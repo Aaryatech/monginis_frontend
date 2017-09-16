@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FileUploadController {
 
+	// file unloader
+	
 	private static final String HOME_PROPERTY = "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/";
 
 	private static final File IMAGES_DIR = new File(HOME_PROPERTY);
