@@ -4,8 +4,16 @@ package com.monginis.ops.model;
 
 public class SpOrderHis {
 	private int spVno;
+	private int frId;
+	
 	
 
+public int getFrId() {
+		return frId;
+	}
+	public void setFrId(int frId) {
+		this.frId = frId;
+	}
 private String frCode;
 private Integer spType;
 private Integer spId;

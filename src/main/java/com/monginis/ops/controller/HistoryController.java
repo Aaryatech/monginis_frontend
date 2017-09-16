@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.HomeController;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllMenuResponse;
+import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.ItemOrderHis;
 import com.monginis.ops.model.ItemOrderList;
 import com.monginis.ops.model.Main;
@@ -37,6 +39,9 @@ public class HistoryController {
 	public List<Menus> menusList;
 	AllMenuResponse allMenuResponse;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	
+	
 	@RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
 	public ModelAndView ordersHistory(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -59,11 +64,21 @@ public class HistoryController {
 	@RequestMapping(value = "/itemHistory", method = RequestMethod.POST)
 	public ModelAndView OrderHistory(HttpServletRequest request, HttpServletResponse response) throws ParseException
 	{
+		
+		String spDeliveryDt=request.getParameter("datepicker");
+
 		String menuTitle="";
+		
+		HttpSession session=request.getSession();
+		Franchisee frDetails= (Franchisee) session.getAttribute("frDetails");
+		int frId=frDetails.getFrId();
+		String frCode=frDetails.getFrCode();
+		
+		
+		
 		
 		Menus selectedMenu=new Menus();
 		int menuId=Integer.parseInt(request.getParameter("group"));
-		String spDeliveryDt=request.getParameter("datepicker");
 		System.out.println("spDeliveryDt"+spDeliveryDt);
 		
 		String parsedDate=Main.formatDate(spDeliveryDt);
@@ -98,7 +113,7 @@ public class HistoryController {
 				{
 					System.out.println("item order ");
 
-					itemOrderHistory=orderHistory(menuId,parsedDate);
+					itemOrderHistory=orderHistory(menuId,parsedDate,frId);
 					System.out.println("selected1:"+itemOrderHistory.toString());
 					model.addObject("orderHistory", itemOrderHistory);
 				
@@ -107,7 +122,7 @@ public class HistoryController {
 				{
 					System.out.println("sp cake order ");
 
-				 spOrderHistory=spHistory(menuId,parsedDate);
+				 spOrderHistory=spHistory(menuId,spDeliveryDt,frCode);
 					System.out.println("selected2:"+spOrderHistory.toString());
 				 model.addObject("orderHistory", spOrderHistory);
 				
@@ -142,13 +157,15 @@ public class HistoryController {
 
 	}
 	
-	public List<ItemOrderHis> orderHistory(int menuId,String parsedDate)
+	public List<ItemOrderHis> orderHistory(int menuId,String parsedDate,int frId)
 	{
+	
+		
 		RestTemplate rest=new RestTemplate();
 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 	        map.add("menuId",menuId);
 	        map.add("deliveryDt",parsedDate);
-	        map.add("frId",4);
+	        map.add("frId",frId);
 		ItemOrderList itemOrderList=rest.postForObject(
 				Constant.URL+"/orderHistory",map,
 				ItemOrderList.class);
@@ -157,9 +174,10 @@ public class HistoryController {
 		return itemHistory;
 	
 	}
-   public List<SpOrderHis> spHistory(int menuId,String parsedDate)
+	
+   public List<SpOrderHis> spHistory(int menuId,String parsedDate,String frCode)
 	{
-	   String frCode="db01";
+	  
 	   System.out.println("spHistory");
 		RestTemplate rest=new RestTemplate();
 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
