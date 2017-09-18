@@ -44,7 +44,96 @@ public class SpecialCake {
     private String baseCode;
 
     private float sprRate;
+    
 	private float sprAddOnRate;
+	
+	
+   private String spDesc;
+	
+	private int orderQty;
+	
+	private float orderDiscount;
+	
+	private boolean isCustChoiceCk;
+	
+	private boolean isAddonRateAppli;
+	
+	private int mrpRate1;
+	
+	private int mrpRate2;
+	
+	private int mrpRate3;
+	
+	private int spRate1;
+	
+	private int spRate2;
+	
+	private int spRate3;
+	
+	
+	
+	public String getSpDesc() {
+		return spDesc;
+	}
+	public void setSpDesc(String spDesc) {
+		this.spDesc = spDesc;
+	}
+	public int getOrderQty() {
+		return orderQty;
+	}
+	public void setOrderQty(int orderQty) {
+		this.orderQty = orderQty;
+	}
+	
+	
+	public boolean isCustChoiceCk() {
+		return isCustChoiceCk;
+	}
+	public void setCustChoiceCk(boolean isCustChoiceCk) {
+		this.isCustChoiceCk = isCustChoiceCk;
+	}
+	public boolean isAddonRateAppli() {
+		return isAddonRateAppli;
+	}
+	public void setAddonRateAppli(boolean isAddonRateAppli) {
+		this.isAddonRateAppli = isAddonRateAppli;
+	}
+	public int getMrpRate1() {
+		return mrpRate1;
+	}
+	public void setMrpRate1(int mrpRate1) {
+		this.mrpRate1 = mrpRate1;
+	}
+	public int getMrpRate2() {
+		return mrpRate2;
+	}
+	public void setMrpRate2(int mrpRate2) {
+		this.mrpRate2 = mrpRate2;
+	}
+	public int getMrpRate3() {
+		return mrpRate3;
+	}
+	public void setMrpRate3(int mrpRate3) {
+		this.mrpRate3 = mrpRate3;
+	}
+	public int getSpRate1() {
+		return spRate1;
+	}
+	public void setSpRate1(int spRate1) {
+		this.spRate1 = spRate1;
+	}
+	public int getSpRate2() {
+		return spRate2;
+	}
+	public void setSpRate2(int spRate2) {
+		this.spRate2 = spRate2;
+	}
+	public int getSpRate3() {
+		return spRate3;
+	}
+	public void setSpRate3(int spRate3) {
+		this.spRate3 = spRate3;
+	}
 	public int getSpId() {
 		return spId;
 	}
@@ -171,8 +260,11 @@ public class SpecialCake {
 	public void setSprAddOnRate(float sprAddOnRate) {
 		this.sprAddOnRate = sprAddOnRate;
 	}
-
-
-
+	public float getOrderDiscount() {
+		return orderDiscount;
+	}
+	public void setOrderDiscount(float orderDiscount) {
+		this.orderDiscount = orderDiscount;
+	}
 
 	}
