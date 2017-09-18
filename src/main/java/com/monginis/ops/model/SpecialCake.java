@@ -66,6 +66,7 @@ public class SpecialCake {
 	
 	private int spRate1;
 	
+	
 	private int spRate2;
 	
 	private int spRate3;
