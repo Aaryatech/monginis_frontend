@@ -71,6 +71,8 @@ public class HomeController {
 		String StartTimes = "10:00";
 		String EndTimes = "12:00";
 		
+		
+		
 		String startTimeParse[] = StartTimes.split(":");
 		String endTimeParse[] = EndTimes.split(":");
 		
@@ -103,6 +105,16 @@ public class HomeController {
 		return model;
 
 	}
+//	
+//	@RequestMapping(value = "/loginProcess",method = RequestMethod.POST)
+//	public ModelAndView renderPDF(HttpServletRequest request,
+//	        HttpServletResponse response) throws Exception {
+//
+//	        ModelAndView mav = new ModelAndView("report/order");
+//	        mav.addObject("name", " mahesh cake shop"); 
+//	        return mav;
+//	    }
+//	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -237,6 +249,7 @@ public class HomeController {
 			model.addObject("msgList",msgList);
 			model.addObject("menuList", getFrMenus.getFrMenus());
 			model.addObject("frDetails", loginResponse.getFranchisee());	
+			model.addObject("url",Constant.MESSAGE_IMAGE_URL);
 		}
 		return model;
 
