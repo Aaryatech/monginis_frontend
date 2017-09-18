@@ -103,6 +103,16 @@ public class HomeController {
 		return model;
 
 	}
+//	
+//	@RequestMapping(value = "/loginProcess",method = RequestMethod.POST)
+//	public ModelAndView renderPDF(HttpServletRequest request,
+//	        HttpServletResponse response) throws Exception {
+//
+//	        ModelAndView mav = new ModelAndView("report/order");
+//	        mav.addObject("name", " mahesh cake shop"); 
+//	        return mav;
+//	    }
+//	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
 		
