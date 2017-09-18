@@ -85,9 +85,8 @@
 							<div class="item">
 								<div class="screen4plan">
 									<div class="homesliderImg">
-
-										${msgList.msgImage}
-
+									 <img src="${url}${msgList.msgImage}" height="300" width="300" />
+									
 
 									</div>
 									<h3 class="homesliderTitle">${msgList.msgHeader}</h3>

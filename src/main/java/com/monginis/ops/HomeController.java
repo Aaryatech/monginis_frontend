@@ -71,6 +71,8 @@ public class HomeController {
 		String StartTimes = "10:00";
 		String EndTimes = "12:00";
 		
+		
+		
 		String startTimeParse[] = StartTimes.split(":");
 		String endTimeParse[] = EndTimes.split(":");
 		
