@@ -4,7 +4,7 @@ package com.monginis.ops.model;
 
 public class SpecialCake {
 
-    //
+ 
     private int spId;
    
     private String spCode;
