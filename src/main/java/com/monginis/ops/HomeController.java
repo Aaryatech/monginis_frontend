@@ -237,6 +237,7 @@ public class HomeController {
 			model.addObject("msgList",msgList);
 			model.addObject("menuList", getFrMenus.getFrMenus());
 			model.addObject("frDetails", loginResponse.getFranchisee());	
+			model.addObject("url",Constant.MESSAGE_IMAGE_URL);
 		}
 		return model;
 
