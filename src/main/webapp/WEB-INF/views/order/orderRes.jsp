@@ -198,13 +198,12 @@ $("#tech").change(function() {
 			<c:choose>
 		<c:when test="${spType=='0'}">
 				FC
-				
 		</c:when>
-		<c:when test="${spType='1'}">
+		<c:when test="${spType=='1'}">
 				
 				Chocolate
 		</c:when>				
-						
+				
 						
 	</c:choose>
 			</div>
@@ -228,14 +227,32 @@ $("#tech").change(function() {
        ${specialCake.spEvents} - ${specialCake.spEventsName}		</div>
 	</div>
 	<c:choose>
-		<c:when test="${spPhoUpload=='1'}">
+		<c:when test="${isCustCh=='1'}">
 	<div class="colOuter">
-		<div class="col1"><div class="col1title">Photo</div></div>
+		<div class="col1"><div class="col1title">Order Photo</div></div>
 		<div class="col2full">
-        <img src="http://monginisaurangabad.com/uploads/sp_order/0nsAOrLqsJScreenshotfrom20170817161141.png" alt="img">
+       <img src="${url}${specialCake.orderPhoto}"alt="img"/>
         </div>
 	</div>
+	<div class="colOuter">
+		<div class="col1"><div class="col1title">Customer Choice Photo</div></div>
+		<div class="col2full">
+       <img src="${url}${specialCake.orderPhoto2}"alt="img"/>
+        </div>
+	</div>
+	
+	
     </c:when>
+    <c:when test="${spPhoUpload=='1'}">
+    <div class="colOuter">
+		<div class="col1"><div class="col1title">Order Photo</div></div>
+		<div class="col2full">
+       <img src="${url}${specialCake.orderPhoto}"alt="img"/>
+        </div>
+	</div>
+    
+    
+       </c:when>
     </c:choose>
     
 	<div class="colOuter">

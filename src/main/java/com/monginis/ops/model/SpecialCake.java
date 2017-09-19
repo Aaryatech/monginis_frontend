@@ -54,9 +54,9 @@ public class SpecialCake {
 	
 	private float orderDiscount;
 	
-	private boolean isCustChoiceCk;
+	private int isCustChoiceCk;
 	
-	private boolean isAddonRateAppli;
+	private int isAddonRateAppli;
 	
 	private int mrpRate1;
 	
@@ -70,7 +70,7 @@ public class SpecialCake {
 	private int spRate2;
 	
 	private int spRate3;
-	
+
 	
 	
 	public String getSpDesc() {
@@ -87,16 +87,17 @@ public class SpecialCake {
 	}
 	
 	
-	public boolean isCustChoiceCk() {
+	
+	public int getIsCustChoiceCk() {
 		return isCustChoiceCk;
 	}
-	public void setCustChoiceCk(boolean isCustChoiceCk) {
+	public void setIsCustChoiceCk(int isCustChoiceCk) {
 		this.isCustChoiceCk = isCustChoiceCk;
 	}
-	public boolean isAddonRateAppli() {
+	public int getIsAddonRateAppli() {
 		return isAddonRateAppli;
 	}
-	public void setAddonRateAppli(boolean isAddonRateAppli) {
+	public void setIsAddonRateAppli(int isAddonRateAppli) {
 		this.isAddonRateAppli = isAddonRateAppli;
 	}
 	public int getMrpRate1() {
@@ -266,6 +267,19 @@ public class SpecialCake {
 	}
 	public void setOrderDiscount(float orderDiscount) {
 		this.orderDiscount = orderDiscount;
+	}
+	@Override
+	public String toString() {
+		return "SpecialCake [spId=" + spId + ", spCode=" + spCode + ", spName=" + spName + ", spType=" + spType
+				+ ", spMinwt=" + spMinwt + ", spMaxwt=" + spMaxwt + ", spBookb4=" + spBookb4 + ", sprId=" + sprId
+				+ ", spImage=" + spImage + ", spTax1=" + spTax1 + ", spTax2=" + spTax2 + ", spTax3=" + spTax3
+				+ ", speIdlist=" + speIdlist + ", erpLinkcode=" + erpLinkcode + ", isUsed=" + isUsed + ", spPhoupload="
+				+ spPhoupload + ", timeTwoappli=" + timeTwoappli + ", delStatus=" + delStatus + ", baseCode=" + baseCode
+				+ ", sprRate=" + sprRate + ", sprAddOnRate=" + sprAddOnRate + ", spDesc=" + spDesc + ", orderQty="
+				+ orderQty + ", orderDiscount=" + orderDiscount + ", isCustChoiceCk=" + isCustChoiceCk
+				+ ", isAddonRateAppli=" + isAddonRateAppli + ", mrpRate1=" + mrpRate1 + ", mrpRate2=" + mrpRate2
+				+ ", mrpRate3=" + mrpRate3 + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3
+				+ "]";
 	}
 
 	}

@@ -14,7 +14,14 @@ public class Constant {
 	 
 	 public static final String MESSAGE_IMAGE_URL="http://monginisaurangabad.com/uploads/mongiImage/Message/";
 
-	
-	
+	 public static final String SPECIAL_CAKE_IMAGE_URL="http://monginisaurangabad.com/uploads/mongiImage/SpecialCake/";
+		
+     public static final String SPECIALCAKE_PROPERTY="//home/ats-12/mongiImage/SpecialCake";
+
+	 public static final File SPCAKE_DIR = new File(SPECIALCAKE_PROPERTY);
+		
+	 public static final String SPCAKE_DIR_ABSOLUTE_PATH = SPCAKE_DIR.getAbsolutePath() + File.separator;
+
+
 	// test comment for push
 }

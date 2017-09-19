@@ -6,14 +6,7 @@ public class SpCakeOrder {
 	private int spVno;
 	private int frId;
 	
-	
 
-public int getFrId() {
-		return frId;
-	}
-	public void setFrId(int frId) {
-		this.frId = frId;
-	}
 private String frCode;
 private Integer spType;
 private Integer spId;
@@ -49,8 +42,29 @@ private String tax1Amt;
 private String tax2Amt;
 private String orderPhoto;
 private String orderDate;
+private String orderPhoto2;
+private int isSlotUsed;
 
 
+
+public int getFrId() {
+	return frId;
+}
+public void setFrId(int frId) {
+	this.frId = frId;
+}
+public String getOrderPhoto2() {
+	return orderPhoto2;
+}
+public void setOrderPhoto2(String orderPhoto2) {
+	this.orderPhoto2 = orderPhoto2;
+}
+public int getIsSlotUsed() {
+	return isSlotUsed;
+}
+public void setIsSlotUsed(int isSlotUsed) {
+	this.isSlotUsed = isSlotUsed;
+}
 public int getMenuId() {
 	return menuId;
 }

@@ -1,11 +1,15 @@
 package com.monginis.ops.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,8 +50,9 @@ public class SpCakeController {
 	EventList eventList;
 	ArrayList<String> menuList;
 	List<SpecialCake> specialCakeList;
-	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";
-	String url = "http://monginisaurangabad.com/uploads/mongiImage/SpecialCake/";
+	SpecialCake specialCake;
+
+	String	spImage="0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";
 
 	@RequestMapping(value = "/showSpCakeOrder", method = RequestMethod.GET)
 
@@ -77,8 +83,8 @@ public class SpCakeController {
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
-			model.addObject("spImage", spImage);
-			model.addObject("url", url);
+			model.addObject("spImage", specialCake.getSpImage());
+			model.addObject("url", spImage);
 
 		} catch (Exception e) {
 			System.out.println("Show Sp Cake List Excep: " + e.getMessage());
@@ -96,33 +102,50 @@ public class SpCakeController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("spCode", spCode);
 		try {
-			SpecialCake specialCake = restTemplate.postForObject(Constant.URL + "/searchSpecialCake", map,
+		         specialCake = restTemplate.postForObject(Constant.URL + "/searchSpecialCake", map,
 					SpecialCake.class);
 			if (specialCake != null) {
 
-				spImage = specialCake.getSpImage();
+			String	spImage = specialCake.getSpImage();
 
 				System.out.println("Sp RESPONSE" + specialCake.toString());
+				
 				model.addObject("specialCake", specialCake);
 				model.addObject("eventList", eventList);
+				
 				int spBookb4 = Integer.parseInt(specialCake.getSpBookb4());
+				
+				
 				System.out.println("spBookb4" + spBookb4);
+				
 				model.addObject("spBookb4", spBookb4);
+				
 			} else {
+				
 				model = new ModelAndView("order/spcakeorder");
+				
 			}
 		} catch (Exception e) {
 			model = new ModelAndView("order/spcakeorder");
 			System.out.println("search  Sp Cake  Excep: " + e.getMessage());
+			model.addObject("menuList", menuList);
+			model.addObject("specialCakeList", specialCakeList);
+			model.addObject("eventList", eventList);
+			model.addObject("flavourList", flavourList);
+		
+		
+
 		}
 		model.addObject("menuList", menuList);
+		
 		model.addObject("specialCakeList", specialCakeList);
 		model.addObject("eventList", eventList);
 		model.addObject("flavourList", flavourList);
-		model.addObject("url", url);
+		model.addObject("url",Constant.SPECIAL_CAKE_IMAGE_URL);
 
 		model.addObject("spImage", spImage);
-
+	
+		model.addObject("spBookb4", 0);
 		return model;
 	}
 
@@ -133,7 +156,8 @@ public class SpCakeController {
 
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
 		List<Flavour> filterFlavoursList = new ArrayList<Flavour>();
-
+		List<Flavour> flavoursListWithAddonRate = new ArrayList<Flavour>();
+		
 		flavoursList = flavourList.getFlavour();
 
 		System.out.println("DB Sptype" + flavoursList.get(0).getSpType());
@@ -145,9 +169,21 @@ public class SpCakeController {
 
 			}
 		}
-		System.out.println("Filter Item List " + filterFlavoursList.toString());
+		for(Flavour flavour:filterFlavoursList)
+		{
+			if(specialCake.getIsAddonRateAppli()==1)
+			{
+				flavoursListWithAddonRate.add(flavour);
+			}
+			else
+			{
+				flavour.setSpfAdonRate(0.0);
+				flavoursListWithAddonRate.add(flavour);
+			}
+		}
+		System.out.println("Filter Item List " + flavoursListWithAddonRate.toString());
 
-		return filterFlavoursList;
+		return flavoursListWithAddonRate;
 	}
 
 	@RequestMapping(value = "/getAddOnRate", method = RequestMethod.GET)
@@ -166,9 +202,30 @@ public class SpCakeController {
 
 		return filteredFlavour;
 	}
+	
+	 private void imagesDirIfNeeded() {
+         if (!Constant.SPCAKE_DIR.exists()) {
+       	  Constant.SPCAKE_DIR.mkdirs();
+         }
+     }
+
+     private String createImage(String name, MultipartFile file) {
+         try {
+
+             System.out.println("Directory : " + Constant.SPCAKE_DIR_ABSOLUTE_PATH);
+             File image = new File(Constant.SPCAKE_DIR_ABSOLUTE_PATH + name);
+             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(image));
+             stream.write(file.getBytes());
+             stream.close();
+
+             return "success";
+         } catch (Exception e) {
+             return "failed";
+         }
+     }
 
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
-	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response,@RequestParam("order_photo")MultipartFile orderPhoto,@RequestParam("cust_choice_ck")MultipartFile custChoiceCk )
 			throws JsonProcessingException {
 		ModelAndView mav = new ModelAndView("order/orderRes");
 		HttpSession session = request.getSession();
@@ -188,6 +245,11 @@ public class SpCakeController {
 
 		// String orderPhoto=request.getParameter("sp_image");
 		// System.out.println("4"+orderPhoto);
+		String orderPhoto1=request.getParameter("order_photo");
+		System.out.println("4" + orderPhoto);
+		
+		String custChCk=request.getParameter("cust_choice_ck");
+		System.out.println("4.1" + custChCk);
 
 		String spMinWeight = request.getParameter("sp_min_weight");
 		System.out.println("5" + spMinWeight);
@@ -275,8 +337,41 @@ public class SpCakeController {
 		String spPhoUpload = request.getParameter("spPhoUpload");
 
 		String eventName = request.getParameter("event_name");
-
+		
+		String isCustCh = request.getParameter("isCustCh");
+		
 		String productionTime = request.getParameter("production_time");
+		
+		UUID uuid = UUID.randomUUID();
+	    String randomUUIDString = uuid.toString();
+	    
+		  
+	    orderPhoto1=randomUUIDString+"-"+orderPhoto.getOriginalFilename();
+		System.out.println("image name= "+orderPhoto1);
+	    if (orderPhoto1.isEmpty()) {
+	    } else {
+	        imagesDirIfNeeded();
+	        createImage(orderPhoto1, orderPhoto);
+	    }
+		
+
+		UUID uuid1 = UUID.randomUUID();
+	    String randomUUIDString1 = uuid1.toString();
+	    
+		  
+	    custChCk=randomUUIDString+"-"+custChoiceCk.getOriginalFilename();
+		System.out.println("image name= "+custChCk);
+	    if (orderPhoto.isEmpty()) {
+	    } else {
+	        imagesDirIfNeeded();
+	        createImage(custChCk, custChoiceCk);
+	    }
+	    
+		
+		
+		
+		
+		
 		RestTemplate rest = new RestTemplate();
 
 		SpCakeOrder spCakeOrder = new SpCakeOrder();
@@ -308,7 +403,9 @@ public class SpCakeController {
 		spCakeOrder.setSpBookForNumber(spBookForNum);
 		spCakeOrder.setSpCustDOB(spCustDOB);
 		spCakeOrder.setSpInstructions(spInstructions);
-		spCakeOrder.setOrderPhoto("orderPhoto");
+		spCakeOrder.setOrderPhoto(orderPhoto1);
+	    spCakeOrder.setOrderPhoto2(custChCk);
+	
 		spCakeOrder.setSpCustMobileNo(spCustMobileNo);
 		spCakeOrder.setSpCustName(spCustName);
 		spCakeOrder.setSpDeliveryDt(spDeliveryDt);
@@ -323,7 +420,7 @@ public class SpCakeController {
 		spCakeOrder.setSpWeight(spWeight);
 		spCakeOrder.setSpPlace(spPlace);
 		spCakeOrder.setSpPrice(spPrice);
-		spCakeOrder.setSpProduDate("2017/09/10");
+		spCakeOrder.setSpProduDate("2017/09/10");//Remaining
 		spCakeOrder.setSpProTime(spProTime);
 		spCakeOrder.setSpSubTotal(spSubTotal);
 		spCakeOrder.setSpType(spType);
@@ -365,18 +462,24 @@ public class SpCakeController {
 			}
 
 			String flavourName = filteredFlavour.getSpfName();
-
+            System.out.println("Sptype="+spType);
 			mav.addObject("spType", spType);
 			mav.addObject("specialCake", spCake);
 			mav.addObject("spName", spName);
 			mav.addObject("productionTime", productionTime);
 			mav.addObject("flavourName", flavourName);
 			mav.addObject("spImage", spImage);
+			mav.addObject("isCustCh",isCustCh);
 			mav.addObject("spPhoUpload", spPhoUpload);
+			mav.addObject("url",Constant.SPECIAL_CAKE_IMAGE_URL);
+			
 			System.out.println("SpCakeRes:" + spCake.toString());
-
+		 
 		} catch (Exception e) {
 			System.out.println("Exc" + e.getMessage());
+			mav.addObject("eventList", eventList);
+			mav.addObject("flavourList", flavourList);
+		
 		}
 		return mav;
 

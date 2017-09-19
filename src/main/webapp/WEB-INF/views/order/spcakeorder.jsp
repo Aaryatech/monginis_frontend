@@ -163,7 +163,7 @@ $("#tech").change(function() {
 	<div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
-		<img src="${url}${spImage}" alt="img"></div>
+		<img src="${url}${spImage}" alt="image"></div>
 	</div>
 
 
@@ -241,7 +241,7 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="sp_name" id="sp_name" value="${specialCake.spName}">
 <input type="hidden" name="fr_code" id="fr_code" value="4">
 <input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
-
+<input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
 <!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
 <input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
 <input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
@@ -328,6 +328,73 @@ String fDate1 = formatter1.format(date);
 		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
 		</div>
 	</div>
+	
+		<c:choose>
+		<c:when test="${specialCake.isCustChoiceCk=='1'}">
+		
+	<div class="colOuter">
+	    <div class="col1"><div class="col1title">Photo Cake</div></div>
+	    	<div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
+                                
+                                
+                            </div>
+                            </div>
+                             <img id="image" />
+                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
+                            </div>
+                            </div>
+                            </div>
+	<div class="colOuter">
+	    <div class="col1"><div class="col1title">Customer Choice Cake</div></div>
+	    	<div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="cust_choice_ck" name="cust_choice_ck"/>
+                                
+                                
+                            </div>
+                            </div>
+                             <img id="img" />
+                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
+                            </div>
+                            </div>
+                            </div>
+	
+	
+	</c:when>
+		
+		
+		
+		
+	<c:when test="${specialCake.spPhoupload=='1'}">
+	
+	<div class="colOuter">
+	    <div class="col1"><div class="col1title">Photo Cake</div></div>
+	    	<div class="col2full"><div class="editimg">
+	    	    <div class="editpics">
+	    	        <div class="fileUpload">
+                                <span> <i class="fa fa-pencil"></i></span>
+                                <input class="upload" type="file" id="order_photo" name="order_photo"/>
+                                
+                                
+                            </div>
+                            </div>
+                             <img id="image" />
+                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
+                            </div>
+                            </div>
+                            </div>
+	
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+
+</c:choose>
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
@@ -621,6 +688,36 @@ function empty() {
     };
 }
 
+
+</script>
+<script>
+
+ document.getElementById("order_photo").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+
+</script>
+<script>
+
+ document.getElementById("cust_choice_ck").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("img").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
 
 </script>
 </body>
