@@ -147,7 +147,7 @@ $("#tech").change(function() {
 		<div class="col1"><div class="col1title">Group</div></div>
 		<div class="col2full"><select name="group" id="group" required>
               <option value="">Select Type</option>
-           <option value="${menuId}" selected>${menuTitle}</option>
+        
 									<c:forEach items="${menusList}" var="menusList">
               <option value="${menusList.menuId}">${menusList.menuTitle}</option>
            </c:forEach>   

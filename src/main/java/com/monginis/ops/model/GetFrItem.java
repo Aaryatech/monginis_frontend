@@ -14,9 +14,12 @@ public class GetFrItem  {
 	private Integer itemRate2;
 	private Integer itemMrp1;
 	private Integer itemMrp2;
+	private Integer itemMrp3;
+
 	private String itemImage;
 	private Integer itemTax1;
 	private Integer itemTax2;
+	
 	private Integer itemTax3;
 	private Integer itemIsUsed;
 	private Double itemSortId;
@@ -25,17 +28,26 @@ public class GetFrItem  {
 	private Integer delStatus;
 	private String subCatName;
 	private int menuId;
-	private double itemRate3;
+	private Integer itemRate3;
 	
 	private int minQty;
 	
 	
 	
-	public double getItemRate3() {
+	public Integer getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(Integer itemMrp3) {
+		this.itemMrp3 = itemMrp3;
+	}
+
+	
+	public Integer getItemRate3() {
 		return itemRate3;
 	}
 
-	public void setItemRate3(double itemRate3) {
+	public void setItemRate3(Integer itemRate3) {
 		this.itemRate3 = itemRate3;
 	}
 

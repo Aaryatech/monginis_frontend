@@ -38,6 +38,7 @@ import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.Orders;
+import com.monginis.ops.model.TabTitleData;
 
 @Controller
 public class ItemController {
@@ -49,81 +50,115 @@ public class ItemController {
 	private static int currentMenuId = 0;
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
-	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
+            HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("order/itemorder");
-		logger.info("/item order request mapping. index:" + index);
+        ModelAndView model = new ModelAndView("order/itemorder");
+        logger.info("/item order request mapping. index:" + index);
 
-		globalIndex = index;
+        globalIndex = index;
 
-		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
-		String currentDate = df.format(date);
+        String currentDate = df.format(date);
 
-		HttpSession session = request.getSession();
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+        HttpSession session = request.getSession();
+        Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-		frItemList = new ArrayList<GetFrItem>();
-		try {
+        ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+        frItemList = new ArrayList<GetFrItem>();
+        try {
 
-			System.out.println("Date is : " + currentDate);
-			currentMenuId = menuList.get(index).getMenuId();
-		
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			
-			map.add("items", menuList.get(index).getItemShow());
-			map.add("frId", frDetails.getFrId());
-			map.add("date", currentDate);
-			map.add("menuId", menuList.get(index).getMenuId());
+            System.out.println("Date is : " + currentDate);
+            currentMenuId = menuList.get(index).getMenuId();
 
-			RestTemplate restTemplate = new RestTemplate();
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-			};
-			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
-					HttpMethod.POST, new HttpEntity<>(map), typeRef);
+            map.add("items", menuList.get(index).getItemShow());
+            map.add("frId", frDetails.getFrId());
+            map.add("date", currentDate);
+            map.add("menuId", menuList.get(index).getMenuId());
 
-			frItemList = responseEntity.getBody();
+            RestTemplate restTemplate = new RestTemplate();
 
-			System.out.println("Fr Item List " + frItemList.toString());
-		} catch (Exception e) {
+            ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
+            };
+            ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+                    HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-			System.out.println("Exception Item List " + e.getMessage());
-		}
+            frItemList = responseEntity.getBody();
 
-		Set<String> setName = new HashSet<String>();
+            System.out.println("Fr Item List " + frItemList.toString());
+        } catch (Exception e) {
 
-		List<String> subCatList = new ArrayList<>();
-		float grandTotal = 0;
+            System.out.println("Exception Item List " + e.getMessage());
+        }
 
-		for (int i = 0; i < frItemList.size(); i++) {
-			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-			setName.add(frItemList.get(i).getSubCatName());
+        Set<String> setName = new HashSet<String>();
 
-		}
+        List<String> subCatList = new ArrayList<>();
 
-		subCatList.addAll(setName);
-		System.out.println(subCatList);
+        float grandTotal = 0;
 
-		DateFormat dfReg = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i = 0; i < frItemList.size(); i++) {
 
-		String todaysDate = dfReg.format(date);
+            grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
+            setName.add(frItemList.get(i).getSubCatName());
 
-		model.addObject("menuList", menuList);
-		model.addObject("subCatList", subCatList);
-		model.addObject("itemList", frItemList);
-		model.addObject("grandTotal", grandTotal);
-		model.addObject("frDetails", frDetails);
+        }
 
-		model.addObject("currentDate", todaysDate);
-		model.addObject("toTime", menuList.get(index).getTime());
+        subCatList.addAll(setName);
 
-		return model;
+        List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
 
-	}
+        for (int i = 0; i < subCatList.size(); i++) {
+
+            String subCat=subCatList.get(i);
+            int qty=0;
+            int total=0;
+            
+            for (int j = 0; j < frItemList.size(); j++) {
+            
+                if(frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
+                    
+                    qty=qty+frItemList.get(j).getItemQty();
+                    total=total+(frItemList.get(j).getItemRate1()*frItemList.get(j).getItemQty());
+                }
+                
+            }
+
+            TabTitleData  tabTitleData=new TabTitleData();
+            tabTitleData.setName(subCat);
+            tabTitleData.setHeader(subCat+" (Rs."+total+")"+"(Qty- "+qty+")");
+            
+            subCatListWithQtyTotal.add(tabTitleData);
+            
+        }
+        
+        
+        
+
+        System.out.println(subCatList);
+
+        DateFormat dfReg = new SimpleDateFormat("dd/MM/yyyy");
+
+        String todaysDate = dfReg.format(date);
+
+        model.addObject("menuList", menuList);
+        
+        model.addObject("subCatListTitle", subCatListWithQtyTotal);
+
+        model.addObject("itemList", frItemList);
+        model.addObject("grandTotal", grandTotal);
+        model.addObject("frDetails", frDetails);
+
+        model.addObject("currentDate", todaysDate);
+        model.addObject("toTime", menuList.get(index).getTime());
+
+        return model;
+
+    }
 
 	@RequestMapping("/saveOrder")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {

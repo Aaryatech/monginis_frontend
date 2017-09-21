@@ -122,18 +122,18 @@ jQuery(document).ready(function(){
 							<nav>
 								<ul class="cd-tabs-navigation">
 
-									<c:forEach var="tab" items="${subCatList}" varStatus="loop">
+									<c:forEach var="tab" items="${subCatListTitle}" varStatus="loop">
 
 
 										<c:choose>
 											<c:when test='${loop.index==0}'>
-												<li><a data-content='${tab}' href="#0" class="selected"
-													onClick="javascript:se_tab_id('${loop.index}')">${tab}</a></li>
+												<li><a data-content='${tab.name}' href="#0" class="selected"
+													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
 
 											</c:when>
 											<c:otherwise>
-												<li><a data-content='${tab}' href="#0"
-													onClick="javascript:se_tab_id('${loop.index}')">${tab}</a></li>
+												<li><a data-content='${tab.name}' href="#0"
+													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
 
 											</c:otherwise>
 										</c:choose>
@@ -147,15 +147,15 @@ jQuery(document).ready(function(){
 							<ul class="cd-tabs-content">
 								<!--tab1-->
 
-								<c:forEach var="tabs" items="${subCatList}" varStatus="loop">
+								<c:forEach var="tabs" items="${subCatListTitle}" varStatus="loop">
 
 
 									<c:choose>
 										<c:when test='${loop.index==0}'>
-											<li data-content='${tabs}' class="selected">
+											<li data-content='${tabs.name}' class="selected">
 										</c:when>
 										<c:otherwise>
-											<li data-content='${tabs}'>
+											<li data-content='${tabs.name}'>
 										</c:otherwise>
 									</c:choose>
 
@@ -180,13 +180,15 @@ jQuery(document).ready(function(){
 
 															<c:set var="menuTime" value="${menu.timing}" />
 
-
+                                                    
 															<c:forEach var="items" items="${itemList}"
 																varStatus="loop">
-																<c:if test="${items.subCatName eq tabs}">
-
+																<c:if test="${items.subCatName eq tabs.name}">
+																
+                                                                   <c:choose>
+                                                                    <c:when test="${frDetails.frRateCat=='1'}">
 																	<tr>
-
+                                                                    
 																		<td><c:out value='${items.itemName}' /></td>
 																		<td><input name='${items.itemId}'
 																			id='${items.itemId}' value='${items.itemQty}'
@@ -200,8 +202,49 @@ jQuery(document).ready(function(){
 																		<td id="total${items.itemId}"><c:out
 																				value='${rate * qty}' /></td>
 																	</tr>
+																	  </c:when> 
+																	     
+																	   <c:when test="${frDetails.frRateCat=='2'}">
+																	<tr>
+                                                                    
+																		<td><c:out value='${items.itemName}' /></td>
+																		<td><input name='${items.itemId}'
+																			id='${items.itemId}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChange('${items.itemRate2}',${items.itemId})"></td>
+																		<td><c:out value='${items.itemMrp1}' /></td>
+
+																		<td><c:out value='${items.itemRate2}' /></td>
+																		<c:set var="rate" value="${items.itemRate2}" />
+																		<c:set var="qty" value="${items.itemQty}" />
+																		<td id="total${items.itemId}"><c:out
+																				value='${rate * qty}' /></td>
+																	</tr>
+																	  </c:when>  
+																	    
+																	    <c:when test="${frDetails.frRateCat=='3'}">
+																	<tr>
+                                                                    
+																		<td><c:out value='${items.itemName}' /></td>
+																		<td><input name='${items.itemId}'
+																			id='${items.itemId}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChange('${items.itemRate3}',${items.itemId})"></td>
+																		<td><c:out value='${items.itemMrp3}' /></td>
+
+																		<td><c:out value='${items.itemRate3}' /></td>
+																		<c:set var="rate" value="${items.itemRate3}" />
+																		<c:set var="qty" value="${items.itemQty}" />
+																		<td id="total${items.itemId}"><c:out
+																				value='${rate * qty}'/></td>
+																	</tr>
+																	  </c:when>    
+																	  </c:choose>
+																	  
 																</c:if>
 															</c:forEach>
+															
+															
 
 														</table></td>
 												</tr>

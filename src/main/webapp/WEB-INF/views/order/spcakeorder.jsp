@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
 
 <!--selectlistbox-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
-<script>
+<!-- <script>
     function createByJson() {
 	     var jsonData = [					
 					{description:'Choos your payment gateway', value:'', text:'Payment Gateway'},					
@@ -75,7 +75,7 @@ $("#tech").change(function() {
 	console.log("by jquery: ", this.value);
 })
 //
-</script>
+</script> -->
 <!--selectlistbox-->
 
 <!--datepicker-->
@@ -99,7 +99,12 @@ $("#tech").change(function() {
   </script>
 <!--datepicker--> 
 
-        
+<style type="text/css">
+select {
+    width: 130px;
+    height: 30px;
+}
+</style>   
 </head>
 <body>
 
@@ -145,7 +150,7 @@ $("#tech").change(function() {
 <!--leftForm-->
 <div class="left">
 
-  <form action="searchSpCake" method="post" class="form-horizontal" name="form" onsubmit="return validateForm()">
+  <form action="${pageContext.request.contextPath}/searchSpCake" method="post" class="form-horizontal" name="form" onsubmit="return validateForm()">
   
 	  <div class="fullform">
 		<div class="cackleft2">Item Code</div>
@@ -225,7 +230,7 @@ String fDate1 = formatter1.format(date);
 </div>
 
 <!--leftForm-->
-<form action="orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="from_ord" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="from_ord" enctype="multipart/form-data">
 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 

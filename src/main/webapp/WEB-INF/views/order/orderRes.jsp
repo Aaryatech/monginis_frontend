@@ -358,9 +358,9 @@ $("#tech").change(function() {
  
 		
 </div>
-	<a href="http://monginisaurangabad.com/index.php/dashboard/special_cake"><h1><< Back</h1></a>
+	<a href="${pageContext.request.contextPath}/showSpCakeOrder/${globalIndex}"><h1><< Back</h1></a>
 <br/>    
-	<a href="http://monginisaurangabad.com/invoices/1337.pdf" target="_blank"><h1>PDF</h1></a>
+	<a href="${pageContext.request.contextPath}/showSpCakeOrderPDF" target="_blank"><h1>PDF</h1></a>
 <!--rightSidebar-->
 
 </div>
