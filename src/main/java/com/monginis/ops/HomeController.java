@@ -64,6 +64,8 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	
+	
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -243,8 +245,9 @@ public class HomeController {
 			session.setAttribute("menuList", getFrMenus.getFrMenus());
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			
+			loginResponse.getFranchisee().setFrImage(Constant.FR_IMAGE_URL+loginResponse.getFranchisee().getFrImage());
 			model = new ModelAndView("home");
-
+System.out.println("fr Image URL "+loginResponse.getFranchisee().getFrImage());
 	        model.addObject("schedulerLists",schedulerLists);
 			model.addObject("msgList",msgList);
 			model.addObject("menuList", getFrMenus.getFrMenus());

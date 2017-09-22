@@ -89,7 +89,7 @@
 									
 
 									</div>
-									<h3 class="homesliderTitle">${msgList.msgHeader}</h3>
+									<h3 class="homesliderTitle" ><center>${msgList.msgHeader}</center></h3>
 
 
 								</div>

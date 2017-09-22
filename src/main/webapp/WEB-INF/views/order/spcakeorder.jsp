@@ -168,7 +168,7 @@ select {
 	<div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
-		<img src="${url}${spImage}" alt="image"></div>
+		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
 
 

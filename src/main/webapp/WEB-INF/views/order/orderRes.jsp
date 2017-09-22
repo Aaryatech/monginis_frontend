@@ -161,7 +161,7 @@ $("#tech").change(function() {
 		<div class="cackimg">
 		<div class="cackimglable"><img src="http://monginisaurangabad.com/images/lable-premium.png" alt="img"></div>
 		<!--<div class="cackimglable"><img src="http://monginisaurangabad.com/images/lable-regular.png" alt="img"></div>-->
-		<img src="http://monginisaurangabad.com/uploads/mongiImage/SpecialCake/${spImage}" alt="Tier -Series"></div>
+		<img src="${url}${spImage}" alt="Tier -Series"></div>
 	</div>
         
 	<div class="fullform">

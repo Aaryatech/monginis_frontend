@@ -32,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.util.ImageS3Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.constant.Constant;
@@ -104,7 +105,7 @@ public class SpCakeController {
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
 			model.addObject("spImage", specialCake.getSpImage());
-			model.addObject("url", spImage);
+			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 
 		} catch (Exception e) {
 			System.out.println("Show Sp Cake List Excep: " + e.getMessage());
@@ -153,6 +154,7 @@ public class SpCakeController {
 			model.addObject("specialCakeList", specialCakeList);
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
+			model.addObject("url",Constant.SPCAKE_IMAGE_URL);
 		
 		
 
@@ -162,10 +164,7 @@ public class SpCakeController {
 		model.addObject("specialCakeList", specialCakeList);
 		model.addObject("eventList", eventList);
 		model.addObject("flavourList", flavourList);
-		model.addObject("url",Constant.SPECIAL_CAKE_IMAGE_URL);
-
-		model.addObject("spImage", spImage);
-	
+		model.addObject("url",Constant.SPCAKE_IMAGE_URL);	
 		model.addObject("spBookb4", 0);
 		return model;
 	}
@@ -225,29 +224,11 @@ public class SpCakeController {
 		return filteredFlavour;
 	}
 	
-	 private void imagesDirIfNeeded() {
-         if (!Constant.SPCAKE_DIR.exists()) {
-       	  Constant.SPCAKE_DIR.mkdirs();
-         }
-     }
-
-     private String createImage(String name, MultipartFile file) {
-         try {
-
-             System.out.println("Directory : " + Constant.SPCAKE_DIR_ABSOLUTE_PATH);
-             File image = new File(Constant.SPCAKE_DIR_ABSOLUTE_PATH + name);
-             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(image));
-             stream.write(file.getBytes());
-             stream.close();
-
-             return "success";
-         } catch (Exception e) {
-             return "failed";
-         }
-     }
+	
 
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
-	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response,@RequestParam("order_photo")MultipartFile orderPhoto,@RequestParam("cust_choice_ck")MultipartFile custChoiceCk )
+	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response,@RequestParam("order_photo")MultipartFile orderPhoto,
+			@RequestParam("cust_choice_ck")MultipartFile custChoiceCk )
 			throws JsonProcessingException {
 		
 		ModelAndView mav = new ModelAndView("order/orderRes");
@@ -266,13 +247,13 @@ public class SpCakeController {
 
 		String spName = request.getParameter("sp_name");
 		System.out.println("3" + spName);
-
+/*
 		String orderPhoto1=request.getParameter("order_photo");
-		System.out.println("4" + orderPhoto);
+		System.out.println("4" + orderPhoto);*/
 		
-		String custChCk=request.getParameter("cust_choice_ck");
+		/*String custChCk=request.getParameter("cust_choice_ck");
 		System.out.println("4.1" + custChCk);
-
+*/
 		String spMinWeight = request.getParameter("sp_min_weight");
 		System.out.println("5" + spMinWeight);
 
@@ -365,31 +346,26 @@ public class SpCakeController {
 		
 		String productionTime = request.getParameter("production_time");
 		
-		UUID uuid = UUID.randomUUID();
-	    String randomUUIDString = uuid.toString();
-	    
-		  
-	    orderPhoto1=randomUUIDString+"-"+orderPhoto.getOriginalFilename();
-		System.out.println("image name= "+orderPhoto1);
-	    if (orderPhoto1.isEmpty()) {
-	    } else {
-	        imagesDirIfNeeded();
-	        createImage(orderPhoto1, orderPhoto);
-	    }
 		
-
-		UUID uuid1 = UUID.randomUUID();
-	    String randomUUIDString1 = uuid1.toString();
-	    
-		  
-	    custChCk=randomUUIDString1+"-"+custChoiceCk.getOriginalFilename();
-		System.out.println("image name= "+custChCk);
-	    if (custChCk.isEmpty()) {
-	    } else {
-	        imagesDirIfNeeded();
-	        createImage(custChCk, custChoiceCk);
-	    }
-	    
+		String spImage=request.getParameter("prevImage");
+		String custChCk="";
+		String orderPhoto1="";
+		
+		if(!orderPhoto.getOriginalFilename().equalsIgnoreCase("")) {
+			
+			System.out.println("Empty image");
+			 orderPhoto1=	ImageS3Util.uploadSpCakeImage(orderPhoto);
+		}
+		
+		
+		if(!custChoiceCk.getOriginalFilename().equalsIgnoreCase("")) {
+			
+			System.out.println("Empty image");
+			 custChCk=	ImageS3Util.uploadSpCakeImage(custChoiceCk);
+		}
+		
+		 
+		
 	
 		spCakeOrder = new SpCakeOrder();
 		spCakeOrder.setFrCode(frDetails.getFrCode());
@@ -494,10 +470,10 @@ public class SpCakeController {
 			mav.addObject("spName", spName);
 			mav.addObject("productionTime", productionTime);
 			mav.addObject("flavourName", flavourName);
-			mav.addObject("spImage", spImage);
+			//mav.addObject("spImage", spImage);
 			mav.addObject("isCustCh",isCustCh);
 			mav.addObject("spPhoUpload", spPhoUpload);
-			mav.addObject("url",Constant.SPECIAL_CAKE_IMAGE_URL);
+			mav.addObject("url",Constant.SPCAKE_IMAGE_URL);
 			mav.addObject("globalIndex",globalIndex);
 			System.out.println("SpCakeRes:" + spCake.toString());
 		 

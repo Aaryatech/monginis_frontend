@@ -15,10 +15,12 @@
     	<div class="logoBarLeft"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/images/monginislogo.jpg" alt="monginis"></a></div>  
         <div class="logoBarRight"><div id="menuzord" class="menuzord red menuzord-responsive">
             <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
-                <li><a href="#"><div class="usericon">${frDetails.frName} </div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
+                <li><a href="#"><div class="usericon">${frDetails.frName} 
+                </div> <div class="userimg">
+                <img src="${frDetails.frImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/user.png';"></div> </a>
                 	<ul class="dropdown">
                        
-						<li><a href="#">Edit Profile</a></li>
+						<li><a href="${pageContext.request.contextPath}/editProfile">Edit Profile</a></li>
 						<li><a href="${pageContext.request.contextPath}/logout">Log out</a></li>
 					</ul>
                 </li>
