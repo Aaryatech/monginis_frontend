@@ -70,6 +70,7 @@
 							<c:set var="menuTime" value="${menu.toTime}" />
 							<c:set var="frId" value="${menu.frId}" />
 							<c:set var="settingType" value="${menu.isSameDayApplicable}" />
+	<c:set var="catId" value="${menu.catId}" />
 
 							<%
 								ZoneId z = ZoneId.of("Asia/Calcutta");
@@ -80,6 +81,7 @@
 									
 									
 									int setType = (int) pageContext.getAttribute("settingType");
+									int catId = (int) pageContext.getAttribute("catId");
 
 									System.out.println("Menu Timing" + menuTiming);
 
@@ -104,13 +106,13 @@
 
 								<div class="listareaBox">
 									<%
-										if (setType <= 1) {
+										if (catId != 5) {
 									%>
 
 									<a class="listareaBoximg"
 										href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 										<%
-											} else if(setType==2 || setType==3) {
+											} else if(catId==5 ) {
 										%> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 											<%
 												}
