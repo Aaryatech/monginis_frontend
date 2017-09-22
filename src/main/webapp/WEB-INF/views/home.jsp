@@ -176,14 +176,16 @@
 					<div class="latestNews">
 					
 						<h3 class="latestNewsTitle">Latest News</h3>
+							<div class="microsoft marquee">
 						<c:forEach items="${schedulerLists}" var="schedulerLists">
 						
-						<div class="microsoft marquee">
+					
 
 								<span> ${schedulerLists.schMessage} </span>
 							
-						</div>
+						
 						</c:forEach>
+						</div>
 					</div>
 					
 					

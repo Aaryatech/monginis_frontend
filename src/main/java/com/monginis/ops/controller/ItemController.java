@@ -50,115 +50,135 @@ public class ItemController {
 	private static int currentMenuId = 0;
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
-    public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
-            HttpServletResponse response) {
+	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
+			HttpServletResponse response) {
 
-        ModelAndView model = new ModelAndView("order/itemorder");
-        logger.info("/item order request mapping. index:" + index);
+		ModelAndView model = new ModelAndView("order/itemorder");
+		logger.info("/item order request mapping. index:" + index);
 
-        globalIndex = index;
+		globalIndex = index;
 
-        Date date = new Date(Calendar.getInstance().getTime().getTime());
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date(Calendar.getInstance().getTime().getTime());
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
-        String currentDate = df.format(date);
+		String currentDate = df.format(date);
 
-        HttpSession session = request.getSession();
-        Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-        ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-        frItemList = new ArrayList<GetFrItem>();
-        try {
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		frItemList = new ArrayList<GetFrItem>();
+		try {
 
-            System.out.println("Date is : " + currentDate);
-            currentMenuId = menuList.get(index).getMenuId();
+			System.out.println("Date is : " + currentDate);
+			currentMenuId = menuList.get(index).getMenuId();
 
-            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-            map.add("items", menuList.get(index).getItemShow());
-            map.add("frId", frDetails.getFrId());
-            map.add("date", currentDate);
-            map.add("menuId", menuList.get(index).getMenuId());
+			map.add("items", menuList.get(index).getItemShow());
+			map.add("frId", frDetails.getFrId());
+			map.add("date", currentDate);
+			map.add("menuId", menuList.get(index).getMenuId());
 
-            RestTemplate restTemplate = new RestTemplate();
+			RestTemplate restTemplate = new RestTemplate();
 
-            ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-            };
-            ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
-                    HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
+			};
+			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+					HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-            frItemList = responseEntity.getBody();
+			frItemList = responseEntity.getBody();
 
-            System.out.println("Fr Item List " + frItemList.toString());
-        } catch (Exception e) {
+			System.out.println("Fr Item List " + frItemList.toString());
+		} catch (Exception e) {
 
-            System.out.println("Exception Item List " + e.getMessage());
-        }
+			System.out.println("Exception Item List " + e.getMessage());
+		}
 
-        Set<String> setName = new HashSet<String>();
+		Set<String> setName = new HashSet<String>();
 
-        List<String> subCatList = new ArrayList<>();
+		List<String> subCatList = new ArrayList<>();
 
-        float grandTotal = 0;
+		float grandTotal = 0;
 
-        for (int i = 0; i < frItemList.size(); i++) {
+		for (int i = 0; i < frItemList.size(); i++) {
 
-            grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-            setName.add(frItemList.get(i).getSubCatName());
+			if (frDetails.getFrRateCat() == 1) {
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
+			} else if (frDetails.getFrRateCat() == 2) {
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
 
-        }
+			} else if (frDetails.getFrRateCat() == 3) {
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
 
-        subCatList.addAll(setName);
+			}
+			setName.add(frItemList.get(i).getSubCatName());
 
-        List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
+		}
 
-        for (int i = 0; i < subCatList.size(); i++) {
+		subCatList.addAll(setName);
 
-            String subCat=subCatList.get(i);
-            int qty=0;
-            int total=0;
-            
-            for (int j = 0; j < frItemList.size(); j++) {
-            
-                if(frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
-                    
-                    qty=qty+frItemList.get(j).getItemQty();
-                    total=total+(frItemList.get(j).getItemRate1()*frItemList.get(j).getItemQty());
-                }
-                
-            }
+		List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
 
-            TabTitleData  tabTitleData=new TabTitleData();
-            tabTitleData.setName(subCat);
-            tabTitleData.setHeader(subCat+" (Rs."+total+")"+"(Qty- "+qty+")");
-            
-            subCatListWithQtyTotal.add(tabTitleData);
-            
-        }
-        
-        
-        
+		for (int i = 0; i < subCatList.size(); i++) {
 
-        System.out.println(subCatList);
+			String subCat = subCatList.get(i);
+			int qty = 0;
+			int total = 0;
 
-        DateFormat dfReg = new SimpleDateFormat("dd/MM/yyyy");
+			for (int j = 0; j < frItemList.size(); j++) {
 
-        String todaysDate = dfReg.format(date);
+				if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
 
-        model.addObject("menuList", menuList);
-        
-        model.addObject("subCatListTitle", subCatListWithQtyTotal);
+					qty = qty + frItemList.get(j).getItemQty();
 
-        model.addObject("itemList", frItemList);
-        model.addObject("grandTotal", grandTotal);
-        model.addObject("frDetails", frDetails);
+					if (frDetails.getFrRateCat() == 1) {
+						
+						total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
+						
+					} else if (frDetails.getFrRateCat() == 2) {
+						
+						total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
 
-        model.addObject("currentDate", todaysDate);
-        model.addObject("toTime", menuList.get(index).getTime());
+					} else if (frDetails.getFrRateCat() == 3) {
+						
+						total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
 
-        return model;
+					}
 
-    }
+				}
+
+				
+			}
+
+			TabTitleData tabTitleData = new TabTitleData();
+			tabTitleData.setName(subCat);
+			tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
+
+			subCatListWithQtyTotal.add(tabTitleData);
+
+		}
+
+		System.out.println(subCatList);
+
+		DateFormat dfReg = new SimpleDateFormat("dd/MM/yyyy");
+
+		String todaysDate = dfReg.format(date);
+
+		model.addObject("menuList", menuList);
+
+		model.addObject("subCatListTitle", subCatListWithQtyTotal);
+
+		model.addObject("itemList", frItemList);
+		model.addObject("grandTotal", grandTotal);
+		model.addObject("frDetails", frDetails);
+
+		model.addObject("currentDate", todaysDate);
+		model.addObject("toTime", menuList.get(index).getTime());
+
+		return model;
+
+	}
 
 	@RequestMapping("/saveOrder")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
@@ -167,6 +187,12 @@ public class ItemController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
+
+		String menuId = request.getParameter("menuId");
+		int rateCat = frDetails.getFrRateCat();
+		System.out.println("Fr Rate Cat " + rateCat);
+
+		System.out.println("Current menu id: " + currentMenuId + " menu id from jsp: " + menuId);
 
 		List<GetFrItem> orderList = new ArrayList<>();
 		for (int i = 0; i < frItemList.size(); i++) {
@@ -182,7 +208,7 @@ public class ItemController {
 
 				System.out.println(" " + id + ":" + strQty);
 
-				if (qty > frItem.getItemQty()) {
+				if (qty != frItem.getItemQty()) {
 
 					frItem.setItemQty(qty);
 					orderList.add(frItem);
@@ -206,7 +232,7 @@ public class ItemController {
 			ObjectMapper mapperObj = new ObjectMapper();
 
 			Date date = new Date(Calendar.getInstance().getTime().getTime());
-			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 			String currentDate = df.format(date);
 
@@ -215,27 +241,40 @@ public class ItemController {
 			for (int i = 0; i < orderList.size(); i++) {
 
 				GetFrItem frItem = orderList.get(i);
-				Orders o = new Orders();
 
-				o.setDeliveryDate(date);
-				o.setEditQty(frItem.getItemQty());
-				o.setFrId(frDetails.getFrId());
-				o.setIsEdit(1);
-				o.setIsPositive(1);
-				o.setItemId(frItem.getItemId());
-				o.setMenuId(frItem.getMenuId());
-				o.setOrderDate(date);
-				o.setOrderDatetime(currentDate);
-				o.setOrderMrp(frItem.getItemMrp1());
-				o.setOrderQty(frItem.getItemQty());
-				o.setOrderSubType(Integer.parseInt(frItem.getItemGrp2()));
-				o.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
-				o.setProductionDate(date);
-				o.setRefId(frItem.getId());
-				o.setUserId(2);
-				o.setOrderRate(frItem.getItemRate1());
-				o.setMenuId(currentMenuId);
-				orders.add(o);
+				Orders order = new Orders();
+				order.setDeliveryDate(date);
+				order.setEditQty(frItem.getItemQty());
+				order.setFrId(frDetails.getFrId());
+				order.setIsEdit(1);
+				order.setIsPositive(1);
+				order.setItemId(frItem.getId().toString());
+				order.setMenuId(frItem.getMenuId());
+				order.setOrderDate(date);
+				order.setOrderDatetime(currentDate);
+				order.setOrderQty(frItem.getItemQty());
+				order.setOrderSubType(Integer.parseInt(frItem.getItemGrp2()));
+				order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
+				order.setProductionDate(date);
+				order.setRefId(frItem.getId());
+				order.setUserId(2);
+				order.setMenuId(currentMenuId);
+
+				if (rateCat == 1) {
+					order.setOrderMrp(frItem.getItemMrp1());
+					order.setOrderRate(frItem.getItemRate1());
+
+				} else if (rateCat == 2) {
+					order.setOrderMrp(frItem.getItemMrp2());
+					order.setOrderRate(frItem.getItemRate2());
+
+				} else if (rateCat == 3) {
+					order.setOrderMrp(frItem.getItemMrp3());
+					order.setOrderRate(frItem.getItemRate3());
+
+				}
+
+				orders.add(order);
 
 			}
 

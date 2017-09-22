@@ -12,6 +12,8 @@ public class GetFrItem  {
 	private String itemGrp3;
 	private Integer itemRate1;
 	private Integer itemRate2;
+	private Integer itemRate3;
+	
 	private Integer itemMrp1;
 	private Integer itemMrp2;
 	private Integer itemMrp3;
@@ -28,36 +30,8 @@ public class GetFrItem  {
 	private Integer delStatus;
 	private String subCatName;
 	private int menuId;
-	private Integer itemRate3;
 	
 	private int minQty;
-	
-	
-	
-	public Integer getItemMrp3() {
-		return itemMrp3;
-	}
-
-	public void setItemMrp3(Integer itemMrp3) {
-		this.itemMrp3 = itemMrp3;
-	}
-
-	
-	public Integer getItemRate3() {
-		return itemRate3;
-	}
-
-	public void setItemRate3(Integer itemRate3) {
-		this.itemRate3 = itemRate3;
-	}
-
-	public int getMinQty() {
-		return minQty;
-	}
-
-	public void setMinQty(int minQty) {
-		this.minQty = minQty;
-	}
 
 	public Integer getId() {
 		return id;
@@ -123,6 +97,14 @@ public class GetFrItem  {
 		this.itemRate2 = itemRate2;
 	}
 
+	public Integer getItemRate3() {
+		return itemRate3;
+	}
+
+	public void setItemRate3(Integer itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
 	public Integer getItemMrp1() {
 		return itemMrp1;
 	}
@@ -137,6 +119,14 @@ public class GetFrItem  {
 
 	public void setItemMrp2(Integer itemMrp2) {
 		this.itemMrp2 = itemMrp2;
+	}
+
+	public Integer getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(Integer itemMrp3) {
+		this.itemMrp3 = itemMrp3;
 	}
 
 	public String getItemImage() {
@@ -210,8 +200,7 @@ public class GetFrItem  {
 	public void setDelStatus(Integer delStatus) {
 		this.delStatus = delStatus;
 	}
-	 
-	
+
 	public String getSubCatName() {
 		return subCatName;
 	}
@@ -228,16 +217,29 @@ public class GetFrItem  {
 		this.menuId = menuId;
 	}
 
+	public int getMinQty() {
+		return minQty;
+	}
+
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
+	}
+
 	@Override
 	public String toString() {
 		return "GetFrItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
 				+ ", itemGrp2=" + itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2="
-				+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemImage=" + itemImage
-				+ ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed="
-				+ itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo + ", itemQty=" + itemQty
-				+ ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId=" + menuId + ", itemRate3="
-				+ itemRate3 + ", minQty=" + minQty + "]";
+				+ itemRate2 + ", itemRate3=" + itemRate3 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2
+				+ ", itemMrp3=" + itemMrp3 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2="
+				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
+				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
+				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + "]";
 	}
+	
+	
+	
+	
+	
 
 	
 	
