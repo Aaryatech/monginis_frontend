@@ -111,7 +111,7 @@
 										href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 										<%
 											} else if(setType==2 || setType==3) {
-										%> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showSpCakeOrder">
+										%> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 											<%
 												}
 											%> <img
