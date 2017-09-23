@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -104,7 +105,7 @@ public class SpCakeController {
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
-			model.addObject("spImage", specialCake.getSpImage());
+			//model.addObject("spImage", specialCake.getSpImage());
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 
 		} catch (Exception e) {
@@ -116,6 +117,9 @@ public class SpCakeController {
 
 	@RequestMapping(value = "/searchSpCake", method = RequestMethod.POST)
 	public ModelAndView searchSpCakeBySpCode(HttpServletRequest request, HttpServletResponse response) {
+		
+		System.out.println("inside search sp cake request");
+		
 		String spCode = request.getParameter("sp_code");
 		ModelAndView model = new ModelAndView("order/spcakeorder");
 
@@ -125,11 +129,69 @@ public class SpCakeController {
 		try {
 		         specialCake = restTemplate.postForObject(Constant.URL + "/searchSpecialCake", map,
 					SpecialCake.class);
-			if (specialCake != null) {
+			
+		     if (specialCake != null) {
 
+				String itemShow = menuList.get(globalIndex).getItemShow();
+				
+				HttpSession session = request.getSession();
+
+				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+				 List<String> arrShowItem = Arrays.asList(itemShow.split("\\s*,\\s*"));
+				 
+				 int isfound=0;
+				 System.out.println("item Show "+ itemShow);
+				 
+				    for(String spId:arrShowItem)
+					 {
+						 if(Integer.parseInt(spId)==specialCake.getSpId())
+						 {
+							 isfound=1;
+							 System.out.println("Sp Cake Math "+ spId);
+							 
+						 }
+					 }
+				    
+				    if(isfound==0)
+				    {
+				    	
+						 System.out.println("Sp Cake Not  Math ");
+							model = new ModelAndView("order/spcakeorder");
+							//specialCake = null;
+							
+							
+							
+							model.addObject("menuList", menuList);
+							model.addObject("eventList", eventList);
+							model.addObject("flavourList", flavourList);
+							model.addObject("url",Constant.SPCAKE_IMAGE_URL);
+							model.addObject("spBookb4", 0);
+							model.addObject("sprRate", 0);
+							return model;
+
+				    }
+				
+		
 			String	spImage = specialCake.getSpImage();
 
 				System.out.println("Sp RESPONSE" + specialCake.toString());
+				float sprRate;
+				if(frDetails.getFrRateCat()==1)
+				{
+				    sprRate=specialCake.getMrpRate1();
+					
+				}else if(frDetails.getFrRateCat()==2)
+				{
+					 sprRate=specialCake.getMrpRate2();
+				}
+				else
+				{
+					sprRate=specialCake.getMrpRate3();
+				}
+				
+				model.addObject("sprRate", sprRate);
+				
 				
 				model.addObject("specialCake", specialCake);
 				model.addObject("eventList", eventList);
@@ -143,7 +205,15 @@ public class SpCakeController {
 				
 			} else {
 				
+				System.out.println(" inside else:");
 				model = new ModelAndView("order/spcakeorder");
+				model.addObject("menuList", menuList);
+				model.addObject("eventList", eventList);
+				model.addObject("flavourList", flavourList);
+				model.addObject("url",Constant.SPCAKE_IMAGE_URL);
+				model.addObject("spBookb4", 0);
+				model.addObject("sprRate", 0);
+				return model;
 				
 			}
 		} catch (Exception e) {
@@ -151,21 +221,19 @@ public class SpCakeController {
 			
 			System.out.println("search  Sp Cake  Excep: " + e.getMessage());
 			model.addObject("menuList", menuList);
-			model.addObject("specialCakeList", specialCakeList);
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
 			model.addObject("url",Constant.SPCAKE_IMAGE_URL);
-		
-		
-
+			model.addObject("spBookb4", 0);
+			model.addObject("sprRate", 0);
+			return model;
 		}
 		model.addObject("menuList", menuList);
-		
-		model.addObject("specialCakeList", specialCakeList);
+		//int spBookb4 = Integer.parseInt(specialCake.getSpBookb4());
 		model.addObject("eventList", eventList);
 		model.addObject("flavourList", flavourList);
 		model.addObject("url",Constant.SPCAKE_IMAGE_URL);	
-		model.addObject("spBookb4", 0);
+	  //model.addObject("spBookb4", spBookb4);
 		return model;
 	}
 
@@ -354,14 +422,14 @@ public class SpCakeController {
 		if(!orderPhoto.getOriginalFilename().equalsIgnoreCase("")) {
 			
 			System.out.println("Empty image");
-			 orderPhoto1=	ImageS3Util.uploadSpCakeImage(orderPhoto);
+			 orderPhoto1=	ImageS3Util.uploadPhotoCakeImage(orderPhoto);
 		}
 		
 		
 		if(!custChoiceCk.getOriginalFilename().equalsIgnoreCase("")) {
 			
 			System.out.println("Empty image");
-			 custChCk=	ImageS3Util.uploadSpCakeImage(custChoiceCk);
+			 custChCk=	ImageS3Util.uploadPhotoCakeImage(custChoiceCk);
 		}
 		
 		 
@@ -467,13 +535,16 @@ public class SpCakeController {
             
 			mav.addObject("spType", spType);
 			mav.addObject("specialCake", spCake);
+			mav.addObject("spImage",spImage);
+			mav.addObject("URL",Constant.SPCAKE_IMAGE_URL);
+			
 			mav.addObject("spName", spName);
 			mav.addObject("productionTime", productionTime);
 			mav.addObject("flavourName", flavourName);
 			//mav.addObject("spImage", spImage);
 			mav.addObject("isCustCh",isCustCh);
 			mav.addObject("spPhoUpload", spPhoUpload);
-			mav.addObject("url",Constant.SPCAKE_IMAGE_URL);
+			mav.addObject("PHOTO_URL",Constant.PHOTO_CAKE_URL);
 			mav.addObject("globalIndex",globalIndex);
 			System.out.println("SpCakeRes:" + spCake.toString());
 		 

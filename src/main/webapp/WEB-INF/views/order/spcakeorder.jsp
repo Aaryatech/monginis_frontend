@@ -105,6 +105,38 @@ select {
     height: 30px;
 }
 </style>   
+ <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+    <script type="text/javascript">
+
+      // Load the Google Transliterate API
+      google.load("elements", "1", {
+            packages: "transliteration"
+          });
+
+      function onLoad() {
+        var options = {
+            sourceLanguage:
+                google.elements.transliteration.LanguageCode.ENGLISH,
+            destinationLanguage:
+                [google.elements.transliteration.LanguageCode.HINDI],
+            shortcutKey: 'ctrl+g',
+            transliterationEnabled: true
+        };
+
+        // Create an instance on TransliterationControl with the required
+        // options.
+        var control =
+            new google.elements.transliteration.TransliterationControl(options);
+
+        // Enable transliteration in the textbox with id
+        // 'transliterateTextarea'.
+        control.makeTransliteratable(['transliterateTextarea']);
+      }
+      google.setOnLoadCallback(onLoad);
+    </script>
+
+
 </head>
 <body>
 
@@ -164,13 +196,12 @@ select {
 		<div class="cackleft">Name</div>
 		<div class="cackright" id="sp_name"><span class="cakename">${specialCake.spName}</span></div>
 	</div>
-
+ 
 	<div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
 		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
-
 
 	<div class="fullform">
 		<div class="cackleft">Min Weight</div>
@@ -223,14 +254,14 @@ SimpleDateFormat formatter1 = new SimpleDateFormat("MM-dd-yyyy");
 
 String fDate1 = formatter1.format(date);
 %>
-<%=fDate %>
+<%=fDate1 %>
     </div>
 	</div>
 	
 </div>
 
-<!--leftForm-->
-<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="from_ord" enctype="multipart/form-data">
+<!--Form-->
+<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data">
 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 
@@ -247,15 +278,18 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="fr_code" id="fr_code" value="4">
 <input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
 <input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
+<input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
+
 <!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
 <input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
 <input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
 <input type="hidden" name="tax_2_amt" id="tax_2_amt" value="0">
 <input type="hidden" name="min_weight" id="min_weight" value="5 kg">
 <input type="hidden" name="max_weight" id="max_weight" value="8 kg">
-
 <input type="hidden" name="earliest_delivery_date" id="earliest_delivery_date" value="11 Sep 2017"> -->
+
 <!--centerForm-->	
+
 <div class="center">
 
 	 <div  class="colOuter">
@@ -276,6 +310,7 @@ String fDate1 = formatter1.format(date);
             </select>
 			</div>
 	</div>
+	
     <div class="colOuter">
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
@@ -285,47 +320,35 @@ String fDate1 = formatter1.format(date);
                </select>
        </div>
 	</div>  
-	<!-- <div class="colOuter">
-		<div class="col1"><div class="col1title">Weight</div></div>
-		<div class="col2"><input class="texboxitemcode" name="" type="text"><div class="weightkg">kg</div>
-		</div>
-	</div> -->
-	  
+		  
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Weight</div></div>
 		<div class="col2">
-		      <c:set var = "dbRate" scope = "session" value = "${specialCake.sprRate}"/>
+		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
 		  <%--  <c:set var = "dbRate" scope = "session" value = "${sp_wt}"/>
 		   		 <c:set var = "tRate" scope = "session" value = "${weight*dbRate}"/> --%>
 		  <%int a=1; %>
         <select name="spwt" id="spwt" onchange="onChange('${dbRate}')">
- 	    
-
-        
-         <c:forEach var ="i" begin ="${specialCake.spMinwt}" end ="${specialCake.spMaxwt}" step="1">
-      <option value="${i}">${i}</option>
-   
-    
-     <c:choose>
-            <c:when test="${i != specialCake.spMaxwt}">
-                <option value="${i+0.5}">${i+0.5}</option> 
-            </c:when>
-           
-        </c:choose>
+ 	   
+             <c:forEach var ="i" begin ="${specialCake.spMinwt}" end ="${specialCake.spMaxwt}" step="1">
+                  <option value="${i}">${i}</option>
+                <c:choose>
+                  <c:when test="${i != specialCake.spMaxwt}">
+                     <option value="${i+0.5}">${i+0.5}</option> 
+                  </c:when>
+               </c:choose>
       
-      </c:forEach>
-                     
-              
-            </select><!--<div class="weightkg">kg</div>-->
+            </c:forEach>
+      </select>
 			<div class="err" style="display:none;">Please Enter Weight</div>
 		</div>
-	</div>
+  </div>
 	
 	         
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Event</div></div>
 		<div class="col2"><select name="sp_event" id="sp_event">
-              <option value="">Select Event</option>
+  
               <c:forEach items="${eventList.getEvent()}" var="eventList">
               <option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
              </c:forEach>
@@ -334,13 +357,13 @@ String fDate1 = formatter1.format(date);
 		</div>
 	</div>
 	
-		<c:choose>
-		<c:when test="${specialCake.isCustChoiceCk=='1'}">
+<c:choose>
+<c:when test="${specialCake.isCustChoiceCk=='1'}">
 		
-	<div class="colOuter">
-	    <div class="col1"><div class="col1title">Photo Cake</div></div>
-	    	<div class="col2full"><div class="editimg">
-	    	    <div class="editpics">
+	      <div class="colOuter">
+	         <div class="col1"><div class="col1title">Photo Cake1</div></div>
+	    	   <div class="col2full"><div class="editimg">
+	    	     <div class="editpics">
 	    	        <div class="fileUpload">
                                 <span> <i class="fa fa-pencil"></i></span>
                                 <input class="upload" type="file" id="order_photo" name="order_photo"/>
@@ -353,15 +376,13 @@ String fDate1 = formatter1.format(date);
                             </div>
                             </div>
                             </div>
-	<div class="colOuter">
-	    <div class="col1"><div class="col1title">Customer Choice Cake</div></div>
-	    	<div class="col2full"><div class="editimg">
+	      <div class="colOuter">
+	        <div class="col1"><div class="col1title">Photo Cake2</div></div>
+	    	  <div class="col2full"><div class="editimg">
 	    	    <div class="editpics">
 	    	        <div class="fileUpload">
                                 <span> <i class="fa fa-pencil"></i></span>
-                                <input class="upload" type="file" id="cust_choice_ck" name="cust_choice_ck"/>
-                                
-                                
+                                <input class="upload" type="file" id="cust_choice_ck" name="cust_choice_ck"/>   
                             </div>
                             </div>
                              <img id="img" />
@@ -371,16 +392,12 @@ String fDate1 = formatter1.format(date);
                             </div>
 	
 	
-	</c:when>
-		
-		
-		
-		
-	<c:when test="${specialCake.spPhoupload=='1'}">
+   </c:when>
+   <c:when test="${specialCake.spPhoupload=='1'}">
 	
-	<div class="colOuter">
-	    <div class="col1"><div class="col1title">Photo Cake</div></div>
-	    	<div class="col2full"><div class="editimg">
+	  <div class="colOuter">
+	      <div class="col1"><div class="col1title">Photo Cake</div></div>
+	    	 <div class="col2full"><div class="editimg">
 	    	    <div class="editpics">
 	    	        <div class="fileUpload">
                                 <span> <i class="fa fa-pencil"></i></span>
@@ -400,15 +417,22 @@ String fDate1 = formatter1.format(date);
 	</c:otherwise>
 
 </c:choose>
+
+<div class="colOuter">
 	
-	<div class="colOuter">
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full"><textarea class="textarea" name="sp_instructions" cols="" rows="" id="sp_instructions"></textarea></div>
+		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
 	</div>
+	<!-- <div class="colOuter">
+	
+		<div class="col1"><div class="col1title">Special Instructions</div></div>
+		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
+	</div> -->
+
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate1 %>"  name="datepicker" type="text" >
+		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
 		</div>
 	</div>
 	
@@ -419,19 +443,19 @@ String fDate1 = formatter1.format(date);
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Book For Date</div></div>
-		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate1 %>" name="datepicker3" type="text">
+		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="text">
 		</div>
 	</div>
 	
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
-		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="DOB" name="datepicker4" type="text"></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no"></div>
+		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
+		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="number" id="sp_cust_mobile_no" ></div>
 	</div>
 	
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="text"id="sp_booked_for_name"></div>
-		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="DOB" name="datepicker5" type="text"></div>
+		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker5" type="text"></div>
 		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_book_for_number" type="text"id="sp_book_for_number"></div>
 	</div>
 	
@@ -442,8 +466,8 @@ String fDate1 = formatter1.format(date);
 <!--rightForm-->	
 <div class="right">
 	<div class="priceBox">
-		<h2 class="inrbox" id="INR">INR - ${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}</h2>
-		 <input type="hidden" name="sp_grand" id="sp_grand" value="${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}">   
+		<h2 class="inrbox" id="INR">INR - ${sprRate+specialCake.spTax1+specialCake.spTax2}</h2>
+		 <input type="hidden" name="sp_grand" id="sp_grand" value="${sprRate+specialCake.spTax1+specialCake.spTax2}">   
 		<div class="inrboxmiddle">
 			<ul>
 				<li>
@@ -452,8 +476,8 @@ String fDate1 = formatter1.format(date);
 				</li>
 				<li>
 					<div class="priceLeft">Price </div>
-					<div class="priceRight" id="price">${specialCake.sprRate}</div>
-					<input name="sp_calc_price" id="sp_calc_price" value="${specialCake.sprRate}" type="hidden">
+					<div class="priceRight" id="price">${sprRate}</div>
+					<input name="sp_calc_price" id="sp_calc_price" value="${sprRate}" type="hidden">
 				</li>
 				<li>
 					<div class="priceLeft">Add Rate </div>
@@ -477,8 +501,8 @@ String fDate1 = formatter1.format(date);
 				
 				<li class="total">
 					<div class="priceLeft">TOTAL</div>
-					<div class="priceRight"id="tot">${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}</div>
-					 <input type="hidden" name="total_amt" id="total_amt" value="${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}">
+					<div class="priceRight"id="tot">${sprRate+specialCake.spTax1+specialCake.spTax2}</div>
+					 <input type="hidden" name="total_amt" id="total_amt" value="${sprRate+specialCake.spTax1+specialCake.spTax2}">
 				</li>
 				
 				<li class="advance">
@@ -490,8 +514,8 @@ String fDate1 = formatter1.format(date);
 		</div>
 		<div class="remainamount">
 			<div class="priceLeft">Remaining Amount</div>
-					<div class="priceRight" id="rmAmt">${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}</div>
-				    <input type="hidden" name="rm_amount" id="rm_amount" value="${specialCake.sprRate+specialCake.spTax1+specialCake.spTax2}">
+					<div class="priceRight" id="rmAmt">${sprRate+specialCake.spTax1+specialCake.spTax2}</div>
+				    <input type="hidden" name="rm_amount" id="rm_amount" value="${sprRate+specialCake.spTax1+specialCake.spTax2}">
 		</div>
 	
 	
@@ -504,7 +528,7 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" id="t1" name="t1" value="${specialCake.spTax1}">
 <input type="hidden" id="t2" name="t2" value="${specialCake.spTax2}">
 <input type="hidden" id="dbAdonRate" name="dbAdonRate">
-<input type="hidden" id="dbPrice" name="dbPrice"  value="${specialCake.sprRate}">
+<input type="hidden" id="dbPrice" name="dbPrice"  value="${sprRate}">
 <input type="hidden" id="sp_id" name="sp_id"  value="${specialCake.spId}">
 </form>
 <!--rightForm-->
@@ -523,6 +547,21 @@ String fDate1 = formatter1.format(date);
 <!--rightContainer-->
 
 </div>
+
+<%-- <script
+		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="${pageContext.request.contextPath}/resources/assets/jquery/jquery-2.0.3.min.js"><\/script>')
+	</script>
+
+<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/jquery-validation/dist/additional-methods.min.js"></script> --%>
+
+
 <!--wrapper-end-->
 <script type="text/javascript">
 function ChooseContact(data) {
@@ -630,7 +669,7 @@ $(document).ready(function() {
 			    $('#price').html(p);$('#sp_calc_price').html(p);
 				$('#rate').html(r);$('#sp_add_rate').html(r);document.getElementById("sp_add_rate").setAttribute('value',r);
 				$('#subtotal').html(p+r);document.getElementById("sp_sub_total").setAttribute('value',p+r);
-				$('#INR').html(t1);document.getElementById("sp_grand").setAttribute('value',t1);
+				$('#INR').html('INR -'+t1);document.getElementById("sp_grand").setAttribute('value',t1);
 				$('#tot').html(t1);document.getElementById("total_amt").setAttribute('value',t1);
 				$('#rmAmt').html(t1);document.getElementById("rm_amount").setAttribute('value',t1);
 		}
@@ -655,9 +694,14 @@ $(document).ready(function() {
 				
 					$("#subtotal").html(subtotal);document.getElementById("sp_sub_total").setAttribute('value',subtotal);
 					var t=tax1+tax2;
+					var inr=subtotal+t;
+					var str="INR -";
+					var strinr=str.concat(inr);
+					
 					$('#tot').html(subtotal+t);document.getElementById("total_amt").setAttribute('value',subtotal+t);
 					$('#rmAmt').html(subtotal+t);document.getElementById("rm_amount").setAttribute('value',subtotal+t);
-					$('#INR').html(subtotal+t);document.getElementById("sp_grand").setAttribute('value',subtotal+t);
+					$('#INR').html('');
+	$('#INR').html(strinr);document.getElementById("sp_grand").setAttribute('value',subtotal+t);
 				});
 			});
 });
@@ -679,22 +723,57 @@ function validateForm() {
 }
 </script>	
 
-<script type="text/javascript">
+ <script type="text/javascript">
 function empty() {
-    var t1,spId;
-    t1 = document.getElementById("sp_instructions").value;
+    var t1,spId,spCustName,spPlace,spCustMob,sptype,spFlavour;
+    t1 = document.getElementById("event_name").value;
+    spPlace = document.getElementById("sp_place").value;
+    spCustName=document.getElementById("sp_cust_name").value;
+    spCustMob=document.getElementById("sp_cust_mobile_no").value; 
+    sptype=document.getElementById("sptype").value; 
+    spFlavour=document.getElementById("spFlavour").value;
+    if (sptype == "") {
+        alert("Please Select Special Cake Type");
+        
+
+        return false;
+    };
     
-    spId=document.getElementById("sp_id").value;
+    if (spFlavour == "") {
+        alert("Please Select Flavour");
+        
+
+        return false;
+    }; 
+    if (t1 == "") {
+        alert("Please Enter Event Name");
+        document.getElementById('event_name').focus();
+        return false;
+    };
+    
+    if (spPlace == "") {
+        alert("Please Enter Place of delivery");
+        document.getElementById('sp_place').focus();
+
+        return false;
+    };
+   if (spCustName == "") {
+        alert("Please Enter Customer Name");
+        document.getElementById('sp_cust_name').focus();
+        return false;
+    };
    
-    
-    if (t1 == ""||spId=="") {
-        alert("Some Field is Empty");
+     
+    if (spCustMob == "") {
+        alert("Please Enter Customer Mobile Number");
+        document.getElementById('sp_cust_mobile_no').focus();
+
         return false;
     };
 }
 
 
-</script>
+</script> 
 <script>
 
  document.getElementById("order_photo").onchange = function () {

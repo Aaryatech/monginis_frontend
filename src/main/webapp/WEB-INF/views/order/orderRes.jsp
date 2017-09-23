@@ -159,9 +159,9 @@ $("#tech").change(function() {
 	
 	<div class="fullform">
 		<div class="cackimg">
-		<div class="cackimglable"><img src="http://monginisaurangabad.com/images/lable-premium.png" alt="img"></div>
+	<img src="${URL}${spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 		<!--<div class="cackimglable"><img src="http://monginisaurangabad.com/images/lable-regular.png" alt="img"></div>-->
-		<img src="${url}${spImage}" alt="Tier -Series"></div>
+		<%-- <img src="${url}${spImage}" alt="Tier -Series"></div> --%>
 	</div>
         
 	<div class="fullform">
@@ -192,9 +192,9 @@ $("#tech").change(function() {
 <!--centerForm-->	
 <div class="center">
 
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Type</div></div>
-		<div class="col2full">
+	<div class="fullform">
+		<div class="cackleft">Type</div>
+		<div class="cackright">
 			<c:choose>
 		<c:when test="${spType=='0'}">
 				FC
@@ -209,44 +209,44 @@ $("#tech").change(function() {
 			</div>
 	</div>
     
-<div class="colOuter">
-		<div class="col1"><div class="col1title">Flavour</div></div>
-		<div class="col2full">
+<div class="fullform">
+		<div class="cackleft">Flavour</div>
+		<div class="cackright">
         	${flavourName}			</div>
 	</div>    
 	
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Weight</div></div>
-		<div class="col2">
+	<div class="fullform">
+		<div class="cackleft">Weight</div>
+		<div class="cackright">
       ${specialCake.spWeight} Kg		</div>
 	</div>
 	
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Event</div></div>
-		<div class="col2">
+	<div class="fullform">
+		<div class="cackleft">Event</div>
+		<div class="cackright">
        ${specialCake.spEvents} - ${specialCake.spEventsName}		</div>
 	</div>
 	<c:choose>
 		<c:when test="${isCustCh=='1'}">
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Order Photo</div></div>
-		<div class="col2full">
-       <img src="${url}${specialCake.orderPhoto}"alt="img"/>
+	<div class="fullform">
+		<div class="cackleft">Order Photo</div>
+		<div class="cackright">
+       <img src="${PHOTO_URL}${specialCake.orderPhoto}"alt="img"/>
         </div>
 	</div>
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Customer Choice Photo</div></div>
-		<div class="col2full">
-       <img src="${url}${specialCake.orderPhoto2}"alt="img"/>
+	<div class="fullform">
+		<div class="cackleft">Customer Choice Photo</div>
+		<div class="cackright">
+       <img src="${PHOTO_URL}${specialCake.orderPhoto2}"alt="img"/>
         </div>
 	</div>
 	
 	
     </c:when>
     <c:when test="${spPhoUpload=='1'}">
-    <div class="colOuter">
-		<div class="col1"><div class="col1title">Order Photo</div></div>
-		<div class="col2full">
+    <div class="fullform">
+		<div class="cackleft">Order Photo</div>
+		<div class="cackright">
        <img src="${url}${specialCake.orderPhoto}"alt="img"/>
         </div>
 	</div>
@@ -255,36 +255,43 @@ $("#tech").change(function() {
        </c:when>
     </c:choose>
     
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full">${specialCake.spInstructions}</div>
+	<div class="fullform">
+		<div class="cackleft">Special Instructions</div>
+		<div class="cackright">${specialCake.spInstructions}</div>
 	</div>
 	
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2">${specialCake.spDeliveryDt}</div>
+	<div class="fullform">
+		<div class="cackleft">Delivery Date</div>
+		<div class="cackright">${specialCake.spDeliveryDt}</div>
 	</div>
 	
-	<div class="colOuter">
-		<div class="col1">
-       ${specialCake.spCustName}       </div>
-		<div class="col2">
-        ${specialCake.spCustDOB}       </div>
-		<div class="col3">
-        ${specialCake.spCustMobileNo}        </div>
+	<div class="fullform">
+		<div class="cackleft">Customer Name</div>
+       <div class="cackright"> ${specialCake.spCustName}  </div>
+       </div>
+       
+       <div class="fullform">
+		<div class="cackleft"> Customer DOB</div>
+		<div class="cackright">${specialCake.spCustDOB}</div>
+        </div>
+        
+        <div class="fullform">
+		<div class="cackleft">Customer Mob</div>
+		 <div class="cackright">${specialCake.spCustMobileNo}     
+           </div>
 	</div>
 	
-	<div class="colOuter">
-		<div class="col1">
+	<%-- <div class="colOuter">
+		<div class="cackright">
 		 ${specialCake.spBookedForName} 
                 </div>
-		<div class="col2">
+		<div class="cackright">
 		 ${specialCake.spBookForDOB} 
                 </div>
-		<div class="col3">
+		<div class="cackright">
 		 ${specialCake.spBookForNumber} 
                 </div>
-	</div>
+	</div> --%>
 	
 	
 </div>
