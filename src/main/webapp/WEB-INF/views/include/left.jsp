@@ -301,7 +301,7 @@
 							<div class="profilefildset">Franchisee Name</div>
 							<div class="profileinput">
 								<input class="texboxitemcode" placeholder="franchisee Name"
-									name="" type="text">
+									name="fr_name" type="text">
 							</div>
 						</div>
 
@@ -325,7 +325,7 @@
 						<div class="profile">
 							<div class="profilefildset">City</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="City Name" name=""
+								<input class="texboxitemcode" placeholder="City Name" name="fr_city"
 									type="text">
 							</div>
 						</div>
@@ -333,7 +333,7 @@
 						<div class="profile">
 							<div class="profilefildset">Email id</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" name=""
+								<input class="texboxitemcode" name="fr_email"
 									placeholder="example@gmail.com" type="text">
 							</div>
 						</div>
@@ -346,7 +346,7 @@
 						<div class="profile">
 							<div class="profilefildset">Mobile No.</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="9876543201" name=""
+								<input class="texboxitemcode" placeholder="9876543201" name="fr_mobile"
 									type="text">
 							</div>
 						</div>
@@ -354,7 +354,7 @@
 						<div class="profile">
 							<div class="profilefildset">Owner Name</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Owner Name" name=""
+								<input class="texboxitemcode" placeholder="Owner Name" name="fr_owner"
 									type="text">
 							</div>
 						</div>
@@ -368,7 +368,7 @@
 							<div class="profilefildset">Edit Password</div>
 							<div class="profileinput">
 								<input class="texboxitemcode" placeholder="Edit Password"
-									name="" type="text">
+									name="fr_password" type="text">
 							</div>
 						</div>
 
@@ -376,9 +376,10 @@
 							<div class="profilefildset">Confirm Password</div>
 							<div class="profileinput">
 								<input class="texboxitemcode" placeholder="Confirm Password"
-									name="" type="text">
+									name="fr_password" type="text" data-rule-equalTo="#fr_password">
 							</div>
 						</div>
+
 
 						<div class="profile">
 							<div class="profileinput">
