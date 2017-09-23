@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -59,7 +62,7 @@ public class ItemController {
 		globalIndex = index;
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		String currentDate = df.format(date);
 
@@ -133,22 +136,21 @@ public class ItemController {
 					qty = qty + frItemList.get(j).getItemQty();
 
 					if (frDetails.getFrRateCat() == 1) {
-						
+
 						total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
-						
+
 					} else if (frDetails.getFrRateCat() == 2) {
-						
+
 						total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
 
 					} else if (frDetails.getFrRateCat() == 3) {
-						
+
 						total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
 
 					}
 
 				}
 
-				
 			}
 
 			TabTitleData tabTitleData = new TabTitleData();
@@ -161,9 +163,77 @@ public class ItemController {
 
 		System.out.println(subCatList);
 
-		DateFormat dfReg = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dfReg = new SimpleDateFormat("dd-MM-yyyy");
 
 		String todaysDate = dfReg.format(date);
+
+		// order ,production ,delivery date logic
+
+		int isSameDay = menuList.get(index).getIsSameDayApplicable();
+
+		String fromTime = menuList.get(index).getFromTime();
+		String toTime = menuList.get(index).getToTime();
+
+		ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime currentTime = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
+ 
+		LocalTime formatedFromTime = LocalTime.parse(fromTime);
+		LocalTime formatedToTime = LocalTime.parse(toTime);
+
+		
+		//currentTime=currentTime.plusHours(15);
+	        System.out.println("current time "+currentTime);
+	        System.out.println("from time "+formatedFromTime);
+
+		
+		String orderDate = "";
+		String productionDate = "";
+		String deliveryDate = "";
+
+		if (formatedFromTime.isBefore(formatedToTime)) {
+
+			orderDate = todaysDate;
+			productionDate = todaysDate;
+
+			if (isSameDay == 0) {
+				
+				deliveryDate = incrementDate(todaysDate, 1);
+			System.out.println("inside 1.1");
+				
+			} else {
+			
+				deliveryDate = todaysDate;
+				
+				System.out.println("inside 1.2");
+
+			
+			}
+
+		} else {
+			
+			if(currentTime.isAfter(formatedFromTime)) {
+				
+				orderDate=incrementDate(todaysDate, 1);
+				productionDate=incrementDate(todaysDate, 1);
+				deliveryDate=incrementDate(todaysDate, 2);
+				
+				System.out.println("inside 2.1");
+			}else {
+				
+				orderDate = todaysDate;
+				productionDate = todaysDate;
+				deliveryDate=incrementDate(todaysDate, 1);	
+				System.out.println("inside 2.2");
+			}	
+			
+		}
+		
+		System.out.println("Order date: "+orderDate);
+		System.out.println("Production date: "+productionDate);
+		System.out.println("Delivery date: "+deliveryDate);
+		
+		
+		
 
 		model.addObject("menuList", menuList);
 
@@ -175,6 +245,10 @@ public class ItemController {
 
 		model.addObject("currentDate", todaysDate);
 		model.addObject("toTime", menuList.get(index).getTime());
+		model.addObject("orderDate",orderDate);
+		model.addObject("productionDate",productionDate);
+		model.addObject("deliveryDate",deliveryDate);
+		
 
 		return model;
 
@@ -303,6 +377,24 @@ public class ItemController {
 		}
 
 		return mav;
+
+	}
+
+	public String incrementDate(String date, int day) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(date));
+
+		} catch (ParseException e) {
+			System.out.println("Exception while incrementing date " + e.getMessage());
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, day); // number of days to add
+		date = sdf.format(c.getTime());
+
+		return date;
 
 	}
 

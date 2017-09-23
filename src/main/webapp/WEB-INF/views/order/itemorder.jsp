@@ -96,7 +96,7 @@ jQuery(document).ready(function(){
 
 					<div class="order-left">
 						<h2 class="pageTitle">Order Savouries</h2>
-						<h3 class="pageTitle2">Order Date : ${currentDate}</h3>
+						<h3 class="pageTitle2">Order Date : ${orderDate}</h3>
 						
 						<input type="hidden" name="menuId" value="${menuId}">
 						<input type="hidden" name="rateCat" value="${frDetails.frRateCat}">

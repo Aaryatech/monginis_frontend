@@ -5,6 +5,8 @@
 <%@ page import="java.time.LocalTime"%>
 <%@ page import="java.time.ZoneId"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -67,7 +69,9 @@
 					<ul>
 
 						<c:forEach var="menu" items="${menuList}" varStatus="loop">
-							<c:set var="menuTime" value="${menu.toTime}" />
+							<c:set var="menuToTime" value="${menu.toTime}" />
+														<c:set var="menuFromTime" value="${menu.fromTime}" />
+							
 							<c:set var="frId" value="${menu.frId}" />
 							<c:set var="settingType" value="${menu.isSameDayApplicable}" />
 	<c:set var="catId" value="${menu.catId}" />
@@ -76,18 +80,35 @@
 								ZoneId z = ZoneId.of("Asia/Calcutta");
 									LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
 
-									String menuTiming = (String) pageContext.getAttribute("menuTime");
+									String menuToTiming = (String) pageContext.getAttribute("menuToTime");
+									String menuFromTiming = (String) pageContext.getAttribute("menuFromTime");
+
+									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+							           SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+							           Date fromTime12Hrs = _24HourSDF.parse(menuFromTiming);
+							           Date toTime12Hrs = _24HourSDF.parse(menuToTiming);
+
+							           // System.out.println(_24HourDt);
+							         //  System.out.println(_12HourSDF.format(_24HourDt));
 									
-									
+							           pageContext.setAttribute("fromTime", _12HourSDF.format(fromTime12Hrs));
+							           pageContext.setAttribute("toTime", _12HourSDF.format(toTime12Hrs));
+
 									
 									int setType = (int) pageContext.getAttribute("settingType");
 									int catId = (int) pageContext.getAttribute("catId");
 
-									System.out.println("Menu Timing" + menuTiming);
+									System.out.println("\n\n\nMenu To Timing" + menuToTiming);
+									System.out.println("Menu From Timing" + menuFromTiming);
 
-									LocalTime limit = LocalTime.parse(menuTiming);
-									Boolean isLate = now.isAfter(limit);
+									LocalTime toTime = LocalTime.parse(menuToTiming);
+									LocalTime fromTime = LocalTime.parse(menuFromTiming);
 
+									
+									Boolean isLate = now.isAfter(toTime);
+									Boolean isEarly=now.isBefore(fromTime);
+
+									System.out.println("\nLocal time" + now + "Is Early :" + isLate);
 									System.out.println("Local time" + now + "Is Late :" + isLate);
 
 								/* 	try {
@@ -98,8 +119,24 @@
 									} catch (final ParseException e) {
 									    e.printStackTrace();
 									} */
+								Boolean isSameDay= fromTime.isBefore(toTime);
+								Boolean isValid=false;
+								
+								if(isSameDay){
 									
-									if (!isLate) {
+									if(!isLate && !isEarly){
+										
+										isValid=true;
+									}
+								}else{
+									
+									if(fromTime.isBefore(now) && now.isAfter(toTime)){
+										isValid=true;
+									}
+								}
+								
+									
+									if (isValid) {
 							%>
 
 							<li>
@@ -126,8 +163,8 @@
 											<c:out value='${menu.menuTitle}' />
 										</h2>
 										<h3>
-											Booking Up to
-											<c:out value='${menu.time}' />
+											Booking -  <c:out value='${fromTime}' /> To 
+											<c:out value='${toTime}' />
 										</h3>
 								</div>
 
@@ -144,7 +181,7 @@
 								<div class="listareaBox">
 
 									<a class="listareaBoximg"
-										onclick="javascript:showWindow('${menu.time}');"> <img
+										onclick="javascript:showWindow('${fromTime}','${toTime}');"> <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
 										alt="monginis"> <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
@@ -155,8 +192,8 @@
 										<c:out value='${menu.menuTitle}' />
 									</h2>
 									<h3>
-										Booking Up to
-										<c:out value='${menu.time}' />
+										Booking - <c:out value='${fromTime}' /> To 
+											<c:out value='${toTime}' />
 									</h3>
 									</a>
 								</div>
@@ -408,8 +445,8 @@
 	</script>
 
 	<script type="text/javascript">
-		function showWindow(time) {
-			confirm("Timeout:\n You can place order before " + time);
+		function showWindow(fromTime, toTime) {
+			confirm("Timeout:\n You can place order from " + fromTime+" To "+toTime);
 		}
 	</script>
 
