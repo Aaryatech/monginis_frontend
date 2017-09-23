@@ -64,27 +64,24 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	
-	
+
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		String StartTimes = "10:00";
 		String EndTimes = "12:00";
-		
-		
-		
+
 		String startTimeParse[] = StartTimes.split(":");
 		String endTimeParse[] = EndTimes.split(":");
-		
+
 		int firstHour = Integer.parseInt(startTimeParse[0]);
 		int firstMinute = Integer.parseInt(startTimeParse[1]);
 		int secondHour = Integer.parseInt(endTimeParse[0]);
 		int secondMinute = Integer.parseInt(endTimeParse[1]);
 		int durattionHour = secondHour - firstHour;
 		int durattionMinutes = secondMinute - firstMinute;
-		
+
 		System.out.println("Duration : " + durattionHour + ":" + durattionMinutes);
 
 		Date date = new Date();
@@ -99,41 +96,41 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		ModelAndView model = new ModelAndView("login");
-		
+
 		logger.info("/login request mapping.");
 
 		return model;
 
 	}
-//	
-//	@RequestMapping(value = "/loginProcess",method = RequestMethod.POST)
-//	public ModelAndView renderPDF(HttpServletRequest request,
-//	        HttpServletResponse response) throws Exception {
-//
-//	        ModelAndView mav = new ModelAndView("report/order");
-//	        mav.addObject("name", " mahesh cake shop"); 
-//	        return mav;
-//	    }
-//	
+
+	//
+	// @RequestMapping(value = "/loginProcess",method = RequestMethod.POST)
+	// public ModelAndView renderPDF(HttpServletRequest request,
+	// HttpServletResponse response) throws Exception {
+	//
+	// ModelAndView mav = new ModelAndView("report/order");
+	// mav.addObject("name", " mahesh cake shop");
+	// return mav;
+	// }
+	//
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		ModelAndView model = new ModelAndView("home");
-		
+
 		logger.info("/login request mapping.");
 
 		return model;
 
 	}
-	
 
 	@RequestMapping(value = "/showforgotpassword", method = RequestMethod.GET)
 	public ModelAndView displayForgotPassword(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		ModelAndView model = new ModelAndView("forgotpassword");
-	
+
 		logger.info("/forgot Password request mapping.");
 
 		return model;
@@ -155,17 +152,17 @@ public class HomeController {
 			stream.write(bytes);
 			stream.flush();
 			stream.close();
-			
+
 		} catch (Exception e) {
 			System.out.println("File uplaod exception " + e.getMessage());
 		}
-		
+
 		return new ModelAndView("uploadform", "filesuccess", "File successfully saved!");
 	}
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public ModelAndView displayHomePage(HttpServletRequest request, HttpServletResponse response) {
-	
+
 		logger.info("/loginProcess request mapping.");
 
 		ModelAndView model = new ModelAndView("login");
@@ -190,7 +187,6 @@ public class HomeController {
 			model.addObject("message", loginResponse.getErrorMessage().getMessage());
 
 		} else {
-	
 
 			// getting fr menus
 			MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
@@ -201,70 +197,48 @@ public class HomeController {
 
 			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
-			// converting 24 hr time to 12 hr
-			for (int i = 0; i < getFrMenus.getFrMenus().size(); i++) {
-				final String time = getFrMenus.getFrMenus().get(i).getToTime();
-
-				try {
-					final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss a");
-					final Date dateObj = sdf.parse(time + " PM");
-
-					String strTime = new SimpleDateFormat("K:mm a").format(dateObj);
-
-					System.out.println(dateObj);
-					System.out.println(strTime);
-					
-					getFrMenus.getFrMenus().get(i).setTime(strTime);
-
-				} catch (final ParseException e) {
-					e.printStackTrace();
-				}
-
-			}
-			
-			
-			// Getting news and messages
 		
-			 LatestNewsResponse latestNewsResponse=restTemplate.getForObject( Constant.URL+"/showLatestNews",LatestNewsResponse.class);
-		        List<SchedulerList> schedulerLists=new ArrayList<SchedulerList>();
-		        schedulerLists=latestNewsResponse.getSchedulerList();
-		        System.out.println("latest news  list "+schedulerLists.toString());
-		        
-		        //sachin 9 sept showFrontEndMessage
-		        
-		        MessageListResponse messageListResponse=restTemplate.getForObject( Constant.URL+"/showFrontEndMessage", 
-		                MessageListResponse.class);
-		        List<Message> msgList=new ArrayList<Message>();
-		        msgList=messageListResponse.getMessage();
-		        System.out.println("messages are " +msgList.toString());
-		        
-			
+
+			// Getting news and messages
+
+			LatestNewsResponse latestNewsResponse = restTemplate.getForObject(Constant.URL + "/showLatestNews",
+					LatestNewsResponse.class);
+			List<SchedulerList> schedulerLists = new ArrayList<SchedulerList>();
+			schedulerLists = latestNewsResponse.getSchedulerList();
+			System.out.println("latest news  list " + schedulerLists.toString());
+
+			// sachin 9 sept showFrontEndMessage
+
+			MessageListResponse messageListResponse = restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
+					MessageListResponse.class);
+			List<Message> msgList = new ArrayList<Message>();
+			msgList = messageListResponse.getMessage();
+			System.out.println("messages are " + msgList.toString());
 
 			// Managing session
 			HttpSession session = request.getSession();
 			session.setAttribute("menuList", getFrMenus.getFrMenus());
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
-			
-			loginResponse.getFranchisee().setFrImage(Constant.FR_IMAGE_URL+loginResponse.getFranchisee().getFrImage());
+
+			loginResponse.getFranchisee()
+					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
 			model = new ModelAndView("home");
-System.out.println("fr Image URL "+loginResponse.getFranchisee().getFrImage());
-	        model.addObject("schedulerLists",schedulerLists);
-			model.addObject("msgList",msgList);
+			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
+			model.addObject("schedulerLists", schedulerLists);
+			model.addObject("msgList", msgList);
 			model.addObject("menuList", getFrMenus.getFrMenus());
-			model.addObject("frDetails", loginResponse.getFranchisee());	
-			model.addObject("url",Constant.MESSAGE_IMAGE_URL);
+			model.addObject("frDetails", loginResponse.getFranchisee());
+			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 		}
 		return model;
 
 	}
-	
 
 	@RequestMapping(value = "/logout")
-	  public String logout(HttpSession session) {
-		  System.out.println("Logout Controller User Logout");
-	    session.invalidate();
-	    return "redirect:/";
-	  }
-	
+	public String logout(HttpSession session) {
+		System.out.println("Logout Controller User Logout");
+		session.invalidate();
+		return "redirect:/";
+	}
 
 }

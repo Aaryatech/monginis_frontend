@@ -6,8 +6,10 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -36,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
@@ -70,6 +73,76 @@ public class ItemController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		
+		
+		
+		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
+
+		String todaysDate = dfReg.format(date);
+
+		// order ,production ,delivery date logic
+
+		int isSameDayApplicable = menuList.get(index).getIsSameDayApplicable();
+
+		String fromTime = menuList.get(index).getFromTime();
+		String toTime = menuList.get(index).getToTime();
+
+		ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime currentTime = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
+
+		LocalTime formatedFromTime = LocalTime.parse(fromTime);
+		LocalTime formatedToTime = LocalTime.parse(toTime);
+
+		 currentTime = currentTime.plusHours(15);
+		System.out.println("current time " + currentTime);
+		System.out.println("from time " + formatedFromTime);
+
+		String orderDate = "";
+		String productionDate = "";
+		String deliveryDate = "";
+
+		if (formatedFromTime.isBefore(formatedToTime)) {
+
+			orderDate = todaysDate;
+			productionDate = todaysDate;
+
+			if (isSameDayApplicable == 0 || isSameDayApplicable == 2) {
+
+				deliveryDate = incrementDate(todaysDate, 1);
+				System.out.println("inside 1.1");
+
+			} else if (isSameDayApplicable == 1) {
+
+				deliveryDate = todaysDate;
+
+				System.out.println("inside 1.2");
+
+			}
+
+		} else {
+
+			if (currentTime.isAfter(formatedFromTime)) {
+
+				orderDate = todaysDate;
+				productionDate = incrementDate(todaysDate, 1);
+				deliveryDate = incrementDate(todaysDate, 2);
+
+				System.out.println("inside 2.1");
+			} else {
+
+				orderDate = todaysDate;
+				productionDate = todaysDate;
+				deliveryDate = incrementDate(todaysDate, 1);
+				System.out.println("inside 2.2");
+			}
+
+		}
+
+		System.out.println("Order date: " + orderDate);
+		System.out.println("Production date: " + productionDate);
+		System.out.println("Delivery date: " + deliveryDate);
+
+		
 		frItemList = new ArrayList<GetFrItem>();
 		try {
 
@@ -80,7 +153,7 @@ public class ItemController {
 
 			map.add("items", menuList.get(index).getItemShow());
 			map.add("frId", frDetails.getFrId());
-			map.add("date", currentDate);
+			map.add("date", productionDate);
 			map.add("menuId", menuList.get(index).getMenuId());
 
 			RestTemplate restTemplate = new RestTemplate();
@@ -163,78 +236,7 @@ public class ItemController {
 
 		System.out.println(subCatList);
 
-		DateFormat dfReg = new SimpleDateFormat("dd-MM-yyyy");
-
-		String todaysDate = dfReg.format(date);
-
-		// order ,production ,delivery date logic
-
-		int isSameDay = menuList.get(index).getIsSameDayApplicable();
-
-		String fromTime = menuList.get(index).getFromTime();
-		String toTime = menuList.get(index).getToTime();
-
-		ZoneId z = ZoneId.of("Asia/Calcutta");
-		LocalTime currentTime = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
- 
-		LocalTime formatedFromTime = LocalTime.parse(fromTime);
-		LocalTime formatedToTime = LocalTime.parse(toTime);
-
-		
-		//currentTime=currentTime.plusHours(15);
-	        System.out.println("current time "+currentTime);
-	        System.out.println("from time "+formatedFromTime);
-
-		
-		String orderDate = "";
-		String productionDate = "";
-		String deliveryDate = "";
-
-		if (formatedFromTime.isBefore(formatedToTime)) {
-
-			orderDate = todaysDate;
-			productionDate = todaysDate;
-
-			if (isSameDay == 0) {
-				
-				deliveryDate = incrementDate(todaysDate, 1);
-			System.out.println("inside 1.1");
-				
-			} else {
-			
-				deliveryDate = todaysDate;
-				
-				System.out.println("inside 1.2");
-
-			
-			}
-
-		} else {
-			
-			if(currentTime.isAfter(formatedFromTime)) {
-				
-				orderDate=incrementDate(todaysDate, 1);
-				productionDate=incrementDate(todaysDate, 1);
-				deliveryDate=incrementDate(todaysDate, 2);
-				
-				System.out.println("inside 2.1");
-			}else {
-				
-				orderDate = todaysDate;
-				productionDate = todaysDate;
-				deliveryDate=incrementDate(todaysDate, 1);	
-				System.out.println("inside 2.2");
-			}	
-			
-		}
-		
-		System.out.println("Order date: "+orderDate);
-		System.out.println("Production date: "+productionDate);
-		System.out.println("Delivery date: "+deliveryDate);
-		
-		
-		
-
+	
 		model.addObject("menuList", menuList);
 
 		model.addObject("subCatListTitle", subCatListWithQtyTotal);
@@ -245,10 +247,9 @@ public class ItemController {
 
 		model.addObject("currentDate", todaysDate);
 		model.addObject("toTime", menuList.get(index).getTime());
-		model.addObject("orderDate",orderDate);
-		model.addObject("productionDate",productionDate);
-		model.addObject("deliveryDate",deliveryDate);
-		
+		model.addObject("orderDate", orderDate);
+		model.addObject("productionDate", productionDate);
+		model.addObject("deliveryDate", deliveryDate);
 
 		return model;
 
@@ -262,127 +263,226 @@ public class ItemController {
 
 		ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
 
+		String orderDate = "";
+		String productionDate = "";
+		String deliveryDate = "";
+		
+		
 		String menuId = request.getParameter("menuId");
 		int rateCat = frDetails.getFrRateCat();
 		System.out.println("Fr Rate Cat " + rateCat);
 
 		System.out.println("Current menu id: " + currentMenuId + " menu id from jsp: " + menuId);
 
-		List<GetFrItem> orderList = new ArrayList<>();
-		for (int i = 0; i < frItemList.size(); i++) {
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
-			GetFrItem frItem = frItemList.get(i);
+		// menu timing verification
 
-			try {
-				String id = frItem.getItemId();
-				System.out.println("id " + id);
+		String fromTime = menuList.get(globalIndex).getFromTime();
+		String toTime = menuList.get(globalIndex).getToTime();
+		System.out.println("before order placing: from time " + fromTime + " to time " + toTime);
 
-				String strQty = request.getParameter(id);
-				int qty = Integer.parseInt(strQty);
+		ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
 
-				System.out.println(" " + id + ":" + strQty);
+		LocalTime fromTimeLocalTime = LocalTime.parse(fromTime);
+		LocalTime toTimeLocalTIme = LocalTime.parse(toTime);
 
-				if (qty != frItem.getItemQty()) {
+		Boolean isLate = now.isAfter(toTimeLocalTIme);
+		Boolean isEarly = now.isBefore(fromTimeLocalTime);
 
-					frItem.setItemQty(qty);
-					orderList.add(frItem);
+		System.out.println("\nLocal time" + now + "Is Early :" + isLate);
+		System.out.println("Local time" + now + "Is Late :" + isLate);
+
+		Boolean isSameDay = fromTimeLocalTime.isBefore(toTimeLocalTIme);
+		Boolean isValid = false;
+
+		if (isSameDay) {
+
+			if (!isLate && !isEarly) {
+
+				isValid = true;
+			}
+		} else {
+
+			if (fromTimeLocalTime.isBefore(now) && now.isAfter(toTimeLocalTIme)) {
+				isValid = true;
+			}
+		}
+		System.out.println(" is valid " + isValid);
+
+		if (isValid) {
+			// date verification
+
+			// LocalTime formatedFromTime = LocalTime.parse(fromTime);
+			// LocalTime formatedToTime = LocalTime.parse(toTime);
+
+			// currentTime = currentTime.plusHours(15);
+			System.out.println("current time " + now);
+			System.out.println("from time " + fromTimeLocalTime);
+
+			
+			String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+
+			if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
+
+				orderDate = todaysDate;
+				productionDate = todaysDate;
+
+				if (isSameDayApplicable == 0 || isSameDayApplicable == 2) {
+
+					deliveryDate = incrementDate(todaysDate, 1);
+					System.out.println("inside 1.1");
+
+				} else if (isSameDayApplicable == 1) {
+
+					deliveryDate = todaysDate;
+
+					System.out.println("inside 1.2");
 
 				}
+
+			} else {
+
+				if (now.isAfter(fromTimeLocalTime)) {
+
+					orderDate = todaysDate;
+					productionDate = incrementDate(todaysDate, 1);
+					deliveryDate = incrementDate(todaysDate, 2);
+
+					System.out.println("inside 2.1");
+				} else {
+
+					orderDate = todaysDate;
+					productionDate = todaysDate;
+					deliveryDate = incrementDate(todaysDate, 1);
+					System.out.println("inside 2.2");
+				}
+
+			}
+
+			System.out.println("Order date: " + orderDate);
+			System.out.println("Production date: " + productionDate);
+			System.out.println("Delivery date: " + deliveryDate);
+
+			// if date time verified then place order
+
+			List<GetFrItem> orderList = new ArrayList<>();
+			for (int i = 0; i < frItemList.size(); i++) {
+
+				GetFrItem frItem = frItemList.get(i);
+
+				try {
+					String id = frItem.getItemId();
+					System.out.println("id " + id);
+
+					String strQty = request.getParameter(id);
+					int qty = Integer.parseInt(strQty);
+
+					System.out.println(" " + id + ":" + strQty);
+
+					if (qty != frItem.getItemQty()) {
+
+						frItem.setItemQty(qty);
+						orderList.add(frItem);
+
+					}
+
+				} catch (Exception e) {
+					System.out.println("Except OrderList " + e.getMessage());
+				}
+
+			}
+
+			System.out.println("Order List " + orderList.toString());
+
+			try {
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				String url = Constant.URL + "placeOrder";
+
+				ObjectMapper mapperObj = new ObjectMapper();
+
+				
+			
+				List<Orders> orders = new ArrayList<>();
+
+				for (int i = 0; i < orderList.size(); i++) {
+
+					GetFrItem frItem = orderList.get(i);
+
+					Orders order = new Orders();
+					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
+					order.setEditQty(frItem.getItemQty());
+					order.setFrId(frDetails.getFrId());
+					order.setIsEdit(1);
+					order.setIsPositive(1);
+					order.setItemId(frItem.getId().toString());
+					order.setMenuId(frItem.getMenuId());
+					order.setOrderDate(Common.stringToSqlDate(orderDate));
+					order.setOrderDatetime(todaysDate);
+					order.setOrderQty(frItem.getItemQty());
+					order.setOrderSubType(Integer.parseInt(frItem.getItemGrp2()));
+					order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
+					order.setProductionDate(Common.stringToSqlDate(productionDate));
+					order.setRefId(frItem.getId());
+					order.setUserId(2);
+					order.setMenuId(currentMenuId);
+
+					if (rateCat == 1) {
+						order.setOrderMrp(frItem.getItemMrp1());
+						order.setOrderRate(frItem.getItemRate1());
+
+					} else if (rateCat == 2) {
+						order.setOrderMrp(frItem.getItemMrp2());
+						order.setOrderRate(frItem.getItemRate2());
+
+					} else if (rateCat == 3) {
+						order.setOrderMrp(frItem.getItemMrp3());
+						order.setOrderRate(frItem.getItemRate3());
+
+					}
+
+					orders.add(order);
+
+				}
+
+				String jsonStr = null;
+
+				try {
+					jsonStr = mapperObj.writeValueAsString(orders);
+					System.out.println("Converted JSON: " + jsonStr);
+				} catch (IOException e) {
+					System.out.println("Excep converting java 2 json " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.APPLICATION_JSON);
+
+				HttpEntity<String> entity = new HttpEntity<String>(jsonStr, headers);
+
+				ResponseEntity<String> orderListResponse = restTemplate.exchange(url, HttpMethod.POST, entity,
+						String.class);
+
+				System.out.println("Place Order Response" + orderListResponse.toString());
 
 			} catch (Exception e) {
-				System.out.println("Except OrderList " + e.getMessage());
+				System.out.println("Except Placing order " + e.getMessage());
 			}
+
+		} else { // time out for place order
 
 		}
-
-		System.out.println("Order List " + orderList.toString());
-
-		try {
-
-			RestTemplate restTemplate = new RestTemplate();
-
-			String url = Constant.URL + "placeOrder";
-
-			ObjectMapper mapperObj = new ObjectMapper();
-
-			Date date = new Date(Calendar.getInstance().getTime().getTime());
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-			String currentDate = df.format(date);
-
-			List<Orders> orders = new ArrayList<>();
-
-			for (int i = 0; i < orderList.size(); i++) {
-
-				GetFrItem frItem = orderList.get(i);
-
-				Orders order = new Orders();
-				order.setDeliveryDate(date);
-				order.setEditQty(frItem.getItemQty());
-				order.setFrId(frDetails.getFrId());
-				order.setIsEdit(1);
-				order.setIsPositive(1);
-				order.setItemId(frItem.getId().toString());
-				order.setMenuId(frItem.getMenuId());
-				order.setOrderDate(date);
-				order.setOrderDatetime(currentDate);
-				order.setOrderQty(frItem.getItemQty());
-				order.setOrderSubType(Integer.parseInt(frItem.getItemGrp2()));
-				order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
-				order.setProductionDate(date);
-				order.setRefId(frItem.getId());
-				order.setUserId(2);
-				order.setMenuId(currentMenuId);
-
-				if (rateCat == 1) {
-					order.setOrderMrp(frItem.getItemMrp1());
-					order.setOrderRate(frItem.getItemRate1());
-
-				} else if (rateCat == 2) {
-					order.setOrderMrp(frItem.getItemMrp2());
-					order.setOrderRate(frItem.getItemRate2());
-
-				} else if (rateCat == 3) {
-					order.setOrderMrp(frItem.getItemMrp3());
-					order.setOrderRate(frItem.getItemRate3());
-
-				}
-
-				orders.add(order);
-
-			}
-
-			String jsonStr = null;
-
-			try {
-				jsonStr = mapperObj.writeValueAsString(orders);
-				System.out.println("Converted JSON: " + jsonStr);
-			} catch (IOException e) {
-				System.out.println("Excep converting java 2 json " + e.getMessage());
-				e.printStackTrace();
-			}
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-
-			HttpEntity<String> entity = new HttpEntity<String>(jsonStr, headers);
-
-			ResponseEntity<String> orderListResponse = restTemplate.exchange(url, HttpMethod.POST, entity,
-					String.class);
-
-			System.out.println("Place Order Response" + orderListResponse.toString());
-
-		} catch (Exception e) {
-			System.out.println("Except Placing order " + e.getMessage());
-		}
-
 		return mav;
 
 	}
 
 	public String incrementDate(String date, int day) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		try {
 			c.setTime(sdf.parse(date));

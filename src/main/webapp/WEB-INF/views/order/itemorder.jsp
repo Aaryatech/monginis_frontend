@@ -198,7 +198,7 @@ jQuery(document).ready(function(){
 																				<td><c:out value='${items.itemName}' /></td>
 																				<td><input name='${items.id}' id='${items.id}'
 																					value='${items.itemQty}' class="tableInput"
-																					type="text"
+																					type="number" onkeydown="myFunction()"
 																					onchange="onChange('${items.itemRate1}',${items.id})"></td>
 																				<td><c:out value='${items.itemMrp1}' /></td>
 
@@ -234,7 +234,7 @@ jQuery(document).ready(function(){
 																				<td><c:out value='${items.itemName}' /></td>
 																				<td><input name='${items.id}' id='${items.id}'
 																					value='${items.itemQty}' class="tableInput"
-																					type="text"
+																					type="text" 
 																					onchange="onChange('${items.itemRate3}',${items.id})"></td>
 																				<td><c:out value='${items.itemMrp3}' /></td>
 
@@ -338,19 +338,52 @@ jQuery(document).ready(function(){
 	</script>
 
 	<script type="text/javascript">
-		function getTotal() {
+		function onKeyDown(id) {
+			alert("alert");
+			var e = $('#'+id).val();
 			
-			   var list = '${itemList}';
-			 	for (i = 0; i < list.length; ++i) {
-
-			 	}
-			
-			<%-- document.getElementById('item_tot_' + item_id).innerHTML = parseFloat(
-					final_rate).toFixed(2);
-			
-			<%System.out.println("Local time");%> --%>
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+		             // Allow: Ctrl/cmd+A
+		            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+		             // Allow: Ctrl/cmd+C
+		            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+		             // Allow: Ctrl/cmd+X
+		            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+		             // Allow: home, end, left, right
+		            (e.keyCode >= 35 && e.keyCode <= 39)) {
+		                 // let it happen, don't do anything
+		                 return;
+		        }
+		        // Ensure that it is a number and stop the keypress
+		        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
+		            e.preventDefault();
+		        }
+		    });
 			
 		}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#5").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
+            e.preventDefault();
+        }
+    });
+});
 </script>
 </body>
 </html>
