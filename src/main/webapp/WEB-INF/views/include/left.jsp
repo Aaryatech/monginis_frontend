@@ -71,7 +71,7 @@
 							<c:set var="frId" value="${menu.frId}" />
 							<c:set var="settingType" value="${menu.isSameDayApplicable}" />
 	<c:set var="catId" value="${menu.catId}" />
-
+ 
 							<%
 								ZoneId z = ZoneId.of("Asia/Calcutta");
 									LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
