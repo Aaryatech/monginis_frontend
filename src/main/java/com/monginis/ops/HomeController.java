@@ -234,10 +234,16 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/logout")
-	public String logout(HttpSession session) {
+	@RequestMapping(value = "/logout" )
+	public String logout(HttpSession session , HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
 		session.invalidate();
+		
+		  HttpServletResponse response=(HttpServletResponse)res;
+	        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	        response.setHeader("Pragma", "no-cache");
+	        response.setDateHeader("Expires", -1);
+		
 		return "redirect:/";
 	}
 
