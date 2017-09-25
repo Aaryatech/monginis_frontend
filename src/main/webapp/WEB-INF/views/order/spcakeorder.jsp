@@ -279,7 +279,7 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
 <input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
-
+<input type="hidden" name="isFound" id="isFound" value="${isFound}" onchange="onChangeValue()">
 <!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
 <input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
 <input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
@@ -486,7 +486,7 @@ String fDate1 = formatter1.format(date);
 				</li>
 				<li>
 					<div class="priceLeft">Sub Total </div>
-					<div class="priceRight"id="subtotal">00</div>
+					<div class="priceRight"id="subtotal">${sprRate}</div>
 					<input name="sp_sub_total" id="sp_sub_total"  type="hidden">
 				</li>
 				<li>
@@ -645,7 +645,7 @@ $(document).ready(function() {
 			$('#price').html(wt*dbRate);$('sp_calc_price').html(wt*dbRate);
 			$('#rate').html(wt*flavourAdonRate);	  document.getElementById("sp_add_rate").setAttribute('value',wt*flavourAdonRate);
 			$('#subtotal').html(add);	document.getElementById("sp_sub_total").setAttribute('value',add);
-			$('#INR').html(t1);document.getElementById("sp_grand").setAttribute('value',t1);
+			$('#INR').html('INR-'+t1);document.getElementById("sp_grand").setAttribute('value',t1);
 			$('#tot').html(t1);document.getElementById("total_amt").setAttribute('value',t1);
 			$('#rmAmt').html(t1);document.getElementById("rm_amount").setAttribute('value',t1);
 		}</script> 
@@ -669,7 +669,7 @@ $(document).ready(function() {
 			    $('#price').html(p);$('#sp_calc_price').html(p);
 				$('#rate').html(r);$('#sp_add_rate').html(r);document.getElementById("sp_add_rate").setAttribute('value',r);
 				$('#subtotal').html(p+r);document.getElementById("sp_sub_total").setAttribute('value',p+r);
-				$('#INR').html('INR -'+t1);document.getElementById("sp_grand").setAttribute('value',t1);
+				$('#INR').html('INR-'+t1);document.getElementById("sp_grand").setAttribute('value',t1);
 				$('#tot').html(t1);document.getElementById("total_amt").setAttribute('value',t1);
 				$('#rmAmt').html(t1);document.getElementById("rm_amount").setAttribute('value',t1);
 		}
@@ -718,6 +718,7 @@ function validateForm() {
     var x = document.forms["form"]["sp_code"].value;
     if (x == "") {
         alert("Special Cake Code must be filled out");
+        document.getElementById('sp_code').focus();
         return false;
     }
 }
@@ -804,5 +805,11 @@ function empty() {
 };
 
 </script>
+<script>
+$("isFound").change(function(){
+    alert("Special Cake is Not Found");
+});
+</script>
+
 </body>
 </html>
