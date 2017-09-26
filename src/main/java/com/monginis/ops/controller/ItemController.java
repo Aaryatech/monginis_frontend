@@ -54,6 +54,7 @@ public class ItemController {
 
 	private static int globalIndex = 2;
 	private static int currentMenuId = 0;
+	List<String> subCatList = new ArrayList<>();
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
 	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
@@ -62,7 +63,9 @@ public class ItemController {
 		ModelAndView model = new ModelAndView("order/itemorder");
 		logger.info("/item order request mapping. index:" + index);
 
+		subCatList=new ArrayList<>();
 		globalIndex = index;
+		
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,9 +76,7 @@ public class ItemController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-		
-		
-		
+
 		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
 
 		String todaysDate = dfReg.format(date);
@@ -93,7 +94,7 @@ public class ItemController {
 		LocalTime formatedFromTime = LocalTime.parse(fromTime);
 		LocalTime formatedToTime = LocalTime.parse(toTime);
 
-		 currentTime = currentTime.plusHours(15);
+		currentTime = currentTime.plusHours(15);
 		System.out.println("current time " + currentTime);
 		System.out.println("from time " + formatedFromTime);
 
@@ -142,7 +143,6 @@ public class ItemController {
 		System.out.println("Production date: " + productionDate);
 		System.out.println("Delivery date: " + deliveryDate);
 
-		
 		frItemList = new ArrayList<GetFrItem>();
 		try {
 
@@ -172,8 +172,6 @@ public class ItemController {
 		}
 
 		Set<String> setName = new HashSet<String>();
-
-		List<String> subCatList = new ArrayList<>();
 
 		float grandTotal = 0;
 
@@ -237,10 +235,10 @@ public class ItemController {
 		System.out.println(subCatList);
 
 		// toTime
-		
+
 		SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
-        java.util.Date toTime12Hrs = null;
+		SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+		java.util.Date toTime12Hrs = null;
 		try {
 			toTime12Hrs = _24HourSDF.parse(toTime);
 		} catch (ParseException e) {
@@ -248,8 +246,6 @@ public class ItemController {
 			e.printStackTrace();
 		}
 
-		
-	
 		model.addObject("menuList", menuList);
 
 		model.addObject("subCatListTitle", subCatListWithQtyTotal);
@@ -279,15 +275,97 @@ public class ItemController {
 		String orderDate = "";
 		String productionDate = "";
 		String deliveryDate = "";
-		
-		
+
 		String menuId = request.getParameter("menuId");
 		int rateCat = frDetails.getFrRateCat();
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+
+		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+
 		System.out.println("Fr Rate Cat " + rateCat);
 
 		System.out.println("Current menu id: " + currentMenuId + " menu id from jsp: " + menuId);
 
-		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		List<GetFrItem> tempOrderList = new ArrayList<>();
+		boolean isValidQty=true;
+		
+		if (isSameDayApplicable == 2) { // if category is cake and pastries with limit then check for limit
+
+			for (int i = 0; i < frItemList.size(); i++) {
+
+				GetFrItem frItem = frItemList.get(i);
+
+				try {
+					Integer id = frItem.getId();
+					System.out.println("id " + id);
+
+					String strQty = request.getParameter(String.valueOf(id));
+					//int qty = Integer.parseInt(strQty);
+
+					System.out.println(" " + id + ":" + strQty);
+
+				//	frItem.setItemQty(qty);
+					tempOrderList.add(frItem);
+
+				} catch (Exception e) {
+					System.out.println("Except OrderList " + e.getMessage());
+				}
+
+			}
+			
+			
+
+			System.out.println(" tempOrder List " + tempOrderList.toString());
+
+			int kg1Qty = 0;
+			int kg2Qty = 0;
+			int kg3Qty = 0;
+			int kg4Qty = 0;
+
+			// kg1= pastries kg2= half kg, kg3=1kg, kg4=above 1kg
+
+			for (int i = 0; i < tempOrderList.size(); i++) {
+
+				GetFrItem item = tempOrderList.get(i);
+
+				if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
+
+					kg1Qty = kg1Qty + item.getItemQty();
+
+				} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
+
+					kg2Qty = kg2Qty + item.getItemQty();
+					
+				} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
+
+					kg3Qty = kg3Qty + item.getItemQty();
+					
+				} else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
+
+					kg4Qty = kg4Qty + item.getItemQty();
+				}
+
+			}
+			
+		
+			
+			if(frDetails.getFrKg1()<kg1Qty) {
+				isValidQty=false;
+				
+			} else if(frDetails.getFrKg2()<kg2Qty) {
+				isValidQty=false;
+				
+			} else if(frDetails.getFrKg3()<kg3Qty) {
+				isValidQty=false;
+			} else if(frDetails.getFrKg4()<kg4Qty) {
+				isValidQty=false;
+			}
+			
+			
+
+		}
+		
+		if(isValidQty) {
 
 		// menu timing verification
 
@@ -334,9 +412,7 @@ public class ItemController {
 			System.out.println("current time " + now);
 			System.out.println("from time " + fromTimeLocalTime);
 
-			
 			String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 
 			if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
 
@@ -387,10 +463,12 @@ public class ItemController {
 				GetFrItem frItem = frItemList.get(i);
 
 				try {
-					String id = frItem.getItemId();
+					Integer id = frItem.getId();
 					System.out.println("id " + id);
 
-					String strQty = request.getParameter(id);
+					String strQty = request.getParameter(String.valueOf(id));
+					
+					
 					int qty = Integer.parseInt(strQty);
 
 					System.out.println(" " + id + ":" + strQty);
@@ -418,8 +496,6 @@ public class ItemController {
 
 				ObjectMapper mapperObj = new ObjectMapper();
 
-				
-			
 				List<Orders> orders = new ArrayList<>();
 
 				for (int i = 0; i < orderList.size(); i++) {
@@ -428,7 +504,7 @@ public class ItemController {
 
 					Orders order = new Orders();
 					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
-					order.setEditQty(frItem.getItemQty());
+					order.setEditQty(0);
 					order.setFrId(frDetails.getFrId());
 					order.setIsEdit(1);
 					order.setIsPositive(1);
@@ -488,6 +564,12 @@ public class ItemController {
 
 		} else { // time out for place order
 
+			mav.addObject("errorMessage", "Timeout for placing order");
+		}
+		
+		}else { // qty exceed  limit
+			
+			mav.addObject("errorMessage", "You have exceed maximum limit");
 		}
 		return mav;
 

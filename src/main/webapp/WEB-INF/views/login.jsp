@@ -70,6 +70,8 @@ jQuery(document).ready(function(){
     <br />
     <input type="submit" value="Upload">
 </form> -->
+
+
 <c:if test="${not empty message}">
    <!-- here would be a message with a result of processing -->
     <div class="messages messagesErr"> ${message} </div>

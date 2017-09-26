@@ -103,6 +103,9 @@ jQuery(document).ready(function(){
 						
 					</div>
 
+
+
+
 					<div class="order-right">
 						<div class="ordermto2px">
 							<div class="orderclose">Order Closing Time :</div>
@@ -117,6 +120,14 @@ jQuery(document).ready(function(){
 
 						</div>
 					</div>
+				<c:if test="${not empty message}">
+   <!-- here would be a message with a result of processing -->
+   s
+    <div class="messages messagesErr"> ${message} </div>
+        	
+</c:if>
+					
+					
 					<form action="${pageContext.request.contextPath}/saveOrder"
 						name="form1" method="post">
 

@@ -212,7 +212,7 @@ $("#tech").change(function() {
     <td><c:out value="${orderList.orderMrp}"/></td>
     <td><c:out value="${orderList.orderQty}"/></td>
     <td><c:out value="${orderList.orderRate}"/></td>
-    <td><c:out value="00"/></td>
+    <td><c:out value="${orderList.orderQty * orderList.orderRate}"/></td>
   </tr>
   </c:forEach>   
   

@@ -5,9 +5,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -197,6 +199,52 @@ public class HomeController {
 
 			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
+			//filter fr menus
+			
+			List<FrMenu> frMenuList=getFrMenus.getFrMenus();
+			List<FrMenu> filteredFrMenuList=new ArrayList<>();
+			
+			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
+			Date date = calendar.getTime();
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			String currentDate = df.format(date);
+			int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
+		
+			
+			System.out.println("Toaday date "+currentDate);
+			System.out.println("Day of week "+dayOfWeek);
+			
+			
+			
+			for(int i=0;i<frMenuList.size();i++) {
+				
+			
+				FrMenu frMenu=frMenuList.get(i);
+				
+				if(frMenu.getSettingType()==3) { // day basis
+					
+					if(frMenu.getDay()==dayOfWeek) {
+
+						filteredFrMenuList.add(frMenu);
+						
+					} 
+					
+					
+				}else if(frMenu.getSettingType()==2){ // date basis
+					
+					
+				}else if(frMenu.getSettingType()==1){ // daily basis
+										
+					filteredFrMenuList.add(frMenu);
+					
+				}
+				
+				
+				
+			}
+				
+			
+			System.out.println("filteredFrMenuList is: "+filteredFrMenuList.toString());
 		
 
 			// Getting news and messages
