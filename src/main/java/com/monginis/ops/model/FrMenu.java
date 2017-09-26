@@ -2,6 +2,8 @@
 package com.monginis.ops.model;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 
 public class FrMenu implements Serializable {
 
@@ -19,6 +21,8 @@ public class FrMenu implements Serializable {
     private Integer catId;
     private String time;
     private Integer isSameDayApplicable;
+	private int day;
+	private Date date;
 
     
     public Integer getIsSameDayApplicable() {
@@ -134,19 +138,32 @@ public class FrMenu implements Serializable {
 		this.time = time;
 	}
 
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "FrMenu [settingId=" + settingId + ", fromTime=" + fromTime + ", toTime=" + toTime + ", itemShow="
 				+ itemShow + ", menuDesc=" + menuDesc + ", menuImage=" + menuImage + ", selectedMenuImage="
 				+ selectedMenuImage + ", menuTitle=" + menuTitle + ", settingType=" + settingType + ", frId=" + frId
 				+ ", menuId=" + menuId + ", catId=" + catId + ", time=" + time + ", isSameDayApplicable="
-				+ isSameDayApplicable + "]";
+				+ isSameDayApplicable + ", day=" + day + ", date=" + date + "]";
 	}
 
-	
-
-	  
-    
-    
+	    
 
 }
