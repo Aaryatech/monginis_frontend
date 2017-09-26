@@ -2,6 +2,8 @@ package com.monginis.ops.controller;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -182,6 +184,8 @@ public class SpCakeController {
 					model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 					model.addObject("spBookb4", 0);
 					model.addObject("sprRate", 0);
+					model.addObject("specialCakeList", specialCakeList);
+
 					return model;
 
 				}
@@ -210,6 +214,7 @@ public class SpCakeController {
 
 				model.addObject("spBookb4", spBookb4);
 				model.addObject("isFound", "");
+				model.addObject("specialCakeList", specialCakeList);
 
 
 			} else {
@@ -223,6 +228,8 @@ public class SpCakeController {
 				model.addObject("spBookb4", 0);
 				model.addObject("sprRate", 0);
 				model.addObject("isFound", false);
+				model.addObject("specialCakeList", specialCakeList);
+
 				return model;
 
 			}
@@ -237,6 +244,8 @@ public class SpCakeController {
 			model.addObject("spBookb4", 0);
 			model.addObject("sprRate", 0);
 			model.addObject("isFound", false);
+			model.addObject("specialCakeList", specialCakeList);
+
 			return model;
 		}
 		
@@ -247,6 +256,8 @@ public class SpCakeController {
 		model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 		// model.addObject("spBookb4", spBookb4);
 		model.addObject("isFound", "");
+		model.addObject("specialCakeList", specialCakeList);
+
 
 		return model;
 	}
@@ -327,6 +338,26 @@ public class SpCakeController {
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		int frId = frDetails.getFrId();
+		
+		
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+
+		
+		// menu timing verification
+        String fromTime = menuList.get(globalIndex).getFromTime();
+		String toTime = menuList.get(globalIndex).getToTime();
+		System.out.println("before order placing: from time " + fromTime + " to time " + toTime);
+
+		ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
+
+		LocalTime fromTimeLocalTime = LocalTime.parse(fromTime);
+		LocalTime toTimeLocalTIme = LocalTime.parse(toTime);
+
+		Boolean isLate = now.isAfter(toTimeLocalTIme);
+		Boolean isEarly = now.isBefore(fromTimeLocalTime);
+		
+		if (!isLate && !isEarly) {		
 
 		int spId = Integer.parseInt(request.getParameter("sp_id"));
 		System.out.println("1" + spId);
@@ -571,6 +602,23 @@ public class SpCakeController {
 			mav.addObject("flavourList", flavourList);
 			
 
+		}
+		}
+		else           //End of if -Timeout
+		{
+			mav = new ModelAndView("order/spcakeorder");
+			mav.addObject("errorMessage", "Special Cake Order TimeOut");
+			
+
+			mav.addObject("menuList", menuList);
+			mav.addObject("eventList", eventList);
+			mav.addObject("flavourList", flavourList);
+			mav.addObject("url", Constant.SPCAKE_IMAGE_URL);
+			mav.addObject("spBookb4", 0);
+			mav.addObject("sprRate", 0);
+			mav.addObject("isFound", false);
+			return mav;
+			
 		}
 		return mav;
 

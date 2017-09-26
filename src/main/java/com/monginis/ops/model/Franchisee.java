@@ -8,7 +8,7 @@ public class Franchisee {
     private String frName;
     private String frCode;
     private String frOpeningDate;
-    private Integer frRate;
+    private float frRate;
     private String frImage;
     private Integer frRouteId;
     private String frCity;
@@ -62,15 +62,16 @@ public class Franchisee {
         this.frOpeningDate = frOpeningDate;
     }
 
-    public Integer getFrRate() {
-        return frRate;
-    }
+  
+    public float getFrRate() {
+		return frRate;
+	}
 
-    public void setFrRate(Integer frRate) {
-        this.frRate = frRate;
-    }
+	public void setFrRate(float frRate) {
+		this.frRate = frRate;
+	}
 
-    public String getFrImage() {
+	public String getFrImage() {
         return frImage;
     }
 

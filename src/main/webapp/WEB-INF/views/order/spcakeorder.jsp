@@ -27,6 +27,33 @@ jQuery(document).ready(function(){
 });
 
 </script>
+<!-- <script type="text/javascript">
+
+$( "#sp_code" ).sp_code();
+$( "#toggle" ).on( "click", function() {
+  $( "#sp_code" ).toggle();
+});
+</script> -->
+<script type="text/javascript">
+var result='';
+$(document).ready(function(){  
+  $('input[type=text]').focus(function(){
+    $('#categories option').each(function(){
+        result=result+" "+$(this).val();
+    });
+    
+    $('#result').show().html(result);
+    $('input[type=text]').unbind('focus');
+  });
+  $('input[type=text]').blur(function(){
+    $('#result').hide();  
+    $('input[type=text]').focus(function(){
+      $('#result').show();
+    });
+ 
+  });  
+});
+</script>
 <!--rightNav-->
 
 <!--selectlistbox-->
@@ -105,6 +132,8 @@ select {
     height: 30px;
 }
 </style>   
+
+
  <script type="text/javascript" src="https://www.google.com/jsapi">
     </script>
     <script type="text/javascript">
@@ -179,6 +208,8 @@ select {
 
  <!--formBox-->
 <div class="ordercake">
+
+
 <!--leftForm-->
 <div class="left">
 
@@ -186,7 +217,19 @@ select {
   
 	  <div class="fullform">
 		<div class="cackleft2">Item Code</div>
-		<div class="cackrighttexbox"><input class="texboxitemcode" id="sp_code" value="${specialCake.spCode}" name="sp_code" type="text">
+		<div class="cackrighttexbox"><input class="texboxitemcode" id="sp_code" value="${specialCake.spCode}" name="sp_code" type="text" autocomplete="off"list="categories">
+			
+			<datalist id="categories">
+			
+			     <c:forEach items="${specialCakeList}" var="specialCakeList">	
+			           <option value="${specialCakeList.spCode}"></option>
+		          </c:forEach>
+		     </datalist>
+
+		
+		
+		
+		
 		<div class="searchrecord"><input name="" class="btnsearch" value="" type="submit"> </div>
 	   </div>
      </div>
@@ -202,7 +245,12 @@ select {
 		<div class="cackimglable"></div>
 		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
-
+	
+     <div class="fullform">
+		<div class="cackleft">Description</div>
+		<div class="cackright" id="spDesc"><span class="cakename">${specialCake.spDesc}</span></div>
+	</div>
+	
 	<div class="fullform">
 		<div class="cackleft">Min Weight</div>
 		<div class="cackright" id="spMinWt">${specialCake.spMinwt}Kg</div>
@@ -250,7 +298,7 @@ SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
 String fDate = formatter.format(date);
 System.out.println(""+fDate);
-SimpleDateFormat formatter1 = new SimpleDateFormat("MM-dd-yyyy");
+SimpleDateFormat formatter1 = new SimpleDateFormat("dd MMM yyyy");
 
 String fDate1 = formatter1.format(date);
 %>
@@ -259,6 +307,7 @@ String fDate1 = formatter1.format(date);
 	</div>
 	
 </div>
+
 
 <!--Form-->
 <form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data">
@@ -280,6 +329,7 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
 <input type="hidden" name="isFound" id="isFound" value="${isFound}" onchange="onChangeValue()">
+
 <!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
 <input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
 <input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
@@ -315,7 +365,8 @@ String fDate1 = formatter1.format(date);
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
                 <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour">
-        		     <option value=""> </option>
+                              <option value="">Select Type</option>
+                
                      <option value="">Select Flavour</option>
                </select>
        </div>
@@ -442,8 +493,8 @@ String fDate1 = formatter1.format(date);
 	</div>    
 	
 	<div class="colOuter">
-		<div class="col1"><div class="col1title">Book For Date</div></div>
-		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="text">
+<!-- 		<div class="col1"><div class="col1title">Book For Date</div></div>
+ -->		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="hidden">
 		</div>
 	</div>
 	
@@ -454,13 +505,19 @@ String fDate1 = formatter1.format(date);
 	</div>
 	
 	<div class="colOuter">
-		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="text"id="sp_booked_for_name"></div>
-		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker5" type="text"></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_book_for_number" type="text"id="sp_book_for_number"></div>
+		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="hidden"id="sp_booked_for_name"></div>
+		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker5" type="hidden"></div>
+		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_book_for_number" type="hidden"id="sp_book_for_number"></div>
 	</div>
+	
+	<div class="cackleft" id="error"><span class="cakename">
+<c:if test="${not empty errorMessage}">
+<h3><c:out value="${errorMessage}"/></h3>
+</c:if></span></div>
 	
 	
 </div>
+
 <!--centerForm-->
 	
 <!--rightForm-->	
@@ -520,10 +577,12 @@ String fDate1 = formatter1.format(date);
 	
 	
 	</div>
+	
 	<div class="order-btn">
 		<input name="" class="btnSubmit" value="SUBMIT" type="submit" onClick="return empty()">
-		<input name="" class="btnReset" value="RESET" type="button">
+		<input name="" class="btnReset" value="RESET" type="hidden">
 	</div>
+	
 </div>
 <input type="hidden" id="t1" name="t1" value="${specialCake.spTax1}">
 <input type="hidden" id="t2" name="t2" value="${specialCake.spTax2}">
@@ -723,6 +782,7 @@ function validateForm() {
     }
 }
 </script>	
+
 
  <script type="text/javascript">
 function empty() {
