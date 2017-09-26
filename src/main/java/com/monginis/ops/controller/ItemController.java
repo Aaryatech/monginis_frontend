@@ -236,6 +236,19 @@ public class ItemController {
 
 		System.out.println(subCatList);
 
+		// toTime
+		
+		SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+        java.util.Date toTime12Hrs = null;
+		try {
+			toTime12Hrs = _24HourSDF.parse(toTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 	
 		model.addObject("menuList", menuList);
 
@@ -246,7 +259,7 @@ public class ItemController {
 		model.addObject("frDetails", frDetails);
 
 		model.addObject("currentDate", todaysDate);
-		model.addObject("toTime", menuList.get(index).getTime());
+		model.addObject("toTime", _12HourSDF.format(toTime12Hrs));
 		model.addObject("orderDate", orderDate);
 		model.addObject("productionDate", productionDate);
 		model.addObject("deliveryDate", deliveryDate);
