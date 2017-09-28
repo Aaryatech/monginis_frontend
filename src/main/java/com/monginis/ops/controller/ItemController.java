@@ -50,11 +50,13 @@ import com.monginis.ops.model.TabTitleData;
 public class ItemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
-	private static List<GetFrItem> frItemList = new ArrayList<>();
+	private  List<GetFrItem> frItemList = new ArrayList<>();
+	private  List<GetFrItem> prevFrItemList = new ArrayList<>();
 
 	private static int globalIndex = 2;
 	private static int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
+	public MultiValueMap<String, Object> map;
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
 	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
@@ -144,12 +146,13 @@ public class ItemController {
 		System.out.println("Delivery date: " + deliveryDate);
 
 		frItemList = new ArrayList<GetFrItem>();
+		prevFrItemList=new ArrayList<GetFrItem>();
 		try {
 
 			System.out.println("Date is : " + currentDate);
 			currentMenuId = menuList.get(index).getMenuId();
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			 map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("items", menuList.get(index).getItemShow());
 			map.add("frId", frDetails.getFrId());
@@ -164,7 +167,7 @@ public class ItemController {
 					HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			frItemList = responseEntity.getBody();
-
+			prevFrItemList = responseEntity.getBody();
 			System.out.println("Fr Item List " + frItemList.toString());
 		} catch (Exception e) {
 
@@ -288,24 +291,34 @@ public class ItemController {
 
 		List<GetFrItem> tempOrderList = new ArrayList<>();
 		boolean isValidQty=true;
-		
+		System.out.println(" frItemList List before limit condition " + frItemList.toString());
+
 		if (isSameDayApplicable == 2) { // if category is cake and pastries with limit then check for limit
 
-			for (int i = 0; i < frItemList.size(); i++) {
+			List<GetFrItem> tempFrItemList =  new ArrayList<GetFrItem>();;
+			tempFrItemList=prevFrItemList;
+	
+			for (int i = 0; i < prevFrItemList.size(); i++) {
 
-				GetFrItem frItem = frItemList.get(i);
+				GetFrItem tempFrItem = prevFrItemList.get(i);
 
 				try {
-					Integer id = frItem.getId();
+					Integer id = tempFrItem.getId();
 					System.out.println("id " + id);
+					System.out.println("prev qty " + tempFrItem.getItemQty());
 
 					String strQty = request.getParameter(String.valueOf(id));
-					//int qty = Integer.parseInt(strQty);
+					int qty = Integer.parseInt(strQty);
 
 					System.out.println(" " + id + ":" + strQty);
+				
+				
 
-				//	frItem.setItemQty(qty);
-					tempOrderList.add(frItem);
+						tempFrItem.setItemQty(qty);
+						tempOrderList.add(tempFrItem);
+
+					
+					
 
 				} catch (Exception e) {
 					System.out.println("Except OrderList " + e.getMessage());
@@ -316,6 +329,9 @@ public class ItemController {
 			
 
 			System.out.println(" tempOrder List " + tempOrderList.toString());
+			
+			
+			System.out.println(" frItemList List " + frItemList.toString());
 
 			int kg1Qty = 0;
 			int kg2Qty = 0;
@@ -347,6 +363,11 @@ public class ItemController {
 
 			}
 			
+			System.out.println("limit : "+frDetails.getFrKg1()+"new qty:  kg1:"+kg1Qty);
+			System.out.println("limit : "+frDetails.getFrKg2()+"new qty:  kg2:"+kg2Qty);
+			System.out.println("limit : "+frDetails.getFrKg3()+"new qty:  kg3:"+kg3Qty);
+			System.out.println("limit : "+frDetails.getFrKg4()+"new qty:  kg4:"+kg4Qty);
+
 		
 			
 			if(frDetails.getFrKg1()<kg1Qty) {
@@ -362,11 +383,28 @@ public class ItemController {
 			}
 			
 			
+			
+			
+			if(isValidQty) {
+				frItemList= new ArrayList<GetFrItem>();
+				
+				RestTemplate restTemplate = new RestTemplate();
+
+				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
+				};
+				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				frItemList = responseEntity.getBody();
+			}
+			
 
 		}
 		
 		if(isValidQty) {
 
+			
+			
 		// menu timing verification
 
 		String fromTime = menuList.get(globalIndex).getFromTime();
@@ -471,7 +509,7 @@ public class ItemController {
 					
 					int qty = Integer.parseInt(strQty);
 
-					System.out.println(" " + id + ":" + strQty);
+					System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
 
 					if (qty != frItem.getItemQty()) {
 

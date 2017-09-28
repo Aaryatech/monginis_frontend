@@ -191,7 +191,7 @@ $("#tech").change(function() {
          <c:set var = "selectedMenu" scope = "session" value = "${selectedMenu}"/>
 
 <c:choose>
-    <c:when test="${selectedMenu.getIsSameDayApplicable()=='0'}">
+    <c:when test="${selectedMenu.mainCatId !='5'}">
        
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr class="bgpink">
@@ -222,7 +222,7 @@ $("#tech").change(function() {
 </table>
         <br />
     </c:when>  
-      <c:when test="${selectedMenu.getIsSameDayApplicable()=='1'}">
+      <c:when test="${selectedMenu.mainCatId !='5'}">
        
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr class="bgpink">

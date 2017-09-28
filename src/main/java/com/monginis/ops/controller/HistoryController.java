@@ -108,8 +108,8 @@ public class HistoryController {
 			{
 			System.out.println("menu id matched ");
 				selectedMenu=menu;
-				System.out.println("selected1:"+selectedMenu.getIsSameDayApplicable());
-				if(selectedMenu.getIsSameDayApplicable()==0||selectedMenu.getIsSameDayApplicable()==1)
+				System.out.println("selected1:"+menu.getMainCatId());
+				if(menu.getMainCatId()!=5)
 				{
 					System.out.println("item order ");
 

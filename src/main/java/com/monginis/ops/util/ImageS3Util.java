@@ -30,8 +30,8 @@ import com.amazonaws.util.IOUtils;
 
 public class ImageS3Util {
 
-	private static final String ACCESS_KEY = "AKIAJT6W4DHINGE4TA6A";
-	private static final String SECRET_KEY = "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";
+	private static final String ACCESS_KEY = "AKIAIWMRPGOCLRXAQLRQ";
+	private static final String SECRET_KEY = "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";
 	private static final String END_POINT_URL = "https://s3-ap-south-1.amazonaws.com";// e.g http://s3.amazonaws.com
 	private static final String BUCKET = "elasticbeanstalk-ap-south-1-549563654916";
 	private static final String FR_IMAGE_LOCATION = "uploads/fr";
