@@ -221,8 +221,8 @@ select {
 			
 			<datalist id="categories">
 			
-			     <c:forEach items="${specialCakeList}" var="specialCakeList">	
-			           <option value="${specialCakeList.spCode}"></option>
+			     <c:forEach items="${configuredSpCodeList}" var="specialCakeList">	
+			           <option value="${specialCakeList}"></option>
 		          </c:forEach>
 		     </datalist>
 
@@ -349,11 +349,13 @@ String fDate1 = formatter1.format(date);
               <option value="">Select Type</option>
                  <c:set var= "spCakeType" value="${specialCake.spType}"></c:set>
                <c:choose>
-                   <c:when test="${spCakeType=='0'}"> <option value="0">FC</option>          </c:when>
+                  
                    <c:when test="${spCakeType=='1'}"> <option value="1">Chocolate</option>   </c:when> 
+                    <c:when test="${spCakeType=='2'}"> <option value="2">FC</option>          </c:when>
                 <c:otherwise>
-                      <option value="0">FC</option>
+                    
                       <option value="1">Chocolate</option>
+                        <option value="2">FC</option>
                 </c:otherwise>    
               </c:choose>
               
@@ -365,7 +367,7 @@ String fDate1 = formatter1.format(date);
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
                 <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour">
-                              <option value="">Select Type</option>
+                              <option value="">Select Flavour</option>
                 
                      <option value="">Select Flavour</option>
                </select>
@@ -501,7 +503,7 @@ String fDate1 = formatter1.format(date);
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
 		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="number" id="sp_cust_mobile_no" ></div>
+		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
 	</div>
 	
 	<div class="colOuter">

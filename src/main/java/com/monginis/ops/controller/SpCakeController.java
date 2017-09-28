@@ -55,7 +55,8 @@ public class SpCakeController {
 	
 	FlavourList flavourList;
 	EventList eventList;
-	
+    List<String> configuredSpCodeList;
+    
 	private static int globalIndex = 2;
 	ArrayList<FrMenu> menuList;
 	
@@ -87,11 +88,30 @@ public class SpCakeController {
 
 			currentMenuId = menuList.get(index).getMenuId();
 			System.out.println("MenuList" + currentMenuId);
+			globalIndex = index;
 
 			SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "/showSpecialCakeList",
 					SpCakeResponse.class);
 
-			System.out.println("SpCake Controller SpCakeList Response " + spCakeResponse.toString());
+			
+			HttpSession ses = request.getSession();
+
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String itemShow = menuList.get(globalIndex).getItemShow();
+		
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("menuId",currentMenuId);
+			map.add("items",itemShow);
+	           System.out.println(itemShow);
+
+			
+	       String[] configuredSpCodeArr = restTemplate.postForObject(Constant.URL + "/searchSpCodes",
+	    		   map,String[].class);
+	       
+           configuredSpCodeList = Arrays.asList(configuredSpCodeArr);  //Configured SpCode for Franchisee
+       
+			System.out.println("SpCake configuredSpCodeList " + configuredSpCodeList.toString());
 
 			flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
 			System.out.println("flavour Controller flavourList Response " + flavourList.toString());
@@ -104,14 +124,17 @@ public class SpCakeController {
 			specialCakeList = spCakeResponse.getSpecialCake();
 			System.out.println("MenuList Response " + menuList.toString());
 
-			globalIndex = index;
+			
 
 			System.out.println("Special Cake List:" + specialCakeList.toString());
+			
 			model.addObject("menuList", menuList);
 			model.addObject("specialCakeList", specialCakeList);
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
+			model.addObject("configuredSpCodeList", configuredSpCodeList);
+			
 			// model.addObject("spImage", specialCake.getSpImage());
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 
@@ -122,6 +145,7 @@ public class SpCakeController {
 			model.addObject("eventList", eventList);
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
+			model.addObject("configuredSpCodeList", configuredSpCodeList);
 			// model.addObject("spImage", specialCake.getSpImage());
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 		}
@@ -185,6 +209,7 @@ public class SpCakeController {
 					model.addObject("spBookb4", 0);
 					model.addObject("sprRate", 0);
 					model.addObject("specialCakeList", specialCakeList);
+					//model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 					return model;
 
@@ -215,6 +240,7 @@ public class SpCakeController {
 				model.addObject("spBookb4", spBookb4);
 				model.addObject("isFound", "");
 				model.addObject("specialCakeList", specialCakeList);
+				model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 
 			} else {
@@ -229,6 +255,7 @@ public class SpCakeController {
 				model.addObject("sprRate", 0);
 				model.addObject("isFound", false);
 				model.addObject("specialCakeList", specialCakeList);
+				//model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 				return model;
 
@@ -245,6 +272,7 @@ public class SpCakeController {
 			model.addObject("sprRate", 0);
 			model.addObject("isFound", false);
 			model.addObject("specialCakeList", specialCakeList);
+			model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 			return model;
 		}
@@ -257,6 +285,7 @@ public class SpCakeController {
 		// model.addObject("spBookb4", spBookb4);
 		model.addObject("isFound", "");
 		model.addObject("specialCakeList", specialCakeList);
+		model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 
 		return model;

@@ -29,8 +29,94 @@ public class Franchisee {
     private Integer frOpening;
     private String frPasswordKey;
     private Integer isSameDayApplicable;
+    
+      private String ownerBirthDate;
+      
+      private String fbaLicenseDate;
+      
+      private String frAgreementDate;
+      
+	  private Integer frGstType;
+	  
+      private String frGstNo;
+      
+	  private Integer stockType;
+	  
+      private String frAddress;
+      
+      private Integer frTarget;
+	
+    public String getOwnerBirthDate() {
+		return ownerBirthDate;
+	}
 
-    public Integer getFrId() {
+	public void setOwnerBirthDate(String ownerBirthDate) {
+		this.ownerBirthDate = ownerBirthDate;
+	}
+
+	
+
+	public String getFbaLicenseDate() {
+		return fbaLicenseDate;
+	}
+
+	public void setFbaLicenseDate(String fbaLicenseDate) {
+		this.fbaLicenseDate = fbaLicenseDate;
+	}
+
+	public String getFrAgreementDate() {
+		return frAgreementDate;
+	}
+
+	public void setFrAgreementDate(String frAgreementDate) {
+		this.frAgreementDate = frAgreementDate;
+	}
+
+	
+	public Integer getFrGstType() {
+		return frGstType;
+	}
+
+	public void setFrGstType(Integer frGstType) {
+		this.frGstType = frGstType;
+	}
+
+	public String getFrGstNo() {
+		return frGstNo;
+	}
+
+	public void setFrGstNo(String frGstNo) {
+		this.frGstNo = frGstNo;
+	}
+
+	public Integer getStockType() {
+		return stockType;
+	}
+
+	public void setStockType(Integer stockType) {
+		this.stockType = stockType;
+	}
+
+	
+	public String getFrAddress() {
+		return frAddress;
+	}
+
+	public void setFrAddress(String frAddress) {
+		this.frAddress = frAddress;
+	}
+
+	
+
+	public Integer getFrTarget() {
+		return frTarget;
+	}
+
+	public void setFrTarget(Integer frTarget) {
+		this.frTarget = frTarget;
+	}
+
+	public Integer getFrId() {
         return frId;
     }
 
