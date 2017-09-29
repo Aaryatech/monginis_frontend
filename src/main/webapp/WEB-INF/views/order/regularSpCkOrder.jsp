@@ -202,9 +202,10 @@ select {
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
-<h2 class="pageTitle">Order Special Cake</h2>
+<h2 class="pageTitle">Regular Special Cake Order</h2>
 </div>
 
+<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data">
 
  <!--formBox-->
 <div class="ordercake">
@@ -213,74 +214,40 @@ select {
 <!--leftForm-->
 <div class="left">
 
-  <form action="${pageContext.request.contextPath}/searchSpCake" method="post" class="form-horizontal" name="form" onsubmit="return validateForm()">
-  
-	  <div class="fullform">
-		<div class="cackleft2">Item Code</div>
-		<div class="cackrighttexbox"><input class="texboxitemcode" id="sp_code" value="${specialCake.spCode}" name="sp_code" type="text" autocomplete="off"list="categories">
-			
-			<datalist id="categories">
-			
-			     <c:forEach items="${configuredSpCodeList}" var="specialCakeList">	
-			           <option value="${specialCakeList}"></option>
-		          </c:forEach>
-		     </datalist>
 
-		
-		
-		
-		
-		<div class="searchrecord"><input name="" class="btnsearch" value="" type="submit"> </div>
-	   </div>
-     </div>
- </form>
+<div class="fullform">
+		<div class="cackleft">Regular Special Cake</div>
+		<div class="cackright"><select name="regular_sp_cake" id="regular_sp_cake" required>
+              <option value="">Select Special Cake</option>
+             				
+            </select>
+			</div>
+	</div>
+
 	
 	
 	<div class="fullform">
 		<div class="cackleft">Name</div>
-		<div class="cackright" id="sp_name"><span class="cakename">${specialCake.spName}</span></div>
+		<div class="cackright" id="sp_name"><span class="cakename">${specialCake.spName}DANCING DOLL</span></div>
 	</div>
- 
+ &nbsp; &nbsp; &nbsp;
  
 	<div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
 		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
-	
+	&nbsp;
 	
      <div class="fullform">
 		<div class="cackleft">Description</div>
-		<div class="cackright" id="spDesc"><span class="cakename">${specialCake.spDesc}</span></div>
+		<div class="cackright" id="spDesc"><span class="cakename">${specialCake.spDesc}A classic pound cake is made with a pound each of butter, sugar, eggs, and flour. Baking powder is in many butter cakes, such as Victoria sponge. The ingredients are sometimes mixed without creaming the butter, using recipes for simple and quick cakes.</span></div>
 	</div>
 	
 	
-	<div class="fullform">
-		<div class="cackleft">Min Weight</div>
-		<div class="cackright" id="spMinWt">${specialCake.spMinwt}Kg</div>
-	</div>
 	
 	
-	<div class="fullform">
-		<div class="cackleft">Max Weight</div>
-		<div class="cackright"id="spMaxWt">${specialCake.spMaxwt}Kg</div>
-	</div>
-	
-	
-	<div class="fullform">
-		<div class="cackleft">Production Time</div>
-		<div class="cackright"id="spProTime">${specialCake.spBookb4}Days</div>
-	</div>
-	<c:set var="p" value="${specialCake.spCode}"/>
-	<div class="fullform">
-    <div class="cackleft">Earliest  Delivery Date</div>
-    <div class="cackright" > 
-
-  
-<c:set var="increment" value="${spBookb4}"></c:set>
-
-<%
-int incr=(int) pageContext.getAttribute("increment");
+	<%
 // Create a Calendar object
 Calendar calendar = Calendar.getInstance();
 
@@ -290,7 +257,7 @@ int day = calendar.get(Calendar.DATE);
 int month = calendar.get(Calendar.MONTH) + 1;  
 // Get current year from calendar
 int year = calendar.get(Calendar.YEAR);
-calendar.add(Calendar.DATE, incr);
+calendar.add(Calendar.DATE, 0);
 
 day = calendar.get(Calendar.DATE);
 month = calendar.get(Calendar.MONTH);  
@@ -306,18 +273,17 @@ String fDate = formatter.format(date);
 System.out.println(""+fDate);
 SimpleDateFormat formatter1 = new SimpleDateFormat("dd MMM yyyy");
 
-String fDate1 = formatter1.format(date);
-%>
-<%=fDate1 %>
+String fDate1 = formatter1.format(date);%>
+<%-- 
+<%=fDate %>
     </div>
-	</div>
+	</div> --%>
 	
 </div>
 
 
 <!----------------------------------------Form-------------------------------------------------->
-<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data">
-
+<%-- 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 
 
@@ -343,65 +309,12 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="min_weight" id="min_weight" value="5 kg">
 <input type="hidden" name="max_weight" id="max_weight" value="8 kg">
 <input type="hidden" name="earliest_delivery_date" id="earliest_delivery_date" value="11 Sep 2017"> -->
-
+ --%>
 <!--centerForm-->	
 
 <div class="center">
 
-	 <div  class="colOuter">
-		<div class="col1"><div class="col1title">Type</div></div>
-		<div class="col2full">
-         <select name="sptype" tabindex="-1" id="sptype">
-              <option value="">Select Type</option>
-                 <c:set var= "spCakeType" value="${specialCake.spType}"></c:set>
-               <c:choose>
-                  
-                   <c:when test="${spCakeType=='1'}"> <option value="1">Chocolate</option>   </c:when> 
-                    <c:when test="${spCakeType=='2'}"> <option value="2">FC</option>          </c:when>
-                <c:otherwise>
-                    
-                      <option value="1">Chocolate</option>
-                        <option value="2">FC</option>
-                </c:otherwise>    
-              </c:choose>
-              
-            </select>
-			</div>
-	</div>
 	
-    <div class="colOuter">
-		<div class="col1"><div class="col1title">Flavour</div></div>
-		<div class="col2full" >
-                <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour">
-                              <option value="">Select Flavour</option>
-                
-                     <option value="">Select Flavour</option>
-               </select>
-       </div>
-	</div>  
-		  
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Weight</div></div>
-		<div class="col2">
-		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
-		  <%--  <c:set var = "dbRate" scope = "session" value = "${sp_wt}"/>
-		   		 <c:set var = "tRate" scope = "session" value = "${weight*dbRate}"/> --%>
-		  <%int a=1; %>
-        <select name="spwt" id="spwt" onchange="onChange('${dbRate}')">
- 	   
-             <c:forEach var ="i" begin ="${specialCake.spMinwt}" end ="${specialCake.spMaxwt}" step="1">
-                  <option value="${i}">${i}</option>
-                <c:choose>
-                  <c:when test="${i != specialCake.spMaxwt}">
-                     <option value="${i+0.5}">${i+0.5}</option> 
-                  </c:when>
-               </c:choose>
-      
-            </c:forEach>
-      </select>
-			<div class="err" style="display:none;">Please Enter Weight</div>
-		</div>
-  </div>
 	
 	         
 	<div class="colOuter">
@@ -415,7 +328,7 @@ String fDate1 = formatter1.format(date);
 		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
 		</div>
 	</div>
-	
+	&nbsp;
 <c:choose>
 <c:when test="${specialCake.isCustChoiceCk=='1'}">
 		
@@ -478,25 +391,17 @@ String fDate1 = formatter1.format(date);
 </c:choose>
 
 
-<div class="colOuter">
-	
-		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
-	</div>
-	<!-- <div class="colOuter">
-	
-		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
-	</div> -->
+
 
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
+		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
 		</div>
 	</div>
+	<div class="colOuter"></div>
 	
-	
+	&nbsp;&nbsp;
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Place of Delivery</div></div>
 		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text"></div>
@@ -504,22 +409,35 @@ String fDate1 = formatter1.format(date);
 	
 	
 	<div class="colOuter">
-<!-- 		<div class="col1"><div class="col1title">Book For Date</div></div>
- -->		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="hidden">
-		</div>
+		
 	</div>
+	&nbsp;&nbsp;
 	
 	
 	<div class="colOuter">
-		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
-		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
+	<div class="col1"><div class="col1title">Customer Name</div></div>
+	<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
 	</div>
 	
+	&nbsp;&nbsp;<div class="colOuter"></div>
+	
+	<div class="colOuter">
+		<div class="col1"><div class="col1title">Customer DOB</div></div>
+		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
+	</div>
+	
+	&nbsp;&nbsp;<div class="colOuter"></div>
+	
+	<div class="colOuter">
+			<div class="col1"><div class="col1title">Customer Mobile No.</div></div>
+		   <div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
+	</div>
+	
+	&nbsp;&nbsp;<div class="colOuter"></div>
 	
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="hidden"id="sp_booked_for_name"></div>
-		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker5" type="hidden"></div>
+		<div class="col2"><input id="datepicker5" class="texboxitemcode texboxcal" placeholder="" name="datepicker5" type="hidden"></div>
 		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_book_for_number" type="hidden"id="sp_book_for_number"></div>
 	</div>
 	

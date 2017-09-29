@@ -148,6 +148,7 @@ public class SpCakeController {
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
 			// model.addObject("spImage", specialCake.getSpImage());
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+			
 		}
 
 		return model;
@@ -716,4 +717,97 @@ public class SpCakeController {
 
 	}
    //----------------------------------END----------------------------------------
+
+		@RequestMapping(value = "/orderRegularSpCake", method = RequestMethod.GET)
+		public ModelAndView displayRegularSpCakeOrder(HttpServletRequest request, HttpServletResponse response) {
+			ModelAndView model = new ModelAndView("order/regularSpCkOrder");
+
+			return model;
+
+		}
+
+/*
+@RequestMapping(value = "/showRegularSpCakeOrder/{index}", method = RequestMethod.GET)
+public ModelAndView displayRegularSpCakeOrder(@PathVariable("index") int index, HttpServletRequest request,
+		HttpServletResponse response) {
+	
+
+	ModelAndView model = new ModelAndView("order/regularSpCkOrder");
+	
+	HttpSession session = request.getSession();
+
+	logger.info("/item order request mapping. index:" + index);
+
+	RestTemplate restTemplate = new RestTemplate();
+
+	try {
+		menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+
+		currentMenuId = menuList.get(index).getMenuId();
+		System.out.println("MenuList" + currentMenuId);
+		globalIndex = index;
+
+		SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "/showSpecialCakeList",
+				SpCakeResponse.class);
+
+		
+		HttpSession ses = request.getSession();
+
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		String itemShow = menuList.get(globalIndex).getItemShow();
+	
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		map.add("menuId",currentMenuId);
+		map.add("items",itemShow);
+           System.out.println(itemShow);
+
+		
+       String[] configuredSpCodeArr = restTemplate.postForObject(Constant.URL + "/searchSpCodes",
+    		   map,String[].class);
+       
+       configuredSpCodeList = Arrays.asList(configuredSpCodeArr);  //Configured SpCode for Franchisee
+   
+		System.out.println("SpCake configuredSpCodeList " + configuredSpCodeList.toString());
+
+		flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
+		System.out.println("flavour Controller flavourList Response " + flavourList.toString());
+
+		eventList = restTemplate.getForObject(Constant.URL + "/showEventList", EventList.class);
+		System.out.println("Event Controller EventList Response " + eventList.toString());
+
+		specialCakeList = new ArrayList<SpecialCake>();
+
+		specialCakeList = spCakeResponse.getSpecialCake();
+		System.out.println("MenuList Response " + menuList.toString());
+
+		
+
+		System.out.println("Special Cake List:" + specialCakeList.toString());
+		
+		model.addObject("menuList", menuList);
+		model.addObject("specialCakeList", specialCakeList);
+		model.addObject("eventList", eventList);
+		model.addObject("flavourList", flavourList);
+		model.addObject("spBookb4", 0);
+		model.addObject("configuredSpCodeList", configuredSpCodeList);
+		
+		// model.addObject("spImage", specialCake.getSpImage());
+		model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+
+	} catch (Exception e) {
+		System.out.println("Show Sp Cake List Excep: " + e.getMessage());
+		model.addObject("menuList", menuList);
+		model.addObject("specialCakeList", specialCakeList);
+		model.addObject("eventList", eventList);
+		model.addObject("flavourList", flavourList);
+		model.addObject("spBookb4", 0);
+		model.addObject("configuredSpCodeList", configuredSpCodeList);
+		// model.addObject("spImage", specialCake.getSpImage());
+		model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+		
+	}
+
+	return model;
 }
+*/}
