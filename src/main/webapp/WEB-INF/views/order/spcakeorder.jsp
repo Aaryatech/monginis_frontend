@@ -300,11 +300,11 @@ Calendar cal = Calendar.getInstance();
 
 cal.set(year, month, day);
 Date date = cal.getTime();
-SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 String fDate = formatter.format(date);
 System.out.println(""+fDate);
-SimpleDateFormat formatter1 = new SimpleDateFormat("dd MMM yyyy");
+SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
 
 String fDate1 = formatter1.format(date);
 %>

@@ -144,12 +144,27 @@
 								<div class="listareaBox">
 									<%
 										if (catId != 5) {
+											
+											if(setType==3)
+											{
+												
 									%>
 
 									<a class="listareaBoximg"
+										href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
+										
+										
+										
+										<%
+											}
+											else
+											{
+										%>
+										
+										<a class="listareaBoximg"
 										href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 										<%
-											} else if(catId==5 ) {
+											}} else if(catId==5 ) {
 										%> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 											<%
 												}
@@ -181,20 +196,20 @@
 								<div class="listareaBox">
 
 									<a class="listareaBoximg"
-										onclick="javascript:showWindow('${fromTime}','${toTime}');"> <img
+										> <%-- <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
 										alt="monginis"> <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
-										alt="monginis"></a>
+										alt="monginis"> --%></a>
 
-
+<%--
 									<h2>
 										<c:out value='${menu.menuTitle}' />
 									</h2>
-									<h3>
+								 	<h3>
 										Booking - <c:out value='${fromTime}' /> To 
 											<c:out value='${toTime}' />
-									</h3>
+									</h3> --%>
 									</a>
 								</div>
 

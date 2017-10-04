@@ -12,28 +12,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
 <title>Monginis</title>
-<link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
- 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
 
-<!--rightNav-->
+
 
 <!--selectlistbox-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
 
-<!--selectlistbox-->
 
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    $( "#datepicker" ).datepicker();
   } );
   $( function() {
-    $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    $( "#datepicker2" ).datepicker();
   } );
- 
+  $( function() {
+    $( "#datepicker3" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker4" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker5" ).datepicker();
+  } );
   </script>
 <!--datepicker--> 
 
@@ -44,8 +50,7 @@ select {
 }
 </style>   
 
-
- <script type="text/javascript" src="https://www.google.com/jsapi">
+<script type="text/javascript" src="https://www.google.com/jsapi">
     </script>
     <script type="text/javascript">
 
@@ -118,7 +123,7 @@ select {
 <h2 class="pageTitle">Regular Special Cake Order</h2>
 </div>
 
-<form action="${pageContext.request.contextPath}/orderRegularSpCake"  method="post" class="form-horizontal" name="from_reg_ord" id="validation-form" onsubmit="return validateForm()">
+<form action="${pageContext.request.contextPath}/orderRegularSpCake"  method="post" class="form-horizontal" name="from_reg_ord" id="validation-form" >
 
 
  <!--formBox-->
@@ -129,22 +134,14 @@ select {
 <div class="left">
 
 
-<div class="fullform">
-		<div class="cackleft">Category</div>
-		<div class="cackright"><select name="regular_sp_cake" id="regular_sp_cake" required>
-              <option value="">Select Special Cake</option>
-              
-               <c:forEach items="${categoryResponse}" var="mCategoryWithSubCat">
-               
-              <option value="${mCategoryWithSubCat.subCatId}"><c:out value="${mCategoryWithSubCat.subCatName}" /></option>
-           
-           
-             </c:forEach>				
-            </select>
+<!-- <div class="fullform">
+		<div class="cackleft">Regular Special Type</div>
+		<div class="cackright">
+		
 			</div>
-	</div>
+	</div> -->
     <div class="fullform">
-		<div class="cackleft2">Regular Special Cake</div>
+		<div class="cackleft2">Special Cake</div>
 		<div class="cackrighttexbox"><%-- <input class="texboxitemcode" id="regular_items" value="" name="regular_items" type="text" autocomplete="off"list="itemCategories">
 			
 			 <datalist id="itemCategories">
@@ -153,20 +150,7 @@ select {
 			           <option value="${specialCakeList}"></option>
 		          </c:forEach>
 		     </datalist>  --%>
-		     <select data-placeholder="Select Item"
-
-                 class="form-control chosen"  tabindex="6"
-
-                    id="regSpCkItem" name="regSpCkItem">
-
-            <option value="">Regular Cakes</option>
-
-
-
-
-
-
-</select>
+		    Regular 
 
 	   </div>
      </div>
@@ -174,14 +158,14 @@ select {
 	
 	<div class="fullform">
 		<div class="cackleft">Name</div>
-		<div class="cackright" id="sp_name"><span class="cakename" id="rg_ck_name">- - - -</span></div>
+		<div class="cackright" id="sp_name"><span class="cakename" id="rg_ck_name">  ${spName}</span></div>
 	</div>
  &nbsp; &nbsp; &nbsp;
  
 	<div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
-		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
+		<img src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg' onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
 	&nbsp;
 	
@@ -230,7 +214,35 @@ String fDate1 = formatter1.format(date);%>
 
  <input type="hidden" name="rg_sp_name" id="rg_sp_name" >
  <input type="hidden" name="rg_sp_desc" id="rg_sp_desc" value="NA">
+<%--      //  <c:set var = "frRateCat" scope = "session" value = "${frDetails.getFrRateCat()}"/>
+ --%> <%-- <input type="text" name="frRateCat" id="frRateCat" value="${frDetails.getFrRateCat()}">
+ --%> 
+ <%--
 
+
+<input type="hidden" name="sp_id" id="sp_id" value="${specialCake.spId}">
+
+<input type="hidden" name="sp_min_weight" id="sp_min_weight" value="${specialCake.spMinwt}">
+<input type="hidden" name="sp_max_weight" id="sp_max_weight" value="${specialCake.spMaxwt}">
+<input type="hidden" name="sp_pro_time" id="sp_pro_time" value="${specialCake.spBookb4}">
+<input type="hidden" name="sp_est_del_date" id="sp_est_del_date" value="<%= fDate1>
+<input type="hidden" name="production_time" id="production_time" value="${specialCake.spBookb4} ">
+<input type="hidden" name="sp_code" id="sp_code" value="${specialCake.spCode}">
+<input type="hidden" name="fr_code" id="fr_code" value="4">
+<input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
+<input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
+<input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
+<input type="hidden" name="isFound" id="isFound" value="${isFound}" onchange="onChangeValue()">
+
+<!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
+<input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
+<input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
+<input type="hidden" name="tax_2_amt" id="tax_2_amt" value="0">
+<input type="hidden" name="min_weight" id="min_weight" value="5 kg">
+<input type="hidden" name="max_weight" id="max_weight" value="8 kg">
+<input type="hidden" name="earliest_delivery_date" id="earliest_delivery_date" value="11 Sep 2017"> -->
+ --%>
+<!--centerForm-->	
 
 <div class="center">
 
@@ -239,13 +251,8 @@ String fDate1 = formatter1.format(date);%>
 	         
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Event</div></div>
-		<div class="col2"><select name="sp_event" id="sp_event">
-  
-              <c:forEach items="${eventList.getEvent()}" var="eventList">
-              <option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
-             </c:forEach>
-            </select></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
+		<div class="col2"><div class="col1title">${rspEvents}</div></div>
+		<div class="col3"><div class="col1title">${rspEventsName}</div>
 		</div>
 	</div>
 	
@@ -256,7 +263,7 @@ String fDate1 = formatter1.format(date);%>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Quantity</div></div>
-		   <div class="col2full"><input class="texboxitemcode" placeholder="Quantity" name="sp_qty" type="text" id="sp_qty" ></div>
+		   <div class="col1"> <div class="col1title"> ${qty}</div>    </div>
 	</div>
 		
 	<div class="colOuter"></div>
@@ -266,7 +273,7 @@ String fDate1 = formatter1.format(date);%>
 
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
+		<div class="col2full"><div class="col1title">${rspDeliveryDt}</div> 
 		</div>
 	</div>
 	<div class="colOuter"></div>
@@ -274,7 +281,7 @@ String fDate1 = formatter1.format(date);%>
 	&nbsp;&nbsp;
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Place of Delivery</div></div>
-		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text"></div>
+		<div class="col2full"><div class="col1title">${spPlace}</div> </div>
 	</div>    
 	
 	
@@ -286,21 +293,21 @@ String fDate1 = formatter1.format(date);%>
 	
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">Customer Name</div></div>
-	<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
+	<div class="col2full"><div class="col1title">${rspCustName}</div></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Customer DOB</div></div>
-		<div class="col2full"><input id="datepicker2" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker2" type="text"></div>
+		<div class="col2full"><div class="col1title">${spCustDOB}</div></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Customer Mobile No.</div></div>
-		   <div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
+		   <div class="col2full"><div class="col1title">${rspCustMobileNo}</div></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
@@ -325,60 +332,55 @@ String fDate1 = formatter1.format(date);%>
 <!--rightForm-->	
 <div class="right">
 	<div class="priceBox">
-		<h2 class="inrbox" id="INR">INR - </h2>
-		 <input type="hidden" name="sp_grand" id="sp_grand" value="">   
+		<h2 class="inrbox" id="INR">INR - ${rgCkPrice} </h2>
+		
 		<div class="inrboxmiddle">
 			<ul>
 				
 				<li>
 					<div class="priceLeft">Price </div>
-					<div class="priceRight" id="price"></div>
-					<input name="sp_calc_price" id="sp_calc_price" value="" type="hidden">
+					<div class="priceRight" id="price">${rgCkPrice}</div>
+					
 				</li>
 				
 				<li>
 					<div class="priceLeft">Sub Total </div>
-					<div class="priceRight"id="subtotal"></div>
-					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="">
+					<div class="priceRight"id="subtotal">${rspSubTotal}</div>
 				</li>
 				<li>
 					<div class="priceLeft">GST </div>
-					<div class="priceRight" id="tax3">%</div>
-					<input type="hidden" id="t3" name="t3" value="">
+					<div class="priceRight" id="tax3">${tax}%</div>
 				</li>
 				<li>
 					<div class="priceLeft">GST IN RS.</div>
-					<div class="priceRight" id="gstrs"></div>
-					<input type="hidden" id="gst_rs" name="gst_rs" value="">
+					<div class="priceRight" id="gstrs">${gstRs}</div>
 				</li>
 				<li class="total">
-					<div class="priceLeft" id="mgstamt">AMT- </div>
+					<div class="priceLeft" id="mgstamt">AMT- ${rgGstAmount}</div>
 					
-				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" value="">
 				
-					<div class="priceRight"id="tot">TOTAL-</div>
+					<div class="priceRight"id="tot">TOTAL-${totalAmt}</div>
 					
-					 <input type="hidden" name="total_amt" id="total_amt" value="">
 				</li>
 				
 				<li class="advance">
 					<div class="priceLeft">Advance</div>
-					<div class="priceRight"><input name="adv" id="adv" value="00" class="tableInput" type="text" onkeyup="advanceFun()"></div>
+					<div class="priceRight">${rspAdvanceAmt}</div>
 					
 				</li>
 			</ul>
 		</div>
 		<div class="remainamount">
 			<div class="priceLeft">Remaining Amount</div>
-					<div class="priceRight" id="rmAmt"></div>
-				    <input type="hidden" name="rm_amount" id="rm_amount" value="">
+					<div class="priceRight" id="rmAmt">${rspRemainingAmt}</div>
+				  
 		</div>
 	
 	
 	</div>
 	
 	<div class="order-btn">
-		<input name="" class="btnSubmit" value="SUBMIT" type="submit" onClick="return empty()">
+		<input name="" class="btnSubmit" value="SUBMIT" type="hidden" onClick="return empty()">
 		<input name="" class="btnReset" value="RESET" type="hidden">
 	</div>
 	
@@ -410,14 +412,7 @@ String fDate1 = formatter1.format(date);%>
 
 
 <!--wrapper-end-->
-<script type="text/javascript">
-function ChooseContact(data) {
 
-	document.getElementById ("friendName").value = (data.value)*2;
-
-	}
-
-</script>
 <script>
 $(function() {
     $('#sp_code').change(function(){
@@ -463,7 +458,7 @@ $(document).ready(function() {
  				
 					var len = data.length;
 					
-					$('#regSpCkItem')
+					$('#itemCategories')
 				    .find('option')
 				    .remove()
 				    .end()
@@ -474,18 +469,13 @@ $(document).ready(function() {
 		                } 
 					 */
 					// $("#itemCategories").append($("<option></option>").attr( "value","").text("")
-					
-					 $("#regSpCkItem").append(
-                                $("<option></option>").attr(
-                                    "value",'-1').text('Select Regular SP Cake')
-                            );		
-							
+							 
 					for ( var i = 0; i < len; i++) {
 						
 						/* html += '<option value="' + data[i].menuId + '">'
 								+ data[i].menuTitle + '</option>'; */
 				          
-                        $("#regSpCkItem").append(
+                        $("#itemCategories").append(
                                 $("<option></option>").attr(
                                     "value", data[i].id).text(data[i].itemName)
                             );
@@ -493,18 +483,15 @@ $(document).ready(function() {
 				 	//html += '</option>';
 					/* $('#itemCategories').html(html);
 					$('#itemCategories').form-control chosen('refresh');  */
-					   $("#regSpCkItem").trigger("chosen:updated");
+					   $("#itemCategories").trigger("chosen:updated");
 					 
 				});
 			});
 });
 </script>
-<!-- <!------------------------GETTING FLAVOURS BY SELECTED FLAVOUR TYPE---------------------------->	
  <script type="text/javascript">
 $(document).ready(function() { 
-	
-
-	$('#regSpCkItem').change(
+	$('#itemCategories').change(
 			function() {
 				$.getJSON('${findSpecialCkById}', {
 					itemCategories : $(this).val(),
@@ -630,21 +617,27 @@ function validateForm() {
 </script>	
 <!------------------------------------------------VALIDATIONS---------------------------------------------->	
  <script type="text/javascript">
-function validateForm() {
-    var t1,spId,spCustName,spPlace,spCustMob,spqty;
+function validate() {
+    var t1,spId,spCustName,spPlace,spCustMob,sptype,spFlavour;
     t1 = document.getElementById("event_name").value;
     spPlace = document.getElementById("sp_place").value;
     spCustName=document.getElementById("sp_cust_name").value;
     spCustMob=document.getElementById("sp_cust_mobile_no").value; 
-    spqty=document.getElementById("sp_qty").value; 
-    if (spqty == "") {
-        alert("Please Select Regular Special Cake Quantity");
+    sptype=document.getElementById("sptype").value; 
+    spFlavour=document.getElementById("spFlavour").value;
+    if (sptype == "") {
+        alert("Please Select Special Cake Type");
         
 
         return false;
     };
     
-  
+    if (spFlavour == "") {
+        alert("Please Select Flavour");
+        
+
+        return false;
+    }; 
     if (t1 == "") {
         alert("Please Enter Event Name");
         document.getElementById('event_name').focus();
@@ -674,38 +667,8 @@ function validateForm() {
 
 
 </script> 
-<!------------------------------------------------END------------------------------------------------>	
 
-<script>
 
- document.getElementById("order_photo").onchange = function () {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        // get loaded data and render thumbnail.
-        document.getElementById("image").src = e.target.result;
-    };
-
-    // read the image file as a data URL.
-    reader.readAsDataURL(this.files[0]);
-};
-
-</script>
-<script>
-
- document.getElementById("cust_choice_ck").onchange = function () {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        // get loaded data and render thumbnail.
-        document.getElementById("img").src = e.target.result;
-    };
-
-    // read the image file as a data URL.
-    reader.readAsDataURL(this.files[0]);
-};
-
-</script>
 <script>
 $("isFound").change(function(){
     alert("Special Cake is Not Found");

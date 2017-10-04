@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Main {
 
-  private static SimpleDateFormat inSDF = new SimpleDateFormat("mm/dd/yyyy");
+  private static SimpleDateFormat inSDF = new SimpleDateFormat("dd-mm-yyyy");
   private static SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
 
   public static String formatDate(String inDate) {
