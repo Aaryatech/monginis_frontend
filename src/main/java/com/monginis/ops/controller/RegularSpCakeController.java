@@ -48,7 +48,7 @@ import com.monginis.ops.model.Main;
 import com.monginis.ops.model.RegularSpCake;
 import com.monginis.ops.model.RegularSpCkItemResponse;
 import com.monginis.ops.model.SubCategory;
-  
+   
 @Controller
 public class RegularSpCakeController {
 	
