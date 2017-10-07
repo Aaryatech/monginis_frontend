@@ -36,7 +36,8 @@
 					<div class="title">
 						Goods <span>Return</span>
 					</div></a></li>
-			<li><a href="${pageContext.request.contextPath}/orderHistory"><div class="img">
+			<li><a href="${pageContext.request.contextPath}/orderHistory"><div
+						class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
 							alt="img">
@@ -70,12 +71,15 @@
 
 						<c:forEach var="menu" items="${menuList}" varStatus="loop">
 							<c:set var="menuToTime" value="${menu.toTime}" />
-														<c:set var="menuFromTime" value="${menu.fromTime}" />
-							
+							<c:set var="menuFromTime" value="${menu.fromTime}" />
+
 							<c:set var="frId" value="${menu.frId}" />
-							<c:set var="settingType" value="${menu.isSameDayApplicable}" />
-	<c:set var="catId" value="${menu.catId}" />
- 
+							<c:set var="isSameDayApplicable"
+								value="${menu.isSameDayApplicable}" />
+							<c:set var="settingType" value="${menu.settingType}" />
+
+							<c:set var="catId" value="${menu.catId}" />
+
 							<%
 								ZoneId z = ZoneId.of("Asia/Calcutta");
 									LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
@@ -84,19 +88,19 @@
 									String menuFromTiming = (String) pageContext.getAttribute("menuFromTime");
 
 									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
-							           SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
-							           Date fromTime12Hrs = _24HourSDF.parse(menuFromTiming);
-							           Date toTime12Hrs = _24HourSDF.parse(menuToTiming);
+									SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+									Date fromTime12Hrs = _24HourSDF.parse(menuFromTiming);
+									Date toTime12Hrs = _24HourSDF.parse(menuToTiming);
 
-							           // System.out.println(_24HourDt);
-							         //  System.out.println(_12HourSDF.format(_24HourDt));
-									
-							           pageContext.setAttribute("fromTime", _12HourSDF.format(fromTime12Hrs));
-							           pageContext.setAttribute("toTime", _12HourSDF.format(toTime12Hrs));
+									// System.out.println(_24HourDt);
+									//  System.out.println(_12HourSDF.format(_24HourDt));
 
-									
-									int setType = (int) pageContext.getAttribute("settingType");
+									pageContext.setAttribute("fromTime", _12HourSDF.format(fromTime12Hrs));
+									pageContext.setAttribute("toTime", _12HourSDF.format(toTime12Hrs));
+
+									int isSameDayApplicable = (int) pageContext.getAttribute("isSameDayApplicable");
 									int catId = (int) pageContext.getAttribute("catId");
+									int settingType = (int) pageContext.getAttribute("settingType");
 
 									System.out.println("\n\n\nMenu To Timing" + menuToTiming);
 									System.out.println("Menu From Timing" + menuFromTiming);
@@ -104,85 +108,126 @@
 									LocalTime toTime = LocalTime.parse(menuToTiming);
 									LocalTime fromTime = LocalTime.parse(menuFromTiming);
 
-									
 									Boolean isLate = now.isAfter(toTime);
-									Boolean isEarly=now.isBefore(fromTime);
+									Boolean isEarly = now.isBefore(fromTime);
 
 									System.out.println("\nLocal time" + now + "Is Early :" + isLate);
 									System.out.println("Local time" + now + "Is Late :" + isLate);
 
-								/* 	try {
-									    final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
-									    final Date dateObj = sdf.parse(time);
-									    System.out.println(dateObj);
-									    System.out.println(new SimpleDateFormat("K:mm").format(dateObj));
-									} catch (final ParseException e) {
-									    e.printStackTrace();
-									} */
-								Boolean isSameDay= fromTime.isBefore(toTime);
-								Boolean isValid=false;
-								
-								if(isSameDay){
-									
-									if(!isLate && !isEarly){
-										
-										isValid=true;
+									/* 	try {
+										    final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+										    final Date dateObj = sdf.parse(time);
+										    System.out.println(dateObj);
+										    System.out.println(new SimpleDateFormat("K:mm").format(dateObj));
+										} catch (final ParseException e) {
+										    e.printStackTrace();
+										} */
+									Boolean isSameDay = fromTime.isBefore(toTime);
+									Boolean isValid = false;
+
+									if (isSameDay) {
+
+										if (!isLate && !isEarly) {
+
+											isValid = true;
+										}
+									} else {
+
+										if (fromTime.isBefore(now) && now.isAfter(toTime)) {
+											isValid = true;
+										}
 									}
-								}else{
-									
-									if(fromTime.isBefore(now) && now.isAfter(toTime)){
-										isValid=true;
-									}
-								}
-								
-									
+
 									if (isValid) {
 							%>
 
 							<li>
+								<%
+									if (catId != 5) {
 
-								<div class="listareaBox">
-									<%
-										if (catId != 5) {
-											
-											if(setType==3)
-											{
-												
-									%>
-
+												if (isSameDayApplicable == 3) {
+													// if
+													if (settingType != 1) {
+								%>
+								<div class="listareaBoxBlue">
 									<a class="listareaBoximg"
 										href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
-										
-										
-										
-										<%
-											}
-											else
-											{
-										%>
-										
-										<a class="listareaBoximg"
-										href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-										<%
-											}} else if(catId==5 ) {
-										%> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
-											<%
-												}
-											%> <img
-											src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
-											alt="monginis"> <img
-											src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
-											alt="monginis">
-									</a>
-										<h2>
-											<c:out value='${menu.menuTitle}' />
-										</h2>
-										<h3>
-											Booking -  <c:out value='${fromTime}' /> To 
-											<c:out value='${toTime}' />
-										</h3>
-								</div>
 
+
+
+										<%
+											//else
+															} else {
+										%>
+										<div class="listareaBox">
+											<a class="listareaBoximg"
+												href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
+
+												<%
+													}
+
+																} else {
+																	if (settingType != 1)
+
+																	{
+
+																		//if
+												%>
+												<div class="listareaBoxBlue">
+													<a class="listareaBoximg"
+														href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
+														<%
+															} else {
+														%>
+														<div class="listareaBox">
+															<a class="listareaBoximg"
+																href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
+																<%
+																	}
+
+																				}
+																			} else if (catId == 5) {
+
+																				// if
+																				if (settingType != 1)
+																				{
+																				
+																%> 
+																<div class="listareaBoxBlue">
+																
+																<a class="listareaBoximg"
+																href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
+																	<%
+																	//else
+																	}else{
+																		%> 
+																		<div class="listareaBox">
+																		
+																		<a class="listareaBoximg"
+																		href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
+																			<%
+																		
+																	}
+												
+																		
+
+																				}
+																	%> <img
+																	src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
+																	alt="monginis"> <img
+																	src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
+																	alt="monginis">
+															</a>
+																<h2>
+																	<c:out value='${menu.menuTitle}' />
+																</h2>
+																<h3>
+																	Booking -
+																	<c:out value='${fromTime}' />
+																	To
+																	<c:out value='${toTime}' />
+																</h3>
+														</div>
 							</li>
 
 
@@ -195,14 +240,13 @@
 
 								<div class="listareaBox">
 
-									<a class="listareaBoximg"
-										> <%-- <img
+									<a class="listareaBoximg"> <%-- <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
 										alt="monginis"> <img
 										src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
 										alt="monginis"> --%></a>
 
-<%--
+									<%--
 									<h2>
 										<c:out value='${menu.menuTitle}' />
 									</h2>
@@ -340,8 +384,8 @@
 						<div class="profile">
 							<div class="profilefildset">City</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="City Name" name="fr_city"
-									type="text">
+								<input class="texboxitemcode" placeholder="City Name"
+									name="fr_city" type="text">
 							</div>
 						</div>
 
@@ -361,16 +405,16 @@
 						<div class="profile">
 							<div class="profilefildset">Mobile No.</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="9876543201" name="fr_mobile"
-									type="text">
+								<input class="texboxitemcode" placeholder="9876543201"
+									name="fr_mobile" type="text">
 							</div>
 						</div>
 
 						<div class="profile">
 							<div class="profilefildset">Owner Name</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Owner Name" name="fr_owner"
-									type="text">
+								<input class="texboxitemcode" placeholder="Owner Name"
+									name="fr_owner" type="text">
 							</div>
 						</div>
 
@@ -462,7 +506,8 @@
 
 	<script type="text/javascript">
 		function showWindow(fromTime, toTime) {
-			confirm("Timeout:\n You can place order from " + fromTime+" To "+toTime);
+			confirm("Timeout:\n You can place order from " + fromTime + " To "
+					+ toTime);
 		}
 	</script>
 

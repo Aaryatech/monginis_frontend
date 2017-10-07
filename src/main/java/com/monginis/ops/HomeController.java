@@ -265,7 +265,7 @@ public class HomeController {
 
 			// Managing session
 			HttpSession session = request.getSession();
-			session.setAttribute("menuList", getFrMenus.getFrMenus());
+			session.setAttribute("menuList", filteredFrMenuList);
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 
 			loginResponse.getFranchisee()
@@ -274,7 +274,7 @@ public class HomeController {
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
-			model.addObject("menuList", getFrMenus.getFrMenus());
+			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 		}

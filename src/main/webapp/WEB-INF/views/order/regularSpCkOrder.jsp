@@ -155,11 +155,12 @@ select {
 		     </datalist>  --%>
 		     <select data-placeholder="Select Item"
 
-                 class="form-control chosen"  tabindex="6"
+                 tabindex="6"
 
-                    id="regSpCkItem" name="regSpCkItem">
+                    id="regSpCkItem" name="regSpCkItem"required>
 
-            <option value="">Regular Cakes</option>
+                         <option value="">Select Regular SP Cake</option>
+           
 
 
 
@@ -245,7 +246,7 @@ String fDate1 = formatter1.format(date);%>
               <option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
              </c:forEach>
             </select></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
+		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name" required>
 		</div>
 	</div>
 	
@@ -256,7 +257,7 @@ String fDate1 = formatter1.format(date);%>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Quantity</div></div>
-		   <div class="col2full"><input class="texboxitemcode" placeholder="Quantity" name="sp_qty" type="text" id="sp_qty" ></div>
+		   <div class="col2full"><input class="texboxitemcode" placeholder="" name="sp_qty" type="text" id="sp_qty" onkeyup="calculatePerQuantity()" required></div>
 	</div>
 		
 	<div class="colOuter"></div>
@@ -266,7 +267,7 @@ String fDate1 = formatter1.format(date);%>
 
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
+		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="datepicker" type="text" required>
 		</div>
 	</div>
 	<div class="colOuter"></div>
@@ -274,7 +275,7 @@ String fDate1 = formatter1.format(date);%>
 	&nbsp;&nbsp;
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Place of Delivery</div></div>
-		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text"></div>
+		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text" required></div>
 	</div>    
 	
 	
@@ -286,21 +287,21 @@ String fDate1 = formatter1.format(date);%>
 	
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">Customer Name</div></div>
-	<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
+	<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Customer DOB</div></div>
-		<div class="col2full"><input id="datepicker2" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker2" type="text"></div>
+		<div class="col2full"><input id="datepicker2" class="texboxitemcode texboxcal" placeholder="Customer DOB" name="datepicker2" type="text" required></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Customer Mobile No.</div></div>
-		   <div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
+		   <div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required></div>
 	</div>
 	
 	&nbsp;&nbsp;<div class="colOuter"></div>
@@ -388,6 +389,11 @@ String fDate1 = formatter1.format(date);%>
 <input type="hidden" id="dbAdonRate" name="dbAdonRate">
  <input type="hidden" id="dbPrice" name="dbPrice"  value="">
 <input type="hidden" id="sp_id" name="sp_id"  value="">
+
+<input type="hidden" id="frRateCat" name="frRateCat"  value="${frDetails.getFrRateCat()}">
+<input type="hidden" id="rate" name="rate"  value="">
+<input type="hidden" id="MRP" name="MRP"  value="">
+
 </form>
 <!--rightForm-->
 
@@ -517,20 +523,25 @@ $(document).ready(function() {
 					var frRateCat = $("#frRateCat").val();
 					//alert(frRateCat)
 					if(frRateCat==1)
-					{
+					{  
 						data.itemMrp3=data.itemMrp1;
+						document.getElementById("rate").setAttribute('value',data.itemRate1);
 					
 					}
 					else if(frRateCat==2)
 					{
 						data.itemMrp3=data.itemMrp2;
-
+						document.getElementById("rate").setAttribute('value',data.itemRate2);
 					}
 					else
 					{
 						data.itemMrp3=data.itemMrp3;
+						document.getElementById("rate").setAttribute('value',data.itemRate3);
 
 					}	
+					document.getElementById("MRP").setAttribute('value',data.itemMrp3);
+					
+					
 					    $("#rg_ck_name").text(data.itemName);
 					    document.getElementById("rg_sp_name").setAttribute('value',data.itemName); 
 					    
@@ -560,6 +571,9 @@ $(document).ready(function() {
 						
 						$('#rmAmt').html(data.itemMrp3);
 						document.getElementById("rm_amount").setAttribute('value',data.itemMrp3);
+						
+						document.getElementById("sp_qty").setAttribute('value',1);
+
 
 					/* for ( var i = 0; i < len; i++) {
 						html += '<option value="' + data[i].spfId + '">'
@@ -573,7 +587,7 @@ $(document).ready(function() {
 			});
 });
 </script>
-<!-- <!------------------------CALLING FUNCTION WHEN WEIGHT CHANGE---------------------------------------->	
+<!-- <!-- ----------------------CALLING FUNCTION WHEN WEIGHT CHANGE--------------------------------------	
 
 <script type="text/javascript">
 		function onChange(itemCategories) {
@@ -607,7 +621,7 @@ $(document).ready(function() {
 			document.getElementById("rm_amount").setAttribute('value',grandTotal);
 			
 	}</script> 
-
+ -->
 <!-----------------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------->	
 <script type="text/javascript">
 function advanceFun() {
@@ -618,6 +632,80 @@ function advanceFun() {
 }
 </script>
 <!------------------------------------------------END------------------------------------------------>	
+
+
+<script type="text/javascript">
+function calculatePerQuantity() {
+	var qty=$("#sp_qty").val();
+	
+	var price=$("#MRP").val();
+	
+	var tax=$("#t3").val();
+	
+	var calcPrice=(qty*price);
+	
+	var calGstRs=(calcPrice*tax)/100;
+	
+	var mGstAmt=calcPrice-calGstRs;
+
+	
+	
+	
+	
+	
+	
+	
+	$("#price").text(calcPrice);
+	document.getElementById("sp_calc_price").setAttribute('value',calcPrice);
+
+ $("#subtotal").text(calcPrice);  
+	document.getElementById("sp_sub_total").setAttribute('value',calcPrice);
+
+	 $("#INR").text('INR-'+calcPrice);  
+	document.getElementById("sp_grand").setAttribute('value',calcPrice);
+
+	$("#tax3").html(tax+' %');
+	document.getElementById("t3").setAttribute('value',tax);
+
+$('#gstrs').html(calGstRs); 
+document.getElementById("gst_rs").setAttribute('value',calGstRs);
+
+$('#tot').html('TOTAL-'+calcPrice);
+document.getElementById("total_amt").setAttribute('value',calcPrice);
+
+
+$('#mgstamt').html('AMT-'+mGstAmt);  
+document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
+
+$('#rmAmt').html(calcPrice);
+document.getElementById("rm_amount").setAttribute('value',calcPrice);
+	
+	
+	
+	
+	
+var advance=$("#adv").val();
+var rmamt =$("#total_amt").val();
+
+$('#rmAmt').html(rmamt-advance);
+document.getElementById("rm_amount").setAttribute('value',rmamt-advance);
+	
+
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 function validateForm() {
     var x = document.forms["form"]["sp_code"].value;
@@ -691,7 +779,7 @@ function validateForm() {
 };
 
 </script>
-<script>
+<!-- <script>
 
  document.getElementById("cust_choice_ck").onchange = function () {
     var reader = new FileReader();
@@ -705,7 +793,7 @@ function validateForm() {
     reader.readAsDataURL(this.files[0]);
 };
 
-</script>
+</script> -->
 <script>
 $("isFound").change(function(){
     alert("Special Cake is Not Found");

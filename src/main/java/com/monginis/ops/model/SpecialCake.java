@@ -71,8 +71,18 @@ public class SpecialCake {
 	
 	private int spRate3;
 
+	private int isSlotUsed;
 	
 	
+	
+	
+	
+	public int getIsSlotUsed() {
+		return isSlotUsed;
+	}
+	public void setIsSlotUsed(int isSlotUsed) {
+		this.isSlotUsed = isSlotUsed;
+	}
 	public String getSpDesc() {
 		return spDesc;
 	}
@@ -279,7 +289,8 @@ public class SpecialCake {
 				+ orderQty + ", orderDiscount=" + orderDiscount + ", isCustChoiceCk=" + isCustChoiceCk
 				+ ", isAddonRateAppli=" + isAddonRateAppli + ", mrpRate1=" + mrpRate1 + ", mrpRate2=" + mrpRate2
 				+ ", mrpRate3=" + mrpRate3 + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3
-				+ "]";
+				+ ", isSlotUsed=" + isSlotUsed + "]";
 	}
+	
 
 	}

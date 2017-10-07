@@ -257,7 +257,13 @@ $("#tech").change(function() {
     
 	<div class="fullform">
 		<div class="cackleft">Special Instructions</div>
-		<div class="cackright">${specialCake.spInstructions}</div>
+		<div class="cackright"><c:choose>
+            <c:when test="${specialCake.spInstructions==''}">NA</c:when> 
+            
+            <c:otherwise>
+                   ${specialCake.spInstructions}
+            </c:otherwise>
+        </c:choose></div>
 	</div>
 	
 	<div class="fullform">
@@ -272,7 +278,14 @@ $("#tech").change(function() {
        
        <div class="fullform">
 		<div class="cackleft"> Customer DOB</div>
-		<div class="cackright">${specialCake.spCustDOB}</div>
+		<div class="cackright">
+		<c:choose>
+            <c:when test="${specialCake.spCustDOB==''}">NA</c:when> 
+            
+            <c:otherwise>
+                    ${specialCake.spCustDOB}
+            </c:otherwise>
+        </c:choose></div>
         </div>
         
         <div class="fullform">

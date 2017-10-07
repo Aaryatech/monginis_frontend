@@ -17,113 +17,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
 <!--rightNav-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
 
-jQuery(document).ready(function(){
-	    jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
 
-</script>
-<!-- <script type="text/javascript">
-
-$( "#sp_code" ).sp_code();
-$( "#toggle" ).on( "click", function() {
-  $( "#sp_code" ).toggle();
-});
-</script> -->
-<script type="text/javascript">
-var result='';
-$(document).ready(function(){  
-  $('input[type=text]').focus(function(){
-    $('#categories option').each(function(){
-        result=result+" "+$(this).val();
-    });
-    
-    $('#result').show().html(result);
-    $('input[type=text]').unbind('focus');
-  });
-  $('input[type=text]').blur(function(){
-    $('#result').hide();  
-    $('input[type=text]').focus(function(){
-      $('#result').show();
-    });
- 
-  });  
-});
-</script>
 <!--rightNav-->
 
 <!--selectlistbox-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
-<!-- <script>
-    function createByJson() {
-	     var jsonData = [					
-					{description:'Choos your payment gateway', value:'', text:'Payment Gateway'},					
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Amex-56.png', description:'My life. My card...', value:'amex', text:'Amex'},
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Discover-56.png', description:'It pays to Discover...', value:'Discover', text:'Discover'},
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Mastercard-56.png', title:'For everything else...', description:'For everything else...', value:'Mastercard', text:'Mastercard'},
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Cash-56.png', description:'Sorry not available...', value:'cash', text:'Cash on devlivery', disabled:true},
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Visa-56.png', description:'All you need...', value:'Visa', text:'Visa'},
-					{image:'${pageContext.request.contextPath}/resources/images/msdropdown/icons/Paypal-56.png', description:'Pay and get paid...', value:'Paypal', text:'Paypal'}
-					];
-	$("#byjson").msDropDown({byJson:{data:jsonData, name:'payments2'}}).data("dd");
-}
-$(document).ready(function(e) {		
-	//no use
-	try {
-		var pages = $("#pages").msDropdown({on:{change:function(data, ui) {
-												var val = data.value;
-												if(val!="")
-													window.location = val;
-											}}}).data("dd");
 
-		var pagename = document.location.pathname.toString();
-		pagename = pagename.split("/");
-		pages.setIndexByValue(pagename[pagename.length-1]);
-		$("#ver").html(msBeautify.version.msDropdown);
-	} catch(e) {
-		//console.log(e);	
-	}
-	
-	$("#ver").html(msBeautify.version.msDropdown);
-		
-	//convert
-	$("select").msDropdown({roundedBorder:false});
-	createByJson();
-	$("#tech").data("dd");
-});
-function showValue(h) {
-	console.log(h.name, h.value);
-}
-$("#tech").change(function() {
-	console.log("by jquery: ", this.value);
-})
-//
-</script> -->
 <!--selectlistbox-->
 
 <!--datepicker-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker2" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker3" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker4" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker5" ).datepicker();
-  } );
-  </script>
+
 <!--datepicker--> 
 
 <style type="text/css">
@@ -177,6 +81,7 @@ select {
 <div class="wrapper">
 
 <!--topHeader-->
+<c:url var="findAvailableSlot" value="/getAvailableSlot" />
 <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" />
@@ -316,7 +221,7 @@ String fDate1 = formatter1.format(date);
 
 
 <!----------------------------------------Form-------------------------------------------------->
-<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data"onsubmit="return validate()">
 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 
@@ -339,10 +244,15 @@ String fDate1 = formatter1.format(date);
 <!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
 <input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
 <input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
-<input type="hidden" name="tax_2_amt" id="tax_2_amt" value="0">
+
 <input type="hidden" name="min_weight" id="min_weight" value="5 kg">
 <input type="hidden" name="max_weight" id="max_weight" value="8 kg">
 <input type="hidden" name="earliest_delivery_date" id="earliest_delivery_date" value="11 Sep 2017"> -->
+
+<input type="hidden" name="isCustChoiceCk" id="isCustChoiceCk" value="${specialCake.isCustChoiceCk}">
+<input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
+<input type="hidden" name="isSlotUsed" id="isSlotUsed" value="${specialCake.isSlotUsed}">
+
 
 <!--centerForm-->	
 
@@ -492,8 +402,9 @@ String fDate1 = formatter1.format(date);
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="<%=fDate %>"  name="datepicker" type="text" >
-		</div>
+		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" >
+		</div><div class="col2"> 
+      <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	</div>
 	
 	
@@ -515,7 +426,7 @@ String fDate1 = formatter1.format(date);
 		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
 		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
 	</div>
-	
+	 <span class="cakename"id="slotsNotAvailable"></span>
 	
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="hidden"id="sp_booked_for_name"></div>
@@ -537,8 +448,8 @@ String fDate1 = formatter1.format(date);
 <!--rightForm-->	
 <div class="right">
 	<div class="priceBox">
-		<h2 class="inrbox" id="INR">INR - ${sprRate}</h2>
-		 <input type="hidden" name="sp_grand" id="sp_grand" value="${sprRate}">   
+		<h2 class="inrbox" id="INR">INR - ${(sprRate*specialCake.spMinwt)}</h2>
+		 <input type="hidden" name="sp_grand" id="sp_grand" value="${(sprRate*specialCake.spMinwt)}">   
 		<div class="inrboxmiddle">
 			<ul>
 				<li>
@@ -547,8 +458,8 @@ String fDate1 = formatter1.format(date);
 				</li>
 				<li>
 					<div class="priceLeft">Price </div>
-					<div class="priceRight" id="price">${sprRate}</div>
-					<input name="sp_calc_price" id="sp_calc_price" value="${sprRate}" type="hidden">
+					<div class="priceRight" id="price">${sprRate*specialCake.spMinwt}</div>
+					<input name="sp_calc_price" id="sp_calc_price" value="${sprRate*specialCake.spMinwt}" type="hidden">
 				</li>
 				<li>
 					<div class="priceLeft">Add Rate </div>
@@ -557,27 +468,27 @@ String fDate1 = formatter1.format(date);
 				</li>
 				<li>
 					<div class="priceLeft">Sub Total </div>
-					<div class="priceRight"id="subtotal">${sprRate}</div>
-					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="${sprRate}">
+					<div class="priceRight"id="subtotal">${sprRate*specialCake.spMinwt}</div>
+					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="${sprRate*specialCake.spMinwt}">
 				</li>
 				<li>
 					<div class="priceLeft">GST </div>
-					<div class="priceRight" id="tax3">${specialCake.spTax3}%</div>
-					<input type="hidden" id="t3" name="t3" value="${specialCake.spTax3}">
+					<div class="priceRight" id="tax3"> ${specialCake.spTax1+specialCake.spTax2} </div>
+					<input type="hidden" id="t3" name="t3" value="${specialCake.spTax1+specialCake.spTax2}">
 				</li>
 				<li>
 					<div class="priceLeft">GST IN RS.</div>
-					<div class="priceRight" id="gstrs">${sprRate*(specialCake.spTax3)/100}</div>
-					<input type="hidden" id="gst_rs" name="gst_rs" value="${sprRate*(specialCake.spTax3)/100}">
+					<div class="priceRight" id="gstrs">${(sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100}</div>
+					<input type="hidden" id="gst_rs" name="gst_rs" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100}">
 				</li>
 				<li class="total">
-					<div class="priceLeft" id="mgstamt">AMT- ${sprRate-(sprRate*specialCake.spTax3/100)}</div>
+					<div class="priceLeft" id="mgstamt">AMT- ${(sprRate*specialCake.spMinwt)-((sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100)}</div>
 					
-				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" type="hidden" value="${sprRate-(sprRate*specialCake.spTax3/100)}">
+				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" type="hidden" value="${(sprRate*specialCake.spMinwt)-((sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100)}">
 				
-					<div class="priceRight"id="tot">TOTAL-${sprRate}</div>
+					<div class="priceRight"id="tot">TOTAL-${(sprRate*specialCake.spMinwt)}</div>
 					
-					 <input type="hidden" name="total_amt" id="total_amt" value="${sprRate}">
+					 <input type="hidden" name="total_amt" id="total_amt" value="${(sprRate*specialCake.spMinwt)}">
 				</li>
 				
 				<li class="advance">
@@ -589,21 +500,24 @@ String fDate1 = formatter1.format(date);
 		</div>
 		<div class="remainamount">
 			<div class="priceLeft">Remaining Amount</div>
-					<div class="priceRight" id="rmAmt">${sprRate}</div>
-				    <input type="hidden" name="rm_amount" id="rm_amount" value="${sprRate}">
+					<div class="priceRight" id="rmAmt">${(sprRate*specialCake.spMinwt)}</div>
+				    <input type="hidden" name="rm_amount" id="rm_amount" value="${(sprRate*specialCake.spMinwt)}">
 		</div>
 	
 	
 	</div>
 	
 	<div class="order-btn">
-		<input name="" class="btnSubmit" value="SUBMIT" type="submit" onClick="return empty()">
+		<input name="" class="btnSubmit" value="SUBMIT"  type="button" id="click">
 		<input name="" class="btnReset" value="RESET" type="hidden">
 	</div>
 	
 </div>
 <input type="hidden" id="t1" name="t1" value="${specialCake.spTax1}">
 <input type="hidden" id="t2" name="t2" value="${specialCake.spTax2}">
+<input type="hidden" id="t1amt" name="t1amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1)/100}">
+<input type="hidden" id="t2amt" name="t2amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax2)/100}">
+
 <input type="hidden" id="dbAdonRate" name="dbAdonRate">
  <input type="hidden" id="dbPrice" name="dbPrice"  value="${sprRate}">
 <input type="hidden" id="sp_id" name="sp_id"  value="${specialCake.spId}">
@@ -670,6 +584,19 @@ function closeNav3() {
 
 </script>
 
+<script type="text/javascript">
+
+$(document).ready(function() { 
+	
+		
+	
+});
+
+
+</script>
+
+
+
 <!------------------------GETTING FLAVOURS BY SELECTED FLAVOUR TYPE---------------------------->	
 <script type="text/javascript">
 $(document).ready(function() { 
@@ -703,6 +630,9 @@ $(document).ready(function() {
 			var wt = $('#spwt').find(":selected").text();
 			var flavourAdonRate =$("#dbAdonRate").val();
 			var tax3 = parseFloat($("#t3").val());
+			var tax1 = parseFloat($("#t1").val());
+			var tax2 = parseFloat($("#t2").val());
+			
 			
 			var totalCakeRate = wt*dbRate;
 			var totalFlavourAddonRate = wt*flavourAdonRate;
@@ -730,6 +660,12 @@ $(document).ready(function() {
 			$('#rmAmt').html(grandTotal);
 			document.getElementById("rm_amount").setAttribute('value',grandTotal);
 			
+			$('#t1amt').html((grandTotal*tax1)/100);
+			document.getElementById("t1amt").setAttribute('value',(grandTotal*tax1)/100);
+			
+			$('#t2amt').html((grandTotal*tax2)/100);
+			document.getElementById("t2amt").setAttribute('value',(grandTotal*tax2)/100);
+			
 	}</script> 
 <!------------------------------------------------END------------------------------------------------>	
 <!------------------------CALLING FUNCTION WHEN FLAVOUR CHANGE FOR GETTING ADDON RATE---------------->		
@@ -752,7 +688,10 @@ $(document).ready(function() {
 					
 					var flavourAdonRate =data.spfAdonRate;
 					
-					var tax3 = $("#t3").val();
+					var tax3 = parseFloat($("#t3").val());
+					var tax1 = parseFloat($("#t1").val());
+					var tax2 = parseFloat($("#t2").val());
+					
 					var price = $("#dbPrice").val();
 				
 					var totalFlavourAddonRate= wt*flavourAdonRate;
@@ -773,6 +712,12 @@ $(document).ready(function() {
 						$('#rmAmt').html(grandTotal);
 						document.getElementById("rm_amount").setAttribute('value',grandTotal);
 						
+						$('#t1amt').html((grandTotal*tax1)/100);
+						document.getElementById("t1amt").setAttribute('value',(grandTotal*tax1)/100);
+						
+						$('#t2amt').html((grandTotal*tax2)/100);
+						document.getElementById("t2amt").setAttribute('value',(grandTotal*tax2)/100);
+						
 						
 						var gstInRs=(grandTotal*tax3)/100;
 						$('#gstrs').html(gstInRs); 
@@ -780,6 +725,8 @@ $(document).ready(function() {
 						var mGstAmt=grandTotal-gstInRs;
 						$('#mgstamt').html('AMT-'+mGstAmt);  
 						document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
+						
+						
 					
 			
 				});
@@ -791,7 +738,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 function advanceFun() {
 	var advance=$("#adv").val();
-	var rmamt =$("#tot").text();
+	var rmamt =$("#total_amt").val();
 	$('#rmAmt').html(rmamt-advance);document.getElementById("rm_amount").setAttribute('value',rmamt-advance);
 }
 </script>
@@ -809,6 +756,8 @@ function validateForm() {
 <!------------------------------------------------VALIDATIONS---------------------------------------------->	
  <script type="text/javascript">
 function validate() {
+	
+	
     var t1,spId,spCustName,spPlace,spCustMob,sptype,spFlavour;
     t1 = document.getElementById("event_name").value;
     spPlace = document.getElementById("sp_place").value;
@@ -816,44 +765,43 @@ function validate() {
     spCustMob=document.getElementById("sp_cust_mobile_no").value; 
     sptype=document.getElementById("sptype").value; 
     spFlavour=document.getElementById("spFlavour").value;
+    
+    var isValid=true;
+    
     if (sptype == "") {
         alert("Please Select Special Cake Type");
         
-
-        return false;
-    };
-    
-    if (spFlavour == "") {
+      
+        isValid= false;
+    }else  if (spFlavour == "") {
         alert("Please Select Flavour");
         
-
-        return false;
-    }; 
-    if (t1 == "") {
+  
+        isValid=false;
+    }else  if (t1 == "") {
         alert("Please Enter Event Name");
         document.getElementById('event_name').focus();
-        return false;
-    };
-    
-    if (spPlace == "") {
+        
+        isValid=false;
+    }else if (spPlace == "") {
         alert("Please Enter Place of delivery");
         document.getElementById('sp_place').focus();
 
-        return false;
-    };
-   if (spCustName == "") {
+        isValid= false;
+    }else if (spCustName == "") {
         alert("Please Enter Customer Name");
         document.getElementById('sp_cust_name').focus();
-        return false;
-    };
-   
-     
-    if (spCustMob == "") {
+
+        isValid= false;
+    }else  if (spCustMob == "") {
         alert("Please Enter Customer Mobile Number");
         document.getElementById('sp_cust_mobile_no').focus();
-
-        return false;
+   
+        isValid= false;
     };
+    
+    return isValid;
+ 
 }
 
 
@@ -890,6 +838,111 @@ function validate() {
 };
 
 </script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' ,
+        onSelect: function(date) {
+           
+      	    	var isSlotUsed =$("#isSlotUsed").val();         
+
+      	    	var produTime =$("#sp_pro_time").val();         
+      	     
+
+                  if(isSlotUsed=='1')
+                  	{
+      			      $.getJSON('${findAvailableSlot}', {
+      				  deldate : date,
+      				  prodTime: produTime,
+      			      ajax : 'true'
+      			} , function(availableSlots) {
+      				
+      			
+      				
+      				if(availableSlots>0)
+      					{
+      					
+      					$("#slotUsedSpan").html(availableSlots +' Slots Available');
+      					
+      					}
+      				else
+      					{
+      				
+      					$("#slotUsedSpan").html('No Slots Available');
+      				
+      					
+      					}
+      				
+      			
+      			});
+             }
+         }
+      });
+  } );
+  $( function() {
+    $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
+  $( function() {
+    $( "#datepicker3" ).datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
+  $( function() {
+    $( "#datepicker4" ).datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
+  $( function() {
+    $( "#datepicker5" ).datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
+  </script>
+  
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+
+$(document).ready(function () {
+    $("#click").click(function ()  {
+      	       
+      	       var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+      	      
+      	    	var isSlotUsed =$("#isSlotUsed").val();         
+      	    	
+      	    	var produTime =$("#sp_pro_time").val();         
+      	    
+                  if(isSlotUsed=='1')
+                  	{
+              
+      			      $.getJSON('${findAvailableSlot}', {
+      				  deldate : date,
+      				  prodTime: produTime,
+      			      ajax : 'true'
+      			} , function(availableSlots) {
+      				
+      				
+      				
+      				if(availableSlots>0)
+      					{
+      					$("#slotUsedSpan").html(availableSlots +' Slots Available');
+      				var valid=	validate();
+      				
+      				
+      				if(valid){
+      					document.forms["from_ord"].submit();
+      				}	
+      					
+      					}
+      				else
+      					{
+      				
+      					$("#slotsNotAvailable").html('No Slots Available');
+      					alert("Sorry, No Slots Available !");
+      					}
+      				
+      			
+      			});
+             }
+         });
+});
+  
+</script> 
+
 <script>
 $("isFound").change(function(){
     alert("Special Cake is Not Found");

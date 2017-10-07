@@ -41,6 +41,7 @@ import com.monginis.ops.model.Flavour;
 import com.monginis.ops.model.FlavourList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.Main;
 import com.monginis.ops.model.SearchSpCakeResponse;
 import com.monginis.ops.model.SpCakeOrder;
 import com.monginis.ops.model.SpCakeOrderRes;
@@ -307,6 +308,9 @@ public class SpCakeController {
 			
 	
 		flavoursList = flavourList.getFlavour();
+		
+	     System.out.println("FLAVOURS:"+flavoursList.toString());
+
 
 		System.out.println("DB Sptype" + flavoursList.get(0).getSpType());
 
@@ -350,7 +354,6 @@ public class SpCakeController {
 				filteredFlavour = flavour;
 			}
 		}
-
 		return filteredFlavour;
 	}
     //--------------------------------------END------------------------------------
@@ -358,9 +361,9 @@ public class SpCakeController {
 	
     //------------------------Order Special Cake Process----------------------------
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
-	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("order_photo") MultipartFile orderPhoto,
-			@RequestParam("cust_choice_ck") MultipartFile custChoiceCk) throws JsonProcessingException {
+	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response ,@RequestParam(value="order_photo",required=false) MultipartFile orderPhoto,
+			@RequestParam(value="cust_choice_ck",required=false) MultipartFile custChoiceCk
+			) throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("order/orderRes");
 
@@ -475,10 +478,11 @@ public class SpCakeController {
 		String tax2 = request.getParameter("t2");
 		System.out.println("28" + tax2);
 
-		String tax1Amt = request.getParameter("t1");
+		String tax1Amt = request.getParameter("t1amt");
 		System.out.println("29" + tax1Amt);
-
-		String tax2Amt = request.getParameter("t2");// tax2 amt
+		
+	
+		String tax2Amt = request.getParameter("t2amt");// tax2 amt
 		System.out.println("30" + tax2Amt);
 
 		String rmAmount = request.getParameter("rm_amount");
@@ -496,21 +500,31 @@ public class SpCakeController {
 		String isCustCh = request.getParameter("isCustCh");
 
 		String productionTime = request.getParameter("production_time");
-
+		int isSlotUsed=0;
+        isSlotUsed = Integer.parseInt(request.getParameter("isSlotUsed"));    //isSlotUsed
+		
 		String spImage = request.getParameter("prevImage");
+		
+		//---------isCustSpCk And isSpPhoUpload Special Cake Value(1/0)-------
+		int isCustSpCk = Integer.parseInt(request.getParameter("isCustChoiceCk"));
+		int isSpPhoUpload = Integer.parseInt(request.getParameter("spPhoUpload"));
+
+		
 		String custChCk = "";
 		String orderPhoto1 = "";
 
-		if (!orderPhoto.getOriginalFilename().equalsIgnoreCase("")) {
-
+		if (isSpPhoUpload==1) {
+            
 			System.out.println("Empty image");
 			orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
 		}
 
-		if (!custChoiceCk.getOriginalFilename().equalsIgnoreCase("")) {
+		if (isCustSpCk==1) {
 
 			System.out.println("Empty image");
 			custChCk = ImageS3Util.uploadPhotoCakeImage(custChoiceCk);
+			
+			orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
 		}
 
 		spCakeOrder = new SpCakeOrder();
@@ -519,7 +533,9 @@ public class SpCakeController {
 		spCakeOrder.setFrId(frId);
 
 		// -----Order Date And Production Date------
-
+			
+		
+	Date delDate=	Main.stringToDate(spDeliveryDt);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date currentDate = new Date();
 
@@ -530,11 +546,19 @@ public class SpCakeController {
 		// Current Date
 		Date orderDate = c.getTime();
 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(delDate);
+
+		
+		cal.add(Calendar.DATE, -prodTime);
+		
 		// manipulate date
-		c.add(Calendar.DATE, prodTime);
-		Date currentDatePlusProdTime = c.getTime();
+		//c.add(Calendar.DATE, prodTime);
+		Date deliDateMinusProdTime = cal.getTime();
 
 		System.out.println("Todays date is: " + currentDate);
+		System.out.println("Prod date is: " + deliDateMinusProdTime);
+
 		// -------------------------------------------
 
 		spCakeOrder.setItemId(spCode);
@@ -566,7 +590,7 @@ public class SpCakeController {
 
 		spCakeOrder.setSpPlace(spPlace);
 		spCakeOrder.setSpPrice(spPrice);
-		spCakeOrder.setSpProduDate(dateFormat.format(currentDatePlusProdTime));
+		spCakeOrder.setSpProduDate(dateFormat.format(deliDateMinusProdTime));
 		spCakeOrder.setSpProTime(spProTime);
 		spCakeOrder.setSpSubTotal(spSubTotal);
 		spCakeOrder.setSpType(spType);
@@ -578,6 +602,8 @@ public class SpCakeController {
 		spCakeOrder.setTax2(tax2);
 
 		spCakeOrder.setMenuId(currentMenuId);
+		spCakeOrder.setIsSlotUsed(isSlotUsed);
+		
 
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
@@ -592,6 +618,7 @@ public class SpCakeController {
 			RestTemplate restTemplate = new RestTemplate();
 			SpCakeOrderRes spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder", httpEntity,
 					SpCakeOrderRes.class);
+			System.out.println("ORDER PLACED");
 
 			SpCakeOrder spCake = spCakeOrderRes.getSpCakeOrder();
 
@@ -725,7 +752,50 @@ public class SpCakeController {
 			return model;
 
 		}
+//----------------------------------END----------------------------------------
 
+		 //------------------------CALLING AJAX method FOR GETAVAILABLESLOT BY PRODUCTION DATE----------------------------
+		@RequestMapping(value = "/getAvailableSlot", method = RequestMethod.GET)
+		public @ResponseBody int getAvailableSlot(@RequestParam(value = "deldate", required = true) String deldate,@RequestParam(value = "prodTime", required = true) int prodTime) {
+			
+			System.out.println("GET Available Slots");
+			// manipulate date
+			Date delDate=	Main.stringToDate(deldate);	
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(delDate);
+			cal.add(Calendar.DATE, -prodTime);
+			
+			Date deliDateMinusProdTime = cal.getTime();
+			final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String spProduDate=dateFormat.format(deliDateMinusProdTime);
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("spProduDate",spProduDate );//Avail 10-09-2017
+			
+			RestTemplate restTemplate = new RestTemplate();
+			
+			//Getting Total Used Slot
+			Integer totalSlotUsed = restTemplate.postForObject(Constant.URL + "/getCountByProduDate",
+	    		   map,Integer.class);
+			
+			//Getting Total Available Slot
+			Integer totalAvailableSlot= restTemplate.postForObject(Constant.URL + "/getTotalAvailableSlot",
+		    		   map,Integer.class);
+			
+			int availableSlots=totalAvailableSlot-totalSlotUsed;
+		
+			return availableSlots;
+		}
+	    //--------------------------------------END------------------------------------
+		
+		
+		
+		
+		
+		
+		
+		
 /*
 @RequestMapping(value = "/showRegularSpCakeOrder/{index}", method = RequestMethod.GET)
 public ModelAndView displayRegularSpCakeOrder(@PathVariable("index") int index, HttpServletRequest request,

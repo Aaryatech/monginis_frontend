@@ -116,7 +116,7 @@ public class RegularSpCakeController {
 				     }
 			        
 				    model.addObject("frDetails",frDetails);
-			        
+				    
 				    model.addObject("eventList", eventList);
 			
 				    model.addObject("categoryResponse", subCategories);
@@ -158,7 +158,7 @@ public class RegularSpCakeController {
 		     map.add("itemGrp2", subCatId);
 		     map.add("items", itemShow);
 
-		   regularSpCkItemList=restTemplate.postForObject(Constant.URL + "getRegularSpCkItems",map,RegularSpCkItemResponse.class);
+		   regularSpCkItemList=restTemplate.postForObject(Constant.URL + "/getRegularSpCkItems",map,RegularSpCkItemResponse.class);
 		     
 		    regularSpCkItems=regularSpCkItemList.getGetRegularSpCkItems();
 
@@ -249,6 +249,12 @@ public class RegularSpCakeController {
 		
 			float rgCkGrand = Float.parseFloat(request.getParameter("sp_grand"));
 			System.out.println("12" + rgCkGrand);
+			
+			float rspMrp = Float.parseFloat(request.getParameter("MRP"));
+			System.out.println("12" + rgCkGrand);
+			
+			float rspRate = Float.parseFloat(request.getParameter("rate"));
+			System.out.println("12" + rgCkGrand);
 
 			float rgCkPrice = Float.parseFloat(request.getParameter("sp_calc_price"));
 			System.out.println("13" + rgCkPrice);
@@ -309,7 +315,7 @@ public class RegularSpCakeController {
 			String convertedOrderDate = dateFormat.format(calOrderDate);
 			System.out.println("Todays date is: " + calOrderDate);
 			// -------------------------------------------
-			Date newProdDate=dateFormat.parse(convertedOrderDate);
+			Date newProdDate=dateFormat.parse(convertedDelDate);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime (newProdDate); // convert your date to Calendar object
 			int daysToDecrement = -1;
@@ -326,10 +332,10 @@ public class RegularSpCakeController {
 			
 			regularSpCakeOrder.setItemId(itemId);
 			regularSpCakeOrder.setMenuId(currentMenuId);
-			regularSpCakeOrder.setMrp(rgCkGrand);
+			regularSpCakeOrder.setMrp(rspMrp);
+			regularSpCakeOrder.setRate(rspRate);
 			regularSpCakeOrder.setQty(qty);
 			regularSpCakeOrder.setRateCat(frDetails.getFrRateCat());
-
 			regularSpCakeOrder.setRspAdvanceAmt(rspAdvanceAmt);
 			regularSpCakeOrder.setRspCustMobileNo(rspCustMobileNo);
 			regularSpCakeOrder.setRspCustName(rspCustName);
@@ -343,11 +349,12 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setTax1Amt(gstRs/2);
 			regularSpCakeOrder.setTax2(tax/2);
 			regularSpCakeOrder.setTax2Amt(gstRs/2);
-			regularSpCakeOrder.setRate(totalAmt);
+			
 			regularSpCakeOrder.setRspEventsName(rspEventsName);
 			regularSpCakeOrder.setRspProduDate(produDate);
-			
 
+			
+			
 				HttpHeaders httpHeaders = new HttpHeaders();
 				httpHeaders.set("Content-Type", "application/json");
 
@@ -356,11 +363,12 @@ public class RegularSpCakeController {
 				System.out.println("All Sp Order Data" + jsonInString.toString());
 
 				HttpEntity<String> httpEntity = new HttpEntity<String>(jsonInString.toString(), httpHeaders);
-				  try {
+		try {
+					  
 				RestTemplate restTemplate = new RestTemplate();
 				ErrorMessage errorMessage= restTemplate.postForObject(Constant.URL + "/insertRegularSpCake", httpEntity,
 						ErrorMessage.class);
-
+                  
 		         mav = new ModelAndView("order/regularSpOrderRes");
 
 			     
@@ -393,8 +401,9 @@ public class RegularSpCakeController {
 
 
 			} catch (Exception e) {
-				 mav = new ModelAndView("order/regularSpOrderRes");
-				 mav.addObject("rspEvents", rspEvents);
+				 
+				    mav = new ModelAndView("order/regularSpOrderRes");
+				    mav.addObject("rspEvents", rspEvents);
 					mav.addObject("rspEventsName", rspEventsName);
 					mav.addObject("qty", qty);
 					mav.addObject("URL", Constant.SPCAKE_IMAGE_URL);
