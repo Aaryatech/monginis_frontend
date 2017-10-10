@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Main {
 
-  private static SimpleDateFormat inSDF = new SimpleDateFormat("dd-mm-yyyy");
-  private static SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
+  private static SimpleDateFormat inSDF = new SimpleDateFormat("dd-MM-yyyy");
+  private static SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-MM-dd");
 
   public static String formatDate(String inDate) {
     String outDate = "";
@@ -20,6 +20,21 @@ public class Main {
     return outDate;
   }
 
+  public static Date stringToDate(String inDate) {
+	  Date date=null;
+	    if (inDate != null) {
+	        try {
+	             date = inSDF.parse(inDate);
+	            
+	            
+	        } catch (ParseException ex){ 
+	        }
+	    }
+	    return date;
+	  }
+
+  
+  
   
 
 }
