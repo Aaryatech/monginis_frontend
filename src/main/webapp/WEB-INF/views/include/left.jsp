@@ -45,6 +45,28 @@
 					<div class="title">
 						Order <span>History</span>
 					</div></a></li>
+					
+					
+					
+					
+					
+					<li><a href="${pageContext.request.contextPath}/showBill"><div
+						class="img">
+						<img
+							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
+							alt="img">
+					</div>
+					<div class="title">
+						View Bills <span>Bills</span>
+					</div></a></li>
+					
+					
+					
+					
+					
+					
+					
+					
 			<li><a href="#" onClick="openNav3()"><div class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-editprofile.png"
