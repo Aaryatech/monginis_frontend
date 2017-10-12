@@ -71,8 +71,10 @@
 				<!--rightSidebar-->
 				<div class="sidebarright">
 										<h2 class="pageTitle">Hi <span>${frDetails.frName},</span> Welcome back</h2>
-
-
+            
+       <form action="${pageContext.request.contextPath}/showSpDayCake" method="get">
+        <input type="submit" value="Special Day Cake" />
+       </form>
 					<!--slider-->
 					<!--slider thum size : width:850px height:350px-->
 					<div id="owl-example" class="owl-carousel">

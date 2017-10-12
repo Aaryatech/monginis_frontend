@@ -494,7 +494,7 @@ public class ItemController {
 			System.out.println("Delivery date: " + deliveryDate);
 
 			// if date time verified then place order
-
+// 
 			List<GetFrItem> orderList = new ArrayList<>();
 			for (int i = 0; i < frItemList.size(); i++) {
 
