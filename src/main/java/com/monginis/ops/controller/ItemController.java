@@ -50,8 +50,8 @@ import com.monginis.ops.model.TabTitleData;
 public class ItemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
-	private  List<GetFrItem> frItemList = new ArrayList<>();
-	private  List<GetFrItem> prevFrItemList = new ArrayList<>();
+	private List<GetFrItem> frItemList = new ArrayList<>();
+	private List<GetFrItem> prevFrItemList = new ArrayList<>();
 
 	private static int globalIndex = 2;
 	private static int currentMenuId = 0;
@@ -65,9 +65,8 @@ public class ItemController {
 		ModelAndView model = new ModelAndView("order/itemorder");
 		logger.info("/item order request mapping. index:" + index);
 
-		subCatList=new ArrayList<>();
+		subCatList = new ArrayList<>();
 		globalIndex = index;
-		
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -146,13 +145,13 @@ public class ItemController {
 		System.out.println("Delivery date: " + deliveryDate);
 
 		frItemList = new ArrayList<GetFrItem>();
-		prevFrItemList=new ArrayList<GetFrItem>();
+		prevFrItemList = new ArrayList<GetFrItem>();
 		try {
 
 			System.out.println("Date is : " + currentDate);
 			currentMenuId = menuList.get(index).getMenuId();
 
-			 map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("items", menuList.get(index).getItemShow());
 			map.add("frId", frDetails.getFrId());
@@ -496,6 +495,8 @@ public class ItemController {
 			// if date time verified then place order
 // 
 			List<GetFrItem> orderList = new ArrayList<>();
+			
+			
 			for (int i = 0; i < frItemList.size(); i++) {
 
 				GetFrItem frItem = frItemList.get(i);
@@ -511,12 +512,12 @@ public class ItemController {
 
 					System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
 
-					if (qty != frItem.getItemQty()) {
-
-						frItem.setItemQty(qty);
+					if(qty!=frItem.getItemQty()) {
+						
+					frItem.setItemQty(qty);	
 						orderList.add(frItem);
-
 					}
+					
 
 				} catch (Exception e) {
 					System.out.println("Except OrderList " + e.getMessage());
@@ -541,6 +542,33 @@ public class ItemController {
 					GetFrItem frItem = orderList.get(i);
 
 					Orders order = new Orders();
+					
+					
+
+						int frGrnTwo=frDetails.getGrnTwo();
+					
+						if(frItem.getGrnTwo()==1) {
+							
+							if(frGrnTwo==1) {
+							
+							order.setGrnType(1);
+							
+							
+							}else {
+						
+							order.setGrnType(0);
+							}
+						}//end of if
+						
+						else {	
+							if(frItem.getGrnTwo()==2) {
+							order.setGrnType(2);
+							
+							}
+							else {
+							order.setGrnType(0);
+						}
+						}// end of else
 					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
 					order.setEditQty(0);
 					order.setFrId(frDetails.getFrId());
@@ -555,9 +583,9 @@ public class ItemController {
 					order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
 					order.setProductionDate(Common.stringToSqlDate(productionDate));
 					order.setRefId(frItem.getId());
-					order.setUserId(2);
+					order.setUserId(0);
 					order.setMenuId(currentMenuId);
-
+					System.out.println("order qty===***************"+frItem.getItemQty());
 					if (rateCat == 1) {
 						order.setOrderMrp(frItem.getItemMrp1());
 						order.setOrderRate(frItem.getItemRate1());
@@ -605,11 +633,12 @@ public class ItemController {
 			mav.addObject("errorMessage", "Timeout for placing order");
 		}
 		
-		}else { // qty exceed  limit
-			
-			mav.addObject("errorMessage", "You have exceed maximum limit");
-		}
-		return mav;
+		}else
+
+	{ // qty exceed limit
+
+		mav.addObject("errorMessage", "You have exceed maximum limit");
+	}return mav;
 
 	}
 

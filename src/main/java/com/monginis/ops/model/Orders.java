@@ -64,6 +64,19 @@ public class Orders {
 
 
 	private int menuId;
+	
+	private int grnType;//newly added
+	
+	
+	
+	
+	public int getGrnType() {
+		return grnType;
+	}
+
+	public void setGrnType(int grnType) {
+		this.grnType = grnType;
+	}
 
 	
 	public int getOrderId() {
