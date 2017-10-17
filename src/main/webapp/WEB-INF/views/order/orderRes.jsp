@@ -181,7 +181,7 @@ $("#tech").change(function() {
 	
 	<div class="fullform">
 		<div class="cackleft">Earliest Delivery Date</div>
-		<div class="cackright">${specialCake.spEstDelDate}</div>
+		<div class="cackright">${specialCake.spEstDeliDate}</div>
 	</div>
 	
 </div>
@@ -218,7 +218,7 @@ $("#tech").change(function() {
 	<div class="fullform">
 		<div class="cackleft">Weight</div>
 		<div class="cackright">
-      ${specialCake.spWeight} Kg		</div>
+      ${specialCake.spSelectedWeight} Kg		</div>
 	</div>
 	
 	<div class="fullform">
@@ -268,7 +268,7 @@ $("#tech").change(function() {
 	
 	<div class="fullform">
 		<div class="cackleft">Delivery Date</div>
-		<div class="cackright">${specialCake.spDeliveryDt}</div>
+		<div class="cackright">${specialCake.spDeliveryDate}</div>
 	</div>
 	
 	<div class="fullform">
@@ -280,17 +280,17 @@ $("#tech").change(function() {
 		<div class="cackleft"> Customer DOB</div>
 		<div class="cackright">
 		<c:choose>
-            <c:when test="${specialCake.spCustDOB==''}">NA</c:when> 
+            <c:when test="${specialCake.spCustDob==''}">NA</c:when> 
             
             <c:otherwise>
-                    ${specialCake.spCustDOB}
+                    ${specialCake.spCustDob}
             </c:otherwise>
         </c:choose></div>
         </div>
         
         <div class="fullform">
 		<div class="cackleft">Customer Mob</div>
-		 <div class="cackright">${specialCake.spCustMobileNo}     
+		 <div class="cackright">${specialCake.spCustMobNo}     
            </div>
 	</div>
 	
@@ -315,7 +315,7 @@ $("#tech").change(function() {
 	<div class="priceBox">
 		<h2 class="inrbox">INR - 
         <span id="pro_grand_totla_1">
-		 ${specialCake.spGrand}</span></h2>
+		 ${specialCake.spGrandTotal}</span></h2>
         
 		<div class="inrboxmiddle">
 			<ul>
@@ -329,7 +329,7 @@ $("#tech").change(function() {
 				</li>
 				<li>
 					<div class="priceLeft">Add Rate </div>
-					<div class="priceRight" id="pro_adon_price">${specialCake.spAddRate}</div>
+					<div class="priceRight" id="pro_adon_price">${specialCake.spTotalAddRate}</div>
                     
 				</li>
 				<li>
@@ -341,7 +341,7 @@ $("#tech").change(function() {
 				<li class="total">
 					<div class="priceLeft">TOTAL</div>
 					<div class="priceRight" id="pro_grand_totla">
-					${specialCake.spGrand}</div>
+					${specialCake.spGrandTotal}</div>
 				</li>
 				
 				<li class="advance">

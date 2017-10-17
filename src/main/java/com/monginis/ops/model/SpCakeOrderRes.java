@@ -16,4 +16,12 @@ public class SpCakeOrderRes {
 		this.errorMessage = errorMessage;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "SpCakeOrderRes [spCakeOrder=" + spCakeOrder + ", errorMessage=" + errorMessage + "]";
+	}
+	
+	
+	
 }

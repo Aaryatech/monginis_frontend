@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -221,17 +222,34 @@ public class SpCakeController {
 
 				System.out.println("Sp RESPONSE" + specialCake.toString());
 				float sprRate;
+				float spBackendRate;
+				
 				if (frDetails.getFrRateCat() == 1) {
 					sprRate = specialCake.getMrpRate1();
+					spBackendRate=specialCake.getSpRate1();
 
 				} else if (frDetails.getFrRateCat() == 2) {
 					sprRate = specialCake.getMrpRate2();
+					spBackendRate=specialCake.getSpRate2();
 				} else {
 					sprRate = specialCake.getMrpRate3();
+					spBackendRate=specialCake.getSpRate3();
+				
 				}
 
 				model.addObject("sprRate", sprRate);
+				model.addObject("spBackendRate", spBackendRate);
+				
+				if(specialCake.getIsAddonRateAppli()==0) {
+					model.addObject("addonRatePerKG", 0);
+				}else {
+					model.addObject("addonRatePerKG", specialCake.getSprAddOnRate());
+				}
 
+				System.out.println("Sp cake search: \n Back End Rate "+spBackendRate);
+				System.out.println("Sp cake search: \n Add On Rate "+sprRate);
+
+				
 				model.addObject("specialCake", specialCake);
 				model.addObject("eventList", eventList);
 
@@ -399,15 +417,11 @@ public class SpCakeController {
 
 		String spName = request.getParameter("sp_name");
 		System.out.println("3" + spName);
-		/*
-		 * String orderPhoto1=request.getParameter("order_photo");
-		 * System.out.println("4" + orderPhoto);
-		 */
-
-		/*
-		 * String custChCk=request.getParameter("cust_choice_ck");
-		 * System.out.println("4.1" + custChCk);
-		 */
+		
+		
+		
+		
+		
 		String spMinWeight = request.getParameter("sp_min_weight");
 		System.out.println("5" + spMinWeight);
 
@@ -508,7 +522,14 @@ public class SpCakeController {
 		//---------isCustSpCk And isSpPhoUpload Special Cake Value(1/0)-------
 		int isCustSpCk = Integer.parseInt(request.getParameter("isCustChoiceCk"));
 		int isSpPhoUpload = Integer.parseInt(request.getParameter("spPhoUpload"));
+		
+		
+		String addonRatePerKG = request.getParameter("addonRatePerKG");
 
+		String backendSpRate = request.getParameter("dbRate");
+		
+		
+		
 		
 		String custChCk = "";
 		String orderPhoto1 = "";
@@ -555,54 +576,108 @@ public class SpCakeController {
 		// manipulate date
 		//c.add(Calendar.DATE, prodTime);
 		Date deliDateMinusProdTime = cal.getTime();
+		
+		java.sql.Date  sqlProdDate= new java.sql.Date(deliDateMinusProdTime.getTime());
 
 		System.out.println("Todays date is: " + currentDate);
 		System.out.println("Prod date is: " + deliDateMinusProdTime);
 
 		// -------------------------------------------
+		
+		final SimpleDateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
 
+		try {
+			java.util.Date utilspBookForDOB=dmyFormat.parse(spCustDOB);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		java.util.Date utilSpCustDOB =new java.util.Date();
+		try {
+			utilSpCustDOB = dmyFormat.parse(spCustDOB);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		java.util.Date utilSpEdt = new java.util.Date();
+		try {
+			 utilSpEdt=dmyFormat.parse(spEdt);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		java.util.Date utilSpDeliveryDt = new java.util.Date();  
+		try {
+			utilSpDeliveryDt = dmyFormat.parse(spDeliveryDt);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		java.sql.Date  sqlBookForDob= new java.sql.Date(deliDateMinusProdTime.getTime());
+		java.sql.Date  sqlSpCustDOB= new java.sql.Date(utilSpCustDOB.getTime());
+		java.sql.Date  sqlSpEdt= new java.sql.Date(utilSpEdt.getTime());
+
+		java.sql.Date  sqlSpDeliveryDt= new java.sql.Date(utilSpDeliveryDt.getTime());
+
+		
 		spCakeOrder.setItemId(spCode);
 		spCakeOrder.setOrderDate(dateFormat.format(orderDate));
-		spCakeOrder.setRmAmount(rmAmount);
-		spCakeOrder.setSpAddRate(spAddRate);
-		spCakeOrder.setSpAdvance(spAdvance);
+		spCakeOrder.setRmAmount(Float.valueOf(rmAmount));
+		spCakeOrder.setSpTotalAddRate(Float.valueOf(spAddRate));
+		spCakeOrder.setSpAdvance(Float.valueOf(spAdvance));
 
 		spCakeOrder.setSpBookedForName(spBookedForName);
-		spCakeOrder.setSpBookForDOB(spBookForDOB);
-		spCakeOrder.setSpBookForNumber(spBookForNum);
-		spCakeOrder.setSpCustDOB(spCustDOB);
+		spCakeOrder.setSpBookForDob(sqlBookForDob);
+		spCakeOrder.setSpBookForMobNo(spBookForNum);
+		spCakeOrder.setSpCustDob(sqlSpCustDOB);
 		spCakeOrder.setSpInstructions(spInstructions);
 		spCakeOrder.setOrderPhoto(orderPhoto1);
 		spCakeOrder.setOrderPhoto2(custChCk);
 
-		spCakeOrder.setSpCustMobileNo(spCustMobileNo);
+		spCakeOrder.setSpCustMobNo(spCustMobileNo);
 		spCakeOrder.setSpCustName(spCustName);
-		spCakeOrder.setSpDeliveryDt(spDeliveryDt);
-		spCakeOrder.setSpEstDelDate(spEdt);
+		spCakeOrder.setSpDeliveryDate(sqlSpDeliveryDt);
+		spCakeOrder.setSpEstDeliDate(sqlSpEdt);
 		spCakeOrder.setSpEvents(spEvents);
 		spCakeOrder.setSpEventsName(eventName);
-		spCakeOrder.setSpFlavour(spFlavour);
-		spCakeOrder.setSpGrand(spGrand);
+		spCakeOrder.setSpFlavourId(Integer.parseInt(spFlavour));
+		spCakeOrder.setSpGrandTotal(Float.parseFloat(spGrand));
 		spCakeOrder.setSpId(spId);
-		spCakeOrder.setSpMaxWeight(spMaxWeight);
-		spCakeOrder.setSpMinWeight(spMinWeight);
-		spCakeOrder.setSpWeight(spWeight);
+		spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
+		spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
+		spCakeOrder.setSpSelectedWeight(Float.valueOf(spWeight));
 
-		spCakeOrder.setSpPlace(spPlace);
-		spCakeOrder.setSpPrice(spPrice);
-		spCakeOrder.setSpProduDate(dateFormat.format(deliDateMinusProdTime));
-		spCakeOrder.setSpProTime(spProTime);
-		spCakeOrder.setSpSubTotal(spSubTotal);
+		spCakeOrder.setSpDeliveryPlace(spPlace);
+		spCakeOrder.setSpPrice(Float.valueOf(spPrice));
+		spCakeOrder.setSpProdDate(sqlProdDate);
+		spCakeOrder.setSpProdTime(Integer.parseInt(spProTime));
+		spCakeOrder.setSpSubTotal(Float.valueOf(spSubTotal));
 		spCakeOrder.setSpType(spType);
 
-		spCakeOrder.setSpWeight(spWeight);
-		spCakeOrder.setTax1(tax1);
-		spCakeOrder.setTax1Amt(tax1Amt);
-		spCakeOrder.setTax2Amt(tax2Amt);
-		spCakeOrder.setTax2(tax2);
+		spCakeOrder.setTax1(Float.valueOf(tax1));
+		spCakeOrder.setTax1Amt(Float.valueOf(tax1Amt));
+		spCakeOrder.setTax2Amt(Float.valueOf(tax2Amt));
+		spCakeOrder.setTax2(Float.valueOf(tax2));
 
 		spCakeOrder.setMenuId(currentMenuId);
 		spCakeOrder.setIsSlotUsed(isSlotUsed);
+		
+		Float floatBackEndRate=Float.valueOf(backendSpRate);
+		int intAddonRatePerKG=Integer.parseInt(spAddRate);
+		
+		intAddonRatePerKG=(intAddonRatePerKG*20)/100;
+		
+		System.out.println("Placing Order: \n Back End Rate "+floatBackEndRate);
+		System.out.println("Placing Order: \n Add On Rate "+intAddonRatePerKG);
+
+
+		spCakeOrder.setSpBackendRate(floatBackEndRate );
+		
 		
 
 		try {
@@ -618,7 +693,7 @@ public class SpCakeController {
 			RestTemplate restTemplate = new RestTemplate();
 			SpCakeOrderRes spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder", httpEntity,
 					SpCakeOrderRes.class);
-			System.out.println("ORDER PLACED");
+			System.out.println("ORDER PLACED "+spCakeOrderRes.toString());
 
 			SpCakeOrder spCake = spCakeOrderRes.getSpCakeOrder();
 
