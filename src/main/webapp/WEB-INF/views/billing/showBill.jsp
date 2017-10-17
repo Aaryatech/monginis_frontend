@@ -308,11 +308,6 @@
 
 						</div>
 
-						<div class="colOuter">
-		<div class="col1"><div class="col1title">Delivery Order / GRN / GVN  Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="datepicker" type="text" value="${spDeliveryDt}" >
-		</div>
-	</div>
 	
 						<div class="colOuter">
 							<div class="col2full">
@@ -357,6 +352,7 @@
 
 												<th width="105" align="left">Status</th>
 												<th width="105" align="left">Remark</th>
+												<th width="105" align="left">Action</th>
 												
 											</tr>
 													
@@ -365,13 +361,16 @@
 													<td><c:out value="${count.index+1}" /></td>
 													<td><c:out value="${billHeader.billNo}" /></td>
 													<td><c:out value="${billHeader.billDate}" /></td>
-													<td><c:out value="${billHeader.frName}" /></td>
 													<td><c:out value="${billHeader.taxableAmt}" /></td>
 													<td><c:out value="${billHeader.totalTax}" /></td>
 													<td><c:out value="${billHeader.grandTotal}" /></td>
 													<td><c:out value="${billHeader.status}" /></td>
 													<td><c:out value="${billHeader.remark}" /></td>
-												
+													<td><div class="order-btn textcenter">
+						<a	href="${pageContext.request.contextPath}/showBillDetailProcess/${billHeader.billNo}"
+							class="buttonsaveorder">VIEW DETAILS</a>
+						<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
+					</div> </td>
 													<c:set var="billNo" value="${billHeader.billNo}"/>
 												</tr>
 												</c:forEach>
@@ -387,12 +386,12 @@
 					<!--tabNavigation-->
 
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-					<div class="order-btn textcenter">
+					<%-- <div class="order-btn textcenter">
 						<a
-							href="showBillDetailProcess/${billNo}"
+							href="${pageContext.request.contextPath}/showBillDetailProcess/${billNo}"
 							class="buttonsaveorder">VIEW DETAILS</a>
 						<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
-					</div>
+					</div> --%>
 
 
 				</div>

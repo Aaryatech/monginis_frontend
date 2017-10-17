@@ -66,11 +66,6 @@ public class BillingController {
 		
 		int frId=frDetails.getFrId();
 		
-		System.out.println("from date "+fromDate);
-		
-		System.out.println("to Date "+toDate);
-		
-		System.out.println("fr Id "+frId);
 		
 		map.add("fromDate", fromDate);
 		
@@ -84,9 +79,9 @@ public class BillingController {
 
 		billHeader = billHeadeResponse.getGetBillHeaders();
 
-		System.out.println(" *** get Bill response  " + billHeadeResponse.getGetBillHeaders());
 		
-		System.out.println("thank you");
+		
+		
 		
 		modelAndView.addObject("billHeader",billHeader);
 		
@@ -98,7 +93,10 @@ public class BillingController {
 	@RequestMapping(value = "/showBillDetailProcess/{billNo}", method = RequestMethod.GET)
 	public ModelAndView   showBillDetailProcess(@PathVariable int billNo, HttpServletRequest request,
 			HttpServletResponse response) {
+		System.out.println("inside process of bill details front end ***********************************");
 		ModelAndView modelAndView = new ModelAndView("billing/billDetails");
+		
+		try {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpSession session = request.getSession();
@@ -115,6 +113,11 @@ public class BillingController {
 		System.out.println("bill detail response "+billDetailsList.toString());
 		System.out.println("bill detail size "+billDetailsList.size());
 		modelAndView.addObject("billDetailsList",billDetailsList);
+		}
+		catch (Exception e) {
+		System.out.println("ex in bill detail "+e.getMessage());
+		e.printStackTrace();
+		}
 		
 		
 	return modelAndView;

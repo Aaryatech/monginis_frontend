@@ -2,27 +2,117 @@ package com.monginis.ops.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.ErrorMessage;
+import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.util.ImageS3Util;
 
 @Controller
 public class ProfileController {
 	
 
-	@RequestMapping(value = "/editProfile")
+	@RequestMapping(value = "/showeditprofile")
 	public ModelAndView displaySavouries(HttpServletRequest request,
 		HttpServletResponse response) {
-	ModelAndView model = new ModelAndView("userProfile/profile");
+	ModelAndView model = new ModelAndView("profile");
 	System.out.println("I am here");
 	
-	
+	HttpSession ses = request.getSession();
+	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+	System.out.println("Franchisee Rsponse"+frDetails);
 	return model;
 	
 	
 }
+	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
+	public String editProfile(HttpServletRequest request,
+		HttpServletResponse response) {
+		//,@RequestParam("fr_image") MultipartFile file
+		//ModelAndView model = new ModelAndView("profile");
+		System.out.println("I am here");
 		
+		String frName=request.getParameter("fr_name");
+		String frEmail=request.getParameter("fr_email");
+		String frMob=request.getParameter("fr_mobile");
+		String frOwner=request.getParameter("fr_owner");
+		String frCity=request.getParameter("fr_city");
+		String frPassword=request.getParameter("fr_password");
+		// String frImage=ImageS3Util.uploadFrImage(file);
+		
+		
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		
+		
+		try {
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frName", frName);
+			map.add("frCity", frCity);
+			map.add("frPassword", frPassword);
+			map.add("frEmail", frEmail);
+			map.add("frMob", frMob);
+			map.add("frOwner", frOwner);
+			
+			map.add("grnTwo", frDetails.getGrnTwo());
+			map.add("delStatus", frDetails.getDelStatus());
+			map.add("ownerBirthDate", frDetails.getOwnerBirthDate());
+			map.add("fbaLicenseDate", frDetails.getFbaLicenseDate());
+			map.add("frAgreementDate", frDetails.getFrAgreementDate());
+			map.add("frGstType", frDetails.getFrGstType());
+			map.add("frGstNo", frDetails.getFrGstNo());
+			map.add("stockType", frDetails.getStockType());
+			map.add("frAddress", frDetails.getFrAddress());
+			map.add("frTarget", frDetails.getFrTarget());
+			map.add("frKg1", frDetails.getFrKg1());
+			map.add("frKg2", frDetails.getFrKg2());
+			map.add("frKg3", frDetails.getFrKg3());
+			map.add("frKg4", frDetails.getFrKg4());
+			map.add("frId",frDetails.getFrId() );
+			map.add("frCode", frDetails.getFrCode());
+			map.add("frOpeningDate",frDetails.getFrOpeningDate());
+			map.add("frImage", frDetails.getFrImage());
+			map.add("frRouteId", frDetails.getFrRouteId());
+			map.add("frRateCat", frDetails.getFrRateCat());
+			
+			int intFrRate=(int) frDetails.getFrRate();
+			map.add("frRate",intFrRate);
+			map.add("frRmn1", frDetails.getFrRmn1());
+			
+			 System.out.println(frName+""+frEmail+""+frMob+""+frOwner+""+frCity+""+frPassword);
+			
+			//ErrorMessage errorMessage
+			String s= rest.postForObject(Constant.URL+"updateFranchisee", map, String.class);
+			 System.out.println("REst");
+			
+			/*if (errorMessage.getError()) {
+				return "redirect:/showeditprofile";
+			} else {
+
+				return "redirect:/showeditprofile";
+
+			}*/
+
+			}catch(Exception e)
+			
+			{
+				
+				System.out.println(e.getMessage());
+			}
+			 return "redirect:/showeditprofile";
+	}
 
 }

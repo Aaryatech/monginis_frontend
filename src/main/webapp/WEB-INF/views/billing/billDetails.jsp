@@ -110,6 +110,9 @@
 							<li data-content="tab1" class="selected">
 								<div class="table-responsive">
 									<div class="shInnerwidth">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
+						<tr>
+							<td align="center" valign="middle" style="padding:0px;">
 
 										<table width="100%" id="table1">
 											<tr class="bgpink">
@@ -121,11 +124,11 @@
 												
 													<th width="159" align="left">MRP</th>
 														<th width="91" align="left">Rate</th>
-														<th width="105" align="left">Total (excluding tax) now Taxable Amt</th>
+														<th width="105" align="left">Taxable Amt</th>
 													<th width="105" align="left">GST %</th>
 													
 													<th width="105" align="left">Tax Amount</th>
-													<th width="105" align="left">Total ie now  Grand Total</th>
+													<th width="105" align="left">Grand Total</th>
 													
 													<th width="159" align="left">Remark</th>
 											</tr>
@@ -137,13 +140,15 @@
 													<td><c:out value="${billDetailsList.catName}" /></td>
 													<td><c:out value="${billDetailsList.orderQty}" /></td>
 													<td><c:out value="${billDetailsList.billQty}" /></td>
-													<td><c:out value="${billDetailsList.rate}" /></td>
 													<td><c:out value="${billDetailsList.mrp}" /></td>
+													<td><c:out value="${billDetailsList.rate}" /></td>
+													<td><c:out value="${billDetailsList.taxableAmt}" /></td>
 													
 													<c:set var="sgstPer" value="${billDetailsList.sgstPer}"/>
-															<c:set var="cgstPer" value="${billDetailsList.cgstPer}"/>
+													<c:set var="cgstPer" value="${billDetailsList.cgstPer}"/>
 													<td><c:out value="${sgstPer+cgstPer}" /></td>
-													<td><c:out value="2500" /></td>
+													<td><c:out value="${billDetailsList.totalTax }" /></td>
+													<td><c:out value="${billDetailsList.grandTotal }" /></td>
 													
 													<td><c:out value="${billDetailsList.remark}" /></td>
 													
@@ -151,6 +156,10 @@
 												</c:forEach>
 											
 										</table>
+										</td>
+										</tr>
+										</table>
+										
 
 									</div>
 								</div>

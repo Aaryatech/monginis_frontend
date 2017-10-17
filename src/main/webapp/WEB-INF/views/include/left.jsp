@@ -53,11 +53,11 @@
 					<li><a href="${pageContext.request.contextPath}/showBill"><div
 						class="img">
 						<img
-							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
+							src="${pageContext.request.contextPath}/resources/images/billing.png"
 							alt="img">
 					</div>
 					<div class="title">
-						View Bills <span>Bills</span>
+						View <span>Bills</span>
 					</div></a></li>
 					
 					
@@ -313,18 +313,18 @@
 									alt="monginis"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
 									alt="monginis"></a>
-								<h2>GRN1</h2>
+								<h2>GRN/GVN</h2>
 								<h3>Booking Up to 12.30 PM</h3>
 								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Add <i class="fa fa-pencil"></i></a>
+									<a href="${pageContext.request.contextPath}/showGrn">Add GRN <i class="fa fa-pencil"></i></a>
 								</div>
 								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Upload <i
+									<a href="${pageContext.request.contextPath}/showGvn">Add GVN <i
 										class="fa fa-cloud-upload"></i></a>
 								</div>
 							</div></li>
 
-						<li><div class="listareaBox">
+						<%-- <li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon8.png"
 									alt="monginis"> <img
@@ -356,7 +356,7 @@
 									<a href="order-savouries.html">Upload <i
 										class="fa fa-cloud-upload"></i></a>
 								</div>
-							</div></li>
+							</div></li> --%>
 
 					</ul>
 				</div>

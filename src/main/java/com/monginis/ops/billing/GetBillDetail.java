@@ -24,11 +24,39 @@ public class GetBillDetail {
     private float igstRs;
     private float taxableAmt;
     private String remark;
-    private Integer delStaus;
+    private Integer delStatus;
     private String itemName;
     private String catName;
     private String billDate;
-    private float base_rate;
+    private float baseRate;
+    private float totalTax;
+    private int grnType;
+    private String expiryDate;
+    
+    
+    
+    
+    
+    
+    
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public int getGrnType() {
+		return grnType;
+	}
+	public void setGrnType(int grnType) {
+		this.grnType = grnType;
+	}
+	public float getTotalTax() {
+		return totalTax;
+	}
+	public void setTotalTax(float totalTax) {
+		this.totalTax = totalTax;
+	}
 	public Integer getBillDetailNo() {
 		return billDetailNo;
 	}
@@ -150,11 +178,12 @@ public class GetBillDetail {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Integer getDelStaus() {
-		return delStaus;
+	
+	public Integer getDelStatus() {
+		return delStatus;
 	}
-	public void setDelStaus(Integer delStaus) {
-		this.delStaus = delStaus;
+	public void setDelStatus(Integer delStatus) {
+		this.delStatus = delStatus;
 	}
 	public String getItemName() {
 		return itemName;
@@ -174,11 +203,11 @@ public class GetBillDetail {
 	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
-	public float getBase_rate() {
-		return base_rate;
+	public float getBaseRate() {
+		return baseRate;
 	}
-	public void setBase_rate(float base_rate) {
-		this.base_rate = base_rate;
+	public void setBaseRate(float baseRate) {
+		this.baseRate = baseRate;
 	}
 	@Override
 	public String toString() {
@@ -187,11 +216,13 @@ public class GetBillDetail {
 				+ orderId + ", rateType=" + rateType + ", rate=" + rate + ", mrp=" + mrp + ", grandTotal=" + grandTotal
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", taxableAmt=" + taxableAmt + ", remark=" + remark
-				+ ", delStaus=" + delStaus + ", itemName=" + itemName + ", catName=" + catName + ", billDate="
-				+ billDate + ", base_rate=" + base_rate + "]";
+				+ ", delStatus=" + delStatus + ", itemName=" + itemName + ", catName=" + catName + ", billDate="
+				+ billDate + ", baseRate=" + baseRate + ", totalTax=" + totalTax + ", grnType=" + grnType
+				+ ", expiryDate=" + expiryDate + "]";
 	}
-    
-    
-
+	
+	
+	
+	
   
 }
