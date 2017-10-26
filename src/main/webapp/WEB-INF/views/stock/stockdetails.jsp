@@ -107,9 +107,8 @@
 			
 				</div>
 		
-<div class="colOuter" style="display:none" id=select_date>
+								<div class="colOuter" style="display:none" id=select_date>
 				
-			
 							<div class="col1">
 									<input id="fromdatepicker" class="texboxitemcode texboxcal"
 										placeholder="From Date" name="from_datepicker" type="text">
@@ -117,23 +116,6 @@
 										<input id="todatepicker" class="texboxitemcode texboxcal"
 										placeholder="To Date" name="to_datepicker" type="text">
 										
-								
-							
-
-							<!-- <div class="colOuter">
-								<div class="col1">
-									<div class="col1title">To Date</div>
-								</div>
-								<div class="col2">
-									<input id="todatepicker" class="texboxitemcode texboxcal"
-										placeholder="To Date" name="to_datepicker" type="text">
-										
-								</div>
-							</div> -->
-
-					
-
-	
 						<div class="colOuter">
 							<div class="col2full">
 								<input name="" class="buttonsaveorder" value="Search..."
@@ -143,10 +125,7 @@
 </div>
 				<!-- 	</form>
  -->
-					</div>
-					
-										
-										
+					</div>					
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
@@ -202,11 +181,7 @@
 								</div>
 								</form>
 								</div>
-						
 				</div>
-				
-			<!-- 	Next Month -->
-						
 				
 				<!--rightSidebar-->
 
@@ -222,7 +197,6 @@
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
-
 
 <!-- Select Only Month and Year -->
 <script>
