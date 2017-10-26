@@ -46,7 +46,15 @@
 						Order <span>History</span>
 					</div></a></li>
 					
-					
+					<li><a href="${pageContext.request.contextPath}/showCustomerBill"><div
+						class="img">
+						<img
+							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
+							alt="img">
+					</div>
+					<div class="title">
+						Customer Bill <span></span>
+					</div></a></li>
 					
 					
 					
