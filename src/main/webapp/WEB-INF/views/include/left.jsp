@@ -60,7 +60,14 @@
 						View <span>Bills</span>
 					</div></a></li>
 					
-					
+					<li><a href="${pageContext.request.contextPath}/showstockdetail" ><div class="img">
+						<img
+							src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
+							alt="img">
+					</div>
+					<div class="title">
+						Stock <span>Details</span>
+					</div></a></li>
 					
 					
 					
