@@ -125,7 +125,7 @@ public class SpDayCakeController {
 
 		 deliDate = cal.getTime();
 		 
-		cal.add(Calendar.DATE, -1);
+		  cal.add(Calendar.DATE, -1);
 		
 		// manipulate date
 		//c.add(Calendar.DATE, prodTime);
@@ -243,7 +243,42 @@ public class SpDayCakeController {
 				GetFrItem frItem = orderList.get(i);
 
 				Orders order = new Orders();
-				order.setDeliveryDate(Common.stringToSqlDate(deliveryDt));
+				
+				
+				int frGrnTwo=frDetails.getGrnTwo();
+				System.out.println("Franchisee Grn Two*****************"+frGrnTwo);
+				System.out.println("Item Grn Two*****************"+frItem.getGrnTwo());
+
+				if(frItem.getGrnTwo()==1)
+				{
+					
+					if(frGrnTwo==1)
+					{
+						
+						order.setGrnType(1);
+						
+						
+					}
+					else
+					{
+						order.setGrnType(0);
+					}
+					
+				}
+				else {
+					
+					if(frItem.getGrnTwo()==2){
+				
+						order.setGrnType(2);
+					
+					 }
+				     else
+				     {
+					  order.setGrnType(0);
+				     }
+				
+				}//else End
+    			order.setDeliveryDate(Common.stringToSqlDate(deliveryDt));
 				order.setEditQty(0);
 				order.setFrId(frDetails.getFrId());
 				order.setIsEdit(1);
@@ -273,7 +308,7 @@ public class SpDayCakeController {
 					order.setOrderRate(frItem.getItemRate3());
 
 				}
-
+				
 				orders.add(order);
 
 			}
@@ -306,207 +341,6 @@ public class SpDayCakeController {
 	return mav;
 	}
 	
-		
-		
-		
-		
-/*
-	subCatList=new ArrayList<>();
-
-	
-
-	Date date = new Date(Calendar.getInstance().getTime().getTime());
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-	String currentDate = df.format(date);
-
-	HttpSession session = request.getSession();
-	Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
-	ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-
-	DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
-
-	String todaysDate = dfReg.format(date);
-
-	// order ,production ,delivery date logic
-
-	int isSameDayApplicable = menuList.get(0).getIsSameDayApplicable();
-
-	
-
-	ZoneId z = ZoneId.of("Asia/Calcutta");
-	LocalTime currentTime = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
-
-	
-	currentTime = currentTime.plusHours(15);
-	System.out.println("current time " + currentTime);
-	
-
-	String orderDate = "";
-	String productionDate = "";
-	String deliveryDate = "";
-
-	if (formatedFromTime.isBefore(formatedToTime)) {
-
-		orderDate = todaysDate;
-		productionDate = todaysDate;
-
-		if (isSameDayApplicable == 0 || isSameDayApplicable == 2) {
-
-			deliveryDate = incrementDate(todaysDate, 1);
-			System.out.println("inside 1.1");
-
-		} else if (isSameDayApplicable == 1) {
-
-			deliveryDate = todaysDate;
-
-			System.out.println("inside 1.2");
-
-		}
-
-	} else {
-
-		if (currentTime.isAfter(formatedFromTime)) {
-
-			orderDate = todaysDate;
-			productionDate = incrementDate(todaysDate, 1);
-			deliveryDate = incrementDate(todaysDate, 2);
-
-			System.out.println("inside 2.1");
-		} else {
-
-			orderDate = todaysDate;
-			productionDate = todaysDate;
-			deliveryDate = incrementDate(todaysDate, 1);
-			System.out.println("inside 2.2");
-		}
-
-	}
-
-	System.out.println("Order date: " + orderDate);
-	System.out.println("Production date: " + productionDate);
-	System.out.println("Delivery date: " + deliveryDate);
-
-	frItemList = new ArrayList<GetFrItem>();
-	prevFrItemList=new ArrayList<GetFrItem>();
-	try {
-
-		System.out.println("Date is : " + currentDate);
-		currentMenuId = menuList.get(index).getMenuId();
-
-		 map = new LinkedMultiValueMap<String, Object>();
-
-		map.add("items", menuList.get(index).getItemShow());
-		map.add("frId", frDetails.getFrId());
-		map.add("date", productionDate);
-		map.add("menuId", menuList.get(index).getMenuId());
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-		};
-		ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
-				HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
-		frItemList = responseEntity.getBody();
-		prevFrItemList = responseEntity.getBody();
-		System.out.println("Fr Item List " + frItemList.toString());
-	} catch (Exception e) {
-
-		System.out.println("Exception Item List " + e.getMessage());
-	}
-
-	Set<String> setName = new HashSet<String>();
-
-	float grandTotal = 0;
-
-	for (int i = 0; i < frItemList.size(); i++) {
-
-		if (frDetails.getFrRateCat() == 1) {
-			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-		} else if (frDetails.getFrRateCat() == 2) {
-			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
-
-		} else if (frDetails.getFrRateCat() == 3) {
-			grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
-
-		}
-		setName.add(frItemList.get(i).getSubCatName());
-
-	}
-
-	subCatList.addAll(setName);
-
-	List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
-
-	for (int i = 0; i < subCatList.size(); i++) {
-
-		String subCat = subCatList.get(i);
-		int qty = 0;
-		int total = 0;
-
-		for (int j = 0; j < frItemList.size(); j++) {
-
-			if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
-
-				qty = qty + frItemList.get(j).getItemQty();
-
-				if (frDetails.getFrRateCat() == 1) {
-
-					total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
-
-				} else if (frDetails.getFrRateCat() == 2) {
-
-					total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
-
-				} else if (frDetails.getFrRateCat() == 3) {
-
-					total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
-
-				}
-
-			}
-
-		}
-
-		TabTitleData tabTitleData = new TabTitleData();
-		tabTitleData.setName(subCat);
-		tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
-
-		subCatListWithQtyTotal.add(tabTitleData);
-
-	}
-
-	System.out.println(subCatList);
-
-	// toTime
-
-	SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
-	SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
-	java.util.Date toTime12Hrs = null;
-	try {
-		toTime12Hrs = _24HourSDF.parse(toTime);
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-
-	model.addObject("menuList", menuList);
-
-	model.addObject("subCatListTitle", subCatListWithQtyTotal);
-
-	model.addObject("itemList", frItemList);
-	model.addObject("grandTotal", grandTotal);
-	model.addObject("frDetails", frDetails);
-
-	model.addObject("currentDate", todaysDate);
-	model.addObject("toTime", _12HourSDF.format(toTime12Hrs));
-	model.addObject("orderDate", orderDate);
-	model.addObject("productionDate", productionDate);
-	model.addObject("deliveryDate", deliveryDate);*/
-
-
 	public String incrementDate(String date, int day) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

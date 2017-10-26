@@ -313,6 +313,29 @@ padding:20px 60px 20px 20px; text-align:left;}
 .listareaBox:hover a{ color:#ec268f;}
 .listareaBox:hover a:hover{ color:#343690;}
 
+
+.listareaBlue{ width:100%; float:left; padding:0px 10%;}
+.listareaBlue ul{ width:100%; float:left; margin:0px; padding:0px;}
+.listareaBlue li{ width:33.33%; float:left; margin:0px; padding:15px;}
+.listareaBoxBlue{width:100%; float:left; text-align:left; background:#343690; padding-left:78px; position:relative; height:79px;
+-webkit-border-radius:40px;-moz-border-radius:40px;-o-border-radius:40px;-ms-border-radius:40px;border-radius:40px; color:#fff; border:3px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.listareaBoxBlue:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.listareaBoxBlue img{ position:absolute; left:6px; top:4px;}
+.listareaBoximgBlue{position:absolute; left:6px; top:4px;}
+.listareaBoxBlue h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;}
+.listareaBoxBlue h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;}
+.listareaBoxdownBlue{ float:left; padding-right:13px;font-size:13px;}
+.listareaBoxdownBlue a{ text-decoration:none;font-size:13px; color:#fff; padding:0px!important;}
+.listareaBoxdownBlue i{ margin-left:4px;}
+.listareaBoxBlue:hover h2{ color:#343690;}
+.listareaBoxBlue:hover h3{ color:#343690;}
+.listareaBoxBlue:hover a{ color:#343690;}
+.listareaBoxBlue:hover a:hover{ color:#ec268f;}
+
+
+
+
+
 a.listareaBoximg{ position:absolute; left:0px; top:0px; width:65px; height:65px; padding:0px!important;}
 a.listareaBoximg img:last-child{display:none}
 .listareaBox:hover a.listareaBoximg img:first-child{display:none}

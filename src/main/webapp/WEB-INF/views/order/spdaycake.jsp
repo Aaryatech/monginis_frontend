@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 
 
 <!DOCTYPE html>
@@ -86,8 +89,12 @@ $("#tech").change(function() {
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
+var todaysDate=new Date();
+var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
+
   $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:min}
+    	);
   } );
   $( function() {
     $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
