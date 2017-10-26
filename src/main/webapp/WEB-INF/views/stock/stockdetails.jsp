@@ -94,6 +94,20 @@
 
 							</select>
 						</div>
+						<div class="col2">
+				<b>Select Category</b><select name="select_category" class="form-control chosen" tabindex="6" id="select_category" required>
+             
+
+							
+								<option value="-1">Select Category</option>
+								<c:forEach items="${category}" var="category"
+									varStatus="count">
+									<option value="${category.catId}"><c:out value="${category.catName}"/></option>
+								</c:forEach>
+						
+
+							</select>
+						</div>
 					</div>
 					
 					<div class="colOuter" style="display:none" id=select_month_year>
