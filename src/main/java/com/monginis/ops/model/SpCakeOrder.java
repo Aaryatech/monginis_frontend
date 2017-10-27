@@ -27,7 +27,7 @@ private String spEventsName;
 private String spInstructions;
 private Date spDeliveryDate;
 private String spCustName;
-private int menuId;
+private int menuId; 
 private Date spCustDob;
 private String spCustMobNo;
 private String spBookedForName;
