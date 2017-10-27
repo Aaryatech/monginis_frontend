@@ -21,7 +21,7 @@ public class StockController {
 
 	CategoryList categoryList;
 		@RequestMapping(value = "/showstockdetail")
-		public ModelAndView showPushOrder(HttpServletRequest request, HttpServletResponse response) {
+		public ModelAndView showStockDetail(HttpServletRequest request, HttpServletResponse response) {
 
 			ModelAndView model = new ModelAndView("stock/stockdetails");
 		
@@ -51,11 +51,14 @@ public class StockController {
 		
 		
 		@RequestMapping(value = "/end_StockMonth", method = RequestMethod.POST)
-		public String showOpeningStock(HttpServletRequest request,
+		public ModelAndView showCurrentMonthStock(HttpServletRequest request,
 			HttpServletResponse response) {
+			System.out.println("in end month");
 			
 			
-			return "currentmonthstock";
+			ModelAndView model = new ModelAndView("stock/currentmonthstock");
+			
+			return model;
 			
 		}
 }

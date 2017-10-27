@@ -143,7 +143,7 @@
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
-		<form action="end_StockMonth" methos="POST">
+		<form action="end_StockMonth" method="POST">
 			<div class="table-responsive">
 				<div class="shInnerwidth">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">

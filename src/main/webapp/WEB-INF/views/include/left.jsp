@@ -338,6 +338,22 @@
 										class="fa fa-cloud-upload"></i></a>
 								</div>
 							</div></li>
+	 						<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>View GRN/GVN</h2>
+								<h3>View GRN/GVN for selected Month</h3>
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/displayGrn">View GRN <i class="fa fa-pencil"></i></a>
+								</div>
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/displayGvn">View GVN <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
 
 						<%-- <li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
