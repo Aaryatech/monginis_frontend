@@ -541,8 +541,13 @@ public class GrnGvnController {
 		}
 		grnGvnDetailsList=getGrnGvnDetailsList.getGrnGvnDetails();
 		
-		 System.out.println("gvn conf list "+grnGvnDetailsList.toString());
 		 System.out.println("gvn  list "+grnGvnDetailsList);
+		 for(int i=0; i<grnGvnDetailsList.size();i++)
+		 {
+			 grnGvnDetailsList.get(i).setGvnPhotoUpload1(Constant.SPCAKE_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload1());
+			 grnGvnDetailsList.get(i).setGvnPhotoUpload2(Constant.SPCAKE_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload2());
+			 
+		 }
 		 
 //		 modelAndView.addObject("gvnList",grnGvnDetailsList);
 //		 modelAndView.addObject("fromDate",fromDate);
