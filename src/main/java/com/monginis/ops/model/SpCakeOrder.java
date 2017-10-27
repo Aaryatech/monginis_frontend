@@ -2,6 +2,8 @@ package com.monginis.ops.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SpCakeOrder {
 	private int spOrderNo;
 	private int frId;
@@ -45,6 +47,10 @@ private String orderPhoto;
 private String orderDate;
 private String orderPhoto2;
 private int isSlotUsed;
+private int isBillGenerated;
+
+
+
 public int getSpOrderNo() {
 	return spOrderNo;
 }
@@ -123,12 +129,16 @@ public int getSpProdTime() {
 public void setSpProdTime(int spProdTime) {
 	this.spProdTime = spProdTime;
 }
+
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 public Date getSpEstDeliDate() {
 	return spEstDeliDate;
 }
 public void setSpEstDeliDate(Date spEstDeliDate) {
 	this.spEstDeliDate = spEstDeliDate;
 }
+
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 public Date getSpProdDate() {
 	return spProdDate;
 }
@@ -155,7 +165,7 @@ public void setSpInstructions(String spInstructions) {
 }
 
 
-
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 public Date getSpDeliveryDate() {
 	return spDeliveryDate;
 }
@@ -174,6 +184,8 @@ public int getMenuId() {
 public void setMenuId(int menuId) {
 	this.menuId = menuId;
 }
+
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 public Date getSpCustDob() {
 	return spCustDob;
 }
@@ -192,6 +204,8 @@ public String getSpBookedForName() {
 public void setSpBookedForName(String spBookedForName) {
 	this.spBookedForName = spBookedForName;
 }
+
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 public Date getSpBookForDob() {
 	return spBookForDob;
 }
@@ -289,6 +303,15 @@ public void setIsSlotUsed(int isSlotUsed) {
 	this.isSlotUsed = isSlotUsed;
 }
 
+public int getIsBillGenerated() {
+	return isBillGenerated;
+}
+public void setIsBillGenerated(int isBillGenerated) {
+	this.isBillGenerated = isBillGenerated;
+}
+
+
+
 @Override
 public String toString() {
 	return "SpCakeOrder [spOrderNo=" + spOrderNo + ", frId=" + frId + ", frCode=" + frCode + ", spType=" + spType
@@ -303,8 +326,11 @@ public String toString() {
 			+ ", spTotalAddRate=" + spTotalAddRate + ", spSubTotal=" + spSubTotal + ", spAdvance=" + spAdvance
 			+ ", rmAmount=" + rmAmount + ", tax1=" + tax1 + ", tax2=" + tax2 + ", tax1Amt=" + tax1Amt + ", tax2Amt="
 			+ tax2Amt + ", orderPhoto=" + orderPhoto + ", orderDate=" + orderDate + ", orderPhoto2=" + orderPhoto2
-			+ ", isSlotUsed=" + isSlotUsed + "]";
+			+ ", isSlotUsed=" + isSlotUsed + ", isBillGenerated=" + isBillGenerated + "]";
 }
+
+
+
 
 
 

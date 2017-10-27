@@ -23,7 +23,7 @@ jQuery(document).ready(function(){
 	});
 });
 
-</script>
+</script> 
 <!--rightNav-->
 
 <!--selectlistbox-->
