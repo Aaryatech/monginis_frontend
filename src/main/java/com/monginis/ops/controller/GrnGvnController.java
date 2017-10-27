@@ -320,7 +320,8 @@ public class GrnGvnController {
 	
 	@RequestMapping(value = "/addGvnProcess", method = RequestMethod.POST)
 	public ModelAndView addGvnProcess(HttpServletRequest request,
-		HttpServletResponse response,@RequestParam("gvn_photo1") MultipartFile file) {
+		HttpServletResponse response, @RequestParam("gvn_photo1") MultipartFile[] photo1,
+		 @RequestParam("gvn_photo2") MultipartFile[] photo2) {
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgvn");
 				
 		
@@ -336,14 +337,26 @@ public class GrnGvnController {
 					
 					List<GrnGvn> postGrnGvnList=new ArrayList<GrnGvn>();
 					
-					PostGrnGvnList postGrnList=new PostGrnGvnList();
-					 String spImage=	 com.monginis.ops.util.ImageS3Util.uploadSpCakeImage(file);
+					System.out.println("imgae name array "+photo1.toString());
+System.out.println("image 1"+photo1[0].getOriginalFilename());
+
+System.out.println("image 2"+photo1[1].getOriginalFilename());
+
+
+
 					
+					PostGrnGvnList postGrnList=new PostGrnGvnList();
+					// String spImage=	 com.monginis.ops.util.ImageS3Util.uploadSpCakeImage(file);
 					for(int i=0;i<grnConfList.size();i++) {
-						
+						System.out.println("imgae name array "+photo1.toString());
 						String strGvnQty=request.getParameter("gvn_qty"+grnConfList.get(i).getItemId());
+						String spImage="";
+						
+						
 						
 						int gvnQty=Integer.parseInt(strGvnQty);
+						
+						
 						
 
 						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -429,9 +442,9 @@ public class GrnGvnController {
 					System.out.println("post grn for rest size "+postGrnList.getGrnGvn().size());
 					
 
-					Info info=restTemplate.postForObject(Constant.URL + "insertGrnGvn",
+					/*Info info=restTemplate.postForObject(Constant.URL + "insertGrnGvn",
 							postGrnList, Info.class);
-					
+					*/
 					
 	
 		 return modelAndView;
@@ -464,7 +477,7 @@ public class GrnGvnController {
 		
 		ParameterizedTypeReference<GetGrnGvnDetailsList> typeRef = new ParameterizedTypeReference<GetGrnGvnDetailsList>() {
 		};
-		ResponseEntity<GetGrnGvnDetailsList> responseEntity = restTemplate.exchange(Constant.URL + "getFrGvnDetails",
+		ResponseEntity<GetGrnGvnDetailsList> responseEntity = restTemplate.exchange(Constant.URL + "getFrGrnDetails",
 				HttpMethod.POST, new HttpEntity<>(map), typeRef);
 		
 		getGrnGvnDetailsList = responseEntity.getBody();	
