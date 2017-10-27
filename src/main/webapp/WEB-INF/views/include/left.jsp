@@ -328,15 +328,15 @@
 									alt="monginis"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
 									alt="monginis"></a>
-								<h2>GRN/GVN</h2>
-								<h3>Booking Up to 12.30 PM</h3>
+								<h2>GRN</h2>
+								<!-- <h3>Booking Up to 12.30 PM</h3> -->
 								<div class="listareaBoxdown">
 									<a href="${pageContext.request.contextPath}/showGrn">Add GRN <i class="fa fa-pencil"></i></a>
 								</div>
 								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/showGvn">Add GVN <i
-										class="fa fa-cloud-upload"></i></a>
+									<a href="${pageContext.request.contextPath}/displayGrn">View GRN <i class="fa fa-pencil"></i></a>
 								</div>
+								
 							</div></li>
 	 						<li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
@@ -344,11 +344,13 @@
 									alt="monginis"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
 									alt="monginis"></a>
-								<h2>View GRN/GVN</h2>
-								<h3>View GRN/GVN for selected Month</h3>
+								<h2>GVN</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
 								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/displayGrn">View GRN <i class="fa fa-pencil"></i></a>
+									<a href="${pageContext.request.contextPath}/showGvn">Add GVN <i
+										class="fa fa-cloud-upload"></i></a>
 								</div>
+								
 								<div class="listareaBoxdown">
 									<a href="${pageContext.request.contextPath}/displayGvn">View GVN <i
 										class="fa fa-cloud-upload"></i></a>
