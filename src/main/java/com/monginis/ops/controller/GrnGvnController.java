@@ -13,9 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetGrnGvnDetails;
+import com.monginis.ops.model.GetGrnGvnDetailsList;
 import com.monginis.ops.model.grngvn.GetBillsForFr;
 import com.monginis.ops.model.grngvn.GetBillsForFrList;
 import com.monginis.ops.model.grngvn.GetGrnConfResponse;
@@ -39,6 +46,8 @@ public class GrnGvnController {
 	
 	public GetGrnConfResponse grnConfResponse;
 	public List<GetGrnItemConfig> grnConfList;
+	public List<GetGrnGvnDetails> grnGvnDetailsList;
+	GetGrnGvnDetailsList getGrnGvnDetailsList;
 	
 	@RequestMapping(value = "/showGrn", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request,
@@ -426,6 +435,123 @@ public class GrnGvnController {
 					
 	
 		 return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "/getGrnList", method = RequestMethod.GET)
+	public @ResponseBody List<GetGrnGvnDetails> getGrnDetails(HttpServletRequest request,
+		HttpServletResponse response) {
+		//ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
+				
+		
+		System.out.println("in method");
+		String fromDate=request.getParameter("fromDate");
+		String toDate=request.getParameter("toDate");
+		
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+					RestTemplate restTemplate = new RestTemplate();
+					
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int frId=frDetails.getFrId();
+		map.add("frId", frId);
+		map.add("fromDate", fromDate);
+		map.add("toDate", toDate);
+		//getFrGrnDetail
+		try {
+		//getGrnGvnDetailsList=restTemplate.postForObject(Constant.URL+ "getFrGrnDetail",map, GetGrnGvnDetailsList.class);
+		
+		ParameterizedTypeReference<GetGrnGvnDetailsList> typeRef = new ParameterizedTypeReference<GetGrnGvnDetailsList>() {
+		};
+		ResponseEntity<GetGrnGvnDetailsList> responseEntity = restTemplate.exchange(Constant.URL + "getFrGvnDetails",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+		
+		getGrnGvnDetailsList = responseEntity.getBody();	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		grnGvnDetailsList=getGrnGvnDetailsList.getGrnGvnDetails();
+		
+		 System.out.println("grn conf list "+grnGvnDetailsList.toString());
+		 System.out.println("grn  list "+grnGvnDetailsList);
+		 
+//		 modelAndView.addObject("grnList",grnGvnDetailsList);
+//		 modelAndView.addObject("fromDate",fromDate);
+//		 modelAndView.addObject("toDate",toDate);
+					
+					
+		
+	
+	return grnGvnDetailsList;
+	
+	}
+	@RequestMapping(value = "/displayGrn", method = RequestMethod.GET)
+	public ModelAndView showGrnDetails(HttpServletRequest request,
+		HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
+		return modelAndView;
+	
+	}
+	@RequestMapping(value = "/displayGvn", method = RequestMethod.GET)
+	public ModelAndView showGvnDetails(HttpServletRequest request,
+		HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("grngvn/displaygvn");
+		return modelAndView;
+	
+	}
+		
+	
+	@RequestMapping(value = "/getGvnList", method = RequestMethod.GET)
+	public @ResponseBody List<GetGrnGvnDetails> getGvnDetails(HttpServletRequest request,
+		HttpServletResponse response) {
+		//ModelAndView modelAndView = new ModelAndView("grngvn/displaygvn");
+				
+		
+		System.out.println("in method");
+		String fromDate=request.getParameter("fromDate");
+		String toDate=request.getParameter("toDate");
+		System.out.println("From " +fromDate+  "   To   "+toDate);
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+					RestTemplate restTemplate = new RestTemplate();
+					
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int frId=frDetails.getFrId();
+		map.add("frId", frId);
+		map.add("fromDate", fromDate);
+		map.add("toDate", toDate);
+		//getFrGrnDetail
+		try {
+		//getGrnGvnDetailsList=restTemplate.postForObject(Constant.URL+ "getFrGvnDetail",map, GetGrnGvnDetailsList.class);
+		
+		ParameterizedTypeReference<GetGrnGvnDetailsList> typeRef = new ParameterizedTypeReference<GetGrnGvnDetailsList>() {
+		};
+		ResponseEntity<GetGrnGvnDetailsList> responseEntity = restTemplate.exchange(Constant.URL + "getFrGvnDetails",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+		
+		getGrnGvnDetailsList = responseEntity.getBody();	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		grnGvnDetailsList=getGrnGvnDetailsList.getGrnGvnDetails();
+		
+		 System.out.println("gvn conf list "+grnGvnDetailsList.toString());
+		 System.out.println("gvn  list "+grnGvnDetailsList);
+		 
+//		 modelAndView.addObject("gvnList",grnGvnDetailsList);
+//		 modelAndView.addObject("fromDate",fromDate);
+//		 modelAndView.addObject("toDate",toDate);
+					
+		
+	
+	return grnGvnDetailsList;
+	
 	}
 	
 }
