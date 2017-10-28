@@ -74,6 +74,8 @@ public class CustomerBillController {
 	
 	
 	
+	
+	
 	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
 	public ModelAndView viewBillDetails(HttpServletRequest request,
 				HttpServletResponse response) {
