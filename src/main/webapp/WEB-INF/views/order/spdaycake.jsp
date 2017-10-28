@@ -164,7 +164,7 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 							<div class="col1">
 								<div class="col1title">Select Day</div>
 							</div>
-							<div class="col2full">
+	  						<div class="col2full">
 								<select name="spdayId" id="spdayId" required>
 										<option value="0">Select Day</option>
 
