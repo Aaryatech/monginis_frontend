@@ -98,16 +98,16 @@ jQuery(document).ready(function(){
 	<div class="row">
 	
 		<div class="col-md-2 from_date">
-		    <h4 class="pull-left">Bill No:-</h4>
+		    <h4 class="pull-left">Bill No:-  <b>${sellBillNo}</b></h4>
 		</div>
 		<div class="col-md-2 ">
-			--
+			
 		</div>
 		<div class="col-md-2">
-		    <h4 class="pull-left">Bill Date:-</h4>
+		    <h4 class="pull-left">Bill Date:- <b> ${billDate}</b></h4>
 		</div>
 		<div class="col-md-2 ">
-			--
+			
 		</div>
 		
 		 
@@ -123,30 +123,36 @@ jQuery(document).ready(function(){
 									<table width="100%" border="0" cellspacing="0"
 														cellpadding="0" id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
-									<td >Sr.No</td>
-									<td>Item Id</td>
-							
-									<td>MRP</td>
-									<td>Qty</td>
-									<td>Taxable Amount</td>
-									<td>SGST %</td>
-									<td>CGST%</td>
-									<td>Total Tax</td>
-									<td>Grand Total</td>
-								  </tr>
-								  <tr>
-									<td>1</td>
-									<td>11</td>
 								
-									<td>20</td>
-									<td>20</td>
-									<td>20</td>
-									<td>10</td>
-									<td>20</td>
-									<td>200</td>
-									<td>200</td>
+									<th>Item Name</td>
+									<th>Qty</td>
+									<th>MRP Base Rate</td>
+									<th>Taxable Amount</td>
+									<th>Tax %</td>
+									<th>Total Tax</td>
+									<th>MRP</td>
+								
 									
 								  </tr>
+								  <tbody>
+													<c:forEach items="${getSellBillDetailList}" var="sellBill" varStatus="count">
+
+														<tr>
+															<td><c:out value="${count.index+1}"/></td>
+
+															<td align="left"><c:out value="${sellBill.itemName}" /></td>
+															<td align="left"><c:out	value="${sellBill.qty}" /></td>
+															<%-- <td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td> --%>
+															<td align="left"><c:out value="${sellBill.taxableAmt}" /></td>
+															<td align="left"><c:out value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
+															<td align="left"><c:out value="${sellBill.totalTax}" /></td>
+															<td align="left"><c:out value="${sellBill.mrp}" /></td>
+															
+														
+														</tr>
+													</c:forEach>
+
+												</tbody>
 								  
 								</table>
 							
@@ -175,29 +181,7 @@ jQuery(document).ready(function(){
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "100%";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-		function openNav1() {
-			document.getElementById("mySidenav1").style.width = "100%";
-		}
-
-		function closeNav1() {
-			document.getElementById("mySidenav1").style.width = "0";
-		}
-		function openNav3() {
-			document.getElementById("mySidenav3").style.width = "100%";
-		}
-
-		function closeNav3() {
-			document.getElementById("mySidenav3").style.width = "0";
-		}
-	</script>
+	
 
 </body>
 </html>

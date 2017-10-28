@@ -57,6 +57,7 @@ jQuery(document).ready(function(){
 </head>
 <body>
 
+<c:url var="getSellBillHeader" value="/getSellBillHeader" />
 	
 	<div class="sidebarOuter"></div>
 	
@@ -101,20 +102,19 @@ jQuery(document).ready(function(){
 		    <h4 class="pull-left">From Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
-			<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="" type="text">
+			<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="fromDate" type="text">
 		</div>
 		<div class="col-md-1">
 		    <h4 class="pull-left">To Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
-			<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="" type="text">
+			<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="toDate" type="text">
 		</div>
 		<div class="col-md-2">
-		    <button class="btn search_btn pull-left">Search </button>
+		    <button class="btn search_btn pull-left" onclick="searchSellBill()">Search </button>
 		</div>
 		
     </div>
-	<br/>
 	
 	<div class="row">
 		<div class="col-md-12">
@@ -123,37 +123,19 @@ jQuery(document).ready(function(){
 				<div class="shInnerwidth">
 					
 								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid6" class="table table-bordered">
+														cellpadding="0" id="table_grid" class="table table-bordered">
 									<tr class="bgpink">
-									<th >Bill.No</th>
-									<th>Date</th>
-							
+									<th >Bill No</th>
+										<th >Invoice No</th>
+									<th>Bill Date</th>
+										<th >Grand Total</th>
 									<th>Payable Amount</th>
 									<th>Paid Amount</th>
-									<th>Remaining Amount</th>
 									<th>Paymode</th>
 									<th>Action</th>
 								  </tr>
-								  <tr>
-									<td>1</td>
-									<td>9/28/2017</td>
 								
-									<td>40</td>
-									<td><div class=class=col-md-1 pull-left><input type=number class=form-control  value="20" disabled id="paidAmt" name="paidAmt"></div></td>
-									<td>20</td>
-									<td>Card</td>
-									<td>
-										<a href="${pageContext.request.contextPath}/viewBillDetails" class="action_btn"><abbr title="Details"><i class="fa fa-list"></i></abbr></a>
-									
-									   <abbr title='save'><i class='fa fa-check-circle' style='visibility: hidden;' id="save" onclick="editEnable()"></i></abbr>
-									
-									   <abbr title="edit"><i class="fa fa-edit" id="edit" onclick="editDisable()"></i></abbr>
-										
-							           <abbr title="Delete"><i class="fa fa-trash"></i></abbr>
-							           
-							            <a href="#" class="action_btn"><abbr title="Print"><i class="fa fa-print"></i></abbr></a>
-									</td>
-								  </tr>
+								 
 								  
 								</table>
 						
@@ -182,54 +164,143 @@ jQuery(document).ready(function(){
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "100%";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-		function openNav1() {
-			document.getElementById("mySidenav1").style.width = "100%";
-		}
-
-		function closeNav1() {
-			document.getElementById("mySidenav1").style.width = "0";
-		}
-		function openNav3() {
-			document.getElementById("mySidenav3").style.width = "100%";
-		}
-
-		function closeNav3() {
-			document.getElementById("mySidenav3").style.width = "0";
-		}
-	</script>
+	
 	<script type="text/javascript">
-	function editDisable(){
+	function searchSellBill()
+	{ 
+		$('#table_grid td').remove();
+		
+		
+		var isValid = validate();
+		
+		if (isValid) {
 			
-		$("#paidAmt").prop('disabled', false);
-		
-		$("#save").show();
-		document.getElementById("save").style.visibility = "visible"; 
-		
-		document.getElementById("edit").style.visibility= "hidden"; 
-		$("#edit").prop('disabled', true);
-		
+			var fromDate = document.getElementById("fromdatepicker").value;
+			var toDate = document.getElementById("todatepicker").value;
+			   
+			
+			$.getJSON('${getSellBillHeader}',{
+				
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//$('#table_grid td').remove();
+								
+								
+
+								if (data == "") {
+									alert("No records found !!");
+
+								}
+								alert(data);
+
+								
+								$.each(data,function(key, sellBillData) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													
+
+													var sellBillNo = "<td>&nbsp;&nbsp;&nbsp;"
+															+ sellBillData.sellBillNo
+															+ "</td>";
+															var invoiceNo = "<td>&nbsp;&nbsp;&nbsp;"
+																+ sellBillData.invoiceNo
+																+ "</td>";
+																var billDate = "<td>&nbsp;&nbsp;&nbsp;"
+																	+ sellBillData.billDate
+																	+ "</td>";
+
+																	var grandTotal = "<td>&nbsp;&nbsp;&nbsp;"
+																		+ sellBillData.grandTotal
+																		+ "</td>";
+
+																		var PayableAmt = "<td>&nbsp;&nbsp;&nbsp;"
+						 													+ sellBillData.payableAmt
+						 													+ "</td>";
+																			
+						  													var paidAmt = "<td>&nbsp;&nbsp;&nbsp;"
+																				+ sellBillData.paidAmt
+																				+ "</td>";
+
+																			var paymentMode = "<td>&nbsp;&nbsp;&nbsp;"
+																				+ sellBillData.paymentMode
+																				+ "</td>";
+																				
+																				var viewBill = '<td>&nbsp;&nbsp;&nbsp;'
+																				+'<a href="${pageContext.request.contextPath}/viewBillDetails?sellBillNo='+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+'" class="action_btn" name='+'><abbr title="Details"><i class="fa fa-list"></i></abbr></a>'
+																				+ "</td>";
+
+
+
+													
+
+													var trclosed = "</tr>";
+
+													$('#table_grid tbody')
+															.append(tr);
+													$('#table_grid tbody')
+															.append(sellBillNo);
+													$('#table_grid tbody')
+													.append(invoiceNo);
+													$('#table_grid tbody')
+													.append(billDate);
+													$('#table_grid tbody')
+													.append(grandTotal);
+													$('#table_grid tbody')
+													.append(PayableAmt);
+													$('#table_grid tbody')
+													.append(paidAmt);
+													
+													$('#table_grid tbody')
+													.append(paymentMode);
+													
+													$('#table_grid tbody')
+													.append(viewBill);
+													
+													$('#table_grid tbody')
+													.append(trclosed);
+													
+													
+
+												})
+													
+
+							});
+
+		}
 	}
 	</script>
 	<script type="text/javascript">
-	function editEnable(){
-			
-		$("#paidAmt").prop('enabled', false);
+	function validate() {
+	
+	
+		var fromDate =$("#fromdatepicker").val();
+		var toDate =$("#todatepicker").val();
 		
- 		$("#save").show();
-		document.getElementById("save").style.visibility = "hidden"; 
-		
-		document.getElementById("edit").style.visibility= "visible"; 
-		$("#edit").prop('disabled', true);
-		
+
+		var isValid = true;
+
+	 if (fromDate == "" || fromDate == null) {
+
+			isValid = false;
+			alert("Please select From Date");
+		}
+	 else if (toDate == "" || toDate == null) {
+
+			isValid = false;
+			alert("Please select To Date");
+		}
+		return isValid;
+
 	}
-	</script>
+</script>
+	
 </body>
 </html>
