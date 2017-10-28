@@ -26,9 +26,9 @@
 <link href="${pageContext.request.contextPath}/resources/css/custom.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/resourcesjs/jquery-1.10.2.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/resourcesjs/bootstrap.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -94,7 +94,7 @@ jQuery(document).ready(function(){
 
 					<div class="row">
 						<div class="col-md-12">
-							<h2 class="pageTitle">GRN/GVN Bill</h2>
+							<h2 class="pageTitle">GRN Bill</h2>
 						</div>
 					</div>
 
@@ -107,73 +107,105 @@ jQuery(document).ready(function(){
 					<div class="row">
 						<div class="col-md-12">
 							<!--table-->
-							<form action="${pageContext.request.contextPath}/insertGrnProcess" name="grn" id="grn" method="post">
-							<div class="table-responsive">
-								<div class="shInnerwidth">
-									<table width="100%" border="0" cellspacing="0" cellpadding="0"
-										class="table">
-										<tr>
-											<td align="center" valign="middle" style="padding: 0px;">
-												<table width="100%" border="0" cellspacing="0"
-													cellpadding="0">
-													<tr class="bgpink">
-														<td>Sr No.</td>
-														<td>Bill No.</td>
+							<form
+								action="${pageContext.request.contextPath}/insertGrnProcess"
+								name="grn" id="grn" method="post">
+								<div class="table-responsive">
+									<div class="shInnerwidth">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="table">
+											<tr>
+												<td align="center" valign="middle" style="padding: 0px;">
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr class="bgpink">
+															<td>Sr No.</td>
+															<td>Bill No.</td>
+															<td>Item Name</td>
+															<td>GRN TYPE</td>
+															<td>GRN QTY</td>
+															<td>Item Rate</td>
+															<td>iS Edit</td>
+															<td>Edit GRN Qty</td>
 
-														<td>Item Name</td>
+															<td>GRN Amount</td>
+															<td>GRN Remark</td>
 
-														<td>GRN TYPE</td>
-														<td>GRN QTY</td>
-														<td>Item Rate</td>
-														<td>iS Edit</td>
-														<td>GRN Amount</td>
-														<td>GRN Remark</td>
+														</tr>
 
 
+														<c:forEach items="${grnConfList}" var="grnConfList"
+															varStatus="count">
+															<tr>
 
-													</tr>
+																<td>${count.index+1}</td>
+																<td><c:out value="${grnConfList.billNo}"></c:out></td>
+																<td><c:out value="${grnConfList.itemName}"></c:out></td>
+																<c:choose>
+																	<c:when test="${grnConfList.grnType==0}">
+																		<td><c:out value="GRN 1" ></c:out></td>
+																	</c:when>
+																	<c:when test="${grnConfList.grnType==1}">
+																		<td><c:out value="GRN 2" ></c:out></td>
+																	</c:when>
+																	<c:when test="${grnConfList.grnType== 2}">
+																		<td><c:out value="GRN 3" ></c:out></td>
+																	</c:when>
+																	
+																</c:choose>
+		
 
-
-													<c:forEach items="${grnConfList}" var="grnConfList"
-														varStatus="count">
-														<tr>
-
-															<td>${count.index+1}</td>
-
-															<td><c:out value="${grnConfList.billNo}"></c:out></td>
-															<td><c:out value="${grnConfList.itemName}"></c:out></td>
-															<td><c:out value="${grnConfList.grnType}"></c:out></td>
-															<td><input type="text" name="grn_qty${grnConfList.itemId}"id="grnqty${grnConfList.itemId}" size="5" value="0" onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
-															<td id="grn_rate${grnConfList.itemId}"><c:out value="${grnConfList.rate}"></c:out></td>
-															<td><label><input type="radio"
+																<%--  																		<td><c:out value="GRN 3"></c:out></td>
+ --%>
+																<td><input type="text"
+																	name="grn_qty${grnConfList.itemId}"
+																	id="grnqty${grnConfList.itemId}" size="5" value="0"
+																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
+																<td id="grn_rate${grnConfList.itemId}"><c:out
+																		value="${grnConfList.rate}"></c:out></td>
+																<!-- <td><label><input type="radio"
 																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
 																<label><input type="radio" name="is-edit"
-																	id=is_edit value="1">Yes</label></td>
-																	
-															<td id="grn_amt${grnConfList.itemId}"><c:out
-																	value="0"></c:out></td>
-																	
-															<td><input type="text" name="grn_remark${grnConfList.itemId}"
-																id=grn_remark /></td>
+																	id=is_edit value="1">Yes</label></td> -->
 
-															<!-- <td>
+																<td><select name="is_edit${grnConfList.itemId}"
+																	id="is_edit${grnConfList.itemId}"
+																	onchange="showEdit(this.id,${grnConfList.itemId})">
+																		<option selected value="0">No</option>
+																		<option value="1">Yes</option>
+																</select></td>
+
+
+																<td><input type="number"
+																	name="grn_qty${grnConfList.itemId}" disabled="disabled"
+																	id="grnqtyauto${grnConfList.itemId}" size="5" value="0"
+																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
+
+
+																<td id="grn_amt${grnConfList.itemId}"><c:out
+																		value="0"></c:out></td>
+
+																<td><input type="text"
+																	name="grn_remark${grnConfList.itemId}" id=grn_remark /></td>
+
+																<!-- <td>
 									    <a href="#" class="action_btn"><abbr title="edit"><i class="fa fa-edit"></i></abbr></a>
 										<a href="#" class="action_btn"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
 										<a href="#" class="action_btn"><abbr title="Upload Photo"><i class="fa fa-file-image-o"></i></abbr></a>
 									</td>
 									 -->
 
-														</tr>
-													</c:forEach>
+																</tr>
+														</c:forEach>
 
-												</table>
-											</td>
-										</tr>
-									</table>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
-							</div>
-							
-							
+
+
 								<div class="form-group">
 									<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-5">
 										<button type="submit" class="btn btn-primary">
@@ -182,13 +214,13 @@ jQuery(document).ready(function(){
 										<!--<button type="button" class="btn">Cancel</button>-->
 									</div>
 								</div>
-							
-							<!-- <a href="#" class="action_btn" onclick="submitForm()"><abbr title="Save"><i class="fa fa-trash"></i></abbr></a> -->
-							
+
+								<!-- <a href="#" class="action_btn" onclick="submitForm()"><abbr title="Save"><i class="fa fa-trash"></i></abbr></a> -->
+
 							</form>
 							<!--table end-->
-							
-							
+
+
 
 						</div>
 					</div>
@@ -209,6 +241,42 @@ jQuery(document).ready(function(){
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
+
+	<script type="text/javascript">
+	
+	function showEdit(id,itemId) {
+		
+		 var x=$("#is_edit"+itemId).val();
+		 
+		 
+		 
+		if(x == 1){
+		 
+			 $("#grnqtyauto"+itemId).removeAttr("disabled"); 
+	           
+			// document.getElementById("is_edit"+itemId).style.visibility = "hidden"; 
+			 
+			 document.getElementById("isEditYes"+itemId).show();
+			 
+			// $("#grnqtyauto"+itemId).removeAttr("disabled"); 
+			
+			
+			
+		}
+		if(x== 0)
+			{
+			
+			
+            $("#grnqtyauto"+itemId).attr("disabled", "disabled"); 
+			
+			}
+		
+	}
+	
+	
+	</script>
+
+
 
 	<script>
 		function openNav() {
@@ -233,15 +301,14 @@ jQuery(document).ready(function(){
 			document.getElementById("mySidenav3").style.width = "0";
 		}
 	</script>
-	
-	
+
+
 
 
 	<script type="text/javascript">
 	
 	function calcGrn(grnType,rate,itemId){
 		
-	
 		if(grnType==0){
 			
 			

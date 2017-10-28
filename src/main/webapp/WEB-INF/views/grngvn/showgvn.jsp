@@ -118,7 +118,8 @@ jQuery(document).ready(function(){
 					<div class="row">
 						<div class="col-md-12">
 							<!--table-->
-							<form action="${pageContext.request.contextPath}/getGvnBillDetails"
+							<form
+								action="${pageContext.request.contextPath}/getGvnBillDetails"
 								name="grn" id="grn" method="get">
 								<div class="table-responsive">
 
@@ -143,99 +144,105 @@ jQuery(document).ready(function(){
 										</div>
 									</div>
 									<br>
-									<!-- <div class="form-group">
-										<label class="col-sm-3 col-lg-2 control-label">Items</label>
-										<div class="col-sm-9 col-lg-3 controls">
-											<select data-placeholder="Select Items" name="items[]"
-												class="form-control chosen" tabindex="-1" id="items"
-												data-rule-required="true">
 
-											</select>
 
+
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3 col-lg-5 col-lg-offset-1">
+											<button type="submit" class="btn btn-primary">
+												<i class="fa fa-check"></i> Search
+											</button>
+											<!--<button type="button" class="btn">Cancel</button>-->
 										</div>
-									</div> -->
-
-									
-								<div class="form-group">
-									<div class="col-sm-9 col-sm-offset-3 col-lg-5 col-lg-offset-1">
-										<button type="submit" class="btn btn-primary">
-											<i class="fa fa-check"></i> Search
-										</button>
-										<!--<button type="button" class="btn">Cancel</button>-->
 									</div>
-								</div>
-									</form>
+							</form>
 
-	<form action="${pageContext.request.contextPath}/addGvnProcess"
-								name="grn_add" id="grn_add" enctype="multipart/form-data" method="post">
-									<div class="shInnerwidth">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0">
-														<tr class="bgpink">
-															<td>Sr No.</td>
-															<td>Bill No</td>
-															<td>Bill Date</td>
+							<form action="${pageContext.request.contextPath}/addGvnProcess"
+								name="grn_add" id="grn_add" enctype="multipart/form-data"
+								method="post">
+								<div class="shInnerwidth">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0"
+										class="table">
+										<tr>
+											<td align="center" valign="middle" style="padding: 0px;">
+												<table width="100%" border="0" cellspacing="0"
+													cellpadding="0">
+													<tr class="bgpink">
+														<td width="50">Sr No.</td>
+														<td width="50">Bill No</td>
+														<td width="70">Bill Date</td>
 
-															<td>Item Name</td>
-
-
-															<td>GVN QTY</td>
-															<td>Item Rate</td>
+														<td width="100">Item Name</td>
 
 
-															<td>GVN Amount</td>
-															<td>GVN Remark</td>
-															<td>PHOTO 1</td>
-															<td>PHOTO 2</td>
-
-														</tr>
+														<td width="100">GVN QTY</td>
+														<td width="100">Item Rate</td>
 
 
-														<c:forEach items="${gvnConfList}" var="gvnConfList"
-															varStatus="count">
-															<tr>
+														<td width="100">GVN Amount</td>
+														<td width="200">GVN Remark</td>
+														<td width="150">PHOTO 1</td>
+														<td width="150">PHOTO 2</td>
 
-																<td>${count.index+1}</td>
+													</tr>
 
-																<td>${gvnConfList.billNo}</td>
-																<td>${gvnConfList.billDate}</td>
-																<td>${gvnConfList.itemName}</td>
 
-																<td><input type="text" name="gvn_qty${gvnConfList.itemId}" id="gvn_qty${gvnConfList.itemId}" value="0" size="5" onkeyup="calcGvn(${gvnConfList.rate},${gvnConfList.itemId})" /></td>
-																<td>${gvnConfList.rate}</td>
-																<td id="gvn_amt${gvnConfList.itemId}"><c:out value=""></c:out></td>
-																<td><input type="text" name="gvn_remark${gvnConfList.itemId}"
-																	id=grn_remark value="" placeholder="Gvn Remark"/></td>
-																<td>
+													<c:forEach items="${gvnConfList}" var="gvnConfList"
+														varStatus="count">
+														<tr>
+
+															<td>${count.index+1} <input type="hidden" name="gvnIdForPhoto" value="${gvnConfList.itemId * 2}"></td>
+
+															<td>${gvnConfList.billNo}</td>
+															<td>${gvnConfList.billDate}</td>
+															<td>${gvnConfList.itemName}</td>
+
+															<td><input type="text"
+																name="gvn_qty${gvnConfList.itemId}"
+																id="gvn_qty${gvnConfList.itemId}" value="0" size="5"
+																onkeyup="calcGvn(${gvnConfList.rate},${gvnConfList.itemId})" /></td>
+																
+																
+																
+																
+															<td>${gvnConfList.rate}</td>
+															<td id="gvn_amt${gvnConfList.itemId}"><c:out
+																	value="00"></c:out></td>
+																	
+																	<td><textarea
+																name="gvn_remark${gvnConfList.itemId}" id=grn_remark
+																 placeholder="Gvn Remark" ></textarea></td>
+																	
+																	
+															<%-- <td><input type="text"
+																name="gvn_remark${gvnConfList.itemId}" id=grn_remark
+																value="" placeholder="Gvn Remark" /></td> --%>
+															<%-- <td>
 																	<div class="colOuter">
-																		<div class="col1">
-																			<div class="col1title">Photo1</div>
+																	<div class="col1">
+																			<div class="col1title"></div>
 																		</div>
 																		<div class="col2full">
 																			<div class="editimg">
 																				<div class="editpics">
 																					<div class="fileUpload">
 																						<span> <i class="fa fa-pencil"></i></span> <input
-																							class="upload" type="file" id="gvn_photo1"
+																							class="upload" type="file" id="gvn_photo1${gvnConfList.itemId}"
 																							name="gvn_photo1" />
 
 
 																					</div>
 																				</div>
 																				 <img id="image" />
-																				<img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img"> 
+																				<img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image"> 
 																			</div>
 																		</div>
 																	</div>
 																</td>
 
-																<!-- <td><div class="colOuter">
+																<td><div class="colOuter">
 																		<div class="col1">
-																			<div class="col1title">Photo 2</div>
+																			<div class="col1title"></div>
 																		</div>
 																		<div class="col2full">
 																			<div class="editimg">
@@ -249,24 +256,89 @@ jQuery(document).ready(function(){
 																					</div>
 																				</div>
 																				<img id="image" />
-																				<img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">
+																				<img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" >
 																			</div>
 																		</div>
 																	</div>
-																	</td> -->
-																
+																	</td>
+										 --%>
+										 
+										 
+										 
+										 
+										 <td>
+										 <div class="form-group">
+<!-- 									<div class="col-sm-9 col-lg-10 controls">
+ -->										<div class="fileupload fileupload-new"
+											data-provides="fileupload">
+											<div class="fileupload-new img-thumbnail"
+												style="width: 30px; height: 40px;">
+												<img
+													src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+													alt="" />
+											</div>
+											<div
+												class="fileupload-preview fileupload-exists img-thumbnail"
+												style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
+											<div>
+												<span class="btn btn-default btn-file"><span
+													class="fileupload-new">Select image</span> <span
+													class="fileupload-exists">Change</span> <input type="file"
+													class="file-input" name="gvn_photo1" id="gvn_photo1${gvnConfList.itemId}"
+													data-rule-required="true" /></span> <a href="#"
+													class="btn btn-default fileupload-exists"
+													data-dismiss="fileupload">Remove</a>
+											</div>
+										</div>
 
-
-															</tr>
-														</c:forEach>
-
-													</table>
-												</td>
-											</tr>
-										</table>
 									</div>
+								<!-- </div> -->
+										 </td>
+										 
+										 <td>
+										 
+										 <div class="form-group">
 									
-									<div class="form-group">
+<!-- 									<div class="col-sm-9 col-lg-10 controls">
+ -->										<div class="fileupload fileupload-new"
+											data-provides="fileupload">
+											<div class="fileupload-new img-thumbnail"
+												style="width: 30px; height: 40px;">
+												<img
+													src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+													alt="" />
+											</div>
+											<div
+												class="fileupload-preview fileupload-exists img-thumbnail"
+												style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
+											<div>
+												<span class="btn btn-default btn-file"><span
+													class="fileupload-new">Select image</span> <span
+													class="fileupload-exists">Change</span> <input type="file"
+													class="file-input" name="gvn_photo2" id="gvn_photo2${gvnConfList.itemId}"
+													data-rule-required="true" /></span> <a href="#"
+													class="btn btn-default fileupload-exists"
+													data-dismiss="fileupload">Remove</a>
+											</div>
+										</div>
+
+									</div>
+<!-- 								</div>
+
+ -->										 
+										 </td>
+										 
+										 
+														</tr>
+													</c:forEach>
+
+												</table>
+											</td>
+										</tr>
+									</table>
+								</div>
+
+								<div class="form-group">
 									<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-5">
 										<button type="submit" class="btn btn-primary">
 											<i class="fa fa-check"></i> Save
@@ -274,31 +346,31 @@ jQuery(document).ready(function(){
 										<!--<button type="button" class="btn">Cancel</button>-->
 									</div>
 								</div>
-									
-									</form>
-								</div>
-
-
-								
-								
 
 							</form>
-							<!--table end-->
-
-
-
 						</div>
+
+
+
+
+
+						</form>
+						<!--table end-->
+
+
+
 					</div>
-
-
-
 				</div>
-				<!--rightSidebar-->
+
+
 
 			</div>
-			<!--fullGrid-->
+			<!--rightSidebar-->
+
 		</div>
-		<!--rightContainer-->
+		<!--fullGrid-->
+	</div>
+	<!--rightContainer-->
 
 	</div>
 	<!--wrapper-end-->
@@ -331,7 +403,7 @@ jQuery(document).ready(function(){
 		}
 	</script>
 
-<script>
+	<script>
 
  document.getElementById("order_photo1").onchange = function () {
     var reader = new FileReader();
@@ -348,7 +420,7 @@ jQuery(document).ready(function(){
 </script>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 function calcGvn(rate,itemId){
 	
 	var gvnQty=$("#gvn_qty"+itemId).val();
@@ -365,12 +437,12 @@ function calcGvn(rate,itemId){
 };
 
 
-</script >
+</script>
 
 
 
 
-<script>
+	<script>
 
  document.getElementById("gvn_photo1").onchange = function () {
     var reader = new FileReader();
@@ -386,7 +458,24 @@ function calcGvn(rate,itemId){
 
 </script>
 
+<script type="text/javascript">
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+</script>
 	<!-- <script type="text/javascript">
 $(document).ready(function() {
 	
