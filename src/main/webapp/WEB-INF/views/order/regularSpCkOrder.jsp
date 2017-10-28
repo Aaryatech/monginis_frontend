@@ -23,7 +23,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
 
 <!--selectlistbox-->
-
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery("#menuzord").menuzord({
+		align:"left"
+	});
+});
+</script>
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>

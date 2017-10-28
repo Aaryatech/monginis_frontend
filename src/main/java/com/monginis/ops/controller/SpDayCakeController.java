@@ -80,7 +80,9 @@ public class SpDayCakeController {
 
 	
 		model.addObject("configureSpDayFrList", configureSpDayFrList);
-
+		model.addObject("spdayId",0);
+		
+		
 		return model;
 	}	
 	@RequestMapping(value = "/searchItems", method = RequestMethod.POST)
@@ -164,6 +166,9 @@ public class SpDayCakeController {
 			model.addObject("frDetails", frDetails);
 			model.addObject("itemList", frItemList);
 			model.addObject("menuId", spDayCk.getMenuId());
+			
+			model.addObject("delDate",delDate );
+			model.addObject("spdayId",spdayId);
 
 			model.addObject("configureSpDayFrList", configureSpDayFrList);
 	       } catch (Exception e) {

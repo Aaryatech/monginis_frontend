@@ -91,8 +91,7 @@ jQuery(document).ready(function(){
 							</div>
 						</div>
 					</div> --%>
-
-
+  
 
 					<div class="order-left">
 						<h2 class="pageTitle">Order Savouries</h2>
@@ -226,7 +225,7 @@ jQuery(document).ready(function(){
 
 																				<td><c:out value='${items.itemName}' /></td>
 																				<td><input name='${items.id}'
-																					id='${items.itemId}' value='${items.itemQty}'
+																					id='${items.id}' value='${items.itemQty}'
 																					class="tableInput" type="text"
 																					onchange="onChange('${items.itemRate2}',${items.id})"></td>
 																				<td><c:out value='${items.itemMrp1}' /></td>
@@ -340,7 +339,6 @@ jQuery(document).ready(function(){
 
 			//calculate total value  
 			var qty = $('#'+id).val();
-			
 			var total = rate * qty;
 			
 			  $('#total'+id).html(total);
@@ -369,7 +367,7 @@ jQuery(document).ready(function(){
 		        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
 		            e.preventDefault();
 		        }
-		    });
+		   
 			
 		}
 </script>

@@ -15,7 +15,9 @@
 	<div class="wrapperIn positionR">
     	<div class="logoBarLeft"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/images/monginislogo.jpg" alt="monginis"></a></div>  
        
+       
         <div class="logoBarRight"><div id="menuzord" class="menuzord red menuzord-responsive">
+        
         
            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
            
@@ -36,11 +38,10 @@
                 </c:otherwise>    
               </c:choose>
               
-                
-          
+               
                 <li><a href="#"><div class="usericon">${frDetails.frName} </div>
                  <div class="userimg">
-                <img src="${frDetails.frImage}"  height="80" width="80"this.src='${pageContext.request.contextPath}/resources/images/user.png';">
+                <img src="${frDetails.frImage}"  height="70" width="70" this.src='${pageContext.request.contextPath}/resources/images/user.png';">
                 	</div> </a>
                 	
                 	<ul class="dropdown">

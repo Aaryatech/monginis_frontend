@@ -59,8 +59,33 @@ public class CustomerBillController {
 		
 		int menuId;
 	      
+	@RequestMapping(value = "/viewBill", method = RequestMethod.GET)
+	public ModelAndView viewBill(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("frSellBilling/showSellBill");
 			
-		
+			
+			return model;		
+			
+			
+			
+	}
+	
+	
+	
+	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
+	public ModelAndView viewBillDetails(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("frSellBilling/showSellBillDetails");
+			
+			
+			return model;		
+			
+			
+			
+	}	
 	@RequestMapping(value = "/showCustomerBill", method = RequestMethod.GET)
 	public ModelAndView displayCustomerBill(HttpServletRequest request,
 			HttpServletResponse response) {

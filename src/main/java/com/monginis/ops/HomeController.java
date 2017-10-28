@@ -40,6 +40,7 @@ import com.monginis.ops.model.DummyItems;
 import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
 import com.monginis.ops.model.LatestNewsResponse;
@@ -121,7 +122,13 @@ public class HomeController {
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("home");
-
+		HttpSession session = request.getSession();
+		
+		ArrayList<SchedulerList> schedulerLists=  (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
+		ArrayList<Message> msgList=  (ArrayList<Message>) session.getAttribute("msgList");
+		
+		model.addObject("schedulerLists", schedulerLists);
+		model.addObject("msgList", msgList);
 		logger.info("/login request mapping.");
 
 		return model;
@@ -267,7 +274,10 @@ public class HomeController {
 			HttpSession session = request.getSession();
 			session.setAttribute("menuList", filteredFrMenuList);
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
-
+			session.setAttribute("msgList", msgList);
+			session.setAttribute("schedulerLists",schedulerLists);
+			
+			
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
 			model = new ModelAndView("home");

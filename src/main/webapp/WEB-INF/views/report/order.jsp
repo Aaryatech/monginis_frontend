@@ -163,11 +163,11 @@ document.body.onload = function()
         <table width="100%" border="0" cellspacing="0" cellpadding="7" >
   
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Delivery Date : </strong> ${spCakeOrder.spDeliveryDt}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Delivery Date : </strong> ${spCakeOrder.spDeliveryDate}</td>
       
     </tr>
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Place of Delivery  :</strong> ${spCakeOrder.spPlace}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Place of Delivery  :</strong> ${spCakeOrder.spDeliveryPlace}</td>
     </tr>
   
 </table>
@@ -179,7 +179,7 @@ document.body.onload = function()
       
     </tr>
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Phno : </strong> ${spCakeOrder.spCustMobileNo}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Phno : </strong> ${spCakeOrder.spCustMobNo}</td>
     </tr>
     <tr>
       <td colspan="2" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p style="font-size:13px;">While we shall take every care to execute your order as per your instruction, We shall not be liable for delay/non delivery or for variations in the order and decoration due to circumstances beyond our control.</p><p style="font-size:13px;">Fresh cream items should be stored under refrigeration.Please present this receipt at the time of delivery. Order once given will not be cancelled/reversed at any cost.</p></td>

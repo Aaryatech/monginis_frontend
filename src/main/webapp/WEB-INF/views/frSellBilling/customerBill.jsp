@@ -137,9 +137,9 @@
 					</div>
 
 					<div class="order-right">
-						<button class="pull-right btn view_bill_btn">
-							<a href="view_bill.html">View Bill</a>
-						</button>
+						<a href="${pageContext.request.contextPath}/viewBill"><button class="pull-right btn view_bill_btn">
+							View Bill
+						</button></a>
 					</div>
 
 					<!--tabNavigation-->

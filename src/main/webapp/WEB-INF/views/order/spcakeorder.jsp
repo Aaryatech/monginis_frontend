@@ -24,6 +24,17 @@
 <!--selectlistbox-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
 
+
+<!--selectlistbox-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery("#menuzord").menuzord({
+		align:"left"
+	});
+});
+</script>
 <!--selectlistbox-->
 
 <!--datepicker-->
@@ -294,6 +305,8 @@ String fDate1 = formatter1.format(date);
 		<div class="col1"><div class="col1title">Weight</div></div>
 		<div class="col2">
 		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
+		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}">
+		      
 		  <%--  <c:set var = "dbRate" scope = "session" value = "${sp_wt}"/>
 		   		 <c:set var = "tRate" scope = "session" value = "${weight*dbRate}"/> --%>
 		  <%int a=1; %>
@@ -841,8 +854,13 @@ function validate() {
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
+
+var todaysDate=new Date();
+var min=new Date(todaysDate.setDate(todaysDate.getDate()));
+
+
   $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' ,
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , minDate:min,
         onSelect: function(date) {
            
       	    	var isSlotUsed =$("#isSlotUsed").val();         
