@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,6 +36,10 @@ import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
+import com.monginis.ops.model.GetGrnGvnDetails;
+import com.monginis.ops.model.GetGrnGvnDetailsList;
+import com.monginis.ops.model.GetSellBillDetail;
+import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
@@ -56,6 +64,8 @@ public class CustomerBillController {
 		public static CustomerBillData customerBillDataToken6=new CustomerBillData();
 		
 		public static CustomerBillData customerBillDataToken7=new CustomerBillData();
+		List<GetSellBillHeader> getSellBillHeaderList;
+		List<GetSellBillDetail>getSellBillDetailList;
 		
 		int menuId;
 	      
@@ -64,17 +74,54 @@ public class CustomerBillController {
 				HttpServletResponse response) {
 
 			ModelAndView model = new ModelAndView("frSellBilling/showSellBill");
-			
-			
-			return model;		
-			
-			
-			
+			return model;			
 	}
 	
 	
+	@RequestMapping(value = "/getSellBillHeader", method = RequestMethod.GET)
+	public @ResponseBody List<GetSellBillHeader> getSellBillHeader(HttpServletRequest request,
+		HttpServletResponse response) {
+				
+		
+		System.out.println("in method");
+		String fromDate=request.getParameter("fromDate");
+		String toDate=request.getParameter("toDate");
+		
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+					RestTemplate restTemplate = new RestTemplate();
+					
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int frId=frDetails.getFrId();
+		map.add("frId", frId);
+		map.add("fromDate", fromDate);
+		map.add("toDate", toDate);
+		//getFrGrnDetail
+		try {
+		  
+		ParameterizedTypeReference<List<GetSellBillHeader>> typeRef = new ParameterizedTypeReference<List<GetSellBillHeader>>() {
+		};
+		ResponseEntity<List<GetSellBillHeader>> responseEntity = restTemplate.exchange(Constant.URL + "getSellBillHeader",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+		
+		getSellBillHeaderList = responseEntity.getBody();	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+		
+		 System.out.println("Sell Bill Header "+getSellBillHeaderList.toString());
+		
+			
+					
+		
 	
+	return getSellBillHeaderList;
 	
+	}
 	
 	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
 	public ModelAndView viewBillDetails(HttpServletRequest request,
@@ -82,12 +129,46 @@ public class CustomerBillController {
 
 			ModelAndView model = new ModelAndView("frSellBilling/showSellBillDetails");
 			
+
+			System.out.println("in method");
 			
-			return model;		
+			String sellBill_no=request.getParameter("sellBillNo");
+
+			String billDate=request.getParameter("billDate");
 			
 			
+				
+						RestTemplate restTemplate = new RestTemplate();
+						
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int sellBillNo=Integer.parseInt(sellBill_no);
+			map.add("sellBillNo", sellBillNo);
 			
+			try {
+			
+			ParameterizedTypeReference<List<GetSellBillDetail>> typeRef = new ParameterizedTypeReference<List<GetSellBillDetail>>() {
+			};
+			ResponseEntity<List<GetSellBillDetail>> responseEntity = restTemplate.exchange(Constant.URL + "getSellBillDetail",
+					HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			
+			getSellBillDetailList = responseEntity.getBody();	
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+			
+			
+			 System.out.println("Sell Bill Detail "+getSellBillDetailList.toString());
+			
+			model.addObject("getSellBillDetailList",getSellBillDetailList);
+			model.addObject("sellBillNo", sellBillNo);	
+			model.addObject("billDate",billDate);
+			
+			
+			return model;			
 	}	
+	
 	@RequestMapping(value = "/showCustomerBill", method = RequestMethod.GET)
 	public ModelAndView displayCustomerBill(HttpServletRequest request,
 			HttpServletResponse response) {
