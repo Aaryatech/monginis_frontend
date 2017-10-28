@@ -119,7 +119,7 @@
 
 				<!--leftNav-->
 
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
+	 			<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 
 				</jsp:include>

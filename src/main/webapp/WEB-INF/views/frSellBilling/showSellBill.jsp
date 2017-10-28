@@ -223,7 +223,7 @@ jQuery(document).ready(function(){
 			
 		$("#paidAmt").prop('enabled', false);
 		
-		$("#save").show();
+ 		$("#save").show();
 		document.getElementById("save").style.visibility = "hidden"; 
 		
 		document.getElementById("edit").style.visibility= "visible"; 
