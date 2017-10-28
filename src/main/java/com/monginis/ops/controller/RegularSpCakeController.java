@@ -122,7 +122,7 @@ public class RegularSpCakeController {
 				    model.addObject("categoryResponse", subCategories);
 				     
 				  //  model.addObject("frDetails",frDetails);
-
+				 
 				  
 				    model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 
@@ -398,7 +398,7 @@ public class RegularSpCakeController {
 				mav.addObject("rspName","");
 				mav.addObject("rgGstAmount",rgGstAmount);
 			//	mav.addObject("url", Constant.SPCAKE_IMAGE_URL);
-
+				mav.addObject("globalIndex", globalIndex);
 
 			} catch (Exception e) {
 				 

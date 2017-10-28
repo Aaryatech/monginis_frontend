@@ -166,11 +166,38 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 							</div>
 							<div class="col2full">
 								<select name="spdayId" id="spdayId" required>
-									<option value="">Select Day</option>
+										<option value="0">Select Day</option>
 
-									<c:forEach items="${configureSpDayFrList}" var="configureSpDayFr">
-										<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
+								 <c:forEach items="${configureSpDayFrList}" var="configureSpDayFr" varStatus="count">
+									
+									  <%--   <c:choose>
+									   <c:when test="${spdayId=='0'}"> --%>
+								    
+									
+									   	<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
+									   
+							    <%--        </c:when>
+							           
+							           <c:otherwise>
+							           
+							           
+							           
+							           </c:otherwise>
+							           
+							           
+									 	</c:choose> --%>
+									 	
+									 	
+									   
 									</c:forEach>
+									
+									
+									
+								
+									
+									
+									
+								
 								</select>
 							</div>
 						</div>
@@ -181,7 +208,7 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 							</div>
 							<div class="col2">
 								<input id="datepicker" class="texboxitemcode texboxcal"
-									placeholder="Delivery Date" name="datepicker" type="text">
+									placeholder="Delivery Date" name="datepicker" type="text" value="${delDate}">
 							</div>
 						</div>
 

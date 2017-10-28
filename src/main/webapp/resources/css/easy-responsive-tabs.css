@@ -4,7 +4,7 @@
   max-width:100%;
 }
 .cd-tabs-content{ border:1px solid #ccc; text-align:left; margin-top:-1px;}
-.cd-tabs-content li{ padding:27px 27px 5px 27px;height:100%;}
+.cd-tabs-content li{ padding:27px 27px 5px 27px;height:auto;}
 .cd-tabs-content .bgpink th{ text-align:center;}
 .table-body{background-color:gray !important;}
 .cd-tabs:after {

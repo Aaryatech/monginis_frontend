@@ -36,7 +36,11 @@ jQuery(document).ready(function(){
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+	  
+	  var todaysDate=new Date();
+	  var min=new Date(todaysDate.setDate(todaysDate.getDate()+1));
+
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , minDate:min});
   } );
   $( function() {
     $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
@@ -265,7 +269,7 @@ String fDate1 = formatter1.format(date);%>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Quantity</div></div>
-		   <div class="col2full"><input class="texboxitemcode" placeholder="" name="sp_qty" type="text" id="sp_qty" onkeyup="calculatePerQuantity()" required></div>
+		   <div class="col2full"><input class="texboxitemcode" placeholder="" name="sp_qty" type="text" id="sp_qty" onkeyup="calculatePerQuantity()" required value="1"></div>
 	</div>
 		
 	<div class="colOuter"></div>
@@ -412,10 +416,12 @@ String fDate1 = formatter1.format(date);%>
 		
 </div>
 <!--rightSidebar-->
-
+   
 </div>
 <!--fullGrid-->
 </div>
+
+
 <!--rightContainer-->
 
 </div>

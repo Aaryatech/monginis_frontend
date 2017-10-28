@@ -415,7 +415,9 @@ String fDate1 = formatter1.format(date);%>
 <!--fullGrid-->
 </div>
 <!--rightContainer-->
-
+<div>
+	<a href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${globalIndex}"><h1> << Back</h1></a>
+</div>
 </div>
 
 

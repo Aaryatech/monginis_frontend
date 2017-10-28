@@ -88,6 +88,9 @@ public class SpCakeController {
 		try {
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
+			int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+
+			
 			currentMenuId = menuList.get(index).getMenuId();
 			System.out.println("MenuList" + currentMenuId);
 			globalIndex = index;
@@ -136,6 +139,7 @@ public class SpCakeController {
 			model.addObject("flavourList", flavourList);
 			model.addObject("spBookb4", 0);
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
+			model.addObject("isSameDayApplicable",isSameDayApplicable);
 			
 			// model.addObject("spImage", specialCake.getSpImage());
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
@@ -394,9 +398,14 @@ public class SpCakeController {
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
 		
+		
 		// menu timing verification
         String fromTime = menuList.get(globalIndex).getFromTime();
 		String toTime = menuList.get(globalIndex).getToTime();
+		
+		
+		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+		
 		System.out.println("before order placing: from time " + fromTime + " to time " + toTime);
 
 		ZoneId z = ZoneId.of("Asia/Calcutta");
