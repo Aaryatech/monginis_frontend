@@ -44,7 +44,7 @@ public class CustomerBillController {
 		public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
 		
 		public static CustomerBillData customerBillDataToken1=new CustomerBillData();
-		
+	  	
 		public static CustomerBillData customerBillDataToken2=new CustomerBillData();
 		
 		public static CustomerBillData customerBillDataToken3=new CustomerBillData();
