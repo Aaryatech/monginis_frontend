@@ -123,7 +123,7 @@ jQuery(document).ready(function(){
 									<table width="100%" border="0" cellspacing="0"
 														cellpadding="0" id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
-								
+									<th>Index</th>
 									<th>Item Name</td>
 									<th>Qty</td>
 									<th>MRP Base Rate</td>
@@ -142,7 +142,7 @@ jQuery(document).ready(function(){
 
 															<td align="left"><c:out value="${sellBill.itemName}" /></td>
 															<td align="left"><c:out	value="${sellBill.qty}" /></td>
-															<%-- <td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td> --%>
+															<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
 															<td align="left"><c:out value="${sellBill.taxableAmt}" /></td>
 															<td align="left"><c:out value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
 															<td align="left"><c:out value="${sellBill.totalTax}" /></td>

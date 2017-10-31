@@ -27,6 +27,8 @@ public class GetSellBillHeader {
 	private int discountPer;
 	
 	private float payableAmt;
+	
+	private String frName;
 
 	public int getSellBillNo() {
 		return sellBillNo;
@@ -118,13 +120,22 @@ public class GetSellBillHeader {
 		this.payableAmt = payableAmt;
 	}
 
+	public String getFrName() {
+		return frName;
+	}
+
+	public void setFrName(String frName) {
+		this.frName = frName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetSellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
 				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt="
 				+ paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", discountPer="
-				+ discountPer + ", PayableAmt=" + payableAmt + "]";
+				+ discountPer + ", payableAmt=" + payableAmt + ", frName=" + frName + "]";
 	}
+
 
 
 	
