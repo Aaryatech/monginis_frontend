@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -128,6 +129,9 @@ jQuery(document).ready(function(){
 															<td>iS Edit</td>
 															<td>Edit GRN Qty</td>
 
+
+															<td>Tax Percentage</td>
+
 															<td>GRN Amount</td>
 															<td>GRN Remark</td>
 
@@ -143,31 +147,27 @@ jQuery(document).ready(function(){
 																<td><c:out value="${grnConfList.itemName}"></c:out></td>
 																<c:choose>
 																	<c:when test="${grnConfList.grnType==0}">
-																		<td><c:out value="GRN 1" ></c:out></td>
+																		<td><c:out value="GRN 1"></c:out></td>
 																	</c:when>
 																	<c:when test="${grnConfList.grnType==1}">
-																		<td><c:out value="GRN 2" ></c:out></td>
+																		<td><c:out value="GRN 2"></c:out></td>
 																	</c:when>
 																	<c:when test="${grnConfList.grnType== 2}">
-																		<td><c:out value="GRN 3" ></c:out></td>
+																		<td><c:out value="GRN 3"></c:out></td>
 																	</c:when>
-																	
-																</c:choose>
-		
 
-																<%--  																		<td><c:out value="GRN 3"></c:out></td>
- --%>
+																</c:choose>
+
+
 																<td><input type="text"
 																	name="grn_qty${grnConfList.itemId}"
 																	id="grnqty${grnConfList.itemId}" size="5" value="0"
-																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
-																<td id="grn_rate${grnConfList.itemId}"><c:out
-																		value="${grnConfList.rate}"></c:out></td>
-																<!-- <td><label><input type="radio"
-																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
-																<label><input type="radio" name="is-edit"
-																	id=is_edit value="1">Yes</label></td> -->
+																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})" /></td>
 
+																<td id="grn_rate${grnConfList.itemId}"><c:out
+																		value="${grnConfList.calcBaseRate}"></c:out></td>
+																
 																<td><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
 																	onchange="showEdit(this.id,${grnConfList.itemId})">
@@ -175,18 +175,39 @@ jQuery(document).ready(function(){
 																		<option value="1">Yes</option>
 																</select></td>
 
-
 																<td><input type="number"
-																	name="grn_qty${grnConfList.itemId}" disabled="disabled"
+																	name="grnqtyauto${grnConfList.itemId}"
+																	disabled="disabled"
 																	id="grnqtyauto${grnConfList.itemId}" size="5" value="0"
 																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
 
+																<td id="tax_per${grnConfList.itemId}"><c:out
+																		value="0"></c:out></td>
 
 																<td id="grn_amt${grnConfList.itemId}"><c:out
 																		value="0"></c:out></td>
 
 																<td><input type="text"
 																	name="grn_remark${grnConfList.itemId}" id=grn_remark /></td>
+
+
+
+																<td id="grn_rate${grnConfList.itemId}"><c:out
+																		value="${grnConfList.calcBaseRate}"></c:out></td>
+
+
+																<!-- <td><label><input type="radio"
+																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
+																<label><input type="radio" name="is-edit"
+																	id=is_edit value="1">Yes</label></td> -->
+
+
+
+
+
+
+
+
 
 																<!-- <td>
 									    <a href="#" class="action_btn"><abbr title="edit"><i class="fa fa-edit"></i></abbr></a>
@@ -195,7 +216,7 @@ jQuery(document).ready(function(){
 									</td>
 									 -->
 
-																</tr>
+															</tr>
 														</c:forEach>
 
 													</table>
@@ -265,9 +286,14 @@ jQuery(document).ready(function(){
 		}
 		if(x== 0)
 			{
-			
-			
-            $("#grnqtyauto"+itemId).attr("disabled", "disabled"); 
+			var i=0;
+			//document.getElementsById("grnqtyauto").value=0;
+
+
+           $("#grnqtyauto"+itemId).attr("disabled", "disabled");
+           
+    		
+
 			
 			}
 		
@@ -307,7 +333,14 @@ jQuery(document).ready(function(){
 
 	<script type="text/javascript">
 	
-	function calcGrn(grnType,rate,itemId){
+	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer){
+		
+		
+		var baseRate=rate*100/(sgstPer+cgstPer+100);
+	
+		var grnBaseRate;
+		
+		var grnRate;
 		
 		if(grnType==0){
 			
@@ -317,15 +350,16 @@ jQuery(document).ready(function(){
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
+			grnBaseRate = baseRate * 75 / 100;
+			 
+			 grnRate=(rate * 75) / 100;
 			
-			var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			grnAmt=grnAmt*75/100;	
-			$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
+			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
+			//grnAmt=grnAmt*75/100;	
+			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 		}
-		else{ 
-			
-			if(grnType==1){
+	 if(grnType==1){
 			
 		
 			var grnQty=$("#grnqty"+itemId).val();
@@ -333,13 +367,15 @@ jQuery(document).ready(function(){
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
-			var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			grnAmt=grnAmt*90/100;	
-			$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
+			grnBaseRate = baseRate * 90 / 100;
+			
+			grnRate=(rate * 90) / 100;
+			
+			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
+			//grnAmt=grnAmt*90/100;	
+			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
-		}
-			else{ 
-				
+			}
 			if(grnType==2){
 			
 			
@@ -348,18 +384,31 @@ jQuery(document).ready(function(){
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
+			grnBaseRate=baseRate;
+			grnRate=rate;
 			
-			var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
+			   
+			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
 			
-			$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
+			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 			}
-		}
-		
-		}
+			
+		var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
+			var taxableAmt=grnBaseRate*grnQty;
+			var totalTax=taxableAmt*(cgstPer+sgstPer)/100;
+			
+			var grandTotal=taxableAmt+totalTax;
+			alert(taxableAmt);
+			alert(totalTax);
+			alert(grandTotal);
+			
+		//$("#grn_rate"+itemId).html(baseRate.toFixed(2));
+
+		$("#grn_amt"+itemId).html(grandTotal.toFixed(2));
+		$("#tax_per"+itemId).html(totTaxPer.toFixed(2));
 	
 	}
-
 	
 	
 	</script>

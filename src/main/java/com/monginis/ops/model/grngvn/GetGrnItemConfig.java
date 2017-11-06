@@ -15,6 +15,12 @@ public class GetGrnItemConfig {
     private Integer billQty;
     String billDate;
     
+    float sgstPer;
+    float cgstPer;
+    float igstPer;
+    
+    
+    
 
     public Integer getBillDetailNo() {
         return billDetailNo;
@@ -96,11 +102,40 @@ public class GetGrnItemConfig {
 		this.billDate = billDate;
 	}
 
+	
+	
+	
+	public float getSgstPer() {
+		return sgstPer;
+	}
+
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
+
+	public float getCgstPer() {
+		return cgstPer;
+	}
+
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
+
+	public float getIgstPer() {
+		return igstPer;
+	}
+
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
 				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp="
-				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + "]";
+				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
+				+ cgstPer + ", igstPer=" + igstPer + "]";
 	}
 
+	
 }

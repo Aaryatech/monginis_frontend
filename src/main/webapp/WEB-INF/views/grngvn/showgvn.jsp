@@ -177,6 +177,9 @@ jQuery(document).ready(function(){
 
 														<td width="100">GVN QTY</td>
 														<td width="100">Item Rate</td>
+														<td width="100">Tax Percentage</td>
+
+
 
 
 														<td width="100">GVN Amount</td>
@@ -191,7 +194,8 @@ jQuery(document).ready(function(){
 														varStatus="count">
 														<tr>
 
-															<td>${count.index+1} <input type="hidden" name="gvnIdForPhoto" value="${gvnConfList.itemId * 2}"></td>
+															<td>${count.index+1}<input type="hidden"
+																name="gvnIdForPhoto" value="${gvnConfList.itemId * 2}"></td>
 
 															<td>${gvnConfList.billNo}</td>
 															<td>${gvnConfList.billDate}</td>
@@ -200,20 +204,24 @@ jQuery(document).ready(function(){
 															<td><input type="text"
 																name="gvn_qty${gvnConfList.itemId}"
 																id="gvn_qty${gvnConfList.itemId}" value="0" size="5"
-																onkeyup="calcGvn(${gvnConfList.rate},${gvnConfList.itemId})" /></td>
-																
-																
-																
-																
-															<td>${gvnConfList.rate}</td>
+																onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer})" /></td>
+
+
+
+
+															<td>${gvnConfList.calcBaseRate}</td>
+															
+															<td id="tax_per${gvnConfList.itemId}"><c:out
+																	value="00"></c:out></td>
+															
+															
 															<td id="gvn_amt${gvnConfList.itemId}"><c:out
 																	value="00"></c:out></td>
-																	
-																	<td><textarea
-																name="gvn_remark${gvnConfList.itemId}" id=grn_remark
-																 placeholder="Gvn Remark" ></textarea></td>
-																	
-																	
+
+															<td><textarea name="gvn_remark${gvnConfList.itemId}"
+																	id=grn_remark placeholder="Gvn Remark"></textarea></td>
+
+
 															<%-- <td><input type="text"
 																name="gvn_remark${gvnConfList.itemId}" id=grn_remark
 																value="" placeholder="Gvn Remark" /></td> --%>
@@ -262,73 +270,75 @@ jQuery(document).ready(function(){
 																	</div>
 																	</td>
 										 --%>
-										 
-										 
-										 
-										 
-										 <td>
-										 <div class="form-group">
-<!-- 									<div class="col-sm-9 col-lg-10 controls">
- -->										<div class="fileupload fileupload-new"
-											data-provides="fileupload">
-											<div class="fileupload-new img-thumbnail"
-												style="width: 30px; height: 40px;">
-												<img
-													src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-													alt="" />
-											</div>
-											<div
-												class="fileupload-preview fileupload-exists img-thumbnail"
-												style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
-											<div>
-												<span class="btn btn-default btn-file"><span
-													class="fileupload-new">Select image</span> <span
-													class="fileupload-exists">Change</span> <input type="file"
-													class="file-input" name="gvn_photo1" id="gvn_photo1${gvnConfList.itemId}"
-													data-rule-required="true" /></span> <a href="#"
-													class="btn btn-default fileupload-exists"
-													data-dismiss="fileupload">Remove</a>
-											</div>
-										</div>
 
-									</div>
-								<!-- </div> -->
-										 </td>
-										 
-										 <td>
-										 
-										 <div class="form-group">
-									
-<!-- 									<div class="col-sm-9 col-lg-10 controls">
- -->										<div class="fileupload fileupload-new"
-											data-provides="fileupload">
-											<div class="fileupload-new img-thumbnail"
-												style="width: 30px; height: 40px;">
-												<img
-													src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-													alt="" />
-											</div>
-											<div
-												class="fileupload-preview fileupload-exists img-thumbnail"
-												style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
-											<div>
-												<span class="btn btn-default btn-file"><span
-													class="fileupload-new">Select image</span> <span
-													class="fileupload-exists">Change</span> <input type="file"
-													class="file-input" name="gvn_photo2" id="gvn_photo2${gvnConfList.itemId}"
-													data-rule-required="true" /></span> <a href="#"
-													class="btn btn-default fileupload-exists"
-													data-dismiss="fileupload">Remove</a>
-											</div>
-										</div>
 
-									</div>
-<!-- 								</div>
 
- -->										 
-										 </td>
-										 
-										 
+
+															<td>
+																<div class="form-group">
+																	<!-- 									<div class="col-sm-9 col-lg-10 controls">
+ -->
+																	<div class="fileupload fileupload-new"
+																		data-provides="fileupload">
+																		<div class="fileupload-new img-thumbnail"
+																			style="width: 30px; height: 40px;">
+																			<img
+																				src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+																				alt="" />
+																		</div>
+																		<div
+																			class="fileupload-preview fileupload-exists img-thumbnail"
+																			style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
+																		<div>
+																			<span class="btn btn-default btn-file"><span
+																				class="fileupload-new">Select image</span> <span
+																				class="fileupload-exists">Change</span> <input
+																				type="file" class="file-input" name="gvn_photo1"
+																				id="gvn_photo1${gvnConfList.itemId}"
+																				data-rule-required="true" /></span> <a href="#"
+																				class="btn btn-default fileupload-exists"
+																				data-dismiss="fileupload">Remove</a>
+																		</div>
+																	</div>
+
+																</div> <!-- </div> -->
+															</td>
+
+															<td>
+
+																<div class="form-group">
+
+																	<!-- 									<div class="col-sm-9 col-lg-10 controls">
+ -->
+																	<div class="fileupload fileupload-new"
+																		data-provides="fileupload">
+																		<div class="fileupload-new img-thumbnail"
+																			style="width: 30px; height: 40px;">
+																			<img
+																				src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+																				alt="" />
+																		</div>
+																		<div
+																			class="fileupload-preview fileupload-exists img-thumbnail"
+																			style="max-width: 60px; max-height: 40px; line-height: 10px;"></div>
+																		<div>
+																			<span class="btn btn-default btn-file"><span
+																				class="fileupload-new">Select image</span> <span
+																				class="fileupload-exists">Change</span> <input
+																				type="file" class="file-input" name="gvn_photo2"
+																				id="gvn_photo2${gvnConfList.itemId}"
+																				data-rule-required="true" /></span> <a href="#"
+																				class="btn btn-default fileupload-exists"
+																				data-dismiss="fileupload">Remove</a>
+																		</div>
+																	</div>
+
+																</div> <!-- 								</div>
+
+ -->
+															</td>
+
+
 														</tr>
 													</c:forEach>
 
@@ -421,18 +431,29 @@ jQuery(document).ready(function(){
 
 
 	<script type="text/javascript">
-function calcGvn(rate,itemId){
+function calcGvn(baseRate,itemId,sgstPer,cgstPer){
 	
 	var gvnQty=$("#gvn_qty"+itemId).val();
 	//alert(gvnQty);
 	
 	
-	var gvnAmt=parseFloat(gvnQty)*parseFloat(rate);
+	var gvnAmt=parseFloat(gvnQty)*parseFloat(baseRate);
 	//alert(gvnAmt);
-	$("#gvn_amt"+itemId).html(gvnAmt.toFixed(2));
+	//$("#gvn_amt"+itemId).html(gvnAmt.toFixed(2));
 
+	 var taxableAmt=baseRate*gvnQty;
+		
+		var totalTax=(taxableAmt*(sgstPer+cgstPer))/100;
+		
+		var grandTotal=taxableAmt+totalTax;
+		
+		$("#gvn_amt"+itemId).html(grandTotal.toFixed(2));
+		
+		
+		var taxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
+		$("#tax_per"+itemId).html(taxPer.toFixed(2));
 
-	
+		
 	
 };
 
@@ -458,7 +479,7 @@ function calcGvn(rate,itemId){
 
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function readURL(input) {
     if (input.files && input.files[0]) {

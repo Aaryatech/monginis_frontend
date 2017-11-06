@@ -89,13 +89,13 @@ $( function() {
 
 <div class="colOuter">
 		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text"  >
+		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="${cDate}"  name="from_Date" type="text"  >
 		</div>
 	</div>
 
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="datepicker2" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  >
+		<div class="col2"><input id="datepicker2" class="texboxitemcode texboxcal" value="${cDate}"   name="to_Date" type="text"  >
 		</div>
 	</div>
 	
@@ -142,7 +142,7 @@ $( function() {
 													</thead>
 <tbody>
 
- <%-- <c:forEach items="${grnList}" var="grnList"> 
+ <c:forEach items="${grnList}" var="grnList"> 
   <tr>
     <td><c:out value="${grnList.billNo}"/></td>
     <td><c:out value="${grnList.grnGvnDate}"/></td>
@@ -164,7 +164,7 @@ $( function() {
     <td><c:out value="${grnList.grnGvnStatus}"/></td>
     <td><c:out value="${grnList.frGrnGvnRemark}"/></td>
   </tr>
-  </c:forEach>   --%>
+  </c:forEach>  
   
  </tbody>
   
