@@ -1,8 +1,9 @@
 
 package com.monginis.ops.model;
 
+import java.io.Serializable;
 
-public class SchedulerList {
+public class SchedulerList implements Serializable{
 
     private Integer schId;
     private String schDate;

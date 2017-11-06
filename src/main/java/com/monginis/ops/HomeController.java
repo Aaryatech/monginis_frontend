@@ -1,6 +1,7 @@
 package com.monginis.ops;
 
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,11 +37,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.ConfiguredSpDayCkResponse;
 import com.monginis.ops.model.DummyItems;
 import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
 import com.monginis.ops.model.LatestNewsResponse;
@@ -51,8 +54,10 @@ import com.monginis.ops.model.SchedulerList;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Handles requests for the application home page.
@@ -119,20 +124,82 @@ public class HomeController {
 	// }
 	//
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
+	    RestTemplate restTemplate = new RestTemplate();
+
 		
 		ArrayList<SchedulerList> schedulerLists=  (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
 		ArrayList<Message> msgList=  (ArrayList<Message>) session.getAttribute("msgList");
 		
+		System.out.println("***************Schedular List*****************"+schedulerLists);
+		System.out.println("***************msgList*****************"+msgList);
+		
+		ConfiguredSpDayCkResponse	 configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
+		        	ConfiguredSpDayCkResponse.class);
+	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+
+	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+
+	    List<GetConfiguredSpDayCk> configureSpDayCk=new ArrayList<GetConfiguredSpDayCk>();
+	    
+	    boolean flag=false,spDayShow=false;
+	    int count=0;
+	    
+	   for(GetConfiguredSpDayCk getConfSpDayCk:configureSpDayFrList)
+	   {
+	    
+	    DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date startDate;
+
+		startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+		System.out.println("startDate"+startDate);
+				
+		Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+		System.out.println("endDate"+endDate);
+		
+		String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		Date dateToCheck = dmyFormat.parse(todaysDate);
+		
+		System.out.println("dateToCheck"+dateToCheck);
+		
+		 flag=checkBetween(dateToCheck,startDate, endDate) ;
+		System.out.println("ShowSpDayCk:"+flag);
+		
+		if(flag==true)
+		{   count=count+1;
+			configureSpDayCk.add(getConfSpDayCk);
+			System.out.println("Configure SpDay Cake To And From Date: "+configureSpDayCk.toString());
+		}
+	   
+	   }
+	   
+	   if(count>0)
+	   {
+		   spDayShow=true;
+	   }
+	    
+
+	   model.addObject("configureSpDayFrList", configureSpDayCk);
+		
+		
+		
 		model.addObject("schedulerLists", schedulerLists);
 		model.addObject("msgList", msgList);
+		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
+		model.addObject("result", spDayShow);
+		
 		logger.info("/login request mapping.");
 
 		return model;
 
+	}
+
+	private boolean checkBetween(Date dateToCheck, Date startDate, Date endDate) {
+		 return dateToCheck.compareTo(startDate) >= 0 && dateToCheck.compareTo(endDate) <=0;
+		
 	}
 
 	@RequestMapping(value = "/showforgotpassword", method = RequestMethod.GET)
@@ -170,7 +237,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-	public ModelAndView displayHomePage(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView displayHomePage(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
 		logger.info("/loginProcess request mapping.");
 
@@ -280,10 +347,61 @@ public class HomeController {
 			
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
+			
+			
+			//-----------------------------------------------------------------------------------
+			
+			ConfiguredSpDayCkResponse	 configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
+		        	ConfiguredSpDayCkResponse.class);
+	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+
+	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+
+	    boolean flag=false,spDayShow=false;
+	    int count=0;
+	    
+	   for(GetConfiguredSpDayCk getConfSpDayCk:configureSpDayFrList)
+	   {
+	    
+	    DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date startDate;
+
+		startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+		System.out.println("startDate"+startDate);
+				
+		Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+		System.out.println("endDate"+endDate);
+		
+		String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		Date dateToCheck = dmyFormat.parse(todaysDate);
+		
+		System.out.println("dateToCheck"+dateToCheck);
+		
+		 flag=checkBetween(dateToCheck,startDate, endDate) ;
+		System.out.println("ShowSpDayCk:"+flag);
+		
+		if(flag==true)
+		{   count=count+1;
+			
+		}
+	   
+	   }
+	   
+	   if(count>0)
+	   {
+		   spDayShow=true;
+	   }
+	//-------------------------------------------------------------------------------------------
+			
+			
+			
+			
+			
 			model = new ModelAndView("home");
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
+			model.addObject("result",spDayShow);
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);

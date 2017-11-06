@@ -171,6 +171,9 @@ public class SpCakeController {
 
 		String spCode = request.getParameter("sp_code");
 		ModelAndView model = new ModelAndView("order/spcakeorder");
+		
+		List<Float> weightList=new ArrayList<>();
+
 
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -202,8 +205,15 @@ public class SpCakeController {
 
 					}
 				}
+				
+				
+				
 
 				if (isfound == 0) {
+					
+					
+					
+					
 
 					System.out.println("Sp Cake Not  Math ");
 					model = new ModelAndView("order/spcakeorder");
@@ -216,6 +226,7 @@ public class SpCakeController {
 					model.addObject("spBookb4", 0);
 					model.addObject("sprRate", 0);
 					model.addObject("specialCakeList", specialCakeList);
+					model.addObject("weightList", weightList);
 					//model.addObject("configuredSpCodeList", configuredSpCodeList);
 
 					return model;
@@ -227,6 +238,24 @@ public class SpCakeController {
 				System.out.println("Sp RESPONSE" + specialCake.toString());
 				float sprRate;
 				float spBackendRate;
+				
+				float minWt=Float.valueOf(specialCake.getSpMinwt());
+				
+				float maxWt=Float.valueOf(specialCake.getSpMaxwt());
+				
+				weightList.add(minWt);
+				float currentWt=minWt;
+				do {
+					currentWt=currentWt+0.5f;
+					weightList.add(currentWt);
+
+		 			
+					
+				}while(currentWt<maxWt);
+				
+				System.out.println("Weight List for SP Cake: "+weightList.toString());
+				
+				
 				
 				if (frDetails.getFrRateCat() == 1) {
 					sprRate = specialCake.getMrpRate1();
@@ -265,7 +294,7 @@ public class SpCakeController {
 				model.addObject("isFound", "");
 				model.addObject("specialCakeList", specialCakeList);
 				model.addObject("configuredSpCodeList", configuredSpCodeList);
-
+				model.addObject("weightList", weightList);
 
 			} else {
 
@@ -280,7 +309,7 @@ public class SpCakeController {
 				model.addObject("isFound", false);
 				model.addObject("specialCakeList", specialCakeList);
 				//model.addObject("configuredSpCodeList", configuredSpCodeList);
-
+				model.addObject("weightList", weightList);
 				return model;
 
 			}
@@ -297,7 +326,8 @@ public class SpCakeController {
 			model.addObject("isFound", false);
 			model.addObject("specialCakeList", specialCakeList);
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
-
+			model.addObject("weightList", weightList);
+			
 			return model;
 		}
 		
@@ -456,9 +486,17 @@ public class SpCakeController {
 		String spEvents = request.getParameter("sp_event");
 		System.out.println("12" + spEvents);
 
-		String spInstructions = request.getParameter("sp_instructions");
-		System.out.println("13" + spInstructions);
+		String spInstructions = request.getParameter("sp_inst1");
+		System.out.println("Marathi Inst :" + spInstructions);
 
+		
+		if(spInstructions.isEmpty()|| spInstructions==null) {
+		 spInstructions = request.getParameter("sp_inst2");
+		System.out.println("English Inst :" + spInstructions);
+
+		}
+		
+		
 		String spDeliveryDt = request.getParameter("datepicker");
 		System.out.println("14" + spDeliveryDt);
 

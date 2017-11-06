@@ -89,13 +89,9 @@ $("#tech").change(function() {
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
-var todaysDate=new Date();
-var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 
-  $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:min}
-    	);
-  } );
+
+  
   $( function() {
     $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
@@ -114,6 +110,8 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 
 </head>
 <body>
+
+<c:url var="findDelToAndFromDate" value="/getDelToAndFromDate" />
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -156,36 +154,36 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 					</div>
 
 					<form name="frm_search" id="frm_search" method="post"
-						action="searchItems">
+						action="${pageContext.request.contextPath}/searchItems">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 
 						<div class="colOuter">
 							<div class="col1">
-								<div class="col1title">Select Day</div>
+			 					<div class="col1title">Select Day</div>
 							</div>
 	  						<div class="col2full">
-								<select name="spdayId" id="spdayId" required>
+								<select name="spdayId" id="spdayId" onchange="onChangeDay()"required>
 										<option value="0">Select Day</option>
 
-								 <c:forEach items="${configureSpDayFrList}" var="configureSpDayFr" varStatus="count">
+								 <c:forEach items="${configureSpDayFrList}" var="configureSpDayFr">
 									
-									  <%--   <c:choose>
-									   <c:when test="${spdayId=='0'}"> --%>
+								   <c:choose>
+									   <c:when test="${spdayId==configureSpDayFr.spdayId}"> 
 								    
 									
-									   	<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
+									   	<option value="${configureSpDayFr.spdayId}"selected>${configureSpDayFr.spdayName}</option>
 									   
-							    <%--        </c:when>
+							          </c:when>
 							           
-							           <c:otherwise>
+							           <c:when test="${spdayId!=configureSpDayFr.spdayId}"> 
+							           
+							           	<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
+							           
+							           </c:when>
 							           
 							           
-							           
-							           </c:otherwise>
-							           
-							           
-									 	</c:choose> --%>
+									 	</c:choose>
 									 	
 									 	
 									   
@@ -286,7 +284,7 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()+2));
 
 																				<td><c:out value='${items.itemName}' /></td>
 																				<td><input name='${items.id}'
-																					id='${items.itemId}' value='${items.itemQty}'
+																					id='${items.id}' value='${items.itemQty}'
 																					class="tableInput" type="text"
 																					onchange="onChange('${items.itemRate2}',${items.id})"></td>
 																				<td><c:out value='${items.itemMrp1}' /></td>
@@ -456,7 +454,7 @@ function closeNav3() {
 		        }
 		    };
 			
-		}
+		
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -482,5 +480,30 @@ $(document).ready(function() {
 });
 </script>
 
+<script type="text/javascript">
+function onChangeDay() {
+
+	var spdayId = $('#spdayId').find(":selected").val();
+	//alert(spdayId);
+	
+	
+	 $.getJSON(
+				'${findDelToAndFromDate}',
+				{
+					spdayId : spdayId,
+					ajax : 'true'
+				},
+				function(data) {
+					//alert(data.deliveryFromDate);
+
+					  $( function() {
+					    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:data.deliveryFromDate ,maxDate:data.deliveryToDate}
+					    	);
+					  } );
+				
+				});
+	 
+}
+</script>
 </body>
 </html>

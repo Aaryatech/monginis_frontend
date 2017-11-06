@@ -58,6 +58,7 @@ public class HistoryController {
 		System.out.println("MENU LIST= "+menusList.toString());
 		model.addObject("menusList",menusList);
 		System.out.println("menu list is"+menusList.toString());
+		model.addObject("menuId", 0);
 		return model;
 
 	}

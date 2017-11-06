@@ -2,7 +2,6 @@ package com.monginis.ops.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +11,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,14 +35,18 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
+import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
 
@@ -57,10 +61,12 @@ public class ItemController {
 	private static int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
 	public MultiValueMap<String, Object> map;
+	public static String qtyAlert="Enter the Quantity as per the Limit.";
+	
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
 	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ParseException {
 
 		ModelAndView model = new ModelAndView("order/itemorder");
 		logger.info("/item order request mapping. index:" + index);
@@ -85,6 +91,9 @@ public class ItemController {
 		// order ,production ,delivery date logic
 
 		int isSameDayApplicable = menuList.get(index).getIsSameDayApplicable();
+		String menuTitle=menuList.get(index).getMenuTitle();
+		
+		System.out.println("Menu Title: "+menuTitle);
 
 		String fromTime = menuList.get(index).getFromTime();
 		String toTime = menuList.get(index).getToTime();
@@ -127,6 +136,7 @@ public class ItemController {
 
 				orderDate = todaysDate;
 				productionDate = incrementDate(todaysDate, 1);
+				
 				deliveryDate = incrementDate(todaysDate, 2);
 
 				System.out.println("inside 2.1");
@@ -157,6 +167,7 @@ public class ItemController {
 			map.add("frId", frDetails.getFrId());
 			map.add("date", productionDate);
 			map.add("menuId", menuList.get(index).getMenuId());
+			map.add("isSameDayApplicable",isSameDayApplicable);
 
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -226,10 +237,38 @@ public class ItemController {
 
 			}
 
+			
 			TabTitleData tabTitleData = new TabTitleData();
 			tabTitleData.setName(subCat);
-			tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
-
+			
+			if(isSameDayApplicable!=2)
+			{
+			  tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
+			}
+			else if(isSameDayApplicable==2)
+			{
+				if(subCat.equalsIgnoreCase("Pastries"))
+				{
+					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg1() + ")");
+				}
+				else
+					if(subCat.equalsIgnoreCase("1/2 Kg Cake"))
+					{
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg2() + ")");
+					}
+					else
+						if(subCat.equalsIgnoreCase("1 Kg Cake"))
+						{
+							tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg3() + ")");
+						}
+						else
+							if(subCat.equalsIgnoreCase("Above 1 Kg Cake"))
+							{
+								tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg4() + ")");
+							}
+				
+				
+			}
 			subCatListWithQtyTotal.add(tabTitleData);
 
 		}
@@ -248,6 +287,24 @@ public class ItemController {
 			e.printStackTrace();
 		}
 
+		
+		
+
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date itemOrderDate;Date itemDeliveryDate;
+		
+		    itemOrderDate = (Date) parser.parse(orderDate);
+			 itemDeliveryDate=(Date) parser.parse(deliveryDate);
+		
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
+		String strOrderDate=formatter.format(itemOrderDate);
+		
+		String  strDeliveryDate=formatter.format(itemDeliveryDate);
+		
+		
+		
+		
+		
 		model.addObject("menuList", menuList);
 
 		model.addObject("subCatListTitle", subCatListWithQtyTotal);
@@ -258,14 +315,134 @@ public class ItemController {
 
 		model.addObject("currentDate", todaysDate);
 		model.addObject("toTime", _12HourSDF.format(toTime12Hrs));
-		model.addObject("orderDate", orderDate);
+		model.addObject("orderDate", strOrderDate);
 		model.addObject("productionDate", productionDate);
-		model.addObject("deliveryDate", deliveryDate);
-
+		model.addObject("deliveryDate", strDeliveryDate);
+		model.addObject("menuTitle",menuTitle);
+		System.out.println("isSameDayApplicable"+isSameDayApplicable);
+		model.addObject("isSameDayApplicable",isSameDayApplicable);
+		model.addObject("qtyMessage", qtyAlert);
 		return model;
-
+     
 	}
+	//-----------------------------------------------------------------------------------------
+	@RequestMapping(value = "/quantityValidation", method = RequestMethod.GET)
+	public @ResponseBody Info qtyValidation(HttpServletRequest request,HttpServletResponse response) {
+		System.out.println("AJAX CALL Qty Validation");
+		Info info=new Info();
+		
+		
+		List<GetFrItem> tempFrItemList =  new ArrayList<GetFrItem>();;
+		tempFrItemList=prevFrItemList;
 
+		List<GetFrItem> tempOrderList = new ArrayList<>();
+		boolean isValidQty=true;
+		
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		
+		
+		for (int i = 0; i < prevFrItemList.size(); i++) {
+
+			GetFrItem tempFrItem = prevFrItemList.get(i);
+
+			try {
+				Integer id = tempFrItem.getId();
+				System.out.println("id " + id);
+				System.out.println("prev qty " + tempFrItem.getItemQty());
+
+				String strQty = request.getParameter(String.valueOf(id));
+				int qty = Integer.parseInt(strQty);
+
+				System.out.println(" " + id + ":" + strQty);
+			
+			
+
+					tempFrItem.setItemQty(qty);
+					tempOrderList.add(tempFrItem);
+
+				
+				
+
+			} catch (Exception e) {
+				System.out.println("Except OrderList " + e.getMessage());
+			}
+
+		}
+		
+		
+
+		System.out.println(" tempOrder List " + tempOrderList.toString());
+		
+		
+		System.out.println(" frItemList List " + frItemList.toString());
+
+		int kg1Qty = 0;
+		int kg2Qty = 0;
+		int kg3Qty = 0;
+		int kg4Qty = 0;
+
+		// kg1= pastries kg2= half kg, kg3=1kg, kg4=above 1kg
+
+		for (int i = 0; i < tempOrderList.size(); i++) {
+
+			GetFrItem item = tempOrderList.get(i);
+
+			if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
+
+				kg1Qty = kg1Qty + item.getItemQty();
+
+			} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
+
+				kg2Qty = kg2Qty + item.getItemQty();
+				
+			} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
+
+				kg3Qty = kg3Qty + item.getItemQty();
+				
+			} else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
+
+				kg4Qty = kg4Qty + item.getItemQty();
+			}
+
+		}
+		
+		System.out.println("limit : "+frDetails.getFrKg1()+"new qty:  kg1:"+kg1Qty);
+		System.out.println("limit : "+frDetails.getFrKg2()+"new qty:  kg2:"+kg2Qty);
+		System.out.println("limit : "+frDetails.getFrKg3()+"new qty:  kg3:"+kg3Qty);
+		System.out.println("limit : "+frDetails.getFrKg4()+"new qty:  kg4:"+kg4Qty);
+
+	
+		
+		if(frDetails.getFrKg1()<kg1Qty) {
+			isValidQty=false;
+			
+			info.setError(true);
+			info.setMessage("You have exceeded Max limit for Pastries");
+		} else if(frDetails.getFrKg2()<kg2Qty) {
+			isValidQty=false;
+			
+			info.setError(true);
+			info.setMessage("You have exceeded Max limit for 1/2 Kg Cake");
+		} else if(frDetails.getFrKg3()<kg3Qty) {
+			isValidQty=false;
+			info.setError(true);
+			info.setMessage("You have exceeded Max limit for 1 Kg Cake");
+		} else if(frDetails.getFrKg4()<kg4Qty) {
+			isValidQty=false;
+			info.setError(true);
+			info.setMessage("You have exceeded Max limit for Above 1 Kg Cake");
+		}
+		
+	
+		
+		
+		
+		return  info;
+	}
+   //--------------------------------------------------------------------------------------------
 	@RequestMapping("/saveOrder")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
@@ -338,7 +515,9 @@ public class ItemController {
 			int kg4Qty = 0;
 
 			// kg1= pastries kg2= half kg, kg3=1kg, kg4=above 1kg
-
+		//	mav.addObject("qtyError", "0");
+			//mav.addObject("qtyMessage", "");
+		qtyAlert="";
 			for (int i = 0; i < tempOrderList.size(); i++) {
 
 				GetFrItem item = tempOrderList.get(i);
@@ -348,15 +527,15 @@ public class ItemController {
 					kg1Qty = kg1Qty + item.getItemQty();
 
 				} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
-
+				
 					kg2Qty = kg2Qty + item.getItemQty();
 					
 				} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
-
+				
 					kg3Qty = kg3Qty + item.getItemQty();
 					
 				} else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
-
+					
 					kg4Qty = kg4Qty + item.getItemQty();
 				}
 
@@ -371,14 +550,21 @@ public class ItemController {
 			
 			if(frDetails.getFrKg1()<kg1Qty) {
 				isValidQty=false;
+				qtyAlert= "You have exceeded max limit for Pastries";
 				
+
 			} else if(frDetails.getFrKg2()<kg2Qty) {
 				isValidQty=false;
-				
+				qtyAlert= "You have exceeded max limit for 1/2 Kg Cake";
+
 			} else if(frDetails.getFrKg3()<kg3Qty) {
 				isValidQty=false;
+				qtyAlert="You have exceeded max limit for 1 Kg Cake";
+
 			} else if(frDetails.getFrKg4()<kg4Qty) {
 				isValidQty=false;
+				qtyAlert= "You have exceeded max limit for Above 1 Kg Cake";
+
 			}
 			
 			
@@ -637,7 +823,7 @@ public class ItemController {
 
 	{ // qty exceed limit
 
-		mav.addObject("errorMessage", "You have exceed maximum limit");
+		//mav.addObject("errorMessage", "You have exceed maximum limit");
 	}return mav;
 
 	}

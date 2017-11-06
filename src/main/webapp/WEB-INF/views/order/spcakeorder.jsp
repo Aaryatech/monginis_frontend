@@ -82,7 +82,8 @@ select {
 
 
 </head>
-<body>
+<body onload="onload()">
+
 
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
@@ -312,15 +313,17 @@ String fDate1 = formatter1.format(date);
 		  <%int a=1; %>
         <select name="spwt" id="spwt" onchange="onChange('${dbRate}')">
  	   
-             <c:forEach var ="i" begin ="${specialCake.spMinwt}" end ="${specialCake.spMaxwt}" step="1">
-                  <option value="${i}">${i}</option>
-                <c:choose>
-                  <c:when test="${i != specialCake.spMaxwt}">
-                     <option value="${i+0.5}">${i+0.5}</option> 
-                  </c:when>
-               </c:choose>
+            <c:forEach items="${weightList}" var="weightList">
+              
+                
+               
+                  
+                  <option value="${weightList}">${weightList}</option>
+                  
+                
       
-            </c:forEach>
+            </c:forEach> 
+           
       </select>
 			<div class="err" style="display:none;">Please Enter Weight</div>
 		</div>
@@ -338,7 +341,7 @@ String fDate1 = formatter1.format(date);
 		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
 		</div>
 	</div>
-	
+
 <c:choose>
 <c:when test="${specialCake.isCustChoiceCk=='1'}">
 		
@@ -398,14 +401,39 @@ String fDate1 = formatter1.format(date);
 	<c:otherwise>
 	</c:otherwise>
 
-</c:choose>
+</c:choose> 
+
+       <div class="colOuter">
+	
+		<div class="col1"><div class="col1title">Select Language</div></div>
+        <div class="col2full">
+                                    <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
+             
+                                                                        
+                                                   <option value="1" id="marathi" >Marathi</option>
+                                                   <option value="2" id="english" >English</option>
+                                   </select>
+
+        </div>
+                                                           
+                 
+        </div>
 
 
-<div class="colOuter">
+     <div class="colOuter">
 	
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
-	</div>
+		
+		<div class="col1full" id="marathiDiv">
+		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:200px;height:90px" ></textarea>
+		</div>
+		
+	    <div class="col1full" id="englishDiv" style="display: none;">
+	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px" >
+	    </textarea>
+	    </div>
+<!-- 	      <textarea id="textarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea>
+ -->	</div>
 	<!-- <div class="colOuter">
 	
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
@@ -521,7 +549,7 @@ String fDate1 = formatter1.format(date);
 	</div>
 	
 	<div class="order-btn">
-		<input name="" class="btnSubmit" value="SUBMIT"  type="button" id="click">
+		<input name="" class="btnSubmit" value="SUBMIT"  type="button" id="click" >
 		<input name="" class="btnReset" value="RESET" type="hidden">
 	</div>
 	
@@ -917,13 +945,18 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()));
 
 $(document).ready(function () {
     $("#click").click(function ()  {
-      	       
+    	
+  	  alert("Submit");
+
       	       var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
-      	      
+      	  
       	    	var isSlotUsed =$("#isSlotUsed").val();         
-      	    	
+      	  	 
+	
       	    	var produTime =$("#sp_pro_time").val();         
-      	    
+      	  
+
+      	    	
                   if(isSlotUsed=='1')
                   	{
               
@@ -955,6 +988,14 @@ $(document).ready(function () {
       				
       			
       			});
+             }else{
+            	 var valid=	validate();
+   				
+   				
+   				if(valid){
+   					document.forms["from_ord"].submit();
+   				}	
+            	 
              }
          });
 });
@@ -966,6 +1007,61 @@ $("isFound").change(function(){
     alert("Special Cake is Not Found");
 });
 </script>
+<!-- 
+<script type="text/javascript">
+$(function() {
+    $.fn.showField = function() {
+        var selectVal = document.getElementById(this.val() + 'Div');
+        return this.each(function() {
+          $(selectVal).show().siblings('div').hide();
+        });
+    };    
+    $('select#reportsSelect').change(function() {
+        $(this).showField();
+    });
+});
 
+
+</script> -->
+
+<script>
+function showDiv(elem){
+   if(elem.value == 1)
+	   {
+	  
+      document.getElementById('marathiDiv').style.display= "block";
+   document.getElementById('englishDiv').style="display:none";
+	   }
+   else if(elem.value == 2)
+   {
+	   document.getElementById('englishDiv').style.display = "block";
+	   document.getElementById('marathiDiv').style="display:none";
+   }
+ 
+}
+</script>
+ 
+<script type="text/javascript">
+function setSpInstructions(){
+	
+	var instru=document.getElementById("show").value; 
+	//alert(instru)
+	var inst1,inst2;
+	if(instru==1)
+		{
+		inst1=document.getElementById("sp_inst1").value; 
+		document.getElementById("sp_instructions").setAttribute('value',inst1);
+		
+		}
+	else
+		{
+		inst2=document.getElementById("sp_inst2").value; 
+		document.getElementById("sp_instructions").setAttribute('value',inst2);
+		
+		}
+		
+	
+}
+</script> -->
 </body>
 </html>

@@ -109,6 +109,7 @@
 						<c:forEach var="menu" items="${menuList}" varStatus="loop">
 							<c:set var="menuToTime" value="${menu.toTime}" />
 							<c:set var="menuFromTime" value="${menu.fromTime}" />
+							<c:set var="menuDesc" value="${menu.menuDesc}" />
 
 							<c:set var="frId" value="${menu.frId}" />
 							<c:set var="isSameDayApplicable"
@@ -124,6 +125,9 @@
 									String menuToTiming = (String) pageContext.getAttribute("menuToTime");
 									String menuFromTiming = (String) pageContext.getAttribute("menuFromTime");
 
+									String menuDesc = (String) pageContext.getAttribute("menuDesc");
+
+									
 									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
 									SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
 									Date fromTime12Hrs = _24HourSDF.parse(menuFromTiming);
@@ -163,14 +167,17 @@
 									Boolean isValid = false;
 
 									if (isSameDay) {
+										System.out.println("in isSameDay if loop");
 
 										if (!isLate && !isEarly) {
 
 											isValid = true;
 										}
-									} else {
+									} else {										
+										System.out.println("in isSameDay else loop");
 
-										if (fromTime.isBefore(now) && now.isAfter(toTime)) {
+									
+										if (now.isBefore(toTime) && fromTime.isAfter(now)) {
 											isValid = true;
 										}
 									}
@@ -186,7 +193,7 @@
 													// if
 													if (settingType != 1) {
 								%>
-								<div class="listareaBoxBlue">
+							<abbr title='${menu.menuDesc}'>			<div class="listareaBoxBlue"></abbr>
 									<a class="listareaBoximg"
 										href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
 
@@ -196,7 +203,7 @@
 											//else
 															} else {
 										%>
-										<div class="listareaBox">
+									<abbr title='${menu.menuDesc}'><div class="listareaBox"></abbr>
 											<a class="listareaBoximg"
 												href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
 
@@ -210,13 +217,13 @@
 
 																		//if
 												%>
-												<div class="listareaBoxBlue">
+											<abbr title='${menu.menuDesc}'>	<div class="listareaBoxBlue"></abbr>
 													<a class="listareaBoximg"
 														href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 														<%
 															} else {
 														%>
-														<div class="listareaBox">
+													<abbr title='${menu.menuDesc}'>	<div class="listareaBox"></abbr>
 															<a class="listareaBoximg"
 																href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 																<%
@@ -230,7 +237,7 @@
 																				{
 																				
 																%> 
-																<div class="listareaBoxBlue">
+															<abbr title='${menu.menuDesc}'>	<div class="listareaBoxBlue"></abbr>
 																
 																<a class="listareaBoximg"
 																href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
@@ -238,7 +245,7 @@
 																	//else
 																	}else{
 																		%> 
-																		<div class="listareaBox">
+																	<abbr title='${menu.menuDesc}'>	<div class="listareaBox"></abbr>
 																		
 																		<a class="listareaBoximg"
 																		href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">

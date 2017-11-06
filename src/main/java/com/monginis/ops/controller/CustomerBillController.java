@@ -490,7 +490,7 @@ public class CustomerBillController {
 		
 		float discountAmt=((sumGrandTotal*discountPer)/100);
 		float payableAmt=(sumGrandTotal-discountAmt);
-		
+		payableAmt=roundUp(payableAmt);
 		
 		sellBillHeader.setDiscountAmt(discountAmt);
 		sellBillHeader.setPayableAmt(payableAmt);
@@ -724,7 +724,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);
@@ -955,7 +955,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);
@@ -1186,7 +1186,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);
@@ -1417,7 +1417,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);
@@ -1648,7 +1648,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);
@@ -1879,7 +1879,7 @@ public class CustomerBillController {
 			
 			float discountAmt=((sumGrandTotal*discountPer)/100);
 			float payableAmt=(sumGrandTotal-discountAmt);
-			
+			payableAmt=roundUp(payableAmt);
 			
 			sellBillHeader.setDiscountAmt(discountAmt);
 			sellBillHeader.setPayableAmt(payableAmt);

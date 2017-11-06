@@ -1,8 +1,9 @@
 
 package com.monginis.ops.model;
 
+import java.io.Serializable;
 
-public class Message {
+public class Message implements Serializable{
 
     private Integer msgId;
     private String msgFrdt;

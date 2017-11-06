@@ -34,12 +34,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
+import com.monginis.ops.model.DateResponse;
+import com.monginis.ops.model.Flavour;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
@@ -62,29 +66,54 @@ public class SpDayCakeController {
 	public MultiValueMap<String, Object> map;
 
 	ConfiguredSpDayCkResponse configuredSpDayCkRes;
-
+	
+    //--------------------------SHOW SPECIAL DAY CAKE FORM SHOW-----------------------------------------
+	List<GetConfiguredSpDayCk> configureSpDayFrList;
+	
 	@RequestMapping(value = "/showSpDayCake", method = RequestMethod.GET)
 	public ModelAndView displaySpDayCake(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("order/spdaycake");
+		    ModelAndView model = new ModelAndView("order/spdaycake");
 	
 
-		RestTemplate restTemplate = new RestTemplate();
+		    RestTemplate restTemplate = new RestTemplate();
 
-		 configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "getSpDayCkList",
-				ConfiguredSpDayCkResponse.class);
-		List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+		    configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
+			        	ConfiguredSpDayCkResponse.class);
+		  configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
-		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+		    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
 
 	
-		model.addObject("configureSpDayFrList", configureSpDayFrList);
-		model.addObject("spdayId",0);
+		   model.addObject("configureSpDayFrList", configureSpDayFrList);
+		   model.addObject("spdayId",0);
 		
 		
-		return model;
+		 return model;
 	}	
+	
+	
+	@RequestMapping(value = "/getDelToAndFromDate", method = RequestMethod.GET)
+	public @ResponseBody DateResponse getDelToAndFromDate(@RequestParam(value = "spdayId", required = true) int spdayId) {
+		
+		DateResponse dateResponse=new DateResponse();
+		
+		for(GetConfiguredSpDayCk getConfSpDay:configureSpDayFrList)
+		{
+		    if(getConfSpDay.getSpdayId()==spdayId)
+		    {
+			   dateResponse.setDeliveryFromDate(getConfSpDay.getDeliveryFromDate());
+			   dateResponse.setDeliveryToDate(getConfSpDay.getDeliveryToDate());
+		    }
+		
+		}
+		System.out.println("dateResponse: "+dateResponse.toString());
+		return dateResponse;
+		
+	}
+	//-----------------------SEARCH ITEMS-------------------------------------------
+	
 	@RequestMapping(value = "/searchItems", method = RequestMethod.POST)
 	public ModelAndView searchItems(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -101,6 +130,7 @@ public class SpDayCakeController {
 		
 		
 		int spdayId=Integer.parseInt(request.getParameter("spdayId"));
+		
 		
 		GetConfiguredSpDayCk spDayCk=new GetConfiguredSpDayCk();
 		
@@ -144,7 +174,7 @@ public class SpDayCakeController {
 			
 	
 
-		 map = new LinkedMultiValueMap<String, Object>();
+	    	 map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("items",spDayCk.getItemId());
 			map.add("frId", frDetails.getFrId());
@@ -180,7 +210,7 @@ public class SpDayCakeController {
 		return model;
 	}		
 		
-		
+	//--------------------------SAVE SPECIAL DAY CAKE ORDER----------------------------------------	
 	@RequestMapping("/saveSpDayCakeOrder")
 	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
@@ -208,6 +238,7 @@ public class SpDayCakeController {
 			GetFrItem frItem = frItemList.get(i);
 
 			try {
+				
 				Integer id = frItem.getId();
 				System.out.println("id " + id);
 
@@ -220,14 +251,14 @@ public class SpDayCakeController {
 
 				if (qty != frItem.getItemQty()) {
 
-					frItem.setItemQty(qty);
-					orderList.add(frItem);
+					                             frItem.setItemQty(qty);
+					                             orderList.add(frItem);
 
-				}
+				                                }
 
 			} catch (Exception e) {
-				System.out.println("Except OrderList " + e.getMessage());
-			}
+				                   System.out.println("Except OrderList " + e.getMessage());
+			                      }
 
 		}
 
@@ -297,7 +328,7 @@ public class SpDayCakeController {
 				order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
 				order.setProductionDate(Common.stringToSqlDate(prodDate));
 				order.setRefId(frItem.getId());
-				order.setUserId(2);
+				order.setUserId(0);
 			
 
 				if (rateCat == 1) {
@@ -340,12 +371,13 @@ public class SpDayCakeController {
 
 		} catch (Exception e) {
 			System.out.println("Except Placing order " + e.getMessage());
+			e.printStackTrace();
 		}
 
 	
 	return mav;
 	}
-	
+	//-------------------------------------------------------------------------------
 	public String incrementDate(String date, int day) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -364,3 +396,4 @@ public class SpDayCakeController {
 
 	}
 }
+//----------------------------------------------------------------------------------

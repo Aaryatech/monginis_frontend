@@ -79,19 +79,19 @@ $("#tech").change(function() {
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   $( function() {
-    $( "#datepicker2" ).datepicker();
+    $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   $( function() {
-    $( "#datepicker3" ).datepicker();
+    $( "#datepicker3" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   $( function() {
-    $( "#datepicker4" ).datepicker();
+    $( "#datepicker4" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   $( function() {
-    $( "#datepicker5" ).datepicker();
+    $( "#datepicker5" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   </script>
 <!--datepicker--> 
@@ -149,7 +149,16 @@ $("#tech").change(function() {
               <option value="">Select Type</option>
         
 									<c:forEach items="${menusList}" var="menusList">
-              <option value="${menusList.menuId}">${menusList.menuTitle}</option>
+									  <c:choose>
+									   <c:when test="${menuId==menusList.menuId}"> 
+								    
+                                           <option value="${menusList.menuId}"selected>${menusList.menuTitle}</option>
+                                        </c:when>
+                                         <c:when test="${menuId!=menusList.menuId}"> 
+                                         
+                                          <option value="${menusList.menuId}">${menusList.menuTitle}</option>
+                                         </c:when>
+                                        </c:choose>
            </c:forEach>   
             </select>
 			</div>

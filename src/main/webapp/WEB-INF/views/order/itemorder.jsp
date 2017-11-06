@@ -30,14 +30,46 @@ jQuery(document).ready(function(){
 });
 </script>
 <!--rightNav-->
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	
+	
+	
+});
+</script>
 
 
+
+<style>
+.alert {
+	padding: 15px;
+	background-color: #f44336;
+	color: white;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
+}
+</style>
 </head>
 <body>
+	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
+
 
 	<!--wrapper-start-->
 	<div class="wrapper">
@@ -67,39 +99,29 @@ jQuery(document).ready(function(){
 				<!--leftNav-->
 				<!--rightSidebar-->
 				<div class="sidebarright">
-
-					<%-- <div class="order-left">
-
-						<h2 class="pageTitle">Order Savouries</h2>
-						<h3 class="pageTitle2">Order Date : ${currentDate}</h3>
-					</div>
-
-					<div class="order-right">
-						<div class="ordermto2px">
-							<div class="orderclose">Order Closing Time :</div>
-							<div class="ordercloser2">
-								<span>${toTime}</span>
-							</div>
-						</div>
-						<div class="ordermto20px">
-							<div class="order-price">Total Amount :</div>
-							<div class="order-amount">
-
-								<label>INR: </label> <label id="grandtotal">${grandTotal}</label>
-
-								
-							</div>
-						</div>
-					</div> --%>
-  
-
+					<c:choose>
+						<c:when test="${isSameDayApplicable=='2'}">
+							<c:if test="${not empty qtyMessage}">
+								<div class="alert">
+									<span class="closebtn"
+										onclick="this.parentElement.style.display='none';">&times;</span>
+									<strong>Alert!</strong> ${qtyMessage}
+								</div>
+							</c:if>
+						</c:when>
+					</c:choose>
 					<div class="order-left">
-						<h2 class="pageTitle">Order Savouries</h2>
-						<h3 class="pageTitle2">Order Date : ${orderDate}</h3>
-						
-						<input type="hidden" name="menuId" value="${menuId}">
-						<input type="hidden" name="rateCat" value="${frDetails.frRateCat}">
-						
+						<h2 class="pageTitle">${menuTitle}</h2>
+						<h3 class="pageTitle2">Order Date :
+							${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
+							${deliveryDate}</h3>
+
+						<input type="hidden" name="menuId" value="${menuId}"> <input
+							type="hidden" name="rateCat" value="${frDetails.frRateCat}">
+						<input type="hidden" value="${isSameDayApplicable}"
+							id="isSameDayApplicable" />
+
 					</div>
 
 
@@ -119,14 +141,12 @@ jQuery(document).ready(function(){
 
 						</div>
 					</div>
-				<c:if test="${not empty message}">
-   <!-- here would be a message with a result of processing -->
-   s
-    <div class="messages messagesErr"> ${message} </div>
-        	
-</c:if>
-					
-					
+
+					<c:if test="${not empty message}">
+						<!-- here would be a message with a result of processing -->
+						<div class="messages messagesErr">${message}</div>
+					</c:if>
+
 					<form action="${pageContext.request.contextPath}/saveOrder"
 						name="form1" method="post">
 
@@ -187,6 +207,7 @@ jQuery(document).ready(function(){
 															<tr class="bgpink">
 
 																<td>Item Name</td>
+																<td>Min Quantity</td>
 																<td>Quantity</td>
 																<td>MRP</td>
 																<td>Rate</td>
@@ -206,10 +227,15 @@ jQuery(document).ready(function(){
 																			<tr>
 
 																				<td><c:out value='${items.itemName}' /></td>
+																				<td><c:out value='${items.minQty}' /></td>
+
 																				<td><input name='${items.id}' id='${items.id}'
 																					value='${items.itemQty}' class="tableInput"
-																					type="number" onkeydown="myFunction()"
-																					onchange="onChange('${items.itemRate1}',${items.id})"></td>
+																					type="text" onkeydown="myFunction()"
+																					onchange="onChange('${items.itemRate1}',${items.id})">
+
+																					<input type="hidden" value="${items.minQty}"
+																					id="minqty${items.id}" /></td>
 																				<td><c:out value='${items.itemMrp1}' /></td>
 
 																				<td><c:out value='${items.itemRate1}' /></td>
@@ -217,6 +243,8 @@ jQuery(document).ready(function(){
 																				<c:set var="qty" value="${items.itemQty}" />
 																				<td id="total${items.id}"><c:out
 																						value='${rate * qty}' /></td>
+
+
 																			</tr>
 																		</c:when>
 
@@ -224,10 +252,14 @@ jQuery(document).ready(function(){
 																			<tr>
 
 																				<td><c:out value='${items.itemName}' /></td>
-																				<td><input name='${items.id}'
-																					id='${items.id}' value='${items.itemQty}'
-																					class="tableInput" type="text"
-																					onchange="onChange('${items.itemRate2}',${items.id})"></td>
+																				<td><c:out value='${items.minQty}' /></td>
+																				<td><input name='${items.id}' id='${items.id}'
+																					value='${items.itemQty}' class="tableInput"
+																					type="text"
+																					onchange="onChange('${items.itemRate2}',${items.id})">
+
+																					<input type="hidden" value="${items.minQty}"
+																					id="minqty${items.id}" /></td>
 																				<td><c:out value='${items.itemMrp1}' /></td>
 
 																				<td><c:out value='${items.itemRate2}' /></td>
@@ -242,10 +274,14 @@ jQuery(document).ready(function(){
 																			<tr>
 
 																				<td><c:out value='${items.itemName}' /></td>
+																				<td><c:out value='${items.minQty}' /></td>
 																				<td><input name='${items.id}' id='${items.id}'
 																					value='${items.itemQty}' class="tableInput"
-																					type="text" 
-																					onchange="onChange('${items.itemRate3}',${items.id})"></td>
+																					type="text"
+																					onchange="onChange('${items.itemRate3}',${items.id})">
+
+																					<input type="hidden" value="${items.minQty}"
+																					id="minqty${items.id}" /></td>
 																				<td><c:out value='${items.itemMrp3}' /></td>
 
 																				<td><c:out value='${items.itemRate3}' /></td>
@@ -328,8 +364,39 @@ jQuery(document).ready(function(){
             function button1()
             {
 
-             //   document.form1.buttonName.value = "SAVE ORDER";
-                form1.submit();
+              form1.submit();
+                
+    		/* 	if(isSameDayApplicable!=2)
+    				{
+    				   form1.submit();
+    				}
+    		else if(isSameDayApplicable==2)
+    				{
+   			   
+    				  $.getJSON(
+    							'${qtyValidation}',
+    							{
+    								
+    								ajax : 'true'
+    							},
+    							function(data) {
+    							
+    							//	alert(data.error);
+        							
+   								if (data.error) {
+   								//	alert("hii");
+    									alert(data.message);
+    									 window.location.reload();
+    								
+    								}
+    								else
+    								{
+    									 form1.submit();
+    								
+    								}	
+    							});
+    				}   
+ */
             }    
            
         </script>
@@ -339,12 +406,27 @@ jQuery(document).ready(function(){
 
 			//calculate total value  
 			var qty = $('#'+id).val();
-			var total = rate * qty;
 			
-			  $('#total'+id).html(total);
 			
+			var minqty = $('#minqty'+id).val();
+			
+			if(qty % minqty==0){
+			    var total = rate * qty;
+			
+			   $('#total'+id).html(total);
+			}else
+			{
+				 var total =0;
+				 
+				alert("Please Enter Qty Multiple of Minimum Qty");
+				$('#'+id).val('0');
+				
+				$('#total'+id).html(total);
+				$('#'+id).focus();
+			}
 		}
 	</script>
+
 
 	<script type="text/javascript">
 		function onKeyDown(id) {
@@ -371,7 +453,7 @@ jQuery(document).ready(function(){
 			
 		}
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
     $("#5").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -394,5 +476,9 @@ $(document).ready(function() {
     });
 });
 </script>
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+
 </body>
 </html>
