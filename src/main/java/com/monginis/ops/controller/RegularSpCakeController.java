@@ -57,7 +57,7 @@ public class RegularSpCakeController {
 	ArrayList<FrMenu> menuList;
 	private static int currentMenuId = 0;
 	private static int globalIndex = 2;
-	String itemShow;
+ 	String itemShow;
 	 List<MCategory>  mCategories;
 	
 	 RegularSpCkItemResponse regularSpCkItemList;
