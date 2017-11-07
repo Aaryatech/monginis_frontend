@@ -33,12 +33,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
-import com.monginis.ops.model.GetGrnGvnDetails;
-import com.monginis.ops.model.GetGrnGvnDetailsList;
 import com.monginis.ops.model.grngvn.GetBillsForFr;
 import com.monginis.ops.model.grngvn.GetBillsForFrList;
 import com.monginis.ops.model.grngvn.GetGrnConfResponse;
 import com.monginis.ops.model.grngvn.GetGrnGvnConfResponse;
+import com.monginis.ops.model.grngvn.GetGrnGvnDetails;
+import com.monginis.ops.model.grngvn.GetGrnGvnDetailsList;
 import com.monginis.ops.model.grngvn.GetGrnItemConfig;
 import com.monginis.ops.model.grngvn.GrnGvn;
 import com.monginis.ops.model.grngvn.PostGrnGvnList;
@@ -245,7 +245,7 @@ public class GrnGvnController {
 
 				
 
-				
+				if(grnQty>0) {
 				postGrnGvn.setGrnGvnDate(grnGvnDate);// 1
 				System.out.println("c date *********" + grnGvnDate);
 				System.out.println("c date time *********" + dateFormat.format(cal.getTime()));
@@ -295,7 +295,8 @@ public class GrnGvnController {
 
 				postGrnGvnList.add(postGrnGvn);
 
-			}
+			}//end of if checking for grnQty
+			}// end of for
 
 			modelAndView.addObject("grnConfList", grnConfList);
 			System.out.println("postGrnGvnList************----- " + postGrnGvnList.toString());

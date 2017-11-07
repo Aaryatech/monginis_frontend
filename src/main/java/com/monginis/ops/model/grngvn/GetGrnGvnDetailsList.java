@@ -1,6 +1,8 @@
-package com.monginis.ops.model;
+package com.monginis.ops.model.grngvn;
 
 import java.util.List;
+
+import com.monginis.ops.model.Info;
 
 
 public class GetGrnGvnDetailsList {

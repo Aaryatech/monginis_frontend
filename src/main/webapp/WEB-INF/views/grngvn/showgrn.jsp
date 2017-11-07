@@ -178,7 +178,7 @@ jQuery(document).ready(function(){
 																<td><input type="number"
 																	name="grnqtyauto${grnConfList.itemId}"
 																	disabled="disabled"
-																	id="grnqtyauto${grnConfList.itemId}" size="5" value="0"
+																	id="grnqtyauto${grnConfList.itemId}" size="5" value="0" min="0"
 																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
 
 																<td id="tax_per${grnConfList.itemId}"><c:out
@@ -188,7 +188,7 @@ jQuery(document).ready(function(){
 																		value="0"></c:out></td>
 
 																<td><input type="text"
-																	name="grn_remark${grnConfList.itemId}" id=grn_remark /></td>
+																	name="grn_remark${grnConfList.itemId}" id="grn_remark${grnConfList.itemId}" class="remark" /></td>
 
 
 
@@ -229,7 +229,7 @@ jQuery(document).ready(function(){
 
 								<div class="form-group">
 									<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-5">
-										<button type="submit" class="btn btn-primary">
+										<button type="submit" class="btn btn-primary"  id="submit" onclick="checkRemark()">
 											<i class="fa fa-check"></i> Save
 										</button>
 										<!--<button type="button" class="btn">Cancel</button>-->
@@ -399,14 +399,33 @@ jQuery(document).ready(function(){
 			var totalTax=taxableAmt*(cgstPer+sgstPer)/100;
 			
 			var grandTotal=taxableAmt+totalTax;
-			alert(taxableAmt);
+			/* alert(taxableAmt);
 			alert(totalTax);
 			alert(grandTotal);
-			
+			 */
 		//$("#grn_rate"+itemId).html(baseRate.toFixed(2));
 
 		$("#grn_amt"+itemId).html(grandTotal.toFixed(2));
 		$("#tax_per"+itemId).html(totTaxPer.toFixed(2));
+		
+		var x=$("#grn_remark"+itemId).val();
+		if(grnQty>0){
+		
+		if(x ==null ||x == ""){
+			alert("Enter Remark");
+			
+		    document.getElementById("grn_remark"+itemId).focus();
+		    
+		}
+		}
+	}
+	</script>
+
+	
+<script type="text/javascript">
+	
+	function checkRemark() {
+		
 	
 	}
 	

@@ -161,11 +161,14 @@
 														<thead>
 															<tr class="bgpink">
 
+																<th>Sr No</th>
 																<th>Bill No</th>
 																<th>GVN Date</th>
 																<th>Item Name</th>
 																<th>RATE</th>
 																<th>Quantity</th>
+																<th>Tax Percentage</th>
+																<th>Tax Amount</th>
 																<th>Amount</th>
 																<th>Status</th>
 																<th>Photo 1</th>
@@ -177,20 +180,27 @@
 														<tbody>
 
 														</tbody>
-														<c:forEach items="${gvnList}" var="gvnList">
+														<c:forEach items="${gvnList}" var="gvnList"
+															varStatus="count">
 															<tr>
+																<td><c:out value="${count.index+1}" /></td>
+
 																<td><c:out value="${gvnList.billNo}" /></td>
 																<td><c:out value="${gvnList.grnGvnDate}" /></td>
 																<td><c:out value="${gvnList.itemName}" /></td>
-																<td><c:out value="${gvnList.itemRate}" /></td>
+																<td><c:out value="${gvnList.baseRate}" /></td>
 																<td><c:out value="${gvnList.grnGvnQty}" /></td>
+																<td><c:out value="${gvnList.sgstPer+gvnList.cgstPer}" /></td>
+
+																<td><c:out value="${gvnList.totalTax}" /></td>
+
 
 																<td><c:out value="${gvnList.grnGvnAmt}" /></td>
 																<td><c:out value="${gvnList.grnGvnStatus}" /></td>
 																<td><a href="${url}${gvnList.gvnPhotoUpload1}"
-																data-lightbox="image-1">Image 1</a></td>
+																	data-lightbox="image-1">Image 1</a></td>
 																<td><a href="${url}${gvnList.gvnPhotoUpload2}"
-																	data-lightbox="image-2" >Image 2</a></td>
+																	data-lightbox="image-2">Image 2</a></td>
 																<td><c:out value="${gvnList.frGrnGvnRemark}" /></td>
 															</tr>
 														</c:forEach>
@@ -263,6 +273,9 @@
 														var index = key + 1;
 
 														var tr = "<tr>";
+														var srNo = "<td>&nbsp;&nbsp;&nbsp;"
+																+ index
+																+ "</td>";
 
 														var billNo = "<td>&nbsp;&nbsp;&nbsp;"
 																+ gvndata.billNo
@@ -275,12 +288,25 @@
 																+ "</td>";
 
 														var itemRate = "<td>&nbsp;&nbsp;&nbsp;"
-																+ gvndata.itemRate
+																+ gvndata.baseRate
 																+ "</td>";
 
 														var grnGvnQty = "<td>&nbsp;&nbsp;&nbsp;"
 																+ gvndata.grnGvnQty
 																+ "</td>";
+																
+																var calcTaxPer=parseFloat(gvndata.sgstPer)+parseFloat(gvndata.cgstPer);
+																
+																var gvnTaxPer = "<td>&nbsp;&nbsp;&nbsp;"
+																	+ calcTaxPer
+																	+ "</td>";
+																	
+																	var totalTax = "<td>&nbsp;&nbsp;&nbsp;"
+																		+ gvndata.totalTax
+																		+ "</td>";
+																
+																
+																
 
 														var grnGvnAmt = "<td>&nbsp;&nbsp;&nbsp;"
 																+ gvndata.grnGvnAmt
@@ -307,6 +333,9 @@
 														$('#table_grid tbody')
 																.append(tr);
 														$('#table_grid tbody')
+																.append(srNo);
+
+														$('#table_grid tbody')
 																.append(billNo);
 														$('#table_grid tbody')
 																.append(
@@ -321,6 +350,18 @@
 																.append(
 																		grnGvnQty);
 
+														$('#table_grid tbody')
+														.append(
+																gvnTaxPer);
+
+														
+														$('#table_grid tbody')
+														.append(
+																totalTax);
+
+														
+														
+														
 														$('#table_grid tbody')
 																.append(
 																		grnGvnAmt);
@@ -377,14 +418,14 @@
 
 
 	<script type="text/javascript">
-function show_image(data) {
-	alert(data);
-    var image = new Image();
-    image.src = data;
+		function show_image(data) {
+			alert(data);
+			var image = new Image();
+			image.src = data;
 
-    var w = window.open("");
-    w.document.write(image.outerHTML);
-}
-</script>
+			var w = window.open("");
+			w.document.write(image.outerHTML);
+		}
+	</script>
 </body>
 </html>

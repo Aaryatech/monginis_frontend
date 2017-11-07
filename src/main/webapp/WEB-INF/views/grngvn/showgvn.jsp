@@ -219,7 +219,7 @@ jQuery(document).ready(function(){
 																	value="00"></c:out></td>
 
 															<td><textarea name="gvn_remark${gvnConfList.itemId}"
-																	id=grn_remark placeholder="Gvn Remark"></textarea></td>
+																	id="gvn_remark${gvnConfList.itemId}" ></textarea></td>
 
 
 															<%-- <td><input type="text"
@@ -453,8 +453,16 @@ function calcGvn(baseRate,itemId,sgstPer,cgstPer){
 		var taxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
 		$("#tax_per"+itemId).html(taxPer.toFixed(2));
 
+var x=$("#gvn_remark"+itemId).val();
+if(gvnQty>0){
 		
-	
+		if(x ==null ||x == ""){
+			alert("Enter Remark");
+			
+		    document.getElementById("gvn_remark"+itemId).focus();
+		    
+		}
+}
 };
 
 

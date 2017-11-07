@@ -1,321 +1,414 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib
-    uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-  <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-  
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Monginis</title>
-<link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
-<link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<link
+	href="${pageContext.request.contextPath}/resources/css/monginis.css"
+	rel="stylesheet" type="text/css" />
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
+	type="image/x-icon" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
 <!--rightNav-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
 <script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
+	jQuery(document).ready(function() {
+		jQuery("#menuzord").menuzord({
+			align : "left"
+		});
 	});
-});
 </script>
 <!--rightNav-->
 
 <!--selectlistbox-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
 
 <!--selectlistbox-->
 
 <!--datepicker-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
-$( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-  $( function() {
-    $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
+	$(function() {
+		$("#datepicker").datepicker({
+			dateFormat : 'dd-mm-yy'
+		});
+	});
+	$(function() {
+		$("#datepicker2").datepicker({
+			dateFormat : 'dd-mm-yy'
+		});
+	});
+</script>
+<!--datepicker-->
 
-  </script>
-<!--datepicker--> 
 
-        
 </head>
 <body>
 
-<!--topLeft-nav-->
-<div class="sidebarOuter"></div>
-<!--topLeft-nav-->
+	<!--topLeft-nav-->
+	<div class="sidebarOuter"></div>
+	<!--topLeft-nav-->
 
-<!--wrapper-start-->
-<div class="wrapper">
+	<!--wrapper-start-->
+	<div class="wrapper">
 
-<!--topHeader-->
-<c:url var="getGrnList" value="/getGrnList" />
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
-
-<!--topHeader-->
-
-<!--rightContainer-->
-<div class="fullGrid center">
-<!--fullGrid-->
-<div class="wrapperIn2">
-
-<!--leftNav-->
-
-<jsp:include page="/WEB-INF/views/include/left.jsp">
-                <jsp:param name="myMenu" value="${menuList}"/>
-        
-    </jsp:include>
+		<!--topHeader-->
+		<c:url var="getGrnList" value="/getGrnList" />
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-<!--leftNav-->
+		<!--topHeader-->
+
+		<!--rightContainer-->
+		<div class="fullGrid center">
+			<!--fullGrid-->
+			<div class="wrapperIn2">
+
+				<!--leftNav-->
+
+				<jsp:include page="/WEB-INF/views/include/left.jsp">
+					<jsp:param name="myMenu" value="${menuList}" />
+
+				</jsp:include>
+
+
+				<!--leftNav-->
 
 
 
-<!--rightSidebar-->
-<div class="sidebarright">
-<div class="order-left">
-<h2 class="pageTitle">GRN Details</h2>
+				<!--rightSidebar-->
+				<div class="sidebarright">
+					<div class="order-left">
+						<h2 class="pageTitle">GRN Details</h2>
 
-</div>
+					</div>
 
 
-<div class="colOuter">
-		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="${cDate}"  name="from_Date" type="text"  >
-		</div>
-	</div>
+					<div class="colOuter">
+						<div class="col1">
+							<div class="col1title">From</div>
+						</div>
+						<div class="col2">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								value="${cDate}" name="from_Date" type="text">
+						</div>
+					</div>
 
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="datepicker2" class="texboxitemcode texboxcal" value="${cDate}"   name="to_Date" type="text"  >
-		</div>
-	</div>
-	
-<div class="colOuter">
-		<div class="col2full">
-        	<input name="" class="buttonsaveorder" value="Search..." type="button" onclick="searchGRN()">
+					<div class="colOuter">
+						<div class="col1">
+							<div class="col1title">TO</div>
+						</div>
+						<div class="col2">
+							<input id="datepicker2" class="texboxitemcode texboxcal"
+								value="${cDate}" name="to_Date" type="text">
+						</div>
+					</div>
+
+					<div class="colOuter">
+						<div class="col2full">
+							<input name="" class="buttonsaveorder" value="Search..."
+								type="button" onclick="searchGRN()">
+						</div>
+					</div>
+
+					<!--tabNavigation-->
+					<div class="cd-tabs">
+						<!--tabMenu-->
+
+						<!--tabMenu-->
+						<ul class="cd-tabs-content">
+							<!--tab1-->
+							<li data-content="tab1" class="selected">
+								<div class="table-responsive">
+									<div class="shInnerwidth">
+
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="table">
+											<tr>
+												<td align="center" valign="middle" style="padding: 0px;">
+
+
+
+
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0" id="table_grid">
+														<thead>
+															<tr class="bgpink">
+																<th>Sr No</th>
+
+																<th>Bill No</th>
+																<th>Grn Date</th>
+																<th>Item Name</th>
+																<th>Rate</th>
+																<th>Quantity</th>
+																<th>Grn Type</th>
+																<th>Grn Amount</th>
+
+																<th>Tax Percentage</th>
+
+																<th>Tax Amount</th>
+
+
+																<th>Amount</th>
+																<th>Status</th>
+
+															</tr>
+														</thead>
+														<tbody>
+
+															<c:forEach items="${grnList}" var="grnList"
+																varStatus="count">
+																<tr>
+																	<td><c:out value="${count.index+1}" /></td>
+																	<td><c:out value="${grnList.billNo}" /></td>
+																	<td><c:out value="${grnList.grnGvnDate}" /></td>
+																	<td><c:out value="${grnList.itemName}" /></td>
+																	<td><c:out value="${grnList.baseRate}" /></td>
+																	<td><c:out value="${grnList.grnGvnQty}" /></td>
+																	<c:choose>
+																		<c:when test="${grnList.grnType==0}">
+																			<td><c:out value="GRN 1"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnType==1}">
+																			<td><c:out value="GRN 2"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnType==2}">
+																			<td><c:out value="GRN 3"></c:out></td>
+																		</c:when>
+																	</c:choose>
+																	<td><c:out value="${grnList.taxableAmt}" /></td>
+																	<td><c:out
+																			value="${grnList.sgstPer + grnList.cgstPer}" /></td>
+																	<td><c:out value="${grnList.totalTax}" /></td>
+																	<td><c:out value="${grnList.grnGvnAmt}" /></td>
+																	
+																	<c:choose>
+																		<c:when test="${grnList.grnGvnStatus==1}">
+																			<td><c:out value="Pending"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnGvnStatus==2}">
+																			<td><c:out value="Approved By Gate"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnGvnStatus==3}">
+																			<td><c:out value="Reject By Gate"></c:out></td>
+																		</c:when>
+																		
+																		<c:when test="${grnList.grnGvnStatus==4}">
+																			<td><c:out value="Approve By Store"></c:out></td>
+																		</c:when>
+																		
+																		<c:when test="${grnList.grnGvnStatus==5}">
+																			<td><c:out value="Reject By Store"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnGvnStatus==6}">
+																			<td><c:out value="Approve By Account"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnGvnStatus==7}">
+																			<td><c:out value="Reject By Account"></c:out></td>
+																		</c:when>
+																		
+																	</c:choose>
+																																													
+																</tr>
+															</c:forEach>
+
+														</tbody>
+
+
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</li>
+
+						</ul>
+					</div>
+					<!--tabNavigation-->
+
+
+
+				</div>
+				<!--rightSidebar-->
+
 			</div>
-</div>
-    
-<!--tabNavigation-->
-<div class="cd-tabs">
-<!--tabMenu-->
+			<!--fullGrid-->
+		</div>
+		<!--rightContainer-->
 
-<!--tabMenu-->
-<ul class="cd-tabs-content">
-<!--tab1-->
-<li data-content="tab1" class="selected">
-<div class="table-responsive">
-<div class="shInnerwidth">
+	</div>
+	<!--wrapper-end-->
 
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
-  <tr>
-    <td align="center" valign="middle" style="padding:0px;">
-        
-
-    
-       
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="table_grid">
-												<thead>
-												<tr class="bgpink">
-														
-														<th  >Bill No</th>
-														<th >GRN Date</th>
-														<th >Item Name</th>
-														<th  >RATE</th>
-														<th  >Quantity</th>
-														<th  >TYPE of GRN</th>
-														<th  >Amount</th>
-														<th  >Status</th>
-														<th  >Remark</th>
-														
-													</tr>
-													</thead>
-<tbody>
-
- <c:forEach items="${grnList}" var="grnList"> 
-  <tr>
-    <td><c:out value="${grnList.billNo}"/></td>
-    <td><c:out value="${grnList.grnGvnDate}"/></td>
-    <td><c:out value="${grnList.itemName}"/></td>
-    <td><c:out value="${grnList.itemRate}"/></td>
-    <td><c:out value="${grnList.grnGvnQty}"/></td>
-   			<c:choose>
-					<c:when test="${grnList.grnType==0}">
-					<td><c:out value="GRN 1"></c:out></td>
-						</c:when>
-							<c:when test="${grnList.grnType==1}">
-								<td><c:out value="GRN 2"></c:out></td>
-									</c:when>
-									<c:when test="${grnList.grnType==2}">
-										<td><c:out value="GRN 3"></c:out></td>
-										</c:when>
-									</c:choose>
-    <td><c:out value="${grnList.grnGvnAmt}"/></td>
-    <td><c:out value="${grnList.grnGvnStatus}"/></td>
-    <td><c:out value="${grnList.frGrnGvnRemark}"/></td>
-  </tr>
-  </c:forEach>  
-  
- </tbody>
-  
-
-</table>
-</td>
-  </tr>
-</table>
-</div>
-</div>
-</li>
-
-</ul> 
-</div>
-<!--tabNavigation-->
- 
- 
-		
-</div>
-<!--rightSidebar-->
-
-</div>
-<!--fullGrid-->
-</div>
-<!--rightContainer-->
-
-</div>
-<!--wrapper-end-->
-
-<script type="text/javascript">
-	
+	<script type="text/javascript">
 		function searchGRN() {
-			
+
 			$('#table_grid td').remove();
-		
-			
+
 			var isValid = validate();
-			
+
 			if (isValid) {
-				
+
 				var fromDate = document.getElementById("datepicker").value;
 				var toDate = document.getElementById("datepicker2").value;
-				   
+
+				$.getJSON('${getGrnList}', {
+
+					fromDate : fromDate,
+					toDate : toDate,
+					ajax : 'true'
+
+				}, function(data) {
+
+					//$('#table_grid td').remove();
+
+					if (data == "") {
+						alert("No records found !!");
+
+					}
+
+					$.each(data, function(key, grndata) {
+
+						var index = key + 1;
+
+						var tr = "<tr>";
+
+						var srNo = "<td>&nbsp;&nbsp;&nbsp;" + index + "</td>";
+
+						var billNo = "<td>&nbsp;&nbsp;&nbsp;" + grndata.billNo
+								+ "</td>";
+						var grnGvnDate = "<td>&nbsp;&nbsp;&nbsp;"
+								+ grndata.grnGvnDate + "</td>";
+						var itemName = "<td>&nbsp;&nbsp;&nbsp;"
+								+ grndata.itemName + "</td>";
+
+						var itemRate = "<td>&nbsp;&nbsp;&nbsp;"
+								+ grndata.baseRate + "</td>";
+
+						var grnGvnQty = "<td>&nbsp;&nbsp;&nbsp;"
+								+ grndata.grnGvnQty + "</td>";
+
+						if (grndata.grnType == 0) {
+							var grnType = "<td>&nbsp;&nbsp;&nbsp;" + "Grn 1"
+									+ "</td>";
+						}
+						if (grndata.grnType == 1) {
+							var grnType = "<td>&nbsp;&nbsp;&nbsp;" + "Grn 2"
+									+ "</td>";
+						}
+						if (grndata.grnType == 2) {
+							var grnType = "<td>&nbsp;&nbsp;&nbsp;" + "Grn 3"
+									+ "</td>";
+						}
+						
+						var grnAmt = "<td>&nbsp;&nbsp;&nbsp;"
+							+ grndata.taxableAmt + "</td>";
+							
+				var calcTaxPer=parseFloat(grndata.sgstPer)+parseFloat(grndata.cgstPer);
 				
-				$.getJSON('${getGrnList}',{
+				var grnTaxPer = "<td>&nbsp;&nbsp;&nbsp;"
+					+calcTaxPer + "</td>";
+
 					
-									fromDate : fromDate,
-									toDate : toDate,
-									ajax : 'true'
+					var taxAmt = "<td>&nbsp;&nbsp;&nbsp;"
+						+ grndata.totalTax + "</td>";
+						
+						var amount = "<td>&nbsp;&nbsp;&nbsp;"
+								+ grndata.grnGvnAmt + "</td>";
+								
+								
+								
+								
+								if (grndata.grnGvnStatus == 1) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Pending"
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 2) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Approved By Gate "
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 3) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Reject By Gate"
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 4) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Approved By Store"
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 5) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Reject By Store"
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 6) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Approved By Account"
+											+ "</td>";
+								}
+								
+								if (grndata.grnGvnStatus == 7) {
+									var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;" + "Reject By Account"
+											+ "</td>";
+								}
+								
+								
+								
 
-								},
-								function(data) {
+						
+						
+						var trclosed = "</tr>";
 
-									//$('#table_grid td').remove();
-									
-									
+						$('#table_grid tbody').append(tr);
+						$('#table_grid tbody').append(srNo);
 
-									if (data == "") {
-										alert("No records found !!");
+						$('#table_grid tbody').append(billNo);
+						$('#table_grid tbody').append(grnGvnDate);
+						$('#table_grid tbody').append(itemName);
+						$('#table_grid tbody').append(itemRate);
+						$('#table_grid tbody').append(grnGvnQty);
+						$('#table_grid tbody').append(grnType);
+						
+						$('#table_grid tbody').append(grnAmt);
 
-									}
+						$('#table_grid tbody').append(grnTaxPer);
 
-									
-									$.each(data,function(key, grndata) {
+						$('#table_grid tbody').append(taxAmt);
 
-														var index = key + 1;
+						$('#table_grid tbody').append(amount);
 
-														var tr = "<tr>";
+						$('#table_grid tbody').append(grnGvnStatus);
 
-														
+						$('#table_grid tbody').append(trclosed);
 
-														var billNo = "<td>&nbsp;&nbsp;&nbsp;"
-																+ grndata.billNo
-																+ "</td>";
-																var grnGvnDate = "<td>&nbsp;&nbsp;&nbsp;"
-																	+ grndata.grnGvnDate
-																	+ "</td>";
-																	var itemName = "<td>&nbsp;&nbsp;&nbsp;"
-																		+ grndata.itemName
-																		+ "</td>";
+					})
 
-																		var itemRate = "<td>&nbsp;&nbsp;&nbsp;"
-																			+ grndata.itemRate
-																			+ "</td>";
-
-																			var grnGvnQty = "<td>&nbsp;&nbsp;&nbsp;"
-																				+ grndata.grnGvnQty
-																				+ "</td>";
-																				
-																				var grnType = "<td>&nbsp;&nbsp;&nbsp;"
-																					+ grndata.grnType
-																					+ "</td>";
-
-																				var grnGvnAmt = "<td>&nbsp;&nbsp;&nbsp;"
-																					+ grndata.grnGvnAmt
-																					+ "</td>";
-
-																					var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;"
-																						+ grndata.grnGvnStatus
-																						+ "</td>";
-																						
-																							var frGrnGvnRemark = "<td>&nbsp;&nbsp;&nbsp;"
-																									+ grndata.frGrnGvnRemark
-																									+ "</td>";
-
-
-
-														
-
-														var trclosed = "</tr>";
-
-														$('#table_grid tbody')
-																.append(tr);
-														$('#table_grid tbody')
-																.append(billNo);
-														$('#table_grid tbody')
-														.append(grnGvnDate);
-														$('#table_grid tbody')
-														.append(itemName);
-														$('#table_grid tbody')
-														.append(itemRate);
-														$('#table_grid tbody')
-														.append(grnGvnQty);
-														$('#table_grid tbody')
-														.append(grnType);
-														
-														$('#table_grid tbody')
-														.append(grnGvnAmt);
-														
-														$('#table_grid tbody')
-														.append(grnGvnStatus);
-														
-														$('#table_grid tbody')
-														.append(frGrnGvnRemark);
-														
-														$('#table_grid tbody')
-														.append(trclosed);
-														
-
-													})
-														
-
-								});
+				});
 
 			}
 		}
 	</script>
-	
-	
-	
-		<script type="text/javascript">
+
+
+
+	<script type="text/javascript">
 		function validate() {
 		
 		
