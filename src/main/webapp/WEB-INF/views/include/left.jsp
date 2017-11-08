@@ -36,6 +36,14 @@
 					<div class="title">
 						Goods <span>Return</span>
 					</div></a></li>
+					<li><a href="#" onClick="openNav4()"><div class="img">
+						<img
+							src="${pageContext.request.contextPath}/resources/images/nav-report.png"
+							alt="img">
+					</div>
+					<div class="title">
+						<span>Reports</span>
+					</div></a></li>
 			<li><a href="${pageContext.request.contextPath}/orderHistory"><div
 						class="img">
 						<img
@@ -406,6 +414,103 @@
 	</div>
 	<!--2nav-->
 
+	<!--4nav-->
+	<div id="mySidenav4" class="sidenav">
+		<div class="topSlide">
+			<div class="topSlide2">
+				<a href="javascript:void(0)" class="closebtn" onClick="closeNav4()"><img
+					src="${pageContext.request.contextPath}/resources//images/closebtn.png"
+					alt="monginis"></a>
+				<div class="listarea">
+					<ul>
+						<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon7.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
+									alt="monginis"></a>
+								<h2>Bill Reports</h2>
+								<!-- <h3>Booking Up to 12.30 PM</h3> -->
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewBillwiseSell">Bill wise Sell Report <i class="fa fa-pencil"></i></a>
+								</div>
+								<%-- <div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/displayreport">Report <i class="fa fa-pencil"></i></a>
+								</div> --%>
+								
+							</div></li>
+							
+	 						<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>Day and Month</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewDatewiseSellBill">Day wise summary  <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+								
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill">Month wise Summary <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
+							
+							<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>Item wise</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewItemwiseSellBill">Item wise summary  <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+								
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">Item wise Report <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
+							
+								<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>Tax Report</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewFrTaxSellBill">Tax Report summary  <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+								
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill">Date wise Report <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill">Bill wise Report <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
+
+						
+
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--4nav-->
+
 	<!--3nav-->
 	<div id="mySidenav3" class="sidenav">
 
@@ -544,6 +649,13 @@
 
 		function closeNav3() {
 			document.getElementById("mySidenav3").style.width = "0";
+		}
+		function openNav4() {
+			document.getElementById("mySidenav4").style.width = "100%";
+		}
+
+		function closeNav4() {
+			document.getElementById("mySidenav4").style.width = "0";
 		}
 	</script>
 
