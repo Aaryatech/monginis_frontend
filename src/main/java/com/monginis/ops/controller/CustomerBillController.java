@@ -36,8 +36,7 @@ import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
-import com.monginis.ops.model.GetGrnGvnDetails;
-import com.monginis.ops.model.GetGrnGvnDetailsList;
+
 import com.monginis.ops.model.GetSellBillDetail;
 import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.Info;
