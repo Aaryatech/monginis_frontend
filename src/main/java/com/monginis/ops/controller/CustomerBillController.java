@@ -155,6 +155,11 @@ public class CustomerBillController {
 			catch (Exception e) {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
+				model.addObject("getSellBillDetailList",getSellBillDetailList);
+				model.addObject("sellBillNo", sellBillNo);	
+				model.addObject("billDate",billDate);
+				
+				
 			}
 			
 			
@@ -183,9 +188,12 @@ public class CustomerBillController {
 		resetData7();
 		
 		HttpSession session = request.getSession();
+		try {
+			
 		
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-		
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
 		System.out.println("menuList"+menuList.toString());
 		ArrayList<Integer> itemList=new ArrayList<Integer>();
 	
@@ -221,7 +229,6 @@ public class CustomerBillController {
 		List<Item>  newItemsList=itemsList.getItemList();
 		
 
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 	
 		customerBillItemList=new ArrayList<CustomerBillItem>();
 
@@ -268,7 +275,12 @@ public class CustomerBillController {
 		System.out.println("*********customerBillItemList***********"+customerBillItemList.toString());
 		
 		model.addObject("itemListResponse", customerBillItemList);
-		
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception in Display Customer Bill");
+			model.addObject("itemListResponse", customerBillItemList);
+		}
 		
 		return model;
 	

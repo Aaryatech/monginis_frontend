@@ -432,14 +432,32 @@
 								<h2>Bill Reports</h2>
 								<!-- <h3>Booking Up to 12.30 PM</h3> -->
 								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewBillwiseSell">Bill wise Sell Report <i class="fa fa-pencil"></i></a>
+									<a href="${pageContext.request.contextPath}/viewBillwiseSell">Bill Wise Sell Report <i class="fa fa-pencil"></i></a>
 								</div>
+								
 								<%-- <div class="listareaBoxdown">
 									<a href="${pageContext.request.contextPath}/displayreport">Report <i class="fa fa-pencil"></i></a>
 								</div> --%>
 								
 							</div></li>
-							
+							<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon7.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
+									alt="monginis"></a>
+								<h2>Bill Reports(Purchase)</h2>
+								<!-- <h3>Booking Up to 12.30 PM</h3> -->
+								
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewBillWisePurchaseReport">BillWise Report <i class="fa fa-pencil"></i></a>
+								</div>
+								
+								<%-- <div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/displayreport">Report <i class="fa fa-pencil"></i></a>
+								</div> --%>
+								
+							</div></li>
 	 						<li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon8.png"
@@ -457,7 +475,24 @@
 									<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill">Month wise Summary <i
 										class="fa fa-cloud-upload"></i></a>
 								</div>
+								
 							</div></li>
+							<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>MonthWise(Purchase)</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+							
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport">Month wise(Purchase) <i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
+							
+							
 							
 							<li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
@@ -476,8 +511,26 @@
 									<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">Item wise Report <i
 										class="fa fa-cloud-upload"></i></a>
 								</div>
+								
 							</div></li>
+							<li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>Item wise(Purchase)</h2>
+								<!-- <h3>View GRN/GVN for selected Month</h3> -->
 							
+									<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewItemWiseDetailReport">Item wise Detail Report<i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewItemWiseReport">Item wise Report<i
+										class="fa fa-cloud-upload"></i></a>
+								</div>
+							</div></li>
 								<li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
 									src="${pageContext.request.contextPath}/resources/images/icon8.png"
@@ -499,8 +552,19 @@
 									<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill">Bill wise Report <i
 										class="fa fa-cloud-upload"></i></a>
 								</div>
+								
 							</div></li>
-
+                           <li><div class="listareaBox">
+								<a class="listareaBoximg"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8.png"
+									alt="monginis"> <img
+									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
+									alt="monginis"></a>
+								<h2>Tax Report(Purchase)</h2>
+								<div class="listareaBoxdown">
+									<a href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport">BillWise Tax Report <i class="fa fa-pencil"></i></a>
+								</div>
+							</div></li>
 						
 
 					</ul>

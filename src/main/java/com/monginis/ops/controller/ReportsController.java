@@ -42,21 +42,21 @@ public class ReportsController {
 
 	
 	
-	@RequestMapping(value = "/billWisePurchaseReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewBillWisePurchaseReport", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request,
 				HttpServletResponse response) {
 
 			ModelAndView model = new ModelAndView("report/purchaseReport/billWisePurchaseReport");
 			return model;			
 	}
-	@RequestMapping(value = "/billTaxReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewBillTaxPurchaseReport", method = RequestMethod.GET)
 	public ModelAndView billTaxReport(HttpServletRequest request,
 				HttpServletResponse response) {
 
 			ModelAndView model = new ModelAndView("report/purchaseReport/billWiseTaxReport");
 			return model;			
 	}
-	@RequestMapping(value = "/itemWiseDetailReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewItemWiseDetailReport", method = RequestMethod.GET)
 	public ModelAndView itemWiseDetailReport(HttpServletRequest request,
 				HttpServletResponse response) {
 
@@ -76,7 +76,7 @@ public class ReportsController {
 			
 			return model;			
 	}
-	@RequestMapping(value = "/itemWiseReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewItemWiseReport", method = RequestMethod.GET)
 	public ModelAndView itemWiseReport(HttpServletRequest request,
 				HttpServletResponse response) {
 
@@ -96,7 +96,7 @@ public class ReportsController {
 			
 			return model;			
 	}
-	@RequestMapping(value = "/monthWisePurchaseReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewMonthWisePurchaseReport", method = RequestMethod.GET)
 	public ModelAndView monthWisePurchaseReport(HttpServletRequest request,
 				HttpServletResponse response) {
 
