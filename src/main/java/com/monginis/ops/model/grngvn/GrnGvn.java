@@ -1,6 +1,7 @@
 package com.monginis.ops.model.grngvn;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 
 public class GrnGvn {
@@ -125,6 +126,61 @@ public class GrnGvn {
 	private int isCreditNote;
 	
 	
+
+	
+	
+	private int menuId;
+	
+
+	private int catId;
+	
+
+	private String invoiceNo;
+	
+
+	private Date refInvoiceDate;
+	
+	
+	
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+
+	public int getCatId() {
+		return catId;
+	}
+
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+
+	public Date getRefInvoiceDate() {
+		return refInvoiceDate;
+	}
+
+
+	public void setRefInvoiceDate(Date refInvoiceDate) {
+		this.refInvoiceDate = refInvoiceDate;
+	}
 
 
 	public int getIsCreditNote() {
@@ -527,8 +583,11 @@ public class GrnGvn {
 				+ ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate
 				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt="
 				+ taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt
-				+ ", isCreditNote=" + isCreditNote + "]";
+				+ ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
+				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + "]";
 	}
 
+
+	
 
 }

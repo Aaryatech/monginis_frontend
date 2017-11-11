@@ -33,7 +33,7 @@ public class GetBillDetail {
     private int grnType;
     private String expiryDate;
     
-    private int isgrnGvnApplied;
+    private int isGrngvnApplied;
     
     
     
@@ -41,11 +41,12 @@ public class GetBillDetail {
     
     
     
-	public int getIsgrnGvnApplied() {
-		return isgrnGvnApplied;
+	
+	public int getIsGrngvnApplied() {
+		return isGrngvnApplied;
 	}
-	public void setIsgrnGvnApplied(int isgrnGvnApplied) {
-		this.isgrnGvnApplied = isgrnGvnApplied;
+	public void setIsGrngvnApplied(int isGrngvnApplied) {
+		this.isGrngvnApplied = isGrngvnApplied;
 	}
 	public String getExpiryDate() {
 		return expiryDate;
@@ -226,9 +227,8 @@ public class GetBillDetail {
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", taxableAmt=" + taxableAmt + ", remark=" + remark
 				+ ", delStatus=" + delStatus + ", itemName=" + itemName + ", catName=" + catName + ", billDate="
 				+ billDate + ", baseRate=" + baseRate + ", totalTax=" + totalTax + ", grnType=" + grnType
-				+ ", expiryDate=" + expiryDate + "]";
+				+ ", expiryDate=" + expiryDate + ", isGrngvnApplied=" + isGrngvnApplied + "]";
 	}
-	
 	
 	
 	

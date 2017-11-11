@@ -1,6 +1,7 @@
 
 package com.monginis.ops.model.grngvn;
 
+import java.util.Date;
 
 public class GetGrnItemConfig {
 
@@ -13,16 +14,47 @@ public class GetGrnItemConfig {
     private Integer rate;
     private Integer mrp;
     private Integer billQty;
-    String billDate;
+    
+    Date billDate;
     
     float sgstPer;
     float cgstPer;
     float igstPer;
     
     
-    
+  
+	private int menuId;
+	
+	private int catId;
+	
+	private String invoiceNo;
+	
+   
+    public int getMenuId() {
+		return menuId;
+	}
 
-    public Integer getBillDetailNo() {
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public Integer getBillDetailNo() {
         return billDetailNo;
     }
 
@@ -94,17 +126,20 @@ public class GetGrnItemConfig {
         this.billQty = billQty;
     }
 
-	public String getBillDate() {
+	
+    
+
+	
+	
+	
+	public Date getBillDate() {
 		return billDate;
 	}
 
-	public void setBillDate(String billDate) {
+	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
 
-	
-	
-	
 	public float getSgstPer() {
 		return sgstPer;
 	}
@@ -129,13 +164,17 @@ public class GetGrnItemConfig {
 		this.igstPer = igstPer;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
 				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp="
 				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
-				+ cgstPer + ", igstPer=" + igstPer + "]";
+				+ cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
+				+ invoiceNo + "]";
 	}
 
+	
 	
 }
