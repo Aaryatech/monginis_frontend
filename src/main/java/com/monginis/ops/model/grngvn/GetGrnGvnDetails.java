@@ -121,11 +121,25 @@ private int isTallySync;
 	
 	
 	
+	
+	
 	private float roundUpAmt;
 	
 	
 	private float finalAmt;
+	
+	private int isCreditNote;
+	
+	
 
+
+	public int getIsCreditNote() {
+		return isCreditNote;
+	}
+
+	public void setIsCreditNote(int isCreditNote) {
+		this.isCreditNote = isCreditNote;
+	}
 
 	public int getGrnGvnId() {
 		return grnGvnId;
@@ -454,10 +468,10 @@ private int isTallySync;
 				+ ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName
 				+ ", frName=" + frName + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer="
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt
-				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + "]";
+				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote="
+				+ isCreditNote + "]";
 	}
 
-	
 	
 	
 

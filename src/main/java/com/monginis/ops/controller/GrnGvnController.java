@@ -292,6 +292,7 @@ public class GrnGvnController {
 				postGrnGvn.setFinalAmt(finalAmt);
 				postGrnGvn.setRoundUpAmt(roundUpAmt);
 				
+				postGrnGvn.setIsCreditNote(0);
 
 				postGrnGvnList.add(postGrnGvn);
 
@@ -647,6 +648,9 @@ public class GrnGvnController {
 				postGrnGvn.setTotalTax(totalTax);
 				postGrnGvn.setFinalAmt(finalAmt);
 				postGrnGvn.setRoundUpAmt(roundUpAmt);
+				
+				postGrnGvn.setIsCreditNote(0);
+				
 				
 
 				postGrnGvnList.add(postGrnGvn);

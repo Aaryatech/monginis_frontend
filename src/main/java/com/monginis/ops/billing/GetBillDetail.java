@@ -33,12 +33,20 @@ public class GetBillDetail {
     private int grnType;
     private String expiryDate;
     
+    private int isgrnGvnApplied;
     
     
     
     
     
     
+    
+	public int getIsgrnGvnApplied() {
+		return isgrnGvnApplied;
+	}
+	public void setIsgrnGvnApplied(int isgrnGvnApplied) {
+		this.isgrnGvnApplied = isgrnGvnApplied;
+	}
 	public String getExpiryDate() {
 		return expiryDate;
 	}
