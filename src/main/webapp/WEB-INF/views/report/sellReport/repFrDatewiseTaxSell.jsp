@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Date wise Report</h2></div>
 	</div>
 	
 	<div class="row">
@@ -111,12 +111,14 @@ jQuery(document).ready(function(){
 	</div>
 	
 		<div align="center">
-		    <button class="btn search_btn" onclick="searchSellBill()" >Search </button>
+		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
 		</div>
 		<br>
     </div>
 	
-	<div class="row">
+	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="table-responsive">
@@ -142,7 +144,7 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-						
+						 
 				</div>
 			</div>
 		<!--table end-->
@@ -150,7 +152,14 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-
+	<div id="chart"  ">
+	<hr>
+        
+    <br><br>
+    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+			 
+				 
+				</div>
 				
 				
 				</div>
@@ -166,12 +175,16 @@ jQuery(document).ready(function(){
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!--easyTabs-->
 
 	
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
+		document.getElementById('table').style.display = "block";
+		   document.getElementById('chart').style="display:none";
+		  // document.getElementById('showchart').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
@@ -323,7 +336,100 @@ jQuery(document).ready(function(){
 		return isValid;
 
 	}
+ 
 </script>
-	
+	<script type="text/javascript">
+	 
+function showChart(){
+		
+	//$("#PieChart_div").empty();
+	$("#chart_div").empty();
+		document.getElementById('chart').style.display = "block";
+		   document.getElementById("table").style="display:none";
+		   
+		   var fromDate = document.getElementById("fromdatepicker").value;
+			var toDate = document.getElementById("todatepicker").value;
+			   
+			var isValid = validate();
+			
+			if (isValid) {
+			$.getJSON('${getDatewiseTaxSellReport}',{
+				
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+								 //alert(data);
+							 if (data == "") {
+									alert("No records found !!");
+
+								}
+							 var i=0;
+
+							 google.charts.load('current', {'packages':['corechart', 'bar']});
+							 google.charts.setOnLoadCallback(drawStuff);
+
+							 function drawStuff() {
+ 
+							   var chartDiv = document.getElementById('chart_div');
+							   document.getElementById("chart_div").style.border = "thin dotted red";
+						       var dataTable = new google.visualization.DataTable();
+						       
+						       dataTable.addColumn('string', 'Date & Tax %'); // Implicit domain column.
+						       dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
+						       dataTable.addColumn({type:'string', role:'interval'});
+						       dataTable.addColumn({type:'string', role:'interval'});
+						       dataTable.addColumn('number', 'Taxable Amount');
+						       $.each(data,function(key, item) {
+
+									var tax=item.cgst + item.sgst;
+									var date= item.billDate+'\nTax : ' + item.tax_per + '%';
+									
+								   dataTable.addRows([
+									 
+								             [date, tax, "cgst : "+item.cgst,  "sgst : "+item.sgst ,   item.tax_amount, ]
+								           
+								           ]);
+								     }) 
+						    
+ var materialOptions = {
+          width: 700,
+          chart: {
+            title: 'Date wise Tax Graph',
+            subtitle: 'Total tax & Taxable Amount per day'
+          },
+          series: {
+            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+          },
+          axes: {
+            y: {
+              distance: {label: 'Total Tax'}, // Left y-axis.
+              brightness: {side: 'right', label: 'Taxable Amount'} // Right y-axis.
+            }
+          }
+        };
+						       
+						       function drawMaterialChart() {
+						           var materialChart = new google.charts.Bar(chartDiv);
+						           materialChart.draw(dataTable, google.charts.Bar.convertOptions(materialOptions));
+						          // button.innerText = 'Change to Classic';
+						          // button.onclick = drawClassicChart;
+						         }
+						       
+						      /*  var chart = new google.visualization.ColumnChart(
+						                document.getElementById('chart_div'));
+						       chart.draw(dataTable,
+						          {width: 800, height: 600, title: 'Tax Summary Chart'}); */
+						       drawMaterialChart();
+							 };
+							 
+										
+							  	});
+			}
+}
+</script>
 </body>
 </html>

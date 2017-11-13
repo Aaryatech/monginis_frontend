@@ -142,7 +142,9 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-						
+						 <div align="center" id="showpdf" style="display: none"> 
+		    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		</div>
 				</div>
 			</div>
 		<!--table end-->
@@ -172,6 +174,7 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
+		   document.getElementById('showpdf').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
