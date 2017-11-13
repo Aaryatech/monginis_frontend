@@ -58,6 +58,7 @@ jQuery(document).ready(function(){
 <body>
 
 <c:url var="getDateItemwiselReport" value="/getDateItemwiselReport" />
+<c:url var="getDateCatwisellReport" value="/getDateCatwisellReport" />
 	
 	<div class="sidebarOuter"></div>
 	
@@ -128,13 +129,15 @@ jQuery(document).ready(function(){
 	</div>
 	
 		<div align="center">
-		    <button class="btn search_btn" onclick="searchSellBill()" >Search </button>
+		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	   <br><br> <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  >PDF </button>
 		</div>
 		<br>
 		
     </div>
 	
-	<div class="row">
+	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="table-responsive">
@@ -158,7 +161,7 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-						
+						 
 				</div>
 			</div>
 		<!--table end-->
@@ -166,7 +169,10 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-
+	<div id="chart" style="display: none">
+		<div id="chart_div" style="width:400; height:300" align="center"></div>
+				 
+				</div>
 				
 				
 				</div>
@@ -182,12 +188,16 @@ jQuery(document).ready(function(){
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!--easyTabs-->
 
 	
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
+		document.getElementById('table').style.display = "block";
+		   document.getElementById('chart').style="display:none";
+		  
 		$('#table_grid td').remove();
 		
 		
@@ -311,7 +321,220 @@ jQuery(document).ready(function(){
 		return isValid;
 
 	}
+ 
 </script>
-	
+	<script type="text/javascript">
+	 
+function showChart(){
+		
+		document.getElementById('chart').style.display = "block";
+		   document.getElementById("table").style="display:none";
+		   
+		   var isValid = validate();
+			
+			if (isValid) {
+				
+				var fromDate = document.getElementById("fromdatepicker").value;
+				var toDate = document.getElementById("todatepicker").value;
+				var category=$("#category").val();
+				
+				
+				$.getJSON('${getDateCatwisellReport}',{
+					
+									fromDate : fromDate,
+									toDate : toDate,
+									category : category,
+									ajax : 'true',
+
+								},
+								function(data) {
+								// alert(data);
+							 if (data == "") {
+									alert("No records found !!");
+
+								}
+							 var i=0;
+
+							 google.charts.load('current', {'packages':['corechart', 'bar']});
+							 google.charts.setOnLoadCallback(drawStuff);
+
+							 function drawStuff() {
+ 
+							   var chartDiv = document.getElementById('chart_div');
+							   document.getElementById("chart_div").style.border = "thin dotted red";
+						       var dataTable = new google.visualization.DataTable();
+						       
+						       dataTable.addColumn('string', 'Bill Date'); // Implicit domain column.
+						       dataTable.addColumn('number', 'Amount'); // Implicit data column.
+						      // dataTable.addColumn({type:'string', role:'interval'});
+						     //  dataTable.addColumn({type:'string', role:'interval'});
+						       dataTable.addColumn('number', 'Qauntity');
+						       $.each(data,function(key, item) {
+
+									//var tax=item.cgst + item.sgst;
+									//var date= item.billDate+'\nTax : ' + item.tax_per + '%';
+									
+								   dataTable.addRows([
+									 
+								             [item.billDate, item.amount, item.qty, ]
+								           
+								           ]);
+								     }) 
+						    
+ var materialOptions = {
+          width: 600,
+          height:450,
+          chart: {
+            title: ' Qauntity & Amount',
+            subtitle: 'Date wise Qauntity & Amount '
+          },
+          series: {
+            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+          },
+          axes: {
+            y: {
+              distance: {label: 'Amount'}, // Left y-axis.
+              brightness: {side: 'right', label: 'Quantity'} // Right y-axis.
+            }
+          }
+        };
+						       var materialChart = new google.charts.Bar(chartDiv);
+						       
+						       function selectHandler() {
+							          var selectedItem = materialChart.getSelection()[0];
+							          if (selectedItem) {
+							            var topping = dataTable.getValue(selectedItem.row, 0);
+							           // alert('The user selected ' + selectedItem.row,0);
+							            i=selectedItem.row,0;
+							            itemSellBill(data[i].billDate);
+							           // google.charts.setOnLoadCallback(drawBarChart);
+							          }
+							        }
+						       
+						       function drawMaterialChart() {
+						          // var materialChart = new google.charts.Bar(chartDiv);
+						           google.visualization.events.addListener(materialChart, 'select', selectHandler);    
+						           materialChart.draw(dataTable, google.charts.Bar.convertOptions(materialOptions));
+						          // button.innerText = 'Change to Classic';
+						          // button.onclick = drawClassicChart;
+						         }
+						         
+						       drawMaterialChart();
+						 
+							 };
+							 
+										
+							  	});
+			}
+}
+</script>
+<script type="text/javascript">
+	function itemSellBill(date)
+	{ 
+		document.getElementById('table').style.display = "block";
+		   document.getElementById('chart').style="display:none";
+		  
+		$('#table_grid td').remove();
+		
+		
+		var isValid = validate();
+		
+		if (isValid) {
+			
+			//var fromDate = date;
+			//var toDate = date;
+			var category=$("#category").val();
+			//alert(date);
+			var newdate = date.split("-").reverse().join("-");
+			
+			$.getJSON('${getDateItemwiselReport}',{
+				
+								fromDate : newdate,
+								toDate : newdate,
+								category : category,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//$('#table_grid td').remove();
+								
+								
+
+								if (data == "") {
+									alert("No records found !!");
+
+								}
+							 
+
+							 
+								var amtTotal=0;
+								
+								var totalQty=0;
+								
+								$.each(data,function(key, sellBillData) {
+
+
+									var tr = $('<tr></tr>');
+
+								  	tr.append($('<td></td>').html(key+1));
+								  	
+								  	tr.append($('<td></td>').html(sellBillData.billDate));
+
+								  	tr.append($('<td></td>').html(sellBillData.itemName));
+								  									  	
+								  	tr.append($('<td></td>').html(sellBillData.catName));
+								  	
+									tr.append($('<td></td>').html(sellBillData.qty));
+									totalQty=totalQty + sellBillData.qty;
+								  	
+								  	tr.append($('<td></td>').html(sellBillData.amount));
+								  	
+								  	amtTotal=amtTotal + sellBillData.amount;
+								  	
+								  	
+								  	
+
+									$('#table_grid tbody').append(tr);
+
+									
+													
+
+												})
+												
+							var tr = "<tr>";
+								 var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								 
+								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
+									+ amtTotal
+									+ "</b></td>";
+								 var totalQty = "<td><b>&nbsp;&nbsp;&nbsp;"
+									+  totalQty
+									+ "</b></td>";
+							
+									
+								
+								var trclosed = "</tr>";
+								
+								
+								$('#table_grid tbody')
+								.append(tr);
+								$('#table_grid tbody')
+								.append(total);
+								$('#table_grid tbody')
+								.append(totalQty);
+								 $('#table_grid tbody')
+									.append(totalAmt);
+								 $('#table_grid tbody')
+								 
+								$('#table_grid tbody')
+								.append(trclosed); 
+								 
+							});
+
+		}
+	}
+	</script>
 </body>
 </html>

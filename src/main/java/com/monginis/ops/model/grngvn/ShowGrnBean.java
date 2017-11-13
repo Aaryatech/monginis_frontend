@@ -1,5 +1,7 @@
 package com.monginis.ops.model.grngvn;
 
+import java.util.Date;
+
 public class ShowGrnBean {
 
 	 private Integer billDetailNo;
@@ -11,13 +13,51 @@ public class ShowGrnBean {
 	    private Integer rate;
 	    private Integer mrp;
 	    private Integer billQty;
-	    String billDate;
+	    
+	    Date billDate;
 	    
 	    float sgstPer;
 	    float cgstPer;
 	    float igstPer;
 	    
 	    float calcBaseRate;
+	    
+	    
+	    private int menuId;
+		
+		private int catId;
+		
+		private String invoiceNo;
+		
+	    
+	    
+		
+		
+
+	    public int getMenuId() {
+			return menuId;
+		}
+
+		public void setMenuId(int menuId) {
+			this.menuId = menuId;
+		}
+
+		public int getCatId() {
+			return catId;
+		}
+
+		public void setCatId(int catId) {
+			this.catId = catId;
+		}
+
+		public String getInvoiceNo() {
+			return invoiceNo;
+		}
+
+		public void setInvoiceNo(String invoiceNo) {
+			this.invoiceNo = invoiceNo;
+		}
+
 	    
 	    
 		public Integer getBillDetailNo() {
@@ -74,12 +114,17 @@ public class ShowGrnBean {
 		public void setBillQty(Integer billQty) {
 			this.billQty = billQty;
 		}
-		public String getBillDate() {
+		
+		
+		
+		public Date getBillDate() {
 			return billDate;
 		}
-		public void setBillDate(String billDate) {
-			this.billDate = billDate;
+
+		public void setBillDate(java.util.Date date) {
+			this.billDate = date;
 		}
+
 		public float getSgstPer() {
 			return sgstPer;
 		}
@@ -104,15 +149,16 @@ public class ShowGrnBean {
 		public void setCalcBaseRate(float calcBaseRate) {
 			this.calcBaseRate = calcBaseRate;
 		}
+
 		@Override
 		public String toString() {
 			return "ShowGrnBean [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId + ", itemName="
 					+ itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp=" + mrp
 					+ ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
-					+ cgstPer + ", igstPer=" + igstPer + ", calcBaseRate=" + calcBaseRate + "]";
+					+ cgstPer + ", igstPer=" + igstPer + ", calcBaseRate=" + calcBaseRate + ", menuId=" + menuId
+					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + "]";
 		}
-	    
-	    
-	    
-	
+		
+		
+		
 }

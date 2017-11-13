@@ -111,12 +111,14 @@ jQuery(document).ready(function(){
 	</div>
 	
 		<div align="center">
-		    <button class="btn search_btn" onclick="searchSellBill()" >Search </button>
+		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
 		</div>
 		<br>
     </div>
 	
-	<div class="row">
+	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="table-responsive">
@@ -140,7 +142,10 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-						
+						<div align="center" id="showchart" style="display: none">
+		    
+		    
+		</div>
 				</div>
 			</div>
 		<!--table end-->
@@ -148,7 +153,20 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-
+	<div id="chart" style="display: none">
+	<hr><div  >
+	 
+			<div  id="chart_div" style="width:60%; height:300; float:left;" ></div> 
+		 
+			<div   id="PieChart_div" style="width:40%%; height:300; float: right;" ></div> 
+			</div>
+			<!-- <hr style="height:1px; width:50%%;" color="black">
+			<div class="colOuter" >
+			 
+				<div   id="PieChart_div" style="width:100%; height:300;" align="center" ></div>
+				</div> -->
+				 
+				</div>
 				
 				
 				</div>
@@ -164,12 +182,16 @@ jQuery(document).ready(function(){
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!--easyTabs-->
 
 	
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
+		document.getElementById('table').style.display = "block";
+		   document.getElementById('chart').style="display:none";
+		   //document.getElementById('showchart').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
@@ -299,7 +321,181 @@ jQuery(document).ready(function(){
 		return isValid;
 
 	}
+ 
 </script>
-	
+	<script type="text/javascript">
+	 
+function showChart(){
+		
+	$("#PieChart_div").empty();
+	$("#chart_div").empty();
+		document.getElementById('chart').style.display = "block";
+		   document.getElementById("table").style="display:none";
+		   
+		   var fromDate = document.getElementById("fromdatepicker").value;
+			var toDate = document.getElementById("todatepicker").value;
+			   
+			var isValid = validate();
+			
+			if (isValid) {
+			$.getJSON('${getDatewiselReport}',{
+				
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+								// alert(data);
+							 if (data == "") {
+									alert("No records found !!");
+
+								}
+							 var i=0;
+							 
+							  google.charts.load('current', {'packages':['corechart', 'bar']});
+							  google.charts.setOnLoadCallback(drawStuff);
+							 
+							 function drawChart() {
+								 var dataTable = new google.visualization.DataTable();
+								 dataTable.addColumn('string', 'Topping');
+								 dataTable.addColumn('number', 'Slices');
+						
+								   $.each(data,function(key, item) {
+
+										var amt=item.cash + item.card + item.other;
+
+									   dataTable.addRows([
+
+									             [item.billDate, amt]
+
+									           ]);
+									   
+
+									   }) 
+							 var options = {'title':'Sell Amount per Day',
+				                       'width':300,
+				                       'height':250};
+							 var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+							   document.getElementById("chart_div").style.border = "thin dotted red";
+						        function selectHandler() {
+						          var selectedItem = chart.getSelection()[0];
+						          if (selectedItem) {
+						            var topping = dataTable.getValue(selectedItem.row, 0);
+						           // alert('The user selected ' + selectedItem.row,0);
+						            i=selectedItem.row,0;
+						            google.charts.setOnLoadCallback(drawBarChart);
+						          }
+						        }
+
+						        google.visualization.events.addListener(chart, 'select', selectHandler);    
+						        chart.draw(dataTable, options);
+						      }
+							 
+							 function drawStuff() {
+								 
+								   var chartDiv = document.getElementById('chart_div');
+								   document.getElementById("chart_div").style.border = "thin dotted red";
+							       var dataTable = new google.visualization.DataTable();
+							       
+							       dataTable.addColumn('string', 'Date'); // Implicit domain column.
+							       dataTable.addColumn('number', 'Amount'); // Implicit data column.
+							      // dataTable.addColumn({type:'string', role:'interval'});
+							     //  dataTable.addColumn({type:'string', role:'interval'});
+							       $.each(data,function(key, item) {
+
+										var amt=item.cash + item.card + item.other;
+
+									   dataTable.addRows([
+
+									             [item.billDate, amt]
+
+									           ]);
+									   
+
+									   }) 
+							    
+	 var materialOptions = {
+	          width: 600,
+	          height:450,
+	          chart: {
+	            title: 'Sell Amount per Day',
+	            subtitle: ' '
+	          },
+	          series: {
+	            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+	            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+	          },
+	          axes: {
+	            y: {
+	              distance: {label: 'Paid Amount'}, // Left y-axis.
+	              brightness: {side: 'right', label: 'Total Tax'} // Right y-axis.
+	            }
+	          }
+	        };
+							       var materialChart = new google.charts.Bar(chartDiv);
+							       
+							        function selectHandler() {
+						          var selectedItem = materialChart.getSelection()[0];
+						          if (selectedItem) {
+						            var topping = dataTable.getValue(selectedItem.row, 0);
+						            //alert('The user selected ' + selectedItem.row,0);
+						            i=selectedItem.row,0;
+						            google.charts.setOnLoadCallback(drawBarChart);
+						          }
+						        }
+							       
+							       function drawMaterialChart() {
+							          // var materialChart = new google.charts.Bar(chartDiv);
+							           google.visualization.events.addListener(materialChart, 'select', selectHandler);    
+							           materialChart.draw(dataTable, google.charts.Bar.convertOptions(materialOptions));
+							          // button.innerText = 'Change to Classic';
+							          // button.onclick = drawClassicChart;
+							         }
+							         
+							       drawMaterialChart();
+							 
+								 };
+							 
+							 
+							 function drawBarChart() {
+								 var dataTable = new google.visualization.DataTable();
+								 dataTable.addColumn('string', 'Topping');
+								 dataTable.addColumn('number', 'Slices');
+							        
+									   dataTable.addRows([
+
+									             ['Cash', data[i].cash],
+									             ['Card', data[i].card],
+									             ['Other', data[i].other],
+
+									           ]);
+
+									//   }) 
+							 var options = {'title':'Total Amount: Cash, Card and Other',
+				                       'width':400,
+				                       'height':250};
+							 var chart = new google.visualization.PieChart(document.getElementById('PieChart_div'));
+
+							   document.getElementById("PieChart_div").style.border = "thin dotted red";
+						        function selectHandler() {
+						          var selectedItem = chart.getSelection()[0];
+						          if (selectedItem) {
+						            var topping = dataTable.getValue(selectedItem.row, 0);
+						          //  alert('The user selected ' + selectedItem.row,0);
+						           
+						          }
+						        }
+
+						        google.visualization.events.addListener(chart, 'select', selectHandler);    
+						        chart.draw(dataTable, options);
+				
+							 }
+										
+							  	});
+			}
+			}
+</script>
 </body>
 </html>

@@ -33,6 +33,7 @@ import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRepFrDatewiseSellResponse;
 import com.monginis.ops.model.GetRepFrItemwiseSellResponse;
+import com.monginis.ops.model.GetRepMenuwiseSellResponse;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.ItemWiseDetail;
@@ -556,12 +557,13 @@ public class ReportsController {
 				}
 				
 				@RequestMapping(value = "/viewItemwiseSellBill", method = RequestMethod.GET)
+				//@RequestMapping(value = "/viewChart", method = RequestMethod.GET)
 				public ModelAndView viewItemwiseSellBill(HttpServletRequest request,
 							HttpServletResponse response) {
 
 						ModelAndView model = new ModelAndView("report/sellReport/repFrItemwiseSell");
 						
-						List<MCategory> mCategoryList;
+						/*List<MCategory> mCategoryList;
 						RestTemplate restTemplate = new RestTemplate();
 						
 						CategoryList categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory",
@@ -573,14 +575,69 @@ public class ReportsController {
 						List<MCategory> newMcategoryList=new ArrayList<MCategory>();
 						for(int i=0;i<mCategoryList.size();i++)
 						{
-							if(mCategoryList.get(i).getCatId()!=5 && mCategoryList.get(i).getCatId()!=6)
+							if(mCategoryList.get(i).getCatId()!=5)
 							{
 								newMcategoryList.add(mCategoryList.get(i));
 							}
 						}
 						System.out.println("New Category list  " +newMcategoryList);
-						model.addObject("unSelectedCatList", newMcategoryList);
+						model.addObject("unSelectedCatList", newMcategoryList);*/
 						return model;			
+				}
+				
+				
+				@RequestMapping(value = "/getMenuwiselReport", method = RequestMethod.GET)
+				public @ResponseBody List<GetRepMenuwiseSellResponse> getMenuwisellReport(HttpServletRequest request,
+					HttpServletResponse response) {
+							
+					
+					System.out.println("in method");
+					String fromDate=request.getParameter("fromDate");
+					String toDate=request.getParameter("toDate");
+					//String catId=request.getParameter("category");
+					
+					/*catId = catId.substring(1, catId.length() - 1);
+					catId = catId.replaceAll("\"", "");*/
+					
+					HttpSession ses = request.getSession();
+					Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+						
+								RestTemplate restTemplate = new RestTemplate();
+								
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					int frId=frDetails.getFrId();
+					map.add("frId", frId);
+					map.add("fromDate", fromDate);
+					map.add("toDate", toDate);
+					 
+				 
+					//getFrGrnDetail
+					List<GetRepMenuwiseSellResponse> getRepFrMenuwiseSellResponseList=new ArrayList<GetRepMenuwiseSellResponse>();
+					try {
+					  
+					ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>>() {
+					};
+					ResponseEntity<List<GetRepMenuwiseSellResponse>> responseEntity = restTemplate.exchange(Constant.URL + "getRepMenuwiseSell",
+							HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					
+					getRepFrMenuwiseSellResponseList = responseEntity.getBody();	
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+						System.out.println(e.getMessage());
+					}
+					
+					
+					
+					
+					 System.out.println("Sell Bill Header "+getRepFrMenuwiseSellResponseList.toString());
+					
+						
+								
+					
+				
+				return getRepFrMenuwiseSellResponseList;
+				
 				}
 				
 				@RequestMapping(value = "/getItemwiselReport", method = RequestMethod.GET)
@@ -656,7 +713,7 @@ public class ReportsController {
 						List<MCategory> newMcategoryList=new ArrayList<MCategory>();
 						for(int i=0;i<mCategoryList.size();i++)
 						{
-							if(mCategoryList.get(i).getCatId()!=5 && mCategoryList.get(i).getCatId()!=6)
+							if(mCategoryList.get(i).getCatId()!=5 )
 							{
 								newMcategoryList.add(mCategoryList.get(i));
 							}
@@ -699,6 +756,61 @@ public class ReportsController {
 					ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
 					};
 					ResponseEntity<List<GetRepFrItemwiseSellResponse>> responseEntity = restTemplate.exchange(Constant.URL + "getRepDateItemwiseSell",
+							HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					
+					getRepFrItemwiseSellResponseList = responseEntity.getBody();	
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+						System.out.println(e.getMessage());
+					}
+					
+					
+					
+					
+					 System.out.println("Sell Bill Header "+getRepFrItemwiseSellResponseList.toString());
+					
+						
+								
+					
+				
+				return getRepFrItemwiseSellResponseList;
+				
+				}
+				
+				@RequestMapping(value = "/getDateCatwisellReport", method = RequestMethod.GET)
+				public @ResponseBody List<GetRepFrItemwiseSellResponse> getDateCatwiselReport(HttpServletRequest request,
+					HttpServletResponse response) {
+							
+					
+					System.out.println("in method");
+					String fromDate=request.getParameter("fromDate");
+					String toDate=request.getParameter("toDate");
+					String catId=request.getParameter("category");
+					
+					/*catId = catId.substring(1, catId.length() - 1);
+					catId = catId.replaceAll("\"", "");*/
+					
+					HttpSession ses = request.getSession();
+					Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+						
+								RestTemplate restTemplate = new RestTemplate();
+								
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					int frId=frDetails.getFrId();
+					map.add("frId", frId);
+					map.add("fromDate", fromDate);
+					map.add("toDate", toDate);
+					map.add("catId", catId);
+					System.out.println(catId);
+					//getFrGrnDetail
+
+					List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
+					try {
+					  
+					ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
+					};
+					ResponseEntity<List<GetRepFrItemwiseSellResponse>> responseEntity = restTemplate.exchange(Constant.URL + "getRepDateCatwiseSell",
 							HttpMethod.POST, new HttpEntity<>(map), typeRef);
 					
 					getRepFrItemwiseSellResponseList = responseEntity.getBody();	
@@ -806,6 +918,7 @@ public class ReportsController {
 					map.add("fromDate", fromDate);
 					map.add("toDate", toDate);
 					//getFrGrnDetail
+					System.out.println(frId + fromDate +toDate);
 					List<GetRepTaxSell> getRepTaxSell=new ArrayList<GetRepTaxSell>();
 					try {
 					  
@@ -877,4 +990,14 @@ public class ReportsController {
 				}
 				
 				//Sell report End
+				
+				@RequestMapping(value = "/view1Chart", method = RequestMethod.GET)
+				public ModelAndView viewChart(HttpServletRequest request,
+							HttpServletResponse response) {
+
+						ModelAndView model = new ModelAndView("report/sellReport/datewiseChart");
+						model.addObject("msg", "hhhh");
+						return model;			
+				}
+				
 }
