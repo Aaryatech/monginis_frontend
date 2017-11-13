@@ -48,7 +48,7 @@
 						class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
-							alt="img">
+				 			alt="img">
 					</div>
 					<div class="title">
 						Order <span>History</span>
