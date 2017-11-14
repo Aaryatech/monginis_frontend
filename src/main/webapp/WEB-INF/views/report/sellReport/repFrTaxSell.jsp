@@ -487,7 +487,7 @@ function showChart(){
 								       var chart = new google.visualization.PieChart(
 								                document.getElementById('Piechart'));
 								       chart.draw(dataTable,
-								          {width: 400, height: 300, title: 'Taxable Amount'});
+								          {width: 400, height: 300, title: 'Total Tax'});
 									   
 									 };
 										

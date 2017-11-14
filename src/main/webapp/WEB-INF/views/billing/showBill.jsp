@@ -310,9 +310,9 @@
 
 	
 						<div class="colOuter">
-							<div class="col2full">
+							<div align="center">
 								<input name="" class="buttonsaveorder" value="Search..."
-									type="submit">
+									type="submit" align="center">
 							</div>
 						</div>
 
@@ -364,11 +364,35 @@
 													<td><c:out value="${billHeader.taxableAmt}" /></td>
 													<td><c:out value="${billHeader.totalTax}" /></td>
 													<td><c:out value="${billHeader.grandTotal}" /></td>
-													<td><c:out value="${billHeader.status}" /></td>
+												<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
+														<c:choose>
+																	<c:when test="${billHeader.status==1}">
+																		<td><c:out value="Pending"></c:out></td>
+																	</c:when>
+																	<c:when test="${billHeader.status==2}">
+																		<td><c:out value="Receive"></c:out></td>
+																	</c:when>
+																	<c:when test="${billHeader.status== 3}">
+																		<td><c:out value="GVN Apply"></c:out></td>
+																	</c:when>
+																	<c:when test="${billHeader.status== 4}">
+																		<td><c:out value="GVN Approve"></c:out></td>
+																	</c:when>
+																	<c:when test="${billHeader.status== 5}">
+																		<td><c:out value="GRN Apply"></c:out></td>
+																	</c:when>
+																		<c:when test="${billHeader.status== 6}">
+																		<td><c:out value="GRN Approve"></c:out></td>
+																	</c:when>
+																		<c:when test="${billHeader.status== 7}">
+																		<td><c:out value="Closed"></c:out></td>
+																	</c:when>
+
+																</c:choose>
 													<td><c:out value="${billHeader.remark}" /></td>
 													<td><div class="order-btn textcenter">
-						<a	href="${pageContext.request.contextPath}/showBillDetailProcess/${billHeader.billNo}"
-							class="buttonsaveorder">VIEW DETAILS</a>
+						<a	href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}"
+						 class="buttonsaveorder">VIEW</a>
 						<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
 					</div> </td>
 													<c:set var="billNo" value="${billHeader.billNo}"/>

@@ -113,13 +113,18 @@ jQuery(document).ready(function(){
 		<div class="col-md-2 ">
 			<input type='text' placeholder="Select To Month" id=txtDateto name="to_stockdate" required />
 		</div>
-		<div class="col-md-2">
+		<!-- <div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
+		</div> -->
+			<div align="center">
+		    <button class="btn search_btn" onclick="monthWisePurchase()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
 		</div>
 		
     </div>
 	
-	<div class="row">
+	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="table-responsive">
@@ -152,7 +157,24 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-
+<div id="chart"  >
+	<hr><div  >
+	 
+			 
+   
+    <div  id="chart_div" style="width:60%; height:300; float:left;" style="overflow-y: scroll;"></div> 
+		 
+			<div   id="pieChart_div" style="width:40%%; height:300; float: right;" ></div> 
+			<div   id="Piechart" style="width:40%%; height:300; float: right;" ></div> 
+			<!-- <div   id="PieChart_div" style="width:40%%; height:300; float: right;" ></div>  -->
+			</div>
+			<!-- <hr style="height:1px; width:50%%;" color="black">
+			<div class="colOuter" >
+			 
+				<div   id="PieChart_div" style="width:100%; height:300;" align="center" ></div>
+				</div> -->
+				 
+				</div>
 				
 				
 				</div>
@@ -168,6 +190,7 @@ jQuery(document).ready(function(){
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!--easyTabs-->
 
 	
@@ -177,7 +200,8 @@ jQuery(document).ready(function(){
 		$('#table_grid td').remove();
 		
 		
-	
+		document.getElementById('table').style.display = "block";
+		   document.getElementById('chart').style="display:none";
 			
 			var fromDate = document.getElementById("txtDate").value;
 			var toDate = document.getElementById("txtDateto").value;
@@ -417,6 +441,175 @@ $(document).ready(function() {
     }
   });
 });
+</script>
+
+<script type="text/javascript">
+	 
+function showChart(){
+		
+	//$("#PieChart_div").empty();
+	$("#chart_div").empty();
+		document.getElementById('chart').style.display = "block";
+		   document.getElementById("table").style="display:none";
+		   
+		   var fromDate = document.getElementById("txtDate").value;
+			var toDate = document.getElementById("txtDateto").value;
+			   
+			
+			$.getJSON('${monthWisePurchaseReport}',{
+				
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								$('#loader').hide();
+								 //alert(data);
+							 if (data == "") {
+									alert("No records found !!");
+
+								}
+							 var i=0;
+
+							 google.charts.load('current', {'packages':['corechart', 'bar']});
+							 google.charts.setOnLoadCallback(drawStuff);
+							 google.charts.setOnLoadCallback(drawAmtPieChart);
+							 google.charts.setOnLoadCallback(drawTaxPieChart);
+							  
+							 function drawStuff() {
+								 
+								   var chartDiv = document.getElementById('chart_div');
+								   document.getElementById("chart_div").style.border = "thin dotted red";
+							       var dataTable = new google.visualization.DataTable();
+							       
+							       dataTable.addColumn('string', 'Month'); // Implicit domain column.
+							       dataTable.addColumn('number', 'Amount'); // Implicit data column.
+							      // dataTable.addColumn({type:'string', role:'interval'});
+							     //  dataTable.addColumn({type:'string', role:'interval'});
+							       dataTable.addColumn('number', 'Total Tax');
+							       $.each(data,function(key, item) {
+							    	   
+							    	   var monthNumber = item.month;
+									    
+							    	   var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+										var totalTax = item.cgstRs + item.sgstRs;
+									   dataTable.addRows([
+										 
+									             [monthNames[monthNumber], item.taxableAmt, totalTax, ]
+									           
+									           ]);
+									     }) 
+							    
+	 var materialOptions = {
+	          width: 600,
+	          height:450,
+	          chart: {
+	            title: ' Taxable Amount & Total Tax',
+	            subtitle: 'Tax percent wise Total Tax & Amount '
+	          },
+	          series: {
+	            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+	            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+	          },
+	          axes: {
+	            y: {
+	              distance: {label: 'Taxable Amount'}, // Left y-axis.
+	              brightness: {side: 'right', label: 'Total Tax'} // Right y-axis.
+	            }
+	          }
+	        };
+							     //  var materialChart = new google.charts.Bar(chartDiv);
+							       
+							        
+							       
+							       function drawMaterialChart() {
+							           var materialChart = new google.charts.Bar(chartDiv);
+							         //  google.visualization.events.addListener(materialChart, 'select', selectHandler);    
+							           materialChart.draw(dataTable, google.charts.Bar.convertOptions(materialOptions));
+							          // button.innerText = 'Change to Classic';
+							          // button.onclick = drawClassicChart;
+							         }
+							         
+							       drawMaterialChart();
+							 
+								 };
+									
+							 function drawAmtPieChart() {
+								 
+								   var chartDiv = document.getElementById('pieChart_div');
+								   document.getElementById("pieChart_div").style.border = "thin dotted red";
+							       var dataTable = new google.visualization.DataTable();
+							       
+							       dataTable.addColumn('string', 'Month'); // Implicit domain column.
+							       dataTable.addColumn('number', 'Taxable Amount'); // Implicit data column.
+							     //  dataTable.addColumn({type:'string', role:'interval'});
+							     //  dataTable.addColumn({type:'string', role:'interval'});
+							       //dataTable.addColumn('number', 'TaxableAmt');
+							        $.each(data,function(key, item) {
+							    	   
+							    	   var monthNumber = item.month;
+									    
+							    	   var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+										var totalTax = item.cgstRs + item.sgstRs;
+									   dataTable.addRows([
+										 
+									             [monthNames[monthNumber], item.taxableAmt, ]
+									           
+									           ]);
+									     }) 
+							    
+							     
+
+							       var chart = new google.visualization.PieChart(
+							                document.getElementById('pieChart_div'));
+							       chart.draw(dataTable,
+							          {width: 400, height: 300, title: 'Taxable Amount'});
+								   
+								 };
+								 function drawTaxPieChart() {
+									 
+									   var chartDiv = document.getElementById('Piechart');
+									   document.getElementById("Piechart").style.border = "thin dotted red";
+								       var dataTable = new google.visualization.DataTable();
+								       
+								       dataTable.addColumn('string', 'Month'); // Implicit domain column.
+								       dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
+								     //  dataTable.addColumn({type:'string', role:'interval'});
+								     //  dataTable.addColumn({type:'string', role:'interval'});
+								       //dataTable.addColumn('number', 'TaxableAmt');
+								        $.each(data,function(key, item) {
+							    	   
+							    	   var monthNumber = item.month;
+									    
+							    	   var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+										var totalTax = item.cgstRs + item.sgstRs;
+									   dataTable.addRows([
+										 
+									             [monthNames[monthNumber],totalTax, ]
+									           
+									           ]);
+									     }) 
+							    
+								     
+
+								       var chart = new google.visualization.PieChart(
+								                document.getElementById('Piechart'));
+								       chart.draw(dataTable,
+								          {width: 400, height: 300, title: 'Total tax'});
+									   
+									 };
+										
+							  	});
+			}
+
 </script>
 </body>
 </html>

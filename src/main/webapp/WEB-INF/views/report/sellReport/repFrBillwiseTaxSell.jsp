@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Bill wise Report</h2></div>
 	</div>
 	
 	<div class="row">
@@ -146,6 +146,9 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
+								 <div align="center" id="showpdf" style="display: none"> 
+		    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		</div>
 						
 				</div>
 			</div>
@@ -176,6 +179,7 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
+		 document.getElementById('showpdf').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
