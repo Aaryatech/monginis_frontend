@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -37,8 +36,6 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
-import com.monginis.ops.model.PostBillDataCommon;
-import com.monginis.ops.model.PostBillHeader;
 
 
 @Controller
@@ -164,12 +161,10 @@ public class BillingController {
 		String billNo=request.getParameter("billNo");
 		System.out.println("Bill No : "+ billNo);
 		
-		PostBillDataCommon postBillDataCommon=new PostBillDataCommon();
 		
-		List<PostBillHeader> postBillHeaderList=new ArrayList<PostBillHeader>();
 		
 		 System.out.println("Headerdgdgdfg List "+billHeadeResponse.getGetBillHeaders().toString());
-		PostBillHeader postBillHeader=new PostBillHeader();
+		
 		try {
 			GetBillHeader getBillHeader=new GetBillHeader();
 			 List<GetBillHeader> getBillHeaders=billHeadeResponse.getGetBillHeaders();
@@ -181,60 +176,15 @@ public class BillingController {
 			{
 				System.out.println("first date :"+ billHeadeResponse.getGetBillHeaders().get(i).getBillDate());
 				
-				/*Date date=null;
-				String convertedDate=null;
-				try {
-					SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
-					SimpleDateFormat dmySDF = new SimpleDateFormat("dd-MM-yyyy");
-					Date dmyDate = dmySDF.parse(billHeadeResponse.getGetBillHeaders().get(i).getBillDate());
-					
-					convertedDate=ymdSDF.format(dmyDate);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("  yyyy mm dd "+convertedDate);
 				
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
-				//String dateInString = "Jan 1, 2015"; 
-				 
-				try{
-				 
-				 date = formatter.parse(convertedDate);
-				System.out.println(date);
-				System.out.println(formatter.format(date));  
-				//billDate =formatter.format(date);
-				 
-				}catch(ParseException e){
-				e.printStackTrace();
-				}
-				// Date dt =sm.parse(billHeadeResponse.getGetBillHeaders().get(i).getBillDate());
-				//System.out.println("dfghj"+date);
-*/				
 				
 				getBillHeader=billHeadeResponse.getGetBillHeaders().get(i);
 				//postBillHeader.setBillDate(date);
 				
 				
-				/*postBillHeader.setBillNo(Integer.parseInt(billNo));
-				postBillHeader.setDelStatus(billHeadeResponse.getGetBillHeaders().get(i).getDelStatus());
-				postBillHeader.setFrCode(billHeadeResponse.getGetBillHeaders().get(i).getFrCode());
-				postBillHeader.setFrId(billHeadeResponse.getGetBillHeaders().get(i).getFrId());
-				postBillHeader.setGrandTotal(billHeadeResponse.getGetBillHeaders().get(i).getGrandTotal());
-				postBillHeader.setInvoiceNo(billHeadeResponse.getGetBillHeaders().get(i).getInvoiceNo());
-				postBillHeader.setRemark(billHeadeResponse.getGetBillHeaders().get(i).getRemark());
-				postBillHeader.setStatus(2);
-				postBillHeader.setTaxableAmt(billHeadeResponse.getGetBillHeaders().get(i).getTaxableAmt());
-				postBillHeader.setTaxApplicable(billHeadeResponse.getGetBillHeaders().get(i).getTaxApplicable());
-				postBillHeader.setTotalTax(billHeadeResponse.getGetBillHeaders().get(i).getTotalTax());
-		
-				//postBillHeader.setPostBillDetailsList(billHeadeResponse.getGetBillHeaders().get(i).get;);
-				//postBillDataCommon.setPostBillHeadersList((billHeadeResponse.getGetBillHeaders());
-*/			}
+							}
 		}
-		//postBillHeaderList.add(postBillHeader);
-		//postBillDataCommon.setPostBillHeadersList(postBillHeaderList);
+		
 		getBillHeader.setStatus(2);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
