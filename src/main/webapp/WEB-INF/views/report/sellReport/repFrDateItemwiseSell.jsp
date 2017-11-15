@@ -97,7 +97,46 @@ jQuery(document).ready(function(){
 	    <div class="col-md-12"><h2 class="pageTitle">View Date & Item wise Report</h2></div>
 	</div>
 	
+	<div class="colOuter">
+		<div align="center" >
+		<div class="col1"><b>Group </b><select id="category" class="form-control chosen" placeholder="Select Category"  name="category" tabindex="6"    >
+		<option value="-1">Select Option</option>
+								
+											
+											<c:forEach items="${unSelectedCatList}" var="unSelectedCat"
+													varStatus="count">
+												<option value="${unSelectedCat.catId}"><c:out value="${unSelectedCat.catName}"/></option>
+												</c:forEach>
+
+							</select>
+							</div>
+		<div class="col2"><div class="col2title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="30" style="height:35px;" >
+		</div></div>
+		<div class="col3"><div class="col3title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="30" style="height:35px;">
+		</div></div>
+		
+	</div>
+ 
+	
+ <!-- 	<div align="center"> 
+		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		 
+		<br>
+    </div> -->
+	</div>
 	<div class="row">
+		<div align="center"> 
+		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		 
+		<br> 
+    </div></div>
+	<%-- <div class="row">
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Group</div></div>
@@ -136,7 +175,7 @@ jQuery(document).ready(function(){
 		<br>
 		
     </div>
-	
+	 --%>
 	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
@@ -169,7 +208,7 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-	<div id="chart" style="display: none">
+	<div id="chart" style="display: none"><br> <hr>
 		<div id="chart_div" style="width:400; height:300" align="center"></div>
 				 
 				</div>

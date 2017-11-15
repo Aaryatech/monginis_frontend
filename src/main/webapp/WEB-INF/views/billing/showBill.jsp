@@ -267,10 +267,10 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-					<div class="order-left">
+					<!-- <div class="order-left">
 						<h2 class="pageTitle">Bills</h2>
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-					</div>
+						<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>
+					</div> -->
 
 					<form name="frm_search" id="frm_search" method="post"
 						action="showBillProcess">
@@ -370,7 +370,7 @@
 																		<td><c:out value="Pending"></c:out></td>
 																	</c:when>
 																	<c:when test="${billHeader.status==2}">
-																		<td><c:out value="Receive"></c:out></td>
+																		<td><c:out value="Received"></c:out></td>
 																	</c:when>
 																	<c:when test="${billHeader.status== 3}">
 																		<td><c:out value="GVN Apply"></c:out></td>

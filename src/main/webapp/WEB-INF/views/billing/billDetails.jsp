@@ -166,7 +166,7 @@ However, delay the fade out process for 2.5 seconds */
 																		<b><c:out value="Pending"></c:out></b>
 																	</c:when>
 																	<c:when test="${billStatus==2}">
-																		<b><c:out value="Receive"></c:out></b>
+																		<b><c:out value="Received"></c:out></b>
 																		
 																	</c:when>
 																	<c:when test="${billStatus== 3}">
@@ -261,7 +261,12 @@ However, delay the fade out process for 2.5 seconds */
 							</li>
 
 						</ul>
-					</div>
+					</div><br>
+					<div align="center">
+								<input name="" class="buttonsaveorder" value="Go Back"
+									 onclick="goBack()" align="center" type="button">
+							</div>
+					 
 					<!--tabNavigation-->
 
 				
@@ -303,6 +308,9 @@ function updateStatus(billNo)
 	document.getElementById("updateStatus").style="display:none";
 	x.className = "show";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+function goBack() {
+    window.history.back();
 }
 </script>
 

@@ -96,26 +96,26 @@ jQuery(document).ready(function(){
 	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Bill wise Report</h2></div>
 	</div>
 	
-	<div class="row">
-	
-		<div class="colOuter">
-		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text"  >
-		</div>
+<div class="colOuter">
+		<div align="center" >
+		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		</div></div>
+		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		</div></div>
+		
 	</div>
-
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  >
-		</div>
-	</div>
+ 
 	
-		<div align="center">
-		    <button class="btn search_btn" onclick="searchSellBill()" >Search </button>
-		</div>
+ 	<div align="center"> 
+		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+		  &nbsp;&nbsp;&nbsp;
+		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		 
 		<br>
     </div>
-	
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
@@ -146,9 +146,7 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-								 <div align="center" id="showpdf" style="display: none"> 
-		    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
-		</div>
+								 
 						
 				</div>
 			</div>
@@ -179,7 +177,7 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
-		 document.getElementById('showpdf').style.display = "block";
+		  
 		$('#table_grid td').remove();
 		
 		

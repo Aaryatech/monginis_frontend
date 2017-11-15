@@ -97,45 +97,25 @@ jQuery(document).ready(function(){
 	    <div class="col-md-12"><h2 class="pageTitle">View Item wise Report</h2></div>
 	</div>
 	
-	<div class="row">
-	
-<%-- 	<div class="colOuter">
-		<div class="col1"><div class="col1title">Group</div></div>
-		<div class="col2"><select id="category" class="form-control chosen" placeholder="Select Category"  name="category" tabindex="6"    >
-		<option value="-1">Select Option</option>
-								
-											
-											<c:forEach items="${unSelectedCatList}" var="unSelectedCat"
-													varStatus="count">
-												<option value="${unSelectedCat.catId}"><c:out value="${unSelectedCat.catName}"/></option>
-												</c:forEach>
-
-							</select>
-		</div>
-			
-								
-	</div> --%>
-	
-		<div class="colOuter">
-		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text"  >
-		</div>
-	</div>
-
 	<div class="colOuter">
-		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  >
-		</div>
+		<div align="center" >
+		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		</div></div>
+		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		</div></div>
+		
 	</div>
+ 
 	
-		<div align="center">
+ 	<div align="center">
 		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	   <br><br> <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  style="display: none">PDF </button>
+		    	<br> <br>   <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  style="display: none">PDF </button>
 		</div>
-		<br>
-		
-    </div>
+	</div>
+		 
 	
 	<div class="row" id="table" style="display: none">
 		<div class="col-md-12">
@@ -169,7 +149,7 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
     
-    <div class="row" id="menuTable" style="display: none">
+    <div class="row" id="menuTable">
 		<div class="col-md-12">
 		<!--table-->
 			<div class="table-responsive">
@@ -200,8 +180,8 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-	<div id="chart" style="display: none">
-		 <div  >
+	<div id="chart" style="display: none"><br><br><br>
+		 <hr><div  >
 	 
 			<div  id="chart_div" style="width:60%; height:300; float:left;" style="overflow-y: scroll;"></div> 
 		 

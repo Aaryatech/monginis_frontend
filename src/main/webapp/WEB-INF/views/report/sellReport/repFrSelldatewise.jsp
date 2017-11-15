@@ -96,27 +96,26 @@ jQuery(document).ready(function(){
 	    <div class="col-md-12"><h2 class="pageTitle">View Date wise Report</h2></div>
 	</div>
 	
-	<div class="row">
-	
-		<div class="colOuter">
-		<div class="col1"><div class="col1title">From</div></div>
-		<div class="col2"><input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="from_Date" type="text"  >
-		</div>
-	</div>
-
 	<div class="colOuter">
-		<div class="col1"><div class="col1title">TO</div></div>
-		<div class="col2"><input id="todatepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="to_Date" type="text"  >
-		</div>
+		<div align="center" >
+		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		</div></div>
+		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		</div></div>
+		
 	</div>
+ 
 	
-		<div align="center">
+ 	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
 		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
-		</div>
+		 
 		<br>
     </div>
+	</div>
 	
 	<div class="row" id="table">
 		<div class="col-md-12">
@@ -153,7 +152,7 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-	<div id="chart" style="display: none">
+	<div id="chart" style="display: none"><br><br><br>
 	<hr><div  >
 	 
 			<div  id="chart_div" style="width:60%; height:300; float:left;" ></div> 
