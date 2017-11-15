@@ -6,6 +6,8 @@ public class GetCurrentStockDetails {
 
 	private int itemId;
 
+	private int id;
+	
 	private String itemName;
 
 	private int regOpeningStock;
@@ -29,6 +31,14 @@ public class GetCurrentStockDetails {
 	private int currentSpStock;
 	
 	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getStockDetailId() {
 		return stockDetailId;
