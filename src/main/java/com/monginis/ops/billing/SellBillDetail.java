@@ -20,7 +20,7 @@ public class SellBillDetail implements Serializable{
 	
 	private int itemId;
 	
-
+	private String itemName;
 
 	private float mrp;
 	
@@ -30,6 +30,7 @@ public class SellBillDetail implements Serializable{
 	
 	private float mrpBaseRate;
 	
+	private int billStockType;
 	
 	private float taxableAmt;
 		
@@ -63,6 +64,22 @@ public class SellBillDetail implements Serializable{
 	private int delStatus;
 
 	
+	public int getBillStockType() {
+		return billStockType;
+	}
+
+	public void setBillStockType(int billStockType) {
+		this.billStockType = billStockType;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
 	public int getSellBillDetailNo() {
 		return sellBillDetailNo;
 	}
