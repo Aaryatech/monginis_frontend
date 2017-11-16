@@ -59,7 +59,7 @@ public class SellBillDetail implements Serializable{
 	
 
 	private String remark;
-	
+	 
 	
 	private int delStatus;
 
