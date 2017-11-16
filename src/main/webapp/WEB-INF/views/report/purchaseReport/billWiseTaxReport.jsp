@@ -112,6 +112,8 @@ jQuery(document).ready(function(){
 		</div>
 		<div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="billWiseTaxReport()">Search </button>
+		  &nbsp;&nbsp;&nbsp;  <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseTaxBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+		 
 		</div>
 		
     </div>
@@ -179,7 +181,8 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 		
 		if (isValid) {
-			
+
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   

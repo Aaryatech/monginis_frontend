@@ -111,7 +111,7 @@ jQuery(document).ready(function(){
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
 		 
 		<br>
     </div>
@@ -197,7 +197,7 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
@@ -330,13 +330,14 @@ function showChart(){
 	$("#chart_div").empty();
 		document.getElementById('chart').style.display = "block";
 		   document.getElementById("table").style="display:none";
-		   
+		 
 		   var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
 			var isValid = validate();
 			
 			if (isValid) {
+				  document.getElementById('btn_pdf').style.display = "block";
 			$.getJSON('${getDatewiselReport}',{
 				
 								fromDate : fromDate,

@@ -119,7 +119,9 @@ jQuery(document).ready(function(){
 			<div align="center">
 		    <button class="btn search_btn" onclick="monthWisePurchase()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	   
+		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+		 
 		</div>
 		
     </div>
@@ -199,7 +201,8 @@ jQuery(document).ready(function(){
 	{ 
 		$('#table_grid td').remove();
 		
-		
+
+		document.getElementById('btn_pdf').style.display = "block";
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
 			
@@ -446,7 +449,8 @@ $(document).ready(function() {
 <script type="text/javascript">
 	 
 function showChart(){
-		
+
+	document.getElementById('btn_pdf').style.display = "block";
 	//$("#PieChart_div").empty();
 	$("#chart_div").empty();
 		document.getElementById('chart').style.display = "block";

@@ -111,7 +111,7 @@ jQuery(document).ready(function(){
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		  &nbsp;&nbsp;&nbsp;
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
 		 
 		<br>
     </div>
@@ -177,14 +177,14 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
-		  
+		
 		$('#table_grid td').remove();
 		
 		
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
@@ -264,25 +264,25 @@ jQuery(document).ready(function(){
 								 
 								 
 								 var totalAmt="<td>&nbsp;&nbsp;&nbsp;<b>"
-										+ billTotal
+										+ billTotal.toFixed(2);
 										+ "</b></td>";
 								var totalTax = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ taxTotal
+									+ taxTotal.toFixed(2);
 									+ "</b></td>";
 									var blank = "<td>&nbsp;&nbsp;&nbsp;<b>"
 										
 										+ "</b></td>";
 								var igst = "<td><b>&nbsp;&nbsp;&nbsp;"
-										+  igstTotal
+										+  igstTotal.toFixed(2);
 										+ "</b></td>";
 								 var cgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  cgstTotal
+									+  cgstTotal.toFixed(2);
 									+ "</b></td>";
 								var sgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ sgstTotal
+									+ sgstTotal.toFixed(2);
 									+ "</b></td>";
 								var cess = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ cessTotal
+									+ cessTotal.toFixed(2);
 									+ "</b></td>"; 
 									
 								

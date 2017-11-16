@@ -112,7 +112,8 @@ jQuery(document).ready(function(){
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		 
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+		 
 		 
 		<br>
     </div>
@@ -175,14 +176,14 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
-		   
+		
 		$('#table_grid td').remove();
 		
 		
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
