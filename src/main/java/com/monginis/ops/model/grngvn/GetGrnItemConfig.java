@@ -22,34 +22,35 @@ public class GetGrnItemConfig {
     float igstPer;
     
     
-  
-	private int menuId;
+    int catId;
+    int menuId;
+    String invoiceNo;
+    
+    private int autoGrnQty;
 	
-	private int catId;
-	
-	private String invoiceNo;
-	
-   
-    public int getMenuId() {
-		return menuId;
-	}
-
-	public void setMenuId(int menuId) {
-		this.menuId = menuId;
-	}
 
 	public int getCatId() {
 		return catId;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	
+	public String getInvoiceNo() {
+		return invoiceNo;
 	}
 
 	public void setCatId(int catId) {
 		this.catId = catId;
 	}
 
-	public String getInvoiceNo() {
-		return invoiceNo;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
 	}
 
+	
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
@@ -164,17 +165,24 @@ public class GetGrnItemConfig {
 		this.igstPer = igstPer;
 	}
 
-	
-	
+	public int getAutoGrnQty() {
+		return autoGrnQty;
+	}
+
+	public void setAutoGrnQty(int autoGrnQty) {
+		this.autoGrnQty = autoGrnQty;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
 				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp="
 				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
-				+ cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
-				+ invoiceNo + "]";
+				+ cgstPer + ", igstPer=" + igstPer + ", catId=" + catId + ", menuId=" + menuId + ", invoiceNo="
+				+ invoiceNo + ", autoGrnQty=" + autoGrnQty + "]";
 	}
 
+	
 	
 	
 }
