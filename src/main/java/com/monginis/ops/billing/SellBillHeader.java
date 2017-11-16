@@ -58,9 +58,17 @@ public class SellBillHeader implements Serializable{
 	private int status;
 	
 	private int DelStatus;
+ 
+	private char billType;
+   
+	public char getBillType() {
+		return billType;
+	}
 
+	public void setBillType(char billType) {
+		this.billType = billType;
+	}
 
-	
 	List<SellBillDetail> sellBillDetailsList;
 	
 	public List<SellBillDetail> getSellBillDetailsList() {
