@@ -23,6 +23,9 @@ public class ShowGrnBean {
 	    float calcBaseRate;
 	    
 	    
+	    
+	    
+	    
 	    private int menuId;
 		
 		private int catId;
@@ -30,7 +33,11 @@ public class ShowGrnBean {
 		private String invoiceNo;
 		
 	    
-	    
+	private int autoGrnQty;
+	
+	private float taxPer;
+	private float grnAmt;
+	
 		
 		
 
@@ -150,14 +157,40 @@ public class ShowGrnBean {
 			this.calcBaseRate = calcBaseRate;
 		}
 
+		public int getAutoGrnQty() {
+			return autoGrnQty;
+		}
+
+		public void setAutoGrnQty(int autoGrnQty) {
+			this.autoGrnQty = autoGrnQty;
+		}
+
+		public float getTaxPer() {
+			return taxPer;
+		}
+
+		public float getGrnAmt() {
+			return grnAmt;
+		}
+
+		public void setTaxPer(float taxPer) {
+			this.taxPer = taxPer;
+		}
+
+		public void setGrnAmt(float grnAmt) {
+			this.grnAmt = grnAmt;
+		}
+
 		@Override
 		public String toString() {
 			return "ShowGrnBean [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId + ", itemName="
 					+ itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp=" + mrp
 					+ ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
 					+ cgstPer + ", igstPer=" + igstPer + ", calcBaseRate=" + calcBaseRate + ", menuId=" + menuId
-					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + "]";
+					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", autoGrnQty=" + autoGrnQty + ", taxPer="
+					+ taxPer + ", grnAmt=" + grnAmt + "]";
 		}
+
 		
 		
 		

@@ -146,13 +146,15 @@ public class GetCurrentStockDetails {
 
 	@Override
 	public String toString() {
-		return "GetCurrentStockDetails [stockDetailId=" + stockDetailId + ", itemId=" + itemId + ", itemName="
-				+ itemName + ", regOpeningStock=" + regOpeningStock + ", spOpeningStock=" + spOpeningStock
-				+ ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
+		return "GetCurrentStockDetails [stockDetailId=" + stockDetailId + ", itemId=" + itemId + ", id=" + id
+				+ ", itemName=" + itemName + ", regOpeningStock=" + regOpeningStock + ", spOpeningStock="
+				+ spOpeningStock + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
 				+ ", currentSpStock=" + currentSpStock + "]";
 	}
+
+	
 	
 
 }

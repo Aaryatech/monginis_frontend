@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.grngvn.GetBillsForFr;
 import com.monginis.ops.model.grngvn.GetBillsForFrList;
 import com.monginis.ops.model.grngvn.GetGrnConfResponse;
@@ -48,6 +49,24 @@ import com.monginis.ops.util.ImageS3Util;
 @Controller
 public class GrnGvnController {
 
+	public String incrementDate(String date, int day) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(date));
+
+		} catch (ParseException e) {
+			System.out.println("Exception while incrementing date " + e.getMessage());
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, day); // number of days to add
+		date = sdf.format(c.getTime());
+
+		return date;
+
+	}
+
 	public GetGrnGvnConfResponse grnGvnConfResponse;
 	public List<GetGrnItemConfig> grnConfList;
 	public List<GetGrnGvnDetails> grnGvnDetailsList;
@@ -58,6 +77,10 @@ public class GrnGvnController {
 	// List<ShowGrnBean> showGrnBean;
 	List<ShowGrnBean> objShowGrnList;
 	List<ShowGrnBean> objShowGvnList;
+
+	List<GetCurrentStockDetails> openingStockList = new ArrayList<GetCurrentStockDetails>();
+
+	List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<GetCurrentStockDetails>();
 
 	public static float roundUp(float d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
@@ -74,20 +97,257 @@ public class GrnGvnController {
 			RestTemplate restTemplate = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			
-			int frId=frDetails.getFrId();
 
-			map.add("frId",frId);
-			
-			System.out.println("fr Id = "+frDetails.getFrId());
+			int frId = frDetails.getFrId();
+
+			map.add("frId", frId);
+
+			System.out.println("fr Id = " + frDetails.getFrId());
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,
 					GetGrnGvnConfResponse.class);
 
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
 
-			System.out.println("grn conf list =" + grnConfList.toString());
-			System.out.println("grn conf list size= ********************" + grnConfList.size());
+			/*
+			 * System.out.println("grn conf list =" + grnConfList.toString());
+			 * System.out.println("grn conf list size= ********************" +
+			 * grnConfList.size());
+			 */
+			/*
+			 * // stock java.sql.Date currentDate = new
+			 * java.sql.Date(Calendar.getInstance().getTime().getTime()); int month =
+			 * currentDate.getMonth();
+			 * 
+			 * DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); DateFormat
+			 * yearFormat = new SimpleDateFormat("yyyy");
+			 * 
+			 * java.util.Date todaysDate = new java.util.Date();
+			 * System.out.println(dateFormat.format(todaysDate));
+			 * 
+			 * Calendar cal = Calendar.getInstance();
+			 * 
+			 * 
+			 * cal.set(Calendar.DAY_OF_MONTH, 1);
+			 * 
+			 * java.util.Date firstDay = cal.getTime();
+			 * 
+			 * System.out.println("First Day of month " + firstDay);
+			 * 
+			 * String strFirstDay = dateFormat.format(firstDay);
+			 * 
+			 * System.out.println("Year " + yearFormat.format(todaysDate)); StringBuilder sb
+			 * = new StringBuilder();
+			 * 
+			 * int catId = 0;
+			 * 
+			 * 
+			 * 
+			 * Calendar cal2 = Calendar.getInstance(); //subtracting a day
+			 * cal2.add(Calendar.DATE, -1); todaysDate=cal2.getTime();
+			 * 
+			 * System.out.println("********from Date sachin "+dateFormat.format(firstDay));
+			 * System.out.println("********toDate Date sachin "+dateFormat.format(todaysDate
+			 * ));
+			 * 
+			 * 
+			 * 
+			 * 
+			 * 
+			 * List<Integer> itemIdList = new ArrayList<Integer>(); for (int i = 0; i <
+			 * grnConfList.size(); i++) {
+			 * 
+			 * if (grnConfList.get(i).getCatId() == grnConfList.get(i++).getCatId()) {
+			 * 
+			 * catId = grnConfList.get(i).getCatId();
+			 * 
+			 * System.out.println("cat Id matched " + grnConfList.get(i).getCatId());
+			 * 
+			 * for (int j = 0; j < grnConfList.size(); j++) {
+			 * 
+			 * int itemId = grnConfList.get(j).getItemId();
+			 * 
+			 * if (!itemIdList.contains(itemId)) { itemIdList.add(itemId);
+			 * sb.append(itemIdList.get(j) + ",");
+			 * 
+			 * }
+			 * 
+			 * } String item = sb.toString(); item = item.substring(0, item.length() - 1);
+			 * 
+			 * 
+			 * MultiValueMap<String, Object> stockMap = new LinkedMultiValueMap<String,
+			 * Object>(); stockMap.add("frId", frDetails.getFrId());
+			 * stockMap.add("fromDate", dateFormat.format(firstDay)); stockMap.add("toDate",
+			 * dateFormat.format(todaysDate)); stockMap.add("currentMonth",
+			 * currentDate.getMonth() + 1); stockMap.add("year",
+			 * yearFormat.format(todaysDate)); stockMap.add("catId", catId);
+			 * stockMap.add("itemIdList", item);
+			 * 
+			 * ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new
+			 * ParameterizedTypeReference<List<GetCurrentStockDetails>>() { };
+			 * ResponseEntity<List<GetCurrentStockDetails>> responseEntity =
+			 * restTemplate.exchange( Constant.URL + "getCurrentStock", HttpMethod.POST, new
+			 * HttpEntity<>(stockMap), typeRef);
+			 * 
+			 * currentStockDetailList = responseEntity.getBody();
+			 * 
+			 * }
+			 * 
+			 * else {
+			 * 
+			 * MultiValueMap<String, Object> stockMap2 = new LinkedMultiValueMap<String,
+			 * Object>(); stockMap2.add("frId", frDetails.getFrId());
+			 * stockMap2.add("fromDate", dateFormat.format(firstDay));
+			 * stockMap2.add("toDate", dateFormat.format(todaysDate));
+			 * stockMap2.add("currentMonth", currentDate.getMonth() + 1);
+			 * stockMap2.add("year", yearFormat.format(todaysDate)); stockMap2.add("catId",
+			 * grnConfList.get(i).getCatId()); stockMap2.add("itemIdList",
+			 * grnConfList.get(i).getItemId());
+			 * 
+			 * ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new
+			 * ParameterizedTypeReference<List<GetCurrentStockDetails>>() { };
+			 * ResponseEntity<List<GetCurrentStockDetails>> responseEntity2 =
+			 * restTemplate.exchange( Constant.URL + "getCurrentStock", HttpMethod.POST, new
+			 * HttpEntity<>(stockMap2), typeRef);
+			 * 
+			 * currentStockDetailList = responseEntity2.getBody(); }
+			 * 
+			 * }
+			 */
 
+			// System.out.println("iDs " + itemIdList.toString());
+
+			java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+			int month = currentDate.getMonth();
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+			java.util.Date todaysDate = new java.util.Date();
+
+			Calendar cal = Calendar.getInstance();
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+
+			java.util.Date firstDay = cal.getTime();
+
+			System.out.println("First Day of month " + firstDay);
+
+			String strFirstDay = dateFormat.format(firstDay);
+
+			System.out.println("Year " + yearFormat.format(todaysDate));
+			StringBuilder sb = new StringBuilder();
+
+			int catId = 0;
+
+			Calendar cal2 = Calendar.getInstance();
+			// subtracting a day
+			cal2.add(Calendar.DATE, -1);
+			todaysDate = cal2.getTime();
+
+			MultiValueMap<String, Object> stockMap = new LinkedMultiValueMap<String, Object>();
+			
+			
+			for (int i = 0; i < grnConfList.size(); i++) {
+
+				java.util.Date bDate = grnConfList.get(i).getBillDate();
+
+				Calendar cal3 = Calendar.getInstance();
+				cal3.setTime(bDate);
+				cal3.add(Calendar.DATE, -1);
+				java.util.Date subBillDate = cal3.getTime();
+				//System.out.println("sub bill date =" + subBillDate);
+
+				stockMap.add("frId", frDetails.getFrId());
+				stockMap.add("fromDate", dateFormat.format(firstDay));
+				// stockMap.add("toDate", dateFormat.format(todaysDate));
+				stockMap.add("toDate", dateFormat.format(subBillDate));
+
+				stockMap.add("currentMonth", currentDate.getMonth() + 1);
+				stockMap.add("year", yearFormat.format(todaysDate));
+				stockMap.add("catId", grnConfList.get(i).getCatId());
+				stockMap.add("itemIdList", grnConfList.get(i).getItemId());
+
+				ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+				};
+				ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate.exchange(
+						Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(stockMap), typeRef);
+
+				openingStockList = responseEntity.getBody();
+
+			}
+
+			System.out.println("Current openingStockList Stock Details : " + openingStockList.toString());
+
+			// stock
+
+			// second web service
+
+			MultiValueMap<String, Object> stockMap2 = new LinkedMultiValueMap<String, Object>();
+			java.util.Date toDate = new java.util.Date();
+
+			for (int i = 0; i < grnConfList.size(); i++) {
+
+				java.util.Date bDate = grnConfList.get(i).getBillDate();
+
+				Calendar cal3 = Calendar.getInstance();
+				cal3.setTime(bDate);
+				cal3.add(Calendar.DATE, -1);
+				java.util.Date subBillDate = cal3.getTime();
+				//System.out.println("sub bill date =" + subBillDate);
+
+				stockMap2.add("frId", frDetails.getFrId());
+				stockMap2.add("fromDate", dateFormat.format(grnConfList.get(i).getBillDate()));
+				// stockMap2.add("toDate", dateFormat.format(todaysDate));
+				stockMap2.add("toDate", dateFormat.format(toDate));
+
+				stockMap2.add("currentMonth", currentDate.getMonth() + 1);
+				stockMap2.add("year", yearFormat.format(todaysDate));
+				stockMap2.add("catId", grnConfList.get(i).getCatId());
+				stockMap2.add("itemIdList", grnConfList.get(i).getItemId());
+
+				ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+				};
+				ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate.exchange(
+						Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(stockMap2), typeRef);
+
+				currentStockDetailList = responseEntity.getBody();
+
+			}
+
+			System.out.println("Current Stock Details : " + currentStockDetailList.toString());
+			// end of second web service
+
+			//calculate autogrnQty
+			
+			for(int i=0;i<grnConfList.size();i++) {
+				
+				
+				
+				int autoGrnQty=openingStockList.get(i).getRegOpeningStock()+grnConfList.get(i).getBillQty()-
+						currentStockDetailList.get(i).getRegTotalSell()+currentStockDetailList.get(i).getRegTotalGrnGvn();
+				System.out.println("auto Grn Qty "+autoGrnQty);
+				
+				grnConfList.get(i).setAutoGrnQty(autoGrnQty);
+				
+				//grnConfList.get(i).setAutoGrnQty(autoGrnQty);
+			
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			//end of calc autogrnQty
+			
+			
+			
+			
+			
+			
+			
 			objShowGrnList = new ArrayList<>();
 
 			ShowGrnBean objShowGrn = null;
@@ -110,32 +370,109 @@ public class GrnGvnController {
 				objShowGrn.setMrp(grnConfList.get(i).getMrp());
 				objShowGrn.setRate(grnConfList.get(i).getRate());
 				objShowGrn.setSgstPer(grnConfList.get(i).getSgstPer());
-				
-				objShowGrn.setMenuId(grnConfList.get(i).getMenuId());
-				objShowGrn.setItemId(grnConfList.get(i).getItemId());
-				objShowGrn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
-			
-				
+
+				/*
+				 * objShowGrn.setMenuId(grnConfList.get(i).getMenuId());
+				 * objShowGrn.setItemId(grnConfList.get(i).getItemId());
+				 * objShowGrn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
+				 */
 
 				float calcBaseRate = grnConfList.get(i).getRate() * 100
 						/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() + 100);
 
 				objShowGrn.setCalcBaseRate(roundUp(calcBaseRate));
+				
+				objShowGrn.setAutoGrnQty(grnConfList.get(i).getAutoGrnQty());
+				
+				
+				// System.out.println("objShowGrn to String" + objShowGrn.toString());
+				
+				
+				//cal tax and grnAmt
+				
+				/*if (objShowGrn.getGrnType()==0) {
+					
+					float taxPer=objShowGrn.getSgstPer()+objShowGrn.getCgstPer();
+					objShowGrn.setTaxPer(taxPer);
+					
+					//float grnAmt=
+					
+							float taxableAmt = calcBaseRate * objShowGrn.getAutoGrnQty();
+
+					float totalTax = (taxableAmt * taxPer)/100;
+						
+
+					float grandTotal = taxableAmt + totalTax;
+
+					//float finalAmt = calcBaseRate *objShowGrn.getAutoGrnQty();
+
+					objShowGrn.setGrnAmt(grandTotal);
+					
+				}
+				*/
+				
+				
+				
+				
+				float baseRate =objShowGrn.getRate() * 100
+						/ (objShowGrn.getSgstPer() + objShowGrn.getCgstPer() + 100);
+
+				float grnBaseRate = 0.0f;
+
+				float grnRate = 0.0f;
+
+				if (objShowGrn.getGrnType() == 0) {
+					grnBaseRate = baseRate * 75 / 100;
+
+					grnRate = (objShowGrn.getRate() * 75) / 100;
+					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+				}
+
+				if (objShowGrn.getGrnType() == 1) {
+					grnBaseRate = baseRate * 90 / 100;
+					grnRate = (objShowGrn.getRate() * 90) / 100;
+					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+				}
+
+				if (objShowGrn.getGrnType() == 2) {
+					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+
+					grnBaseRate = baseRate;
+					grnRate = objShowGrn.getRate();
+				}
+
+				float taxableAmt = grnBaseRate * objShowGrn.getAutoGrnQty();
+
+				float totalTax = (taxableAmt * (objShowGrn.getSgstPer() +objShowGrn.getCgstPer()))
+						/ 100;
+
+				float grandTotal = taxableAmt + totalTax;
+
+				float finalAmt = grnRate * objShowGrn.getAutoGrnQty();
+
+				objShowGrn.setGrnAmt(roundUp(grandTotal));
+				
+				
+				float taxPer=objShowGrn.getSgstPer()+objShowGrn.getCgstPer();
+				objShowGrn.setTaxPer(taxPer);
+				
+				
+				
+				
 				objShowGrnList.add(objShowGrn);
-				System.out.println("objShowGrn to String" + objShowGrn.toString());
 
 			}
 
 			System.out.println("bean new " + objShowGrnList.toString());
 
 			modelAndView.addObject("grnConfList", objShowGrnList);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			System.out.println("Error in getting grn Item config " + e.getMessage());
 		}
-		
+
 		return modelAndView;
 
 	}
@@ -176,7 +513,7 @@ public class GrnGvnController {
 
 				GrnGvn postGrnGvn = new GrnGvn();
 
-				int grnQty = Integer.parseInt(request.getParameter("grn_qty" + grnConfList.get(i).getItemId()));
+				int grnQty = Integer.parseInt(request.getParameter("grnqtyauto" + grnConfList.get(i).getItemId()));
 				String frGrnRemark = request.getParameter("grn_remark" + grnConfList.get(i).getItemId());
 				int isEdit = Integer.parseInt(request.getParameter("is_edit" + grnConfList.get(i).getItemId()));
 
@@ -299,20 +636,14 @@ public class GrnGvnController {
 
 					postGrnGvn.setIsCreditNote(0);
 
-					
-					
 					postGrnGvn.setCatId(grnConfList.get(i).getCatId());
 					postGrnGvn.setMenuId(grnConfList.get(i).getMenuId());
-					
 
-					
-					
 					postGrnGvn.setRefInvoiceDate(grnConfList.get(i).getBillDate());
 					postGrnGvn.setInvoiceNo("gefl");
-					
-					
-					System.out.println("post grn ref inv date "+postGrnGvn.getRefInvoiceDate());
-					
+
+					System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
+
 					postGrnGvnList.add(postGrnGvn);
 
 				} // end of if checking for grnQty
@@ -636,6 +967,12 @@ public class GrnGvnController {
 				postGrnGvn.setRoundUpAmt(roundUpAmt);
 
 				postGrnGvn.setIsCreditNote(0);
+
+				postGrnGvn.setCatId(grnConfList.get(i).getCatId());
+				postGrnGvn.setMenuId(grnConfList.get(i).getMenuId());
+
+				postGrnGvn.setRefInvoiceDate(grnConfList.get(i).getBillDate());
+				postGrnGvn.setInvoiceNo("gefl");
 
 				postGrnGvnList.add(postGrnGvn);
 

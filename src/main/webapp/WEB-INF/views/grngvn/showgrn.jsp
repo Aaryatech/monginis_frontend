@@ -128,10 +128,7 @@ jQuery(document).ready(function(){
 															<td>Item Rate</td>
 															<td>iS Edit</td>
 															<td>Edit GRN Qty</td>
-
-
 															<td>Tax Percentage</td>
-
 															<td>GRN Amount</td>
 															<td>GRN Remark</td>
 
@@ -161,13 +158,14 @@ jQuery(document).ready(function(){
 
 																<td><input type="text"
 																	name="grn_qty${grnConfList.itemId}"
-																	id="grnqty${grnConfList.itemId}" size="5" value="0"
-																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})" /></td>
+																	id="grnqty${grnConfList.itemId}" size="5"
+																	value="${grnConfList.autoGrnQty}" disabled="disabled"
+																	<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})"  --%>/></td>
 
 																<td id="grn_rate${grnConfList.itemId}"><c:out
 																		value="${grnConfList.calcBaseRate}"></c:out></td>
-																
+
 																<td><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
 																	onchange="showEdit(this.id,${grnConfList.itemId})">
@@ -175,32 +173,34 @@ jQuery(document).ready(function(){
 																		<option value="1">Yes</option>
 																</select></td>
 
-																<td><input type="number"
+																<td><input type="text"
 																	name="grnqtyauto${grnConfList.itemId}"
 																	disabled="disabled"
-																	id="grnqtyauto${grnConfList.itemId}" size="5" value="0" min="0"
-																	onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId})" /></td>
+																	id="grnqtyauto${grnConfList.itemId}" size="5"
+																	value="${grnConfList.autoGrnQty}" min="0"
+																	onchange="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})" /></td>
 
 																<td id="tax_per${grnConfList.itemId}"><c:out
-																		value="0"></c:out></td>
+																		value="${grnConfList.taxPer}"></c:out></td>
 
 																<td id="grn_amt${grnConfList.itemId}"><c:out
-																		value="0"></c:out></td>
+																		value="${grnConfList.grnAmt}"></c:out></td>
 
 																<td><input type="text"
-																	name="grn_remark${grnConfList.itemId}" id="grn_remark${grnConfList.itemId}" class="remark" /></td>
+																	name="grn_remark${grnConfList.itemId}"
+																	id="grn_remark${grnConfList.itemId}" class="remark" /></td>
 
 
 
-																<td id="grn_rate${grnConfList.itemId}"><c:out
+																<%-- <td id="grn_rate${grnConfList.itemId}"><c:out
 																		value="${grnConfList.calcBaseRate}"></c:out></td>
-
+ --%>
 
 																<!-- <td><label><input type="radio"
 																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
 																<label><input type="radio" name="is-edit"
 																	id=is_edit value="1">Yes</label></td> -->
-
 
 
 
@@ -229,7 +229,8 @@ jQuery(document).ready(function(){
 
 								<div class="form-group">
 									<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-5">
-										<button type="submit" class="btn btn-primary"  id="submit" onclick="checkRemark()">
+										<button type="submit" class="btn btn-primary" id="submit"
+											onclick="checkRemark()">
 											<i class="fa fa-check"></i> Save
 										</button>
 										<!--<button type="button" class="btn">Cancel</button>-->
@@ -345,7 +346,7 @@ jQuery(document).ready(function(){
 		if(grnType==0){
 			
 			
-			var grnQty=$("#grnqty"+itemId).val();
+			var grnQty=$("#grnqtyauto"+itemId).val();
 			
 			
 			var grnRate=$("#grn_rate"+itemId).text();
@@ -362,7 +363,7 @@ jQuery(document).ready(function(){
 	 if(grnType==1){
 			
 		
-			var grnQty=$("#grnqty"+itemId).val();
+			var grnQty=$("#grnqtyauto"+itemId).val();
 			
 			
 			var grnRate=$("#grn_rate"+itemId).text();
@@ -379,7 +380,7 @@ jQuery(document).ready(function(){
 			if(grnType==2){
 			
 			
-			var grnQty=$("#grnqty"+itemId).val();
+			var grnQty=$("#grnqtyauto"+itemId).val();
 			
 			
 			var grnRate=$("#grn_rate"+itemId).text();
@@ -421,16 +422,8 @@ jQuery(document).ready(function(){
 	}
 	</script>
 
+
 	
-<script type="text/javascript">
-	
-	function checkRemark() {
-		
-	
-	}
-	
-	
-	</script>
 
 </body>
 </html>

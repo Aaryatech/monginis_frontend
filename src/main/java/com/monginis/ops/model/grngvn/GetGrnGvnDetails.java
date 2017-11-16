@@ -131,6 +131,18 @@ private int isTallySync;
 	private int isCreditNote;
 	
 	
+	
+	
+	private int menuId;
+	
+
+	private int catId;
+	
+
+	private String invoiceNo;
+	
+
+	private Date refInvoiceDate;
 
 
 	public int getIsCreditNote() {
@@ -453,6 +465,38 @@ private int isTallySync;
 		this.finalAmt = finalAmt;
 	}
 
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public Date getRefInvoiceDate() {
+		return refInvoiceDate;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public void setRefInvoiceDate(Date refInvoiceDate) {
+		this.refInvoiceDate = refInvoiceDate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnDetails [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
@@ -469,10 +513,10 @@ private int isTallySync;
 				+ ", frName=" + frName + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer="
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt
 				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote="
-				+ isCreditNote + "]";
+				+ isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo
+				+ ", refInvoiceDate=" + refInvoiceDate + "]";
 	}
 
-	
 	
 
 
