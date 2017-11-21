@@ -132,7 +132,8 @@ jQuery(document).ready(function(){
 		<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
+		 
 		 
 		<br> 
     </div></div>
@@ -234,16 +235,16 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
-		document.getElementById('table').style.display = "block";
+		
 		   document.getElementById('chart').style="display:none";
-		  
+		   document.getElementById('btn_pdf').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('table').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var category=$("#category").val();
@@ -368,11 +369,11 @@ function showChart(){
 		
 		document.getElementById('chart').style.display = "block";
 		   document.getElementById("table").style="display:none";
-		   
+		
 		   var isValid = validate();
 			
 			if (isValid) {
-				
+				   document.getElementById('btn_pdf').style.display = "block";
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
 				var category=$("#category").val();
@@ -473,14 +474,15 @@ function showChart(){
 	{ 
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
-		  
+
+	
 		$('#table_grid td').remove();
 		
 		
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			   document.getElementById('btn_pdf').style.display = "block";
 			//var fromDate = date;
 			//var toDate = date;
 			var category=$("#category").val();

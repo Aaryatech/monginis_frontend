@@ -114,7 +114,8 @@ jQuery(document).ready(function(){
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	    <button class="btn search_btn" onclick="showPdf()" >PDF </button>
+		    	    <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellMonthwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+		 
 		 
 		<br>
     </div>
@@ -197,7 +198,8 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 		
 		if (isValid) {
-			
+
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
@@ -346,6 +348,7 @@ function showChart(){
 			var isValid = validate();
 			
 			if (isValid) {
+				document.getElementById('btn_pdf').style.display = "block";
 			$.getJSON('${getMonthwiselReport}',{
 				
 								fromDate : fromDate,

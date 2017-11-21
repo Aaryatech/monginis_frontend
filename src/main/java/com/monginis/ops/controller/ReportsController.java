@@ -1,12 +1,21 @@
 package com.monginis.ops.controller;
 
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +25,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.zefer.pd4ml.PD4Constants;
+import org.zefer.pd4ml.PD4ML;
 
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.BillWisePurchaseList;
@@ -49,6 +61,19 @@ import com.monginis.ops.model.SpCakeResponse;
 @Controller
 public class ReportsController {
 
+	public static List<GetRepTaxSell> getRepTaxSell;
+	public static List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
+	public static List<GetSellBillHeader> getSellBillHeaderList;
+	//List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
+	public static List<GetRepMenuwiseSellResponse> getRepFrMenuwiseSellResponseList;
+	public static List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList;
+	//List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList;
+//	List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList;
+	public static List<BillWisePurchaseReport> billWisePurchaseReportList;
+	public static List<ItemWiseDetail> itemWiseDetailReportList;
+	public static List<ItemWiseReport> itemWiseReportList;
+	public static List<BillWiseTaxReport> billWiseTaxReport;
+	public static 	List<MonthWiseReport> monthWiseReportList;
 	
 	
 	@RequestMapping(value = "/viewBillWisePurchaseReport", method = RequestMethod.GET)
@@ -140,7 +165,7 @@ public class ReportsController {
 		map.add("toDate",Main.formatDate(toDate));
 
 		
-		List<BillWisePurchaseReport> billWisePurchaseReportList=new ArrayList<BillWisePurchaseReport>();
+		  billWisePurchaseReportList=new ArrayList<BillWisePurchaseReport>();
 	   try {
 		      BillWisePurchaseList billWisePurchaseList=restTemplate.postForObject(Constant.URL + "/showBillWisePurchaseReport",map,
 		    		  BillWisePurchaseList.class);
@@ -192,7 +217,7 @@ public class ReportsController {
 			map.add("catId", catId);
 
 			
-			List<ItemWiseDetail> itemWiseDetailReportList=new ArrayList<ItemWiseDetail>();
+			 itemWiseDetailReportList=new ArrayList<ItemWiseDetail>();
 		   try {
 			   ItemWiseDetailList itemWiseDetailList=restTemplate.postForObject(Constant.URL + "/showItemWiseDetailsReport",map,
 					   ItemWiseDetailList.class);
@@ -242,7 +267,7 @@ public class ReportsController {
 					map.add("catId", catId);
 
 					
-					List<ItemWiseReport> itemWiseReportList=new ArrayList<ItemWiseReport>();
+					  itemWiseReportList=new ArrayList<ItemWiseReport>();
 				   try {
 					   ItemWiseReportList itemWiseList=restTemplate.postForObject(Constant.URL + "/showItemWiseReport",map,
 							   ItemWiseReportList.class);
@@ -291,7 +316,7 @@ public class ReportsController {
 					map.add("toDate",Main.formatDate(toDate));
 
 					
-					List<BillWiseTaxReport> billWiseTaxReport=new ArrayList<BillWiseTaxReport>();
+				 billWiseTaxReport=new ArrayList<BillWiseTaxReport>();
 				   try {
 					      BillWiseTaxReportList billWiseTaxReportList=restTemplate.postForObject(Constant.URL + "/showBillWiseTaxReport",map,
 					    		  BillWiseTaxReportList.class);
@@ -350,7 +375,7 @@ public class ReportsController {
 					map.add("toDate",""+tDate);
 
 					
-					List<MonthWiseReport> monthWiseReportList=new ArrayList<MonthWiseReport>();
+					  monthWiseReportList=new ArrayList<MonthWiseReport>();
 				   try {
 					      MonthWiseReportList monthWiseReportListBean=restTemplate.postForObject(Constant.URL + "/showMonthWiseReport",map,
 					    		  MonthWiseReportList.class);
@@ -400,8 +425,8 @@ public class ReportsController {
 					map.add("frId", frId);
 					map.add("fromDate", fromDate);
 					map.add("toDate", toDate);
-					//getFrGrnDetail
-					List<GetSellBillHeader> getSellBillHeaderList=new ArrayList<GetSellBillHeader>();
+					 
+				  getSellBillHeaderList=new ArrayList<GetSellBillHeader>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetSellBillHeader>> typeRef = new ParameterizedTypeReference<List<GetSellBillHeader>>() {
@@ -454,8 +479,8 @@ public class ReportsController {
 					map.add("frId", frId);
 					map.add("fromDate", fromDate);
 					map.add("toDate", toDate);
-					//getFrGrnDetail
-					List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse=new ArrayList<GetRepFrDatewiseSellResponse>();
+					 
+				 getRepFrDatewiseSellResponse=new ArrayList<GetRepFrDatewiseSellResponse>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepFrDatewiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrDatewiseSellResponse>>() {
@@ -526,8 +551,8 @@ public class ReportsController {
 				
 					map.add("fromDate",""+fDate);
 					map.add("toDate",""+tDate);
-					//getFrGrnDetail
-					List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse=new ArrayList<GetRepFrDatewiseSellResponse>();
+				 
+					  getRepFrDatewiseSellResponse=new ArrayList<GetRepFrDatewiseSellResponse>();
 				
 					try {
 					  
@@ -611,8 +636,7 @@ public class ReportsController {
 					map.add("toDate", toDate);
 					 
 				 
-					//getFrGrnDetail
-					List<GetRepMenuwiseSellResponse> getRepFrMenuwiseSellResponseList=new ArrayList<GetRepMenuwiseSellResponse>();
+				  getRepFrMenuwiseSellResponseList=new ArrayList<GetRepMenuwiseSellResponse>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>>() {
@@ -665,8 +689,7 @@ public class ReportsController {
 					map.add("toDate", toDate);
 					map.add("catId", catId);
 					System.out.println(catId);
-					//getFrGrnDetail
-					List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
+				  getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
@@ -748,9 +771,7 @@ public class ReportsController {
 					map.add("toDate", toDate);
 					map.add("catId", catId);
 					System.out.println(catId);
-					//getFrGrnDetail
-
-					List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
+				  getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
@@ -803,9 +824,7 @@ public class ReportsController {
 					map.add("toDate", toDate);
 					map.add("catId", catId);
 					System.out.println(catId);
-					//getFrGrnDetail
-
-					List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
+			  getRepFrItemwiseSellResponseList=new ArrayList<GetRepFrItemwiseSellResponse>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
@@ -860,8 +879,8 @@ public class ReportsController {
 					map.add("frId", frId);
 					map.add("fromDate", fromDate);
 					map.add("toDate", toDate);
-					//getFrGrnDetail
-					List<GetRepTaxSell> getRepTaxSell=new ArrayList<GetRepTaxSell>();
+				  getRepTaxSell=new ArrayList<GetRepTaxSell>();
+					getRepTaxSell=new ArrayList<GetRepTaxSell>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepTaxSell>> typeRef = new ParameterizedTypeReference<List<GetRepTaxSell>>() {
@@ -919,7 +938,7 @@ public class ReportsController {
 					map.add("toDate", toDate);
 					//getFrGrnDetail
 					System.out.println(frId + fromDate +toDate);
-					List<GetRepTaxSell> getRepTaxSell=new ArrayList<GetRepTaxSell>();
+				  getRepTaxSell=new ArrayList<GetRepTaxSell>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepTaxSell>> typeRef = new ParameterizedTypeReference<List<GetRepTaxSell>>() {
@@ -967,8 +986,7 @@ public class ReportsController {
 					map.add("frId", frId);
 					map.add("fromDate", fromDate);
 					map.add("toDate", toDate);
-					//getFrGrnDetail
-					List<GetRepTaxSell> getRepTaxSell=new ArrayList<GetRepTaxSell>();
+					  getRepTaxSell=new ArrayList<GetRepTaxSell>();
 					try {
 					  
 					ParameterizedTypeReference<List<GetRepTaxSell>> typeRef = new ParameterizedTypeReference<List<GetRepTaxSell>>() {
@@ -990,7 +1008,7 @@ public class ReportsController {
 				}
 				
 				//Sell report End
-				
+				/*
 				@RequestMapping(value = "/view1Chart", method = RequestMethod.GET)
 				public ModelAndView viewChart(HttpServletRequest request,
 							HttpServletResponse response) {
@@ -998,6 +1016,243 @@ public class ReportsController {
 						ModelAndView model = new ModelAndView("report/sellReport/datewiseChart");
 						model.addObject("msg", "hhhh");
 						return model;			
+				}*/
+				
+				
+				//Report PDF Begins
+				
+				@RequestMapping(value = "/showSellDatewiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellDatewiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrSellDatewisePdf");
+					model.addObject("reportList", getRepFrDatewiseSellResponse);
+					return model;
 				}
 				
+				@RequestMapping(value = "/showSellMonthwiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellMonthwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrMonthwiseSellPdf");
+					String month[]= {"0","Jan","Feb","Mar","April","May","Jun","July","Aug","Sep","Oct","Nov","Dec"};
+					model.addObject("reportList", getRepFrDatewiseSellResponse);
+					model.addObject("month", month);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellItemwiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellItemwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrItemwiseSellPdf");
+					model.addObject("reportList", getRepFrItemwiseSellResponseList);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellDateItemwisewiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellDateItemwisewiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrDateItemwiseSellPdf");
+					model.addObject("reportList", getRepFrItemwiseSellResponseList);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellBillwiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellBillwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrSellBillwiseSellPdf");
+					model.addObject("reportList", getSellBillHeaderList);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellTaxReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellTaxReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrTaxSellPdf");
+					model.addObject("reportList", getRepTaxSell);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellTaxDatewiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellTaxDatewiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrDatewiseTaxSellPdf");
+					model.addObject("reportList", getRepTaxSell);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showSellTaxBillwiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showSellTaxBillwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrBillwiseTaxSellPdf");
+					model.addObject("reportList", getRepTaxSell);
+					return model;
+				}
+				
+				@RequestMapping(value = "/showPurchaseTaxBillwiseReportPdf", method = RequestMethod.GET)
+				public ModelAndView showPurchaseTaxBillwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/purchaseReport/purchaseReportPdf/billWiseTaxReportPdf");
+					model.addObject("reportList", billWiseTaxReport);
+					return model;
+				}
+				@RequestMapping(value = "/showPurchaseMonthwiseReportPdf", method = RequestMethod.GET)
+				public ModelAndView showPurchaseMonthwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/purchaseReport/purchaseReportPdf/monthWisePurchasePdf");
+						String month[]= {"0","Jan","Feb","Mar","April","May","Jun","July","Aug","Sep","Oct","Nov","Dec"};
+					
+					model.addObject("month", month);
+					model.addObject("reportList", monthWiseReportList);
+					return model;
+				}
+				@RequestMapping(value = "/showPurchaseItemwiseReportpPdf", method = RequestMethod.GET)
+				public ModelAndView showPurchaseItemwiseReportpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseReportPdf");
+					model.addObject("reportList", itemWiseReportList);
+					return model;
+				}
+				@RequestMapping(value = "/showPurchaseItemwiseDetailPdf", method = RequestMethod.GET)
+				public ModelAndView showPurchaseItemwiseDetailpPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseDetailPdf");
+					model.addObject("reportList", itemWiseDetailReportList);
+					return model;
+				}
+				@RequestMapping(value = "/showPurchaseBillwiseReportPdf", method = RequestMethod.GET)
+				public ModelAndView showPurchaseBillwiseReportPdf(HttpServletRequest request,
+						HttpServletResponse response) {
+					
+					ModelAndView model=new ModelAndView("report/purchaseReport/purchaseReportPdf/billWisePurchaseReportPdf");
+					model.addObject("reportList", billWisePurchaseReportList);
+					return model;
+				}  
+				
+				
+				private Dimension format = PD4Constants.A4;
+				private boolean landscapeValue = false;
+				private int topValue = 0;
+				private int leftValue = 0;
+				private int rightValue = 0;
+				private int bottomValue = 0;
+				private String unitsValue = "m";
+				private String proxyHost = "";
+				private int proxyPort = 0;
+
+				private int userSpaceWidth = 750;
+				private static  int BUFFER_SIZE = 1024;
+				
+				@RequestMapping(value = "/pdf", method = RequestMethod.GET)
+				public void showPDF(HttpServletRequest request, HttpServletResponse response) {
+
+					String url=request.getParameter("reportURL");
+					// http://monginis.ap-south-1.elasticbeanstalk.com
+					File f = new File("/ordermemo221.pdf");
+
+					try {
+						runConverter(Constant.ReportURL+url, f);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+
+						System.out.println("Pdf conversion exception " + e.getMessage());
+					}
+
+					// get absolute path of the application
+					ServletContext context = request.getSession().getServletContext();
+					String appPath = context.getRealPath("");
+					String filename = "ordermemo221.pdf";
+					String filePath = "/ordermemo221.pdf";
+
+					// construct the complete absolute path of the file
+					String fullPath = appPath + filePath;
+					File downloadFile = new File(filePath);
+					FileInputStream inputStream = null;
+					try {
+						inputStream = new FileInputStream(downloadFile);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						// get MIME type of the file
+						String mimeType = context.getMimeType(fullPath);
+						if (mimeType == null) {
+							// set to binary type if MIME mapping not found
+							mimeType = "application/pdf";
+						}
+						System.out.println("MIME type: " + mimeType);
+
+						String headerKey = "Content-Disposition";
+
+						// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+						response.setContentType("application/pdf");
+
+						// get output stream of the response
+						OutputStream outStream;
+
+						outStream = response.getOutputStream();
+
+						byte[] buffer = new byte[BUFFER_SIZE];
+						int bytesRead = -1;
+
+						// write bytes read from the input stream into the output stream
+
+						while ((bytesRead = inputStream.read(buffer)) != -1) {
+							outStream.write(buffer, 0, bytesRead);
+						}
+
+						inputStream.close();
+						outStream.close();
+
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				private void runConverter(String urlstring, File output) throws IOException {
+
+					if (urlstring.length() > 0) {
+						if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
+							urlstring = "http://" + urlstring;
+						}
+
+						java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+						if (proxyHost != null && proxyHost.length() != 0 && proxyPort != 0) {
+							System.getProperties().setProperty("proxySet", "true");
+							System.getProperties().setProperty("proxyHost", proxyHost);
+							System.getProperties().setProperty("proxyPort", "" + proxyPort);
+						}
+
+						PD4ML pd4ml = new PD4ML();
+
+						try {
+							pd4ml.setPageSize(landscapeValue ? pd4ml.changePageOrientation(format) : format);
+						} catch (Exception e) {
+							System.out.println("Pdf conversion ethod excep " + e.getMessage());
+						}
+
+						if (unitsValue.equals("mm")) {
+							pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+						} else {
+							pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+						}
+
+						pd4ml.setHtmlWidth(userSpaceWidth);
+
+						pd4ml.render(urlstring, fos);
+					}
+				}
 }

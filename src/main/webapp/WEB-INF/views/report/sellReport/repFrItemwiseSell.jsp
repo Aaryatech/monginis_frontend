@@ -112,8 +112,8 @@ jQuery(document).ready(function(){
  	<div align="center">
 		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	<br> <br>   <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  style="display: none">PDF </button>
-		</div>
+		    	 <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellItemwiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none" >PDF</a>
+		    	</div>
 	</div>
 		 
 	
@@ -326,7 +326,7 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function itemSellBill(id)
 	{ 
-		document.getElementById('btn_pdf').style.display = "block";
+		
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
 		   document.getElementById('menuTable').style="display:none";
@@ -337,7 +337,7 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var category=$("#category").val();
@@ -463,7 +463,7 @@ function showChart(){
 	$("#PieChart_div").empty();
 	$("#chart_div").empty();
 	
-	document.getElementById("btn_pdf").style="display:none";
+	
 		document.getElementById('chart').style.display = "block";
 		   document.getElementById("table").style="display:none";
 		   document.getElementById("menuTable").style="display:none";
@@ -473,7 +473,7 @@ function showChart(){
 			var isValid = validate();
 			
 			if (isValid) {
-			
+				document.getElementById("btn_pdf").style="display:none";
 			$.getJSON('${getMenuwiselReport}',{
 				
 								fromDate : fromDate,
