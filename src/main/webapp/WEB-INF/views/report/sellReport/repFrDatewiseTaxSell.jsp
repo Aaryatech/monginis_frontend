@@ -111,7 +111,7 @@ jQuery(document).ready(function(){
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none" >PDF</a>
 		 
 		<br>
     </div>
