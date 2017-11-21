@@ -4,7 +4,7 @@ public class GetCurrentStockDetails {
 	
 	private int stockDetailId;
 
-	private int itemId;
+	private String itemId;
 
 	private int id;
 	
@@ -48,11 +48,12 @@ public class GetCurrentStockDetails {
 		this.stockDetailId = stockDetailId;
 	}
 
-	public int getItemId() {
+
+	public String getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 

@@ -12,9 +12,44 @@ private int qty;
 private double itemTax1;
 private double itemTax2;
 private double itemTax3;
+private int billStockType;
+private boolean isSpStockGretor;
+private boolean isSpStockLessthanQty;
+private boolean isRegOpStockLess;
+
+private boolean isRegOpStockGretor;
 
 
-
+public boolean isRegOpStockGretor() {
+	return isRegOpStockGretor;
+}
+public void setRegOpStockGretor(boolean isRegOpStockGretor) {
+	this.isRegOpStockGretor = isRegOpStockGretor;
+}
+public boolean isRegOpStockLess() {
+	return isRegOpStockLess;
+}
+public void setRegOpStockLess(boolean isRegOpStockLess) {
+	this.isRegOpStockLess = isRegOpStockLess;
+}
+public int getBillStockType() {
+	return billStockType;
+}
+public void setBillStockType(int billStockType) {
+	this.billStockType = billStockType;
+}
+public boolean isSpStockGretor() {
+	return isSpStockGretor;
+}
+public void setSpStockGretor(boolean isSpStockGretor) {
+	this.isSpStockGretor = isSpStockGretor;
+}
+public boolean isSpStockLessthanQty() {
+	return isSpStockLessthanQty;
+}
+public void setSpStockLessthanQty(boolean isSpStockLessthanQty) {
+	this.isSpStockLessthanQty = isSpStockLessthanQty;
+}
 public double getItemTax1() {
 	return itemTax1;
 }
@@ -81,9 +116,8 @@ public void setQty(int qty) {
 public String toString() {
 	return "CustomerBillItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", catId=" + catId
 			+ ", mrp=" + mrp + ", rate=" + rate + ", qty=" + qty + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2
-			+ ", itemTax3=" + itemTax3 + "]";
+			+ ", itemTax3=" + itemTax3 + ", billStockType=" + billStockType + ", isSpStockGretor=" + isSpStockGretor
+			+ ", isSpStockLessthanQty=" + isSpStockLessthanQty + ", isRegOpStockLess=" + isRegOpStockLess + "]";
 }
-
-
 
 }

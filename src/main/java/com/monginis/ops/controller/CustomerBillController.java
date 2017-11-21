@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +36,7 @@ import com.monginis.ops.model.CustomerBillData;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.GetFrItem;
 
 import com.monginis.ops.model.GetSellBillDetail;
@@ -43,10 +45,14 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.Main;
+import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDataCommon;
 
 @Controller
 public class CustomerBillController {
+	
+	public static List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<GetCurrentStockDetails>();//
+
 	   //static ItemList
 		public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
 		
@@ -63,10 +69,27 @@ public class CustomerBillController {
 		public static CustomerBillData customerBillDataToken6=new CustomerBillData();
 		
 		public static CustomerBillData customerBillDataToken7=new CustomerBillData();
+		
+		public static CustomerBillItem currentNewItem1=new CustomerBillItem();
+
+		public static CustomerBillItem currentNewItem2=new CustomerBillItem();
+
+		public static CustomerBillItem currentNewItem3=new CustomerBillItem();
+
+		public static CustomerBillItem currentNewItem4=new CustomerBillItem();
+
+		public static CustomerBillItem currentNewItem5=new CustomerBillItem();
+
+		public static CustomerBillItem currentNewItem6=new CustomerBillItem();
+
+		
+		public static CustomerBillItem currentNewItem7=new CustomerBillItem();
+
 		List<GetSellBillHeader> getSellBillHeaderList;
 		List<GetSellBillDetail>getSellBillDetailList;
 		
 		int menuId;
+		private static String itemShowGlobal;
 	      
 	@RequestMapping(value = "/viewBill", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request,
@@ -187,6 +210,7 @@ public class CustomerBillController {
 		resetData6();
 		resetData7();
 		
+		resetDataOfStockList();
 		HttpSession session = request.getSession();
 		try {
 			
@@ -215,7 +239,7 @@ public class CustomerBillController {
 	    items=items.substring(1, items.length());
 		
 		System.out.println("Item Show List is "+items);
-		
+		itemShowGlobal=items;
 		
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -288,6 +312,12 @@ public class CustomerBillController {
 	
 	public static float roundUp(float d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+	}
+	
+	
+	public void resetDataOfStockList()
+	{
+		currentStockDetailList = new ArrayList<GetCurrentStockDetails>();//
 	}
 	public void resetData1()
 	{
@@ -409,6 +439,7 @@ public class CustomerBillController {
 		sellBillHeader.setInvoiceNo(0);//hardcoded
 		sellBillHeader.setPaidAmt(paidAmount);
 		sellBillHeader.setPaymentMode(paymentMode);
+		sellBillHeader.setBillType('R');
 		
 		sellBillHeader.setSellBillNo(0);
 	
@@ -643,7 +674,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -874,7 +906,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -1105,7 +1138,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -1336,7 +1370,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -1567,7 +1602,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -1798,7 +1834,8 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(0);//hardcoded
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			
+			sellBillHeader.setBillType('R');
+
 			sellBillHeader.setSellBillNo(0);
 		
 			
@@ -1992,15 +2029,40 @@ public class CustomerBillController {
 		int itemQty =  Integer.parseInt(request.getParameter("qty"));
 		System.out.println("itemQty : "+itemQty);
 		
-
+          
              for(int j=0;j<(customerBillDataToken1.getCustomerBillList()).size();j++) {
 			
 			if (customerBillDataToken1.getCustomerBillList().get(j).getId()==id) {
 				
-						    
-				customerBillDataToken1.getCustomerBillList().remove(j);
-				
+				 for(int i=0;i<currentStockDetailList.size();i++)
+		           {
+		        	    if(currentStockDetailList.get(i).getId()==id)
+		        	    {
+		        	    	if(customerBillDataToken1.getCustomerBillList().get(j).getBillStockType()==1)
+		        	    	{
+		        	    		
+		        	    		currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()+itemQty);
+		        	    		System.out.println("Stock List1:"+currentStockDetailList);
 
+		        	    	}
+		        	    	else if(customerBillDataToken1.getCustomerBillList().get(j).getBillStockType()==2)
+                            {
+		        	    		
+		        	    		currentStockDetailList.get(i).setSpOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()+itemQty);
+
+		        	    		System.out.println("Stock List2:"+currentStockDetailList);
+		        	    	}
+		        	    	
+		        	    	
+		        	    }
+		        	
+		        	   
+		           }
+				
+				
+				
+				
+				customerBillDataToken1.getCustomerBillList().remove(j);
 			}
 			
 		}
@@ -2308,9 +2370,68 @@ public class CustomerBillController {
 				//double prevItemDiscount=customerBillDataToken1.getDiscount();
 				double prevItemPaidAmt=customerBillDataToken1.getPaidAmount();
 				
-				double prevItemMrp=customerBillDataToken1.getCustomerBillList().get(j).getMrp();
-				double prevItemQty=customerBillDataToken1.getCustomerBillList().get(j).getQty();*/
+				double prevItemMrp=customerBillDataToken1.getCustomerBillList().get(j).getMrp();*/
+				int prevItemQty=customerBillDataToken1.getCustomerBillList().get(j).getQty();
+				if(prevItemQty>itemQty)
+				{
+					for(int i=0;i<=currentStockDetailList.size();i++)
+					{
+					
+						GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+						
+						if(getCurrentStockDetails.getId()==id)
+						{
+							if(customerBillDataToken1.getCustomerBillList().get(j).getBillStockType()==1)
+							{
+								currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-prevItemQty);
+								int regAvailItemQty=currentStockDetailList.get(i).getRegOpeningStock();
+								if(regAvailItemQty<=itemQty)
+								{
+									currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+
+								}
+								else
+								{
+								//	currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+
+								}
+							}
+							else  //if stock type is two
+							{
+								
+								
+							}
+						}
+						
+					}
+					
+				}
+				else
+					if(prevItemQty<itemQty)
+					{
+						
+						for(int i=0;i<=currentStockDetailList.size();i++)
+						{
+						
+							GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+							
+							if(getCurrentStockDetails.getId()==id)
+							{
+								if(customerBillDataToken1.getCustomerBillList().get(j).getBillStockType()==1)
+								{
+									
+									
+								}
+								else  //if stock type is two
+								{
+									
+									
+								}
+							}
+						
+					}
 				
+					}
 				
 				customerBillDataToken1.getCustomerBillList().get(j).setQty(itemQty);
 				
@@ -2604,14 +2725,18 @@ public class CustomerBillController {
 				
                    return customerBillDataToken7.getCustomerBillList();
      	}
+	
+	
 	@RequestMapping(value = "/addNewCustBillItemToken1", method = RequestMethod.GET)
 	public @ResponseBody List<CustomerBillItem> getAllAddedItem1(HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("**************getAllAddedItem1*******************");
-		/*double total1 = customerBillDataToken1.getTotal();//change
-		  double grandTotal1 = customerBillDataToken1.getGrandTotal();//change
-*/		 int prevQty=0;
 		
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+		System.out.println("**************getAllAddedItem1*******************");
+		
+		int prevQty=0;
 		
 		int id= Integer.parseInt(request.getParameter("id"));
 		System.out.println("id : "+id);
@@ -2630,39 +2755,264 @@ public class CustomerBillController {
 			if(customerBillItemList.get(i).getId()==id) {
 				System.out.println("Data Matched : "+customerBillItemList.get(i).getId());
 				
-				currentNewItem= customerBillItemList.get(i);
+				//currentNewItem= customerBillItemList.get(i);
 				
-				prevQty=customerBillItemList.get(i).getQty();
-				currentNewItem.setQty(itemQty);
+				currentNewItem1=customerBillItemList.get(i);
+
 				
-				/*total1=(total1-(currentNewItem.getMrp()*prevQty))+(currentNewItem.getMrp()*itemQty);
-				grandTotal1=(grandTotal1-(currentNewItem.getMrp()*prevQty))+(currentNewItem.getMrp()*itemQty);*/
+				//prevQty=customerBillItemList.get(i).getQty();
+				//currentNewItem.setQty(itemQty);
 				
+				currentNewItem1.setQty(itemQty);
+				
+			System.out.println("currentNewItem1"+currentNewItem1.toString());
 			}
 					
 		}
-		
-		boolean isOldItem=false;
-		
-		for(int j=0;j<prevCustomerBillItemList.size();j++) {
+		//------------------------------------------------------------------------------------------
+		if(currentStockDetailList.size()==0)
+		{//if stock list is empty
 			
-			if (prevCustomerBillItemList.get(j).getId()==currentNewItem.getId()) {
-				prevCustomerBillItemList.get(j).setQty(prevQty);
+			
+			System.out.println("**---------if Stock List is Empty----------**");//
+			
+			System.out.println("Current Stock Detail List1: "+currentStockDetailList.toString());//
+
+			stockCalc(currentNewItem1,frDetails);//stock calculation
+			
+			System.out.println("currentStockDetailList: "+currentStockDetailList.toString());//
+
+			
+			for(int i=0;i<currentStockDetailList.size();i++)
+			{
 				
-				/*total1=(total1-((prevCustomerBillItemList.get(j).getMrp())*itemQty))+((prevCustomerBillItemList.get(j).getMrp())*prevQty);
-				grandTotal1=(grandTotal1-((prevCustomerBillItemList.get(j).getMrp())*itemQty))+((prevCustomerBillItemList.get(j).getMrp())*prevQty);
-				*/
-				isOldItem=true;
-				System.out.println("old"+isOldItem);
+				
+				
+			System.out.println("**--------if Stock List is Empty-----------[inner for]**");//
+
+			GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+			
+			/*if(getCurrentStockDetails.getSpOpeningStock()>0)
+			{
+				//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+			     //bill stock type =2
+				currentNewItem1.setSpStockGretor(true);
+			
+				prevCustomerBillItemList.add(currentNewItem1);
+				customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+				return customerBillDataToken1.getCustomerBillList();
+				
+			
+				
+				
+			}
+			else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+				
+				
+				System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+				if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+				{
+					
+					System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+					
+					//Add item to table and substract, (regOpStock-entered qty)
+					System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+					currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+					System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+					
+					currentNewItem1.setRegOpStockLess(false);
+					prevCustomerBillItemList.add(currentNewItem1);
+
+					
+					customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+					return customerBillDataToken1.getCustomerBillList();
+				}
+				else
+				{
+					//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+					//and show alert1 your qty is over
+					System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+					System.out.println("itemQty is gretor than reg stock qty !!");
+					System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+					
+					
+					currentNewItem1.setRegOpStockLess(true);
+					prevCustomerBillItemList.add(currentNewItem1);
+					customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+					return customerBillDataToken1.getCustomerBillList();
+					
+					
+
+				}
+				
+			}*/
+			
+			List<CustomerBillItem> addItemList=addItem1(currentNewItem1);
+
+			return addItemList;
+			
+			
+			
+			
+		}
+		}
+		else 
+		{//if stock list is not empty.
+
+			boolean isPrevItem=false;
+            
+			System.out.println("**-----Stock List is not Empty--------[--ELSE Loop]**");
+			
+			//------------------------------------------------------------------
+			for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("**----Stock List is not Empty---[ELSE Loop[for]]**currentitem stk:"+currentNewItem1.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem1.getId()==getCurrentStockDetails.getId())
+				{
+					
+					
+					/*if(getCurrentStockDetails.getSpOpeningStock()>0)
+					{
+						//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+					     //bill stock type =2
+					//	currentNewItem1.setSpStockGretor(true);
+						if(itemQty<=getCurrentStockDetails.getSpOpeningStock())
+						{
+							
+						
+						currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()-itemQty);
+
+						prevCustomerBillItemList.add(currentNewItem1);
+						customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+						System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+						
+						return customerBillDataToken1.getCustomerBillList();
+						}
+						else
+						{
+							//if itemQty is gretor than reg sp stockqty
+							//PROMPT ,current entered qty is gretor than Sp Opening Stock(show no. of qty)still would you like to use special opening stock ,if
+							//yes,add item to list and substract available qty from available sp opening stock	,if no,use reg opening stock
+							//and 
+							
+							System.out.println("itemQty is gretor than  to  sp stock qty !else stock not empty!");
+
+							
+							currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+							System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							
+							prevCustomerBillItemList.add(currentNewItem);
+
+							
+						}
+					
+						
+						
+					}
+					else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+						
+						
+						System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+						if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+						{
+							
+							System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+							
+							//Add item to table and substract, (regOpStock-entered qty)
+							System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+							currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+							System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							
+							currentNewItem1.setRegOpStockLess(false);
+							prevCustomerBillItemList.add(currentNewItem1);
+
+							
+							customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+							return customerBillDataToken1.getCustomerBillList();
+						}
+						else
+						{
+							//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+							//and show alert1 your qty is over
+							System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+							System.out.println("itemQty is gretor than reg stock qty !!");
+							System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							
+							
+							currentNewItem1.setRegOpStockLess(true);
+							prevCustomerBillItemList.add(currentNewItem1);
+							customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+							return customerBillDataToken1.getCustomerBillList();
+							
+							
+
+						}
+						
+					}*/
+					List<CustomerBillItem> addItemList=addItem1(currentNewItem1);
+				
+					isPrevItem=true;
+					
+					return addItemList;
+				}
+				
 			}
 			
+			//------------------------------------------------------------------------------
+			 if(!isPrevItem)
+		     {					
+				 
+					stockCalc(currentNewItem,frDetails);
+
+			
+			     for(int i=0;i<currentStockDetailList.size();i++)
+			    {				 
+			    	 
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				
+				if(currentNewItem1.getId()==getCurrentStockDetails.getId())
+				{
+			    	 System.out.println("**! isPrevItem [if[for[if]]]**");
+					
+					/*if(getCurrentStockDetails.getSpOpeningStock()>0)
+					{*/
+						
+						List<CustomerBillItem> currentNewItemList=addItem1(currentNewItem1);
+						return currentNewItemList;
+				/*  }*/
+				 
+			  }
+			
+		   }
+		  }
+			 else
+				{
+				 //stock is over
+					System.out.println("Else  ...........");
+
+				}
 		}
 		
-		if (!isOldItem) {
-			System.out.println("not old"+isOldItem);
-			prevCustomerBillItemList.add(currentNewItem);
-
-		}
 		
 		float total=0;
 		for(int i=0;i<prevCustomerBillItemList.size();i++) {
@@ -2694,7 +3044,435 @@ public class CustomerBillController {
  		
 			return customerBillDataToken1.getCustomerBillList();
 }
+	//-----------------------------------Common add Item function--------------------------------------
 	
+	
+	List<CustomerBillItem> addItem1(CustomerBillItem customerBillItem)
+	{
+		List<CustomerBillItem> prevCustomerBillItemList=customerBillDataToken1.getCustomerBillList();
+
+		int itemQty=currentNewItem1.getQty();
+		
+		
+		for(int i=0;i<currentStockDetailList.size();i++)
+		{
+			GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+
+			
+			if(currentNewItem1.getId()==currentStockDetailList.get(i).getId())
+				
+			{
+				if(getCurrentStockDetails.getSpOpeningStock()>0)
+				{
+					//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+				     //bill stock type =2
+					currentNewItem1.setSpStockGretor(true);
+				
+					prevCustomerBillItemList.add(currentNewItem1);
+					customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+					return customerBillDataToken1.getCustomerBillList();
+					
+				
+					
+					
+				}
+				else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+					
+					
+					System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+					if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+					{
+						
+						System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+						
+						//Add item to table and substract, (regOpStock-entered qty)
+						System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+						currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+						System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						
+						currentNewItem1.setRegOpStockLess(false);
+						prevCustomerBillItemList.add(currentNewItem1);
+
+						
+						customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+						return customerBillDataToken1.getCustomerBillList();
+					}
+					else
+					{
+						//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+						//and show alert1 your qty is over
+						System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+						System.out.println("itemQty is gretor than reg stock qty !!");
+						System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						
+						
+						currentNewItem1.setRegOpStockLess(true);
+						prevCustomerBillItemList.add(currentNewItem1);
+						customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList);
+
+						return customerBillDataToken1.getCustomerBillList();
+						
+						
+
+					}
+					
+				}
+				
+				
+			}
+			
+			
+			
+		}
+		
+		return customerBillDataToken1.getCustomerBillList();
+
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/useFromStock2Fun1", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromStock2Fun1(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("**----Stock List is not Empty---[ELSE Loop[for]]**currentitem stk:"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+
+					   if(currentNewItem.getQty()<=getCurrentStockDetails.getSpOpeningStock())
+						{	
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setSpOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()-currentNewItem.getQty());
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(2);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setSpStockGretor(false);
+           
+		                       	   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+
+		              }
+					   else
+					   {
+						   customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(true);
+						   return customerBillDataToken1.getCustomerBillList();
+						   
+						   
+					   }
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}
+	@RequestMapping(value = "/useFromStock2Fun2", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromStock2Fun2(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("***currentitem stk:useFromStock2Fun2"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+					System.out.println("currentStockDetailList.get(i).getSpOpeningStock()"+currentStockDetailList.get(i).getSpOpeningStock());
+					/*if(currentNewItem.getQty()<=getCurrentStockDetails.getSpOpeningStock())
+					{*/
+					
+					
+                                   customerBillDataToken1.getCustomerBillList().get(index).setQty(currentStockDetailList.get(i).getSpOpeningStock());//qty changes to show on jsp 
+
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setSpOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()-currentStockDetailList.get(i).getSpOpeningStock());//0 qty
+			                      
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(2);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setSpStockGretor(false);
+           
+		                       	   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+					/* }
+					   else
+					   {  
+						   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						   customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(true);
+						   return customerBillDataToken1.getCustomerBillList();
+
+						   
+					   }*/
+		            
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}
+	
+	
+	@RequestMapping(value = "/useFromStock1Fun1", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromStock1Fun1(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:useFromStock1Fun1"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+
+					   if(currentNewItem.getQty()<=getCurrentStockDetails.getRegOpeningStock())
+						{	
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentNewItem.getQty());
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+           
+		                       	   System.out.println("currentStockDetailList: useFromStock1Fun1"+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+
+		              }
+					   else
+					   {                       	
+						   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						   
+						   
+						   customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(true);
+						   return customerBillDataToken1.getCustomerBillList();
+						   
+						   
+					   }
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}
+	
+	@RequestMapping(value = "/useFromStock1Fun2", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromStock1Fun2(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:useFromStock1Fun2"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+
+					               customerBillDataToken1.getCustomerBillList().get(index).setQty(currentStockDetailList.get(i).getRegOpeningStock());//qty changes
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentStockDetailList.get(i).getRegOpeningStock());
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+           
+		                       	   System.out.println("currentStockDetailList: useFromStock1Fun1"+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+
+		            
+					   
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}
+	@RequestMapping(value = "/regOpStockQtyLess", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> regOpStockQtyLess(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:useFromStock1Fun2"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+
+					               customerBillDataToken1.getCustomerBillList().get(index).setQty(currentStockDetailList.get(i).getRegOpeningStock());//qty changes
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentStockDetailList.get(i).getRegOpeningStock());
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setRegOpStockLess(false);
+           
+		                       	   System.out.println("currentStockDetailList: useFromStock1Fun1"+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+
+		            
+					   
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}
+	
+	/*@RequestMapping(value = "/useFromStock1Fun3", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromStock1Fun3(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem1;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:useFromStock1Fun3"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getItemId().equalsIgnoreCase(getCurrentStockDetails.getItemId()))
+				{
+
+					   if(currentNewItem.getQty()<=getCurrentStockDetails.getRegOpeningStock())
+						{	
+			                       //SUBSTRACT Regular STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentNewItem.getQty());
+			                      
+			                      customerBillDataToken1.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+           
+		                       	   System.out.println("currentStockDetailList: useFromStock1Fun1"+currentStockDetailList.toString());
+		               			
+		                       	   
+		                       	   return customerBillDataToken1.getCustomerBillList();
+
+		              }
+					   else
+					   {                       	
+						   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						   
+						   
+						   customerBillDataToken1.getCustomerBillList().get(index).setSpStockLessthanQty(true);
+						   return customerBillDataToken1.getCustomerBillList();
+						   
+						   
+					   }
+				}
+			}		
+	
+	
+       	   return customerBillDataToken1.getCustomerBillList();
+
+	}*/
+//-------------------------------------------------------------------------------------------------------------------------------
+	public void stockCalc(CustomerBillItem currentNewItem,Franchisee frDetails)
+	{
+		Integer runningMonth = 0;
+	
+	    PostFrItemStockHeader frItemStockHeader;
+		//-------------------------------------Stock---------------------------------------
+		RestTemplate restTemplate = new RestTemplate();
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+		
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
+			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+					PostFrItemStockHeader.class);
+			runningMonth = frItemStockHeader.getMonth();
+
+		} catch (Exception e) {
+			System.out.println("Exception in runningMonth" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		
+		Date todaysDate = new Date();
+		System.out.println(dateFormat.format(todaysDate));
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(todaysDate);
+
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+
+		Date firstDay = cal.getTime();
+
+		System.out.println("First Day of month " + firstDay);
+
+		String strFirstDay=dateFormat.format(firstDay);
+		
+		System.out.println("Year " + yearFormat.format(todaysDate));
+		
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		map.add("fromDate", dateFormat.format(firstDay));
+		map.add("toDate", dateFormat.format(todaysDate));
+		map.add("currentMonth", String.valueOf(runningMonth));
+		map.add("year", yearFormat.format(todaysDate));
+		System.out.println("currentNewItem catId:"+currentNewItem.getCatId());
+		map.add("catId",currentNewItem.getCatId() );
+		map.add("itemIdList", currentNewItem.getId());
+
+
+		ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+		};
+		ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate
+				.exchange(Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+		currentStockDetailList.addAll(responseEntity.getBody());
+		System.out.println("Current Stock Details : " + currentStockDetailList.toString());
+		//-----------------------------------------------------------------------------------
+		
+	}
+	//-------------------------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/addNewCustBillItemToken2", method = RequestMethod.GET)
 	public @ResponseBody List<CustomerBillItem> getAllAddedItem2(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -2709,29 +3487,307 @@ public class CustomerBillController {
 		int itemQty =  Integer.parseInt(request.getParameter("qty"));
 		System.out.println("itemQty : "+itemQty);
 		try {
-		   
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
 		  
 			
 			List<CustomerBillItem> prevCustomerBillItemList=customerBillDataToken2.getCustomerBillList();
-			CustomerBillItem currentNewItem=new CustomerBillItem();
+		//	CustomerBillItem currentNewItem=new CustomerBillItem();
 			
 		for(int i=0;i<customerBillItemList.size();i++) {
 			
 			if(customerBillItemList.get(i).getId()==id) {
 				System.out.println("Data Matched : "+customerBillItemList.get(i).getId());
 				
-				currentNewItem= customerBillItemList.get(i);
+				currentNewItem2= customerBillItemList.get(i);
 				
 				prevQty=customerBillItemList.get(i).getQty();
-				currentNewItem.setQty(itemQty);
+				currentNewItem2.setQty(itemQty);
 				
 				
 				
 			}
 					
 		}
+		if(currentStockDetailList.size()==0)
+		{
+			
+			stockCalc(currentNewItem2,frDetails);//stock calculation
 		
-		boolean isOldItem=false;
+			System.out.println("****1)currentStockDetailList[token2]****:"+currentStockDetailList.toString());
+			
+		for(int i=0;i<=currentStockDetailList.size();i++)
+		{
+			GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+			System.out.println("****2)getCurrentStockDetails[token2]****:"+getCurrentStockDetails.toString());
+
+			
+			if(currentNewItem2.getId()==getCurrentStockDetails.getId())
+			{
+				System.out.println("****3)Id Matched:****"+currentNewItem2.getId());
+				
+				if(getCurrentStockDetails.getSpOpeningStock()>0)
+				{
+					//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+				     //bill stock type =2
+					currentNewItem2.setSpStockGretor(true);
+					currentNewItem2.setBillStockType(2);
+					
+					System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+					
+					prevCustomerBillItemList.add(currentNewItem2);
+					customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+					return customerBillDataToken2.getCustomerBillList();
+					
+				
+					
+					
+				}
+				else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+					
+					
+					System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+					if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+					{
+						
+						System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+						
+						//Add item to table and substract, (regOpStock-entered qty)
+						System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+						currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+						System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						
+						currentNewItem2.setRegOpStockLess(false);
+						prevCustomerBillItemList.add(currentNewItem2);
+
+						
+						customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+						return customerBillDataToken2.getCustomerBillList();
+					}
+					else
+					{
+						//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+						//and show alert1 your qty is over
+						System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+						System.out.println("itemQty is gretor than reg stock qty !!");
+						System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+						
+						
+						currentNewItem2.setRegOpStockLess(true);
+						prevCustomerBillItemList.add(currentNewItem2);
+						customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+						return customerBillDataToken2.getCustomerBillList();
+						
+						
+
+					}
+					
+				}
+			}
+			
+		}
+		
+		
+		
+		}
+		else 
+		{//if stock list is not empty.
+
+			boolean isPrevItem=false;
+            
+			System.out.println("**-----Stock List is not Empty--------[--ELSE Loop]**");
+			
+			//------------------------------------------------------------------
+			for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("**----Stock List is not Empty---[ELSE Loop[for]]:"+currentNewItem2.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem2.getId()==getCurrentStockDetails.getId())
+				{
+					//*****************************************************************************//
+					
+					if(getCurrentStockDetails.getSpOpeningStock()>0)
+					{
+						//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+					     //bill stock type =2
+						currentNewItem2.setSpStockGretor(true);
+						currentNewItem2.setBillStockType(2);
+						
+						System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+						
+						prevCustomerBillItemList.add(currentNewItem2);
+						customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+						return customerBillDataToken2.getCustomerBillList();
+						
+					
+						
+						
+					}
+					else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+						
+						
+						System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+						if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+						{
+							
+							System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+							
+							//Add item to table and substract, (regOpStock-entered qty)
+							System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+							currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+							System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							
+							currentNewItem2.setRegOpStockLess(false);
+							prevCustomerBillItemList.add(currentNewItem2);
+
+							
+							customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+							return customerBillDataToken2.getCustomerBillList();
+						}
+						else
+						{
+							//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+							//and show alert1 your qty is over
+							System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+							System.out.println("itemQty is gretor than reg stock qty !!");
+							System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							
+							
+							currentNewItem2.setRegOpStockLess(true);
+							prevCustomerBillItemList.add(currentNewItem2);
+							customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+							return customerBillDataToken2.getCustomerBillList();
+							
+							
+
+						}
+						
+					}
+					//*****************************************************************************//
+	            }
+				
+			}
+			
+			//------------------------------------------------------------------------------
+			 if(!isPrevItem)
+		     {					
+				 
+					stockCalc(currentNewItem2,frDetails);
+
+			
+			     for(int i=0;i<currentStockDetailList.size();i++)
+			    {				 
+			    	 
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				
+				if(currentNewItem1.getId()==getCurrentStockDetails.getId())
+				{
+			    	 System.out.println("**! isPrevItem [if[for[if]]]**");
+			    	//*****************************************************************************//
+						
+						if(getCurrentStockDetails.getSpOpeningStock()>0)
+						{
+							//prompt1(Are use WANT TO USE SpOpeningStock)if yes,
+						     //bill stock type =2
+							currentNewItem2.setSpStockGretor(true);
+							currentNewItem2.setBillStockType(2);
+							
+							System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+							
+							prevCustomerBillItemList.add(currentNewItem2);
+							customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+							return customerBillDataToken2.getCustomerBillList();
+							
+						
+							
+							
+						}
+						else if(getCurrentStockDetails.getRegOpeningStock()>0){//prompt2 NO & prompt1 NO
+							
+							
+							System.out.println("**------if Stock List is Empty--------[inner for[inner else if]**");
+
+							if(itemQty<=getCurrentStockDetails.getRegOpeningStock())
+							{
+								
+								System.out.println("**------if Stock List is Empty-----[inner for[inner else if[inner if]]**");
+
+								
+								//Add item to table and substract, (regOpStock-entered qty)
+								System.out.println("itemQty is less than or equal to reg stock qty !!");
+
+								currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-itemQty);
+								System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+								
+								currentNewItem2.setRegOpStockLess(false);
+								prevCustomerBillItemList.add(currentNewItem2);
+
+								
+								customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+								return customerBillDataToken2.getCustomerBillList();
+							}
+							else
+							{
+								//Prompt3 ,item qty is less than entered qty, still you want to use avail qty" if yes",substract(avail Reg opening stock-entered qty),& reg op stk=0,"if no",dont add to table and
+								//and show alert1 your qty is over
+								System.out.println("**if Stock List is Empty[for[else if[if[else]]]**");
+								System.out.println("itemQty is gretor than reg stock qty !!");
+								System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+								
+								
+								currentNewItem2.setRegOpStockLess(true);
+								prevCustomerBillItemList.add(currentNewItem2);
+								customerBillDataToken2.setCustomerBillList(prevCustomerBillItemList);
+
+								return customerBillDataToken2.getCustomerBillList();
+								
+								
+
+							}
+							
+						}
+						//*****************************************************************************//
+				
+				 
+			  }
+			
+		   }
+		  }
+			 else
+				{
+				 //stock is over
+					System.out.println("Else  ...........");
+
+				}
+		}
+		
+		
+		
+		/*boolean isOldItem=false;
 		
 		for(int j=0;j<prevCustomerBillItemList.size();j++) {
 			
@@ -2750,7 +3806,7 @@ public class CustomerBillController {
 			System.out.println("not old"+isOldItem);
 			prevCustomerBillItemList.add(currentNewItem);
 
-		}
+		}*/
 		
 		
 		
@@ -2786,6 +3842,189 @@ public class CustomerBillController {
 		
 			return customerBillDataToken2.getCustomerBillList();
 }
+	@RequestMapping(value = "/useFromSpecialOpStockFun1", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromSpecialOpStockFun1(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem2;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("**StockListIsNotEmpty[token2]*for*:"+currentNewItem.getItemId()+"liststock"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getId()==getCurrentStockDetails.getId())
+				{
+
+					   if(currentNewItem.getQty()<=getCurrentStockDetails.getSpOpeningStock())
+						{	
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setSpOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()-currentNewItem.getQty());
+			                      
+			                      customerBillDataToken2.getCustomerBillList().get(index).setBillStockType(2);//setting bill Stock type
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockGretor(false);
+           
+		                       	   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+		               			
+		       					System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+		                       	   return customerBillDataToken2.getCustomerBillList();
+
+		              }
+					   else
+					   {
+							System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+						   customerBillDataToken2.getCustomerBillList().get(index).setSpStockLessthanQty(true);
+						   return customerBillDataToken2.getCustomerBillList();
+						   
+						   
+					   }
+				}
+			}		
+	
+	
+       	   return customerBillDataToken2.getCustomerBillList();
+
+	}
+	
+	@RequestMapping(value = "/useFromSpecialOpStockFun2", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromSpecialOpStockFun2(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem2;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("***currentitem stk:[token2]"+currentNewItem.getItemId()+"liststock2"+getCurrentStockDetails.getItemId());
+
+				
+				if(currentNewItem.getId()==getCurrentStockDetails.getId())
+				{
+					System.out.println("currentStockDetailList.get(i).getSpOpeningStock()"+currentStockDetailList.get(i).getSpOpeningStock());
+					
+					
+                                   customerBillDataToken2.getCustomerBillList().get(index).setQty(currentStockDetailList.get(i).getSpOpeningStock());//qty changes to show on jsp 
+
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setSpOpeningStock(currentStockDetailList.get(i).getSpOpeningStock()-currentStockDetailList.get(i).getSpOpeningStock());//0 qty
+			                      
+			                      
+			                      customerBillDataToken2.getCustomerBillList().get(index).setBillStockType(2);//setting bill Stock type
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockGretor(false);
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+			                      
+		                       	   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+		       				    	System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+		                       	   
+		                       	   return customerBillDataToken2.getCustomerBillList();
+				
+		            
+				}
+			}		
+	
+	
+       	   return customerBillDataToken2.getCustomerBillList();
+
+	}
+	
+	@RequestMapping(value = "/useFromRegOpeningStockFun3", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromRegOpeningStockFun3(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem2;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:"+currentNewItem.getId()+"liststock"+getCurrentStockDetails.getId());
+
+				
+				if(currentNewItem.getId()==getCurrentStockDetails.getId())
+				{
+
+					   if(currentNewItem.getQty()<=getCurrentStockDetails.getRegOpeningStock())
+						{	
+			                       //SUBSTRACT SP STOCK QTY(STOCK 2) 
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentNewItem.getQty());
+			                      
+			                      customerBillDataToken2.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockGretor(false);
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+
+			                      
+		                       	   System.out.println("currentStockDetailList:"+currentStockDetailList.toString());
+		       					System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+		                       	   
+		                       	   return customerBillDataToken2.getCustomerBillList();
+
+		              }
+					   else
+					   {                       	
+						   System.out.println("currentStockDetailList: "+currentStockDetailList.toString());
+
+							System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+						   
+						   customerBillDataToken2.getCustomerBillList().get(index).setRegOpStockLess(true);
+						   return customerBillDataToken2.getCustomerBillList();
+						   
+						   
+					   }
+				}
+			}		
+	
+	
+       	   return customerBillDataToken2.getCustomerBillList();
+
+	}
+	
+	@RequestMapping(value = "/useFromRegOpeningStockFun4", method = RequestMethod.GET)
+	public @ResponseBody List<CustomerBillItem> useFromRegOpeningStockFun4(@RequestParam(value = "index", required = true) int index) {
+	
+	   CustomerBillItem currentNewItem=currentNewItem2;
+			
+			
+		   for(int i=0;i<currentStockDetailList.size();i++)
+			{
+				
+				GetCurrentStockDetails getCurrentStockDetails=currentStockDetailList.get(i);
+				System.out.println("currentitem stk:"+currentNewItem.getId()+"liststock"+getCurrentStockDetails.getId());
+
+				
+				if(currentNewItem.getId()==getCurrentStockDetails.getId())
+				{
+
+					               customerBillDataToken2.getCustomerBillList().get(index).setQty(currentStockDetailList.get(i).getRegOpeningStock());//qty changes
+			                      
+			                      currentStockDetailList.get(i).setRegOpeningStock(currentStockDetailList.get(i).getRegOpeningStock()-currentStockDetailList.get(i).getRegOpeningStock());
+			                      
+			                      customerBillDataToken2.getCustomerBillList().get(index).setBillStockType(1);//setting bill Stock type
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockLessthanQty(false);
+			                      customerBillDataToken2.getCustomerBillList().get(index).setSpStockGretor(false);
+			                      
+		                       	   System.out.println("currentStockDetailList:"+currentStockDetailList.toString());
+		       					   System.out.println("**** CurrentNewItem:  ****:"+currentNewItem2.toString());
+
+		                       	   
+		                       	   return customerBillDataToken2.getCustomerBillList();
+
+		            
+					   
+				}
+			}		
+	
+	
+       	   return customerBillDataToken2.getCustomerBillList();
+
+	}
 	@RequestMapping(value = "/addNewCustBillItemToken3", method = RequestMethod.GET)
 	public @ResponseBody List<CustomerBillItem> getAllAddedItem3(HttpServletRequest request,
 			HttpServletResponse response) {

@@ -264,7 +264,7 @@ public class StockController {
 			// String stockDiff=request.getParameter("stockDiff"+stockDetails.getItemId());
 			int intPhysicalStock = Integer.parseInt(physicalStockQty);
 
-			postFrItemStockDetail.setItemId(stockDetails.getItemId());
+			postFrItemStockDetail.setItemId(Integer.parseInt(stockDetails.getItemId()));
 			postFrItemStockDetail.setItemName(stockDetails.getItemName());
 			postFrItemStockDetail.setRegOpeningStock(stockDetails.getRegOpeningStock());
 			postFrItemStockDetail.setOpeningStockDetailId(stockDetails.getStockDetailId());

@@ -63,35 +63,35 @@
 
 </head>
 <body>
-<c:url var="getCustomerBillList1" value="/generateSellBill1"></c:url>
-<c:url var="getCustomerBillList2" value="/generateSellBill2"></c:url>
-<c:url var="getCustomerBillList3" value="/generateSellBill3"></c:url>
-<c:url var="getCustomerBillList4" value="/generateSellBill4"></c:url>
-<c:url var="getCustomerBillList5" value="/generateSellBill5"></c:url>
-<c:url var="getCustomerBillList6" value="/generateSellBill6"></c:url>
-<c:url var="getCustomerBillList7" value="/generateSellBill7"></c:url>
+	<c:url var="getCustomerBillList1" value="/generateSellBill1"></c:url>
+	<c:url var="getCustomerBillList2" value="/generateSellBill2"></c:url>
+	<c:url var="getCustomerBillList3" value="/generateSellBill3"></c:url>
+	<c:url var="getCustomerBillList4" value="/generateSellBill4"></c:url>
+	<c:url var="getCustomerBillList5" value="/generateSellBill5"></c:url>
+	<c:url var="getCustomerBillList6" value="/generateSellBill6"></c:url>
+	<c:url var="getCustomerBillList7" value="/generateSellBill7"></c:url>
 
 
 
 	<!-- onload="removeOption()" -->
 	<c:url var="findItemById" value="/getItemById" />
-	
-		<c:url var="deleteItem1" value="/deleteCustBillItemTokenItem1"></c:url>
-		<c:url var="deleteItem2" value="/deleteCustBillItemTokenItem2"></c:url>
-		<c:url var="deleteItem3" value="/deleteCustBillItemTokenItem3"></c:url>
-		<c:url var="deleteItem4" value="/deleteCustBillItemTokenItem4"></c:url>
-		<c:url var="deleteItem5" value="/deleteCustBillItemTokenItem5"></c:url>
-		<c:url var="deleteItem6" value="/deleteCustBillItemTokenItem6"></c:url>
-		<c:url var="deleteItem7" value="/deleteCustBillItemTokenItem7"></c:url>
-		
+
+	<c:url var="deleteItem1" value="/deleteCustBillItemTokenItem1"></c:url>
+	<c:url var="deleteItem2" value="/deleteCustBillItemTokenItem2"></c:url>
+	<c:url var="deleteItem3" value="/deleteCustBillItemTokenItem3"></c:url>
+	<c:url var="deleteItem4" value="/deleteCustBillItemTokenItem4"></c:url>
+	<c:url var="deleteItem5" value="/deleteCustBillItemTokenItem5"></c:url>
+	<c:url var="deleteItem6" value="/deleteCustBillItemTokenItem6"></c:url>
+	<c:url var="deleteItem7" value="/deleteCustBillItemTokenItem7"></c:url>
+
 	<c:url var="updateItem1" value="/updateCustBillItemTokenItem1"></c:url>
 	<c:url var="updateItem2" value="/updateCustBillItemTokenItem2"></c:url>
 	<c:url var="updateItem3" value="/updateCustBillItemTokenItem3"></c:url>
 	<c:url var="updateItem4" value="/updateCustBillItemTokenItem4"></c:url>
-    <c:url var="updateItem5" value="/updateCustBillItemTokenItem5"></c:url>
-    <c:url var="updateItem6" value="/updateCustBillItemTokenItem6"></c:url>
-    <c:url var="updateItem7" value="/updateCustBillItemTokenItem7"></c:url>
-	
+	<c:url var="updateItem5" value="/updateCustBillItemTokenItem5"></c:url>
+	<c:url var="updateItem6" value="/updateCustBillItemTokenItem6"></c:url>
+	<c:url var="updateItem7" value="/updateCustBillItemTokenItem7"></c:url>
+
 	<c:url var="getAllAddedItems1" value="/addNewCustBillItemToken1"></c:url>
 	<c:url var="getAllAddedItems2" value="/addNewCustBillItemToken2"></c:url>
 	<c:url var="getAllAddedItems3" value="/addNewCustBillItemToken3"></c:url>
@@ -99,6 +99,19 @@
 	<c:url var="getAllAddedItems5" value="/addNewCustBillItemToken5"></c:url>
 	<c:url var="getAllAddedItems6" value="/addNewCustBillItemToken6"></c:url>
 	<c:url var="getAllAddedItems7" value="/addNewCustBillItemToken7"></c:url>
+
+
+	<c:url var="useFromStock2fun1" value="/useFromStock2Fun1"></c:url>
+	<c:url var="useFromStock2fun2" value="/useFromStock2Fun2"></c:url>
+	<c:url var="useFromStock1fun1" value="/useFromStock1Fun1"></c:url>
+	<c:url var="useFromStock1fun2" value="/useFromStock1Fun2"></c:url>
+     <c:url var="regOpStockQtyLess" value="/regOpStockQtyLess"></c:url>
+     
+    <c:url var="useFromSpecialOpStockFun1" value="/useFromSpecialOpStockFun1"></c:url>
+     <c:url var="useFromSpecialOpStockFun2" value="/useFromSpecialOpStockFun2"></c:url>
+    <c:url var="useFromRegOpeningStockFun3" value="/useFromRegOpeningStockFun3"></c:url>
+         <c:url var="useFromRegOpeningStockFun4" value="/useFromRegOpeningStockFun4"></c:url>
+     
 	<div class="sidebarOuter"></div>
 
 	<div class="wrapper">
@@ -119,7 +132,7 @@
 
 				<!--leftNav-->
 
-	 			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 
 				</jsp:include>
@@ -137,9 +150,8 @@
 					</div>
 
 					<div class="order-right">
-						<a href="${pageContext.request.contextPath}/viewBill"><button class="pull-right btn view_bill_btn">
-							View Bill
-						</button></a>
+						<a href="${pageContext.request.contextPath}/viewBill"><button
+								class="pull-right btn view_bill_btn">View Bill</button></a>
 					</div>
 
 					<!--tabNavigation-->
@@ -167,7 +179,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName1" id="custName1" value="Cash">
+											placeholder="Enter Name" name="custName1" id="custName1"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -248,20 +261,20 @@
 								</div> <br /> <!-- Form End -->
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table class="table table-bordered" width="100%" border="0" cellspacing="0"
-														cellpadding="0 " id="table_grid">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th style="width: 130px;">Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!--<td>1</td>
+
+										<table class="table table-bordered" width="100%" border="0"
+											cellspacing="0" cellpadding="0 " id="table_grid">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th style="width: 130px;">Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!--<td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -272,87 +285,91 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td>-->
 
-														</tr>
-													</table>
-											
+											</tr>
+										</table>
+
 									</div>
 								</div>
-								
-								
-								<hr/>
-                               <div class="row">
+
+
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total1" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total1" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot1">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount1"
-														onkeyup="disMinusTotal1()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount1"
+														onkeyup="disMinusTotal1()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal1"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal1"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot1">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
-								
+								</div> </br>
+
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode1"
-																class="form-control" tabindex="-1" id="paymentMode1"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode1" class="form-control" tabindex="-1"
+														id="paymentMode1" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount1"
-														onkeyup="amtMinusGrandTotal1()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount1"
+														onkeyup="amtMinusGrandTotal1()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt1"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt1"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount1">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill1()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse1 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill1()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse1
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab1-->
 
@@ -364,7 +381,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName2" id="custName2"value="Cash">
+											placeholder="Enter Name" name="custName2" id="custName2"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -432,20 +450,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid2" class="table table-bordered">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- <td>1</td>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid2" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- <td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -456,84 +474,88 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td> -->
 
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
 								</div>
-                                <hr/>
-								 <div class="row">
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total2" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total2" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot2">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount2"
-														onkeyup="disMinusTotal2()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount2"
+														onkeyup="disMinusTotal2()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal2"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal2"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot2">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode2"
-																class="form-control" tabindex="-1" id="paymentMode2"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode2" class="form-control" tabindex="-1"
+														id="paymentMode2" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount2"
-														onkeyup="amtMinusGrandTotal2()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount2"
+														onkeyup="amtMinusGrandTotal2()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt2"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt2"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount2">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill2()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse2 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill2()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse2
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab2-->
 
@@ -545,7 +567,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName3" id="custName3"value="Cash">
+											placeholder="Enter Name" name="custName3" id="custName3"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -613,20 +636,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid3" class="table table-bordered">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- <td>1</td>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid3" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- <td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -637,83 +660,88 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td> -->
 
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
-								</div><hr/>
-								 <div class="row">
+								</div>
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total3" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total3" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot3">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount3"
-														onkeyup="disMinusTotal3()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount3"
+														onkeyup="disMinusTotal3()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal3"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal3"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot3">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode3"
-																class="form-control" tabindex="-1" id="paymentMode3"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode3" class="form-control" tabindex="-1"
+														id="paymentMode3" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount3"
-														onkeyup="amtMinusGrandTotal3()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount3"
+														onkeyup="amtMinusGrandTotal3()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt3"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt3"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount3">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill3()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse3 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill3()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse3
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab4-->
 							<li data-content="tab4">
@@ -723,7 +751,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName4" id="custName4" value="Cash">
+											placeholder="Enter Name" name="custName4" id="custName4"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -791,20 +820,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-									
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid4" class="table table-bordered">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- 
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid4" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- 
 															<td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
@@ -816,84 +845,89 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td>
  -->
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
-								</div><hr/>
-								 <div class="row">
+								</div>
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total4" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total4" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot4">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount4"
-														onkeyup="disMinusTotal4()" value="0"></div>
-														
-												<h4 class="col-md-2"style="margin-top: 5px">		
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount4"
+														onkeyup="disMinusTotal4()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal4"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal4"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot4">
-										    
+
+											</div>
+
 										</div>
-								
 									</div>
-								</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode4"
-																class="form-control" tabindex="-1" id="paymentMode4"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode4" class="form-control" tabindex="-1"
+														id="paymentMode4" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount4"
-														onkeyup="amtMinusGrandTotal4()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount4"
+														onkeyup="amtMinusGrandTotal4()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt4"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt4"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount4">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill4()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse4 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill4()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse4
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab5-->
 							<li data-content="tab5">
@@ -903,7 +937,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName5" id="custName5"value="Cash">
+											placeholder="Enter Name" name="custName5" id="custName5"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -971,20 +1006,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-									
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid5" class="table table-bordered">
-														<tr class="bgpink">
-														<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- <td>1</td>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid5" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- <td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -995,83 +1030,88 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td>
  -->
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
-								</div><hr/>
-								 <div class="row">
+								</div>
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total5" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total5" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot5">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount5"
-														onkeyup="disMinusTotal5()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount5"
+														onkeyup="disMinusTotal5()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal5"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal5"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot5">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode5"
-																class="form-control" tabindex="-1" id="paymentMode5"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode5" class="form-control" tabindex="-1"
+														id="paymentMode5" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount5"
-														onkeyup="amtMinusGrandTotal5()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount5"
+														onkeyup="amtMinusGrandTotal5()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt5"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt5"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount5">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill5()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse5 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill5()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse5
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab6-->
 							<li data-content="tab6">
@@ -1081,7 +1121,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName6" id="custName6"value="Cash">
+											placeholder="Enter Name" name="custName6" id="custName6"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -1149,20 +1190,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid6" class="table table-bordered">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- <td>1</td>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid6" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- <td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -1173,83 +1214,88 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td>
  -->
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
-								</div><hr/>
-								 <div class="row">
+								</div>
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total6" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total6" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot6">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount6"
-														onkeyup="disMinusTotal6()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount6"
+														onkeyup="disMinusTotal6()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal6"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal6"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot6">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode6"
-																class="form-control" tabindex="-1" id="paymentMode6"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode6" class="form-control" tabindex="-1"
+														id="paymentMode6" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount6"
-														onkeyup="amtMinusGrandTotal6()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount6"
+														onkeyup="amtMinusGrandTotal6()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt6"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt6"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount6">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill6()">Generate Bill</button>
-								</center>
-							<input type="hidden" class="form-control" id=orderResponse6 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill6()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse6
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab7-->
 							<li data-content="tab7">
@@ -1259,7 +1305,8 @@
 									</div>
 									<div class="col-md-2">
 										<input type="text" class="form-control"
-											placeholder="Enter Name" name="custName7" id="custName7"value="Cash">
+											placeholder="Enter Name" name="custName7" id="custName7"
+											value="Cash">
 									</div>
 
 									<div class="col-md-2">
@@ -1327,20 +1374,20 @@
 								</div> <br />
 								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid7" class="table table-bordered">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th>Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!-- <td>1</td>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											id="table_grid7" class="table table-bordered">
+											<tr class="bgpink">
+												<th style="width: 130px;">Sr no.</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<tr>
+												<!-- <td>1</td>
 															<td>#ppp</td>
 															<td>cake</td>
 															<td>5</td>
@@ -1351,87 +1398,92 @@
 																href="#" class="action_btn"><abbr title="Delete"><i
 																		class="fa fa-trash"></i></abbr></a></td>
  -->
-														</tr>
-													</table>
-												
+											</tr>
+										</table>
+
 									</div>
-								</div><hr/>
-								 <div class="row">
+								</div>
+								<hr />
+								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="col-md-2">
 													<b>Total:-</b>
 												</h4>
-												<h4 class="col-md-2" id="total7" style="text-align:center;">00</h4>
+												<h4 class="col-md-2" id="total7" style="text-align: center;">00</h4>
 												<input type="hidden" class="form-control" id="tot7">
-												
+
 												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Discount(%):-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="discount7"
-														onkeyup="disMinusTotal7()" value="0"></div>
-										     
-										     	<h4 class="col-md-2"style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="discount7"
+														onkeyup="disMinusTotal7()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Grand Total:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="grandtotal7"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="grandtotal7"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="grandtot7">
-										     </div>	
+											</div>
 										</div>
-								
+
 									</div>
-								</div>
-								</br>
+								</div> </br>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												
-												<h4 class="col-md-2" >
+
+												<h4 class="col-md-2">
 													<b>Payment Mode:-</b>
 												</h4>
 												<div class="col-md-2">
-												<select
-																data-placeholder="Enter Payment Mode" name="paymentMode7"
-																class="form-control" tabindex="-1" id="paymentMode7"
-																data-rule-required="true">
-																
-																
-																<option value="1">Cash</option>
-																<option value="2">Card</option>
-																<option value="3">Other</option>
-																
-																</select>
-												
+													<select data-placeholder="Enter Payment Mode"
+														name="paymentMode7" class="form-control" tabindex="-1"
+														id="paymentMode7" data-rule-required="true">
+
+
+														<option value="1">Cash</option>
+														<option value="2">Card</option>
+														<option value="3">Other</option>
+
+													</select>
+
 												</div>
-												<h4 class="col-md-2" >
+												<h4 class="col-md-2">
 													<b>Paid Amount:-</b>
 												</h4>
-												<div class="col-md-1 pull-left"><input type="text" class="form-control" id="paidAmount7"
-														onkeyup="amtMinusGrandTotal7()" value="0"></div>
-										     
-										     	<h4 class="col-md-2" style="margin-top: 5px">
+												<div class="col-md-1 pull-left">
+													<input type="text" class="form-control" id="paidAmount7"
+														onkeyup="amtMinusGrandTotal7()" value="0">
+												</div>
+
+												<h4 class="col-md-2" style="margin-top: 5px">
 													<b>Remaining Amt:-</b>
 												</h4>
-										
-												<h4 class="col-md-2 pull-left" id="remAmt7"style="margin-top: 5px">00</h4>
+
+												<h4 class="col-md-2 pull-left" id="remAmt7"
+													style="margin-top: 5px">00</h4>
 												<input type="hidden" class="form-control" id="remAmount7">
-										     </div>	
-								</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<br/>
+								</div> <br />
 								<center>
-									<button class="btn additem_btn" onclick="generateSellBill7()">Generate Bill</button>
-								</center>
-							    <input type="hidden" class="form-control" id=orderResponse7 value="${orderResponse}"/>
-								
+									<button class="btn additem_btn" onclick="generateSellBill7()">Generate
+										Bill</button>
+								</center> <input type="hidden" class="form-control" id=orderResponse7
+								value="${orderResponse}" />
+
 							</li>
 							<!--tab8-->
 						</ul>
-						              
+
 					</div>
 					<!--tabNavigation-->
 
@@ -1457,7 +1509,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function generateSellBill1() {
 
 			var isValid = validation1();
@@ -1466,479 +1518,417 @@
 				var custName = $("#custName1").val();
 				var gstNo = $("#gstNo1").val();
 				var phoneNo = $("#phoneNo1").val();
-                var discount=$("#discount1").val();
-                var paymentMode=$("#paymentMode1").val();
-                var paidAmount=$("#paidAmount1").val();
+				var discount = $("#discount1").val();
+				var paymentMode = $("#paymentMode1").val();
+				var paidAmount = $("#paidAmount1").val();
 
-               
 				$('#loader').show();
 
 				$.getJSON('${getCustomerBillList1}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-							
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid td').remove();
-									
-									document.getElementById("barcode1")
-									.setAttribute('value',
-											0);
-									
+				}, function(data) {
 
-							        $("#rateTdVal1").html(0);
-									
-									$("#total1").html(0.0);
-									document.getElementById("tot1")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount1")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal1').html(0.0);
-									document.getElementById("grandtot1").setAttribute('value',0.0);
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid td').remove();
 
-									
-									$('#remAmt1').html(grandMinusPaidAmt);
-									document.getElementById("remAmount1").setAttribute('value',0.0);
-									
-									document.getElementById("barcode1").focus();
-										
-									
-								});
-			
-			
+					document.getElementById("barcode1")
+							.setAttribute('value', 0);
+
+					$("#rateTdVal1").html(0);
+
+					$("#total1").html(0.0);
+					document.getElementById("tot1").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount1").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal1').html(0.0);
+					document.getElementById("grandtot1").setAttribute('value',
+							0.0);
+
+					$('#remAmt1').html(grandMinusPaidAmt);
+					document.getElementById("remAmount1").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode1").focus();
+
+				});
+
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
 		function generateSellBill2() {
 
-			
 			var isValid = validation1();
 
 			if (isValid) {
 				var custName = $("#custName2").val();
 				var gstNo = $("#gstNo2").val();
 				var phoneNo = $("#phoneNo2").val();
-                var discount=$("#discount2").val();
-                var paymentMode=$("#paymentMode2").val();
-                var paidAmount=$("#paidAmount2").val();
-
+				var discount = $("#discount2").val();
+				var paymentMode = $("#paymentMode2").val();
+				var paidAmount = $("#paidAmount2").val();
 
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList2}',
+				$.getJSON('${getCustomerBillList2}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-							
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid2 td').remove();
+				}, function(data) {
 
-									document.getElementById("barcode2")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid2 td').remove();
 
-							        $("#rateTdVal2").html(0);
-									
-									$("#total2").html(0.0);
-									document.getElementById("tot2")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount2")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal2').html(0.0);
-									document.getElementById("grandtot2").setAttribute('value',0.0);
+					document.getElementById("barcode2")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt2').html(grandMinusPaidAmt);
-									document.getElementById("remAmount2").setAttribute('value',0.0);
-									
-									document.getElementById("barcode2").focus();
-										
-									
-								});
+					$("#rateTdVal2").html(0);
+
+					$("#total2").html(0.0);
+					document.getElementById("tot2").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount2").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal2').html(0.0);
+					document.getElementById("grandtot2").setAttribute('value',
+							0.0);
+
+					$('#remAmt2').html(grandMinusPaidAmt);
+					document.getElementById("remAmount2").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode2").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function generateSellBill3() {
 
-		
-			
 			var isValid = validation3();
 
 			if (isValid) {
 				var custName = $("#custName3").val();
 				var gstNo = $("#gstNo3").val();
 				var phoneNo = $("#phoneNo3").val();
-                var discount=$("#discount3").val();
-                var paymentMode=$("#paymentMode3").val();
-                var paidAmount=$("#paidAmount3").val();
+				var discount = $("#discount3").val();
+				var paymentMode = $("#paymentMode3").val();
+				var paidAmount = $("#paidAmount3").val();
 
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList3}',
+				$.getJSON('${getCustomerBillList3}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-								
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid3 td').remove();
+				}, function(data) {
 
-									
-									document.getElementById("barcode3")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid3 td').remove();
 
-							        $("#rateTdVal3").html(0);
-									
-									$("#total3").html(0.0);
-									document.getElementById("tot3")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount3")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal3').html(0.0);
-									document.getElementById("grandtot3").setAttribute('value',0.0);
+					document.getElementById("barcode3")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt3').html(grandMinusPaidAmt);
-									document.getElementById("remAmount3").setAttribute('value',0.0);
-									
-									document.getElementById("barcode3").focus();	
-									
-								});
+					$("#rateTdVal3").html(0);
+
+					$("#total3").html(0.0);
+					document.getElementById("tot3").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount3").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal3').html(0.0);
+					document.getElementById("grandtot3").setAttribute('value',
+							0.0);
+
+					$('#remAmt3').html(grandMinusPaidAmt);
+					document.getElementById("remAmount3").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode3").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
 		function generateSellBill4() {
 
-			
 			var isValid = validation4();
 
 			if (isValid) {
 				var custName = $("#custName4").val();
 				var gstNo = $("#gstNo4").val();
 				var phoneNo = $("#phoneNo4").val();
-                var discount=$("#discount4").val();
-                var paymentMode=$("#paymentMode4").val();
-                var paidAmount=$("#paidAmount4").val();
+				var discount = $("#discount4").val();
+				var paymentMode = $("#paymentMode4").val();
+				var paidAmount = $("#paidAmount4").val();
 
-         
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList4}',
+				$.getJSON('${getCustomerBillList4}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-							
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid4 td').remove();
+				}, function(data) {
 
-									document.getElementById("barcode4")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid4 td').remove();
 
-							        $("#rateTdVal4").html(0);
-									
-									$("#total4").html(0.0);
-									document.getElementById("tot4")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount4")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal4').html(0.0);
-									document.getElementById("grandtot4").setAttribute('value',0.0);
+					document.getElementById("barcode4")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt4').html(grandMinusPaidAmt);
-									document.getElementById("remAmount4").setAttribute('value',0.0);
-									
-									document.getElementById("barcode4").focus();
-										
-									
-								});
+					$("#rateTdVal4").html(0);
+
+					$("#total4").html(0.0);
+					document.getElementById("tot4").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount4").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal4').html(0.0);
+					document.getElementById("grandtot4").setAttribute('value',
+							0.0);
+
+					$('#remAmt4').html(grandMinusPaidAmt);
+					document.getElementById("remAmount4").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode4").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
 		function generateSellBill5() {
 
-	
-			
 			var isValid = validation5();
 
 			if (isValid) {
 				var custName = $("#custName5").val();
 				var gstNo = $("#gstNo5").val();
 				var phoneNo = $("#phoneNo5").val();
-                var discount=$("#discount5").val();
-                var paymentMode=$("#paymentMode5").val();
-                var paidAmount=$("#paidAmount5").val();
+				var discount = $("#discount5").val();
+				var paymentMode = $("#paymentMode5").val();
+				var paidAmount = $("#paidAmount5").val();
 
-        
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList5}',
+				$.getJSON('${getCustomerBillList5}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-								
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid5 td').remove();
+				}, function(data) {
 
-									document.getElementById("barcode5")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid5 td').remove();
 
-							        $("#rateTdVal5").html(0);
-									
-									$("#total5").html(0.0);
-									document.getElementById("tot5")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount5")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal5').html(0.0);
-									document.getElementById("grandtot5").setAttribute('value',0.0);
+					document.getElementById("barcode5")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt5').html(grandMinusPaidAmt);
-									document.getElementById("remAmount5").setAttribute('value',0.0);
-									
-									document.getElementById("barcode5").focus();
-										
-									
-								});
+					$("#rateTdVal5").html(0);
+
+					$("#total5").html(0.0);
+					document.getElementById("tot5").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount5").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal5').html(0.0);
+					document.getElementById("grandtot5").setAttribute('value',
+							0.0);
+
+					$('#remAmt5').html(grandMinusPaidAmt);
+					document.getElementById("remAmount5").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode5").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
 		function generateSellBill6() {
 
-
-			
 			var isValid = validation6();
 
 			if (isValid) {
 				var custName = $("#custName6").val();
 				var gstNo = $("#gstNo6").val();
 				var phoneNo = $("#phoneNo6").val();
-                var discount=$("#discount6").val();
-                var paymentMode=$("#paymentMode6").val();
-                var paidAmount=$("#paidAmount6").val();
+				var discount = $("#discount6").val();
+				var paymentMode = $("#paymentMode6").val();
+				var paidAmount = $("#paidAmount6").val();
 
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList6}',
+				$.getJSON('${getCustomerBillList6}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-								
-									
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid6 td').remove();
+				}, function(data) {
 
-									document.getElementById("barcode6")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid6 td').remove();
 
-							        $("#rateTdVal6").html(0);
-									
-									$("#total6").html(0.0);
-									document.getElementById("tot6")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount6")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal6').html(0.0);
-									document.getElementById("grandtot6").setAttribute('value',0.0);
+					document.getElementById("barcode6")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt6').html(grandMinusPaidAmt);
-									document.getElementById("remAmount6").setAttribute('value',0.0);
-									
-									document.getElementById("barcode6").focus();
-										
-									
-								});
+					$("#rateTdVal6").html(0);
+
+					$("#total6").html(0.0);
+					document.getElementById("tot6").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount6").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal6').html(0.0);
+					document.getElementById("grandtot6").setAttribute('value',
+							0.0);
+
+					$('#remAmt6').html(grandMinusPaidAmt);
+					document.getElementById("remAmount6").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode6").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
 		function generateSellBill7() {
 
-	
-			
 			var isValid = validation7();
 
 			if (isValid) {
 				var custName = $("#custName7").val();
 				var gstNo = $("#gstNo7").val();
 				var phoneNo = $("#phoneNo7").val();
-                var discount=$("#discount7").val();
-                var paymentMode=$("#paymentMode7").val();
-                var paidAmount=$("#paidAmount7").val();
+				var discount = $("#discount7").val();
+				var paymentMode = $("#paymentMode7").val();
+				var paidAmount = $("#paidAmount7").val();
 
 				$('#loader').show();
 
-				$.getJSON(
-								'${getCustomerBillList7}',
+				$.getJSON('${getCustomerBillList7}',
 
-								{
-									custName :custName,
-									gstNo :gstNo ,
-									phoneNo :phoneNo,
-									discount:discount,
-									paymentMode:paymentMode,
-									paidAmount:paidAmount,
-									ajax : 'true'
+				{
+					custName : custName,
+					gstNo : gstNo,
+					phoneNo : phoneNo,
+					discount : discount,
+					paymentMode : paymentMode,
+					paidAmount : paidAmount,
+					ajax : 'true'
 
-								},
-								function(data) {
-								
-									$('#loader').hide();
-									if (data == "") {
-										alert("Order Placed Successfully !!");
-									}
-									$('#table_grid7 td').remove();
+				}, function(data) {
 
-									document.getElementById("barcode7")
-									.setAttribute('value',
-											0);
-									
+					$('#loader').hide();
+					if (data == "") {
+						alert("Order Placed Successfully !!");
+					}
+					$('#table_grid7 td').remove();
 
-							        $("#rateTdVal7").html(0);
-									
-									$("#total7").html(0.0);
-									document.getElementById("tot7")
-											.setAttribute('value', 0.0);
-									
-									document.getElementById("paidAmount7")
-									.setAttribute('value', 0.0);
-								
-									
-									$('#grandtotal7').html(0.0);
-									document.getElementById("grandtot7").setAttribute('value',0.0);
+					document.getElementById("barcode7")
+							.setAttribute('value', 0);
 
-									
-									$('#remAmt7').html(grandMinusPaidAmt);
-									document.getElementById("remAmount7").setAttribute('value',0.0);
-									
-									document.getElementById("barcode7").focus();
-										
-									
-								});
+					$("#rateTdVal7").html(0);
+
+					$("#total7").html(0.0);
+					document.getElementById("tot7").setAttribute('value', 0.0);
+
+					document.getElementById("paidAmount7").setAttribute(
+							'value', 0.0);
+
+					$('#grandtotal7').html(0.0);
+					document.getElementById("grandtot7").setAttribute('value',
+							0.0);
+
+					$('#remAmt7').html(grandMinusPaidAmt);
+					document.getElementById("remAmount7").setAttribute('value',
+							0.0);
+
+					document.getElementById("barcode7").focus();
+
+				});
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
@@ -1953,8 +1943,6 @@
 									ajax : 'true'
 								},
 										function(data) {
-
-										
 
 											document.getElementById("barcode1")
 													.setAttribute('value',
@@ -1972,7 +1960,6 @@
 
 					$('#itemName2').change(
 							function() {
-								
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -1980,11 +1967,9 @@
 								},
 										function(data) {
 
-											
 											document.getElementById("barcode2")
 													.setAttribute('value',
 															data.itemId);
-											
 
 											$("#rateTdVal2").html(data.mrp);
 										});
@@ -1997,7 +1982,6 @@
 
 					$('#itemName3').change(
 							function() {
-							
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -2005,11 +1989,9 @@
 								},
 										function(data) {
 
-									
 											document.getElementById("barcode3")
 													.setAttribute('value',
 															data.itemId);
-											
 
 											$("#rateTdVal3").html(data.mrp);
 										});
@@ -2022,7 +2004,6 @@
 
 					$('#itemName4').change(
 							function() {
-							
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -2030,7 +2011,6 @@
 								},
 										function(data) {
 
-											
 											document.getElementById("barcode4")
 													.setAttribute('value',
 															data.itemId);
@@ -2046,7 +2026,6 @@
 
 					$('#itemName5').change(
 							function() {
-								
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -2054,11 +2033,9 @@
 								},
 										function(data) {
 
-											
 											document.getElementById("barcode5")
 													.setAttribute('value',
 															data.itemId);
-											
 
 											$("#rateTdVal5").html(data.mrp);
 										});
@@ -2071,7 +2048,6 @@
 
 					$('#itemName6').change(
 							function() {
-								
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -2079,11 +2055,9 @@
 								},
 										function(data) {
 
-											
 											document.getElementById("barcode6")
 													.setAttribute('value',
 															data.itemId);
-											
 
 											$("#rateTdVal6").html(data.mrp);
 										});
@@ -2096,7 +2070,6 @@
 
 					$('#itemName7').change(
 							function() {
-								
 
 								$.getJSON('${findItemById}', {
 									id : $(this).val(),
@@ -2104,7 +2077,6 @@
 								},
 										function(data) {
 
-											
 											document.getElementById("barcode7")
 													.setAttribute('value',
 															data.itemId);
@@ -2150,8 +2122,892 @@
 									$('#table_grid td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
+														if (item.spStockGretor == true) {
+															var retVal = confirm("Would you like to use Special Opening Stock?")
+															if (retVal == true) {
+																$
+																		.getJSON(
+																				'${useFromStock2fun1}',//function, when  User want to use Special Opening Stock
+																				{
+																					index : key,
+																					ajax : 'true'
+																				},
+																				function(
+																						data) {
+																					$(
+																							'#loader')
+																							.hide();
+																					if (data == "") {
+																						alert("No records found !!");
+																					}
+																					$(
+																							'#table_grid td')
+																							.remove();
+																					var allTotal = 0;
+
+																					$
+																							.each(
+																									data,
+																									function(
+																											key,
+																											item) {
+
+																										if (item.spStockGretor == true) {
+
+																											var retVal1 = confirm("Special opening stock is less than current quantity still, you like to use Special Available Opening Stock?")
+																											if (retVal1 == true) {																						$
+																												.getJSON(
+																														'${useFromStock2fun2}',//function, when Special Opening Stock is less than entered Qty
+																														{
+																															index : key,
+																															ajax : 'true'
+																														},
+																														function(data) {
+																															$('#loader').hide();
+																															if (data == "") {
+																																alert("No records found !!");
+																															}
+																															$('#table_grid td').remove();
+																															var allTotal = 0;
+
+																															$.each(data,function(key, item) {
+
+																																				var index = key + 1;
+
+																																				var tr = "<tr>";
+
+																																				var index = "<td align=left>"
+																																						+ index
+																																						+ "</td>";
+
+																																				var barcode = "<td>"
+																																						+ item.itemId
+																																						+ "</td>";
+
+																																				var itemName = "<td>"
+																																						+ item.itemName
+																																						+ "</td>";
+
+																																				var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+																						/*onkeyup= updateTotal("
+																																					+ bill.id + ","
+																																					+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																																				var rate = "<td >"
+																																						+ item.mrp
+																																						+ "</td>";
+
+																																				var total = parseFloat(item.mrp)
+																																						* parseFloat(item.qty);
+
+																																				var Amount = "<td align=center id=billTotal1"+item.id+">"
+																																						+ total
+																																						+ "</td>";
+
+																																				var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																																				+ item.id + ","
+																																				+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																																				/* <a href='#' class='action_btn'> *//* </a> */
+																																				allTotal = allTotal
+																																						+ total;
+
+																																				var trclosed = "</tr>";
+
+																																				$('#table_grid tbody')
+																																						.append(tr);
+																																				$('#table_grid tbody')
+																																						.append(index);
+																																				$('#table_grid tbody')
+																																						.append(barcode);
+																																				$('#table_grid tbody')
+																																						.append(
+																																								itemName);
+																																				$('#table_grid tbody')
+																																						.append(qty);
+																																				$('#table_grid tbody')
+																																						.append(rate);
+
+																																				$('#table_grid tbody')
+																																						.append(Amount);
+
+																																				$('#table_grid tbody')
+																																						.append(action);
+
+																																				$('#table_grid tbody')
+																																						.append(
+																																								trclosed);
+
+																																			})
+
+
+																															$("#total1").html(allTotal);
+																															document.getElementById("tot1")
+																																	.setAttribute('value', allTotal);
+
+																															
+																															
+																															
+																															var discount = $("#discount1").val();
+																															var grandAmt = allTotal - (allTotal * (discount / 100));
+																															
+																															document.getElementById("paidAmount1")
+																															.setAttribute('value', grandAmt);
+																															
+																															var paidAmount = $("#paidAmount1").val();
+																															
+																															var grandMinusPaidAmt=grandAmt-paidAmount;
+																															
+																															$('#grandtotal1').html(grandAmt);
+																															document.getElementById("grandtot1").setAttribute('value',grandAmt);
+
+																															
+																															$('#remAmt1').html(grandMinusPaidAmt);
+																															document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
+																															
+																															document.getElementById("barcode1").focus();
+																														});
+													
+																											} else {//Use from Regular Opening Stock
+
+																												$
+																														.getJSON(
+																																'${useFromStock1fun1}',//function, when Use from Regular Opening Stock 
+																																{
+																																	index : key,
+																																	ajax : 'true'
+																																},
+																																function(
+																																		data) {
+																																	$(
+																																			'#loader')
+																																			.hide();
+																																	if (data == "") {
+																																		alert("No records found !!");
+																																	}
+																																	$(
+																																			'#table_grid td')
+																																			.remove();
+																																	var allTotal = 0;
+																																	$
+																																			.each(
+																																					data,
+																																					function(
+																																							key,
+																																							item) {
+
+																																						if (item.spStockLessthanQty == true) {
+																																							var retVal2 = confirm("Regular Opening Stock is Less Than Ordered Qty,Still you want to use Available Regular Opening Stock?1");
+																																							if (retVal2 == true) {
+
+																																								$
+																																										.getJSON(
+																																												'${useFromStock1fun2}',//function, when Regular Opening Stock is less than entered Qty
+																																												{
+																																													index : key,
+																																													ajax : 'true'
+																																												},
+																																												function(data) {
+																																													$('#loader').hide();
+																																													if (data == "") {
+																																														alert("No records found !!");
+																																													}
+																																													$('#table_grid td').remove();
+																																													var allTotal = 0;
+
+																																													$.each(data,function(key, item) {
+
+																																																		var index = key + 1;
+
+																																																		var tr = "<tr>";
+
+																																																		var index = "<td align=left>"
+																																																				+ index
+																																																				+ "</td>";
+
+																																																		var barcode = "<td>"
+																																																				+ item.itemId
+																																																				+ "</td>";
+
+																																																		var itemName = "<td>"
+																																																				+ item.itemName
+																																																				+ "</td>";
+
+																																																		var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+																																				/*onkeyup= updateTotal("
+																																																			+ bill.id + ","
+																																																			+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																																																		var rate = "<td >"
+																																																				+ item.mrp
+																																																				+ "</td>";
+
+																																																		var total = parseFloat(item.mrp)
+																																																				* parseFloat(item.qty);
+
+																																																		var Amount = "<td align=center id=billTotal1"+item.id+">"
+																																																				+ total
+																																																				+ "</td>";
+
+																																																		var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																																																		+ item.id + ","
+																																																		+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																																																		/* <a href='#' class='action_btn'> *//* </a> */
+																																																		allTotal = allTotal
+																																																				+ total;
+
+																																																		var trclosed = "</tr>";
+
+																																																		$('#table_grid tbody')
+																																																				.append(tr);
+																																																		$('#table_grid tbody')
+																																																				.append(index);
+																																																		$('#table_grid tbody')
+																																																				.append(barcode);
+																																																		$('#table_grid tbody')
+																																																				.append(
+																																																						itemName);
+																																																		$('#table_grid tbody')
+																																																				.append(qty);
+																																																		$('#table_grid tbody')
+																																																				.append(rate);
+
+																																																		$('#table_grid tbody')
+																																																				.append(Amount);
+
+																																																		$('#table_grid tbody')
+																																																				.append(action);
+
+																																																		$('#table_grid tbody')
+																																																				.append(
+																																																						trclosed);
+
+																																																	})
+
+
+																																													$("#total1").html(allTotal);
+																																													document.getElementById("tot1")
+																																															.setAttribute('value', allTotal);
+
+																																													
+																																													
+																																													
+																																													var discount = $("#discount1").val();
+																																													var grandAmt = allTotal - (allTotal * (discount / 100));
+																																													
+																																													document.getElementById("paidAmount1")
+																																													.setAttribute('value', grandAmt);
+																																													
+																																													var paidAmount = $("#paidAmount1").val();
+																																													
+																																													var grandMinusPaidAmt=grandAmt-paidAmount;
+																																													
+																																													$('#grandtotal1').html(grandAmt);
+																																													document.getElementById("grandtot1").setAttribute('value',grandAmt);
+
+																																													
+																																													$('#remAmt1').html(grandMinusPaidAmt);
+																																													document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
+																																													
+																																													document.getElementById("barcode1").focus();
+																																												});
+																																								return true;
+																																							} else {//11.17
+																																								
+																																								
+																																								
+																																								alert("Your Regular Opening Stock is Less than Order Quantity!!")
+
+																																								
+																																								
+
+																																								return false;
+																																							}
+																																						} else {
+																																							//11.28 reg op stock is less than entered qty
+																																							
+																																							var index = key + 1;
+
+																																							var tr = "<tr>";
+
+																																							var index = "<td align=left>"
+																																									+ index
+																																									+ "</td>";
+
+																																							var barcode = "<td>"
+																																									+ item.itemId
+																																									+ "</td>";
+
+																																							var itemName = "<td>"
+																																									+ item.itemName
+																																									+ "</td>";
+
+																																							var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+																									/*onkeyup= updateTotal("
+																																								+ bill.id + ","
+																																								+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																																							var rate = "<td >"
+																																									+ item.mrp
+																																									+ "</td>";
+
+																																							var total = parseFloat(item.mrp)
+																																									* parseFloat(item.qty);
+
+																																							var Amount = "<td align=center id=billTotal1"+item.id+">"
+																																									+ total
+																																									+ "</td>";
+
+																																							var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																																							+ item.id + ","
+																																							+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																																							/* <a href='#' class='action_btn'> *//* </a> */
+																																							allTotal = allTotal
+																																									+ total;
+
+																																							var trclosed = "</tr>";
+
+																																							$('#table_grid tbody')
+																																									.append(tr);
+																																							$('#table_grid tbody')
+																																									.append(index);
+																																							$('#table_grid tbody')
+																																									.append(barcode);
+																																							$('#table_grid tbody')
+																																									.append(
+																																											itemName);
+																																							$('#table_grid tbody')
+																																									.append(qty);
+																																							$('#table_grid tbody')
+																																									.append(rate);
+
+																																							$('#table_grid tbody')
+																																									.append(Amount);
+
+																																							$('#table_grid tbody')
+																																									.append(action);
+
+																																							$('#table_grid tbody')
+																																									.append(
+																																											trclosed);
+
+																																					
+																																							
+
+																																							
+																																							
+
+																																						}
+
+																																					})
+																																					
+																																					$("#total1").html(allTotal);
+																																	document.getElementById("tot1")
+																																			.setAttribute('value', allTotal);
+
+																																	var discount = $("#discount1").val();
+																																	var grandAmt = allTotal
+																																			- (allTotal * (discount / 100));
+
+																																	document.getElementById("paidAmount1")
+																																			.setAttribute('value', grandAmt);
+
+																																	var paidAmount = $("#paidAmount1").val();
+
+																																	var grandMinusPaidAmt = grandAmt
+																																			- paidAmount;
+
+																																	$('#grandtotal1').html(grandAmt);
+																																	document.getElementById("grandtot1")
+																																			.setAttribute('value', grandAmt);
+
+																																	$('#remAmt1').html(grandMinusPaidAmt);
+																																	document.getElementById("remAmount1")
+																																			.setAttribute('value',
+																																					grandMinusPaidAmt);
+
+																																	document.getElementById("barcode1").focus();
+																																	
+
+																																});
+
+																											}
+																										} else {//Adding Added item to List
+																											
+
+																											var index = key + 1;
+
+																											var tr = "<tr>";
+
+																											var index = "<td align=left>"
+																													+ index
+																													+ "</td>";
+
+																											var barcode = "<td>"
+																													+ item.itemId
+																													+ "</td>";
+
+																											var itemName = "<td>"
+																													+ item.itemName
+																													+ "</td>";
+
+																											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+													/*onkeyup= updateTotal("
+																												+ bill.id + ","
+																												+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																											var rate = "<td >"
+																													+ item.mrp
+																													+ "</td>";
+
+																											var total = parseFloat(item.mrp)
+																													* parseFloat(item.qty);
+
+																											var Amount = "<td align=center id=billTotal1"+item.id+">"
+																													+ total
+																													+ "</td>";
+
+																											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																											+ item.id + ","
+																											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																											/* <a href='#' class='action_btn'> *//* </a> */
+																											allTotal = allTotal
+																													+ total;
+
+																											var trclosed = "</tr>";
+
+																											$('#table_grid tbody')
+																													.append(tr);
+																											$('#table_grid tbody')
+																													.append(index);
+																											$('#table_grid tbody')
+																													.append(barcode);
+																											$('#table_grid tbody')
+																													.append(
+																															itemName);
+																											$('#table_grid tbody')
+																													.append(qty);
+																											$('#table_grid tbody')
+																													.append(rate);
+
+																											$('#table_grid tbody')
+																													.append(Amount);
+
+																											$('#table_grid tbody')
+																													.append(action);
+
+																											$('#table_grid tbody')
+																													.append(
+																															trclosed);
+
+																									
+																											
+
+																										}
+																									})//1
+																									
+																									$("#total1").html(allTotal);
+																					document.getElementById("tot1")
+																							.setAttribute('value', allTotal);
+
+																					var discount = $("#discount1").val();
+																					var grandAmt = allTotal
+																							- (allTotal * (discount / 100));
+
+																					document.getElementById("paidAmount1")
+																							.setAttribute('value', grandAmt);
+
+																					var paidAmount = $("#paidAmount1").val();
+
+																					var grandMinusPaidAmt = grandAmt
+																							- paidAmount;
+
+																					$('#grandtotal1').html(grandAmt);
+																					document.getElementById("grandtot1")
+																							.setAttribute('value', grandAmt);
+
+																					$('#remAmt1').html(grandMinusPaidAmt);
+																					document.getElementById("remAmount1")
+																							.setAttribute('value',
+																									grandMinusPaidAmt);
+
+																					document.getElementById("barcode1").focus();
+																									
+																									
+
+																				});
+
+																//	
+
+																return true;
+															} else {
+																//if User Selected No(Then, Use from Reg Opening Stock)
+
+																$
+																		.getJSON(
+																				'${useFromStock1fun1}',//function, when Use from Regular Opening Stock 
+																				{
+																					index : key,
+																					ajax : 'true'
+																				},
+																				function(
+																						data) {
+																					$(
+																							'#loader')
+																							.hide();
+																					if (data == "") {
+																						alert("No records found !!");
+																					}
+																					$(
+																							'#table_grid td')
+																							.remove();
+																					var allTotal = 0;
+																					$
+																							.each(
+																									data,
+																									function(
+																											key,
+																											item) {
+
+																										if (item.spStockLessthanQty == true) {
+																											var retVal2 = confirm("Regular Opening Stock is Less Than Ordered Qty,Still you want to use Available Regular Opening Stock?2");
+																											if (retVal2 == true) {
+
+																												$
+																														.getJSON(
+																																'${useFromStock1fun2}',//function, when Regular Opening Stock is less than entered Qty
+																																{
+																																	index : key,
+																																	ajax : 'true'
+																																},
+																																function(data) {
+																																	$('#loader').hide();
+																																	if (data == "") {
+																																		alert("No records found !!");
+																																	}
+																																	$('#table_grid td').remove();
+																																	var allTotal = 0;
+
+																																	$.each(data,function(key, item) {
+
+																																						var index = key + 1;
+
+																																						var tr = "<tr>";
+
+																																						var index = "<td align=left>"
+																																								+ index
+																																								+ "</td>";
+
+																																						var barcode = "<td>"
+																																								+ item.itemId
+																																								+ "</td>";
+
+																																						var itemName = "<td>"
+																																								+ item.itemName
+																																								+ "</td>";
+
+																																						var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+																								/*onkeyup= updateTotal("
+																																							+ bill.id + ","
+																																							+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																																						var rate = "<td >"
+																																								+ item.mrp
+																																								+ "</td>";
+
+																																						var total = parseFloat(item.mrp)
+																																								* parseFloat(item.qty);
+
+																																						var Amount = "<td align=center id=billTotal1"+item.id+">"
+																																								+ total
+																																								+ "</td>";
+
+																																						var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																																						+ item.id + ","
+																																						+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																																						/* <a href='#' class='action_btn'> *//* </a> */
+																																						allTotal = allTotal
+																																								+ total;
+
+																																						var trclosed = "</tr>";
+
+																																						$('#table_grid tbody')
+																																								.append(tr);
+																																						$('#table_grid tbody')
+																																								.append(index);
+																																						$('#table_grid tbody')
+																																								.append(barcode);
+																																						$('#table_grid tbody')
+																																								.append(
+																																										itemName);
+																																						$('#table_grid tbody')
+																																								.append(qty);
+																																						$('#table_grid tbody')
+																																								.append(rate);
+
+																																						$('#table_grid tbody')
+																																								.append(Amount);
+
+																																						$('#table_grid tbody')
+																																								.append(action);
+
+																																						$('#table_grid tbody')
+																																								.append(
+																																										trclosed);
+
+																																					})
+
+
+																																	$("#total1").html(allTotal);
+																																	document.getElementById("tot1")
+																																			.setAttribute('value', allTotal);
+
+																																	
+																																	
+																																	
+																																	var discount = $("#discount1").val();
+																																	var grandAmt = allTotal - (allTotal * (discount / 100));
+																																	
+																																	document.getElementById("paidAmount1")
+																																	.setAttribute('value', grandAmt);
+																																	
+																																	var paidAmount = $("#paidAmount1").val();
+																																	
+																																	var grandMinusPaidAmt=grandAmt-paidAmount;
+																																	
+																																	$('#grandtotal1').html(grandAmt);
+																																	document.getElementById("grandtot1").setAttribute('value',grandAmt);
+
+																																	
+																																	$('#remAmt1').html(grandMinusPaidAmt);
+																																	document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
+																																	
+																																	document.getElementById("barcode1").focus();
+																																});
+
+																												return true;
+																											} else {
+																												
+																												//Don't use from Regular opening Stock
+																												
+																												alert("Your Regular Opening Stock is Less than Ordered Quantity!!!")
+
+																												return false;
+																											}
+																										} else {
+
+																										}
+
+																									})
+
+																				});
+
+																return false;
+															}
+														} else if(item.regOpStockLess==true){
+															
+															//else condition in controller(if reg op stock is less)1.22
+																							var retVal2 = confirm("Regular Opening Stock is Less Than Ordered Qty,Still you want to use Available Regular Opening Stock?3");
+																											if (retVal2 == true) {
+
+																												$
+																														.getJSON(
+																																'${regOpStockQtyLess}',//function, when Regular Opening Stock is less than entered Qty
+																																{
+																																	index : key,
+																																	ajax : 'true'
+																																},
+																																function(data) {
+																																	$('#loader').hide();
+																																	if (data == "") {
+																																		alert("No records found !!");
+																																	}
+																																	$('#table_grid td').remove();
+																																	var allTotal = 0;
+
+																																	$.each(data,function(key, item) {
+
+																																						var index = key + 1;
+
+																																						var tr = "<tr>";
+
+																																						var index = "<td align=left>"
+																																								+ index
+																																								+ "</td>";
+
+																																						var barcode = "<td>"
+																																								+ item.itemId
+																																								+ "</td>";
+
+																																						var itemName = "<td>"
+																																								+ item.itemName
+																																								+ "</td>";
+
+																																						var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+																								/*onkeyup= updateTotal("
+																																							+ bill.id + ","
+																																							+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+																																						var rate = "<td >"
+																																								+ item.mrp
+																																								+ "</td>";
+
+																																						var total = parseFloat(item.mrp)
+																																								* parseFloat(item.qty);
+
+																																						var Amount = "<td align=center id=billTotal1"+item.id+">"
+																																								+ total
+																																								+ "</td>";
+
+																																						var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+																																						+ item.id + ","
+																																						+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+																																						/* <a href='#' class='action_btn'> *//* </a> */
+																																						allTotal = allTotal
+																																								+ total;
+
+																																						var trclosed = "</tr>";
+
+																																						$('#table_grid tbody')
+																																								.append(tr);
+																																						$('#table_grid tbody')
+																																								.append(index);
+																																						$('#table_grid tbody')
+																																								.append(barcode);
+																																						$('#table_grid tbody')
+																																								.append(
+																																										itemName);
+																																						$('#table_grid tbody')
+																																								.append(qty);
+																																						$('#table_grid tbody')
+																																								.append(rate);
+
+																																						$('#table_grid tbody')
+																																								.append(Amount);
+
+																																						$('#table_grid tbody')
+																																								.append(action);
+
+																																						$('#table_grid tbody')
+																																								.append(
+																																										trclosed);
+
+																																					})
+
+
+																																	$("#total1").html(allTotal);
+																																	document.getElementById("tot1")
+																																			.setAttribute('value', allTotal);
+
+																																	
+																																	
+																																	
+																																	var discount = $("#discount1").val();
+																																	var grandAmt = allTotal - (allTotal * (discount / 100));
+																																	
+																																	document.getElementById("paidAmount1")
+																																	.setAttribute('value', grandAmt);
+																																	
+																																	var paidAmount = $("#paidAmount1").val();
+																																	
+																																	var grandMinusPaidAmt=grandAmt-paidAmount;
+																																	
+																																	$('#grandtotal1').html(grandAmt);
+																																	document.getElementById("grandtot1").setAttribute('value',grandAmt);
+
+																																	
+																																	$('#remAmt1').html(grandMinusPaidAmt);
+																																	document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
+																																	
+																																	document.getElementById("barcode1").focus();
+																																});
+
+																												return true;
+																											} else {
+																												
+																												//Don't use from Regular opening Stock
+																												
+																												alert("Your Regular Opening Stock is Less than Ordered Quantity!!!")
+
+																												return false;
+																											}
+															
+															
+
+														}
+														else
+															{
+															//if special opening stock is less than 0 for that item
+															var index = key + 1;
+
+															var tr = "<tr>";
+
+															var index = "<td align=left>"
+																	+ index
+																	+ "</td>";
+
+															var barcode = "<td>"
+																	+ item.itemId
+																	+ "</td>";
+
+															var itemName = "<td>"
+																	+ item.itemName
+																	+ "</td>";
+
+															var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control   disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+	/*onkeyup= updateTotal("
+																+ bill.id + ","
+																+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+															var rate = "<td >"
+																	+ item.mrp
+																	+ "</td>";
+
+															var total = parseFloat(item.mrp)
+																	* parseFloat(item.qty);
+
+															var Amount = "<td align=center id=billTotal1"+item.id+">"
+																	+ total
+																	+ "</td>";
+
+															var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
+															+ item.id + ","
+															+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+															/* <a href='#' class='action_btn'> *//* </a> */
+															allTotal = allTotal
+																	+ total;
+
+															var trclosed = "</tr>";
+
+															$('#table_grid tbody')
+																	.append(tr);
+															$('#table_grid tbody')
+																	.append(index);
+															$('#table_grid tbody')
+																	.append(barcode);
+															$('#table_grid tbody')
+																	.append(
+																			itemName);
+															$('#table_grid tbody')
+																	.append(qty);
+															$('#table_grid tbody')
+																	.append(rate);
+
+															$('#table_grid tbody')
+																	.append(Amount);
+
+															$('#table_grid tbody')
+																	.append(action);
+
+															$('#table_grid tbody')
+																	.append(
+																			trclosed);
+
+
+															
+															
+															
+															
+															
+															}
+															
 														var index = key + 1;
 
 														var tr = "<tr>";
@@ -2216,293 +3072,327 @@
 																.append(
 																		trclosed);
 
+														//regOpStockisGretor=true
+														
+												
 													})
-
 
 									$("#total1").html(allTotal);
 									document.getElementById("tot1")
 											.setAttribute('value', allTotal);
 
-									
-									
-									
 									var discount = $("#discount1").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									
-									document.getElementById("paidAmount1")
-									.setAttribute('value', grandAmt);
-									
-									var paidAmount = $("#paidAmount1").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									
-									$('#grandtotal1').html(grandAmt);
-									document.getElementById("grandtot1").setAttribute('value',grandAmt);
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
 
-									
+									document.getElementById("paidAmount1")
+											.setAttribute('value', grandAmt);
+
+									var paidAmount = $("#paidAmount1").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+
+									$('#grandtotal1').html(grandAmt);
+									document.getElementById("grandtot1")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt1').html(grandMinusPaidAmt);
-									document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount1")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode1").focus();
 								});
 			}
+			
 		}
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
-	function editDisable1(id,qty){
-	//	alert(id+""+qty)
-		
-		$("#billQty1"+id).prop('disabled', false);
-		
-		$("#saveItem1"+id).show();
-		document.getElementById("saveItem1"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem1"+id).style.visibility= "hidden"; 
-		$("#editItem1"+id).prop('disabled', true);
-		
-	}
+		function editDisable1(id, qty) {
+			//	alert(id+""+qty)
+
+			$("#billQty1" + id).prop('disabled', false);
+
+			$("#saveItem1" + id).show();
+			document.getElementById("saveItem1" + id).style.visibility = "visible";
+
+			document.getElementById("editItem1" + id).style.visibility = "hidden";
+			$("#editItem1" + id).prop('disabled', true);
+
+		}
 	</script>
 	<script type="text/javascript">
-	function editEnable1(id){
-		//alert(id)
-		$("#saveItem1"+id).hide();
-		document.getElementById("saveItem1"+id).style.visibility = "hidden"; 
+		function editEnable1(id) {
+			//alert(id)
+			$("#saveItem1" + id).hide();
+			document.getElementById("saveItem1" + id).style.visibility = "hidden";
 
-		$("#editItem1"+id).prop('disabled', false);
-		document.getElementById("editItem1"+id).style.visibility= "visible"; 
-	}
+			$("#editItem1" + id).prop('disabled', false);
+			document.getElementById("editItem1" + id).style.visibility = "visible";
+		}
 	</script>
 	<script type="text/javascript">
-	function deleteFunction1(id,qty){
-		 $.getJSON(
-					'${deleteItem1}',
-					{
-						id : id,
-						qty : qty,
+		function deleteFunction1(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem1}',
+							{
+								id : id,
+								qty : qty,
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid td').remove();
-						var allTotal = 0;
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid td').remove();
+								var allTotal = 0;
 
-						$.each(data,function(key, item) {
+								$
+										.each(
+												data,
+												function(key, item) {
 
-											var index = key + 1;
+													var index = key + 1;
 
-											var tr = "<tr>";
+													var tr = "<tr>";
 
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-											var Amount = "<td align=center id=billTotal1"+item.id+">"
-													+ total
-													+ "</td>";
+													var Amount = "<td align=center id=billTotal1"+item.id+">"
+															+ total + "</td>";
 
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"
+															+ item.id
+															+ " onclick=updateTotal1("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem1"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 
-											allTotal = allTotal
-													+ total;
+													allTotal = allTotal + total;
 
-											var trclosed = "</tr>";
+													var trclosed = "</tr>";
 
-											$('#table_grid tbody')
-													.append(tr);
-											$('#table_grid tbody')
-													.append(index);
-											$('#table_grid tbody')
-													.append(barcode);
-											$('#table_grid tbody')
-													.append(
-															itemName);
-											$('#table_grid tbody')
-													.append(qty);
-											$('#table_grid tbody')
-													.append(rate);
+													$('#table_grid tbody')
+															.append(tr);
+													$('#table_grid tbody')
+															.append(index);
+													$('#table_grid tbody')
+															.append(barcode);
+													$('#table_grid tbody')
+															.append(itemName);
+													$('#table_grid tbody')
+															.append(qty);
+													$('#table_grid tbody')
+															.append(rate);
 
-											$('#table_grid tbody')
-													.append(Amount);
+													$('#table_grid tbody')
+															.append(Amount);
 
-											$('#table_grid tbody')
-													.append(action);
+													$('#table_grid tbody')
+															.append(action);
 
-											$('#table_grid tbody')
-													.append(
-															trclosed);
-											
+													$('#table_grid tbody')
+															.append(trclosed);
 
-										})
+												})
 
-						$("#total1").html(allTotal);
-						document.getElementById("tot1")
-								.setAttribute('value', allTotal);
+								$("#total1").html(allTotal);
+								document.getElementById("tot1").setAttribute(
+										'value', allTotal);
 
-						
-						
-						var discount = $("#discount1").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						
-						document.getElementById("paidAmount1")
-						.setAttribute('value', grandAmt);
-						
-						var paidAmount = $("#paidAmount1").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal1').html(grandAmt);
-						document.getElementById("grandtot1").setAttribute('value',grandAmt);
+								var discount = $("#discount1").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
 
-						
-						$('#remAmt1').html(grandMinusPaidAmt);
-						document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode1").focus();
-					});
-}</script>
+								document.getElementById("paidAmount1")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount1").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal1').html(grandAmt);
+								document.getElementById("grandtot1")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt1').html(grandMinusPaidAmt);
+								document.getElementById("remAmount1")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode1").focus();
+							});
+		}
+	</script>
 	<script type="text/javascript">
-		function updateTotal1(id,mrp) {
-			
-		//	alert(id);
-		//	alert(mrp);
+		function updateTotal1(id, mrp) {
+
+			//	alert(id);
+			//	alert(mrp);
 			var newQty = $("#billQty1" + id).val();
-		//	alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem1}',
-						{
-							id : id,
-							qty : newQty,
+			//	alert(newQty)
 
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid td').remove();
-							var allTotal = 0;
+			$
+					.getJSON(
+							'${updateItem1}',
+							{
+								id : id,
+								qty : newQty,
 
-							$.each(data,function(key, item) {
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid td').remove();
+								var allTotal = 0;
 
-												var index = key + 1;
+								$
+										.each(
+												data,
+												function(key, item) {
 
-												var tr = "<tr>";
+													var index = key + 1;
 
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
+													var tr = "<tr>";
 
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty1"+ item.id+ " name=billQty1"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-												var Amount = "<td align=center id=billTotal1"+item.id+">"
-														+ total
-														+ "</td>";
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"+item.id+" onclick=updateTotal1("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
+													var Amount = "<td align=center id=billTotal1"+item.id+">"
+															+ total + "</td>";
 
-												var trclosed = "</tr>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem1"
+															+ item.id
+															+ " onclick=updateTotal1("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable1("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem1"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction1("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
 
-												$('#table_grid tbody')
-														.append(tr);
-												$('#table_grid tbody')
-														.append(index);
-												$('#table_grid tbody')
-														.append(barcode);
-												$('#table_grid tbody')
-														.append(
-																itemName);
-												$('#table_grid tbody')
-														.append(qty);
-												$('#table_grid tbody')
-														.append(rate);
+													var trclosed = "</tr>";
 
-												$('#table_grid tbody')
-														.append(Amount);
+													$('#table_grid tbody')
+															.append(tr);
+													$('#table_grid tbody')
+															.append(index);
+													$('#table_grid tbody')
+															.append(barcode);
+													$('#table_grid tbody')
+															.append(itemName);
+													$('#table_grid tbody')
+															.append(qty);
+													$('#table_grid tbody')
+															.append(rate);
 
-												$('#table_grid tbody')
-														.append(action);
+													$('#table_grid tbody')
+															.append(Amount);
 
-												$('#table_grid tbody')
-														.append(
-																trclosed);
+													$('#table_grid tbody')
+															.append(action);
 
-											})
+													$('#table_grid tbody')
+															.append(trclosed);
 
-							$("#total1").html(allTotal);
-							document.getElementById("tot1")
-									.setAttribute('value', allTotal);
+												})
 
-							
-							
-							var discount = $("#discount1").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							
-							document.getElementById("paidAmount1")
-							.setAttribute('value', grandAmt);
-							
-							var paidAmount = $("#paidAmount1").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal1').html(grandAmt);
-							document.getElementById("grandtot1").setAttribute('value',grandAmt);
+								$("#total1").html(allTotal);
+								document.getElementById("tot1").setAttribute(
+										'value', allTotal);
 
-							
-							$('#remAmt1').html(grandMinusPaidAmt);
-							document.getElementById("remAmount1").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode1").focus();
-						});
+								var discount = $("#discount1").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount1")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount1").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal1').html(grandAmt);
+								document.getElementById("grandtot1")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt1').html(grandMinusPaidAmt);
+								document.getElementById("remAmount1")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode1").focus();
+							});
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function addNewRow2() {
 
@@ -2529,6 +3419,7 @@
 									id : id,
 									qty : qty,
 
+									
 									ajax : 'true'
 								},
 								function(data) {
@@ -2539,333 +3430,557 @@
 									$('#table_grid2 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,function(key, item) {//**Fun1-Start**
+														
+											    //**----------Check first Special Opening Stock is gretor Show Prompt!!---------**
+													if (item.spStockGretor == true) {
+														
+														var retVal = confirm("Would you like to use Special Opening Stock?");
+														
+												//-------------------- Use From Special Opening Stock-----------------------------
+														if (retVal == true) {
+															
+															
+													$.getJSON(
+														'${useFromSpecialOpStockFun1}',//function, when  User Selected Special Opening Stock
+														{
+																index : key,
+																ajax : 'true'
+														},
+														function(data) {             
+																$('#loader').hide();
+																if (data == "") {
+																		alert("No records found !!");
+																}
+															$('#table_grid2 td').remove();
+														    var allTotal = 0;
+                                                             $.each(data,function(key, item) {//**Fun2-Start**
+                                                 //-------------------------------------------------------------------------------
+                                     				if (item.spStockGretor == true) {
 
-														var index = key + 1;
+															var retVal1 = confirm("Special opening stock is less than Entered quantity, Do you want to use Special Available Opening Stock?")
+															if (retVal1 == true) {							
+																							
+																		$.getJSON(
+																				'${useFromSpecialOpStockFun2}',//function, when User Want To Use Special Opening Stock //append data and totakl rem
+																				{
+																						index : key,
+																						ajax : 'true'
+																				},
+																				function(data) {             
+																					$('#loader').hide();
+																					if (data == "") {
+																							alert("No records found !!");
+																					}
+																				$('#table_grid2 td').remove();
+																			    var allTotal = 0;
+					                                                             $.each(data,function(key, item) {//**Fun3-Start**
+					                                                            	 
+					                                                            	 
+					                                                            	 
+					                                                            	//**Fun3-appendData(useFromSpecialOpStockFun2)**
+					                                                             })
+					                                                         	//**Fun3-totalCal(useFromSpecialOpStockFun2)**
 
-														var tr = "<tr>";
+					                                                             
+																				})
+					                                                             
+																				
+																		return true;		
+															}
+															else
+																{//When User Selected No ( Use RegOpening Stock )
+																$
+																.getJSON(
+																		'${useFromRegOpeningStockFun3}',//function, when Use from Regular Opening Stock 
+																		{
+																			index : key,
+																			ajax : 'true'
+																		},
+																		function(data) {             
+																			$('#loader').hide();
+																			if (data == "") {
+																					alert("No records found !!");
+																			}
+																		$('#table_grid2 td').remove();
+																	    var allTotal = 0;
+			                                                             $.each(data,function(key, item) {
+			                                                            	 if (item.regOpStockLess == true) {
 
-														var index = "<td align=left>"
-																+ index
-																+ "</td>";
+			         															var retVal1 = confirm("Regular opening stock is less than Entered quantity, Do you want to use Regular Available Opening Stock?")
+			         															if (retVal1 == true) {	
+			         																
+			         																$
+			        																.getJSON(
+			        																		'${useFromRegOpeningStockFun4}',//function, when Use from Regular Opening Stock 
+			        																		{
+			        																			index : key,
+			        																			ajax : 'true'
+			        																		})
+			         																
+			         																return true;
+			         															}
+			         															else
+			         																{
+			         																//alertPromt3No 
+			         																
+			         																alert("Regular Opening Stock is Less than entered Qty.");
+			         																return false;
+			         																}
+			         																
+			                                                            	 }
+			                                                            	 
+			                                                             })
+																		})
+																  
+																  return false;
+																}
+                                     				}
+														//**Fun2-appendData();	
+                                                })//**Fun2-End**
+                                                 //**Fun2-totalCalculation();										
+											})		
+														
+														/* var index = key + 1;
 
-														var barcode = "<td>"
-																+ item.itemId
-																+ "</td>";
+															var tr = "<tr>";
 
-														var itemName = "<td>"
-																+ item.itemName
-																+ "</td>";
+															var index = "<td align=left>"
+																	+ index
+																	+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
-														var rate = "<td >"
-																+ item.mrp
-																+ "</td>";
+															var barcode = "<td>"
+																	+ item.itemId
+																	+ "</td>";
 
-														var total = parseFloat(item.mrp)
-																* parseFloat(item.qty);
+															var itemName = "<td>"
+																	+ item.itemName
+																	+ "</td>";
 
-														var Amount = "<td align=center id=billTotal2"+item.id+">"
-																+ total
-																+ "</td>";
+															var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
+															
+															var rate = "<td >"
+																	+ item.mrp
+																	+ "</td>";
 
-														var action = "<td><abbr title='Save'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"+item.id+" onclick=updateTotal2("
-														+ item.id + ","
-														+ item.mrp + ")>  </i> </abbr> <abbr title='Edit'><i class='fa fa-edit'onclick=editDisable2("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem2"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-														/* <a href='#' class='action_btn'> *//* </a> */
-														allTotal = allTotal
-																+ total;
+															var total = parseFloat(item.mrp)
+																	* parseFloat(item.qty);
 
-														var trclosed = "</tr>";
+															var Amount = "<td align=center id=billTotal2"+item.id+">"
+																	+ total
+																	+ "</td>";
 
-														$('#table_grid2 tbody')
-																.append(tr);
-														$('#table_grid2 tbody')
-																.append(index);
-														$('#table_grid2 tbody')
-																.append(barcode);
-														$('#table_grid2 tbody')
-																.append(
-																		itemName);
-														$('#table_grid2 tbody')
-																.append(qty);
-														$('#table_grid2 tbody')
-																.append(rate);
+															var action = "<td><abbr title='Save'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"
+																	+ item.id
+																	+ " onclick=updateTotal2("
+																	+ item.id
+																	+ ","
+																	+ item.mrp
+																	+ ")>  </i> </abbr> <abbr title='Edit'><i class='fa fa-edit'onclick=editDisable2("
+																	+ item.id
+																	+ ","
+																	+ item.qty
+																	+ ","
+																	+ item.mrp
+																	+ ");   id=editItem2"
+																	+ item.id
+																	+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("
+																	+ item.id
+																	+ ","
+																	+ item.qty
+																	+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														
+															allTotal = allTotal
+																	+ total;
 
-														$('#table_grid2 tbody')
-																.append(Amount);
+															var trclosed = "</tr>";
 
-														$('#table_grid2 tbody')
-																.append(action);
+															$('#table_grid2 tbody')
+																	.append(tr);
+															$('#table_grid2 tbody')
+																	.append(index);
+															$('#table_grid2 tbody')
+																	.append(barcode);
+															$('#table_grid2 tbody')
+																	.append(
+																			itemName);
+															$('#table_grid2 tbody')
+																	.append(qty);
+															$('#table_grid2 tbody')
+																	.append(rate);
 
-														$('#table_grid2 tbody')
-																.append(
-																		trclosed);
+															$('#table_grid2 tbody')
+																	.append(Amount);
 
-													})
+															$('#table_grid2 tbody')
+																	.append(action);
 
+															$('#table_grid2 tbody')
+																	.append(
+																			trclosed);
+															 */
+													
+																return true;
+															}
+															else
+																{
+																$
+																.getJSON(
+																		'${useFromRegOpeningStockFun3}',//function, when Use from Regular Opening Stock 
+																		{
+																			index : key,
+																			ajax : 'true'
+																		},
+																		function(data) {             
+																			$('#loader').hide();
+																			if (data == "") {
+																					alert("No records found !!");
+																			}
+																		$('#table_grid2 td').remove();
+																	    var allTotal = 0;
+			                                                             $.each(data,function(key, item) {
+			                                                            	 if (item.regOpStockLess == true) {
 
-									$("#total2").html(allTotal);
+			         															var retVal1 = confirm("Regular opening stock is less than Entered quantity, Do you want to use Regular Available Opening Stock?")
+			         															if (retVal1 == true) {	
+			         																
+			         																$
+			        																.getJSON(
+			        																		'${useFromRegOpeningStockFun4}',//function, when Use from Regular Opening Stock 
+			        																		{
+			        																			index : key,
+			        																			ajax : 'true'
+			        																		})
+			         																
+			         																return true;
+			         															}
+			         															else
+			         																{
+			         																//alertPromt3No 
+			         																
+			         																alert("Regular Opening Stock is Less than entered Qty.");
+			         																return false;
+			         																}
+			         																
+			                                                            	 }
+			                                                            	 
+			                                                             })
+																		})
+																
+																return false;
+																}
+													}
+													else
+														{
+														
+														//Special Stock is not gretor (Else Condition)
+														
+														}
+												
+											    //----------------------------------------------------------------------------------------
+													//**Fun1-appendData();
+
+													}) //**Fun1-End**
+
+								    $("#total2").html(allTotal);
 									document.getElementById("tot2")
 											.setAttribute('value', allTotal);
 
 									document.getElementById("paidAmount2")
-									.setAttribute('value', allTotal);
-									
-									var discount = $("#discount2").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									var paidAmount = $("#paidAmount2").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal2').html(grandAmt);
-									document.getElementById("grandtot2").setAttribute('value',grandAmt);
+											.setAttribute('value', allTotal);
 
-									
+									var discount = $("#discount2").val();
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
+									var paidAmount = $("#paidAmount2").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal2').html(grandAmt);
+									document.getElementById("grandtot2")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt2').html(grandMinusPaidAmt);
-									document.getElementById("remAmount2").setAttribute('value',grandMinusPaidAmt);
-									
-									document.getElementById("barcode2").focus();
+									document.getElementById("remAmount2")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
+									document.getElementById("barcode2").focus(); 
 								});
 			}
 		}
 	</script>
+	
 	<script type="text/javascript">
-	function editDisable2(id,qty){
-	//	alert(id+""+qty)
-		
-		$("#billQty2"+id).prop('disabled', false);
-		
-		$("#saveItem2"+id).show();
-		document.getElementById("saveItem2"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem2"+id).style.visibility= "hidden"; 
-		$("#editItem2"+id).prop('disabled', true);
-		
-	}
+		function editDisable2(id, qty) {
+			//	alert(id+""+qty)
+
+			$("#billQty2" + id).prop('disabled', false);
+
+			$("#saveItem2" + id).show();
+			document.getElementById("saveItem2" + id).style.visibility = "visible";
+
+			document.getElementById("editItem2" + id).style.visibility = "hidden";
+			$("#editItem2" + id).prop('disabled', true);
+
+		}
 	</script>
 	<script type="text/javascript">
-	function deleteFunction2(id,qty){
-		 $.getJSON(
-					'${deleteItem2}',
-					{
-						id : id,
-						qty : qty,
+		function deleteFunction2(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem2}',
+							{
+								id : id,
+								qty : qty,
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid2 td').remove();
-						var allTotal = 0;
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid2 td').remove();
+								var allTotal = 0;
 
-						$.each(data,function(key, item) {
+								$
+										.each(
+												data,
+												function(key, item) {
 
-											var index = key + 1;
+													var index = key + 1;
 
-											var tr = "<tr>";
+													var tr = "<tr>";
 
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-											var Amount = "<td align=center id=billTotal2"+item.id+">"
-													+ total
-													+ "</td>";
+													var Amount = "<td align=center id=billTotal2"+item.id+">"
+															+ total + "</td>";
 
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"+item.id+" onclick=updateTotal2("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable2("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem2"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"
+															+ item.id
+															+ " onclick=updateTotal2("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable2("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem2"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 
-											allTotal = allTotal
-													+ total;
+													allTotal = allTotal + total;
 
-											var trclosed = "</tr>";
+													var trclosed = "</tr>";
 
-											$('#table_grid2 tbody')
-													.append(tr);
-											$('#table_grid2 tbody')
-													.append(index);
-											$('#table_grid2 tbody')
-													.append(barcode);
-											$('#table_grid2 tbody')
-													.append(
-															itemName);
-											$('#table_grid2 tbody')
-													.append(qty);
-											$('#table_grid2 tbody')
-													.append(rate);
+													$('#table_grid2 tbody')
+															.append(tr);
+													$('#table_grid2 tbody')
+															.append(index);
+													$('#table_grid2 tbody')
+															.append(barcode);
+													$('#table_grid2 tbody')
+															.append(itemName);
+													$('#table_grid2 tbody')
+															.append(qty);
+													$('#table_grid2 tbody')
+															.append(rate);
 
-											$('#table_grid2 tbody')
-													.append(Amount);
+													$('#table_grid2 tbody')
+															.append(Amount);
 
-											$('#table_grid2 tbody')
-													.append(action);
+													$('#table_grid2 tbody')
+															.append(action);
 
-											$('#table_grid2 tbody')
-													.append(
-															trclosed);
-											
+													$('#table_grid2 tbody')
+															.append(trclosed);
 
-										})
+												})
 
-						$("#total2").html(allTotal);
-						document.getElementById("tot2")
-								.setAttribute('value', allTotal);
+								$("#total2").html(allTotal);
+								document.getElementById("tot2").setAttribute(
+										'value', allTotal);
 
-						document.getElementById("paidAmount2")
-						.setAttribute('value', allTotal);
-						
-						var discount = $("#discount2").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						var paidAmount = $("#paidAmount2").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal2').html(grandAmt);
-						document.getElementById("grandtot2").setAttribute('value',grandAmt);
+								document.getElementById("paidAmount2")
+										.setAttribute('value', allTotal);
 
-						
-						$('#remAmt2').html(grandMinusPaidAmt);
-						document.getElementById("remAmount2").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode2").focus();
-					});
-}</script>
+								var discount = $("#discount2").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+								var paidAmount = $("#paidAmount2").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal2').html(grandAmt);
+								document.getElementById("grandtot2")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt2').html(grandMinusPaidAmt);
+								document.getElementById("remAmount2")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode2").focus();
+							});
+		}
+	</script>
 	<script type="text/javascript">
-		function updateTotal2(id,mrp) {
-			
+		function updateTotal2(id, mrp) {
+
 			//alert(id);
-		//	alert(mrp);
+			//	alert(mrp);
 			var newQty = $("#billQty2" + id).val();
 			//alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem2}',
-						{
-							id : id,
-							qty : newQty,
 
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid2 td').remove();
-							var allTotal = 0;
+			$
+					.getJSON(
+							'${updateItem2}',
+							{
+								id : id,
+								qty : newQty,
 
-							$.each(data,function(key, item) {
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid2 td').remove();
+								var allTotal = 0;
 
-												var index = key + 1;
+								$
+										.each(
+												data,
+												function(key, item) {
 
-												var tr = "<tr>";
+													var index = key + 1;
 
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
+													var tr = "<tr>";
 
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty2"+ item.id+ " name=billQty2"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-												var Amount = "<td align=center id=billTotal2"+item.id+">"
-														+ total
-														+ "</td>";
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"+item.id+" onclick=updateTotal2("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable2("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem2"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
+													var Amount = "<td align=center id=billTotal2"+item.id+">"
+															+ total + "</td>";
 
-												var trclosed = "</tr>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem2"
+															+ item.id
+															+ " onclick=updateTotal2("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable2("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem2"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction2("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
 
-												$('#table_grid2 tbody')
-														.append(tr);
-												$('#table_grid2 tbody')
-														.append(index);
-												$('#table_grid2 tbody')
-														.append(barcode);
-												$('#table_grid2 tbody')
-														.append(
-																itemName);
-												$('#table_grid2 tbody')
-														.append(qty);
-												$('#table_grid2 tbody')
-														.append(rate);
+													var trclosed = "</tr>";
 
-												$('#table_grid2 tbody')
-														.append(Amount);
+													$('#table_grid2 tbody')
+															.append(tr);
+													$('#table_grid2 tbody')
+															.append(index);
+													$('#table_grid2 tbody')
+															.append(barcode);
+													$('#table_grid2 tbody')
+															.append(itemName);
+													$('#table_grid2 tbody')
+															.append(qty);
+													$('#table_grid2 tbody')
+															.append(rate);
 
-												$('#table_grid2 tbody')
-														.append(action);
+													$('#table_grid2 tbody')
+															.append(Amount);
 
-												$('#table_grid2 tbody')
-														.append(
-																trclosed);
+													$('#table_grid2 tbody')
+															.append(action);
 
-											})
+													$('#table_grid2 tbody')
+															.append(trclosed);
 
-							$("#total2").html(allTotal);
-							document.getElementById("tot2")
-									.setAttribute('value', allTotal);
+												})
 
-							document.getElementById("paidAmount2")
-							.setAttribute('value', allTotal);
-							
-							var discount = $("#discount2").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							var paidAmount = $("#paidAmount2").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal2').html(grandAmt);
-							document.getElementById("grandtot2").setAttribute('value',grandAmt);
+								$("#total2").html(allTotal);
+								document.getElementById("tot2").setAttribute(
+										'value', allTotal);
 
-							
-							$('#remAmt2').html(grandMinusPaidAmt);
-							document.getElementById("remAmount2").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode2").focus();
-						});
+								document.getElementById("paidAmount2")
+										.setAttribute('value', allTotal);
+
+								var discount = $("#discount2").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+								var paidAmount = $("#paidAmount2").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal2').html(grandAmt);
+								document.getElementById("grandtot2")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt2').html(grandMinusPaidAmt);
+								document.getElementById("remAmount2")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode2").focus();
+							});
 		}
 	</script>
 	<script type="text/javascript">
@@ -2904,7 +4019,10 @@
 									$('#table_grid3 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
 														var index = key + 1;
 
@@ -2922,10 +4040,10 @@
 																+ item.itemName
 																+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+														var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
+														/*onkeyup= updateTotal("
+														 + bill.id + ","
+														 + bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
 														var rate = "<td >"
 																+ item.mrp
 																+ "</td>";
@@ -2937,9 +4055,25 @@
 																+ total
 																+ "</td>";
 
-														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"+item.id+" onclick=updateTotal3("
-														+ item.id + ","
-														+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem3"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"
+																+ item.id
+																+ " onclick=updateTotal3("
+																+ item.id
+																+ ","
+																+ item.mrp
+																+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ","
+																+ item.mrp
+																+ ");   id=editItem3"
+																+ item.id
+																+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 														/* <a href='#' class='action_btn'> *//* </a> */
 														allTotal = allTotal
 																+ total;
@@ -2972,270 +4106,307 @@
 
 													})
 
-
 									$("#total3").html(allTotal);
 									document.getElementById("tot3")
 											.setAttribute('value', allTotal);
 
 									document.getElementById("paidAmount3")
-									.setAttribute('value', allTotal);
-									
-									var discount = $("#discount3").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									var paidAmount = $("#paidAmount3").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal3').html(grandAmt);
-									document.getElementById("grandtot3").setAttribute('value',grandAmt);
+											.setAttribute('value', allTotal);
 
-									
+									var discount = $("#discount3").val();
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
+									var paidAmount = $("#paidAmount3").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal3').html(grandAmt);
+									document.getElementById("grandtot3")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt3').html(grandMinusPaidAmt);
-									document.getElementById("remAmount3").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount3")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode3").focus();
 								});
 			}
 		}
 	</script>
 	<script type="text/javascript">
-	function editDisable3(id,qty){
-	//	alert(id+""+qty)
-		
-		$("#billQty3"+id).prop('disabled', false);
-		
-		$("#saveItem3"+id).show();
-		document.getElementById("saveItem3"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem3"+id).style.visibility= "hidden"; 
-		$("#editItem3"+id).prop('disabled', true);
-		
-	}
-	</script>
-	
-	<script type="text/javascript">
-	function deleteFunction3(id,qty){
-		 $.getJSON(
-					'${deleteItem3}',
-					{
-						id : id,
-						qty : qty,
+		function editDisable3(id, qty) {
+			//	alert(id+""+qty)
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid3 td').remove();
-						var allTotal = 0;
+			$("#billQty3" + id).prop('disabled', false);
 
-						$.each(data,function(key, item) {
+			$("#saveItem3" + id).show();
+			document.getElementById("saveItem3" + id).style.visibility = "visible";
 
-											var index = key + 1;
+			document.getElementById("editItem3" + id).style.visibility = "hidden";
+			$("#editItem3" + id).prop('disabled', true);
 
-											var tr = "<tr>";
-
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
-
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
-
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
-
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
-
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
-
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
-
-											var Amount = "<td align=center id=billTotal3"+item.id+">"
-													+ total
-													+ "</td>";
-
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"+item.id+" onclick=updateTotal3("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem3"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-
-											allTotal = allTotal
-													+ total;
-
-											var trclosed = "</tr>";
-
-											$('#table_grid3 tbody')
-													.append(tr);
-											$('#table_grid3 tbody')
-													.append(index);
-											$('#table_grid3 tbody')
-													.append(barcode);
-											$('#table_grid3 tbody')
-													.append(
-															itemName);
-											$('#table_grid3 tbody')
-													.append(qty);
-											$('#table_grid3 tbody')
-													.append(rate);
-
-											$('#table_grid3 tbody')
-													.append(Amount);
-
-											$('#table_grid3 tbody')
-													.append(action);
-
-											$('#table_grid3 tbody')
-													.append(
-															trclosed);
-											
-
-										})
-
-						$("#total3").html(allTotal);
-						document.getElementById("tot3")
-								.setAttribute('value', allTotal);
-
-						document.getElementById("paidAmount3")
-						.setAttribute('value', allTotal);
-						
-						var discount = $("#discount3").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						var paidAmount = $("#paidAmount3").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal3').html(grandAmt);
-						document.getElementById("grandtot3").setAttribute('value',grandAmt);
-
-						
-						$('#remAmt3').html(grandMinusPaidAmt);
-						document.getElementById("remAmount3").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode3").focus();
-					});
-}</script>
-
-<script type="text/javascript">
-		function updateTotal3(id,mrp) {
-			
-		//	alert(id);
-		//	alert(mrp);
-			var newQty = $("#billQty3" + id).val();
-		//	alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem3}',
-						{
-							id : id,
-							qty : newQty,
-
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid3 td').remove();
-							var allTotal = 0;
-
-							$.each(data,function(key, item) {
-
-												var index = key + 1;
-
-												var tr = "<tr>";
-
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
-
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
-
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
-
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
-
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
-
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
-
-												var Amount = "<td align=center id=billTotal3"+item.id+">"
-														+ total
-														+ "</td>";
-
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"+item.id+" onclick=updateTotal3("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem3"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
-
-												var trclosed = "</tr>";
-
-												$('#table_grid3 tbody')
-														.append(tr);
-												$('#table_grid3 tbody')
-														.append(index);
-												$('#table_grid3 tbody')
-														.append(barcode);
-												$('#table_grid3 tbody')
-														.append(
-																itemName);
-												$('#table_grid3 tbody')
-														.append(qty);
-												$('#table_grid3 tbody')
-														.append(rate);
-
-												$('#table_grid3 tbody')
-														.append(Amount);
-
-												$('#table_grid3 tbody')
-														.append(action);
-
-												$('#table_grid3 tbody')
-														.append(
-																trclosed);
-
-											})
-
-							$("#total3").html(allTotal);
-							document.getElementById("tot3")
-									.setAttribute('value', allTotal);
-
-							document.getElementById("paidAmount3")
-							.setAttribute('value', allTotal);
-							
-							var discount = $("#discount3").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							var paidAmount = $("#paidAmount3").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal3').html(grandAmt);
-							document.getElementById("grandtot3").setAttribute('value',grandAmt);
-
-							
-							$('#remAmt3').html(grandMinusPaidAmt);
-							document.getElementById("remAmount3").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode3").focus();
-						});
 		}
 	</script>
-	
+
+	<script type="text/javascript">
+		function deleteFunction3(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem3}',
+							{
+								id : id,
+								qty : qty,
+
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid3 td').remove();
+								var allTotal = 0;
+
+								$
+										.each(
+												data,
+												function(key, item) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													var index = "<td align=left>"
+															+ index + "</td>";
+
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
+
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
+
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
+
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
+
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
+
+													var Amount = "<td align=center id=billTotal3"+item.id+">"
+															+ total + "</td>";
+
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"
+															+ item.id
+															+ " onclick=updateTotal3("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem3"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+
+													allTotal = allTotal + total;
+
+													var trclosed = "</tr>";
+
+													$('#table_grid3 tbody')
+															.append(tr);
+													$('#table_grid3 tbody')
+															.append(index);
+													$('#table_grid3 tbody')
+															.append(barcode);
+													$('#table_grid3 tbody')
+															.append(itemName);
+													$('#table_grid3 tbody')
+															.append(qty);
+													$('#table_grid3 tbody')
+															.append(rate);
+
+													$('#table_grid3 tbody')
+															.append(Amount);
+
+													$('#table_grid3 tbody')
+															.append(action);
+
+													$('#table_grid3 tbody')
+															.append(trclosed);
+
+												})
+
+								$("#total3").html(allTotal);
+								document.getElementById("tot3").setAttribute(
+										'value', allTotal);
+
+								document.getElementById("paidAmount3")
+										.setAttribute('value', allTotal);
+
+								var discount = $("#discount3").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+								var paidAmount = $("#paidAmount3").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal3').html(grandAmt);
+								document.getElementById("grandtot3")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt3').html(grandMinusPaidAmt);
+								document.getElementById("remAmount3")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode3").focus();
+							});
+		}
+	</script>
+
+	<script type="text/javascript">
+		function updateTotal3(id, mrp) {
+
+			//	alert(id);
+			//	alert(mrp);
+			var newQty = $("#billQty3" + id).val();
+			//	alert(newQty)
+
+			$
+					.getJSON(
+							'${updateItem3}',
+							{
+								id : id,
+								qty : newQty,
+
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid3 td').remove();
+								var allTotal = 0;
+
+								$
+										.each(
+												data,
+												function(key, item) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													var index = "<td align=left>"
+															+ index + "</td>";
+
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
+
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
+
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty3"+ item.id+ " name=billQty3"+item.id+" value = "+ item.qty+ " ></div></td>";
+
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
+
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
+
+													var Amount = "<td align=center id=billTotal3"+item.id+">"
+															+ total + "</td>";
+
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem3"
+															+ item.id
+															+ " onclick=updateTotal3("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable3("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem3"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction3("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
+
+													var trclosed = "</tr>";
+
+													$('#table_grid3 tbody')
+															.append(tr);
+													$('#table_grid3 tbody')
+															.append(index);
+													$('#table_grid3 tbody')
+															.append(barcode);
+													$('#table_grid3 tbody')
+															.append(itemName);
+													$('#table_grid3 tbody')
+															.append(qty);
+													$('#table_grid3 tbody')
+															.append(rate);
+
+													$('#table_grid3 tbody')
+															.append(Amount);
+
+													$('#table_grid3 tbody')
+															.append(action);
+
+													$('#table_grid3 tbody')
+															.append(trclosed);
+
+												})
+
+								$("#total3").html(allTotal);
+								document.getElementById("tot3").setAttribute(
+										'value', allTotal);
+
+								document.getElementById("paidAmount3")
+										.setAttribute('value', allTotal);
+
+								var discount = $("#discount3").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+								var paidAmount = $("#paidAmount3").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal3').html(grandAmt);
+								document.getElementById("grandtot3")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt3').html(grandMinusPaidAmt);
+								document.getElementById("remAmount3")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode3").focus();
+							});
+		}
+	</script>
+
 	<script type="text/javascript">
 		function addNewRow4() {
 
@@ -3272,7 +4443,10 @@
 									$('#table_grid4 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
 														var index = key + 1;
 
@@ -3290,10 +4464,10 @@
 																+ item.itemName
 																+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+														var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
+														/*onkeyup= updateTotal("
+														 + bill.id + ","
+														 + bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
 														var rate = "<td >"
 																+ item.mrp
 																+ "</td>";
@@ -3305,9 +4479,25 @@
 																+ total
 																+ "</td>";
 
-														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"+item.id+" onclick=updateTotal4("
-														+ item.id + ","
-														+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem4"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"
+																+ item.id
+																+ " onclick=updateTotal4("
+																+ item.id
+																+ ","
+																+ item.mrp
+																+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ","
+																+ item.mrp
+																+ ");   id=editItem4"
+																+ item.id
+																+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 														/* <a href='#' class='action_btn'> *//* </a> */
 														allTotal = allTotal
 																+ total;
@@ -3340,277 +4530,308 @@
 
 													})
 
-
 									$("#total4").html(allTotal);
 									document.getElementById("tot4")
 											.setAttribute('value', allTotal);
 
-									
-									
 									var discount = $("#discount4").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									
-									document.getElementById("paidAmount4")
-									.setAttribute('value', grandAmt);
-									
-									var paidAmount = $("#paidAmount4").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal4').html(grandAmt);
-									document.getElementById("grandtot4").setAttribute('value',grandAmt);
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
 
-									
+									document.getElementById("paidAmount4")
+											.setAttribute('value', grandAmt);
+
+									var paidAmount = $("#paidAmount4").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal4').html(grandAmt);
+									document.getElementById("grandtot4")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt4').html(grandMinusPaidAmt);
-									document.getElementById("remAmount4").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount4")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode4").focus();
 								});
 			}
 		}
 	</script>
 	<script type="text/javascript">
-	function editDisable4(id,qty){
-	//	alert(id+""+qty)
-		
-		$("#billQty4"+id).prop('disabled', false);
-		
-		$("#saveItem4"+id).show();
-		document.getElementById("saveItem4"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem4"+id).style.visibility= "hidden"; 
-		$("#editItem4"+id).prop('disabled', true);
-		
-	}
-	</script>
-	<script type="text/javascript">
-	function deleteFunction4(id,qty){
-		 $.getJSON(
-					'${deleteItem4}',
-					{
-						id : id,
-						qty : qty,
+		function editDisable4(id, qty) {
+			//	alert(id+""+qty)
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid4 td').remove();
-						var allTotal = 0;
+			$("#billQty4" + id).prop('disabled', false);
 
-						$.each(data,function(key, item) {
+			$("#saveItem4" + id).show();
+			document.getElementById("saveItem4" + id).style.visibility = "visible";
 
-											var index = key + 1;
+			document.getElementById("editItem4" + id).style.visibility = "hidden";
+			$("#editItem4" + id).prop('disabled', true);
 
-											var tr = "<tr>";
-
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
-
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
-
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
-
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
-
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
-
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
-
-											var Amount = "<td align=center id=billTotal4"+item.id+">"
-													+ total
-													+ "</td>";
-
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"+item.id+" onclick=updateTotal4("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem4"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-
-											allTotal = allTotal
-													+ total;
-
-											var trclosed = "</tr>";
-
-											$('#table_grid4 tbody')
-													.append(tr);
-											$('#table_grid4 tbody')
-													.append(index);
-											$('#table_grid4 tbody')
-													.append(barcode);
-											$('#table_grid4 tbody')
-													.append(
-															itemName);
-											$('#table_grid4 tbody')
-													.append(qty);
-											$('#table_grid4 tbody')
-													.append(rate);
-
-											$('#table_grid4 tbody')
-													.append(Amount);
-
-											$('#table_grid4 tbody')
-													.append(action);
-
-											$('#table_grid4 tbody')
-													.append(
-															trclosed);
-											
-
-										})
-
-						$("#total4").html(allTotal);
-						document.getElementById("tot4")
-								.setAttribute('value', allTotal);
-
-						
-						
-						var discount = $("#discount4").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						
-						document.getElementById("paidAmount4")
-						.setAttribute('value', grandAmt);
-						
-						var paidAmount = $("#paidAmount4").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal4').html(grandAmt);
-						document.getElementById("grandtot4").setAttribute('value',grandAmt);
-
-						
-						$('#remAmt4').html(grandMinusPaidAmt);
-						document.getElementById("remAmount4").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode4").focus();
-					});
-}</script>
-	<script type="text/javascript">
-		function updateTotal4(id,mrp) {
-			
-		//	alert(id);
-		//	alert(mrp);
-			var newQty = $("#billQty4" + id).val();
-		//	alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem4}',
-						{
-							id : id,
-							qty : newQty,
-
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid4 td').remove();
-							var allTotal = 0;
-
-							$.each(data,function(key, item) {
-
-												var index = key + 1;
-
-												var tr = "<tr>";
-
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
-
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
-
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
-
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
-
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
-
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
-
-												var Amount = "<td align=center id=billTotal4"+item.id+">"
-														+ total
-														+ "</td>";
-
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"+item.id+" onclick=updateTotal4("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem4"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
-
-												var trclosed = "</tr>";
-
-												$('#table_grid4 tbody')
-														.append(tr);
-												$('#table_grid4 tbody')
-														.append(index);
-												$('#table_grid4 tbody')
-														.append(barcode);
-												$('#table_grid4 tbody')
-														.append(
-																itemName);
-												$('#table_grid4 tbody')
-														.append(qty);
-												$('#table_grid4 tbody')
-														.append(rate);
-
-												$('#table_grid4 tbody')
-														.append(Amount);
-
-												$('#table_grid4 tbody')
-														.append(action);
-
-												$('#table_grid4 tbody')
-														.append(
-																trclosed);
-
-											})
-
-							$("#total4").html(allTotal);
-							document.getElementById("tot4")
-									.setAttribute('value', allTotal);
-
-						
-							
-							var discount = $("#discount4").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							
-							document.getElementById("paidAmount4")
-							.setAttribute('value', grandAmt);
-							
-							var paidAmount = $("#paidAmount4").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal4').html(grandAmt);
-							document.getElementById("grandtot4").setAttribute('value',grandAmt);
-
-							
-							$('#remAmt4').html(grandMinusPaidAmt);
-							document.getElementById("remAmount4").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode4").focus();
-						});
 		}
 	</script>
-	
+	<script type="text/javascript">
+		function deleteFunction4(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem4}',
+							{
+								id : id,
+								qty : qty,
+
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid4 td').remove();
+								var allTotal = 0;
+
+								$
+										.each(
+												data,
+												function(key, item) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													var index = "<td align=left>"
+															+ index + "</td>";
+
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
+
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
+
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
+
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
+
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
+
+													var Amount = "<td align=center id=billTotal4"+item.id+">"
+															+ total + "</td>";
+
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"
+															+ item.id
+															+ " onclick=updateTotal4("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem4"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+
+													allTotal = allTotal + total;
+
+													var trclosed = "</tr>";
+
+													$('#table_grid4 tbody')
+															.append(tr);
+													$('#table_grid4 tbody')
+															.append(index);
+													$('#table_grid4 tbody')
+															.append(barcode);
+													$('#table_grid4 tbody')
+															.append(itemName);
+													$('#table_grid4 tbody')
+															.append(qty);
+													$('#table_grid4 tbody')
+															.append(rate);
+
+													$('#table_grid4 tbody')
+															.append(Amount);
+
+													$('#table_grid4 tbody')
+															.append(action);
+
+													$('#table_grid4 tbody')
+															.append(trclosed);
+
+												})
+
+								$("#total4").html(allTotal);
+								document.getElementById("tot4").setAttribute(
+										'value', allTotal);
+
+								var discount = $("#discount4").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount4")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount4").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal4').html(grandAmt);
+								document.getElementById("grandtot4")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt4').html(grandMinusPaidAmt);
+								document.getElementById("remAmount4")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode4").focus();
+							});
+		}
+	</script>
+	<script type="text/javascript">
+		function updateTotal4(id, mrp) {
+
+			//	alert(id);
+			//	alert(mrp);
+			var newQty = $("#billQty4" + id).val();
+			//	alert(newQty)
+
+			$
+					.getJSON(
+							'${updateItem4}',
+							{
+								id : id,
+								qty : newQty,
+
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid4 td').remove();
+								var allTotal = 0;
+
+								$
+										.each(
+												data,
+												function(key, item) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													var index = "<td align=left>"
+															+ index + "</td>";
+
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
+
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
+
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty4"+ item.id+ " name=billQty4"+item.id+" value = "+ item.qty+ " ></div></td>";
+
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
+
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
+
+													var Amount = "<td align=center id=billTotal4"+item.id+">"
+															+ total + "</td>";
+
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem4"
+															+ item.id
+															+ " onclick=updateTotal4("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable4("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem4"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction4("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
+
+													var trclosed = "</tr>";
+
+													$('#table_grid4 tbody')
+															.append(tr);
+													$('#table_grid4 tbody')
+															.append(index);
+													$('#table_grid4 tbody')
+															.append(barcode);
+													$('#table_grid4 tbody')
+															.append(itemName);
+													$('#table_grid4 tbody')
+															.append(qty);
+													$('#table_grid4 tbody')
+															.append(rate);
+
+													$('#table_grid4 tbody')
+															.append(Amount);
+
+													$('#table_grid4 tbody')
+															.append(action);
+
+													$('#table_grid4 tbody')
+															.append(trclosed);
+
+												})
+
+								$("#total4").html(allTotal);
+								document.getElementById("tot4").setAttribute(
+										'value', allTotal);
+
+								var discount = $("#discount4").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount4")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount4").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal4').html(grandAmt);
+								document.getElementById("grandtot4")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt4').html(grandMinusPaidAmt);
+								document.getElementById("remAmount4")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode4").focus();
+							});
+		}
+	</script>
+
 	<script type="text/javascript">
 		function addNewRow5() {
 
@@ -3619,15 +4840,15 @@
 
 				var id = $("#itemName5").val();
 				var barcode = $("#barcode5").val();
-			//	alert(barcode);
+				//	alert(barcode);
 				var qty = $("#qty5").val();
-			//	alert(qty);
+				//	alert(qty);
 				var custName = $("#custName5").val();
-			//	alert(custName);
+				//	alert(custName);
 				var phoneNo = $("#phoneNo5").val();
-			//	alert(phoneNo);
+				//	alert(phoneNo);
 				var gstNo = $("#gstNo5").val();
-			//	alert(gstNo);
+				//	alert(gstNo);
 
 				$('#loader').show();
 				$
@@ -3647,7 +4868,10 @@
 									$('#table_grid5 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
 														var index = key + 1;
 
@@ -3665,10 +4889,10 @@
 																+ item.itemName
 																+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+														var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
+														/*onkeyup= updateTotal("
+														 + bill.id + ","
+														 + bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
 														var rate = "<td >"
 																+ item.mrp
 																+ "</td>";
@@ -3680,9 +4904,25 @@
 																+ total
 																+ "</td>";
 
-														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"+item.id+" onclick=updateTotal5("
-														+ item.id + ","
-														+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem5"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"
+																+ item.id
+																+ " onclick=updateTotal5("
+																+ item.id
+																+ ","
+																+ item.mrp
+																+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ","
+																+ item.mrp
+																+ ");   id=editItem5"
+																+ item.id
+																+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 														/* <a href='#' class='action_btn'> *//* </a> */
 														allTotal = allTotal
 																+ total;
@@ -3715,275 +4955,308 @@
 
 													})
 
-
 									$("#total5").html(allTotal);
 									document.getElementById("tot5")
 											.setAttribute('value', allTotal);
 
-									
-									
 									var discount = $("#discount5").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									
-									document.getElementById("paidAmount5")
-									.setAttribute('value', grandAmt);
-									
-									var paidAmount = $("#paidAmount5").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal5').html(grandAmt);
-									document.getElementById("grandtot5").setAttribute('value',grandAmt);
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
 
-									
+									document.getElementById("paidAmount5")
+											.setAttribute('value', grandAmt);
+
+									var paidAmount = $("#paidAmount5").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal5').html(grandAmt);
+									document.getElementById("grandtot5")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt5').html(grandMinusPaidAmt);
-									document.getElementById("remAmount5").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount5")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode5").focus();
 								});
 			}
 		}
 	</script>
 	<script type="text/javascript">
-	function editDisable5(id,qty){
-	//	alert(id+""+qty)
-		
-		$("#billQty5"+id).prop('disabled', false);
-		
-		$("#saveItem5"+id).show();
-		document.getElementById("saveItem5"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem5"+id).style.visibility= "hidden"; 
-		$("#editItem5"+id).prop('disabled', true);
-		
-	}
+		function editDisable5(id, qty) {
+			//	alert(id+""+qty)
+
+			$("#billQty5" + id).prop('disabled', false);
+
+			$("#saveItem5" + id).show();
+			document.getElementById("saveItem5" + id).style.visibility = "visible";
+
+			document.getElementById("editItem5" + id).style.visibility = "hidden";
+			$("#editItem5" + id).prop('disabled', true);
+
+		}
 	</script>
 	<script type="text/javascript">
-	function deleteFunction5(id,qty){
-		 $.getJSON(
-					'${deleteItem5}',
-					{
-						id : id,
-						qty : qty,
+		function deleteFunction5(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem5}',
+							{
+								id : id,
+								qty : qty,
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid5 td').remove();
-						var allTotal = 0;
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid5 td').remove();
+								var allTotal = 0;
 
-						$.each(data,function(key, item) {
+								$
+										.each(
+												data,
+												function(key, item) {
 
-											var index = key + 1;
+													var index = key + 1;
 
-											var tr = "<tr>";
+													var tr = "<tr>";
 
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-											var Amount = "<td align=center id=billTotal5"+item.id+">"
-													+ total
-													+ "</td>";
+													var Amount = "<td align=center id=billTotal5"+item.id+">"
+															+ total + "</td>";
 
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"+item.id+" onclick=updateTotal5("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem5"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"
+															+ item.id
+															+ " onclick=updateTotal5("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem5"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 
-											allTotal = allTotal
-													+ total;
+													allTotal = allTotal + total;
 
-											var trclosed = "</tr>";
+													var trclosed = "</tr>";
 
-											$('#table_grid5 tbody')
-													.append(tr);
-											$('#table_grid5 tbody')
-													.append(index);
-											$('#table_grid5 tbody')
-													.append(barcode);
-											$('#table_grid5 tbody')
-													.append(
-															itemName);
-											$('#table_grid5 tbody')
-													.append(qty);
-											$('#table_grid5 tbody')
-													.append(rate);
+													$('#table_grid5 tbody')
+															.append(tr);
+													$('#table_grid5 tbody')
+															.append(index);
+													$('#table_grid5 tbody')
+															.append(barcode);
+													$('#table_grid5 tbody')
+															.append(itemName);
+													$('#table_grid5 tbody')
+															.append(qty);
+													$('#table_grid5 tbody')
+															.append(rate);
 
-											$('#table_grid5 tbody')
-													.append(Amount);
+													$('#table_grid5 tbody')
+															.append(Amount);
 
-											$('#table_grid5 tbody')
-													.append(action);
+													$('#table_grid5 tbody')
+															.append(action);
 
-											$('#table_grid5 tbody')
-													.append(
-															trclosed);
-											
+													$('#table_grid5 tbody')
+															.append(trclosed);
 
-										})
+												})
 
-						$("#total5").html(allTotal);
-						document.getElementById("tot5")
-								.setAttribute('value', allTotal);
+								$("#total5").html(allTotal);
+								document.getElementById("tot5").setAttribute(
+										'value', allTotal);
 
-						
-						var discount = $("#discount5").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						
-						document.getElementById("paidAmount5")
-						.setAttribute('value', grandAmt);
-						
-						var paidAmount = $("#paidAmount5").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal5').html(grandAmt);
-						document.getElementById("grandtot5").setAttribute('value',grandAmt);
+								var discount = $("#discount5").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
 
-						
-						$('#remAmt5').html(grandMinusPaidAmt);
-						document.getElementById("remAmount5").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode5").focus();
-					});
-}</script>
+								document.getElementById("paidAmount5")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount5").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal5').html(grandAmt);
+								document.getElementById("grandtot5")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt5').html(grandMinusPaidAmt);
+								document.getElementById("remAmount5")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode5").focus();
+							});
+		}
+	</script>
 	<script type="text/javascript">
-		function updateTotal5(id,mrp) {
-			
-		//	alert(id);
-		//	alert(mrp);
+		function updateTotal5(id, mrp) {
+
+			//	alert(id);
+			//	alert(mrp);
 			var newQty = $("#billQty5" + id).val();
-		//	alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem5}',
-						{
-							id : id,
-							qty : newQty,
+			//	alert(newQty)
 
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid5 td').remove();
-							var allTotal = 0;
+			$
+					.getJSON(
+							'${updateItem5}',
+							{
+								id : id,
+								qty : newQty,
 
-							$.each(data,function(key, item) {
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid5 td').remove();
+								var allTotal = 0;
 
-												var index = key + 1;
+								$
+										.each(
+												data,
+												function(key, item) {
 
-												var tr = "<tr>";
+													var index = key + 1;
 
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
+													var tr = "<tr>";
 
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty5"+ item.id+ " name=billQty5"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-												var Amount = "<td align=center id=billTotal5"+item.id+">"
-														+ total
-														+ "</td>";
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"+item.id+" onclick=updateTotal5("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem5"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
+													var Amount = "<td align=center id=billTotal5"+item.id+">"
+															+ total + "</td>";
 
-												var trclosed = "</tr>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem5"
+															+ item.id
+															+ " onclick=updateTotal5("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable5("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem5"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction5("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
 
-												$('#table_grid5 tbody')
-														.append(tr);
-												$('#table_grid5 tbody')
-														.append(index);
-												$('#table_grid5 tbody')
-														.append(barcode);
-												$('#table_grid5 tbody')
-														.append(
-																itemName);
-												$('#table_grid5 tbody')
-														.append(qty);
-												$('#table_grid5 tbody')
-														.append(rate);
+													var trclosed = "</tr>";
 
-												$('#table_grid5 tbody')
-														.append(Amount);
+													$('#table_grid5 tbody')
+															.append(tr);
+													$('#table_grid5 tbody')
+															.append(index);
+													$('#table_grid5 tbody')
+															.append(barcode);
+													$('#table_grid5 tbody')
+															.append(itemName);
+													$('#table_grid5 tbody')
+															.append(qty);
+													$('#table_grid5 tbody')
+															.append(rate);
 
-												$('#table_grid5 tbody')
-														.append(action);
+													$('#table_grid5 tbody')
+															.append(Amount);
 
-												$('#table_grid5 tbody')
-														.append(
-																trclosed);
+													$('#table_grid5 tbody')
+															.append(action);
 
-											})
+													$('#table_grid5 tbody')
+															.append(trclosed);
 
-							$("#total5").html(allTotal);
-							document.getElementById("tot5")
-									.setAttribute('value', allTotal);
+												})
 
-							
-							document.getElementById("paidAmount5")
-							.setAttribute('value', allTotal);
-							
-							var discount = $("#discount5").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							
-							document.getElementById("paidAmount5")
-							.setAttribute('value', grandAmt);
-							
-							var paidAmount = $("#paidAmount5").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal5').html(grandAmt);
-							document.getElementById("grandtot5").setAttribute('value',grandAmt);
+								$("#total5").html(allTotal);
+								document.getElementById("tot5").setAttribute(
+										'value', allTotal);
 
-							
-							$('#remAmt5').html(grandMinusPaidAmt);
-							document.getElementById("remAmount5").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode5").focus();
-						});
+								document.getElementById("paidAmount5")
+										.setAttribute('value', allTotal);
+
+								var discount = $("#discount5").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount5")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount5").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal5').html(grandAmt);
+								document.getElementById("grandtot5")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt5').html(grandMinusPaidAmt);
+								document.getElementById("remAmount5")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode5").focus();
+							});
 		}
 	</script>
 	<script type="text/javascript">
@@ -3994,15 +5267,15 @@
 
 				var id = $("#itemName6").val();
 				var barcode = $("#barcode6").val();
-			//	alert(barcode);
+				//	alert(barcode);
 				var qty = $("#qty6").val();
-			//	alert(qty);
+				//	alert(qty);
 				var custName = $("#custName6").val();
-			//	alert(custName);
+				//	alert(custName);
 				var phoneNo = $("#phoneNo6").val();
-			//	alert(phoneNo);
+				//	alert(phoneNo);
 				var gstNo = $("#gstNo6").val();
-			//	alert(gstNo);
+				//	alert(gstNo);
 
 				$('#loader').show();
 				$
@@ -4022,7 +5295,10 @@
 									$('#table_grid6 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
 														var index = key + 1;
 
@@ -4040,10 +5316,10 @@
 																+ item.itemName
 																+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+														var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
+														/*onkeyup= updateTotal("
+														 + bill.id + ","
+														 + bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
 														var rate = "<td >"
 																+ item.mrp
 																+ "</td>";
@@ -4055,9 +5331,25 @@
 																+ total
 																+ "</td>";
 
-														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"+item.id+" onclick=updateTotal6("
-														+ item.id + ","
-														+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem6"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"
+																+ item.id
+																+ " onclick=updateTotal6("
+																+ item.id
+																+ ","
+																+ item.mrp
+																+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ","
+																+ item.mrp
+																+ ");   id=editItem6"
+																+ item.id
+																+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 														/* <a href='#' class='action_btn'> *//* </a> */
 														allTotal = allTotal
 																+ total;
@@ -4090,29 +5382,30 @@
 
 													})
 
-
 									$("#total6").html(allTotal);
 									document.getElementById("tot6")
 											.setAttribute('value', allTotal);
 
-								
-									
 									var discount = $("#discount6").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									
-									document.getElementById("paidAmount6")
-									.setAttribute('value', grandAmt);
-									
-									var paidAmount = $("#paidAmount6").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal6').html(grandAmt);
-									document.getElementById("grandtot6").setAttribute('value',grandAmt);
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
 
-									
+									document.getElementById("paidAmount6")
+											.setAttribute('value', grandAmt);
+
+									var paidAmount = $("#paidAmount6").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal6').html(grandAmt);
+									document.getElementById("grandtot6")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt6').html(grandMinusPaidAmt);
-									document.getElementById("remAmount6").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount6")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode6").focus();
 								});
 
@@ -4120,244 +5413,275 @@
 		}
 	</script>
 	<script type="text/javascript">
-	function editDisable6(id,qty){
-		//alert(id+""+qty)
-		
-		$("#billQty6"+id).prop('disabled', false);
-		
-		$("#saveItem6"+id).show();
-		document.getElementById("saveItem6"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem6"+id).style.visibility= "hidden"; 
-		$("#editItem6"+id).prop('disabled', true);
-		
-	}
+		function editDisable6(id, qty) {
+			//alert(id+""+qty)
+
+			$("#billQty6" + id).prop('disabled', false);
+
+			$("#saveItem6" + id).show();
+			document.getElementById("saveItem6" + id).style.visibility = "visible";
+
+			document.getElementById("editItem6" + id).style.visibility = "hidden";
+			$("#editItem6" + id).prop('disabled', true);
+
+		}
 	</script>
 	<script type="text/javascript">
-	function deleteFunction6(id,qty){
-		 $.getJSON(
-					'${deleteItem6}',
-					{
-						id : id,
-						qty : qty,
+		function deleteFunction6(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem6}',
+							{
+								id : id,
+								qty : qty,
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid6 td').remove();
-						var allTotal = 0;
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid6 td').remove();
+								var allTotal = 0;
 
-						$.each(data,function(key, item) {
+								$
+										.each(
+												data,
+												function(key, item) {
 
-											var index = key + 1;
+													var index = key + 1;
 
-											var tr = "<tr>";
+													var tr = "<tr>";
 
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-											var Amount = "<td align=center id=billTotal1"+item.id+">"
-													+ total
-													+ "</td>";
+													var Amount = "<td align=center id=billTotal1"+item.id+">"
+															+ total + "</td>";
 
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"+item.id+" onclick=updateTotal6("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem6"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"
+															+ item.id
+															+ " onclick=updateTotal6("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem6"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 
-											allTotal = allTotal
-													+ total;
+													allTotal = allTotal + total;
 
-											var trclosed = "</tr>";
+													var trclosed = "</tr>";
 
-											$('#table_grid6 tbody')
-													.append(tr);
-											$('#table_grid6 tbody')
-													.append(index);
-											$('#table_grid6 tbody')
-													.append(barcode);
-											$('#table_grid6 tbody')
-													.append(
-															itemName);
-											$('#table_grid6 tbody')
-													.append(qty);
-											$('#table_grid6 tbody')
-													.append(rate);
+													$('#table_grid6 tbody')
+															.append(tr);
+													$('#table_grid6 tbody')
+															.append(index);
+													$('#table_grid6 tbody')
+															.append(barcode);
+													$('#table_grid6 tbody')
+															.append(itemName);
+													$('#table_grid6 tbody')
+															.append(qty);
+													$('#table_grid6 tbody')
+															.append(rate);
 
-											$('#table_grid6 tbody')
-													.append(Amount);
+													$('#table_grid6 tbody')
+															.append(Amount);
 
-											$('#table_grid6 tbody')
-													.append(action);
+													$('#table_grid6 tbody')
+															.append(action);
 
-											$('#table_grid6 tbody')
-													.append(
-															trclosed);
-											
+													$('#table_grid6 tbody')
+															.append(trclosed);
 
-										})
+												})
 
-						$("#total6").html(allTotal);
-						document.getElementById("tot6")
-								.setAttribute('value', allTotal);
+								$("#total6").html(allTotal);
+								document.getElementById("tot6").setAttribute(
+										'value', allTotal);
 
-						
-						var discount = $("#discount6").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						
-						document.getElementById("paidAmount6")
-						.setAttribute('value', grandAmt);
-						
-						
-						var paidAmount = $("#paidAmount6").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal6').html(grandAmt);
-						document.getElementById("grandtot6").setAttribute('value',grandAmt);
+								var discount = $("#discount6").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
 
-						
-						$('#remAmt6').html(grandMinusPaidAmt);
-						document.getElementById("remAmount6").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode6").focus();
-					});
-}</script>
+								document.getElementById("paidAmount6")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount6").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal6').html(grandAmt);
+								document.getElementById("grandtot6")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt6').html(grandMinusPaidAmt);
+								document.getElementById("remAmount6")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode6").focus();
+							});
+		}
+	</script>
 	<script type="text/javascript">
-		function updateTotal6(id,mrp) {
-			
+		function updateTotal6(id, mrp) {
+
 			//alert(id);
 			//alert(mrp);
 			var newQty = $("#billQty6" + id).val();
 			//alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem6}',
-						{
-							id : id,
-							qty : newQty,
 
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid6 td').remove();
-							var allTotal = 0;
+			$
+					.getJSON(
+							'${updateItem6}',
+							{
+								id : id,
+								qty : newQty,
 
-							$.each(data,function(key, item) {
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid6 td').remove();
+								var allTotal = 0;
 
-												var index = key + 1;
+								$
+										.each(
+												data,
+												function(key, item) {
 
-												var tr = "<tr>";
+													var index = key + 1;
 
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
+													var tr = "<tr>";
 
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty6"+ item.id+ " name=billQty6"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-												var Amount = "<td align=center id=billTotal6"+item.id+">"
-														+ total
-														+ "</td>";
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"+item.id+" onclick=updateTotal6("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem6"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
+													var Amount = "<td align=center id=billTotal6"+item.id+">"
+															+ total + "</td>";
 
-												var trclosed = "</tr>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem6"
+															+ item.id
+															+ " onclick=updateTotal6("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable6("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem6"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction6("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
 
-												$('#table_grid6 tbody')
-														.append(tr);
-												$('#table_grid6 tbody')
-														.append(index);
-												$('#table_grid6 tbody')
-														.append(barcode);
-												$('#table_grid6 tbody')
-														.append(
-																itemName);
-												$('#table_grid6 tbody')
-														.append(qty);
-												$('#table_grid6 tbody')
-														.append(rate);
+													var trclosed = "</tr>";
 
-												$('#table_grid6 tbody')
-														.append(Amount);
+													$('#table_grid6 tbody')
+															.append(tr);
+													$('#table_grid6 tbody')
+															.append(index);
+													$('#table_grid6 tbody')
+															.append(barcode);
+													$('#table_grid6 tbody')
+															.append(itemName);
+													$('#table_grid6 tbody')
+															.append(qty);
+													$('#table_grid6 tbody')
+															.append(rate);
 
-												$('#table_grid6 tbody')
-														.append(action);
+													$('#table_grid6 tbody')
+															.append(Amount);
 
-												$('#table_grid6 tbody')
-														.append(
-																trclosed);
+													$('#table_grid6 tbody')
+															.append(action);
 
-											})
+													$('#table_grid6 tbody')
+															.append(trclosed);
 
-							$("#total6").html(allTotal);
-							document.getElementById("tot6")
-									.setAttribute('value', allTotal);
+												})
 
-							
-							var discount = $("#discount6").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							
-							document.getElementById("paidAmount6")
-							.setAttribute('value', grandAmt);
-							
-							var paidAmount = $("#paidAmount6").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal6').html(grandAmt);
-							document.getElementById("grandtot6").setAttribute('value',grandAmt);
+								$("#total6").html(allTotal);
+								document.getElementById("tot6").setAttribute(
+										'value', allTotal);
 
-							
-							$('#remAmt6').html(grandMinusPaidAmt);
-							document.getElementById("remAmount6").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode6").focus();
-						});
+								var discount = $("#discount6").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount6")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount6").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal6').html(grandAmt);
+								document.getElementById("grandtot6")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt6').html(grandMinusPaidAmt);
+								document.getElementById("remAmount6")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode6").focus();
+							});
 		}
 	</script>
 	<script type="text/javascript">
@@ -4396,7 +5720,10 @@
 									$('#table_grid7 td').remove();
 									var allTotal = 0;
 
-									$.each(data,function(key, item) {
+									$
+											.each(
+													data,
+													function(key, item) {
 
 														var index = key + 1;
 
@@ -4414,10 +5741,10 @@
 																+ item.itemName
 																+ "</td>";
 
-														var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
-/*onkeyup= updateTotal("
-															+ bill.id + ","
-															+ bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
+														var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
+														/*onkeyup= updateTotal("
+														 + bill.id + ","
+														 + bill.mrp + ") onchange= updateTotal("+ bill.id+ ","+ bill.mrp+ ")*/
 														var rate = "<td >"
 																+ item.mrp
 																+ "</td>";
@@ -4429,9 +5756,25 @@
 																+ total
 																+ "</td>";
 
-														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"+item.id+" onclick=updateTotal7("
-														+ item.id + ","
-														+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem1"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+														var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"
+																+ item.id
+																+ " onclick=updateTotal7("
+																+ item.id
+																+ ","
+																+ item.mrp
+																+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ","
+																+ item.mrp
+																+ ");   id=editItem1"
+																+ item.id
+																+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("
+																+ item.id
+																+ ","
+																+ item.qty
+																+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
 														/* <a href='#' class='action_btn'> *//* </a> */
 														allTotal = allTotal
 																+ total;
@@ -4464,274 +5807,307 @@
 
 													})
 
-
 									$("#total7").html(allTotal);
 									document.getElementById("tot7")
 											.setAttribute('value', allTotal);
-								
-									var discount = $("#discount7").val();
-									var grandAmt = allTotal - (allTotal * (discount / 100));
-									
-									document.getElementById("paidAmount7")
-									.setAttribute('value', grandAmt);
-									
-									var paidAmount = $("#paidAmount7").val();
-									
-									var grandMinusPaidAmt=grandAmt-paidAmount;
-									$('#grandtotal7').html(grandAmt);
-									document.getElementById("grandtot7").setAttribute('value',grandAmt);
 
-									
+									var discount = $("#discount7").val();
+									var grandAmt = allTotal
+											- (allTotal * (discount / 100));
+
+									document.getElementById("paidAmount7")
+											.setAttribute('value', grandAmt);
+
+									var paidAmount = $("#paidAmount7").val();
+
+									var grandMinusPaidAmt = grandAmt
+											- paidAmount;
+									$('#grandtotal7').html(grandAmt);
+									document.getElementById("grandtot7")
+											.setAttribute('value', grandAmt);
+
 									$('#remAmt7').html(grandMinusPaidAmt);
-									document.getElementById("remAmount7").setAttribute('value',grandMinusPaidAmt);
-									
+									document.getElementById("remAmount7")
+											.setAttribute('value',
+													grandMinusPaidAmt);
+
 									document.getElementById("barcode7").focus();
 								});
 			}
 		}
-		
 	</script>
-	
+
 	<script type="text/javascript">
-	function editDisable7(id,qty){
-		//alert(id+""+qty)
-		
-		$("#billQty7"+id).prop('disabled', false);
-		
-		$("#saveItem7"+id).show();
-		document.getElementById("saveItem7"+id).style.visibility = "visible"; 
-		
-		document.getElementById("editItem7"+id).style.visibility= "hidden"; 
-		$("#editItem7"+id).prop('disabled', true);
-		
-	}
+		function editDisable7(id, qty) {
+			//alert(id+""+qty)
+
+			$("#billQty7" + id).prop('disabled', false);
+
+			$("#saveItem7" + id).show();
+			document.getElementById("saveItem7" + id).style.visibility = "visible";
+
+			document.getElementById("editItem7" + id).style.visibility = "hidden";
+			$("#editItem7" + id).prop('disabled', true);
+
+		}
 	</script>
-	
-<script type="text/javascript">
-	function deleteFunction7(id,qty){
-		 $.getJSON(
-					'${deleteItem7}',
-					{
-						id : id,
-						qty : qty,
 
-						ajax : 'true'
-					},
-					function(data) {
-						$('#loader').hide();
-						if (data == "") {
-							alert("No records found !!");
-						}
-						$('#table_grid7 td').remove();
-						var allTotal = 0;
-
-						$.each(data,function(key, item) {
-
-											var index = key + 1;
-
-											var tr = "<tr>";
-
-											var index = "<td align=left>"
-													+ index
-													+ "</td>";
-
-											var barcode = "<td>"
-													+ item.itemId
-													+ "</td>";
-
-											var itemName = "<td>"
-													+ item.itemName
-													+ "</td>";
-
-											var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
-
-											var rate = "<td >"
-													+ item.mrp
-													+ "</td>";
-
-											var total = parseFloat(item.mrp)
-													* parseFloat(item.qty);
-
-											var Amount = "<td align=center id=billTotal7"+item.id+">"
-													+ total
-													+ "</td>";
-
-											var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"+item.id+" onclick=updateTotal7("
-											+ item.id + ","
-											+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem7"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-
-											allTotal = allTotal
-													+ total;
-
-											var trclosed = "</tr>";
-
-											$('#table_grid7 tbody')
-													.append(tr);
-											$('#table_grid7 tbody')
-													.append(index);
-											$('#table_grid7 tbody')
-													.append(barcode);
-											$('#table_grid7 tbody')
-													.append(
-															itemName);
-											$('#table_grid7 tbody')
-													.append(qty);
-											$('#table_grid7 tbody')
-													.append(rate);
-
-											$('#table_grid7 tbody')
-													.append(Amount);
-
-											$('#table_grid7 tbody')
-													.append(action);
-
-											$('#table_grid7 tbody')
-													.append(
-															trclosed);
-											
-
-										})
-
-						$("#total7").html(allTotal);
-						document.getElementById("tot7")
-								.setAttribute('value', allTotal);
-
-						
-						var discount = $("#discount7").val();
-						var grandAmt = allTotal - (allTotal * (discount / 100));
-						
-						document.getElementById("paidAmount7")
-						.setAttribute('value', grandAmt);
-						
-						
-						var paidAmount = $("#paidAmount7").val();
-						
-						var grandMinusPaidAmt=grandAmt-paidAmount;
-						$('#grandtotal7').html(grandAmt);
-						document.getElementById("grandtot7").setAttribute('value',grandAmt);
-
-						
-						$('#remAmt7').html(grandMinusPaidAmt);
-						document.getElementById("remAmount7").setAttribute('value',grandMinusPaidAmt);
-						
-						document.getElementById("barcode7").focus();
-					});
-}</script>
 	<script type="text/javascript">
-		function updateTotal7(id,mrp) {
-			
-		////	alert(id);
-	//	alert(mrp);
+		function deleteFunction7(id, qty) {
+			$
+					.getJSON(
+							'${deleteItem7}',
+							{
+								id : id,
+								qty : qty,
+
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid7 td').remove();
+								var allTotal = 0;
+
+								$
+										.each(
+												data,
+												function(key, item) {
+
+													var index = key + 1;
+
+													var tr = "<tr>";
+
+													var index = "<td align=left>"
+															+ index + "</td>";
+
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
+
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
+
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control    disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
+
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
+
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
+
+													var Amount = "<td align=center id=billTotal7"+item.id+">"
+															+ total + "</td>";
+
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"
+															+ item.id
+															+ " onclick=updateTotal7("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem7"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+
+													allTotal = allTotal + total;
+
+													var trclosed = "</tr>";
+
+													$('#table_grid7 tbody')
+															.append(tr);
+													$('#table_grid7 tbody')
+															.append(index);
+													$('#table_grid7 tbody')
+															.append(barcode);
+													$('#table_grid7 tbody')
+															.append(itemName);
+													$('#table_grid7 tbody')
+															.append(qty);
+													$('#table_grid7 tbody')
+															.append(rate);
+
+													$('#table_grid7 tbody')
+															.append(Amount);
+
+													$('#table_grid7 tbody')
+															.append(action);
+
+													$('#table_grid7 tbody')
+															.append(trclosed);
+
+												})
+
+								$("#total7").html(allTotal);
+								document.getElementById("tot7").setAttribute(
+										'value', allTotal);
+
+								var discount = $("#discount7").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount7")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount7").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal7').html(grandAmt);
+								document.getElementById("grandtot7")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt7').html(grandMinusPaidAmt);
+								document.getElementById("remAmount7")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode7").focus();
+							});
+		}
+	</script>
+	<script type="text/javascript">
+		function updateTotal7(id, mrp) {
+
+			////	alert(id);
+			//	alert(mrp);
 			var newQty = $("#billQty7" + id).val();
-		//	alert(newQty)
-			
-			
-				
-			 $.getJSON(
-						'${updateItem7}',
-						{
-							id : id,
-							qty : newQty,
+			//	alert(newQty)
 
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-							if (data == "") {
-								alert("No records found !!");
-							}
-							$('#table_grid7 td').remove();
-							var allTotal = 0;
+			$
+					.getJSON(
+							'${updateItem7}',
+							{
+								id : id,
+								qty : newQty,
 
-							$.each(data,function(key, item) {
+								ajax : 'true'
+							},
+							function(data) {
+								$('#loader').hide();
+								if (data == "") {
+									alert("No records found !!");
+								}
+								$('#table_grid7 td').remove();
+								var allTotal = 0;
 
-												var index = key + 1;
+								$
+										.each(
+												data,
+												function(key, item) {
 
-												var tr = "<tr>";
+													var index = key + 1;
 
-												var index = "<td align=left>"
-														+ index
-														+ "</td>";
+													var tr = "<tr>";
 
-												var barcode = "<td>"
-														+ item.itemId
-														+ "</td>";
+													var index = "<td align=left>"
+															+ index + "</td>";
 
-												var itemName = "<td>"
-														+ item.itemName
-														+ "</td>";
+													var barcode = "<td>"
+															+ item.itemId
+															+ "</td>";
 
-												var qty =  "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
+													var itemName = "<td>"
+															+ item.itemName
+															+ "</td>";
 
-												var rate = "<td >"
-														+ item.mrp
-														+ "</td>";
+													var qty = "<td><div class=class=col-md-1 pull-left><input type=number min=0 max=30 class=form-control  disabled id= billQty7"+ item.id+ " name=billQty7"+item.id+" value = "+ item.qty+ " ></div></td>";
 
-												var total = parseFloat(item.mrp)
-														* parseFloat(item.qty);
+													var rate = "<td >"
+															+ item.mrp
+															+ "</td>";
 
-												var Amount = "<td align=center id=billTotal7"+item.id+">"
-														+ total
-														+ "</td>";
+													var total = parseFloat(item.mrp)
+															* parseFloat(item.qty);
 
-												var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"+item.id+" onclick=updateTotal7("
-												+ item.id + ","
-												+ item.mrp + ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("+item.id+","+ item.qty+ ","+ item.mrp+ ");   id=editItem7"+item.id+"></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("+item.id+ ","+ item.qty+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
-												/* <a href='#' class='action_btn'> *//* </a> */
-												allTotal = allTotal
-														+ total;
+													var Amount = "<td align=center id=billTotal7"+item.id+">"
+															+ total + "</td>";
 
-												var trclosed = "</tr>";
+													var action = "<td><abbr title='edit'><i class='fa fa-check-circle' style='visibility: hidden;' id=saveItem7"
+															+ item.id
+															+ " onclick=updateTotal7("
+															+ item.id
+															+ ","
+															+ item.mrp
+															+ ")>  </i>  <i class='fa fa-edit'onclick=editDisable7("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ","
+															+ item.mrp
+															+ ");   id=editItem7"
+															+ item.id
+															+ "></i></abbr> <a href='#' class='action_btn'onclick=deleteFunction7("
+															+ item.id
+															+ ","
+															+ item.qty
+															+ ")><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a></td>";
+													/* <a href='#' class='action_btn'> *//* </a> */
+													allTotal = allTotal + total;
 
-												$('#table_grid7 tbody')
-														.append(tr);
-												$('#table_grid7 tbody')
-														.append(index);
-												$('#table_grid7 tbody')
-														.append(barcode);
-												$('#table_grid7 tbody')
-														.append(
-																itemName);
-												$('#table_grid7 tbody')
-														.append(qty);
-												$('#table_grid7 tbody')
-														.append(rate);
+													var trclosed = "</tr>";
 
-												$('#table_grid7 tbody')
-														.append(Amount);
+													$('#table_grid7 tbody')
+															.append(tr);
+													$('#table_grid7 tbody')
+															.append(index);
+													$('#table_grid7 tbody')
+															.append(barcode);
+													$('#table_grid7 tbody')
+															.append(itemName);
+													$('#table_grid7 tbody')
+															.append(qty);
+													$('#table_grid7 tbody')
+															.append(rate);
 
-												$('#table_grid7 tbody')
-														.append(action);
+													$('#table_grid7 tbody')
+															.append(Amount);
 
-												$('#table_grid7 tbody')
-														.append(
-																trclosed);
+													$('#table_grid7 tbody')
+															.append(action);
 
-											})
+													$('#table_grid7 tbody')
+															.append(trclosed);
 
-							$("#total7").html(allTotal);
-							document.getElementById("tot7")
-									.setAttribute('value', allTotal);
+												})
 
-							
-							var discount = $("#discount7").val();
-							var grandAmt = allTotal - (allTotal * (discount / 100));
-							
-							document.getElementById("paidAmount7")
-							.setAttribute('value', grandAmt);
-							
-							var paidAmount = $("#paidAmount7").val();
-							
-							var grandMinusPaidAmt=grandAmt-paidAmount;
-							$('#grandtotal7').html(grandAmt);
-							document.getElementById("grandtot7").setAttribute('value',grandAmt);
+								$("#total7").html(allTotal);
+								document.getElementById("tot7").setAttribute(
+										'value', allTotal);
 
-							
-							$('#remAmt7').html(grandMinusPaidAmt);
-							document.getElementById("remAmount7").setAttribute('value',grandMinusPaidAmt);
-							
-							document.getElementById("barcode7").focus();
-						});
+								var discount = $("#discount7").val();
+								var grandAmt = allTotal
+										- (allTotal * (discount / 100));
+
+								document.getElementById("paidAmount7")
+										.setAttribute('value', grandAmt);
+
+								var paidAmount = $("#paidAmount7").val();
+
+								var grandMinusPaidAmt = grandAmt - paidAmount;
+								$('#grandtotal7').html(grandAmt);
+								document.getElementById("grandtot7")
+										.setAttribute('value', grandAmt);
+
+								$('#remAmt7').html(grandMinusPaidAmt);
+								document.getElementById("remAmount7")
+										.setAttribute('value',
+												grandMinusPaidAmt);
+
+								document.getElementById("barcode7").focus();
+							});
 		}
 	</script>
 	<script type="text/javascript">
@@ -4743,7 +6119,7 @@
 			if (custName1 == "" || custName1 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo1 != "" && phoneNo1.length!=10) {
+			} else if (phoneNo1 != "" && phoneNo1.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName1 == "" || itemName1 == null) {
@@ -4762,7 +6138,7 @@
 			if (custName2 == "" || custName1 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo2!= "" && phoneNo2.length!=10) {
+			} else if (phoneNo2 != "" && phoneNo2.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName2 == "" || itemName2 == null) {
@@ -4781,7 +6157,7 @@
 			if (custName3 == "" || custName3 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo3!= "" && phoneNo3.length!=10) {
+			} else if (phoneNo3 != "" && phoneNo3.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName3 == "" || itemName3 == null) {
@@ -4800,7 +6176,7 @@
 			if (custName4 == "" || custName4 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo4 != "" &&  phoneNo4.length!=10) {
+			} else if (phoneNo4 != "" && phoneNo4.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName4 == "" || itemName4 == null) {
@@ -4819,7 +6195,7 @@
 			if (custName5 == "" || custName5 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo5 != "" && phoneNo5.length!=10) {
+			} else if (phoneNo5 != "" && phoneNo5.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName5 == "" || itemName5 == null) {
@@ -4838,7 +6214,7 @@
 			if (custName6 == "" || custName6 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo6 != "" && phoneNo6.length!=10) {
+			} else if (phoneNo6 != "" && phoneNo6.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName6 == "" || itemName6 == null) {
@@ -4857,15 +6233,14 @@
 			if (custName7 == "" || custName7 == null) {
 				isValid = false;
 				alert("Please Enter Customer Name");
-			} else if (phoneNo7 != "" && phoneNo7.length!=10) {
+			} else if (phoneNo7 != "" && phoneNo7.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
 			} else if (itemName7 == "" || itemName7 == null) {
 				isValid = false;
 				alert("Please Enter Select Item");
 			}
-			
-		
+
 			return isValid;
 		}
 	</script>
@@ -4908,11 +6283,12 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal1').html(grandAmt);
-			document.getElementById("grandtot1").setAttribute('value',grandAmt);
-			
-			
-			document.getElementById("paidAmount1").setAttribute('value',grandAmt);
-			
+			document.getElementById("grandtot1")
+					.setAttribute('value', grandAmt);
+
+			document.getElementById("paidAmount1").setAttribute('value',
+					grandAmt);
+
 		}
 	</script>
 	<script type="text/javascript">
@@ -4924,10 +6300,11 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal2').html(grandAmt);
-			document.getElementById("grandtot2").setAttribute('value',grandAmt);
+			document.getElementById("grandtot2")
+					.setAttribute('value', grandAmt);
 
-			
-			document.getElementById("paidAmount2").setAttribute('value',grandAmt);
+			document.getElementById("paidAmount2").setAttribute('value',
+					grandAmt);
 		}
 	</script>
 	<script type="text/javascript">
@@ -4939,9 +6316,11 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal3').html(grandAmt);
-			document.getElementById("grandtot3").setAttribute('value',grandAmt);
+			document.getElementById("grandtot3")
+					.setAttribute('value', grandAmt);
 
-			document.getElementById("paidAmount3").setAttribute('value',grandAmt);
+			document.getElementById("paidAmount3").setAttribute('value',
+					grandAmt);
 
 		}
 	</script>
@@ -4954,9 +6333,11 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal4').html(grandAmt);
-			document.getElementById("grandtot4").setAttribute('value',grandAmt);
-			
-			document.getElementById("paidAmount4").setAttribute('value',grandAmt);
+			document.getElementById("grandtot4")
+					.setAttribute('value', grandAmt);
+
+			document.getElementById("paidAmount4").setAttribute('value',
+					grandAmt);
 
 		}
 	</script>
@@ -4969,9 +6350,11 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal5').html(grandAmt);
-			document.getElementById("grandtot5").setAttribute('value',grandAmt);
+			document.getElementById("grandtot5")
+					.setAttribute('value', grandAmt);
 
-			document.getElementById("paidAmount5").setAttribute('value',grandAmt);
+			document.getElementById("paidAmount5").setAttribute('value',
+					grandAmt);
 		}
 	</script>
 	<script type="text/javascript">
@@ -4983,10 +6366,12 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal6').html(grandAmt);
-			
-			document.getElementById("grandtot6").setAttribute('value',grandAmt);
-			
-			document.getElementById("paidAmount6").setAttribute('value',grandAmt);
+
+			document.getElementById("grandtot6")
+					.setAttribute('value', grandAmt);
+
+			document.getElementById("paidAmount6").setAttribute('value',
+					grandAmt);
 		}
 	</script>
 	<script type="text/javascript">
@@ -4998,128 +6383,123 @@
 			var grandAmt = total - (total * (discount / 100));
 
 			$('#grandtotal7').html(grandAmt);
-			
-			document.getElementById("grandtot7").setAttribute('value',grandAmt);
-			
-			document.getElementById("paidAmount7").setAttribute('value',grandAmt);
+
+			document.getElementById("grandtot7")
+					.setAttribute('value', grandAmt);
+
+			document.getElementById("paidAmount7").setAttribute('value',
+					grandAmt);
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal1()
-		{
+		function amtMinusGrandTotal1() {
 			var paidAmount = $("#paidAmount1").val();
-            
-			
+
 			var grandAmount = $("#grandtot1").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt1').html(remainingAmount);
-			document.getElementById("remAmount1").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount1").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal2()
-		{
+		function amtMinusGrandTotal2() {
 			var paidAmount = $("#paidAmount2").val();
-            
-			
+
 			var grandAmount = $("#grandtot2").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt2').html(remainingAmount);
-			document.getElementById("remAmount2").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount2").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal3()
-		{
+		function amtMinusGrandTotal3() {
 			var paidAmount = $("#paidAmount3").val();
-            
-			
+
 			var grandAmount = $("#grandtot3").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt3').html(remainingAmount);
-			document.getElementById("remAmount3").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount3").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal4()
-		{
+		function amtMinusGrandTotal4() {
 			var paidAmount = $("#paidAmount4").val();
-            
-			
+
 			var grandAmount = $("#grandtot4").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt4').html(remainingAmount);
-			document.getElementById("remAmount4").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount4").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal5()
-		{
+		function amtMinusGrandTotal5() {
 			var paidAmount = $("#paidAmount5").val();
-            
-			
+
 			var grandAmount = $("#grandtot5").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt5').html(remainingAmount);
-			document.getElementById("remAmount5").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount5").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal6()
-		{
+		function amtMinusGrandTotal6() {
 			var paidAmount = $("#paidAmount6").val();
-            
-			
+
 			var grandAmount = $("#grandtot6").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt6').html(remainingAmount);
-			document.getElementById("remAmount6").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount6").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
 	<script type="text/javascript">
-		function amtMinusGrandTotal7()
-		{
+		function amtMinusGrandTotal7() {
 			var paidAmount = $("#paidAmount7").val();
-            
-			
+
 			var grandAmount = $("#grandtot7").val();
 			//alert(paidAmount);
 			//alert(grandAmount);
-			
+
 			var remainingAmount = (grandAmount - paidAmount);
 
 			$('#remAmt7').html(remainingAmount);
-			document.getElementById("remAmount7").setAttribute('value',remainingAmount);
+			document.getElementById("remAmount7").setAttribute('value',
+					remainingAmount);
 
 		}
 	</script>
