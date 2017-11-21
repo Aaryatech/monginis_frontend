@@ -12,7 +12,7 @@
 
 <title>Monginis</title>
 
-
+  
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />

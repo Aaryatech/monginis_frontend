@@ -52,7 +52,7 @@ import com.monginis.ops.model.SellBillDataCommon;
 public class CustomerBillController {
 	
 	public static List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<GetCurrentStockDetails>();//
-
+      
 	   //static ItemList
 		public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
 		
