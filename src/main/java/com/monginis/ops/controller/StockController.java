@@ -65,11 +65,13 @@ public class StockController {
 		RestTemplate restTemplate = new RestTemplate();
 	
 		try {
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
+			
 			runningMonth = frItemStockHeader.getMonth();
 
 		} catch (Exception e) {
@@ -94,7 +96,7 @@ public class StockController {
 
 		System.out.println("Day Of Month is: " + dayOfMonth);
 
-		if (dayOfMonth == 14 && runningMonth < calCurrentMonth) {
+		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth < calCurrentMonth) {
 
 			isMonthCloseApplicable = true;
 		}
@@ -264,7 +266,7 @@ public class StockController {
 			// String stockDiff=request.getParameter("stockDiff"+stockDetails.getItemId());
 			int intPhysicalStock = Integer.parseInt(physicalStockQty);
 
-			postFrItemStockDetail.setItemId(Integer.parseInt(stockDetails.getItemId()));
+			postFrItemStockDetail.setItemId(stockDetails.getItemId());
 			postFrItemStockDetail.setItemName(stockDetails.getItemName());
 			postFrItemStockDetail.setRegOpeningStock(stockDetails.getRegOpeningStock());
 			postFrItemStockDetail.setOpeningStockDetailId(stockDetails.getStockDetailId());
