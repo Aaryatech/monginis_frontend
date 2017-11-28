@@ -13,13 +13,38 @@ private double itemTax1;
 private double itemTax2;
 private double itemTax3;
 private int billStockType;
+
+private int totalSpStock;
+private int totalRegStock;
+
 private boolean isSpStockGretor;
 private boolean isSpStockLessthanQty;
 private boolean isRegOpStockLess;
 
 private boolean isRegOpStockGretor;
 
+private boolean isCurrentStockOver;
 
+
+
+public int getTotalSpStock() {
+	return totalSpStock;
+}
+public void setTotalSpStock(int totalSpStock) {
+	this.totalSpStock = totalSpStock;
+}
+public int getTotalRegStock() {
+	return totalRegStock;
+}
+public void setTotalRegStock(int totalRegStock) {
+	this.totalRegStock = totalRegStock;
+}
+public boolean isCurrentStockOver() {
+	return isCurrentStockOver;
+}
+public void setCurrentStockOver(boolean isCurrentStockOver) {
+	this.isCurrentStockOver = isCurrentStockOver;
+}
 public boolean isRegOpStockGretor() {
 	return isRegOpStockGretor;
 }
