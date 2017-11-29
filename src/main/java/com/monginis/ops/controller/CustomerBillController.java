@@ -188,10 +188,109 @@ public class CustomerBillController {
 		return model;
 	}
 
+	@RequestMapping(value = "/showCustomerBill1", method = RequestMethod.GET)
+	public ModelAndView displayCustomerBill1(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("frSellBilling/customerBill");
+
+		resetData1();
+		resetData2();
+		resetData3();
+		resetData4();
+		resetData5();
+		resetData6();
+		resetData7();
+
+		resetDataOfStockList();
+		HttpSession session = request.getSession();
+		try {
+
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+			System.out.println("menuList" + menuList.toString());
+			ArrayList<Integer> itemList = new ArrayList<Integer>();
+
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
+
+				if (frMenu.getMenuId() == 26 || frMenu.getMenuId() == 31 || frMenu.getMenuId() == 33
+						|| frMenu.getMenuId() == 34) {
+
+					String str = frMenu.getItemShow();
+					System.out.println("getItemShow" + frMenu.getItemShow());
+
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length());
+
+			System.out.println("Item Show List is " + items);
+			itemShowGlobal = items;
+
+			RestTemplate restTemplate = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("itemList", items);
+
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsById", map,
+					ItemResponse.class);
+
+			List<Item> newItemsList = itemsList.getItemList();
+
+			customerBillItemList = new ArrayList<CustomerBillItem>();
+
+			for (int i = 0; i < newItemsList.size(); i++) {
+
+				Item item = newItemsList.get(i);
+
+				CustomerBillItem customerBillItem = new CustomerBillItem();
+				customerBillItem.setCatId(item.getItemGrp1());
+				customerBillItem.setId(item.getId());
+				customerBillItem.setItemId(item.getItemId());
+				customerBillItem.setItemName(item.getItemName());
+				customerBillItem.setQty(0);
+				customerBillItem.setItemTax1(item.getItemTax1());
+				customerBillItem.setItemTax2(item.getItemTax2());
+				customerBillItem.setItemTax3(item.getItemTax3());
+
+				if (frDetails.getFrRateCat() == 1) {
+					customerBillItem.setMrp(item.getItemMrp1());
+					customerBillItem.setRate(item.getItemRate1());
+				} else if (frDetails.getFrRateCat() == 2) {
+					customerBillItem.setMrp(item.getItemMrp2());
+
+					customerBillItem.setRate(item.getItemRate2());
+
+				} else if (frDetails.getFrRateCat() == 3) {
+					customerBillItem.setMrp(item.getItemMrp3());
+
+					customerBillItem.setRate(item.getItemRate3());
+				}
+
+				customerBillItemList.add(customerBillItem);
+
+			}
+
+			System.out.println("*********customerBillItemList***********" + customerBillItemList.toString());
+
+			model.addObject("itemListResponse", customerBillItemList);
+		} catch (Exception e) {
+			System.out.println("Exception in Display Customer Bill");
+			model.addObject("itemListResponse", customerBillItemList);
+		}
+
+		return model;
+
+	}
+	
 	@RequestMapping(value = "/showCustomerBill", method = RequestMethod.GET)
 	public ModelAndView displayCustomerBill(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("frSellBilling/customerBill");
+		ModelAndView model = new ModelAndView("frSellBilling/newCustomerBill");
 
 		resetData1();
 		resetData2();
@@ -549,6 +648,7 @@ public class CustomerBillController {
 
 	}
 
+	
 	// ---------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/generateSellBill2", method = RequestMethod.GET)
@@ -2739,6 +2839,10 @@ public class CustomerBillController {
 				}
 
 			}
+			
+			
+			
+			
 			// ------------------------------------------------------------------------------------------
 			if (currentStockDetailList.size() == 0) {
 
