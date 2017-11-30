@@ -29,6 +29,9 @@ public class GetGrnItemConfig {
     private int autoGrnQty;
 	
 
+    private String billDateTime;
+    
+    
 	public int getCatId() {
 		return catId;
 	}
@@ -173,16 +176,23 @@ public class GetGrnItemConfig {
 		this.autoGrnQty = autoGrnQty;
 	}
 
+	public String getBillDateTime() {
+		return billDateTime;
+	}
+
+	public void setBillDateTime(String billDateTime) {
+		this.billDateTime = billDateTime;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
 				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp="
 				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
 				+ cgstPer + ", igstPer=" + igstPer + ", catId=" + catId + ", menuId=" + menuId + ", invoiceNo="
-				+ invoiceNo + ", autoGrnQty=" + autoGrnQty + "]";
+				+ invoiceNo + ", autoGrnQty=" + autoGrnQty + ", billDateTime=" + billDateTime + "]";
 	}
 
-	
 	
 	
 }

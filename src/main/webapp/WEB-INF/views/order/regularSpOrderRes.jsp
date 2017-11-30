@@ -4,8 +4,11 @@
 <%@page import="java.time.LocalDate,java.util.*"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+    		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
     
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,28 +33,9 @@ jQuery(document).ready(function(){
 		align:"left"
 	});
 });
-</script>
+</script> --%>
 
-<!--datepicker-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker2" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker3" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker4" ).datepicker();
-  } );
-  $( function() {
-    $( "#datepicker5" ).datepicker();
-  } );
-  </script>
-<!--datepicker--> 
+
 
 <style type="text/css">
 select {
@@ -92,8 +76,29 @@ select {
     </script>
 
 
-</head>
-<body>
+<!-- </head>
+<body> -->
+
+<!--datepicker-->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker2" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker3" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker4" ).datepicker();
+  } );
+  $( function() {
+    $( "#datepicker5" ).datepicker();
+  } );
+  </script>
+<!--datepicker--> 
 	<c:url var="findAllRegularSpCk" value="/getAllRegularSpCk" />
             <c:url var="findSpecialCkById" value="/getSpecialCkById" />
 <!--topLeft-nav-->
@@ -107,7 +112,7 @@ select {
 <%-- <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" /> --%>
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 <!--topHeader-->

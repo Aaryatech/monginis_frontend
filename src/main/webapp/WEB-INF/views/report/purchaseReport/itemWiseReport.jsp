@@ -2,44 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
-<title>Monginis</title>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet" type="text/css"/>	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-	
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
-	
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-	
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -54,8 +20,6 @@ jQuery(document).ready(function(){
 <!--datepicker--> 
 
 
-</head>
-<body>
 
 <c:url var="getItemWiseReport" value="/findItemWiseReport" />
 	
@@ -65,7 +29,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -140,21 +104,28 @@ jQuery(document).ready(function(){
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-									<tr class="bgpink">
-									<th>Sr.No.</th>
-									<th>Party Name</th>
-									<th>Item Name</th>
-									<th>Qty</th>
-									<th>Rate</th>
-									<th>Amount</th>
+			<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+															
+								
+									<th class="col-md-1">Sr.No.</th>
+									<th class="col-md-1">Party Name</th>
+									<th class="col-md-1">Item Name</th>
+									<th class="col-md-1">Qty</th>
+									<th class="col-md-1">Rate</th>
+									<th class="col-md-1">Amount</th>
 								
 								  </tr>
-								
+								</thead>
+								<tbody>
 								 
 								  
 								</table>
@@ -200,7 +171,7 @@ jQuery(document).ready(function(){
 			var toDate = document.getElementById("todatepicker").value;
 			var catId = document.getElementById("catId").value;   
 			
-			alert(catId);
+		
 			$.getJSON('${getItemWiseReport}',{
 				
 								fromDate : fromDate,
@@ -222,17 +193,17 @@ jQuery(document).ready(function(){
 									
 								var tr = $('<tr></tr>');
 
-								tr.append($('<td></td>').html(key+1));
+								tr.append($('<td class="col-md-1"></td>').html(key+1));
 								
-								tr.append($('<td></td>').html(partyname));
+								tr.append($('<td class="col-md-1"></td>').html(partyname));
 
-							  	tr.append($('<td></td>').html(itemWiseTaxData.itemName));
+							  	tr.append($('<td class="col-md-1"></td>').html(itemWiseTaxData.itemName));
 
-								tr.append($('<td></td>').html(itemWiseTaxData.qty));
+								tr.append($('<td class="col-md-1"></td>').html(itemWiseTaxData.qty));
 
-								tr.append($('<td></td>').html(itemWiseTaxData.rate));
+								tr.append($('<td class="col-md-1"></td>').html(itemWiseTaxData.rate));
 
-								tr.append($('<td></td>').html(itemWiseTaxData.total));
+								tr.append($('<td class="col-md-1"></td>').html(itemWiseTaxData.total));
 
 
 								
@@ -362,6 +333,23 @@ jQuery(document).ready(function(){
 
 	}
 </script>
+	
+	<script>
+	
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
+	
 	
 </body>
 </html>

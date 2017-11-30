@@ -83,7 +83,13 @@ However, delay the fade out process for 2.5 seconds */
     to {bottom: 0; opacity: 0;}
 }
 </style>
-
+<!--new css added by kalpesh -->
+	<link href="/ops/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
+	
+	<!--new css added by kalpesh -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
+	
 </head>
 <body onload="myFunction(${billStatus})">
 <c:url var="updateBillStatus" value="/updateBillStatus" />
@@ -99,7 +105,7 @@ However, delay the fade out process for 2.5 seconds */
 		<%-- <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" /> --%>
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 		<!--topHeader-->
@@ -122,43 +128,19 @@ However, delay the fade out process for 2.5 seconds */
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-					<!-- <div class="order-left">
-						<h2 class="pageTitle">Bills</h2>
-						<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>
-					</div> -->
-
-		<%-- 			<form name="frm_search" id="frm_search" method="post"
-						action="showBillProcess">
-						<input type="hidden" name="mod_ser" id="mod_ser"
-							value="search_result">
-
-						
-
-						<div class="colOuter">
-		<div class="col1"><div class="col1title">Delivery Order / GRN / GVN  Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="datepicker" type="text" value="${spDeliveryDt}" >
-		</div>
-	</div>
-	
-						<div class="colOuter">
-							<div class="col2full">
-								<input name="" class="buttonsaveorder" value="Search..."
-									type="submit">
-							</div>
-						</div>
-
-					</form> --%>
+					
 		<div class="sidebarright">
+		<br>
 	
 		<div class=" col-md-2">
-		    <h2 class=" pull-left">Bill No:-  <b>${billNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h4>
+		    <h2 class=" pull-left">Bill No:-  <b>${billNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 	
 		<div class="col-md-2">
-		    <h2 class="pull-left">Bill Date:- <b> ${billDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h4>
+		    <h2 class="pull-left">Bill Date:- <b> ${billDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 			<div class="col-md-3">
-		    <h2 class="pull-left">Grand Total:- <b> ${grandTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h4>
+		    <h2 class="pull-left">Grand Total:- <b> ${grandTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 		<div class="col-md-4 ">
 			  <h2 class="pull-left">Bill Status:- <c:choose>
@@ -185,7 +167,7 @@ However, delay the fade out process for 2.5 seconds */
 							 									<b><c:out value="Closed"></c:out></b>
 																	</c:when>
 
-																</c:choose></h4>
+																</c:choose></h2>
 		</div>
 		
 		 <div class="col-md-2 ">
@@ -200,67 +182,63 @@ However, delay the fade out process for 2.5 seconds */
 						<!--tabMenu-->
 
 						<!--tabMenu-->
-						<ul class="cd-tabs-content">
-							<!--tab1-->
-							<li data-content="tab1" class="selected">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
-									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
-						<tr>
-							<td align="center" valign="middle" style="padding:0px;">
+					<div class="clearfix"></div>
 
-										<table width="100%" id="table1">
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
 											<tr class="bgpink">
 												<th width="138" style="width: 18px" align="left">Sr No</th>
-													<th width="138" align="left">Item Name</th>
-													<th width="159" align="left">Group</th>
-													<th width="105" align="left">Order Qty</th>
-													<th width="270" align="right">Billed Qty</th>
+													<th class="col-md-1">Item Name</th>
+													<th class="col-md-1">Group</th>
+													<th class="col-md-1">Order Qty</th>
+													<th class="col-md-1">Billed Qty</th>
 												
-													<th width="159" align="left">MRP</th>
-														<th width="91" align="left">Rate</th>
-														<th width="105" align="left">Taxable Amt</th>
-													<th width="105" align="left">GST %</th>
+													<th class="col-md-1">MRP</th>
+														<th class="col-md-1">Rate</th>
+														<th class="col-md-1">Taxable Amt</th>
+													<th class="col-md-1">GST %</th>
 													
-													<th width="105" align="left">Tax Amount</th>
-													<th width="105" align="left">Grand Total</th>
+													<th class="col-md-1">Tax Amt</th>
+													<th class="col-md-1">Total</th>
 													
-													<th width="159" align="left">Remark</th>
+													<th class="col-md-1">Remark</th>
 											</tr>
+											</thead>
+							<tbody>
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
 												<tr>
-													<td><c:out value="${count.index+1}" /></td>
-													<td><c:out value="${billDetailsList.itemName}" /></td>
-													<td><c:out value="${billDetailsList.catName}" /></td>
-													<td><c:out value="${billDetailsList.orderQty}" /></td>
-													<td><c:out value="${billDetailsList.billQty}" /></td>
-													<td><c:out value="${billDetailsList.mrp}" /></td>
-													<td><c:out value="${billDetailsList.rate}" /></td>
-													<td><c:out value="${billDetailsList.taxableAmt}" /></td>
+													<td class="col-md-1"><c:out value="${count.index+1}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.itemName}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.catName}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.orderQty}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.billQty}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.mrp}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.rate}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.taxableAmt}" /></td>
 													
 													<c:set var="sgstPer" value="${billDetailsList.sgstPer}"/>
 													<c:set var="cgstPer" value="${billDetailsList.cgstPer}"/>
-													<td><c:out value="${sgstPer+cgstPer}" /></td>
-													<td><c:out value="${billDetailsList.totalTax }" /></td>
-													<td><c:out value="${billDetailsList.grandTotal }" /></td>
+													<td class="col-md-1"><c:out value="${sgstPer+cgstPer}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.totalTax }" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.grandTotal }" /></td>
 													
-													<td><c:out value="${billDetailsList.remark}" /></td>
+													<td class="col-md-1"><c:out value="${billDetailsList.remark}" /></td>
 													
 												</tr>
 												</c:forEach>
 											
-										</table>
-										</td>
-										</tr>
-										</table>
-										
+										</tbody>
 
-									</div>
-								</div>
-							</li>
+						</table>
+					</div>
+				</div>
 
-						</ul>
 					</div><br>
 					<div align="center">
 								<input name="" class="buttonsaveorder" value="Go Back"
@@ -314,6 +292,26 @@ function goBack() {
 }
 </script>
 
+<script>
+	/*
+//  jquery equivalent
+jQuery(document).ready(function() {
+   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+ });
+*/
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
 
+
+	</script>
 </body>
 </html>

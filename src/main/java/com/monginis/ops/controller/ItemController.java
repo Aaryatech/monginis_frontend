@@ -458,6 +458,7 @@ public class ItemController {
 		String menuId = request.getParameter("menuId");
 		int rateCat = frDetails.getFrRateCat();
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		
 
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 
@@ -755,6 +756,15 @@ public class ItemController {
 							order.setGrnType(0);
 						}
 						}// end of else
+						
+						if(menuList.get(globalIndex).getMenuId()==29||menuList.get(globalIndex).getMenuId()==30||
+								menuList.get(globalIndex).getMenuId()==42||menuList.get(globalIndex).getMenuId()==43||
+								menuList.get(globalIndex).getMenuId()==44||menuList.get(globalIndex).getMenuId()==47) {
+							
+							order.setGrnType(3);
+							
+						}
+
 					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
 					order.setEditQty(0);
 					order.setFrId(frDetails.getFrId());
@@ -840,6 +850,7 @@ public class ItemController {
 			e.printStackTrace();
 		}
 		c.add(Calendar.DATE, day); // number of days to add
+		
 		date = sdf.format(c.getTime());
 
 		return date;

@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,7 +33,9 @@
 
 
 </head>
-<body>
+<body> --%>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
 
 
 	<!--topLeft-nav-->
@@ -44,7 +46,7 @@
 	<div class="wrapper">
 
 		<!--topHeader-->
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 		
 		</jsp:include>
 

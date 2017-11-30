@@ -98,9 +98,9 @@ public class ItemWiseDetail {
 
 	@Override
 	public String toString() {
-		return "ItemWiseDetail [billNo=" + billNo + ", itemId=" + itemId + ", billDetailNo="
-				+ billDetailNo + ", rate=" + rate + ", qty=" + qty + ", total=" + total + ", itemName=" + itemName
-				+ "]";
+		return "ItemWiseDetail [billNo=" + billNo + ", itemId=" + itemId + ", billDetailNo=" + billDetailNo + ", rate="
+				+ rate + ", qty=" + qty + ", grnType=" + grnType + ", total=" + total + ", itemName=" + itemName
+				+ ", billDate=" + billDate + "]";
 	}
 
 	

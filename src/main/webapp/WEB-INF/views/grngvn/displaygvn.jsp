@@ -3,238 +3,173 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/lightbox.css">
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/lightbox.js"></script>
-
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery("#menuzord").menuzord({
-			align : "left"
-		});
-	});
-</script>
-<!--rightNav-->
-
-<!--selectlistbox-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
-
-<!--selectlistbox-->
-
-<!--datepicker-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-	$(function() {
-		$("#datepicker2").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-</script>
-<!--datepicker-->
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-</head>
-<body>
+<!--topLeft-nav-->
+<div class="sidebarOuter"></div>
+<!--topLeft-nav-->
 
-	<!--topLeft-nav-->
-	<div class="sidebarOuter"></div>
-	<!--topLeft-nav-->
+<!--wrapper-start-->
+<div class="wrapper">
 
-	<!--wrapper-start-->
-	<div class="wrapper">
+	<!--topHeader-->
+	<c:url var="getGvnList" value="/getGvnList" />
 
-		<!--topHeader-->
-		<c:url var="getGvnList" value="/getGvnList" />
-
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
-		<!--topHeader-->
+	<!--topHeader-->
 
-		<!--rightContainer-->
-		<div class="fullGrid center">
-			<!--fullGrid-->
-			<div class="wrapperIn2">
+	<!--rightContainer-->
+	<div class="fullGrid center">
+		<!--fullGrid-->
+		<div class="wrapperIn2">
 
-				<!--leftNav-->
+			<!--leftNav-->
 
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
-					<jsp:param name="myMenu" value="${menuList}" />
+			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:param name="myMenu" value="${menuList}" />
 
-				</jsp:include>
+			</jsp:include>
 
 
-				<!--leftNav-->
+			<!--leftNav-->
 
 
 
-				<!--rightSidebar-->
-				<div class="sidebarright">
-					<div class="order-left">
-						<h2 class="pageTitle">GVN Details</h2>
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+			<!--rightSidebar-->
+			<div class="sidebarright">
+				<div class="order-left">
+					<h2 class="pageTitle">GVN Details</h2>
+					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				</div>
+
+
+				<input type="hidden" name="mod_ser" id="mod_ser"
+					value="search_result">
+
+				<div class="colOuter">
+					<!-- copy div kalpesh -->
+
+					<div class="calender-title">From</div>
+					<div class="col-md-2">
+						<input id="datepicker" class="texboxitemcode texboxcal"
+							value="${cDate}" name="from_Date" type="text">
 					</div>
 
-
-					<input type="hidden" name="mod_ser" id="mod_ser"
-						value="search_result">
-
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">From</div>
-						</div>
-						<div class="col2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
-								value="${cDate}" name="from_Date" type="text">
-						</div>
+					<div class="calender-title">TO</div>
+					<div class="col-md-2">
+						<input id="datepicker2" class="texboxitemcode texboxcal"
+							value="${cDate}" name="to_Date" type="text">
 					</div>
 
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">TO</div>
-						</div>
-						<div class="col2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
-								value="${cDate}" name="to_Date" type="text">
-						</div>
+					<div class="col-md-1">
+						<button type="button" class="btn  buttonsaveorder"
+							onclick="searchGVN()">Search</button>
 					</div>
-
-					<div class="colOuter">
-						<div class="col2full">
-							<input name="" class="buttonsaveorder" value="Search..."
-								type="button" onclick="searchGVN()">
-						</div>
-					</div>
-
-
-
-					<!--tabNavigation-->
-					<div class="cd-tabs">
-						<!--tabMenu-->
-
-						<!--tabMenu-->
-						<ul class="cd-tabs-content">
-							<!--tab1-->
-							<li data-content="tab1" class="selected">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
-
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-
-
-
-
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid">
-														<thead>
-															<tr class="bgpink">
-
-																<th>Sr No</th>
-																<th>Bill No</th>
-																<th>GVN Date</th>
-																<th>Item Name</th>
-																<th>RATE</th>
-																<th>Quantity</th>
-																<th>Tax Percentage</th>
-																<th>Tax Amount</th>
-																<th>Amount</th>
-																<th>Status</th>
-																<th>Photo 1</th>
-																<th>Photo 2</th>
-																<th>Remark</th>
-
-															</tr>
-														</thead>
-														<tbody>
-
-														</tbody>
-														<c:forEach items="${gvnList}" var="gvnList"
-															varStatus="count">
-															<tr>
-																<td><c:out value="${count.index+1}" /></td>
-
-																<td><c:out value="${gvnList.billNo}" /></td>
-																<td><c:out value="${gvnList.grnGvnDate}" /></td>
-																<td><c:out value="${gvnList.itemName}" /></td>
-																<td><c:out value="${gvnList.baseRate}" /></td>
-																<td><c:out value="${gvnList.grnGvnQty}" /></td>
-																<td><c:out value="${gvnList.sgstPer+gvnList.cgstPer}" /></td>
-
-																<td><c:out value="${gvnList.totalTax}" /></td>
-
-
-																<td><c:out value="${gvnList.grnGvnAmt}" /></td>
-																<td><c:out value="${gvnList.grnGvnStatus}" /></td>
-																<td><a href="${url}${gvnList.gvnPhotoUpload1}"
-																	data-lightbox="image-1">Image 1</a></td>
-																<td><a href="${url}${gvnList.gvnPhotoUpload2}"
-																	data-lightbox="image-2">Image 2</a></td>
-																<td><c:out value="${gvnList.frGrnGvnRemark}" /></td>
-															</tr>
-														</c:forEach>
-
-
-
-
-													</table>
-
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</li>
-
-						</ul>
-					</div>
-					<!--tabNavigation-->
-
-
 
 				</div>
-				<!--rightSidebar-->
+
+				<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+<th class="col-md-1">Bill No</th>
+<th class="col-md-1">Date</th>
+<th class="col-md-2">Name</th>
+<th class="col-md-1">Rate</th>
+<th class="col-md-1">Quantity</th>
+<th class="col-md-1">Tax %</th>
+<th class="col-md-1">Tax Amt</th>
+<th class="col-md-1">Amount</th>
+<th class="col-md-1">Status</th>
+<th class="col-md-1">Photo 1</th>
+<th class="col-md-1">Photo 2</th>
+<th class="col-md-1">Remark</th>
+  </tr>
+							</thead>
+							<tbody>
+
+
+
+								<c:forEach items="${gvnList}" var="gvnList" varStatus="count">
+									<tr>
+
+
+										<td class="col-md-1"><c:out value="${gvnList.billNo}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.grnGvnDate}" /></td>
+										<td class="col-md-2"><c:out value="${gvnList.itemName}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.baseRate}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.grnGvnQty}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.sgstPer+gvnList.cgstPer}" /></td>
+
+										<td class="col-md-1"><c:out value="${gvnList.totalTax}" /></td>
+
+
+										<td class="col-md-1"><c:out value="${gvnList.grnGvnAmt}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.grnGvnStatus}" /></td>
+										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload1}"
+											data-lightbox="image-1">Image 1</a></td>
+										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
+											data-lightbox="image-2">Image 2</a></td>
+										<td class="col-md-1"><c:out value="${gvnList.frGrnGvnRemark}" /></td>
+								</c:forEach>
+
+
+
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 			</div>
-			<!--fullGrid-->
+			<!--rightSidebar-->
+
 		</div>
-		<!--rightContainer-->
-
+		<!--fullGrid-->
 	</div>
-	<!--wrapper-end-->
+	<!--rightContainer-->
 
-	<script type="text/javascript">
+</div>
+<!--wrapper-end-->
+
+<script>
+
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
+
+<script type="text/javascript">
 		function searchGVN() {
 
 			$('#table_grid td').remove();
@@ -269,62 +204,84 @@
 											.each(
 													data,
 													function(key, gvndata) {
+														
+														var tr = $('<tr></tr>');
 
+														tr.append($('<td class="col-md-1"></td>').html(gvndata.billNo));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnDate));
+													 	tr.append($('<td class="col-md-2"></td>').html(gvndata.itemName));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.baseRate));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnQty));
+														var calcTaxPer=parseFloat(gvndata.sgstPer)+parseFloat(gvndata.cgstPer);
+
+													 	tr.append($('<td class="col-md-1"></td>').html(calcTaxPer));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.totalTax));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnAmt));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnStatus));
+													 	tr.append($('<td class="col-md-1"></td>').html('<a href="'
+																							+gvndata.gvnPhotoUpload1+'" data-lightbox="image-1" data-title="My caption"><i class="fa fa-image icon2"></i></a>'));
+													 	tr.append($('<td class="col-md-1"></td>').html('<a href="'
+																							+gvndata.gvnPhotoUpload2+'" data-lightbox="image-1" data-title="My caption"><i class="fa fa-image icon2"></i></a>'));
+													 	
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.frGrnGvnRemark));
+													  	
+
+/* 
 														var index = key + 1;
 
 														var tr = "<tr>";
-														var srNo = "<td>&nbsp;&nbsp;&nbsp;"
-																+ index
-																+ "</td>";
+														
 
-														var billNo = "<td>&nbsp;&nbsp;&nbsp;"
+														var billNo = "<td>"
 																+ gvndata.billNo
 																+ "</td>";
-														var grnGvnDate = "<td>&nbsp;&nbsp;&nbsp;"
+														var grnGvnDate = "<td>"
 																+ gvndata.grnGvnDate
 																+ "</td>";
-														var itemName = "<td>&nbsp;&nbsp;&nbsp;"
+														var itemName = "<td>"
 																+ gvndata.itemName
 																+ "</td>";
 
-														var itemRate = "<td>&nbsp;&nbsp;&nbsp;"
+														var itemRate = "<td>"
 																+ gvndata.baseRate
 																+ "</td>";
 
-														var grnGvnQty = "<td>&nbsp;&nbsp;&nbsp;"
+														var grnGvnQty = "<td>"
 																+ gvndata.grnGvnQty
 																+ "</td>";
 																
-																var calcTaxPer=parseFloat(gvndata.sgstPer)+parseFloat(gvndata.cgstPer);
 																
-																var gvnTaxPer = "<td>&nbsp;&nbsp;&nbsp;"
+																var gvnTaxPer = "<td>"
 																	+ calcTaxPer
 																	+ "</td>";
 																	
-																	var totalTax = "<td>&nbsp;&nbsp;&nbsp;"
+																	var totalTax = "<td>"
 																		+ gvndata.totalTax
 																		+ "</td>";
 																
 																
 																
 
-														var grnGvnAmt = "<td>&nbsp;&nbsp;&nbsp;"
+														var grnGvnAmt = "<td>"
 																+ gvndata.grnGvnAmt
 																+ "</td>";
 
-														var grnGvnStatus = "<td>&nbsp;&nbsp;&nbsp;"
+																
+																
+																
+														var grnGvnStatus = "<td>"
 																+ gvndata.grnGvnStatus
 																+ "</td>";
 
-														var gvnPhotoUpload1 = '<td> &nbsp;&nbsp;<a href="'
+														var gvnPhotoUpload1 = '<td> <a href="'
 																							+gvndata.gvnPhotoUpload1+'" data-lightbox="image-1" data-title="My caption">Image 1</a>'
 																+ '</td>';
 
-														var gvnPhotoUpload2 = '<td> &nbsp;&nbsp;<a href="'
+														var gvnPhotoUpload2 = '<td> <a href="'
 																							+gvndata.gvnPhotoUpload2+'" data-lightbox="image-1" data-title="My caption">Image 2</a>'
 																+ '</td>';
 
-														var frGrnGvnRemark = "<td>&nbsp;&nbsp;&nbsp;"
+														var frGrnGvnRemark = "<td>"
 																+ gvndata.frGrnGvnRemark
 																+ "</td>";
 
@@ -332,8 +289,7 @@
 
 														$('#table_grid tbody')
 																.append(tr);
-														$('#table_grid tbody')
-																.append(srNo);
+														
 
 														$('#table_grid tbody')
 																.append(billNo);
@@ -378,10 +334,10 @@
 														$('#table_grid tbody')
 																.append(
 																		frGrnGvnRemark);
-
+ */
 														$('#table_grid tbody')
 																.append(
-																		trclosed);
+																		tr);
 
 													})
 
@@ -393,7 +349,7 @@
 
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function validate() {
 
 			var fromDate = $("#datepicker").val();
@@ -417,7 +373,7 @@
 
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function show_image(data) {
 			alert(data);
 			var image = new Image();
@@ -427,5 +383,8 @@
 			w.document.write(image.outerHTML);
 		}
 	</script>
+
+
+
 </body>
 </html>

@@ -9,17 +9,10 @@
 
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<!--leftNav-->
 	<div class="sidebarhome">
+	<div class="content mCustomScrollbar">
 		<ul>
-			<li><a href="#" class="active" onClick="openNav()"><div
+			<li><a href="#" onClick="openNav()"><div
 						class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-orderbook.png"
@@ -37,38 +30,22 @@
 						Goods <span>Return</span>
 					</div></a></li>
 					<li><a href="#" onClick="openNav4()"><div class="img">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/nav-report.png"
-							alt="img">
+						<i class="fa fa-file-o icon"></i>
 					</div>
 					<div class="title">
 						<span>Reports</span>
 					</div></a></li>
 			<li><a href="${pageContext.request.contextPath}/orderHistory"><div
 						class="img">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
-				 			alt="img">
+						<i class="fa fa-file-text-o icon"></i>
 					</div>
 					<div class="title">
 						Order <span>History</span>
 					</div></a></li>
 					
-					<li><a href="${pageContext.request.contextPath}/showExpressBill"><div
-						class="img">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
-							alt="img">
-					</div>
-					<div class="title">
-						Express <span>Bill</span>
-					</div></a></li>
-					
 					<li><a href="${pageContext.request.contextPath}/showCustomerBill"><div
 						class="img">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/nav-orerhistory.png"
-							alt="img">
+						<i class="fa fa-file-pdf-o icon"></i>
 					</div>
 					<div class="title">
 						Customer Bill <span></span>
@@ -78,9 +55,7 @@
 					
 					<li><a href="${pageContext.request.contextPath}/showBill"><div
 						class="img">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/billing.png"
-							alt="img">
+						<i class="fa fa-money icon"></i>
 					</div>
 					<div class="title">
 						View <span>Bills</span>
@@ -109,6 +84,7 @@
 						Edit <span>Profile</span>
 					</div></a></li>
 		</ul>
+		</div>
 	</div>
 	<!--leftNav-->
 
@@ -346,41 +322,39 @@
 					src="${pageContext.request.contextPath}/resources//images/closebtn.png"
 					alt="monginis"></a>
 				<div class="listarea">
+				
+				
 					<ul>
-						<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
-									alt="monginis"></a>
-								<h2>GRN</h2>
-								<!-- <h3>Booking Up to 12.30 PM</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/showGrn">Add GRN <i class="fa fa-pencil"></i></a>
-								</div>
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/displayGrn">View GRN <i class="fa fa-pencil"></i></a>
-								</div>
+						<li class="small-box">
+						
+						<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">GRN</div>
+						</div>
+						
+						
+						<a href="${pageContext.request.contextPath}/showGrn"><i class="fa fa-plus-circle icon"></i> Add GRN </a>
+						<div class="clearfix"></div>
+						<a href="${pageContext.request.contextPath}/displayGrn"><i class="fa fa-search-plus icon"></i> View GRN </a>
 								
-							</div></li>
-	 						<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>GVN</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/showGvn">Add GVN <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
+						</div>
+						</li>
+	 						
+	 						<li class="small-box">
+	 						
+	 							<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">GVN</div>
+						</div>
+						
+						
+						<a href="${pageContext.request.contextPath}/showGvn"><i	class="fa fa-plus-circle icon"></i> Add GVN 
+									</a>
+									<a href="${pageContext.request.contextPath}/displayGvn"><i class="fa fa-search-plus icon"></i> View GVN </a>
 								
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/displayGvn">View GVN <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-							</div></li>
+						</div>
+						
+						</li>
 
 						<%-- <li><div class="listareaBox">
 								<a class="listareaBoximg"> <img
@@ -433,148 +407,71 @@
 					alt="monginis"></a>
 				<div class="listarea">
 					<ul>
-						<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
-									alt="monginis"></a>
-								<h2>Bill Reports</h2>
-								<!-- <h3>Booking Up to 12.30 PM</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewBillwiseSell">Bill Wise Sell Report <i class="fa fa-pencil"></i></a>
-								</div>
+						<li class="small-box">
+						
+							<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">Bill Reports</div>
+						</div>
+						<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i class="fa fa-files-o icon"></i>Sell Report (Sell) </a>
+					
+					<a href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i class="fa fa-files-o icon"></i>Purchase  Report (Pur) </a>
+						
 								
-								<%-- <div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/displayreport">Report <i class="fa fa-pencil"></i></a>
-								</div> --%>
-								
-							</div></li>
-							<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon7-h.png"
-									alt="monginis"></a>
-								<h2>Bill Reports(Purchase)</h2>
-								<!-- <h3>Booking Up to 12.30 PM</h3> -->
-								
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewBillWisePurchaseReport">BillWise Report <i class="fa fa-pencil"></i></a>
-								</div>
-								
-								<%-- <div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/displayreport">Report <i class="fa fa-pencil"></i></a>
-								</div> --%>
-								
-							</div></li>
-	 						<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>Day and Month</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewDatewiseSellBill">Day wise summary  <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-								
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill">Month wise Summary <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-								
-							</div></li>
-							<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>MonthWise(Purchase)</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+						</div>
+						
+					</li>
 							
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport">Month wise(Purchase) <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-							</div></li>
-							
-							
-							
-							<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>Item wise</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewItemwiseSellBill">Item wise summary  <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
+	 						<li class="small-box">
+	 						
+	 						<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">Day and Month</div>
+						</div>
+						<a href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i class="fa fa-calendar-o icon"></i> Day Summary (Sell)  </a>
+						
+						
+						<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i class="fa fa-calendar-o  icon"></i> Month Summary (Sell) </a>
+										
+						<a href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i class="fa fa-files-o icon"></i>Month Summary Report (Pur) </a>
+						
 								
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">Item wise Report <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-								
-							</div></li>
-							<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>Item wise(Purchase)</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
+						</div>
+						</li>
 							
-									<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewItemWiseDetailReport">Item wise Detail Report<i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewItemWiseReport">Item wise Report<i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-							</div></li>
-								<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>Tax Report</h2>
-								<!-- <h3>View GRN/GVN for selected Month</h3> -->
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewFrTaxSellBill">Tax Report summary  <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
+							<li class="small-box">
+							
+								<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">Item wise</div>
+						</div>
+						<a href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i class="fa fa-chevron-circle-down icon"></i> Item Summary(Sell)  </a>
+						<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill"> <i class="fa fa-chevron-circle-down icon"></i> Item Report (Sell)</a>
+							<a href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i class="fa fa-files-o icon"></i>ItemWise Detail Report (Pur) </a>
+								<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i class="fa fa-files-o icon"></i>ItemWise  Report (Pur) </a>
 								
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill">Date wise Report <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill">Bill wise Report <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
+						</div>
+						
+							</li>
+							
+								<li class="small-box">
 								
-							</div></li>
-                           <li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>Tax Report(Purchase)</h2>
-								<div class="listareaBoxdown">
-									<a href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport">BillWise Tax Report <i class="fa fa-pencil"></i></a>
-								</div>
-							</div></li>
+								
+								<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">Tax Report</div>
+						</div>
+						<a href="${pageContext.request.contextPath}/viewFrTaxSellBill"><i class="fa fa-file-text-o icon"></i> Tax Report summary (Sell) </a>
+						<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill"><i class="fa fa-calendar icon"></i> Date Report (Sell) </a>
+						<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i class="fa fa-files-o icon"></i> Bill Report (Sell)</a>
+						
+												<a href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i class="fa fa-files-o icon"></i>Bill Wise Tax Report(Pur) </a>
+						
+								
+						</div>
+						
+						</li>
+
 						
 
 					</ul>
@@ -759,5 +656,7 @@
 		}
 	</script>
 
-</body>
-</html>
+
+	<!-- custom scrollbar plugin added by kalpesh -->
+		<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js"></script>

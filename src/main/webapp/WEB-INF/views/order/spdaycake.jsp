@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 
 
@@ -111,7 +111,7 @@ $("#tech").change(function() {
 </head>
 <body>
 
-<c:url var="findDelToAndFromDate" value="/getDelToAndFromDate" />
+	<c:url var="findDelToAndFromDate" value="/getDelToAndFromDate" />
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -160,42 +160,44 @@ $("#tech").change(function() {
 
 						<div class="colOuter">
 							<div class="col1">
-			 					<div class="col1title">Select Day</div>
+								<div class="col1title">Select Day</div>
 							</div>
-	  						<div class="col2full">
-								<select name="spdayId" id="spdayId" onchange="onChangeDay()"required>
-										<option value="0">Select Day</option>
+							<div class="col2full">
+								<select name="spdayId" id="spdayId" onchange="onChangeDay()"
+									required>
+									<option value="0">Select Day</option>
 
-								 <c:forEach items="${configureSpDayFrList}" var="configureSpDayFr">
-									
-								   <c:choose>
-									   <c:when test="${spdayId==configureSpDayFr.spdayId}"> 
-								    
-									
-									   	<option value="${configureSpDayFr.spdayId}"selected>${configureSpDayFr.spdayName}</option>
-									   
-							          </c:when>
-							           
-							           <c:when test="${spdayId!=configureSpDayFr.spdayId}"> 
-							           
-							           	<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
-							           
-							           </c:when>
-							           
-							           
-									 	</c:choose>
-									 	
-									 	
-									   
+									<c:forEach items="${configureSpDayFrList}"
+										var="configureSpDayFr">
+
+										<c:choose>
+											<c:when test="${spdayId==configureSpDayFr.spdayId}">
+
+
+												<option value="${configureSpDayFr.spdayId}" selected>${configureSpDayFr.spdayName}</option>
+
+											</c:when>
+
+											<c:when test="${spdayId!=configureSpDayFr.spdayId}">
+
+												<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
+
+											</c:when>
+
+
+										</c:choose>
+
+
+
 									</c:forEach>
-									
-									
-									
-								
-									
-									
-									
-								
+
+
+
+
+
+
+
+
 								</select>
 							</div>
 						</div>
@@ -206,7 +208,8 @@ $("#tech").change(function() {
 							</div>
 							<div class="col2">
 								<input id="datepicker" class="texboxitemcode texboxcal"
-									placeholder="Delivery Date" name="datepicker" type="text" value="${delDate}">
+									placeholder="Delivery Date" name="datepicker" type="text"
+									value="${delDate}">
 							</div>
 						</div>
 
@@ -218,146 +221,142 @@ $("#tech").change(function() {
 						</div>
 
 					</form>
-	
-					<form action="${pageContext.request.contextPath}/saveSpDayCakeOrder"
+
+					<form
+						action="${pageContext.request.contextPath}/saveSpDayCakeOrder"
 						name="form1" method="post">
-						
-					<!--tabNavigation-->
-					<div class="cd-tabs">
-						<!--tabMenu-->
 
-						<!--tabMenu-->
-						<ul class="cd-tabs-content">
-							<!--tab1-->
-							<li data-content="tab1" class="selected">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
+						<!--tabNavigation-->
+						<div class="cd-tabs">
+							<!--tabMenu-->
 
-
-	                     <input type="hidden" name="menuId" value="${menuId}">
-						<input type="hidden" name="rateCat" value="${frDetails.frRateCat}">
+							<!--tabMenu-->
+							<ul class="cd-tabs-content">
+								<!--tab1-->
+								<li data-content="tab1" class="selected">
+									<div class="table-responsive">
+										<div class="shInnerwidth">
 
 
+											<input type="hidden" name="menuId" value="${menuId}">
+											<input type="hidden" name="rateCat"
+												value="${frDetails.frRateCat}">
 
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-													<c:set var="selectedMenu" scope="session"
-														value="${selectedMenu}" /> 
 
-															<table width="100%" border="0" cellspacing="0"
-																cellpadding="0">
-																<tr class="bgpink">
 
-																<td>Item Name</td>
-																<td>Quantity</td>
-																<td>MRP</td>
-																<td>Rate</td>
-																<td>Total</td>
+
+											<c:set var="selectedMenu" scope="session"
+												value="${selectedMenu}" />
+
+											<div class="clearfix"></div>
+
+
+											<div id="table-scroll" class="table-scroll">
+												<div id="faux-table" class="faux-table" aria="hidden"></div>
+												<div class="table-wrap">
+													<table id="table_grid" class="main-table">
+														<thead>
+															<tr class="bgpink">
+
+																<th class="col-md-1">Item Name</th>
+																<th class="col-md-1">Quantity</th>
+																<th class="col-md-1">MRP</th>
+																<th class="col-md-1">Rate</th>
+																<th class="col-md-1">Total</th>
 															</tr>
-
-																	<c:forEach var="items" items="${itemList}"
+														</thead>
+														<tbody>
+															<c:forEach var="items" items="${itemList}"
 																varStatus="loop">
 
-																	<c:choose>
-																		<c:when test="${frDetails.frRateCat=='1'}">
-																			<tr>
+																<c:choose>
+																	<c:when test="${frDetails.frRateCat=='1'}">
+																		<tr>
 
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><input name='${items.id}' id='${items.id}'
-																					value='${items.itemQty}' class="tableInput"
-																					type="number" onkeydown="myFunction()"
-																					onchange="onChange('${items.itemRate1}',${items.id})"></td>
-																				<td><c:out value='${items.itemMrp1}' /></td>
+																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																				value='${items.itemQty}' class="tableInput"
+																				type="number" onkeydown="myFunction()"
+																				onchange="onChange('${items.itemRate1}',${items.id})"></td>
+																			<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
 
-																				<td><c:out value='${items.itemRate1}' /></td>
-																				<c:set var="rate" value="${items.itemRate1}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-																			</tr>
-																		</c:when>
+																			<td class="col-md-1"><c:out value='${items.itemRate1}' /></td>
+																			<c:set var="rate" value="${items.itemRate1}" />
+																			<c:set var="qty" value="${items.itemQty}" />
+																			<td class="col-md-1" id="total${items.id}"><c:out
+																					value='${rate * qty}' /></td>
+																		</tr>
+																	</c:when>
 
-																		<c:when test="${frDetails.frRateCat=='2'}">
-																			<tr>
+																	<c:when test="${frDetails.frRateCat=='2'}">
+																		<tr>
 
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><input name='${items.id}'
-																					id='${items.id}' value='${items.itemQty}'
-																					class="tableInput" type="text"
-																					onchange="onChange('${items.itemRate2}',${items.id})"></td>
-																				<td><c:out value='${items.itemMrp1}' /></td>
+																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																				value='${items.itemQty}' class="tableInput"
+																				type="text"
+																				onchange="onChange('${items.itemRate2}',${items.id})"></td>
+																			<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
 
-																				<td><c:out value='${items.itemRate2}' /></td>
-																				<c:set var="rate" value="${items.itemRate2}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-																			</tr>
-																		</c:when>
+																			<td class="col-md-1"><c:out value='${items.itemRate2}' /></td>
+																			<c:set var="rate" value="${items.itemRate2}" />
+																			<c:set var="qty" value="${items.itemQty}" />
+																			<td class="col-md-1" id="total${items.id}"><c:out
+																					value='${rate * qty}' /></td>
+																		</tr>
+																	</c:when>
 
-																		<c:when test="${frDetails.frRateCat=='3'}">
-																			<tr>
+																	<c:when test="${frDetails.frRateCat=='3'}">
+																		<tr>
 
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><input name='${items.id}' id='${items.id}'
-																					value='${items.itemQty}' class="tableInput"
-																					type="text" 
-																					onchange="onChange('${items.itemRate3}',${items.id})"></td>
-																				<td><c:out value='${items.itemMrp3}' /></td>
+																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																				value='${items.itemQty}' class="tableInput"
+																				type="text"
+																				onchange="onChange('${items.itemRate3}',${items.id})"></td>
+																			<td class="col-md-1"><c:out value='${items.itemMrp3}' /></td>
 
-																				<td><c:out value='${items.itemRate3}' /></td>
-																				<c:set var="rate" value="${items.itemRate3}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-																			</tr>
-																		</c:when>
-																	</c:choose>
+																			<td class="col-md-1"><c:out value='${items.itemRate3}' /></td>
+																			<c:set var="rate" value="${items.itemRate3}" />
+																			<c:set var="qty" value="${items.itemQty}" />
+																			<td class="col-md-1" id="total${items.id}"><c:out
+																					value='${rate * qty}' /></td>
+																		</tr>
+																	</c:when>
+																</c:choose>
 
-															
+
 															</c:forEach>
+												
 
+							</tbody>
 
-
-
-															</table>
-															<br />
-													
-
-
-
-
-															
-
-
-
-
-
-
-
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</li>
-							<!--tab1-->
-
-							<!--tab2-->
-
-							<!--tab2-->
-
-							<!--tab3-->
-
-							<!--tab4-->
-						</ul>
+						</table>
 					</div>
-					<!--tabNavigation-->
+				</div>
 
-					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-					<div class="order-btn textcenter">
+
+
+
+
+												</div>
+											</div>
+								</li>
+								<!--tab1-->
+
+								<!--tab2-->
+
+								<!--tab2-->
+
+								<!--tab3-->
+
+								<!--tab4-->
+							</ul>
+						</div>
+						<!--tabNavigation-->
+
+						<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
+						<div class="order-btn textcenter">
 
 							<input name="" class="buttonsaveorder" value="SAVE ORDER"
 								type="button" ONCLICK="button1()">
@@ -456,7 +455,7 @@ function closeNav3() {
 			
 		
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
     $("#5").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -480,7 +479,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 function onChangeDay() {
 
 	var spdayId = $('#spdayId').find(":selected").val();

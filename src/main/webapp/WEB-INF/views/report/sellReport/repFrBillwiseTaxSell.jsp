@@ -2,44 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
-<title>Monginis</title>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet" type="text/css"/>	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-	
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
-	
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-	
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -54,9 +20,6 @@ jQuery(document).ready(function(){
 <!--datepicker--> 
 
 
-</head>
-<body>
-
 <c:url var="getBillwiseTaxSellReport" value="/getBillwiseTaxSellReport" />
 	
 	<div class="sidebarOuter"></div>
@@ -65,7 +28,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -119,31 +82,37 @@ jQuery(document).ready(function(){
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-								<thead >
-									<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
-									<!-- <th align="center">Bill No</th> -->
-									<!-- <th align="center">Party name</th> -->
-									<th align="center">GST No.</th>
-									<th align="center">Bill no.</th>
-									<th align="center">Date</th>
-									<th align="center">Bill Amount</th>
-									<th align="center">Taxable Amount</th>
-									<th align="center">Tax Rate</th>
-									<th align="center">IGST</th>
-								 	<th align="center">CGST</th>
-									<th align="center">SGST</th> 
-									<th align="center">CESS</th> 
+			<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+															
+								
+									<th class="col-md-1">Sr.No.</th>
+									<!-- <th class="md=col-1">Bill No</th> -->
+									<!-- <th class="md=col-1">Party name</th> -->
+									<th class="col-md-1">GST No.</th>
+									<th class="col-md-1">Bill no.</th>
+									<th class="md=col-1">Date</th>
+									<th class="md=col-1">Bill Amt</th>
+									<th class="md=col-1">Taxable Amt</th>
+									<th class="md=col-1">Tax Rate</th>
+									<th class="md=col-1">IGST</th>
+								 	<th class="md=col-1">CGST</th>
+									<th class="md=col-1">SGST</th> 
+									<th class="md=col-1">CESS</th> 
 								  </tr>
 								</thead>
 								
 								 <tbody >
-								 </tbody>
+								
+								</tbody>
 								  
 								</table>
 								 
@@ -221,32 +190,32 @@ jQuery(document).ready(function(){
 									
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td></td>').html(key+1));
+								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
 								  	
-								  	tr.append($('<td></td>').html(sellTaxData.tax_gstn));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.tax_gstn));
 								  	
-								  	tr.append($('<td></td>').html(sellTaxData.sellBillNo));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.sellBillNo));
 
-								  	tr.append($('<td></td>').html(sellTaxData.billDate));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.billDate));
 								  	
-								  	tr.append($('<td></td>').html(sellTaxData.bill_amount));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.bill_amount));
 								  	billTotal=billTotal + sellTaxData.bill_amount;
 								  	
-								   	tr.append($('<td></td>').html(sellTaxData.tax_amount));
+								   	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.tax_amount));
 								  	taxTotal=taxTotal + sellTaxData.tax_amount;
 								  	
-									tr.append($('<td></td>').html(sellTaxData.tax_per));
+									tr.append($('<td class="col-md-1"></td>').html(sellTaxData.tax_per));
 								  	
-									tr.append($('<td></td>').html(sellTaxData.igst));
+									tr.append($('<td class="col-md-1"></td>').html(sellTaxData.igst));
 									igstTotal=igstTotal + sellTaxData.igst;
 									
-								  	tr.append($('<td></td>').html(sellTaxData.cgst));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.cgst));
 								  	cgstTotal=cgstTotal + sellTaxData.cgst;
 
-								  	tr.append($('<td></td>').html(sellTaxData.sgst));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.sgst));
 								  	sgstTotal=sgstTotal + sellTaxData.sgst;
 								  	
-								  	tr.append($('<td></td>').html(sellTaxData.sess));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.sess));
 								  	cessTotal=cessTotal + sellTaxData.sess;
 
 								  	
@@ -340,6 +309,24 @@ jQuery(document).ready(function(){
 
 	}
 </script>
+
+
+<script>
+	
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
+	
 	
 </body>
 </html>

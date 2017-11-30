@@ -3,7 +3,10 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
+
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,7 +43,12 @@ jQuery(document).ready(function(){
 });
 </script>
 <!--rightNav-->
-<!--datepicker-->
+<
+
+</head>
+<body> --%>
+
+!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
@@ -54,9 +62,6 @@ jQuery(document).ready(function(){
 <!--datepicker--> 
 
 
-</head>
-<body>
-
 <c:url var="getDatewiseTaxSellReport" value="/getDatewiseTaxSellReport" />
 	
 	<div class="sidebarOuter"></div>
@@ -65,7 +70,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -119,22 +124,25 @@ jQuery(document).ready(function(){
 	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-								<thead >
-									<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
-									<!-- <th align="center">Bill No</th> -->
-									<th align="center">Date</th>
-									<th align="center">Tax Rate</th>
-									<th align="center">Taxable Amount</th>
-									<th align="center">IGST</th>
-								 	<th align="center">CGST</th>
-									<th align="center">SGST</th> 
-									<th align="center">CESS</th> 
+			<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+									<th class="col-md-1">Sr.No.</th>
+									<!-- <th class="col-md-1">Bill No</th> -->
+									<th class="col-md-1">Date</th>
+									<th class="col-md-1">Tax Rate</th>
+									<th class="col-md-1">Taxable Amt</th>
+									<th class="col-md-1">IGST</th>
+								 	<th class="col-md-1">CGST</th>
+									<th class="col-md-1">SGST</th> 
+									<th class="col-md-1">CESS</th> 
 								  </tr>
 								</thead>
 								
@@ -229,25 +237,25 @@ jQuery(document).ready(function(){
 								  	tr.append($('<td></td>').html(key+1));
 								  	
 
-								  	tr.append($('<td></td>').html(sellTaxData.billDate));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.billDate));
 								  	
 
-									tr.append($('<td></td>').html(sellTaxData.tax_per));
+									tr.append($('<td class="col-md-1"></td>').html(sellTaxData.tax_per));
 									
-								   	tr.append($('<td></td>').html(sellTaxData.tax_amount));
+								   	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.tax_amount));
 								  	taxTotal=taxTotal + sellTaxData.tax_amount;
 								  	
 								  	
-									tr.append($('<td></td>').html(sellTaxData.igst));
+									tr.append($('<td class="col-md-1"></td>').html(sellTaxData.igst));
 									igstTotal=igstTotal + sellTaxData.igst;
 									
-								  	tr.append($('<td></td>').html(sellTaxData.cgst));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.cgst));
 								  	cgstTotal=cgstTotal + sellTaxData.cgst;
 
-								  	tr.append($('<td></td>').html(sellTaxData.sgst));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.sgst));
 								  	sgstTotal=sgstTotal + sellTaxData.sgst;
 								  	
-								  	tr.append($('<td></td>').html(sellTaxData.sess));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellTaxData.sess));
 								  	cessTotal=cessTotal + sellTaxData.sess;
 
 								  	
@@ -431,5 +439,21 @@ function showChart(){
 			}
 }
 </script>
+
+<script>
+	
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
 </body>
 </html>

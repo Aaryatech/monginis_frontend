@@ -7,7 +7,7 @@ public class GetBillHeader {
     private Integer billNo;
     private String frName;
     private Integer taxApplicable;
-    private Integer invoiceNo;
+    private String invoiceNo;
     private String billDate;
     private Integer frId;
     private String frCode;
@@ -17,6 +17,11 @@ public class GetBillHeader {
     private Integer status;
     private String remark;
     private Integer delStatus;
+    
+    private String time;
+    
+    private String billDateTime;
+    
 
     public Integer getBillNo() {
         return billNo;
@@ -42,15 +47,16 @@ public class GetBillHeader {
         this.taxApplicable = taxApplicable;
     }
 
-    public Integer getInvoiceNo() {
-        return invoiceNo;
-    }
+  
+    public String getInvoiceNo() {
+		return invoiceNo;
+	}
 
-    public void setInvoiceNo(Integer invoiceNo) {
-        this.invoiceNo = invoiceNo;
-    }
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
 
-    public String getBillDate() {
+	public String getBillDate() {
         return billDate;
     }
 
@@ -123,6 +129,22 @@ public class GetBillHeader {
     public void setDelStatus(Integer delStatus) {
         this.delStatus = delStatus;
     }
+    
+	public String getTime() {
+		return time;
+	}
+
+	public String getBillDateTime() {
+		return billDateTime;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setBillDateTime(String billDateTime) {
+		this.billDateTime = billDateTime;
+	}
 
 	@Override
 	public String toString() {

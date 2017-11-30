@@ -3,7 +3,10 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
+
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,6 +43,14 @@ jQuery(document).ready(function(){
 });
 </script>
 <!--rightNav-->
+
+
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+
+
+</head>
+<body> --%>
 <!--datepicker-->
 <script>
   $( function() {
@@ -52,14 +63,6 @@ jQuery(document).ready(function(){
   </script>
 
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-
-
-</head>
-<body>
-
-
-
 <c:url var="getMonthwiselReport" value="/getMonthwiselReport" />
 	
 	<div class="sidebarOuter"></div>
@@ -68,7 +71,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -124,20 +127,24 @@ jQuery(document).ready(function(){
 	<div class="row" id="table">
 		<div class="col-md-12">
 		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-								<thead >
-									<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
-									<!-- <th align="center">Bill No</th> -->
-									<th align="center">Month</th>
-									<th align="center">Amount</th>
-									<th align="center">Cash</th>
-								 	<th align="center">Card</th>
-									<th align="center">Other</th> 
+			<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+									<th class="col-md-1">Sr.No.</th>
+
+									<!-- <th class="col-md-1">Bill No</th> -->
+									<th class="col-md-1">Month</th>
+									<th class="col-md-1">Amount</th>
+									<th class="col-md-1">Cash</th>
+								 	<th class="col-md-1">Card</th>
+									<th class="col-md-1">Other</th> 
 								  </tr>
 								</thead>
 								
@@ -234,26 +241,26 @@ jQuery(document).ready(function(){
 									
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td></td>').html(key+1));
+								  	tr.append($('<td <th class="col-md-1">></td>').html(key+1));
 
 								  	var monthNumber = sellBillData.month;
 								    
 								    var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-							 tr.append($('<td></td>').html(monthNames[monthNumber]));
+							 tr.append($('<td class="col-md-1"></td>').html(monthNames[monthNumber]));
 								  	
 								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td></td>').html(amt));
+								  	tr.append($('<td class="col-md-1"></td>').html(amt));
 								  	
 								  	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 									
-								  	tr.append($('<td></td>').html(sellBillData.cash));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.cash));
 								  	cashTotal=cashTotal + sellBillData.cash;
 
-								  	tr.append($('<td></td>').html(sellBillData.card));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.card));
 								  	cardTotal=cardTotal + sellBillData.card;
 								  	
-								  	tr.append($('<td></td>').html(sellBillData.other));
+								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.other));
 								  	otherTotal=otherTotal + sellBillData.other;
 
 								  	
@@ -524,7 +531,21 @@ function showChart(){
 			}
 			}
 </script>
- 
+ <script>
+	
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
 
 </body>
 </html>

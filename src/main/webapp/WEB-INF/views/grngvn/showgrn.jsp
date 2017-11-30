@@ -4,60 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
-<title>Monginis</title>
-
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/custom.css"
-	rel="stylesheet" type="text/css" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-
-
-
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
-
-
-</head>
-<body>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
 	<div class="sidebarOuter"></div>
@@ -66,7 +13,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -77,7 +24,12 @@ jQuery(document).ready(function(){
 		<div class="fullGrid center">
 			<!--fullGrid-->
 			<div class="wrapperIn2">
+			
+			
+				<c:url var="getGrnData" value="/getGrnData" />
+			
 
+							
 				<!--leftNav-->
 
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
@@ -91,105 +43,132 @@ jQuery(document).ready(function(){
 
 				<!-- Place Actual content of page inside this div -->
 				<div class="sidebarright">
-
-
+				
+				
+			<%-- 	<form
+								action="${pageContext.request.contextPath}/insertGrnProcess"
+								name="validation_form" id="validation_form" method="post">
+								
+ --%>
+<c:if test="${not empty alert}">
+   <!-- here would be a message with a result of processing -->
+    <div class="messages messagesErr"> ${alert} </div>
+</c:if>
 					<div class="row">
 						<div class="col-md-12">
-							<h2 class="pageTitle">GRN Bill</h2>
+							<h2 class="pageTitle">Apply GRN </h2>
 						</div>
 					</div>
 
+<div class="clearfix"></div>
+	<form
+								action="${pageContext.request.contextPath}/insertGrnProcess"
+								name="validation_form" id="validation_form" method="post">
+								
 
 
+<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+				<th class="col-md-1" >Bill No.</th>
+				<th  class="col-md-3">Name</th>
+				<th  class="col-md-1">Type</th>
+				<th  class="col-md-1">QTY</th>
+				<th  class="col-md-1">Rate</th>
+<!-- 				<th  class="col-md-1">Is Edit </th>
+ -->				<th  class="col-md-1">Edit Qty</th>
+				<th  class="col-md-1">Tax %</th>
+				<th  class="col-md-1">Amount</th>
+				<th  class="col-md-1">Remark</th>
+  </tr>
+  
+	</thead>
+							<tbody>
 
-
-					<br />
-
-					<div class="row">
-						<div class="col-md-12">
-							<!--table-->
+						
+						<%-- 	
 							<form
 								action="${pageContext.request.contextPath}/insertGrnProcess"
 								name="grn" id="grn" method="post">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0">
-														<tr class="bgpink">
-															<td>Sr No.</td>
-															<td>Bill No.</td>
-															<td>Item Name</td>
-															<td>GRN TYPE</td>
-															<td>GRN QTY</td>
-															<td>Item Rate</td>
-															<td>iS Edit</td>
-															<td>Edit GRN Qty</td>
-															<td>Tax Percentage</td>
-															<td>GRN Amount</td>
-															<td>GRN Remark</td>
-
-														</tr>
-
+								 --%>
 
 														<c:forEach items="${grnConfList}" var="grnConfList"
 															varStatus="count">
 															<tr>
 
-																<td>${count.index+1}</td>
-																<td><c:out value="${grnConfList.billNo}"></c:out></td>
-																<td><c:out value="${grnConfList.itemName}"></c:out></td>
+															<%-- 	<td>${count.index+1}</td> --%>
+																<td class="col-md-1"><c:out value="${grnConfList.billNo}"></c:out></td>
+																<td class="col-md-3"><c:out value="${grnConfList.itemName}"></c:out></td>
 																<c:choose>
 																	<c:when test="${grnConfList.grnType==0}">
-																		<td><c:out value="GRN 1"></c:out></td>
+																		<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
 																	</c:when>
 																	<c:when test="${grnConfList.grnType==1}">
-																		<td><c:out value="GRN 2"></c:out></td>
+																		<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
 																	</c:when>
 																	<c:when test="${grnConfList.grnType== 2}">
-																		<td><c:out value="GRN 3"></c:out></td>
+																		<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 																	</c:when>
+																	
+																	<c:when test="${grnConfList.grnType== 4}">
+																		<td class="col-md-1"><c:out value="GRN 4"></c:out></td>
+																	</c:when>
+																	
 
 																</c:choose>
+<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})"
+ --%>
+																<td class="col-md-1">
+																<input type="text"
+																	name="grnqty${grnConfList.itemId}"
+																	id="grnqty${grnConfList.itemId}" size="3" readonly="readonly"
+																	value="${grnConfList.autoGrnQty}" /> </td>
 
+																<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
+																	value="${grnConfList.calcBaseRate}"></c:out></td>
 
-																<td><input type="text"
-																	name="grn_qty${grnConfList.itemId}"
-																	id="grnqty${grnConfList.itemId}" size="5"
-																	value="${grnConfList.autoGrnQty}" disabled="disabled"
-																	<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})"  --%>/></td>
-
-																<td id="grn_rate${grnConfList.itemId}"><c:out
-																		value="${grnConfList.calcBaseRate}"></c:out></td>
-
-																<td><select name="is_edit${grnConfList.itemId}"
+															<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
-																	onchange="showEdit(this.id,${grnConfList.itemId})">
+																	onchange="showEdit(this.id,${grnConfList.itemId},${grnConfList.autoGrnQty})" onclick="me()">
 																		<option selected value="0">No</option>
 																		<option value="1">Yes</option>
-																</select></td>
-
-																<td><input type="text"
-																	name="grnqtyauto${grnConfList.itemId}"
-																	disabled="disabled"
-																	id="grnqtyauto${grnConfList.itemId}" size="5"
-																	value="${grnConfList.autoGrnQty}" min="0"
+																</select></td> --%>
+																
+																<td class="col-md-1"><input type="text"
+																	name= "grnqtyauto${grnConfList.itemId}"  value="${grnConfList.autoGrnQty}" 
+																	id="grnqtyauto${grnConfList.itemId}"  size="3"
 																	onchange="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})" /></td>
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})"/>
 
-																<td id="tax_per${grnConfList.itemId}"><c:out
+																
+																	</td>
+																	
+
+																<td class="col-md-1" id="tax_per${grnConfList.itemId}"><c:out
 																		value="${grnConfList.taxPer}"></c:out></td>
 
-																<td id="grn_amt${grnConfList.itemId}"><c:out
+																<td class="col-md-1" id="grn_amt${grnConfList.itemId}"><c:out
 																		value="${grnConfList.grnAmt}"></c:out></td>
 
-																<td><input type="text"
+																<td class="col-md-1">
+																<select name="grn_remark${grnConfList.itemId}" style="width: 200px"
+																id="grn_remark${grnConfList.itemId}" class="form-control" >
+																<option selected  value="selectRemark">Select Remark</option>
+																<c:forEach items="${remarkList}" var="remarkList">
+																${remarkList.remark}
+																<option value="${remarkList.remark}">${remarkList.remark}</option>
+																</c:forEach>
+																</select></td>
+															 	<%-- <input type="text"
 																	name="grn_remark${grnConfList.itemId}"
 																	id="grn_remark${grnConfList.itemId}" class="remark" /></td>
+ --%>
+
+
 
 
 
@@ -202,50 +181,30 @@ jQuery(document).ready(function(){
 																<label><input type="radio" name="is-edit"
 																	id=is_edit value="1">Yes</label></td> -->
 
-
-
-
-
-
-
-
-																<!-- <td>
-									    <a href="#" class="action_btn"><abbr title="edit"><i class="fa fa-edit"></i></abbr></a>
-										<a href="#" class="action_btn"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
-										<a href="#" class="action_btn"><abbr title="Upload Photo"><i class="fa fa-file-image-o"></i></abbr></a>
-									</td>
-									 -->
-
 															</tr>
 														</c:forEach>
 
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
+												
+							</tbody>
 
-
-								<div class="form-group">
-									<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-5">
-										<button type="submit" class="btn btn-primary" id="submit"
+						</table>
+					</div>
+				</div>
+									
+										<button type="submit" class="buttonsaveorder" id="submit"
 											onclick="checkRemark()">
 											<i class="fa fa-check"></i> Save
 										</button>
-										<!--<button type="button" class="btn">Cancel</button>-->
-									</div>
-								</div>
 
-								<!-- <a href="#" class="action_btn" onclick="submitForm()"><abbr title="Save"><i class="fa fa-trash"></i></abbr></a> -->
 
 							</form>
+							</div>
 							<!--table end-->
 
 
 
-						</div>
-					</div>
+					
+					
 
 
 
@@ -266,72 +225,27 @@ jQuery(document).ready(function(){
 
 	<script type="text/javascript">
 	
-	function showEdit(id,itemId) {
+	
+	 function showEdit(id,itemId,autoGrnQty) {
 		
 		 var x=$("#is_edit"+itemId).val();
 		 
-		 
-		 
 		if(x == 1){
 		 
-			 $("#grnqtyauto"+itemId).removeAttr("disabled"); 
-	           
-			// document.getElementById("is_edit"+itemId).style.visibility = "hidden"; 
-			 
-			 document.getElementById("isEditYes"+itemId).show();
-			 
-			// $("#grnqtyauto"+itemId).removeAttr("disabled"); 
-			
-			
-			
+			 $("#grnqtyauto"+itemId).removeAttr("readonly"); 
+	    
 		}
 		if(x== 0)
 			{
-			var i=0;
-			//document.getElementsById("grnqtyauto").value=0;
+			$("#grnqtyauto"+itemId).html(autoGrnQty);
 
-
-           $("#grnqtyauto"+itemId).attr("disabled", "disabled");
-           
-    		
-
+			 $("#grnqtyauto"+itemId).setAttr("readonly"); 
+			// document.getElementById("grnqtyauto"+itemId).prop="disabled"; 
 			
 			}
-		
 	}
-	
-	
 	</script>
-
-
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "100%";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-		function openNav1() {
-			document.getElementById("mySidenav1").style.width = "100%";
-		}
-
-		function closeNav1() {
-			document.getElementById("mySidenav1").style.width = "0";
-		}
-		function openNav3() {
-			document.getElementById("mySidenav3").style.width = "100%";
-		}
-
-		function closeNav3() {
-			document.getElementById("mySidenav3").style.width = "0";
-		}
-	</script>
-
-
-
-
+	
 	<script type="text/javascript">
 	
 	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer){
@@ -345,9 +259,11 @@ jQuery(document).ready(function(){
 		
 		if(grnType==0){
 			
-			
 			var grnQty=$("#grnqtyauto"+itemId).val();
-			
+			/* $("#hidden_auto_qty"+itemId).html(grnQty);
+
+			var hidden=$("#hidden_auto_qty"+itemId).val();
+			alert(hidden); */
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
@@ -361,10 +277,12 @@ jQuery(document).ready(function(){
 		
 		}
 	 if(grnType==1){
-			
-		
-			var grnQty=$("#grnqtyauto"+itemId).val();
-			
+
+		 var grnQty=$("#grnqtyauto"+itemId).val();
+			/* $("#hidden_auto_qty"+itemId).html(grnQty);
+
+			var hidden=$("#hidden_auto_qty"+itemId).val();
+			alert(hidden); */
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
@@ -381,6 +299,11 @@ jQuery(document).ready(function(){
 			
 			
 			var grnQty=$("#grnqtyauto"+itemId).val();
+			/* $("#hidden_auto_qty"+itemId).html(grnQty);
+			
+			var hidden=$("#hidden_auto_qty"+itemId).val();
+			
+			alert(hidden); */
 			
 			
 			var grnRate=$("#grn_rate"+itemId).text();
@@ -394,6 +317,15 @@ jQuery(document).ready(function(){
 			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 			}
+			
+			if(grnType==4){
+				
+				var grnQty=$("#grnqtyauto"+itemId).val();
+				var grnRate=$("#grn_rate"+itemId).text();
+				grnBaseRate=baseRate;
+				grnRate=rate;
+				
+				}
 			
 		var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
 			var taxableAmt=grnBaseRate*grnQty;
@@ -423,7 +355,72 @@ jQuery(document).ready(function(){
 	</script>
 
 
+	<script>
+
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+});
+
+	</script>
 	
+	
+	
+	<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "100%";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+		function openNav1() {
+			document.getElementById("mySidenav1").style.width = "100%";
+		}
+
+		function closeNav1() {
+			document.getElementById("mySidenav1").style.width = "0";
+		}
+		function openNav3() {
+			document.getElementById("mySidenav3").style.width = "100%";
+		}
+
+		function closeNav3() {
+			document.getElementById("mySidenav3").style.width = "0";
+		}
+	</script>
+	
+	
+		<script type="text/javascript">
+
+function getGrnData(id){
+	
+	
+	var grnQty=$("#grnqtyauto"+id).val();
+	var itemId=id;
+	
+	alert(grnQty);
+	alert(itemId);
+	
+	$.getJSON('${getGrnData}',
+			{
+		
+			qty:grnQty,
+			id:itemId,
+				 
+				ajax : 'true',
+
+}
+);
+}
+	
+</script>
 
 </body>
 </html>

@@ -79,8 +79,13 @@ select {
       }
       google.setOnLoadCallback(onLoad);
     </script>
+    
+    <!--new css added by kalpesh -->
+	<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
 
-
+	<!--new css added by kalpesh -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 </head>
 <body onload="onload()">
 
@@ -97,7 +102,7 @@ select {
 <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" />
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 <!--topHeader-->

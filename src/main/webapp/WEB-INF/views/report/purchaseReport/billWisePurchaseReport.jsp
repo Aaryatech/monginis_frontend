@@ -2,8 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+		
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-<!DOCTYPE html>
+
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,6 +43,10 @@ jQuery(document).ready(function(){
 });
 </script>
 <!--rightNav-->
+
+
+</head>
+<body> --%>
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -53,10 +60,6 @@ jQuery(document).ready(function(){
   </script>
 <!--datepicker--> 
 
-
-</head>
-<body>
-
 <c:url var="getBillWisePurchase" value="/findBillWisePurchase" />
 	
 	<div class="sidebarOuter"></div>
@@ -65,7 +68,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -119,28 +122,31 @@ jQuery(document).ready(function(){
     </div>
 	
 	<div class="row">
-		<div class="col-md-12">
-		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-									<tr class="bgpink">
+		<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
 									
-									<th>Sr.No.</th>
-									<th>Party Name</th>
-									<th>GSTIN</th>
-									<th>Bill No</th>
-									<th>Bill Date</th>
-									<th>Taxable Amt</th>
-									<th>IGST Amt</th>
-									<th>CGST Amt</th>
-									<th>SGST Amt</th>
-									<th>R.off</th>
-									<th>BILL Amount</th>
+									<th class="col-md-1">Sr.No.</th>
+									<th class="col-md-1">Party Name</th>
+									<th class="col-md-1">GSTIN</th>
+									<th class="col-md-1">Bill No</th>
+									<th class="col-md-1">Bill Date</th>
+									<th class="col-md-1">Taxable Amt</th>
+									<th class="col-md-1">IGST Amt</th>
+									<th class="col-md-1">CGST Amt</th>
+									<th class="col-md-1">SGST Amt</th>
+									<th class="col-md-1">R.off</th>
+									<th class="col-md-1">BILL Amount</th>
 								  </tr>
 								
+								 </thead>
+							<tbody>
 								 
 								  
 								</table>
@@ -208,26 +214,26 @@ jQuery(document).ready(function(){
 								var tr = $('<tr></tr>');
 
 							  
-								tr.append($('<td></td>').html(key+1));
-							  	tr.append($('<td></td>').html(partyname));
+								tr.append($('<td class="col-md-1"></td>').html(key+1));
+							  	tr.append($('<td class="col-md-1" ></td>').html(partyname));
 
-							  	tr.append($('<td></td>').html(gstNo));
+							  	tr.append($('<td class="col-md-1"></td>').html(gstNo));
 
-							  	tr.append($('<td></td>').html(billWisePurchaseData.billNo));
+							  	tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.billNo));
 
-							  	tr.append($('<td></td>').html(billWisePurchaseData.billDate));
+							  	tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.billDate));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.taxableAmt));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.taxableAmt));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.igstRs));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.igstRs));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.cgstRs));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.cgstRs));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.sgstRs));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.sgstRs));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.roundOff));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.roundOff));
 
-								tr.append($('<td></td>').html(billWisePurchaseData.grandTotal));
+								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.grandTotal));
 
 								
 								$('#table_grid tbody').append(tr);
@@ -265,6 +271,27 @@ jQuery(document).ready(function(){
 
 	}
 </script>
+	<script>
+	/*
+//  jquery equivalent
+jQuery(document).ready(function() {
+   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+ });
+*/
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
 	
 </body>
 </html>

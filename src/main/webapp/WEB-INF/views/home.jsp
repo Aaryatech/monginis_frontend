@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,12 +33,9 @@
 <!--rightNav-->
 
 </head>
-<body>
+<body> comment by sachin --%>
 
-
-
-
-
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -48,7 +45,7 @@
 	<div class="wrapper">
 
 		<!--topHeader-->
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 		
 			<jsp:param name="fr" value="${frDetails}"/>
 		</jsp:include>

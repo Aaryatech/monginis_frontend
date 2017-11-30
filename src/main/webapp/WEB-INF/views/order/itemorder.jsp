@@ -3,40 +3,17 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
+
+<!--rightNav
 <script type="text/javascript">
 jQuery(document).ready(function(){
 	
 	
 	
 });
-</script>
+</script>-->
 
 
 
@@ -62,280 +39,329 @@ jQuery(document).ready(function(){
 	color: black;
 }
 </style>
-</head>
-<body>
-	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
-
-	<!--topLeft-nav-->
-	<div class="sidebarOuter"></div>
-	<!--topLeft-nav-->
-
-
-	<!--wrapper-start-->
-	<div class="wrapper">
-
-		<!--topHeader-->
-
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
-			<jsp:param name="frDetails" value="${frDetails}" />
-
-		</jsp:include>
-
-		<!--topHeader-->
-
-		<!--rightContainer-->
-		<div class="fullGrid center">
-			<!--fullGrid-->
-			<div class="wrapperIn2">
-
-				<!--leftNav-->
-
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
-					<jsp:param name="myMenu" value="${menuList}" />
-
-				</jsp:include>
-
-
-				<!--leftNav-->
-				<!--rightSidebar-->
-				<div class="sidebarright">
-					<c:choose>
-						<c:when test="${isSameDayApplicable=='2'}">
-							<c:if test="${not empty qtyMessage}">
-								<div class="alert">
-									<span class="closebtn"
-										onclick="this.parentElement.style.display='none';">&times;</span>
-									<strong>Alert!</strong> ${qtyMessage}
-								</div>
-							</c:if>
-						</c:when>
-					</c:choose>
-					<div class="order-left">
-						<h2 class="pageTitle">${menuTitle}</h2>
-						<h3 class="pageTitle2">Order Date :
-							${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
-							${deliveryDate}</h3>
-
-						<input type="hidden" name="menuId" value="${menuId}"> <input
-							type="hidden" name="rateCat" value="${frDetails.frRateCat}">
-						<input type="hidden" value="${isSameDayApplicable}"
-							id="isSameDayApplicable" />
-
-					</div>
 
 
 
+<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 
-					<div class="order-right">
-						<div class="ordermto2px">
-							<div class="orderclose">Order Closing Time :</div>
-							<div class="ordercloser2">
-								<span>${toTime}</span>
+<!--topLeft-nav-->
+<div class="sidebarOuter"></div>
+<!--topLeft-nav-->
+
+
+<!--wrapper-start-->
+<div class="wrapper">
+
+	<!--topHeader-->
+
+	<jsp:include page="/WEB-INF/views/include/logo.jsp">
+		<jsp:param name="frDetails" value="${frDetails}" />
+
+	</jsp:include>
+
+	<!--topHeader-->
+
+	<!--rightContainer-->
+	<div class="fullGrid center">
+		<!--fullGrid-->
+		<div class="wrapperIn2">
+
+			<!--leftNav-->
+
+			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:param name="myMenu" value="${menuList}" />
+
+			</jsp:include>
+
+
+			<!--leftNav-->
+			<!--rightSidebar-->
+			<div class="sidebarright">
+				<c:choose>
+					<c:when test="${isSameDayApplicable=='2'}">
+						<c:if test="${not empty qtyMessage}">
+							<div class="alert">
+								<span class="closebtn"
+									onclick="this.parentElement.style.display='none';">&times;</span>
+								<strong>Alert!</strong> ${qtyMessage}
 							</div>
-						</div>
-						<div class="ordermto20px">
-							<div class="order-price">Total Amount :</div>
-							<div class="order-amount">INR : ${grandTotal}</div>
+						</c:if>
+					</c:when>
+				</c:choose>
+				<div class="order-left">
+					<h2 class="pageTitle">${menuTitle}</h2>
+					<h3 class="pageTitle2">Order Date :
+						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
+						${deliveryDate}</h3>
+
+					<input type="hidden" name="menuId" value="${menuId}"> <input
+						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
+					<input type="hidden" value="${isSameDayApplicable}"
+						id="isSameDayApplicable" />
+
+				</div>
 
 
+
+
+				<div class="order-right">
+					<div class="ordermto2px">
+						<div class="orderclose">Order Closing Time :</div>
+						<div class="ordercloser2">
+							<span>${toTime}</span>
 						</div>
 					</div>
-
-					<c:if test="${not empty message}">
-						<!-- here would be a message with a result of processing -->
-						<div class="messages messagesErr">${message}</div>
-					</c:if>
-
-					<form action="${pageContext.request.contextPath}/saveOrder"
-						name="form1" method="post">
-
-						<!--tabNavigation-->
-						<div class="cd-tabs">
-							<!--tabMenu-->
-							<nav>
-								<ul class="cd-tabs-navigation">
-
-									<c:forEach var="tab" items="${subCatListTitle}"
-										varStatus="loop">
+					<div class="ordermto20px">
+						<div class="order-price">Total Amount :</div>
+						<div class="order-amount">INR : ${grandTotal}</div>
 
 
-										<c:choose>
-											<c:when test='${loop.index==0}'>
-												<li><a data-content='${tab.name}' href="#0"
-													class="selected"
-													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
+					</div>
+				</div>
 
-											</c:when>
-											<c:otherwise>
-												<li><a data-content='${tab.name}' href="#0"
-													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
-
-											</c:otherwise>
-										</c:choose>
+				<c:if test="${not empty message}">
+					<!-- here would be a message with a result of processing -->
+					<div class="messages messagesErr">${message}</div>
+				</c:if>
 
 
-									</c:forEach>
 
-								</ul>
-							</nav>
-							<!--tabMenu-->
-							<ul class="cd-tabs-content">
-								<!--tab1-->
 
-								<c:forEach var="tabs" items="${subCatListTitle}"
-									varStatus="loop">
+
+
+
+
+
+
+
+				<form action="${pageContext.request.contextPath}/saveOrder"
+					name="form1" method="post">
+
+					<!--tabNavigation-->
+					<div class="cd-tabs">
+						<!--tabMenu-->
+						<nav>
+							<ul class="cd-tabs-navigation">
+
+								<c:forEach var="tab" items="${subCatListTitle}" varStatus="loop">
 
 
 									<c:choose>
 										<c:when test='${loop.index==0}'>
-											<li data-content='${tabs.name}' class="selected">
+											<li><a data-content='${tab.name}' href="#0"
+												class="selected"
+												onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
+
 										</c:when>
 										<c:otherwise>
-											<li data-content='${tabs.name}'>
+											<li><a data-content='${tab.name}' href="#0"
+												onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
+
 										</c:otherwise>
 									</c:choose>
 
 
-									<div class="table-responsive">
-										<div class="shInnerwidth">
-											<table width="100%" border="0" cellspacing="0"
-												cellpadding="0" class="table">
-												<tr>
-													<td align="center" valign="middle" style="padding: 0px;"><table
-															width="100%" border="0" cellspacing="0" cellpadding="0">
-															<tr class="bgpink">
-
-																<td>Item Name</td>
-																<td>Min Quantity</td>
-																<td>Quantity</td>
-																<td>MRP</td>
-																<td>Rate</td>
-																<td>Total</td>
-															</tr>
-
-
-															<c:set var="menuTime" value="${menu.timing}" />
-
-
-															<c:forEach var="items" items="${itemList}"
-																varStatus="loop">
-																<c:if test="${items.subCatName eq tabs.name}">
-
-																	<c:choose>
-																		<c:when test="${frDetails.frRateCat=='1'}">
-																			<tr>
-
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><c:out value='${items.minQty}' /></td>
-
-																				<td><input name='${items.id}' id='${items.id}'
-																					value='${items.itemQty}' class="tableInput"
-																					type="text" onkeydown="myFunction()"
-																					onchange="onChange('${items.itemRate1}',${items.id})">
-
-																					<input type="hidden" value="${items.minQty}"
-																					id="minqty${items.id}" /></td>
-																				<td><c:out value='${items.itemMrp1}' /></td>
-
-																				<td><c:out value='${items.itemRate1}' /></td>
-																				<c:set var="rate" value="${items.itemRate1}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-
-
-																			</tr>
-																		</c:when>
-
-																		<c:when test="${frDetails.frRateCat=='2'}">
-																			<tr>
-
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><c:out value='${items.minQty}' /></td>
-																				<td><input name='${items.id}' id='${items.id}'
-																					value='${items.itemQty}' class="tableInput"
-																					type="text"
-																					onchange="onChange('${items.itemRate2}',${items.id})">
-
-																					<input type="hidden" value="${items.minQty}"
-																					id="minqty${items.id}" /></td>
-																				<td><c:out value='${items.itemMrp1}' /></td>
-
-																				<td><c:out value='${items.itemRate2}' /></td>
-																				<c:set var="rate" value="${items.itemRate2}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-																			</tr>
-																		</c:when>
-
-																		<c:when test="${frDetails.frRateCat=='3'}">
-																			<tr>
-
-																				<td><c:out value='${items.itemName}' /></td>
-																				<td><c:out value='${items.minQty}' /></td>
-																				<td><input name='${items.id}' id='${items.id}'
-																					value='${items.itemQty}' class="tableInput"
-																					type="text"
-																					onchange="onChange('${items.itemRate3}',${items.id})">
-
-																					<input type="hidden" value="${items.minQty}"
-																					id="minqty${items.id}" /></td>
-																				<td><c:out value='${items.itemMrp3}' /></td>
-
-																				<td><c:out value='${items.itemRate3}' /></td>
-																				<c:set var="rate" value="${items.itemRate3}" />
-																				<c:set var="qty" value="${items.itemQty}" />
-																				<td id="total${items.id}"><c:out
-																						value='${rate * qty}' /></td>
-																			</tr>
-																		</c:when>
-																	</c:choose>
-
-																</c:if>
-															</c:forEach>
-
-
-														</table></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-
 								</c:forEach>
 
 							</ul>
-						</div>
-						<!--tabNavigation-->
+						</nav>
+						<!--tabMenu-->
+						<ul class="cd-tabs-content">
+							<!--tab1-->
 
-						<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-						<div class="order-btn textcenter">
-
-							<input name="" class="buttonsaveorder" value="SAVE ORDER"
-								type="button" ONCLICK="button1()">
-						</div>
+							<c:forEach var="tabs" items="${subCatListTitle}" varStatus="loop">
 
 
+								<c:choose>
+									<c:when test='${loop.index==0}'>
+										<li data-content='${tabs.name}' class="selected">
+									</c:when>
+									<c:otherwise>
+										<li data-content='${tabs.name}'>
+									</c:otherwise>
+								</c:choose>
 
-					</form>
 
+
+								<div class="clearfix"></div>
+
+
+
+								<div id="table-scroll" class="table-scroll">
+							 
+									<div id="faux-table" class="faux-table" aria="hidden">
+									<table id="table_grid" class="main-table">
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-2">Item Name</th>
+													<th class="col-md-1">Min Quantity</th>
+													<th class="col-md-1">Quantity</th>
+													<th class="col-md-1">MRP</th>
+													<th class="col-md-1">Rate</th>
+													<th class="col-md-1">Total</th>
+												</tr>
+												</thead>
+												</table>
+									
+									</div>
+									<div class="table-wrap">
+									
+										<table id="table_grid" class="main-table">
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-2">Item Name</th>
+													<th class="col-md-1">Min Quantity</th>
+													<th class="col-md-1">Quantity</th>
+													<th class="col-md-1">MRP</th>
+													<th class="col-md-1">Rate</th>
+													<th class="col-md-1">Total</th>
+												</tr>
+												</thead>
+												<tbody>
+											
+
+	<c:set var="menuTime" value="${menu.timing}" />
+
+
+												<c:forEach var="items" items="${itemList}" varStatus="loop">
+													<c:if test="${items.subCatName eq tabs.name}">
+
+														<c:choose>
+															<c:when test="${frDetails.frRateCat=='1'}">
+																<tr>
+
+																	<td class="col-md-2"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
+
+																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text" onkeydown="myFunction()"
+																		onchange="onChange('${items.itemRate1}',${items.id})">
+
+																		<input type="hidden" value="${items.minQty}"
+																		id="minqty${items.id}" /></td>
+																	<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
+
+																	<td class="col-md-1"><c:out value='${items.itemRate1}' /></td>
+																	<c:set var="rate" value="${items.itemRate1}" />
+																	<c:set var="qty" value="${items.itemQty}" />
+																	<td class="col-md-1" id="total${items.id}"><c:out
+																			value='${rate * qty}' /></td>
+
+
+																</tr>
+															</c:when>
+
+															<c:when test="${frDetails.frRateCat=='2'}">
+																<tr>
+
+																	<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
+																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text"
+																		onchange="onChange('${items.itemRate2}',${items.id})">
+
+																		<input type="hidden" value="${items.minQty}"
+																		id="minqty${items.id}" /></td>
+																	<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
+
+																	<td class="col-md-1"><c:out value='${items.itemRate2}' /></td>
+																	<c:set var="rate" value="${items.itemRate2}" />
+																	<c:set var="qty" value="${items.itemQty}" />
+																	<td id="total${items.id}"><c:out
+																			value='${rate * qty}' /></td>
+																</tr>
+															</c:when>
+
+															<c:when test="${frDetails.frRateCat=='3'}">
+																<tr>
+
+																	<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
+																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+																		value='${items.itemQty}' class="tableInput"
+																		type="text"
+																		onchange="onChange('${items.itemRate3}',${items.id})">
+
+																		<input type="hidden" value="${items.minQty}"
+																		id="minqty${items.id}" /></td>
+																	<td class="col-md-1"><c:out value='${items.itemMrp3}' /></td>
+
+																	<td class="col-md-1"><c:out value='${items.itemRate3}' /></td>
+																	<c:set var="rate" value="${items.itemRate3}" />
+																	<c:set var="qty" value="${items.itemQty}" />
+																	<td class="col-md-1" id="total${items.id}"><c:out
+																			value='${rate * qty}' /></td>
+																</tr>
+															</c:when>
+														</c:choose>
+
+													</c:if>
+												</c:forEach>
+
+							</tbody>
+
+						</table>
+					</div>
 				</div>
-				<!--rightSidebar-->
+				
+				
+				
+				
+			
+
+							</c:forEach>
+								
+
+						</ul>
+					</div>
+					<!--tabNavigation-->
+
+					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
+					<div class="order-btn textcenter">
+
+						<input name="" class="buttonsaveorder" value="SAVE ORDER"
+							type="button" ONCLICK="button1()">
+					</div>
+
+
+
+				</form>
 
 			</div>
-			<!--fullGrid-->
+			<!--rightSidebar-->
+
 		</div>
-		<!--rightContainer-->
-
+		<!--fullGrid-->
 	</div>
-	<!--wrapper-end-->
+	<!--rightContainer-->
 
-	<!--easyTabs-->
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<!--easyTabs-->
+</div>
+<!--wrapper-end-->
 
-	<script>
+<script>
+
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+});
+
+
+	</script>
+
+<!--easyTabs-->
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<!--easyTabs-->
+
+<script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";
 		}
@@ -359,7 +385,7 @@ jQuery(document).ready(function(){
 		}
 	</script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
            
             function button1()
             {
@@ -401,7 +427,7 @@ jQuery(document).ready(function(){
            
         </script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function onChange(rate,id) {
 
 			//calculate total value  
@@ -428,7 +454,7 @@ jQuery(document).ready(function(){
 	</script>
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function onKeyDown(id) {
 			alert("alert");
 			var e = $('#'+id).val();
@@ -446,14 +472,14 @@ jQuery(document).ready(function(){
 		                 return;
 		        }
 		        // Ensure that it is a number and stop the keypress
-		        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
+		        if (((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
 		            e.preventDefault();
 		        }
 		   
 			
 		}
 </script>
-	<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
     $("#5").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -470,15 +496,18 @@ $(document).ready(function() {
                  return;
         }
         // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
+        if (((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
             e.preventDefault();
         }
     });
 });
 </script>
 
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	
+
+
 
 </body>
 </html>

@@ -4,61 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery("#menuzord").menuzord({
-			align : "left"
-		});
-	});
-</script>
-<!--rightNav-->
-
-<!--selectlistbox-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
-
-<!--selectlistbox-->
-
-<!--datepicker-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-	$(function() {
-		$("#datepicker2").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-</script>
-<!--datepicker-->
-
-
-</head>
-<body>
-
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -68,7 +15,8 @@
 
 		<!--topHeader-->
 		<c:url var="getGrnList" value="/getGrnList" />
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
+
 
 
 		<!--topHeader-->
@@ -96,130 +44,114 @@
 						<h2 class="pageTitle">GRN Details</h2>
 
 					</div>
-
-
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">From</div>
-						</div>
-						<div class="col2">
+					
+					
+					<div class="colOuter"><!-- copy div kalpesh -->
+					
+							<div class="calender-title">From</div>
+						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" name="from_Date" type="text">
 						</div>
-					</div>
-
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">TO</div>
-						</div>
-						<div class="col2">
+					
+							<div class="calender-title">TO</div>
+						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
 						</div>
-					</div>
-
-					<div class="colOuter">
-						<div class="col2full">
-							<input name="" class="buttonsaveorder" value="Search..."
-								type="button" onclick="searchGRN()">
+						
+						<div class="col-md-1">
+						<button type="button" class="btn  buttonsaveorder"  onclick="searchGRN()">Search</button>
 						</div>
-					</div>
+														
+						</div>
+
+
+					
 
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->
 
 						<!--tabMenu-->
-						<ul class="cd-tabs-content">
-							<!--tab1-->
-							<li data-content="tab1" class="selected">
-								<div class="table-responsive">
-									<div class="shInnerwidth">
+							<div class="clearfix"></div>
 
 
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+																<th class="col-md-1">Bill No</th>
+																<th class="col-md-1">Date</th>
+																<th class="col-md-1">Item Name</th>
+																<th class="col-md-1">Rate</th>
+																<th class="col-md-1">Quantity</th>
+																<th class="col-md-1"> Type</th>
+																<th class="col-md-1"> Amt</th>
+
+																<th class="col-md-1">Tax %</th>
+
+																<th class="col-md-1">Tax Amt</th>
 
 
-
-
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid">
-														<thead>
-															<tr class="bgpink">
-																<th>Sr No</th>
-
-																<th>Bill No</th>
-																<th>Grn Date</th>
-																<th>Item Name</th>
-																<th>Rate</th>
-																<th>Quantity</th>
-																<th>Grn Type</th>
-																<th>Grn Amount</th>
-
-																<th>Tax Percentage</th>
-
-																<th>Tax Amount</th>
-
-
-																<th>Amount</th>
-																<th>Status</th>
+																<th class="col-md-1">Amount</th>
+																<th class="col-md-1">Status</th>
 
 															</tr>
 														</thead>
-														<tbody>
+							<tbody>
 
 															<c:forEach items="${grnList}" var="grnList"
 																varStatus="count">
 																<tr>
-																	<td><c:out value="${count.index+1}" /></td>
-																	<td><c:out value="${grnList.billNo}" /></td>
-																	<td><c:out value="${grnList.grnGvnDate}" /></td>
-																	<td><c:out value="${grnList.itemName}" /></td>
-																	<td><c:out value="${grnList.baseRate}" /></td>
-																	<td><c:out value="${grnList.grnGvnQty}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.billNo}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.grnGvnDate}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.baseRate}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.grnGvnQty}" /></td>
 																	<c:choose>
 																		<c:when test="${grnList.grnType==0}">
-																			<td><c:out value="GRN 1"></c:out></td>
+																			<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnType==1}">
-																			<td><c:out value="GRN 2"></c:out></td>
+																			<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnType==2}">
-																			<td><c:out value="GRN 3"></c:out></td>
+																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 																		</c:when>
 																	</c:choose>
-																	<td><c:out value="${grnList.taxableAmt}" /></td>
-																	<td><c:out
+																	<td class="col-md-1"><c:out value="${grnList.taxableAmt}" /></td>
+																	<td class="col-md-1"><c:out
 																			value="${grnList.sgstPer + grnList.cgstPer}" /></td>
-																	<td><c:out value="${grnList.totalTax}" /></td>
-																	<td><c:out value="${grnList.grnGvnAmt}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.totalTax}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.grnGvnAmt}" /></td>
 																	
 																	<c:choose>
 																		<c:when test="${grnList.grnGvnStatus==1}">
-																			<td><c:out value="Pending"></c:out></td>
+																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==2}">
-																			<td><c:out value="Approved By Gate"></c:out></td>
+																			<td class="col-md-1"><c:out value="Approved By Gate"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==3}">
-																			<td><c:out value="Reject By Gate"></c:out></td>
+																			<td class="col-md-1"><c:out value="Reject By Gate"></c:out></td>
 																		</c:when>
 																		
 																		<c:when test="${grnList.grnGvnStatus==4}">
-																			<td><c:out value="Approve By Store"></c:out></td>
+																			<td class="col-md-1"><c:out value="Approve By Store"></c:out></td>
 																		</c:when>
 																		
 																		<c:when test="${grnList.grnGvnStatus==5}">
-																			<td><c:out value="Reject By Store"></c:out></td>
+																			<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==6}">
-																			<td><c:out value="Approve By Account"></c:out></td>
+																			<td class="col-md-1"><c:out value="Approve By Account"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==7}">
-																			<td><c:out value="Reject By Account"></c:out></td>
+																			<td class="col-md-1"><c:out value="Reject By Account"></c:out></td>
 																		</c:when>
 																		
 																	</c:choose>
@@ -227,18 +159,16 @@
 																</tr>
 															</c:forEach>
 
-														</tbody>
+														
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
 
 
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</li>
 
-						</ul>
 					</div>
 					<!--tabNavigation-->
 
@@ -254,6 +184,10 @@
 
 	</div>
 	<!--wrapper-end-->
+
+
+	
+
 
 	<script type="text/javascript">
 		function searchGRN() {
@@ -283,7 +217,53 @@
 					}
 
 					$.each(data, function(key, grndata) {
+						
+						var tr = $('<tr></tr>');
+						var calcTaxPer=parseFloat(grndata.sgstPer)+parseFloat(grndata.cgstPer);
+						
+						var grnType;
+						var grnStatus;
+						if(grndata.grnType==0)
+							grnType="Grn 1";
+						if(grndata.grnType==1)
+							grnType="Grn 2";
+								if(grndata.grnType==2)
+									grnType="Grn 3";
+								
+								if(grndata.grnGvnStatus==1)
+									grnStatus="Pending";
+								if(grndata.grnGvnStatus==2)
+									grnStatus="Approve By Gate";
+								if(grndata.grnGvnStatus==3)
+									grnStatus="Reject By Gate";
+								if(grndata.grnGvnStatus==4)
+									grnStatus="Approve By Store";
+								if(grndata.grnGvnStatus==5)
+									grnStatus="Reject By Store";
+								if(grndata.grnGvnStatus==6)
+									grnStatus="Approve By Account";
+								if(grndata.grnGvnStatus==7)
+									grnStatus="Reject By Account";
+								
+								
 
+						tr.append($('<td class="col-md-1"></td>').html(grndata.billNo));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnDate));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.itemName));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.baseRate));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnQty));
+						tr.append($('<td class="col-md-1"></td>').html(grnType));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt));
+						tr.append($('<td class="col-md-1"></td>').html(calcTaxPer));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.totalTax));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt));
+						tr.append($('<td class="col-md-1"></td>').html(grnStatus));
+
+						
+
+						
+
+/* 
 						var index = key + 1;
 
 						var tr = "<tr>";
@@ -369,11 +349,7 @@
 											+ "</td>";
 								}
 								
-								
-								
-
-						
-						
+							
 						var trclosed = "</tr>";
 
 						$('#table_grid tbody').append(tr);
@@ -397,13 +373,16 @@
 						$('#table_grid tbody').append(grnGvnStatus);
 
 						$('#table_grid tbody').append(trclosed);
+ */$('#table_grid tbody')
+	.append(
+			tr);
 
-					})
+})
 
-				});
+});
 
-			}
-		}
+}
+}
 	</script>
 
 
@@ -434,6 +413,27 @@
 	</script>
 
 
+<script>
+	/*
+//  jquery equivalent
+jQuery(document).ready(function() {
+   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+ });
+*/
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
 
 
 

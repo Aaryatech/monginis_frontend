@@ -4,8 +4,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +50,7 @@ public class BillingController {
 	
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill() {
+		
 		ModelAndView modelAndView = new ModelAndView("billing/showBill");
 		
 		return modelAndView;
@@ -59,6 +62,9 @@ public class BillingController {
 	public ModelAndView   showBillProcess(HttpServletRequest request,
 			HttpServletResponse response) {
 		
+		System.out.println("inside show bill process");
+
+		
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		
@@ -66,8 +72,9 @@ public class BillingController {
 		List<GetBillHeader> billHeader=new ArrayList<GetBillHeader>();
 		
 		
-		//List<GetBillHeader> billHeadersList = new ArrayList<>();
 		ModelAndView modelAndView = new ModelAndView("billing/showBill");
+		
+		try {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -87,8 +94,7 @@ public class BillingController {
 		map.add("frId", frId);
 		
 	
-		 // billHeadeResponse = restTemplate.postForObject(Constant.URL + "getBillHeader",
-		//		map, GetBillHeaderResponse.class);
+		
 		ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 		};
 		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeader",
@@ -97,13 +103,14 @@ public class BillingController {
 		billHeadeResponse = responseEntity.getBody();	
 
 		billHeader = billHeadeResponse.getGetBillHeaders();
-
-		
-		
-		
 		
 		modelAndView.addObject("billHeader",billHeader);
 		
+		}catch (Exception e) {
+			
+			System.out.println("ex in getting bills "+e.getMessage());
+			e.printStackTrace();
+		}
 		return modelAndView;
 	
 	}
@@ -112,40 +119,44 @@ public class BillingController {
 	@RequestMapping(value = "/showBillDetailProcess", method = RequestMethod.GET)
 	public ModelAndView   showBillDetailProcess(HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("inside process of bill details front end ***********************************");
+		
 		ModelAndView modelAndView = new ModelAndView("billing/billDetails");
+		
+		try {
+			
 		String billNo=request.getParameter("billNo");
 		String billDate=request.getParameter("billDate");
 		String billStatus=request.getParameter("billStatus");
 		String grandTotal=request.getParameter("grandTotal");
 		System.out.println("billNo: "+billNo +"  Date : "+billDate +"  billStatus :"+billStatus);
-		try {
-		RestTemplate restTemplate = new RestTemplate();
 		
+		RestTemplate restTemplate = new RestTemplate();
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("billNo", billNo);
 
 		GetBillDetailsResponse billDetailsResponse = restTemplate.postForObject(Constant.URL + "getBillDetails",
 				map, GetBillDetailsResponse.class);
 
-	billDetailsList = new ArrayList<GetBillDetail>();
+		billDetailsList = new ArrayList<GetBillDetail>();
 		billDetailsList = billDetailsResponse.getGetBillDetails();
-		System.out.println("bill detail response "+billDetailsList.toString());
-		System.out.println("bill detail size "+billDetailsList.size());
+		
 		modelAndView.addObject("billDetailsList",billDetailsList);
-		}
-		catch (Exception e) {
-		System.out.println("ex in bill detail "+e.getMessage());
-		e.printStackTrace();
-		}
 		
 		modelAndView.addObject("billDate", billDate);
 		modelAndView.addObject("billNo", billNo);
 		modelAndView.addObject("billStatus", billStatus);
 		modelAndView.addObject("grandTotal", grandTotal);
+		
+		}catch (Exception e) {
+		System.out.println("ex in bill detail "+e.getMessage());
+		e.printStackTrace();
+		}
+		
+		
 		
 	return modelAndView;
 	
@@ -186,6 +197,23 @@ public class BillingController {
 		}
 		
 		getBillHeader.setStatus(2);
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss ");
+		TimeZone istTimeZone = TimeZone.getTimeZone("Asia/Kolkata");
+		
+		Date d = new Date();
+		sdf.setTimeZone(istTimeZone);
+		
+		String strtime = sdf.format(d);
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		System.out.println("************* Date Time " + dateFormat.format(cal.getTime()));
+		
+		getBillHeader.setBillDateTime(dateFormat.format(cal.getTime()));
+		getBillHeader.setTime(strtime);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
 			
@@ -194,6 +222,9 @@ public class BillingController {
 
 			System.out.println("Message :   "+info.getMessage());
 			System.out.println("Error  :    "+info.getError());
+			
+			
+	
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -201,5 +232,6 @@ public class BillingController {
 		System.out.println("ex in update bill "+e.getMessage());
 		e.printStackTrace();
 	}
+		
 	}
 }

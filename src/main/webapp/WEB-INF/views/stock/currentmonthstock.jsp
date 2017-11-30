@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,7 +33,9 @@
 
 
 </head>
-<body>
+<body> --%>
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -46,7 +48,7 @@
 		<c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" />
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 		<!--topHeader-->

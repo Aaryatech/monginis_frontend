@@ -3,8 +3,42 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
+<title>Monginis</title>
+
+
+<link
+	href="${pageContext.request.contextPath}/resources/css/monginis.css"
+	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet" type="text/css"/>	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
+	type="image/x-icon" />
+	
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
+	
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+
+<!--rightNav-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+	
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery("#menuzord").menuzord({
+		align:"left"
+	});
+});
+</script>
 <!--rightNav-->
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -20,6 +54,8 @@
 <!--datepicker--> 
 
 
+</head>
+<body>
 
 <c:url var="getItemwiselReport" value="/getItemwiselReport" />
 <c:url var="getMenuwiselReport" value="/getMenuwiselReport" />
@@ -30,7 +66,7 @@
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/logo.jsp">
+		<jsp:include page="/WEB-INF/views/include/header.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -76,19 +112,21 @@
  	<div align="center">
 		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	<br> <br>   <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  style="display: none">PDF </button>
-		</div>
+		    	 <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellItemwiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none" >PDF</a>
+		    	</div>
 	</div>
 		 
 	
-	
 	<div class="row" id="table" style="display: none">
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
-										<table id="table_grid" class="main-table">
-											<thead>
-													<tr class="bgpink">
+		<div class="col-md-12">
+		<!--table-->
+			<div class="table-responsive">
+				<div class="shInnerwidth">
+					
+								<table width="100%" border="0" cellspacing="0"
+														cellpadding="0" id="table_grid" class="table table-bordered">
+								<thead >
+									<tr class="bgpink">
 									<th align="right" style="width:100px">Sr no.</th>
 									<!-- <th align="center">Bill No</th> -->
 									<th align="center">Item Name</th>
@@ -97,25 +135,30 @@
 								 	<th align="center">Quantity</th>
 									<th align="center">Amount</th> 
 								  </tr>
-												</thead>
-												<tbody>
-							</tbody>
-
-						</table>
-					</div>
+								</thead>
+								
+								 <tbody >
+								 </tbody>
+								  
+								</table>
+						 
 				</div>
+			</div>
+		<!--table end-->
+		 
+		</div>	
     </div>
     
-    
-    
-
-    <div id="menuTable" >
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
-										<table id="table_menu" class="main-table">
-											<thead>
-												<tr class="bgpink">
+    <div class="row" id="menuTable">
+		<div class="col-md-12">
+		<!--table-->
+			<div class="table-responsive">
+				<div class="shInnerwidth">
+					
+								<table width="100%" border="0" cellspacing="0"
+														cellpadding="0" id="table_menu" class="table table-bordered">
+								<thead >
+									<tr class="bgpink">
 									<th align="right" style="width:100px">Sr no.</th>
 									<!-- <th align="center">Bill No</th> -->
 									<th align="center">Category Name</th>
@@ -123,17 +166,19 @@
 								 	<th align="center">Quantity</th>
 									<th align="center">Amount</th> 
 								  </tr>
-												</thead>
-												<tbody>
-									
-							</tbody>
-
-						</table>
-					</div>
+								</thead>
+								
+								 <tbody >
+								 </tbody>
+								  
+								</table>
+						 
 				</div>
-			</div>	
-				
-
+			</div>
+		<!--table end-->
+		 
+		</div>	
+    </div>
 
 	<div id="chart" style="display: none"><br><br><br>
 		 <hr><div  >
@@ -281,7 +326,7 @@
 	<script type="text/javascript">
 	function itemSellBill(id)
 	{ 
-		document.getElementById('btn_pdf').style.display = "block";
+		
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
 		   document.getElementById('menuTable').style="display:none";
@@ -292,7 +337,7 @@
 		var isValid = validate();
 		
 		if (isValid) {
-			
+			document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var category=$("#category").val();
@@ -418,7 +463,7 @@ function showChart(){
 	$("#PieChart_div").empty();
 	$("#chart_div").empty();
 	
-	document.getElementById("btn_pdf").style="display:none";
+	
 		document.getElementById('chart').style.display = "block";
 		   document.getElementById("table").style="display:none";
 		   document.getElementById("menuTable").style="display:none";
@@ -428,7 +473,7 @@ function showChart(){
 			var isValid = validate();
 			
 			if (isValid) {
-			
+				document.getElementById("btn_pdf").style="display:none";
 			$.getJSON('${getMenuwiselReport}',{
 				
 								fromDate : fromDate,
@@ -597,40 +642,5 @@ function showChart(){
 			}
 }
 </script>
-
-
-<script>
-
-(function() {
-  var fauxTable = document.getElementById("faux-table");
-  var mainTable = document.getElementById("table_grid");
-  var clonedElement = table_grid.cloneNode(true);
-  var clonedElement2 = table_grid.cloneNode(true);
-  clonedElement.id = "";
-  clonedElement2.id = "";
-  fauxTable.appendChild(clonedElement);
-  fauxTable.appendChild(clonedElement2);
-})();
-
-
-	</script>
-	
-	
-	<script>
-
-(function() {
-  var fauxTable = document.getElementById("faux-table");
-  var mainTable = document.getElementById("table_menu");
-  var clonedElement = table_menu.cloneNode(true);
-  var clonedElement2 = table_menu.cloneNode(true);
-  clonedElement.id = "";
-  clonedElement2.id = "";
-  fauxTable.appendChild(clonedElement);
-  fauxTable.appendChild(clonedElement2);
-})();
-
-
-	</script>
-
 </body>
 </html>

@@ -38,6 +38,7 @@ public class ShowGrnBean {
 	private float taxPer;
 	private float grnAmt;
 	
+	private String billDateTime;
 		
 		
 
@@ -181,6 +182,14 @@ public class ShowGrnBean {
 			this.grnAmt = grnAmt;
 		}
 
+		public String getBillDateTime() {
+			return billDateTime;
+		}
+
+		public void setBillDateTime(String billDateTime) {
+			this.billDateTime = billDateTime;
+		}
+
 		@Override
 		public String toString() {
 			return "ShowGrnBean [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId + ", itemName="
@@ -188,10 +197,9 @@ public class ShowGrnBean {
 					+ ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
 					+ cgstPer + ", igstPer=" + igstPer + ", calcBaseRate=" + calcBaseRate + ", menuId=" + menuId
 					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", autoGrnQty=" + autoGrnQty + ", taxPer="
-					+ taxPer + ", grnAmt=" + grnAmt + "]";
+					+ taxPer + ", grnAmt=" + grnAmt + ", billDateTime=" + billDateTime + "]";
 		}
 
-		
 		
 		
 }

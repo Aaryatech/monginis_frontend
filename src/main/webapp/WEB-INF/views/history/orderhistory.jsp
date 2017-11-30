@@ -5,7 +5,7 @@
   <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
   
     
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -23,11 +23,11 @@ jQuery(document).ready(function(){
 		align:"left"
 	});
 });
-</script>
+</script> --%>
 <!--rightNav-->
 
 <!--selectlistbox-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script> --%>
 <script>
 function createByJson() {
 	var jsonData = [					
@@ -75,6 +75,11 @@ $("#tech").change(function() {
 </script>
 <!--selectlistbox-->
 
+
+        
+<!-- </head>
+<body> -->
+
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -95,10 +100,8 @@ $("#tech").change(function() {
   } );
   </script>
 <!--datepicker--> 
+  		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-        
-</head>
-<body>
 
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
@@ -111,7 +114,7 @@ $("#tech").change(function() {
 <c:url var="findAddOnRate" value="/getAddOnRate" />
 <c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 <c:url var="findAllMenus" value="/getAllTypes" />
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 <!--topHeader-->
@@ -131,8 +134,6 @@ $("#tech").change(function() {
 
 <!--leftNav-->
 
-
-
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
@@ -144,8 +145,8 @@ $("#tech").change(function() {
 <input type="hidden" name="mod_ser" id="mod_ser" value="search_result">
 
 <div class="colOuter">
-		<div class="col1"><div class="col1title">Group</div></div>
-		<div class="col2full"><select name="group" id="group" required>
+		<div class="col-md-1"><div class="col1title">Group</div></div>
+		<div class="col-md-4"><select name="group" id="group" required>
               <option value="">Select Type</option>
         
 									<c:forEach items="${menusList}" var="menusList">
@@ -162,17 +163,17 @@ $("#tech").change(function() {
            </c:forEach>   
             </select>
 			</div>
-	</div>
+<!-- 	</div> -->
 
-	<div class="colOuter">
-		<div class="col1"><div class="col1title">Delivery Order / GRN / GVN  Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="datepicker" type="text" value="${spDeliveryDt}" >
+	<!-- <div class="colOuter"> -->
+		<div class="col-md-3"><div class="col1title">Delivery Order / GRN / GVN  Date</div></div>
+		<div class="col-md-2"><input id="datepicker" class="texboxitemcode texboxcal" placeholder="Delivery Date"  name="datepicker" type="text" value="${spDeliveryDt}" >
 		</div>
-	</div>
+	<!-- </div> -->
 	
-<div class="colOuter">
-		<div class="col2full">
-        	<input name="" class="buttonsaveorder" value="Search..." type="submit">
+<!-- <div class="colOuter">
+ -->		<div class="col-md-2">
+        	<input name="" class="buttonsaveorder" value="Search" type="submit">
 			</div>
 </div>
 
@@ -183,55 +184,55 @@ $("#tech").change(function() {
 <!--tabMenu-->
 
 <!--tabMenu-->
-<ul class="cd-tabs-content">
-<!--tab1-->
-<li data-content="tab1" class="selected">
-<div class="table-responsive">
-<div class="shInnerwidth">
-
 	
-	
-
-	
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
-  <tr>
-    <td align="center" valign="middle" style="padding:0px;">
+  
          <c:set var = "selectedMenu" scope = "session" value = "${selectedMenu}"/>
 
 <c:choose>
     <c:when test="${selectedMenu.mainCatId !='5'}">
        
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr class="bgpink">
-    <td style="width:130px;">Type</td>
-    <td style="width:130px;">Item Code</td>
-    <td>Item Name</td>
-    <td>MRP</td>
-    <td>Quantity</td>
-    <td>Rate</td>
-    <td>Total</td>
-  </tr>
+  <div class="clearfix"></div>
 
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+    <th class="col-md-1">Type</th>
+    
+    <th class="col-md-1">Item Code</th>
+    <th class="col-md-1">Item Name</th>
+    <th class="col-md-1">MRP</th>
+    <th class="col-md-1">Quantity</th>
+    <th class="col-md-1">Rate</th>
+    <th class="col-md-1">Total</th>
+  </tr>
+<tbody>
  <c:forEach items="${orderHistory}" var="orderList"> 
+ 
   <tr>
-    <td><c:out value="${orderList.orderType}"/></td>
-    <td><c:out value="${orderList.itemId}"/></td>
-    <td><c:out value="${orderList.itemName}"/></td>
-    <td><c:out value="${orderList.orderMrp}"/></td>
-    <td><c:out value="${orderList.orderQty}"/></td>
-    <td><c:out value="${orderList.orderRate}"/></td>
-    <td><c:out value="${orderList.orderQty * orderList.orderRate}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.orderType}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.itemId}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.itemName}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.orderMrp}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.orderQty}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.orderRate}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.orderQty * orderList.orderRate}"/></td>
   </tr>
   </c:forEach>   
-  
+							</tbody>
+
+						</table>
+					</div>
+				</div>
  
   
 
-</table>
         <br />
     </c:when>  
-      <c:when test="${selectedMenu.mainCatId !='5'}">
+     <%--  <c:when test="${selectedMenu.mainCatId !='5'}">
        
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr class="bgpink">
@@ -261,58 +262,60 @@ $("#tech").change(function() {
 
 </table>
         <br />
-    </c:when>     
+    </c:when>     --%> 
     <c:otherwise>
-       <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr class="bgpink">
-    <td style="width:130px;">Item Code</td>
-    <td style="width:130px;">Item Name</td>
-    <td style="width:130px;">Flavour</td>
-    <td>Event</td>
-    <td>Delivery Date</td>
-    <td>Rate</td>
-    <td>Add Rate</td>
-    <td>Total</td>
-    <td>View</td>
-    <td>PDF</td>
+      <div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+    <th class="col-md-1">Item Code</th>
+     <th class="col-md-1">Item Name</th>
+    <th class="col-md-1">Flavour</th>
+    <th class="col-md-1">Event</th>
+    <th class="col-md-1">Delivery Date</th>
+    <th class="col-md-1">Rate</th>
+    <th class="col-md-1">Add Rate</th>
+    <th class="col-md-1">Total</th>
+    <th class="col-md-1">View</th>
+    <th class="col-md-1">PDF</th>
   </tr>
+  </thead>
+							<tbody>
  <c:forEach items="${orderHistory}" var="orderList"> 
   <tr>
-    <td><c:out value="${orderList.spId}"/></td>
-    <td><c:out value="${orderList.spName}"/></td>
-      <td><c:out value="${orderList.spfName}"/></td>
-    <td><c:out value="${orderList.spEvents}"/></td>
-    <td><c:out value="${orderList.spDeliveryDt}"/></td>
-    <td><c:out value="${orderList.spPrice}"/></td>
-    <td><c:out value="${orderList.spAddRate}"/></td>
-    <td><c:out value="${orderList.spGrand}"/></td>
-    <td><c:out value="${orderList.spGrand}"/></td>
-    <td><c:out value="${orderList.spGrand}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spId}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spName}"/></td>
+      <td class="col-md-1"><c:out value="${orderList.spfName}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spEvents}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spDeliveryDt}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spPrice}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spAddRate}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spGrand}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spGrand}"/></td>
+    <td class="col-md-1"><c:out value="${orderList.spGrand}"/></td>
     
   </tr>
   </c:forEach>   
   
- 
+ </tbody>
   
 
 </table>
+</div>
+</div>
         <br />
     </c:otherwise>
 </c:choose>
 
-   
+  
 
-
-
-
-
-
-</td>
-  </tr>
-</table>
 </div>
 </div>
-</li>
 <!--tab1-->
 
 <!--tab2-->
@@ -327,10 +330,10 @@ $("#tech").change(function() {
 <!--tabNavigation-->
 
 <!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-<div class="order-btn textcenter">
+<!-- <div class="order-btn textcenter">
 <a href="http://monginisaurangabad.com/index.php/dashboard/order_export?sel_group=1&sel_date=2017-09-05" class="buttonsaveorder">EXPORT TO EXCEL</a>
-<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
-</div> 
+<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">
+</div>  -->
  
 		
 </div>
@@ -372,7 +375,27 @@ function closeNav3() {
 }
 
 </script>
+<script>
+	/*
+//  jquery equivalent
+jQuery(document).ready(function() {
+   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+ });
+*/
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
 
+
+	</script>
 
 
 </body>

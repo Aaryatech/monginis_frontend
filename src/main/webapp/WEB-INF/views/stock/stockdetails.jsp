@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,7 +31,16 @@
 
 <!--rightNav-->
 
-<!--datepicker-->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
+
+</head>
+<body> --%>
+
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
+!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -49,163 +58,174 @@
 <!--datepicker-->
 
 
-</head>
-<body>
+<c:url var="getStock" value="/getStockDetails"></c:url>
 
-	<c:url var="getStock" value="/getStockDetails"></c:url>
+<!--topLeft-nav-->
+<div class="sidebarOuter"></div>
+<!--topLeft-nav-->
 
-	<!--topLeft-nav-->
-	<div class="sidebarOuter"></div>
-	<!--topLeft-nav-->
+<!--wrapper-start-->
+<div class="wrapper">
 
-	<!--wrapper-start-->
-	<div class="wrapper">
-
-		<!--topHeader-->
+	<!--topHeader-->
 
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
-		<!--topHeader-->
+	<!--topHeader-->
 
 
 
 
 
-		<!--rightContainer-->
-		<div class="fullGrid center">
-			<!--fullGrid-->
-			<div class="wrapperIn2">
+	<!--rightContainer-->
+	<div class="fullGrid center">
+		<!--fullGrid-->
+		<div class="wrapperIn2">
 
-				<!--leftNav-->
+			<!--leftNav-->
 
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
-					<jsp:param name="myMenu" value="${menuList}" />
-				</jsp:include>
-
-
-				<!--leftNav-->
+			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:param name="myMenu" value="${menuList}" />
+			</jsp:include>
 
 
+			<!--leftNav-->
 
-				<!--rightSidebar-->
-				<div class="sidebarright">
-					<div class="order-left">
-						<h2 class="pageTitle">Stock Details</h2>
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+
+
+			<!--rightSidebar-->
+			<div class="sidebarright">
+				<div class="order-left">
+					<h2 class="pageTitle">Stock Details</h2>
+					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+				</div>
+
+
+				<div class="colOuter">
+					<div class="col-md-2">
+						<div class="col1title">Select Category</div>
 					</div>
+					<div class="col-md-2">
+						<select name="select_category" class="form-control chosen"
+							tabindex="4" id="selectCategory" required>
 
+							<option value="-1">Select Category</option>
+							<c:forEach items="${category}" var="category" varStatus="count">
+								<option value="${category.catId}"><c:out value="${category.catName}"/></option>
+							</c:forEach>
 
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">Select Category</div>
-						</div>
-						<div class="col2">
-							<select name="select_category" class="form-control chosen"
-								tabindex="6" id="selectCategory" required>
-
-								<option value="-1">Select Category</option>
-								<c:forEach items="${category}" var="category" varStatus="count">
-									<option value="${category.catId}"><c:out value="${category.catName}"/></option>
-								</c:forEach>
-
-							</select>
-						</div>
-					</div>
-
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title">Select View Option</div>
-						</div>
-						<div class="col2">
-							<select name="selectStock" class="form-control chosen"
-								tabindex="6" id="selectStock" onchange="showDiv(this)" required>
-
-								<option value="-1">Select Option</option>
-								<option value="1" id="currentStock">Get Current Stock</option>
-								<option value="2" id="monthStock">Get Stock Between Month</option>
-								<option value="3" id="dateStock">Get Stock Between Dates</option>
-
-							</select>
-						</div>
+						</select>
 					</div>
 
 
 
+					<div class="col-md-2">
+						<div class="col1title">Select View Option</div>
+					</div>
+					<div class="col-md-2">
+						<select name="selectStock" class="form-control chosen"
+							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
 
+							<option value="-1">Select Option</option>
+							<option value="1" id="currentStock">Get Current Stock</option>
+							<option value="2" id="monthStock">Get Stock Between Month</option>
+							<option value="3" id="dateStock">Get Stock Between Dates</option>
 
-					<div class="colOuter" style="display: none" id=select_month_year>
-						<div class="col1">
-							<div class="col1title">Select Month From :</div>
-						</div>
-						<div class="col2" align="left">
-
-							<input type='text' placeholder="Select From Month" id='txtDate'
-								name="from_stockdate" required />
-						</div>
-
-						<div class="col3"></div>
-
-
-						<div class="colOuter">
-							<div class="col1">
-								<div class="col1title">To :</div>
-							</div>
-							<div class="col2" align="left">
-								<input type='text' placeholder="Select To Month" id=txtDateto
-									name="to_stockdate" required />
-							</div>
-						</div>
+						</select>
 					</div>
 
 
-
-					<div class="colOuter" style="display: none" id=select_date>
-						<div class="col1">
-							<div class="col1title">From Date:</div>
-						</div>
-						<div class="col2" align="left">
-
-							<input id="fromdatepicker" class="texboxitemcode texboxcal"
-								placeholder="From Date" name="from_datepicker" type="text">
-
-						</div>
-
-						<div class="col3"></div>
+				</div>
 
 
-						<div class="colOuter">
-							<div class="col1">
-								<div class="col1title">To Date:</div>
-							</div>
-							<div class="col2" align="left">
-								<input id="todatepicker" class="texboxitemcode texboxcal"
-									placeholder="To Date" name="to_datepicker" type="text">
-							</div>
-						</div>
+
+				<div class="colOuter" style="display: none" id=select_month_year>
+					<div class="col-md-2">
+						<div class="col1title">Select Month From :</div>
+					</div>
+					<div class="col-md-2" align="left">
+
+						<input type='text' placeholder="Select From Month" id='txtDate'
+							name="from_stockdate" required />
 					</div>
 
+					<div class="col3"></div>
 
 
 
-					<div class="colOuter">
-						<div class="col1">
-							<div class="col1title"></div>
-						</div>
-						<div class="col2">
-							<input name="search_stock" class="buttonsaveorder" value="Search"
-								type="button" onclick="searchStock()">
-						</div>
+					<div class="col-md-2">
+						<div class="col1title">To :</div>
+					</div>
+					<div class="col-md-2" align="left">
+						<input type='text' placeholder="Select To Month" id=txtDateto
+							name="to_stockdate" required />
 					</div>
 
+				</div>
 
 
-					<div class="row">
-						<div class="col-md-12">
-							<!--table-->
-							<form action="monthEndProcess" method="POST">
-								<div class="table-responsive">
+
+				<div class="colOuter" style="display: none" id=select_date>
+					<div class="col-md-2">
+						<div class="col1title">From Date:</div>
+					</div>
+					<div class="col-md-2" align="left">
+
+						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							placeholder="From Date" name="from_datepicker" type="text">
+
+					</div>
+
+					<div class="col3"></div>
+
+
+
+					<div class="col-md-2">
+						<div class="col1title">To Date:</div>
+					</div>
+					<div class="col-md-2" align="left">
+						<input id="todatepicker" class="texboxitemcode texboxcal"
+							placeholder="To Date" name="to_datepicker" type="text">
+					</div>
+
+				</div>
+
+
+
+
+				<div class="colOuter">
+					<div class="col1">
+						<div class="col1title"></div>
+					</div>
+					<div class="col2">
+						<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+							
+							<div align="center" id="loader" style="display: none">
+
+					<span>
+						<h4>
+							<font color="#343690">Loading</font>
+						</h4>
+					</span> <span class="l-1"></span> <span class="l-2"></span> <span
+						class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+					<span class="l-6"></span>
+				</div>
+					</div>
+					
+					
+					
+				</div>
+
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<!--table-->
+						<form action="monthEndProcess" method="POST">
+							<!-- <div class="table-responsive">
 									<div class="shInnerwidth">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0"
 											class="table">
@@ -213,64 +233,72 @@
 												<td align="center" valign="middle" style="padding: 0px;">
 													<table width="100%" border="0" cellspacing="0"
 														cellpadding="0" id="stockTable">
-														<tr class="bgpink">
-															<th width="60" align="left">Item Id</th>
-															<th width="100" align="left">Item Name</th>
-															<th width="80" align="left">Regular Opening Stock</th>
-															<th width="80" align="left">Special Opening Stock</th>
-															<th width="80" align="left">Total Purchase Amt</th>
-															<th width="80" align="left">GRN / GVN Qty</th>
-															<th width="80" align="left">Total Sell</th>
-															<th width="80" align="left">Regular Current Stock</th>
-															<th width="80" align="left">Special Current Stock</th>
-															
-															<%-- <c:if test="${isMonthCloseApplicable eq true}">
+														<tr class="bgpink"> -->
+
+							<div class="clearfix"></div>
+
+
+							<div id="table-scroll" class="table-scroll">
+								<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div class="table-wrap">
+									<table id="table_grid" class="main-table">
+										<thead>
+											<tr class="bgpink">
+												<th class="col-md-1">Item Id</th>
+												<th class="col-md-1">Item Name</th>
+												<th class="col-md-1">Reg Op Stock</th>
+												<th class="col-md-1">Sp Op Stock</th>
+												<th class="col-md-1">Pur Amt</th>
+												<th class="col-md-1">Grn-Gvn Qty</th>
+												<th class="col-md-1">Total Sell</th>
+												<th class="col-md-1">Reg Cur Stock</th>
+												<th class="col-md-1">Sp Cur Stock</th>
+
+												<%-- <c:if test="${isMonthCloseApplicable eq true}">
 																<th width="105" align="left">Physical Stock</th>
 																<th width="105" align="left">Stock Difference</th>
 															</c:if> --%>
-															
-														</tr>
 
-
-
-													</table>
-												</td>
 											</tr>
-										</table>
+										</thead>
+										<tbody>
 
-									</div>
-
-									
-
-										<div class="colOuter" id ="monthEnd" style="display: none">
-											<div class="col2full">
-												<input name="" class="buttonsaveorder" value="Month End"
-													type="submit">
-											</div>
-										</div>
-								
+										</tbody>
+									</table>
 								</div>
-							</form>
-						</div>
+
+							</div>
+
+
+
+							<div class="colOuter" id="monthEnd" style="display: none">
+								<div class="col2full">
+									<input name="" class="buttonsaveorder" value="Month End"
+										type="submit">
+								</div>
+						</form>	</div>
 					</div>
-
-					<!--rightSidebar-->
-
+					
 				</div>
-				<!--fullGrid-->
 			</div>
-			<!--rightContainer-->
+
+			<!--rightSidebar-->
 
 		</div>
-		<!--wrapper-end-->
+		<!--fullGrid-->
+	</div>
+	<!--rightContainer-->
 
-		<!--easyTabs-->
-		<!--easyTabs-->
-		<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-		<!--easyTabs-->
+</div>
+<!--wrapper-end-->
 
-		<!-- Select Only Month and Year -->
-		<script>
+<!--easyTabs-->
+<!--easyTabs-->
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<!--easyTabs-->
+
+<!-- Select Only Month and Year -->
+<script>
 			$(document)
 					.ready(
 							function() {
@@ -334,7 +362,7 @@
 							});
 		</script>
 
-		<script>
+<script>
 			$(document)
 					.ready(
 							function() {
@@ -397,7 +425,7 @@
 												});
 							});
 		</script>
-		<script>
+<script>
 			function showDiv(elem) {
 				if (elem.value == 1) {
 					document.getElementById('select_month_year').style = "display:none";
@@ -412,8 +440,11 @@
 			}
 		</script>
 
-		<script type="text/javascript">
+<script type="text/javascript">
 			function searchStock() {
+				
+				$('#loader').show();
+
 				
 				
 				var isMonthClose= ${isMonthCloseApplicable};
@@ -428,6 +459,8 @@
 					show_option : selectedStockOption,
 					ajax : 'true'
 				}, function(data) {
+					$('#loader').hide();
+
 
 					var len = data.length;
 					$('#stockTable td').remove();
@@ -470,13 +503,13 @@
 					$.each(data, function(key, item) {
 
 						var tr = $('<tr></tr>');
-						tr.append($('<td></td>').html(item.itemId));
-						tr.append($('<td></td>').html(item.itemName));
-						tr.append($('<td></td>').html(item.regOpeningStock));
-						tr.append($('<td></td>').html(item.spOpeningStock));
-						tr.append($('<td></td>').html(item.regTotalPurchase));
-						tr.append($('<td></td>').html(item.regTotalGrnGvn));
-						tr.append($('<td></td>').html(item.regTotalSell));
+						tr.append($('<td class="col-md-1" ></td>').html(item.itemId));
+						tr.append($('<td class="col-md-1"></td>').html(item.itemName));
+						tr.append($('<td class="col-md-1"></td>').html(item.regOpeningStock));
+						tr.append($('<td class="col-md-1"></td>').html(item.spOpeningStock));
+						tr.append($('<td class="col-md-1"></td>').html(item.regTotalPurchase));
+						tr.append($('<td class="col-md-1"></td>').html(item.regTotalGrnGvn));
+						tr.append($('<td class="col-md-1"></td>').html(item.regTotalSell));
 						
 					//	var regOpeningBalance = parseFloat(item.regOpeningStock);
 					//	var regTotalPurchase = parseFloat(item.regTotalPurchase);
@@ -500,14 +533,14 @@
 						}
 						
 						
-						$('#stockTable tbody').append(tr);
+						$('#table_grid tbody').append(tr);
 
 					})
 				});
 			}
 		</script>
-		
-			<script type="text/javascript">
+
+<script type="text/javascript">
 		function updateStockDiff(id, currentStock) {
 			
 			var physicalStockQty = $("#physicalStockQty" + id).val();
@@ -529,9 +562,30 @@
 			 $('#stockDiff'+id).html(stockDiff);
 		}
 	</script>
-		
-		
-		
+
+<script>
+	/*
+//  jquery equivalent
+jQuery(document).ready(function() {
+   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+ });
+*/
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
+
+
 </body>
 
 </html>
