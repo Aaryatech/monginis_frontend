@@ -64,7 +64,7 @@ public class GrnGvnController {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
 		Calendar c = Calendar.getInstance();
-		try {
+		 try {
 			c.setTime(sdf.parse(date));
 
 		} catch (ParseException e) {
