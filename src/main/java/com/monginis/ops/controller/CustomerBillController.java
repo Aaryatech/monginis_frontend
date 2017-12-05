@@ -290,7 +290,7 @@ public class CustomerBillController {
 	@RequestMapping(value = "/showCustomerBill", method = RequestMethod.GET)
 	public ModelAndView displayCustomerBill(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("frSellBilling/newCustomerBill");
+		ModelAndView model = new ModelAndView("frSellBilling/customerBill");
 
 		resetData1();
 		resetData2();

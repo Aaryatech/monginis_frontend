@@ -3,7 +3,18 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
+
+
+
+<script src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
+	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
+	<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
+
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -46,6 +57,8 @@
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 
 <!--rightNav-->
 <script type="text/javascript"
@@ -60,19 +73,24 @@
 </script>
 <!--rightNav-->
 
-
 </head>
 <body>
-<c:url var="getItemDetails" value="/findItemDetails" />
-<c:url var="insertItemOrder" value="/insertItem" />
-<c:url var="insertHeader" value="/insertHeader" />
-<div class="sidebarOuter"></div>
+ --%>
+
+	<c:url var="getItemDetails" value="/findItemDetails" />
+	<c:url var="insertItemOrder" value="/insertItem" />
+	<c:url var="insertHeader" value="/insertHeader" />
+	<div class="sidebarOuter"></div>
+	<c:url var="calcStock" value="/calcStock" />
+
+	<c:url var="deleteItem" value="/deleteItem" />
+
 
 	<div class="wrapper">
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
@@ -86,7 +104,7 @@
 
 				<!--leftNav-->
 
-	 			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 
 				</jsp:include>
@@ -96,44 +114,43 @@
 				<!--rightSidebar-->
 
 				<!------------ Place Actual content of page inside this div ----------->
-				    <div class="sidebarright">
+				<div class="sidebarright">
 
-					  <div class="order-left">
+					<div class="order-left">
 						<h2 class="pageTitle">Express Bill</h2>
 
 					</div>
-					
-					
-				<!-------------------------------------------------------------->
-				
-   <c:choose>
-         
-         <c:when test = "${count == 0}">
-                      <div class="colOuter">
-		 			  <div class="col3full">
-        				<input name="" class="buttonsaveorder" value="Start Day" type="button" id="start" onclick="start()">
-					  </div>
-					  </div>
-         </c:when>
-         
-         <c:when test = "${count ==2}">
-           
-              <div class="colOuter">
-		            <div class="col1">Bill NO:</div>
-		            <div class="col2">${sellBillHeader.sellBillNo}</div>
-	                </div>
-	                
-	                <div class="colOuter">
-		            <div class="col1">Bill Date:</div>
-		            <div class="col2">${sellBillHeader.billDate}</div>
-	                </div>
-					  
-				<!--tab1-->
-							<li  class="selected">
-								<div class="row">
-									
-								</div> <br /> <br />
-								<div class="table-responsive" ">
+
+
+					<!-------------------------------------------------------------->
+
+					<c:choose>
+
+						<c:when test="${count == 0}">
+							<div class="colOuter">
+								<div class="col3full">
+									<input name="" class="buttonsaveorder" value="Start Day"
+										type="button" id="start" onclick="start(); hideMe(this.id);">
+								</div>
+							</div>
+						</c:when>
+
+						<c:when test="${count ==2}">
+
+							<div class="colOuter">
+								<div class="col1">Bill NO:</div>
+								<div class="col1">${sellBillHeader.sellBillNo}</div>
+							</div>
+
+							<div class="colOuter">
+								<div class="col1">Bill Date:</div>
+								<div class="col1">${sellBillHeader.billDate}</div>
+							</div>
+
+							<!--tab1-->
+							<li class="selected">
+								<div class="row"></div> <br /> <br />
+								<div class="table-responsive"">
 									<div class="shInnerwidth">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0"
 											class="table">
@@ -148,26 +165,40 @@
 															<td>Rate</td>
 														</tr>
 														<tr>
-																<td>
-																<input type='text' oninput='onInput()' class="form-control"placeholder="Enter Barcode" id='input' list='dlist' />
-
-                                                                 <datalist id='dlist'>
-                                                                    <c:forEach items="${itemsList}" var="itemsList"> 
-                                                                       <option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
-                                                                     </c:forEach>
-                                                                  </datalist>
-																</td>
 															<td>
-															<input type="text" class="form-control"
-																id="itemName" name="itemName"
-																placeholder="Item Name" disabled>
+																<!--  new Input <input type='text' class="form-control"
+																oninput='onInput()' id='input1' />
+																 --> <input type='text' onchange='onInput()'
+																class="form-control" placeholder="Enter Barcode"
+																id='input' list='dlist' /> <datalist id='dlist'>
+																	<c:forEach items="${itemsList}" var="itemsList">
+																		<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
+																	</c:forEach>
+																</datalist>
 															</td>
+															<td>
+															
+															<!-- <input type="text" class="form-control"
+																id="itemName" name="itemName" placeholder="Item Name"
+																disabled onchange="changeFocus()"> -->
+																
+																<select class="selectpicker"  data-show-subtext="true" data-live-search="true"
+																data-placeholder="Enter Item Name"  name="itemName"
+																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
+																data-rule-required="true">
+																	<option value="">Item Name</option>
+																	<c:forEach items="${itemsList}"
+																		var="itemsList">
+																		<option value="${itemsList.itemId}">${itemsList.itemName}</option>
+																	</c:forEach>
+															</select> 
+																</td>
+																
 															<td><input type="number" min="0" max="500"
 																class="form-control" placeholder="1" name="qty1"
 																id="qty1" value="1"></td>
 															<td id="rateTdVal1">00</td>
 
-
 														</tr>
 													</table>
 												</td>
@@ -179,223 +210,243 @@
 								<div class="row">
 									<div class="col-md-12">
 										<center>
-											<button class="btn additem_btn" onclick="insertItem1()"
-												id="b2" >SUBMIT</button>
+											<button class="btn btn-primary" onclick="insertItem1()"
+												id="insertItemButton">Submit Item</button>
 										</center>
 									</div>
 								</div> <br /> <!-- Form End -->
-								<div class="table-responsive" >
+								<div class="table-responsive">
 									<div class="shInnerwidth">
-										
-													<table class="table table-bordered" width="100%" border="0" cellspacing="0"
-														cellpadding="0 " id="table_grid1">
-														<tr class="bgpink">
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th style="width: 130px;">Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-														</tr>
-														  <c:forEach items="${sellBillDetails}" var="sellBillDetails"> 
-                                                              <tr>      
-                                                                  <td><c:out value="${sellBillDetails.itemId}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.itemName}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.qty}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.mrp}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.grandTotal}"/></td>
-                                                               </tr>
-                                                            </c:forEach>
 
-													</table>
+										<table class="table table-bordered" width="100%" border="0"
+											cellspacing="0" cellpadding="0 " id="table_grid1">
+											<tr class="bgpink">
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th style="width: 130px;">Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<c:forEach items="${sellBillDetails}" var="sellBillDetails">
+												<tr>
+													<td><c:out value="${sellBillDetails.itemId}" /></td>
+													<td><c:out value="${sellBillDetails.itemName}" /></td>
+													<td><c:out value="${sellBillDetails.qty}" /></td>
+													<td><c:out value="${sellBillDetails.mrp}" /></td>
+													<td><c:out value="${sellBillDetails.grandTotal}" /></td>
+
+													<td>
+						<a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
+													</td>
+												</tr>
+											</c:forEach>
+
+										</table>
 									</div>
+
+
+							<!-- Loader Div -->
+									<div align="center" id="loader" style="display: none">
+										<span>
+											<h4>
+												<font color="#343690">Loading</font>
+											</h4>
+										</span> <span class="l-1"></span> <span class="l-2"></span> <span
+											class="l-3"></span> <span class="l-4"></span> <span
+											class="l-5"></span> <span class="l-6"></span>
+									</div>
+									
+																<!--End of  Loader Div -->
+									
 								</div>
-								<hr/>
-								<br/>
-								<center >
-									<button class="btn additem_btn" onclick="todaysDayClose()" id="dayClose1">DAY CLOSE</button>
+								<hr /> <br />
+								<center>
+									<button class="btn additem_btn" onclick="todaysDayClose()"
+										id="dayClose1">DAY CLOSE</button>
 								</center>
-								
+
 							</li>
-                  
-                  </c:when>
-         <c:when test = "${count ==3}">
-         
-               
-         
-         <li>            
-                <div class="row">
-									
-								</div> <br /> <br />
-                     <div class="table-responsive" >
-									<div class="shInnerwidth">
-										
-													<table class="table table-bordered" width="100%" border="0" cellspacing="0"
-														cellpadding="0 " id="table_grid">
-														<tr class="bgpink">
-															<th>Bill No.</th>
-															<th>Bill Date</th>
-															<th style="width: 130px;">Taxable Amount</th>
-															<th>Payable amount</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															 <td><c:out value="${sellBillHeader.sellBillNo}"/></td>
-                                                                  <td><c:out value="${sellBillHeader.billDate}"/></td>
-                                                                  <td><c:out value="${sellBillHeader.taxableAmt}"/></td>
-                                                                  <td><c:out value="${sellBillHeader.payableAmt}"/></td>
-                                                                  <td><c:out value="${sellBillHeader.grandTotal}"/></td>
-                                                   <td>
-                                                   <a href="${pageContext.request.contextPath}/dayClose/${sellBillHeader.sellBillNo}">
-                                                   <input name="Start" class="buttonsaveorder" value="Day Close" type="button"></a></td>
-														</tr>
-													</table>
-									</div>
-						</div>
-						</li>
-					
-						<li>
-                     
-                             
-                                  
-								<div class="table-responsive" >
-									<div class="shInnerwidth">
-										
-													<table class="table table-bordered" width="100%" border="0" cellspacing="0"
-														cellpadding="0 " id="table_grid">
-														<tr class="bgpink">
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th style="width: 130px;">Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-														</tr>
-													
-														
-                                                         <c:forEach items="${sellBillDetails}" var="sellBillDetails"> 
-                                                              <tr>      
-                                                                  <td><c:out value="${sellBillDetails.itemId}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.itemName}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.qty}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.mrp}"/></td>
-                                                                  <td><c:out value="${sellBillDetails.grandTotal}"/></td>
-                                                               </tr>
-                                                            </c:forEach>
 
-
-										
-										        	</table>
-									</div>
-								</div>
-				</li>
-         
-         </c:when>
-         <c:otherwise>
-           
-         </c:otherwise>
-      </c:choose>
-							<!--tab1-->
-							<li  class="selected">
-								<div class="row">
-									
-								</div> <br /> <br />
-								<div class="table-responsive" id="div1" style="display: none;">
+						</c:when>
+						<c:when test="${count ==3}">
+							<li>
+								<div class="row"></div> <br /> <br />
+								<div class="table-responsive">
 									<div class="shInnerwidth">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
+
+										<table class="table table-bordered" width="100%" border="0"
+											cellspacing="0" cellpadding="0 " id="table_grid">
+											<tr class="bgpink">
+												<th>Bill No.</th>
+												<th>Bill Date</th>
+												<th style="width: 130px;">Taxable Amount</th>
+												<th>Payable amount</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
 											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0">
-														<tr class="bgpink">
-															<td>Barcode</td>
-															<td>Item Name</td>
-															<td>Qty</td>
-															<td>Rate</td>
-														</tr>
-														<tr>
-																<td>
-																<input type='text' onchange='onInput()' class="form-control"placeholder="Enter Barcode" id='input1' list='dlist' />
-
-                                                                 <datalist id='dlist'>
-                                                                    <c:forEach items="${itemsList}" var="itemsList"> 
-                                                                       <option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
-                                                                     </c:forEach>
-                                                                  </datalist>
-																</td>
-															<td>
-															<input type="text" class="form-control"
-																id="itemName" name="itemName"
-																placeholder="Item Name" disabled>
-															</td>
-															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty2"
-																id="qty2" value="1"></td>
-															<td id="rateTdVal1">00</td>
-
-
-														</tr>
-													</table>
-												</td>
+												<td><c:out value="${sellBillHeader.sellBillNo}" /></td>
+												<td><c:out value="${sellBillHeader.billDate}" /></td>
+												<td><c:out value="${sellBillHeader.taxableAmt}" /></td>
+												<td><c:out value="${sellBillHeader.payableAmt}" /></td>
+												<td><c:out value="${sellBillHeader.grandTotal}" /></td>
+												<td>
+													 <input type="submit" class="btn btn-primary"
+													onclick="todaysDayClose(${sellBillHeader.sellBillNo})"
+													value="DAY CLOSE" id="callSubmit">
 											</tr>
-
 										</table>
 									</div>
-								</div> <input name="rate1" id="rate1" type="hidden" value="00" />
-								<div class="row">
-									<div class="col-md-12">
-										<center>
-											<button class="btn additem_btn" onclick="insertItems()"
-												id="b1"style="display: none;" >SUBMIT</button>
-										</center>
-									</div>
-								</div> <br /> <!-- Form End -->
-								<div class="table-responsive" style="display: none;" id="div2">
-									<div class="shInnerwidth">
-										
-													<table class="table table-bordered" width="100%" border="0" cellspacing="0"
-														cellpadding="0 " id="table_grid">
-														<tr class="bgpink">
-															<th style="width: 130px;">Sr no.</th>
-															<th>Barcode</th>
-															<th>Item Name</th>
-															<th style="width: 130px;">Qty</th>
-															<th>Rate</th>
-															<th>Amount</th>
-															<th>Action</th>
-														</tr>
-														<tr>
-															<!--<td>1</td>
-															<td>#ppp</td>
-															<td>cake</td>
-															<td>5</td>
-															<td>900</td>
-															<td>10</td>
-															<td><a href="#" class="action_btn"><abbr
-																	title="edit"><i class="fa fa-edit"></i></abbr></a> <a
-																href="#" class="action_btn"><abbr title="Delete"><i
-																		class="fa fa-trash"></i></abbr></a></td>-->
+								</div>
+							</li>
 
-														</tr>
-													</table>
+							<li>
+
+								<div class="table-responsive">
+									<div class="shInnerwidth">
+
+										<table class="table table-bordered" width="100%" border="0"
+											cellspacing="0" cellpadding="0 " id="table_grid">
+											<tr class="bgpink">
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th style="width: 130px;">Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+											</tr>
+
+											<c:forEach items="${sellBillDetails}" var="sellBillDetails">
+												<tr>
+													<td><c:out value="${sellBillDetails.itemId}" /></td>
+													<td><c:out value="${sellBillDetails.itemName}" /></td>
+													<td><c:out value="${sellBillDetails.qty}" /></td>
+													<td><c:out value="${sellBillDetails.mrp}" /></td>
+													<td><c:out value="${sellBillDetails.grandTotal}" /></td>
+												</tr>
+											</c:forEach>
+										</table>
 									</div>
 								</div>
-								<hr/>
-								<br/>
-								<center >
-									<button class="btn additem_btn" onclick="generateSellBill1()"style="display: none;" id="dayClose1">DAY CLOSE</button>
-								</center>
-								
 							</li>
-                      </div>
-					<!--tabNavigation-->
-				</div>
-				<!--rightSidebar-->
 
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+					<!--tab1-->
+					<li class="selected">
+						<div class="row"></div> <br /> <br />
+						<div class="table-responsive" id="div1" style="display: none;">
+							<div class="shInnerwidth">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									class="table">
+									<tr>
+										<td align="center" valign="middle" style="padding: 0px;">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr class="bgpink">
+													<td>Barcode</td>
+													<td>Item Name</td>
+													<td>Qty</td>
+													<td>Rate</td>
+												</tr>
+												<tr>
+													<td>
+														<!-- new Input <input type='text' class="form-control"
+														oninput='onInput()' id='input1' /> --> <input type='text'
+														class="form-control" onchange='onInput()' min='0' max='500'
+														placeholder="Enter Barcode" id='input1' list='dlist' /> <datalist
+															id='dlist'>
+															<c:forEach items="${itemsList}" var="itemsList">
+																<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
+															</c:forEach>
+														</datalist>
+													</td>
+
+													<td><input type="text" class="form-control"
+														id="itemName" name="itemName" placeholder="Item Name"
+														disabled></td>
+													<td><input type="number" min="0" max="500"
+														class="form-control" placeholder="1" name="qty2" id="qty2"
+														value="1"></td>
+													<td id="rateTdVal1">00</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+
+								</table>
+								
+							</div>
+							
+							
+						</div> <input name="rate1" id="rate1" type="hidden" value="00" />
+						<div class="row">
+							<div class="col-md-12">
+								<center>
+									<button class="btn btn-primary" style="display: none;"
+										insertItem1()"
+										id="insertItemButton">Add
+										Item</button>
+								</center>
+
+							<!-- Loader Div -->
+									<div align="center" id="loader" style="display: none">
+										<span>
+											<h4>
+												<font color="#343690">Loading</font>
+											</h4>
+										</span> <span class="l-1"></span> <span class="l-2"></span> <span
+											class="l-3"></span> <span class="l-4"></span> <span
+											class="l-5"></span> <span class="l-6"></span>
+									</div>
+									
+																<!--End of  Loader Div -->
+									
+
+							</div>
+							
+							
+							
+						</div> <br /> <!-- Form End -->
+						<div class="table-responsive" style="display: none;" id="div2">
+							<div class="shInnerwidth">
+
+								<table class="table table-bordered" width="100%" border="0"
+									cellspacing="0" cellpadding="0 " id="table_grid">
+									<tr class="bgpink">
+										<th style="width: 130px;">Sr no.</th>
+										<th>Barcode</th>
+										<th>Item Name</th>
+										<th style="width: 130px;">Qty</th>
+										<th>Rate</th>
+										<th>Amount</th>
+										<th>Action</th>
+									</tr>
+									<tr>
+
+									</tr>
+								</table>
+							</div>
+						</div>
+						<hr /> <br /> <%-- <center>
+									<button class="btn additem_btn"  onclick="todaysDayClose()"style="display: none;" id="dayClose1">DAY CLOSE</button>
+								</center> --%> <input type="submit" class="btn btn-primary"
+						onclick="todaysDayClose()" style="display: none;" id="dayClose1"
+						value="DAY CLOSE">
+
+					</li>
+				</div>
+				<!--tabNavigation-->
 			</div>
-			<!--fullGrid-->
+			<!--rightSidebar-->
+
 		</div>
-		<!--rightContainer-->
+		<!--fullGrid-->
+	</div>
+	<!--rightContainer-->
 
 	</div>
 	<!--wrapper-end-->
@@ -403,28 +454,49 @@
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
-<script type="text/javascript">
+	<script type="text/javascript">
 function start(){
     $("#div1").show();
     $("#div2").show();
     $("#b1").show();
     $("#dayClose1").show();
+    alert("started");
     
     $.getJSON('${insertHeader}',{
 		
 		ajax : 'true',
 
     }, function(data) {
-		alert("insertItem2")
+		alert("inserting Header ")
 
 
 	});
 }
+
+
+function  hideMe(startId){
+	 $("#"+startId).hide();
+	 $("#insertItemButton").show();
+	
+}
+
+
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	function onInput() {
+		
 	    var val = document.getElementById("input").value;
-	    var opts = document.getElementById('dlist').childNodes;
+	    
+	   /*  var iId=document.getElementById("itemName").value;
+	    if(iId !=null || iId !="" || iId !=-1){
+	    	val=iId;
+		    //document.getElementById("input").value=iId;
+		    alert("inside if ");
+
+	    }
+	     */
+	   
+	     var opts = document.getElementById('dlist').childNodes;
 	    for (var i = 0; i < opts.length; i++) {
 	      if (opts[i].value === val) {
 	        // An item was selected from the list!
@@ -432,32 +504,99 @@ function start(){
 	       // alert(opts[i].value);
 	        break;
 	      }
-	    }
+	    } 
+
 	    $.getJSON('${getItemDetails}',{
+	  
 			
             itemId : JSON.stringify(val),
 			
 			ajax : 'true',
 
 		}, function(data) {
-			document.getElementById("itemName").setAttribute('value',data.itemName);
-			$("#rateTdVal1").html(data.mrp);
+			
+			//alert("inside data ");
+			//document.getElementById("itemName").setAttribute('value',data.itemName);
+			
 
+		$('#itemName').val(data.itemId).prop('selected', true);
+
+			
+			$("#rateTdVal1").html(data.mrp);
+			
+			$('#insertItemButton').focus();
+			
 		});
 	    
 	    
+	   // document.getElementById("input").setAttribute('value',"");
+
 	  }
+	
+	
+	function onSelectItem() {
+ 
+		var iId=document.getElementById("itemName").value;
+	  
+	    	val=iId;
+		  
+	    $.getJSON('${getItemDetails}',{
+	  
+			
+            itemId : JSON.stringify(val),
+			
+			ajax : 'true',
+
+		}, function(data) {
+			
+			//alert("inside data ");
+			//document.getElementById("itemName").setAttribute('value',data.itemName);
+			
+
+		$('#itemName').val(data.itemId).prop('selected', true);
+		document.getElementById("input").value=val;
+			
+			$("#rateTdVal1").html(data.mrp);
+			
+			$('#insertItemButton').focus();
+			
+		});
+		
+		
+	}
 	</script>
 	<script type="text/javascript">
 	function insertItem1() {
-		//alert("insertItem")
+		$('#loader').show();
 
 		
 	    var val = document.getElementById("input").value;
 	    var qty = document.getElementById("qty1").value;
 
+	    $('#input').focus();
 	    
 	    
+	    
+	    $.getJSON('${calcStock}',{
+			
+
+            itemId : val,
+          //  qty:qty,
+			ajax : 'true',
+
+		 
+	}, function(data) {
+		if(data<qty)
+			{
+			$('#loader').hide();
+
+			alert("Stock Not Available. Can not add Item ");
+			
+			}
+		else
+	{
+			
+
 		 $.getJSON('${insertItemOrder}',{
 				
 
@@ -474,7 +613,6 @@ function start(){
 				$('#table_grid1 td').remove();
 
 				$.each(data,function(key, item) {
-					
 
 				var tr = $('<tr></tr>');
 
@@ -488,22 +626,100 @@ function start(){
 				tr.append($('<td></td>').html(item.mrp));
 
 				tr.append($('<td></td>').html(item.grandTotal));
+				
+				//tr.append($('<td ><input type="button" id="deleteButton" onclick="deleteItem('+item.sellBillDetailNo+')" /><i class='fa fa-trash'></i></td>'));
+
+				//tr.append($('<td ><a href="#" >< i class="fa fa-trash" id="deleteButton" onclick="deleteItem('+item.sellBillDetailNo+')" ></i></a></td>'));
 
 				
+				tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
 				$('#table_grid1 tbody').append(tr);
 
 			});
 		
 	         });
-		
-	 }
-	</script> 
-	<script type="text/javascript">
-	function todaysDayClose()
-	{
-	
 	}
-	</script>
+	});
+	    document.getElementById("input").value="";
+	    document.getElementById("itemName").value="";
+	    
+	}
+		
 	
+	</script>
+	<script type="text/javascript">
+	function todaysDayClose(){
+			//alert("Hello");
+							$('#loader').show();
+
+			
+			$.ajax({
+
+				type : "get",
+				url : "dayClose", 
+			
+
+			});
+			$('#loader').hide();
+		window.location.reload();
+			
+	}
+	
+	
+	</script>
+
+
+
+	<script type="text/javascript">
+	function deleteItem(sellBillDetailNo){
+		
+		$('#loader').show();
+
+		//alert("Hello");
+			var billNo=sellBillDetailNo;
+			
+			 $.getJSON('${deleteItem}',{
+
+				sellBillDetailNo:billNo,
+				type : "get",
+			
+
+			 },
+			 function(data) {
+					//$('#loader').hide();
+
+
+					$('#loader').hide();
+					var len = data.length;
+
+					$('#table_grid1 td').remove();
+
+					$.each(data,function(key, item) {
+
+					var tr = $('<tr></tr>');
+
+				  	tr.append($('<td></td>').html(item.itemId));
+
+				  	tr.append($('<td></td>').html(item.itemName));
+
+					tr.append($('<td></td>').html(item.qty));
+
+					tr.append($('<td></td>').html(item.mrp));
+
+					tr.append($('<td></td>').html(item.grandTotal));
+					
+				//	tr.append($('<td ><input type="button" id="deleteButton" onclick="deleteItem('+item.sellBillDetailNo+')" value="Delete" /></td>'));
+								tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
+
+
+					$('#table_grid1 tbody').append(tr);
+
+				});
+			
+		         });
+		}
+	
+	</script>
+
 </body>
 </html>

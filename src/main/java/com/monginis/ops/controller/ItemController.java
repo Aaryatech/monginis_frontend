@@ -757,12 +757,19 @@ public class ItemController {
 						}
 						}// end of else
 						
+						
+						//for no grn these menuIds
 						if(menuList.get(globalIndex).getMenuId()==29||menuList.get(globalIndex).getMenuId()==30||
 								menuList.get(globalIndex).getMenuId()==42||menuList.get(globalIndex).getMenuId()==43||
 								menuList.get(globalIndex).getMenuId()==44||menuList.get(globalIndex).getMenuId()==47) {
 							
 							order.setGrnType(3);
 							
+						}
+						//for push grn 
+						if(menuList.get(globalIndex).getMenuId()==48) {
+							
+							order.setGrnType(4);
 						}
 
 					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));

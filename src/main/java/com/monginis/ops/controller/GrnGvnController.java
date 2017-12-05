@@ -254,20 +254,45 @@ public class GrnGvnController {
 			
 			// calculate autogrnQty
 			for (int i = 0; i < grnConfList.size(); i++) {
+				
+				
+				//nw code
+				int purQty=grnConfList.get(i).getBillQty();
+				
+				int tempGQty=grnConfList.get(i).getAutoGrnQty();
+				
+				for(int k=0;k<i;k++) {
+					
+					if(grnConfList.get(i).getItemId()==grnConfList.get(k).getItemId()) {
+						
+						purQty=purQty+grnConfList.get(k).getBillQty();
+						
+						tempGQty=tempGQty+grnConfList.get(k).getAutoGrnQty();
+						
+					}//end of item Id match
+					
+				}//end of k for
+				
 
 				for (int j = 0; j < stockForAutoGrn.size(); j++) {
-
-					
 
 						if (grnConfList.get(i).getItemId() == stockForAutoGrn.get(j).getId()) {
 
 							if (grnConfList.get(i).getGrnType() != 4) {
-
+/*
 								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
 										+ grnConfList.get(i).getBillQty())
 										- (stockForAutoGrn.get(j).getRegSellQty()
 												+ stockForAutoGrn.get(j).getGrnGvnQty());
+												
+												
+								*/
+								
 
+								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
+										+ purQty)
+										- (stockForAutoGrn.get(j).getRegSellQty()
+												+ stockForAutoGrn.get(j).getGrnGvnQty()+tempGQty);
 								
 									System.out.println("item Id= "+grnConfList.get(i).getItemId());
 									System.out.println("bill date ="+grnConfList.get(i).getBillDate());
@@ -284,10 +309,17 @@ public class GrnGvnController {
 
 							}//end of inner if
 							else {
-								System.out.println("");
+								
+								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
+										+ purQty)
+										- (stockForAutoGrn.get(j).getRegSellQty()
+												+ stockForAutoGrn.get(j).getGrnGvnQty()+tempGQty);
+								grnConfList.get(i).setAutoGrnQty(autoGrnQty);
+								/*System.out.println("");
 								//calculate autoGrnQty for pushed item 
+								
 								boolean isSameItem=false;
-								for(int a=1;a<grnConfList.size();a++) {
+								for(int a=0;a<grnConfList.size();a++) {
 									
 									if((grnConfList.get(i).getItemId()==grnConfList.get(a).getItemId())&& (grnConfList.get(a).getGrnType()!=4)) {
 										
@@ -332,7 +364,7 @@ public class GrnGvnController {
 											- (stockForAutoGrn.get(j).getRegSellQty()
 													+ stockForAutoGrn.get(j).getGrnGvnQty());
 									grnConfList.get(i).setAutoGrnQty(autoGrnQty);
-								}
+								}*/
 
 							}//end of else
 						}//end of outer if

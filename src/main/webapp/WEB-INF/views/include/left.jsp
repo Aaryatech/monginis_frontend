@@ -52,6 +52,16 @@
 					</div></a></li>
 					
 					
+					<li><a href="${pageContext.request.contextPath}/showExpressBill"><div
+						class="img">
+						<i class="fa fa-file-pdf-o icon"></i>
+					</div>
+					<div class="title">
+						Express Bill <span></span>
+					</div></a></li>
+					
+					
+					
 					
 					<li><a href="${pageContext.request.contextPath}/showBill"><div
 						class="img">

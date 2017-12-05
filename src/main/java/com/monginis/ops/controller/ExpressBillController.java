@@ -1,10 +1,12 @@
 package com.monginis.ops.controller;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amazonaws.Request;
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
@@ -30,22 +37,28 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
+import com.sun.org.apache.regexp.internal.RE;
 
 
 
 @Controller
 public class ExpressBillController {
+	
+	public static List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<GetCurrentStockDetails>();
 
 	public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
     public static SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
+    
 	
 	
 	@RequestMapping(value = "/showExpressBill", method = RequestMethod.GET)
-	public ModelAndView ordersHistory(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView showExpressBill(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView model = new ModelAndView("expressBill/expressBill");
 		int count = 0;
@@ -83,6 +96,7 @@ public class ExpressBillController {
 	   		
 	   		RestTemplate restTemplate = new RestTemplate();
 	   		MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+	   		
 	   		mvm.add("itemList",items );
 	   		
 
@@ -134,7 +148,7 @@ public class ExpressBillController {
 			System.out.println("*********customerBillItemList***********"+customerBillItemList.toString());
 	   		
 	   		model.addObject("itemsList",customerBillItemList);
-	   		model.addObject("count", count);
+	   		//model.addObject("count", count);
         //----------------------------------------------------------------------------
 			
 		RestTemplate rest=new RestTemplate();
@@ -156,7 +170,7 @@ public class ExpressBillController {
 		//--------------------------------------------------
 		
 		Date billDate=new SimpleDateFormat("yyyy-MM-dd").parse(sellBillHeader.getBillDate());  
-		Date dmyBillDate=new SimpleDateFormat("dd-MM-yyyy").parse(sellBillHeader.getBillDate());  
+	//1	Date dmyBillDate=new SimpleDateFormat("dd-MM-yyyy").parse(sellBillHeader.getBillDate());  
 	    //------------Todays Date-----------
 		Date date = new Date();
 		String todaysDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -212,18 +226,172 @@ public class ExpressBillController {
 		catch(Exception e)
 		{		
 			    model.addObject("count", 0);
+			    
 	        	model.addObject("itemsList",customerBillItemList);
+	        	
 			System.out.println("Exception In ExpressBillController View Page");
 		}
 		return model;
 	}
+	
+	@RequestMapping(value = "/calcStock", method = RequestMethod.GET)
+	public @ResponseBody int getStock(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "itemId", required = true) String itemId)
+	{
+		HttpSession session = request.getSession();
+
+			   Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			   
+			   
+		int curStock=0;
+		try {
+		boolean isPrevItem=false;
+		
+		
+		int catId=0;
+		int id=0;
+		
+		for(CustomerBillItem item:customerBillItemList)
+		{
+			if(item.getItemId().equalsIgnoreCase(itemId))
+			{		
+				id=item.getId();
+				catId=item.getCatId();
+				
+			}
+		}
+		
+        
+        // ------------------------------------------------------------------------------------------
+        if (currentStockDetailList!=null) {
+            for (int i = 0; i < currentStockDetailList.size(); i++) {
+                
+                if (id == currentStockDetailList.get(i).getId()) {
+                    isPrevItem=true;
+                }
+            }
+        }
+          if(currentStockDetailList==null || !isPrevItem)
+        {
+        	  
+        	 
+            System.out.println("If current Detail List is NULL for item Id "+ id);
+            currentStockDetailList= getStockFromServer(id,catId, frDetails);// stock calculation
+        }
+            
+          for (int i = 0; i < currentStockDetailList.size(); i++) {
+              if (id == currentStockDetailList.get(i).getId()) {
+                    isPrevItem=true;
+                    
+                    curStock=(currentStockDetailList.get(i).getCurrentRegStock());
+              }        
+        }
+		 } catch (Exception e) {
+             System.out.println("Exception in cal Stock " + e.getMessage());
+             e.printStackTrace();
+
+         }
+
+		 return curStock;
+	}
+	
+	
+	  public List<GetCurrentStockDetails> getStockFromServer(int currentNewItem,int catId, Franchisee frDetails) {
+          System.out.println("Input para ");
+          System.out.println("item ID "+currentNewItem);
+          System.out.println("cat ID "+catId);
+          System.out.println("Fr ID "+frDetails.getFrId());
+          
+          
+
+	        
+          Integer runningMonth = 0;
+
+          PostFrItemStockHeader frItemStockHeader;
+          // -------------------------------------Stock---------------------------------------
+          RestTemplate restTemplate = new RestTemplate();
+
+          DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+          DateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+          try {
+              MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+              map.add("frId", frDetails.getFrId());
+
+              frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+                      PostFrItemStockHeader.class);
+              runningMonth = frItemStockHeader.getMonth();
+
+         
+          Date todaysDate = new Date();
+          System.out.println(dateFormat.format(todaysDate));
+
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(todaysDate);
+
+          cal.set(Calendar.DAY_OF_MONTH, 1);
+
+          Date firstDay = cal.getTime();
+
+          System.out.println("First Day of month " + firstDay);
+
+          String strFirstDay = dateFormat.format(firstDay);
+
+          System.out.println("Year " + yearFormat.format(todaysDate));
+
+          map = new LinkedMultiValueMap<String, Object>();
+          map.add("frId", frDetails.getFrId());
+          map.add("fromDate", dateFormat.format(firstDay));
+          map.add("toDate", dateFormat.format(todaysDate));
+          map.add("currentMonth", String.valueOf(runningMonth));
+          map.add("year", yearFormat.format(todaysDate));
+          map.add("catId", catId);
+          map.add("itemIdList", currentNewItem);
+    
+          
+          List<GetCurrentStockDetails> getCurrentStockDetailsList=new ArrayList<>();
+          
+          ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
+          };
+          ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate
+                  .exchange(Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+            //getCurrentStockDetailsList.addAll(responseEntity.getBody());
+          
+          getCurrentStockDetailsList=responseEntity.getBody();
+            
+            System.out.println("get Cur Stock De List "+getCurrentStockDetailsList.toString());
+          //System.out.println("Current Stock Details : " + currentStockDetailList.toString());
+          for(int i=0;i<getCurrentStockDetailsList.size();i++)
+          {
+             currentStockDetailList.add(getCurrentStockDetailsList.get(i));
+          }
+          
+          
+          } catch (Exception e) {
+        	  
+        	  System.out.println("cure Sto de li "+currentStockDetailList.toString());
+              System.out.println("Exception in stock web Service " + e.getMessage());
+              e.printStackTrace();
+
+          }
+
+          return currentStockDetailList;
+          
+        
+      }
+	
+	   
+	
+	
 	@RequestMapping(value = "/insertItem", method = RequestMethod.GET)
-	public @ResponseBody List<SellBillDetail>  insertItem(@RequestParam(value = "itemId", required = true) String itemId,@RequestParam(value = "qty", required = true) int qty)
+	public @ResponseBody List<SellBillDetail>  insertItem(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "itemId", required = true) String itemId,@RequestParam(value = "qty", required = true) int qty)
 	{
 		System.out.println("********ItemId********"+itemId);
 		RestTemplate restTemplate = new RestTemplate();
-
 		
+	
+	
 		
 		float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0;
 		for(CustomerBillItem item:customerBillItemList)
@@ -262,15 +430,12 @@ public class ExpressBillController {
 				cgstRs = roundUp(cgstRs);
 				igstRs = roundUp(igstRs);
 				
-				
 				Float totalTax = sgstRs + cgstRs;
 				totalTax = roundUp(totalTax);
 
 				Float grandTotal = totalTax + taxableAmt;
 				grandTotal = roundUp(grandTotal);
 
-				
-				
 				sellBillDetail.setCatId(item.getCatId());
 				sellBillDetail.setSgstPer(tax1);
 				sellBillDetail.setSgstRs(sgstRs);
@@ -293,13 +458,29 @@ public class ExpressBillController {
 				sumTotalTax=sumTotalTax+totalTax;
 				sumGrandTotal=sumGrandTotal+grandTotal;
 				
-				
 				sellBillDetail.setTaxableAmt(taxableAmt);
 				sellBillDetail.setTotalTax(totalTax);
 				System.out.println("**SellBillDetail Response:** "+sellBillDetail.toString()+"GlobalBillNo."+sellBillHeaderGlobal.getSellBillNo());
 
 				SellBillDetail	sellBillDetailRes=restTemplate.postForObject(Constant.URL + "saveSellBillDetail", sellBillDetail,
 						SellBillDetail.class);
+				
+				if(sellBillDetailRes!=null) {
+					
+					for(int i=0;i<currentStockDetailList.size();i++) {
+						
+						if(currentStockDetailList.get(i).getId()==item.getId()) {
+							
+							currentStockDetailList.get(i).setCurrentRegStock(currentStockDetailList.get(i).getCurrentRegStock()-(qty));
+							
+							
+						}
+						
+						
+					}//end of For 
+					
+					
+				}
 				
 				System.out.println("**SellBillDetail Response:** "+sellBillDetail.toString());
 			}
@@ -415,10 +596,15 @@ public class ExpressBillController {
 		System.out.println("**Selected Item**:"+resItem.toString());
 		return resItem;
 	}
+	
+	
+	
+	
 	@RequestMapping(value = "/dayClose", method = RequestMethod.GET)
-	public @ResponseBody List<SellBillDetail> dayClose(HttpServletRequest request, HttpServletResponse response)
+	public @ResponseBody String dayClose(HttpServletRequest request, HttpServletResponse response)
 	{
    		RestTemplate restTemplate = new RestTemplate();
+   		System.out.println("inside day close ");
 
 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			
@@ -428,12 +614,85 @@ public class ExpressBillController {
 					map, SellBillDetailList.class);
 					
 			List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
+			
+			
+			System.out.println("sellBillDetails "+sellBillDetails.toString());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+	
+			map.add("sellBillNo", sellBillHeaderGlobal.getSellBillNo());
+			
+			System.out.println("sellBillHeaderGlobal.getSellBillNo()" +sellBillHeaderGlobal.getSellBillNo());
+			SellBillHeader  billHeader =restTemplate.postForObject(Constant.URL + "/getSellBillHeaderForDayClose",
+					map, SellBillHeader.class);
+			
+			System.out.println("billHeader "+billHeader.toString());
+			
+			
+			for(int x=0;x<sellBillDetails.size();x++) {
+				
+				
+				billHeader.setTaxableAmt(billHeader.getTaxableAmt()+sellBillDetails.get(x).getTaxableAmt());
+				
+				billHeader.setTotalTax(billHeader.getTotalTax()+sellBillDetails.get(x).getTotalTax());
+				billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal()+billHeader.getGrandTotal());
+				
+				//billHeader.setBillDate(billHeader.getBillDate());
+				
+				billHeader.setDiscountPer(billHeader.getDiscountPer());
+				
+			}
+			
+			System.out.println("billHeader new "+billHeader.toString());
+			
+			
+			billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+					SellBillHeader.class);
 		
-		     
+
 			
-			
-		return null;
+		return "redirect:/showExpressBill";
 	}
 
 	
+	
+	// /deleteItem request Maoping 
+	
+	
+	
+	@RequestMapping(value = "/deleteItem", method = RequestMethod.GET)
+	public @ResponseBody List<SellBillDetail>   deleteItem(@RequestParam(value = "sellBillDetailNo", required = true) int sellBillDetailNo)
+	{
+		System.out.println("********ItemId********"+sellBillDetailNo);
+		
+		
+		System.out.println("********inside Delete********"+sellBillDetailNo);
+		//
+		
+		RestTemplate restTemplate = new RestTemplate();
+
+		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("delStatus",Constant.DEL_STATUS);
+			map.add("sellBillDetailNo", sellBillDetailNo);
+			
+			Info info = restTemplate.postForObject(Constant.URL + "/deleteSellBillDetail",
+					map, Info.class);
+				
+			System.out.println("Info.to "+info.toString());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			
+			map.add("billNo", sellBillHeaderGlobal.getSellBillNo());
+			
+			SellBillDetailList sellBillDetailList = restTemplate.postForObject(Constant.URL + "/getSellBillDetails",
+					map, SellBillDetailList.class);
+					
+			List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
+			
+		
+		return sellBillDetails;
+	
+	}
 }
