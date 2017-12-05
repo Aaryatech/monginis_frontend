@@ -362,11 +362,14 @@ public class ExpressBillController {
             
             System.out.println("get Cur Stock De List "+getCurrentStockDetailsList.toString());
           //System.out.println("Current Stock Details : " + currentStockDetailList.toString());
-          for(int i=0;i<getCurrentStockDetailsList.size();i++)
-          {
-             currentStockDetailList.add(getCurrentStockDetailsList.get(i));
-          }
-          
+            
+            if(!getCurrentStockDetailsList.isEmpty()) {
+         
+            	for(int i=0;i<getCurrentStockDetailsList.size();i++)
+            	{
+            		currentStockDetailList.add(getCurrentStockDetailsList.get(i));
+            	}
+            }
           
           } catch (Exception e) {
         	  
@@ -375,7 +378,9 @@ public class ExpressBillController {
               e.printStackTrace();
 
           }
-
+        
+          System.out.println("cure Sto de li "+currentStockDetailList.toString());
+          
           return currentStockDetailList;
           
         
@@ -601,7 +606,7 @@ public class ExpressBillController {
 	
 	
 	@RequestMapping(value = "/dayClose", method = RequestMethod.GET)
-	public @ResponseBody String dayClose(HttpServletRequest request, HttpServletResponse response)
+	public @ResponseBody ModelAndView dayClose(HttpServletRequest request, HttpServletResponse response)
 	{
    		RestTemplate restTemplate = new RestTemplate();
    		System.out.println("inside day close ");
@@ -649,9 +654,11 @@ public class ExpressBillController {
 			billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 					SellBillHeader.class);
 		
-
+			ModelAndView model = new ModelAndView("expressBill/expressBill");
 			
-		return "redirect:/showExpressBill";
+			System.out.println("redirecting to model ex bill ");
+			
+		return model;
 	}
 
 	
