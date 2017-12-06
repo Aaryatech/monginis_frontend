@@ -4,9 +4,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
+<!--datepicker-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+$(function() {
 
+		var todaysDate = new Date();
+		var min = new Date(todaysDate.setDate(todaysDate.getDate()));
 
+		$("#datepicker").datepicker({
+			dateFormat : 'dd-mm-yy',
+			minDate : min
+		});
+	});
+	$(function() {
+		$("#datepicker2").datepicker({
+			dateFormat : 'dd-mm-yy'
+		});
+});
+</script>
+<!--selectlistbox-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,26 +38,10 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Monginis</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
 
 <!--selectlistbox-->
 <script type="text/javascript"
@@ -84,32 +92,10 @@ $("#tech").change(function() {
 //
 </script>
 <!--selectlistbox-->
+	
+	
+    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-<!--datepicker-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-
-
-  
-  $( function() {
-    $( "#datepicker2" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-  $( function() {
-    $( "#datepicker3" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-  $( function() {
-    $( "#datepicker4" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-  $( function() {
-    $( "#datepicker5" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-  </script>
-<!--datepicker-->
-
-
-</head>
-<body>
 
 	<c:url var="findDelToAndFromDate" value="/getDelToAndFromDate" />
 
@@ -124,10 +110,14 @@ $("#tech").change(function() {
 		<c:url var="findAddOnRate" value="/getAddOnRate" />
 		<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 		<c:url var="findAllMenus" value="/getAllTypes" />
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
 		<!--topHeader-->
+         <jsp:include page="/WEB-INF/views/include/logo.jsp">
+		
+			<jsp:param name="fr" value="${frDetails}"/>
+		</jsp:include>
+
 
 		<!--rightContainer-->
 		<div class="fullGrid center">
@@ -138,34 +128,29 @@ $("#tech").change(function() {
 
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
-
 				</jsp:include>
-
-
 				<!--leftNav-->
-
-
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
 					<div class="order-left">
 						<h2 class="pageTitle">Special Day Cake Order</h2>
-						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 
 					<form name="frm_search" id="frm_search" method="post"
-						action="${pageContext.request.contextPath}/searchItems">
+						action="${pageContext.request.contextPath}/searchItems" onsubmit="return validate()">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 
+                     <input type="hidden" id="flag" name="flag" value="1"/>
 						<div class="colOuter">
 							<div class="col1">
 								<div class="col1title">Select Day</div>
 							</div>
-							<div class="col2full">
+							<div class="col2">
 								<select name="spdayId" id="spdayId" onchange="onChangeDay()"
 									required>
-									<option value="0">Select Day</option>
+									<option value="-1">Select Day</option>
 
 									<c:forEach items="${configureSpDayFrList}"
 										var="configureSpDayFr">
@@ -183,25 +168,11 @@ $("#tech").change(function() {
 												<option value="${configureSpDayFr.spdayId}">${configureSpDayFr.spdayName}</option>
 
 											</c:when>
-
-
 										</c:choose>
-
-
-
 									</c:forEach>
-
-
-
-
-
-
-
-
 								</select>
 							</div>
 						</div>
-
 						<div class="colOuter">
 							<div class="col1">
 								<div class="col1title">Delivery Date</div>
@@ -209,47 +180,40 @@ $("#tech").change(function() {
 							<div class="col2">
 								<input id="datepicker" class="texboxitemcode texboxcal"
 									placeholder="Delivery Date" name="datepicker" type="text"
-									value="${delDate}">
+									value="${delDate}" >
 							</div>
 						</div>
 
 						<div class="colOuter">
 							<div class="col2full">
 								<input name="" class="buttonsaveorder" value="Search..."
-									type="submit">
+									type="submit" >
 							</div>
 						</div>
-
 					</form>
-
 					<form
 						action="${pageContext.request.contextPath}/saveSpDayCakeOrder"
 						name="form1" method="post">
 
-						<!--tabNavigation-->
-						<div class="cd-tabs">
-							<!--tabMenu-->
+					 	<!--tabNavigation-->
+					<!--	<div class="cd-tabs">
+							tabMenu
 
-							<!--tabMenu-->
+							tabMenu
 							<ul class="cd-tabs-content">
-								<!--tab1-->
+								tab1
 								<li data-content="tab1" class="selected">
-									<div class="table-responsive">
-										<div class="shInnerwidth">
-
+									<div class="table-responsive"> 
+										<div class="shInnerwidth">-->
+           
 
 											<input type="hidden" name="menuId" value="${menuId}">
 											<input type="hidden" name="rateCat"
 												value="${frDetails.frRateCat}">
 
-
-
-
 											<c:set var="selectedMenu" scope="session"
 												value="${selectedMenu}" />
-
 											<div class="clearfix"></div>
-
 
 											<div id="table-scroll" class="table-scroll">
 												<div id="faux-table" class="faux-table" aria="hidden"></div>
@@ -257,7 +221,7 @@ $("#tech").change(function() {
 													<table id="table_grid" class="main-table">
 														<thead>
 															<tr class="bgpink">
-
+																<th class="col-md-1">Sr No.</th>
 																<th class="col-md-1">Item Name</th>
 																<th class="col-md-1">Quantity</th>
 																<th class="col-md-1">MRP</th>
@@ -272,11 +236,12 @@ $("#tech").change(function() {
 																<c:choose>
 																	<c:when test="${frDetails.frRateCat=='1'}">
 																		<tr>
+																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
 																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
 																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																				value='${items.itemQty}' class="tableInput"
-																				type="number" onkeydown="myFunction()"
+																				type="text" onkeydown="myFunction()"
 																				onchange="onChange('${items.itemRate1}',${items.id})"></td>
 																			<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
 
@@ -290,13 +255,14 @@ $("#tech").change(function() {
 
 																	<c:when test="${frDetails.frRateCat=='2'}">
 																		<tr>
+																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
 																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
 																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																				value='${items.itemQty}' class="tableInput"
 																				type="text"
 																				onchange="onChange('${items.itemRate2}',${items.id})"></td>
-																			<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
+																			<td class="col-md-1"><c:out value='${items.itemMrp2}' /></td>
 
 																			<td class="col-md-1"><c:out value='${items.itemRate2}' /></td>
 																			<c:set var="rate" value="${items.itemRate2}" />
@@ -308,6 +274,7 @@ $("#tech").change(function() {
 
 																	<c:when test="${frDetails.frRateCat=='3'}">
 																		<tr>
+																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
 																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
 																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
@@ -324,45 +291,26 @@ $("#tech").change(function() {
 																		</tr>
 																	</c:when>
 																</c:choose>
-
-
 															</c:forEach>
-												
-
 							</tbody>
 
 						</table>
 					</div>
 				</div>
-
-
-
-
-
-												</div>
+         	<!-- 	</div>
 											</div>
-								</li>
-								<!--tab1-->
-
-								<!--tab2-->
-
-								<!--tab2-->
-
-								<!--tab3-->
-
-								<!--tab4-->
+							</li>
+						
 							</ul>
 						</div>
-						<!--tabNavigation-->
+						tabNavigation
 
-						<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
+						<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div> -->
 						<div class="order-btn textcenter">
 
 							<input name="" class="buttonsaveorder" value="SAVE ORDER"
 								type="button" ONCLICK="button1()">
 						</div>
-
-
 
 					</form>
 
@@ -406,16 +354,15 @@ function closeNav3() {
 
 </script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
            
             function button1()
             {
 
-             //   document.form1.buttonName.value = "SAVE ORDER";
                 form1.submit();
             }    
            
-        </script>
+</script>
 
 	<script type="text/javascript">
 		function onChange(rate,id) {
@@ -430,11 +377,10 @@ function closeNav3() {
 		}
 	</script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function onKeyDown(id) {
 			alert("alert");
 			var e = $('#'+id).val();
-			
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 		             // Allow: Ctrl/cmd+A
 		            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -452,8 +398,6 @@ function closeNav3() {
 		            e.preventDefault();
 		        }
 		    };
-			
-		
 </script>
 	<script type="text/javascript">
 $(document).ready(function() {
@@ -483,8 +427,6 @@ $(document).ready(function() {
 function onChangeDay() {
 
 	var spdayId = $('#spdayId').find(":selected").val();
-	//alert(spdayId);
-	
 	
 	 $.getJSON(
 				'${findDelToAndFromDate}',
@@ -501,8 +443,47 @@ function onChangeDay() {
 					  } );
 				
 				});
-	 
 }
 </script>
+<script>
+
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+});
+
+
+	</script>
+	<script type="text/javascript">
+	function validate()
+	{
+	
+		var spdayId = $('#spdayId').find(":selected").val();
+		var selectedDate = $('#datepicker').val();//delivery Date
+
+		var isValid=true;
+		
+		if(spdayId==-1)
+			{
+			  
+			 alert("Please Select Special Day.")
+			 return false;
+			}else if(selectedDate==""||selectedDate==null)
+			{
+				 alert("Please Select Delivery Date.")
+				 return false;
+
+			}
+		
+           return isValid;
+		
+	}
+	</script>
 </body>
 </html>

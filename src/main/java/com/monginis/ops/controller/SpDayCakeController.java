@@ -60,6 +60,9 @@ public class SpDayCakeController {
 	private  List<GetFrItem> prevFrItemList = new ArrayList<>();
 	Date productionDate;
 	Date deliDate;
+	public static  int spdayId=0;
+	public static String delDate=null;
+
 	
 	private static int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
@@ -73,18 +76,33 @@ public class SpDayCakeController {
 	@RequestMapping(value = "/showSpDayCake", method = RequestMethod.GET)
 	public ModelAndView displaySpDayCake(HttpServletRequest request,
 			HttpServletResponse response) {
-
+	
+		
 		    ModelAndView model = new ModelAndView("order/spdaycake");
 	
+		    HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
+          try {
+            
 		    RestTemplate restTemplate = new RestTemplate();
-
-		    configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
-			        	ConfiguredSpDayCkResponse.class);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frId", frDetails.getFrId());
+			
+		    configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
+			        	map,ConfiguredSpDayCkResponse.class);
 		  configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
 		    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
-
+			
+            }
+            catch(Exception e)
+            {
+                System.out.println("Exception In showSpDayCake");
+            	model.addObject("configureSpDayFrList", configureSpDayFrList);
+       		    model.addObject("spdayId",0);
+            }
 	
 		   model.addObject("configureSpDayFrList", configureSpDayFrList);
 		   model.addObject("spdayId",0);
@@ -93,7 +111,7 @@ public class SpDayCakeController {
 		 return model;
 	}	
 	
-	
+	//-----------------------Getting Delivery FromDate And ToDate------------------
 	@RequestMapping(value = "/getDelToAndFromDate", method = RequestMethod.GET)
 	public @ResponseBody DateResponse getDelToAndFromDate(@RequestParam(value = "spdayId", required = true) int spdayId) {
 		
@@ -128,9 +146,10 @@ public class SpDayCakeController {
 
 		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
 		
+		System.out.println("SpdayId"+spdayId);
 		
-		int spdayId=Integer.parseInt(request.getParameter("spdayId"));
-		
+		 spdayId=Integer.parseInt(request.getParameter("spdayId"));
+	
 		
 		GetConfiguredSpDayCk spDayCk=new GetConfiguredSpDayCk();
 		
@@ -143,13 +162,15 @@ public class SpDayCakeController {
 	   }
 	   System.out.println("Special Day Cake Response:"+spDayCk.toString());
 	   
-		String delDate=request.getParameter("datepicker");
+		 delDate=request.getParameter("datepicker");
 		try {
 			
-	    //  Date deliveryDate=Main.stringToDate(delDate);
+	       Date deliveryDate=Main.stringToDate(delDate);
 			
 			DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
-			Date deliveryDate = dmyFormat.parse(delDate);
+			
+			deliveryDate = dmyFormat.parse(delDate);
+		
 	      System.out.println("Delivery date "+deliveryDate);
 		
 		Calendar cal = Calendar.getInstance();
@@ -171,21 +192,16 @@ public class SpDayCakeController {
 			
 			System.out.println("String ymd  date is: " +strProdDate);
 
-			
-	
-
 	    	 map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("items",spDayCk.getItemId());
 			map.add("frId", frDetails.getFrId());
 			map.add("date", strProdDate);
 			map.add("menuId",spDayCk.getMenuId());
-			
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-			};
+			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {};
 			ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
 					HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
@@ -209,10 +225,102 @@ public class SpDayCakeController {
 
 		return model;
 	}		
-		
+	//-----------------------SEARCH ITEMS-------------------------------------------
+	
+		@RequestMapping(value = "/spDayCake", method = RequestMethod.GET)
+		public ModelAndView redirectToSpDayCake(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("order/spdaycake");
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+			
+			List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+
+			configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+			
+			System.out.println("SpdayId"+spdayId);
+			
+			
+			GetConfiguredSpDayCk spDayCk=new GetConfiguredSpDayCk();
+			
+		   for(GetConfiguredSpDayCk getConfiguredSpDayCk:configureSpDayFrList)
+		   {
+			  if(getConfiguredSpDayCk.getSpdayId()==spdayId)
+			  {
+				  spDayCk=getConfiguredSpDayCk;
+			  }
+		   }
+		   System.out.println("Special Day Cake Response:"+spDayCk.toString());
+		   
+			try {
+				
+		       Date deliveryDate=Main.stringToDate(delDate);
+				
+				DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
+				deliveryDate = dmyFormat.parse(delDate);
+			
+		      System.out.println("Delivery date "+deliveryDate);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(deliveryDate);
+
+			 deliDate = cal.getTime();
+			 
+			  cal.add(Calendar.DATE, -1);
+			
+			// manipulate date
+			//c.add(Calendar.DATE, prodTime);
+				productionDate = cal.getTime();
+
+				
+				DateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+				String strProdDate = ymdFormat.format(productionDate);
+			
+				
+				System.out.println("String ymd  date is: " +strProdDate);
+
+		    	 map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("items",spDayCk.getItemId());
+				map.add("frId", frDetails.getFrId());
+				map.add("date", strProdDate);
+				map.add("menuId",spDayCk.getMenuId());
+
+				RestTemplate restTemplate = new RestTemplate();
+
+				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {};
+				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				frItemList = responseEntity.getBody();
+				prevFrItemList = responseEntity.getBody();
+				System.out.println("Fr Item List " + frItemList.toString());
+				
+				model.addObject("frDetails", frDetails);
+				model.addObject("itemList", frItemList);
+				model.addObject("menuId", spDayCk.getMenuId());
+				
+				model.addObject("delDate",delDate );
+				model.addObject("spdayId",spdayId);
+
+				model.addObject("configureSpDayFrList", configureSpDayFrList);
+		       } catch (Exception e) {
+
+		        	System.out.println("Exception Item List " + e.getMessage());
+		      }
+			
+
+			return model;
+		}		
+				
 	//--------------------------SAVE SPECIAL DAY CAKE ORDER----------------------------------------	
 	@RequestMapping("/saveSpDayCakeOrder")
-	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	public String  saveSpDayCakeOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -375,7 +483,7 @@ public class SpDayCakeController {
 		}
 
 	
-	return mav;
+	return "redirect:/spDayCake";
 	}
 	//-------------------------------------------------------------------------------
 	public String incrementDate(String date, int day) {

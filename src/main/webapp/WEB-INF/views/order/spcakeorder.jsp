@@ -21,38 +21,30 @@
 
 <!--rightNav-->
 
-<!--selectlistbox-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.selectlistbox.js"></script>
 
 
-<!--selectlistbox-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
+ jQuery("#menuzord").menuzord({
+		                         align:"left"
+	                         });
 });
 </script>
-<!--selectlistbox-->
-
-<!--datepicker-->
-
-<!--datepicker--> 
 
 <style type="text/css">
 select {
-    width: 130px;
-    height: 30px;
+          width: 130px;
+          height: 30px;
 }
 </style>   
 
-
- <script type="text/javascript" src="https://www.google.com/jsapi">
-    </script>
+ <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+ 
+ <!---------------Script For Translate Special Instructions------->   
     <script type="text/javascript">
-
       // Load the Google Transliterate API
       google.load("elements", "1", {
             packages: "transliteration"
@@ -79,17 +71,22 @@ select {
       }
       google.setOnLoadCallback(onLoad);
     </script>
-    
-    <!--new css added by kalpesh -->
+ <!--------------------------------END------------------------------------>   
+      <!--new css added by kalpesh -->
 	<link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
 	<!--new css added by kalpesh -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
+	
+	<style>
+.fileUpload {
+     margin: 0px 0px 0px 0px;
+    padding-top: 1px;
+}
+	</style>
 </head>
 <body onload="onload()">
-
-
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
 <!--topLeft-nav-->
@@ -100,23 +97,21 @@ select {
 <!--topHeader-->
 <c:url var="findAvailableSlot" value="/getAvailableSlot" />
 <c:url var="findAddOnRate" value="/getAddOnRate" />
-<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
-<c:url var="findAllMenus" value="/getAllTypes" />
+<c:url var="getFlavourBySpfId" value="/getFlavourBySpfId" />
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
-<!--topHeader-->
 
+<!--topHeader-->
 <!--rightContainer-->
 <div class="fullGrid center">
 <!--fullGrid-->
 <div class="wrapperIn2">
-
 <!--leftNav-->
 
 <jsp:include page="/WEB-INF/views/include/left.jsp">
 <jsp:param name="myMenu" value="${menuList}"/>
-         </jsp:include>
+</jsp:include>
 
 
 <!--leftNav-->
@@ -126,125 +121,126 @@ select {
 <div class="order-left">
 <h2 class="pageTitle">Order Special Cake</h2>
 </div>
-
-
  <!--formBox-->
 <div class="ordercake">
-
-
 <!--leftForm-->
-<div class="left">
+						<div class="left">
+							<form action="${pageContext.request.contextPath}/searchSpCake"
+								method="post" class="form-horizontal" name="form"
+								onsubmit="return validateForm()">
 
-  <form action="${pageContext.request.contextPath}/searchSpCake" method="post" class="form-horizontal" name="form" onsubmit="return validateForm()">
-  
-	  <div class="fullform">
-		<div class="cackleft2">Item Code</div>
-		<div class="cackrighttexbox"><input class="texboxitemcode" id="sp_code" value="${specialCake.spCode}" name="sp_code" type="text" autocomplete="off"list="categories">
-			
-			<datalist id="categories">
-			
-			     <c:forEach items="${configuredSpCodeList}" var="specialCakeList">	
-			           <option value="${specialCakeList}"></option>
-		          </c:forEach>
-		     </datalist>
+								<div class="fullform">
+									<div class="cackleft2">Item Code</div>
+									<div class="cackrighttexbox">
+										<input class="texboxitemcode" id="sp_code"
+											value="${specialCake.spCode}" name="sp_code" type="text"
+											autocomplete="off" list="categories">
 
-		
-		
-		
-		
-		<div class="searchrecord"><input name="" class="btnsearch" value="" type="submit"> </div>
-	   </div>
-     </div>
- </form>
-	
-	
-	<div class="fullform">
-		<div class="cackleft">Name</div>
-		<div class="cackright" id="sp_name"><span class="cakename">${specialCake.spName}</span></div>
-	</div>
- 
- 
-	<div class="fullform">
-		<div class="cackimg">
-		<div class="cackimglable"></div>
-		<img src="${url}${specialCake.spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
-	</div>
-	
-	
-     <div class="fullform">
-		<div class="cackleft">Description</div>
-		<div class="cackright" id="spDesc"><span class="cakename">${specialCake.spDesc}</span></div>
-	</div>
-	
-	
-	<div class="fullform">
-		<div class="cackleft">Min Weight</div>
-		<div class="cackright" id="spMinWt">${specialCake.spMinwt}Kg</div>
-	</div>
-	
-	
-	<div class="fullform">
-		<div class="cackleft">Max Weight</div>
-		<div class="cackright"id="spMaxWt">${specialCake.spMaxwt}Kg</div>
-	</div>
-	
-	
-	<div class="fullform">
-		<div class="cackleft">Production Time</div>
-		<div class="cackright"id="spProTime">${specialCake.spBookb4}Days</div>
-	</div>
-	<c:set var="p" value="${specialCake.spCode}"/>
-	<div class="fullform">
-    <div class="cackleft">Earliest  Delivery Date</div>
-    <div class="cackright" > 
+										<datalist id="categories">
+											<c:forEach items="${configuredSpCodeList}"
+												var="specialCakeList">
+												<option value="${specialCakeList}"></option>
+											</c:forEach>
+										</datalist>
 
-  
-<c:set var="increment" value="${spBookb4}"></c:set>
+										<div class="searchrecord">
+											<input name="" class="btnsearch" value="" type="submit">
+										</div>
+									</div>
+								</div>
+							</form>
 
-<%
-int incr=(int) pageContext.getAttribute("increment");
-// Create a Calendar object
-Calendar calendar = Calendar.getInstance();
-
-// Get current day from calendar
-int day = calendar.get(Calendar.DATE);
-// Get current month from calendar
-int month = calendar.get(Calendar.MONTH) + 1;  
-// Get current year from calendar
-int year = calendar.get(Calendar.YEAR);
-calendar.add(Calendar.DATE, incr);
-
-day = calendar.get(Calendar.DATE);
-month = calendar.get(Calendar.MONTH);  
-year = calendar.get(Calendar.YEAR);
-
-Calendar cal = Calendar.getInstance();
-
-cal.set(year, month, day);
-Date date = cal.getTime();
-SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-String fDate = formatter.format(date);
-System.out.println(""+fDate);
-SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
-
-String fDate1 = formatter1.format(date);
-%>
-<%=fDate1 %>
-    </div>
-	</div>
-	
-</div>
+							<div class="fullform">
+								<div class="cackleft">Name</div>
+								<div class="cackright" id="sp_name">
+									<span class="cakename">${specialCake.spName}</span>
+								</div>
+							</div>
 
 
-<!----------------------------------------Form-------------------------------------------------->
+							<div class="fullform">
+								<div class="cackimg">
+									<div class="cackimglable"></div>
+									<img src="${url}${specialCake.spImage}"
+									 onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
+								</div>
+							</div>
+
+
+							<div class="fullform">
+								<div class="cackleft">Description</div>
+								<div class="cackright" id="spDesc">
+								<span class="cakename">${specialCake.spDesc}</span>
+								</div>
+							</div>
+
+
+							<div class="fullform">
+								<div class="cackleft">Min Weight</div>
+								<div class="cackright" id="spMinWt">${specialCake.spMinwt}Kg</div>
+							</div>
+
+
+							<div class="fullform">
+								<div class="cackleft">Max Weight</div>
+								<div class="cackright" id="spMaxWt">${specialCake.spMaxwt}Kg</div>
+							</div>
+
+
+							<div class="fullform">
+								<div class="cackleft">Production Time</div>
+								<div class="cackright" id="spProTime">${specialCake.spBookb4}Days</div>
+							</div>
+							
+							<c:set var="p" value="${specialCake.spCode}" />
+							<div class="fullform">
+								<div class="cackleft">Earliest Delivery Date</div>
+								<div class="cackright">
+
+
+									<c:set var="increment" value="${spBookb4}"></c:set>
+
+									<%
+										int incr = (int) pageContext.getAttribute("increment");
+										// Create a Calendar object
+										Calendar calendar = Calendar.getInstance();
+
+										// Get current day from calendar
+										int day = calendar.get(Calendar.DATE);
+										// Get current month from calendar
+										int month = calendar.get(Calendar.MONTH) + 1;
+										// Get current year from calendar
+										int year = calendar.get(Calendar.YEAR);
+										calendar.add(Calendar.DATE, incr);
+
+										day = calendar.get(Calendar.DATE);
+										month = calendar.get(Calendar.MONTH);
+										year = calendar.get(Calendar.YEAR);
+
+										Calendar cal = Calendar.getInstance();
+
+										cal.set(year, month, day);
+										Date date = cal.getTime();
+										SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+										String fDate = formatter.format(date);
+										System.out.println("" + fDate);
+										SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
+
+										String fDate1 = formatter1.format(date);
+									%>
+									<%=fDate1 %>
+								</div>
+							</div>
+
+						</div>
+
+
+<!----------------------------------------Form Start-------------------------------------------------->
 <form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data"onsubmit="return validate()">
 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
-
-
 <input type="hidden" name="sp_id" id="sp_id" value="${specialCake.spId}">
-
 <input type="hidden" name="sp_min_weight" id="sp_min_weight" value="${specialCake.spMinwt}">
 <input type="hidden" name="sp_max_weight" id="sp_max_weight" value="${specialCake.spMaxwt}">
 <input type="hidden" name="sp_pro_time" id="sp_pro_time" value="${specialCake.spBookb4}">
@@ -257,15 +253,6 @@ String fDate1 = formatter1.format(date);
 <input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
 <input type="hidden" name="isFound" id="isFound" value="${isFound}" onchange="onChangeValue()">
-
-<!-- <input type="hidden" name="tax_1" id="tax_1" value="0.00">
-<input type="hidden" name="tax_2" id="tax_2" value="0.00"> --><!-- 
-<input type="hidden" name="tax_1_amt" id="tax_1_amt" value="0">
-
-<input type="hidden" name="min_weight" id="min_weight" value="5 kg">
-<input type="hidden" name="max_weight" id="max_weight" value="8 kg">
-<input type="hidden" name="earliest_delivery_date" id="earliest_delivery_date" value="11 Sep 2017"> -->
-
 <input type="hidden" name="isCustChoiceCk" id="isCustChoiceCk" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
 <input type="hidden" name="isSlotUsed" id="isSlotUsed" value="${specialCake.isSlotUsed}">
@@ -278,7 +265,7 @@ String fDate1 = formatter1.format(date);
 	 <div  class="colOuter">
 		<div class="col1"><div class="col1title">Type</div></div>
 		<div class="col2full">
-         <select name="sptype" tabindex="-1" id="sptype">
+         <select name="sptype" tabindex="-1" id="sptype" required>
               <option value="">Select Type</option>
                  <c:set var= "spCakeType" value="${specialCake.spType}"></c:set>
                <c:choose>
@@ -299,12 +286,10 @@ String fDate1 = formatter1.format(date);
     <div class="colOuter">
 		<div class="col1"><div class="col1title">Flavour</div></div>
 		<div class="col2full" >
-                <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour">
+                <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour" required>
                               <option value="">Select Flavour</option>
-                
-                     <option value="">Select Flavour</option>
-               </select>
-       </div>
+                 </select>
+        </div>
 	</div>  
 		  
 	<div class="colOuter">
@@ -313,37 +298,27 @@ String fDate1 = formatter1.format(date);
 		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
 		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}">
 		      
-		  <%--  <c:set var = "dbRate" scope = "session" value = "${sp_wt}"/>
-		   		 <c:set var = "tRate" scope = "session" value = "${weight*dbRate}"/> --%>
-		  <%int a=1; %>
-        <select name="spwt" id="spwt" onchange="onChange('${dbRate}')">
- 	   
+		 
+          <select name="spwt" id="spwt" onchange="onChange('${dbRate}')"required>
             <c:forEach items="${weightList}" var="weightList">
-              
-                
-               
-                  
                   <option value="${weightList}">${weightList}</option>
-                  
-                
-      
             </c:forEach> 
            
-      </select>
+          </select>
 			<div class="err" style="display:none;">Please Enter Weight</div>
 		</div>
-  </div>
+    </div>
 	
 	         
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Event</div></div>
-		<div class="col2"><select name="sp_event" id="sp_event">
+		<div class="col2"><select name="sp_event" id="sp_event"required>
   
               <c:forEach items="${eventList.getEvent()}" var="eventList">
               <option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
              </c:forEach>
             </select></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
+		 <div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
 		</div>
 	</div>
 
@@ -358,11 +333,9 @@ String fDate1 = formatter1.format(date);
                                 <span> <i class="fa fa-pencil"></i></span>
                                 <input class="upload" type="file" id="order_photo" name="order_photo"/>
                                 
-                                
                             </div>
                             </div>
                              <img id="image" />
-                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
                             </div>
                             </div>
                             </div>
@@ -376,7 +349,6 @@ String fDate1 = formatter1.format(date);
                             </div>
                             </div>
                              <img id="img" />
-                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
                             </div>
                             </div>
                             </div>
@@ -387,47 +359,35 @@ String fDate1 = formatter1.format(date);
 	
 	  <div class="colOuter">
 	      <div class="col1"><div class="col1title">Photo Cake</div></div>
-	    	 <div class="col2full"><div class="editimg">
+	    	 <div class="col2full">
+	    	  <div class="editimg">
 	    	    <div class="editpics">
 	    	        <div class="fileUpload">
                                 <span> <i class="fa fa-pencil"></i></span>
                                 <input class="upload" type="file" id="order_photo" name="order_photo"/>
                                 
-                                
-                            </div>
-                            </div>
-                             <img id="image" />
-                           <!-- <img id="image" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="img">-->
-                            </div>
-                            </div>
-                            </div>
+                     </div>
+                 </div>
+                 <img id="image" />
+              </div>
+          </div>
+        </div>
 	
 	</c:when>
-	<c:otherwise>
-	</c:otherwise>
-
 </c:choose> 
 
        <div class="colOuter">
-	
 		<div class="col1"><div class="col1title">Select Language</div></div>
         <div class="col2full">
-                                    <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
-             
-                                                                        
-                                                   <option value="1" id="marathi" >Marathi</option>
-                                                   <option value="2" id="english" >English</option>
-                                   </select>
-
+                      <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
+                              <option value="1" id="marathi" >Marathi</option>
+                              <option value="2" id="english" >English</option>
+                       </select>
         </div>
-                                                           
-                 
         </div>
-
-
+     
      <div class="colOuter">
-	
-		<div class="col1"><div class="col1title">Special Instructions</div></div>
+	    <div class="col1"><div class="col1title">Special Instructions</div></div>
 		
 		<div class="col1full" id="marathiDiv">
 		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:200px;height:90px" ></textarea>
@@ -437,40 +397,32 @@ String fDate1 = formatter1.format(date);
 	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px" >
 	    </textarea>
 	    </div>
-<!-- 	      <textarea id="textarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea>
- -->	</div>
-	<!-- <div class="colOuter">
-	
-		<div class="col1"><div class="col1title">Special Instructions</div></div>
-		<div class="col2full"><textarea id="transliterateTextarea"  name="sp_instructions" cols="" rows="" style="width:200px;height:90px"></textarea></div>
-	</div> -->
-
+	</div>
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" >
+		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
 		</div><div class="col2"> 
-      <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
+        <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	</div>
 	
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Place of Delivery</div></div>
-		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text"></div>
+		<div class="col2full"><input class="texboxitemcode" placeholder="Place of Delivery" name="sp_place" id="sp_place" type="text"required></div>
 	</div>    
 	
 	
 	<div class="colOuter">
-<!-- 		<div class="col1"><div class="col1title">Book For Date</div></div>
- -->		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="hidden">
+		<div class="col2"><input id="datepicker3" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker3" type="hidden"required>
 		</div>
 	</div>
 	
 	
 	<div class="colOuter">
-		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"></div>
-		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" ></div>
+		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
+		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
+		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required ></div>
 	</div>
 	 <span class="cakename"id="slotsNotAvailable"></span>
 	
@@ -481,12 +433,11 @@ String fDate1 = formatter1.format(date);
 	</div>
 	
 	
-	<div class="cackleft" id="error"><span class="cakename">
+<div class="cackleft" id="error"><span class="cakename">
 <c:if test="${not empty errorMessage}">
 <h3><c:out value="${errorMessage}"/></h3>
-</c:if></span></div>
-	
-	
+</c:if></span>
+</div>
 </div>
 
 <!--centerForm-->
@@ -519,8 +470,8 @@ String fDate1 = formatter1.format(date);
 				</li>
 				<li>
 					<div class="priceLeft">GST </div>
-					<div class="priceRight" id="tax3"> ${specialCake.spTax1+specialCake.spTax2} </div>
-					<input type="hidden" id="t3" name="t3" value="${specialCake.spTax1+specialCake.spTax2}">
+					<div class="priceRight" id="taxPer3"> ${specialCake.spTax1+specialCake.spTax2} </div>
+					<input type="hidden" id="tax3" name="tax3" value="${specialCake.spTax1+specialCake.spTax2}">
 				</li>
 				<li>
 					<div class="priceLeft">GST IN RS.</div>
@@ -549,8 +500,6 @@ String fDate1 = formatter1.format(date);
 					<div class="priceRight" id="rmAmt">${(sprRate*specialCake.spMinwt)}</div>
 				    <input type="hidden" name="rm_amount" id="rm_amount" value="${(sprRate*specialCake.spMinwt)}">
 		</div>
-	
-	
 	</div>
 	
 	<div class="order-btn">
@@ -559,8 +508,8 @@ String fDate1 = formatter1.format(date);
 	</div>
 	
 </div>
-<input type="hidden" id="t1" name="t1" value="${specialCake.spTax1}">
-<input type="hidden" id="t2" name="t2" value="${specialCake.spTax2}">
+<input type="hidden" id="tax1" name="tax1" value="${specialCake.spTax1}">
+<input type="hidden" id="tax2" name="tax2" value="${specialCake.spTax2}">
 <input type="hidden" id="t1amt" name="t1amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1)/100}">
 <input type="hidden" id="t2amt" name="t2amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax2)/100}">
 
@@ -585,18 +534,6 @@ String fDate1 = formatter1.format(date);
 
 </div>
 
-
-
-
-<!--wrapper-end-->
-<script type="text/javascript">
-function ChooseContact(data) {
-
-	document.getElementById ("friendName").value = (data.value)*2;
-
-	}
-
-</script>
 <script>
 $(function() {
     $('#sp_code').change(function(){
@@ -605,6 +542,7 @@ $(function() {
     });
 });
 </script>
+
 <script>
 function openNav() {
     document.getElementById("mySidenav").style.width = "100%";
@@ -630,25 +568,12 @@ function closeNav3() {
 
 </script>
 
-<script type="text/javascript">
-
-$(document).ready(function() { 
-	
-		
-	
-});
-
-
-</script>
-
-
-
 <!------------------------GETTING FLAVOURS BY SELECTED FLAVOUR TYPE---------------------------->	
 <script type="text/javascript">
 $(document).ready(function() { 
 	$('#sptype').change(
 			function() {
-				$.getJSON('${findItemsByCatId}', {
+				$.getJSON('${getFlavourBySpfId}', {
 					spType : $(this).val(),
 					ajax : 'true'
 				}, function(data) {
@@ -675,9 +600,9 @@ $(document).ready(function() {
 		function onChange(dbRate) {
 			var wt = $('#spwt').find(":selected").text();
 			var flavourAdonRate =$("#dbAdonRate").val();
-			var tax3 = parseFloat($("#t3").val());
-			var tax1 = parseFloat($("#t1").val());
-			var tax2 = parseFloat($("#t2").val());
+			var tax3 = parseFloat($("#tax3").val());
+			var tax1 = parseFloat($("#tax1").val());
+			var tax2 = parseFloat($("#tax2").val());
 			
 			
 			var totalCakeRate = wt*dbRate;
@@ -734,9 +659,9 @@ $(document).ready(function() {
 					
 					var flavourAdonRate =data.spfAdonRate;
 					
-					var tax3 = parseFloat($("#t3").val());
-					var tax1 = parseFloat($("#t1").val());
-					var tax2 = parseFloat($("#t2").val());
+					var tax3 = parseFloat($("#tax3").val());
+					var tax1 = parseFloat($("#tax1").val());
+					var tax2 = parseFloat($("#tax2").val());
 					
 					var price = $("#dbPrice").val();
 				
@@ -772,15 +697,12 @@ $(document).ready(function() {
 						$('#mgstamt').html('AMT-'+mGstAmt);  
 						document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
 						
-						
-					
-			
 				});
 			});
 });
 </script>
 <!------------------------------------------------END------------------------------------------------>	
-<!-----------------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------->	
+<!------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------------------>	
 <script type="text/javascript">
 function advanceFun() {
 	var advance=$("#adv").val();
@@ -788,43 +710,55 @@ function advanceFun() {
 	$('#rmAmt').html(rmamt-advance);document.getElementById("rm_amount").setAttribute('value',rmamt-advance);
 }
 </script>
-<!------------------------------------------------END------------------------------------------------>	
+<!------------------------------------------------END------------------------------------------------>
+<!------------------------------BLANK VALIDATION FOR SPCODE------------------------------------------>	
+	
 <script type="text/javascript">
 function validateForm() {
-    var x = document.forms["form"]["sp_code"].value;
-    if (x == "") {
+    var spCode = document.forms["form"]["sp_code"].value;
+    if (spCode == "") {
         alert("Special Cake Code must be filled out");
         document.getElementById('sp_code').focus();
         return false;
     }
 }
 </script>	
-<!------------------------------------------------VALIDATIONS---------------------------------------------->	
+<!-------------------------------------------ALL VALIDATIONS----------------------------------------->	
  <script type="text/javascript">
 function validate() {
 	
+	 var phoneNo = /^\d{10}$/;  
+
 	
-    var t1,spId,spCustName,spPlace,spCustMob,sptype,spFlavour;
-    t1 = document.getElementById("event_name").value;
+    var eventName,spId,spCustName,spPlace,spCustMob,spType,spFlavour,spCode,spWt;
+    eventName = document.getElementById("event_name").value;
     spPlace = document.getElementById("sp_place").value;
     spCustName=document.getElementById("sp_cust_name").value;
     spCustMob=document.getElementById("sp_cust_mobile_no").value; 
-    sptype=document.getElementById("sptype").value; 
+    spType=document.getElementById("sptype").value; 
     spFlavour=document.getElementById("spFlavour").value;
-    
+    spCode=document.getElementById("sp_code").value;
+    spWt=document.getElementById("spwt").value;
     var isValid=true;
     
-    if (sptype == "") {
-        alert("Please Select Special Cake Type");
-        
+    if (spCode == "") {
+        alert("Special Cake Code must be filled out");
       
         isValid= false;
-    }else  if (spFlavour == "") {
+    }else 
+    if (spType == "") {
+        alert("Please Select Special Cake Type");
+      
+        isValid= false;
+    }else  if (spWt == "") {
+        alert("Please Select Special Cake Weight");
+      
+        isValid= false;
+    }else if (spFlavour == "") {
         alert("Please Select Flavour");
-        
   
         isValid=false;
-    }else  if (t1 == "") {
+    }else  if (eventName == "") {
         alert("Please Enter Event Name");
         document.getElementById('event_name').focus();
         
@@ -839,23 +773,27 @@ function validate() {
         document.getElementById('sp_cust_name').focus();
 
         isValid= false;
-    }else  if (spCustMob == "") {
-        alert("Please Enter Customer Mobile Number");
-        document.getElementById('sp_cust_mobile_no').focus();
-   
-        isValid= false;
-    };
+    }else  if(spCustMob.match(phoneNo))  
+	  {  
+	      return true;  
+	  }  
+	  else  
+	  {  
+	     alert("Not a valid Mobile Number");  
+	     document.getElementById('sp_cust_mobile_no').value="";
+	     document.getElementById('sp_cust_mobile_no').focus();
+	     return false;  
+	  }  
+
     
     return isValid;
  
 }
-
-
 </script> 
 <!------------------------------------------------END------------------------------------------------>	
+<!------------------------------------------SELECT PHOTO SCRIPT-------------------------------------->	
 
 <script>
-
  document.getElementById("order_photo").onchange = function () {
     var reader = new FileReader();
 
@@ -867,10 +805,8 @@ function validate() {
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 };
-
 </script>
 <script>
-
  document.getElementById("cust_choice_ck").onchange = function () {
     var reader = new FileReader();
 
@@ -882,15 +818,16 @@ function validate() {
     // read the image file as a data URL.
     reader.readAsDataURL(this.files[0]);
 };
-
 </script>
+<!------------------------------------------------END------------------------------------------------>	
+
+<!-------------------------------Getting Available Slots ON Date Selection---------------------------->
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
 
 var todaysDate=new Date();
 var min=new Date(todaysDate.setDate(todaysDate.getDate()));
-
 
   $( function() {
     $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , minDate:min,
@@ -925,7 +862,6 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()));
       					
       					}
       				
-      			
       			});
              }
          }
@@ -944,24 +880,21 @@ var min=new Date(todaysDate.setDate(todaysDate.getDate()));
     $( "#datepicker5" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
   </script>
+  <!-----------------------------------------END----------------------------------------------------->
+  <!-------------------------Getting Available Slots On Submit Click -------------------------------->
   
  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
 
 $(document).ready(function () {
     $("#click").click(function ()  {
-    	
-  	  alert("Submit");
-
+   
       	       var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
       	  
       	    	var isSlotUsed =$("#isSlotUsed").val();         
       	  	 
-	
       	    	var produTime =$("#sp_pro_time").val();         
       	  
-
-      	    	
                   if(isSlotUsed=='1')
                   	{
               
@@ -970,8 +903,6 @@ $(document).ready(function () {
       				  prodTime: produTime,
       			      ajax : 'true'
       			} , function(availableSlots) {
-      				
-      				
       				
       				if(availableSlots>0)
       					{
@@ -1006,36 +937,14 @@ $(document).ready(function () {
 });
   
 </script> 
-
-<script>
-$("isFound").change(function(){
-    alert("Special Cake is Not Found");
-});
-</script>
-<!-- 
-<script type="text/javascript">
-$(function() {
-    $.fn.showField = function() {
-        var selectVal = document.getElementById(this.val() + 'Div');
-        return this.each(function() {
-          $(selectVal).show().siblings('div').hide();
-        });
-    };    
-    $('select#reportsSelect').change(function() {
-        $(this).showField();
-    });
-});
-
-
-</script> -->
-
+<!-----------------------------------------END----------------------------------------------------->
+<!---------Hide And Show Div For Marathi And English Textarea------- -->
 <script>
 function showDiv(elem){
    if(elem.value == 1)
 	   {
-	  
-      document.getElementById('marathiDiv').style.display= "block";
-   document.getElementById('englishDiv').style="display:none";
+         document.getElementById('marathiDiv').style.display= "block";
+         document.getElementById('englishDiv').style="display:none";
 	   }
    else if(elem.value == 2)
    {
@@ -1045,28 +954,7 @@ function showDiv(elem){
  
 }
 </script>
- 
-<script type="text/javascript">
-function setSpInstructions(){
-	
-	var instru=document.getElementById("show").value; 
-	//alert(instru)
-	var inst1,inst2;
-	if(instru==1)
-		{
-		inst1=document.getElementById("sp_inst1").value; 
-		document.getElementById("sp_instructions").setAttribute('value',inst1);
-		
-		}
-	else
-		{
-		inst2=document.getElementById("sp_inst2").value; 
-		document.getElementById("sp_instructions").setAttribute('value',inst2);
-		
-		}
-		
-	
-}
-</script> -->
+<!------------------------END--------------------------------------------> 
+
 </body>
 </html>

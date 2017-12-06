@@ -1,4 +1,4 @@
-	package com.monginis.ops;
+package com.monginis.ops;
 
 import java.io.FileOutputStream;
 import java.io.Serializable;
@@ -133,12 +133,20 @@ public class HomeController {
 		
 		ArrayList<SchedulerList> schedulerLists=  (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
 		ArrayList<Message> msgList=  (ArrayList<Message>) session.getAttribute("msgList");
-		
+		int frId = (Integer) session.getAttribute("frId");
+
 		System.out.println("***************Schedular List*****************"+schedulerLists);
 		System.out.println("***************msgList*****************"+msgList);
+		System.out.println("***************frId*****************"+frId);
+
 		
-		ConfiguredSpDayCkResponse	 configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
-		        	ConfiguredSpDayCkResponse.class);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frId", frId);
+			
+		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
+			        	map,ConfiguredSpDayCkResponse.class);
+			
 	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
 	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
@@ -180,7 +188,8 @@ public class HomeController {
 	   {
 		   spDayShow=true;
 	   }
-	    
+		session.setAttribute("isSpDayShow",spDayShow);
+        System.out.println("isSpDayShow"+spDayShow);
 
 	   model.addObject("configureSpDayFrList", configureSpDayCk);
 		
@@ -189,7 +198,7 @@ public class HomeController {
 		model.addObject("schedulerLists", schedulerLists);
 		model.addObject("msgList", msgList);
 		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
-		model.addObject("result", spDayShow);
+		model.addObject("isSpDayShow", spDayShow);
 		
 		logger.info("/login request mapping.");
 
@@ -242,6 +251,7 @@ public class HomeController {
 		logger.info("/loginProcess request mapping.");
 
 		ModelAndView model = new ModelAndView("login");
+		HttpSession session = request.getSession();
 
 		String frCode = request.getParameter("username");
 		String frPassword = request.getParameter("password");
@@ -317,7 +327,8 @@ public class HomeController {
 				
 			}
 				
-			
+			System.out.println("Fr is: "+loginResponse.getFranchisee().toString());
+
 			System.out.println("filteredFrMenuList is: "+filteredFrMenuList.toString());
 		
 
@@ -338,21 +349,26 @@ public class HomeController {
 			System.out.println("messages are " + msgList.toString());
 
 			// Managing session
-			HttpSession session = request.getSession();
 			session.setAttribute("menuList", filteredFrMenuList);
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			session.setAttribute("msgList", msgList);
 			session.setAttribute("schedulerLists",schedulerLists);
-			
+			session.setAttribute("frId",loginResponse.getFranchisee().getFrId());
+
 			
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
 			
 			
-			//-----------------------------------------------------------------------------------
+	//---------------------------------Special Day Show Button Logic-------------------------------------------
 			
-			ConfiguredSpDayCkResponse	 configuredSpDayCkRes = restTemplate.getForObject(Constant.URL + "/getSpDayCkList",
-		        	ConfiguredSpDayCkResponse.class);
+        MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frId", loginResponse.getFranchisee().getFrId());
+			
+		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
+				map,ConfiguredSpDayCkResponse.class);
+		
 	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
 	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
@@ -382,7 +398,6 @@ public class HomeController {
 		
 		if(flag==true)
 		{   count=count+1;
-			
 		}
 	   
 	   }
@@ -393,7 +408,8 @@ public class HomeController {
 	   }
 	//-------------------------------------------------------------------------------------------
 			
-			
+		session.setAttribute("isSpDayShow",spDayShow);
+
 			
 			
 			
@@ -401,7 +417,7 @@ public class HomeController {
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
-			model.addObject("result",spDayShow);
+			model.addObject("isSpDayShow",spDayShow);
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);

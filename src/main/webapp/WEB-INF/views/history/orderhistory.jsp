@@ -3,6 +3,7 @@
     <%@ taglib
     uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
   
     
 <%-- <!DOCTYPE html>
@@ -376,13 +377,7 @@ function closeNav3() {
 
 </script>
 <script>
-	/*
-//  jquery equivalent
-jQuery(document).ready(function() {
-   jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
-   jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
- });
-*/
+
 (function() {
   var fauxTable = document.getElementById("faux-table");
   var mainTable = document.getElementById("table_grid");
@@ -392,7 +387,7 @@ jQuery(document).ready(function() {
   clonedElement2.id = "";
   fauxTable.appendChild(clonedElement);
   fauxTable.appendChild(clonedElement2);
-})();
+});
 
 
 	</script>
