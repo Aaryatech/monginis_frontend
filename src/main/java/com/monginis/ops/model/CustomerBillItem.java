@@ -20,9 +20,7 @@ private int totalRegStock;
 private boolean isSpStockGretor;
 private boolean isSpStockLessthanQty;
 private boolean isRegOpStockLess;
-
 private boolean isRegOpStockGretor;
-
 private boolean isCurrentStockOver;
 
 
@@ -137,12 +135,18 @@ public int getQty() {
 public void setQty(int qty) {
 	this.qty = qty;
 }
+
 @Override
 public String toString() {
 	return "CustomerBillItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", catId=" + catId
 			+ ", mrp=" + mrp + ", rate=" + rate + ", qty=" + qty + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2
-			+ ", itemTax3=" + itemTax3 + ", billStockType=" + billStockType + ", isSpStockGretor=" + isSpStockGretor
-			+ ", isSpStockLessthanQty=" + isSpStockLessthanQty + ", isRegOpStockLess=" + isRegOpStockLess + "]";
+			+ ", itemTax3=" + itemTax3 + ", billStockType=" + billStockType + ", totalSpStock=" + totalSpStock
+			+ ", totalRegStock=" + totalRegStock + ", isSpStockGretor=" + isSpStockGretor + ", isSpStockLessthanQty="
+			+ isSpStockLessthanQty + ", isRegOpStockLess=" + isRegOpStockLess + ", isRegOpStockGretor="
+			+ isRegOpStockGretor + ", isCurrentStockOver=" + isCurrentStockOver + "]";
 }
+
+
+ 
 
 }
