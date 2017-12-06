@@ -9,8 +9,13 @@
 	<div class="wrapperIn positionR">
     	<div class="logoBarLeft"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/images/monginislogo.jpg" alt="monginis"></a></div>  
        
-       <a class="special-day" href="#">Special Day Cake</a>
-       
+         <c:choose>
+               <c:when test = "${isSpDayShow ==true}">
+                    <a class="special-day" href="${pageContext.request.contextPath}/showSpDayCake">Special Day Cake</a>
+              </c:when>
+               <c:otherwise>
+              </c:otherwise>
+              </c:choose>
        
         <div class="logoBarRight"><div id="menuzord" class="menuzord red menuzord-responsive">
         
