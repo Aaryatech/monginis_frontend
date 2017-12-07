@@ -5,7 +5,10 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-
+  <script src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
+	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
+	
 
 
 <%-- <!DOCTYPE html>
@@ -195,7 +198,7 @@
 																
 																<select class="selectpicker"  data-show-subtext="true" data-live-search="true"
 																data-placeholder="Enter Item Name"  name="itemName"
-																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
+																class="form-control" tabindex="6" id="itemName" onchange="onSelectItem()"
 																data-rule-required="true">
 																	<option value="">Item Name</option>
 																	<c:forEach items="${itemsList}"
@@ -390,7 +393,7 @@
 														 -->
 														 <select class="selectpicker"  data-show-subtext="true" data-live-search="true"
 																data-placeholder="Enter Item Name"  name="itemName"
-																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
+																class="form-control" tabindex="6" id="itemName" onchange="onSelectItem()"
 																data-rule-required="true">
 																	<option value="">Item Name</option>
 																	<c:forEach items="${itemsList}"
