@@ -43,6 +43,8 @@ import com.monginis.ops.model.BillWiseTaxReport;
 import com.monginis.ops.model.BillWiseTaxReportList;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetCustBillTax;
+import com.monginis.ops.model.GetCustmoreBillResponse;
 import com.monginis.ops.model.GetRepFrDatewiseSellResponse;
 import com.monginis.ops.model.GetRepFrItemwiseSellResponse;
 import com.monginis.ops.model.GetRepMenuwiseSellResponse;
@@ -60,7 +62,7 @@ import com.monginis.ops.model.SpCakeResponse;
 
 @Controller
 public class ReportsController {
-
+ 
 	public static List<GetRepTaxSell> getRepTaxSell;
 	public static List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
 	public static List<GetSellBillHeader> getSellBillHeaderList;
@@ -74,7 +76,7 @@ public class ReportsController {
 	public static List<ItemWiseReport> itemWiseReportList;
 	public static List<BillWiseTaxReport> billWiseTaxReport;
 	public static 	List<MonthWiseReport> monthWiseReportList;
-	
+	public static int frGstType=0;
 	
 	@RequestMapping(value = "/viewBillWisePurchaseReport", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request,
@@ -158,6 +160,7 @@ public class ReportsController {
 					
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int frId=frDetails.getFrId();
+		frGstType=frDetails.getFrGstType();
 		System.out.println("frId"+frId);
 		
 		map.add("frId", frId);
@@ -1138,7 +1141,39 @@ public class ReportsController {
 					model.addObject("reportList", billWisePurchaseReportList);
 					return model;
 				}  
-				
+
+				@RequestMapping(value = "/pdfCustBill", method = RequestMethod.GET)
+				public ModelAndView demoBill(HttpServletRequest request,
+						HttpServletResponse response) {
+					String sellBillNo=request.getParameter("billNo");
+					//String fr_Id=request.getParameter("frId");
+					int billNo=Integer.parseInt(sellBillNo);
+					//int billNo=Integer.parseInt(fr_Id);
+					//HttpSession ses = request.getSession();
+					//Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+					
+					
+					ModelAndView model=new ModelAndView("report/franchCompInvoice");
+					
+					RestTemplate rest=new RestTemplate();
+					MultiValueMap<String, Object> map=new LinkedMultiValueMap<String, Object>();
+			
+					map.add("billNo", billNo);
+					if(frGstType!=0)
+					{
+						 model=new ModelAndView("report/franchTaxInvoice");
+						 List<GetCustBillTax> getCustBilTaxList=rest.postForObject(Constant.URL+"getCustomerBillTax", map, List.class);
+							
+						 model.addObject("custBilltax", getCustBilTaxList);
+					}
+					
+					List<GetCustmoreBillResponse> getCustmoreBillResponseList=rest.postForObject(Constant.URL+"getCustomerBill", map, List.class);
+					
+					System.out.println("Custmore Bill : "+getCustmoreBillResponseList.toString());
+					
+					model.addObject("billList", getCustmoreBillResponseList);
+					return model;
+				}
 				
 				private Dimension format = PD4Constants.A4;
 				private boolean landscapeValue = false;
