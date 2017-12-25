@@ -352,12 +352,10 @@ $(document).ready(function () {
 <script type="text/javascript">
 function showDiv() {
 	   document.getElementById('adminDiv').style.display = "block";
-	   document.getElementById('updateDiv').style.display = "block";
 	   document.getElementById('admin_password').value = "";
 	}
 function showDiv1() {
 	   document.getElementById('adminDiv1').style.display = "block";
-	   document.getElementById('updateDiv1').style.display = "block";
 	   document.getElementById('admin_password1').value = "";
 
 	}
@@ -383,6 +381,7 @@ function checkAuthority() {
 					  $('#txtNewPassword').css('background-color' , 'white'); // change the background color
 					   $('#txtConfirmPassword').css('background-color' , 'white'); // change the background color
 					   document.getElementById('adminDiv').style.display = "none";
+					   document.getElementById('updateDiv').style.display = "block";
 
 					}
 				else
@@ -416,7 +415,8 @@ function checkAuthForPassChange() {
 					  $('#user3_password').css('background-color' , 'white'); // change the background color
 
 					   document.getElementById('adminDiv1').style.display = "none";
-					
+					   document.getElementById('updateDiv1').style.display = "block";
+
 					}
 				else
 					{
