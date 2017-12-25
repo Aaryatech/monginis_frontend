@@ -9,7 +9,7 @@
 
 
 
-	<div class="sidebarhome">
+ 	<div class="sidebarhome">
 	<div class="content mCustomScrollbar">
 		<ul>
 		<c:if test="${info.accessRight==1 or info.accessRight==2}">
