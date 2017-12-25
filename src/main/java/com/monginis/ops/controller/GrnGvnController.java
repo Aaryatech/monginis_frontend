@@ -35,7 +35,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
@@ -83,7 +82,7 @@ public class GrnGvnController {
 	}
 	
 	
-	GetAllRemarksList allRemarksList;
+	GetAllRemarksList allRemarksList,getAllRemarksList;
 	List<GetAllRemarks> getAllRemarks;
 	
 
@@ -103,6 +102,9 @@ public class GrnGvnController {
 	List<StockForAutoGrnGvn> stockForAutoGrn = new ArrayList<StockForAutoGrnGvn>();
 
 	List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<GetCurrentStockDetails>();
+	
+	
+	
 
 	public static float roundUp(float d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
@@ -151,9 +153,28 @@ public class GrnGvnController {
 			 */
 
 			
-			allRemarksList = restTemplate.getForObject(Constant.URL + "getAllRemarks", GetAllRemarksList.class);
+			//Ganesh Remrk
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			getAllRemarks = allRemarksList.getGetAllRemarks();
+			map=new LinkedMultiValueMap<String, Object>();
+			map.add("isFrUsed", 0);
+			map.add("moduleId", 1);
+			map.add("subModuleId", 1); 
+			  getAllRemarksList=restTemplate.postForObject(Constant.URL + "/getAllRemarks",map, GetAllRemarksList.class);
+			  
+			
+			
+
+			//allRemarksList = restTemplate.getForObject(Constants.url + "getAllRemarks", GetAllRemarksList.class);
+
+			getAllRemarks = new ArrayList<>();
+			getAllRemarks = getAllRemarksList.getGetAllRemarks();
+			
+			
+			//allRemarksList = restTemplate.getForObject(Constant.URL + "getAllRemarks", GetAllRemarksList.class);
+
+			//getAllRemarks = allRemarksList.getGetAllRemarks();
 
 			System.out.println("remark list " + getAllRemarks.toString());
 
@@ -170,7 +191,7 @@ public class GrnGvnController {
 			
 			//RestTemplate restTemplate = new RestTemplate();
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map = new LinkedMultiValueMap<String, Object>();
 
 				int frId = frDetails.getFrId();
 
