@@ -23,6 +23,10 @@ public class FranchiseSup{
 
 	private String pass3;
 
+	private String pass4;
+
+	private String pass5;
+
 	
 	private int delStatus;
 
@@ -49,6 +53,22 @@ public class FranchiseSup{
 
 	public void setPass3(String pass3) {
 		this.pass3 = pass3;
+	}
+
+	public String getPass4() {
+		return pass4;
+	}
+
+	public void setPass4(String pass4) {
+		this.pass4 = pass4;
+	}
+
+	public String getPass5() {
+		return pass5;
+	}
+
+	public void setPass5(String pass5) {
+		this.pass5 = pass5;
 	}
 
 	public boolean isError() {
@@ -119,7 +139,9 @@ public class FranchiseSup{
 	public String toString() {
 		return "FranchiseSup [error=" + error + ", message=" + message + ", id=" + id + ", frId=" + frId + ", frPanNo="
 				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", pass1=" + pass1 + ", pass2="
-				+ pass2 + ", pass3=" + pass3 + ", delStatus=" + delStatus + "]";
+				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", delStatus=" + delStatus
+				+ "]";
 	}
-    
+
+	
 }
