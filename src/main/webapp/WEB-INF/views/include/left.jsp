@@ -82,7 +82,6 @@
 					</div></a></li>
 					
 					
-				<c:if test="${info.accessRight==1 or info.accessRight==2}">	
 					
 					<li><a href="${pageContext.request.contextPath}/showstockdetail" ><div class="img">
 						<img
@@ -93,7 +92,6 @@
 						Stock <span>Details</span>
 					</div></a></li>
 					
-				</c:if>
 					
 					
 					
