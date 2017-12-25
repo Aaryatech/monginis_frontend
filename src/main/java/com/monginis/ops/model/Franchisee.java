@@ -29,6 +29,7 @@ public class Franchisee {
     private Integer frOpening;
     private String frPasswordKey;
     private Integer isSameDayApplicable;
+    private int isSameState;
     
       private String ownerBirthDate;
       
@@ -46,7 +47,15 @@ public class Franchisee {
       
       private Integer frTarget;
 	
-    public String getOwnerBirthDate() {
+    public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
+	public String getOwnerBirthDate() {
 		return ownerBirthDate;
 	}
 
@@ -328,8 +337,4 @@ public class Franchisee {
 				+ ", frPasswordKey=" + frPasswordKey + ", isSameDayApplicable=" + isSameDayApplicable + "]";
 	}
     
-    
-    
-    
-
 }

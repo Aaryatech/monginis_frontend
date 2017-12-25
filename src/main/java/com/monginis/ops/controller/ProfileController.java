@@ -1,5 +1,7 @@
 package com.monginis.ops.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,13 +12,19 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ErrorMessage;
+import com.monginis.ops.model.FrLoginResponse;
+import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.Info;
+import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.util.ImageS3Util;
 
 @Controller
@@ -32,6 +40,15 @@ public class ProfileController {
 	HttpSession ses = request.getSession();
 	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 	System.out.println("Franchisee Rsponse"+frDetails);
+	
+	MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	map.add("frId",frDetails.getFrId());
+	RestTemplate rest = new RestTemplate();
+
+	FranchiseSup frSup= rest.postForObject(Constant.URL + "/getFrSupByFrId",
+			map, FranchiseSup.class);
+	
+	model.addObject("frSup", frSup);
 	return model;
 	
 	
@@ -114,5 +131,90 @@ public class ProfileController {
 			}
 			 return "redirect:/showeditprofile";
 	}
+	
+	
+	@RequestMapping(value = "/checkUserAuthority", method = RequestMethod.GET)
+	public @ResponseBody LoginInfo checkUserAuthority(HttpServletRequest request,HttpServletResponse response) {
+		
+		FrLoginResponse loginResponse=new FrLoginResponse();
+		try
+		{
+		String adminPwd=request.getParameter("adminPwd");
 
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frCode", frDetails.getFrCode());
+		map.add("frPasswordKey",adminPwd);
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		 loginResponse = restTemplate.postForObject(Constant.URL + "/loginFr", map,
+				FrLoginResponse.class);
+
+		System.out.println("Login Response " + loginResponse.toString());
+
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception In /checkAutority Method /ProfileController");
+		}
+		return loginResponse.getLoginInfo();
+
+	}
+	
+	
+	@RequestMapping(value = "/updateUserPasswords", method = RequestMethod.GET)
+	public @ResponseBody Info updateUserPasswords(HttpServletRequest request,HttpServletResponse response) {
+		
+		String pass1=request.getParameter("pass1");
+		String pass2=request.getParameter("pass2");
+		String pass3=request.getParameter("pass3");
+
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		map.add("pass1", pass1);
+		map.add("pass2",pass2);
+		map.add("pass3",pass3);
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		 Info info = restTemplate.postForObject(Constant.URL + "/updateFranchiseSupUsrPwd", map,
+				 Info.class);
+
+		 System.out.println(info.toString());
+		return info;
+	}
+	
+	
+	
+	@RequestMapping(value = "/updateAdminPassword", method = RequestMethod.GET)
+	public @ResponseBody Info updateAdminPassword(HttpServletRequest request,HttpServletResponse response) {
+		
+		String adminPwd=request.getParameter("adminPwd");
+	
+
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		map.add("adminPwd", adminPwd);
+	    
+		RestTemplate restTemplate = new RestTemplate();
+
+		 Info info = restTemplate.postForObject(Constant.URL + "/updateAdminPwd", map,
+				 Info.class);
+
+		 System.out.println(info.toString());
+		return info;
+	}
 }

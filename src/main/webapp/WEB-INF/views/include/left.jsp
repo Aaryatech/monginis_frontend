@@ -12,6 +12,7 @@
 	<div class="sidebarhome">
 	<div class="content mCustomScrollbar">
 		<ul>
+		<c:if test="${info.accessRight==1 or info.accessRight==2}">
 			<li><a href="#" onClick="openNav()"><div
 						class="img">
 						<img
@@ -20,7 +21,10 @@
 					</div>
 					<div class="title">
 						Order <span>Booking</span>
-					</div></a></li>
+					</div></a>
+			</li>
+		</c:if>
+		<c:if test="${info.accessRight==1 or info.accessRight==2 or info.accessRight==3}">	
 			<li><a href="#" onClick="openNav1()"><div class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-goodsreturn.png"
@@ -28,13 +32,20 @@
 					</div>
 					<div class="title">
 						Goods <span>Return</span>
-					</div></a></li>
+					</div></a>
+			</li>
+			</c:if>
+					<c:if test="${info.accessRight==1}">
+			
 					<li><a href="#" onClick="openNav4()"><div class="img">
 						<i class="fa fa-file-o icon"></i>
 					</div>
 					<div class="title">
 						<span>Reports</span>
 					</div></a></li>
+					</c:if>
+			<c:if test="${info.accessRight==1 or info.accessRight==2 or info.accessRight==3}">	
+					
 			<li><a href="${pageContext.request.contextPath}/orderHistory"><div
 						class="img">
 						<i class="fa fa-file-text-o icon"></i>
@@ -42,6 +53,8 @@
 					<div class="title">
 						Order <span>History</span>
 					</div></a></li>
+			</c:if>		
+					
 					
 					<li><a href="${pageContext.request.contextPath}/showCustomerBill"><div
 						class="img">
@@ -60,9 +73,6 @@
 						Express Bill <span></span>
 					</div></a></li>
 					
-					
-					
-					
 					<li><a href="${pageContext.request.contextPath}/showBill"><div
 						class="img">
 						<i class="fa fa-money icon"></i>
@@ -70,6 +80,9 @@
 					<div class="title">
 						View <span>Bills</span>
 					</div></a></li>
+					
+					
+				<c:if test="${info.accessRight==1 or info.accessRight==2}">	
 					
 					<li><a href="${pageContext.request.contextPath}/showstockdetail" ><div class="img">
 						<img
@@ -80,19 +93,23 @@
 						Stock <span>Details</span>
 					</div></a></li>
 					
+				</c:if>
 					
 					
 					
+			<c:if test="${info.accessRight==1}">	
 					
-					
-			<li><a href="#" onClick="openNav3()"><div class="img">
+			<li><a href="${pageContext.request.contextPath}/showeditprofile" ><div class="img">
+						
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-editprofile.png"
 							alt="img">
 					</div>
 					<div class="title">
 						Edit <span>Profile</span>
-					</div></a></li>
+					</div></a>
+		   </li>
+		   </c:if>
 		</ul>
 		</div>
 	</div>
@@ -493,7 +510,7 @@
 	<!--4nav-->
 
 	<!--3nav-->
-	<div id="mySidenav3" class="sidenav">
+	<%-- <div id="mySidenav3" class="sidenav">
 
 		<div class="topSlide">
 			<div class="topSlide2 textcen">
@@ -605,7 +622,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<!--3nav-->
 
 	<!--navInner-->

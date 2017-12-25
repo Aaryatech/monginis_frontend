@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,11 +36,9 @@
 
 </head>
 <body>
-
-		
-
-
-
+<c:url var="checkUserAuthority" value="/checkUserAuthority"/>
+<c:url var="updateUserPasswords" value="/updateUserPasswords"/>
+<c:url var="updateAdminPassword" value="/updateAdminPassword"/>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -133,7 +133,7 @@
 								</div>
 							</div>
 						</div>
-
+                         
 						<div class="profile">
 							<div class="profilefildset">City</div>
 							<div class="profileinput">
@@ -143,20 +143,53 @@
 									
 							</div>
 						</div>
-
+                        <div class="profile">
+							<div class="profilefildset">Edit Admin Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="Enter new Password"
+									name="fr_password" type="password" onChange="checkPasswordMatch();"    value="${frDetails.frPassword}" id="txtNewPassword" disabled="disabled"
+									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
+							</div>
+						</div>  
+						 <div class="profile">
+							<div class="profilefildset">User1 Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="User1 Password"
+									name="user1_password" type="password"  value="${frSup.pass1}" id="user1_password" 
+									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
+								
+							</div>
+						</div>
 						<div class="profile">
+							<div class="profilefildset">User3 Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="User3 Password"
+									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
+									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
+								
+							</div>
+							<div class="form-group">
+						
+								<input name="" class="buttonupdateprofile" value="Change Pwd"
+									type="button" id="changePwd2" style="font-size: 9pt; height: 30px; width:70px; "onclick="showDiv1()">
+							
+						</div>	
+						</div>
+                         
+               
+					</div>
+                    
+                   
+					<div class="profileinsiteRight">
+					<div class="profile">
 							<div class="profilefildset">Email id</div>
 							<div class="profileinput">
 								<input class="texboxitemcode" name="fr_email"
 									placeholder="example@gmail.com" type="text" value="${frDetails.frEmail}">
 							</div>
 						</div>
-
-
-
-					</div>
-
-					<div class="profileinsiteRight">
+					&nbsp;
+					
 						<div class="profile">
 							<div class="profilefildset">Mobile No.</div>
 							<div class="profileinput">
@@ -178,26 +211,84 @@
 							<div class="profileinput mardis">26 Feb. 2017</div>
 						</div>
 
-						<div class="profile">
-							<div class="profilefildset">Edit Password</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Enter new Password"
-									name="fr_password" type="password" value="${frDetails.frPassword}" id="txtNewPassword">
-							</div>
-						</div>
+						
 
 						<div class="profile">
-							<div class="profilefildset">Confirm Password</div>
-							<div class="profileinput">
+							<div class="profilefildset">Confirm Admin Password</div>
+							<div class="col2">
 								<input class="texboxitemcode" placeholder="Confirm new Password"
-									name="fr_password" type="password"  value="${frDetails.frPassword}" id="txtConfirmPassword" onChange="checkPasswordMatch();">
+									name="fr_password" type="password"  value="${frDetails.frPassword}" id="txtConfirmPassword" onChange="checkPasswordMatch();" disabled="disabled"
+									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
+								
 							</div>
+						
+							<div class="form-group">
+						
+								<input name="" class="buttonupdateprofile" value="Change Password"
+									type="button" id="changePwd1" onclick="showDiv()">
+							
+						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
 							</div>
+							
 						</div>
-
-
 						
+                      <div class="profile">
+							<div class="profilefildset">User2 Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="User2 Password"
+									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
+									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
+								
+							</div>
+						</div>
+						          <div class="profile" style="display: none;"id="adminDiv">
+							<div class="profilefildset">Admin Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="Enter Admin Password"
+									name="admin_password" type="password" value="" id="admin_password"
+									style="font-size: 8pt; height: 30px; width:130px; ">
+							</div>
+						 
+						 <div class="form-group">
+						
+								<input name="" class="buttonupdateprofile" value="Submit"
+									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 30px; width:70px; "onclick="return checkAuthority()">
+							
+						</div>
+						
+                       </div> 
+                    <div id="updateDiv" class="colOuter"style="display: none;">
+						<div class="col3full">
+								<input name="updateAdminPwd" class="btn btn-primary" value="Update Password" onclick="updateAdminPassword()"
+									type="button" id="btnupdate_profile" >
+							</div>
+						</div>
+					
+					
+					
+                     <div class="profile" style="display: none;"id="adminDiv1">
+							<div class="profilefildset">Admin Password</div>
+							<div class="col2">
+								<input class="texboxitemcode" placeholder="Enter Admin Password"
+									name="admin_password1" type="password" value="" id="admin_password1"
+									style="font-size: 8pt; height: 30px; width:130px; ">
+							</div>
+						 
+						 <div class="form-group">
+						
+								<input name="" class="buttonupdateprofile" value="Submit"
+									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 30px; width:70px; "onclick="return checkAuthForPassChange()">
+							
+						</div>
+						
+                       </div> 
+                    <div id="updateDiv1" class="colOuter"style="display: none;">
+						<div class="col3full">
+								<input name="updateUserPwd" class="btn btn-primary" value="Update Password"
+									type="button" id="btnupdate_profile" onclick="return updateUserPasswords()">
+							</div>
+						</div>
 
 					</div>
 					
@@ -258,5 +349,151 @@ $(document).ready(function () {
 });
 
 </script>
+<script type="text/javascript">
+function showDiv() {
+	   document.getElementById('adminDiv').style.display = "block";
+	   document.getElementById('updateDiv').style.display = "block";
+	   document.getElementById('admin_password').value = "";
+	}
+function showDiv1() {
+	   document.getElementById('adminDiv1').style.display = "block";
+	   document.getElementById('updateDiv1').style.display = "block";
+	   document.getElementById('admin_password1').value = "";
 
+	}
+</script>
+<script type="text/javascript">
+
+function checkAuthority() {
+	
+	var adminPwd = document.getElementById("admin_password").value;
+
+			$.getJSON('${checkUserAuthority}', {
+				
+				adminPwd:adminPwd,
+				ajax : 'true'
+			}, function(data) {
+				
+				if(data.accessRight==1)
+					{
+				    document.getElementById("changePwd1").disabled = true;
+					document.getElementById('txtNewPassword').removeAttribute('disabled');
+					document.getElementById('txtConfirmPassword').removeAttribute('disabled');
+  
+					  $('#txtNewPassword').css('background-color' , 'white'); // change the background color
+					   $('#txtConfirmPassword').css('background-color' , 'white'); // change the background color
+					   document.getElementById('adminDiv').style.display = "none";
+
+					}
+				else
+				{
+				 alert("Invalid Credentials");
+
+				}
+			}
+			
+			
+);
+}
+function checkAuthForPassChange() {
+	
+	var adminPwd = document.getElementById("admin_password1").value;
+			$.getJSON('${checkUserAuthority}', {
+				
+				adminPwd:adminPwd,
+				ajax : 'true'
+			}, function(data) {
+				
+				if(data.accessRight==1)
+					{
+					 document.getElementById("changePwd2").disabled = true;
+					document.getElementById('user1_password').removeAttribute('disabled');
+					document.getElementById('user2_password').removeAttribute('disabled');
+					document.getElementById('user3_password').removeAttribute('disabled');
+					
+					  $('#user1_password').css('background-color' , 'white'); // change the background color
+					  $('#user2_password').css('background-color' , 'white'); // change the background color
+					  $('#user3_password').css('background-color' , 'white'); // change the background color
+
+					   document.getElementById('adminDiv1').style.display = "none";
+					
+					}
+				else
+					{
+					 alert("Invalid Credentials");
+
+					}
+			}
+			
+			
+);
+}
+function updateUserPasswords() {
+	
+	var pass1=document.getElementById('user1_password').value;
+
+	var pass2=document.getElementById('user2_password').value;
+
+	var pass3=document.getElementById('user3_password').value;
+	$.getJSON('${updateUserPasswords}', {
+		
+		pass1:pass1,
+		pass2:pass2,
+		pass3:pass3,
+
+		ajax : 'true'
+	}, function(data) {
+		if(data.error==false)
+		{
+			
+			document.getElementById("changePwd2").removeAttribute('disabled');
+			document.getElementById('user1_password').disabled = true;
+			document.getElementById('user2_password').disabled = true;
+			document.getElementById('user3_password').disabled = true;
+			
+			  $('#user1_password').css('background-color' , 'LightGrey'); // change the background color
+			  $('#user2_password').css('background-color' , 'LightGrey'); // change the background color
+			  $('#user3_password').css('background-color' , 'LightGrey');
+			   document.getElementById('updateDiv1').style.display = "none";
+
+			
+				 alert("User Passwords Updated Successfully");
+
+			
+		}
+		
+		
+		
+	}
+	);
+}
+
+function updateAdminPassword() {
+	
+	var adminPwd=document.getElementById('txtNewPassword').value;
+	$.getJSON('${updateAdminPassword}', {
+		
+		adminPwd:adminPwd,
+	
+		ajax : 'true'
+	}, function(data) {
+		
+		if(data.error==false)
+			{
+			document.getElementById('changePwd1').removeAttribute('disabled');
+			document.getElementById('txtNewPassword').disabled = true;
+			document.getElementById('txtConfirmPassword').disabled = true;
+
+			  $('#txtNewPassword').css('background-color' , 'LightGrey'); // change the background color
+			  $('#txtConfirmPassword').css('background-color' , 'LightGrey'); // 
+			   document.getElementById('updateDiv').style.display = "none";
+
+			 alert("Admin Password Updated Successfully");
+			
+			}
+		
+	}
+	);
+}
+</script>
 </html>

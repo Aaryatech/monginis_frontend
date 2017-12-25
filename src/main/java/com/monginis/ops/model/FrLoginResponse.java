@@ -4,18 +4,19 @@ package com.monginis.ops.model;
 
 public class FrLoginResponse {
 
-    private ErrorMessage errorMessage;
+    private LoginInfo loginInfo;
     private Franchisee franchisee;
 
-    public ErrorMessage getErrorMessage() {
-        return errorMessage;
-    }
+    
+    public LoginInfo getLoginInfo() {
+		return loginInfo;
+	}
 
-    public void setErrorMessage(ErrorMessage errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+	public void setLoginInfo(LoginInfo loginInfo) {
+		this.loginInfo = loginInfo;
+	}
 
-    public Franchisee getFranchisee() {
+	public Franchisee getFranchisee() {
         return franchisee;
     }
 
@@ -25,10 +26,7 @@ public class FrLoginResponse {
 
 	@Override
 	public String toString() {
-		return "FrLoginResponse [errorMessage=" + errorMessage + ", franchisee=" + franchisee + "]";
+		return "FrLoginResponse [loginInfo=" + loginInfo + ", franchisee=" + franchisee + "]";
 	}
 
-    
-    
-    
 }

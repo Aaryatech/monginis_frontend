@@ -268,9 +268,9 @@ public class HomeController {
 
 		System.out.println("Login Response " + loginResponse.toString());
 
-		if (loginResponse.getErrorMessage().getError()) {
+		if (loginResponse.getLoginInfo().isError()) {
 
-			model.addObject("message", loginResponse.getErrorMessage().getMessage());
+			model.addObject("message", loginResponse.getLoginInfo().getMessage());
 
 		} else {
 
@@ -354,7 +354,7 @@ public class HomeController {
 			session.setAttribute("msgList", msgList);
 			session.setAttribute("schedulerLists",schedulerLists);
 			session.setAttribute("frId",loginResponse.getFranchisee().getFrId());
-
+			session.setAttribute("info", loginResponse.getLoginInfo());
 			
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
@@ -421,6 +421,7 @@ public class HomeController {
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
+			model.addObject("info", loginResponse.getLoginInfo());
 		}
 		return model;
 
