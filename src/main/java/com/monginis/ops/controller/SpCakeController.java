@@ -660,6 +660,7 @@ public class SpCakeController {
 
 			spCakeOrder.setMenuId(currentMenuId);
 			spCakeOrder.setIsSlotUsed(isSlotUsed);
+			spCakeOrder.setIsAllocated(0);
 
 			Float floatBackEndRate = Float.valueOf(backendSpRate);
 			int intAddonRatePerKG = Integer.parseInt(spAddRate);

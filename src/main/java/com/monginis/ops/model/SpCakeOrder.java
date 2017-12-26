@@ -48,9 +48,16 @@ private String orderDate;
 private String orderPhoto2;
 private int isSlotUsed;
 private int isBillGenerated;
+private int isAllocated;
 
 
 
+public int getIsAllocated() {
+	return isAllocated;
+}
+public void setIsAllocated(int isAllocated) {
+	this.isAllocated = isAllocated;
+}
 public int getSpOrderNo() {
 	return spOrderNo;
 }
@@ -310,8 +317,6 @@ public void setIsBillGenerated(int isBillGenerated) {
 	this.isBillGenerated = isBillGenerated;
 }
 
-
-
 @Override
 public String toString() {
 	return "SpCakeOrder [spOrderNo=" + spOrderNo + ", frId=" + frId + ", frCode=" + frCode + ", spType=" + spType
@@ -328,11 +333,5 @@ public String toString() {
 			+ tax2Amt + ", orderPhoto=" + orderPhoto + ", orderDate=" + orderDate + ", orderPhoto2=" + orderPhoto2
 			+ ", isSlotUsed=" + isSlotUsed + ", isBillGenerated=" + isBillGenerated + "]";
 }
-
-
-
-
-
-
 
 }
