@@ -4,7 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 <%-- <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
