@@ -3,7 +3,10 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
+<jsp:include page="/WEB-INF/views/include/header.jsp"/>
+
+
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,6 +43,11 @@ jQuery(document).ready(function(){
 });
 </script>
 <!--rightNav-->
+
+
+
+</head> --%>
+
 <!--datepicker-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -54,9 +62,6 @@ jQuery(document).ready(function(){
 <!--datepicker--> 
 
 
-</head>
-<body>
-
 <c:url var="getSellBillHeader" value="/getSellBillHeader" />
 	
 	<div class="sidebarOuter"></div>
@@ -65,7 +70,7 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<jsp:include page="/WEB-INF/views/include/logo.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
