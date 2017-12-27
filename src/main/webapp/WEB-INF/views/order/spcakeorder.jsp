@@ -475,13 +475,19 @@ select {
 				</li>
 				<li>
 					<div class="priceLeft">GST IN RS.</div>
-					<div class="priceRight" id="gstrs">${(sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100}</div>
-					<input type="hidden" id="gst_rs" name="gst_rs" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100}">
+					<c:set var="varGstRs" value="${(((sprRate*specialCake.spMinwt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))*(specialCake.spTax1+specialCake.spTax2)/100}" />  
+					<fmt:formatNumber var="fGstRs" minFractionDigits="2" maxFractionDigits="2" type="number" value="${varGstRs}" />  
+					
+					<div class="priceRight" id="gstrs"><c:out value="${fGstRs}" /></div>
+					<input type="hidden" id="gst_rs" name="gst_rs" value="${fGstRs}">
 				</li>
 				<li class="total">
-					<div class="priceLeft" id="mgstamt">AMT- ${(sprRate*specialCake.spMinwt)-((sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100)}</div>
+				<c:set var="varMgstamt" value="${(((sprRate*specialCake.spMinwt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))}"/>
+					<fmt:formatNumber var="fMgstamt" minFractionDigits="2" maxFractionDigits="2" type="number" value="${varMgstamt}" />  
 					
-				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" type="hidden" value="${(sprRate*specialCake.spMinwt)-((sprRate*specialCake.spMinwt)*(specialCake.spTax1+specialCake.spTax2)/100)}">
+					<div class="priceLeft" id="mgstamt">AMT-<c:out value="${fMgstamt}"></c:out></div>
+					
+				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" type="hidden" value="${fMgstamt}">
 				
 					<div class="priceRight"id="tot">TOTAL-${(sprRate*specialCake.spMinwt)}</div>
 					
@@ -611,11 +617,19 @@ $(document).ready(function() {
 		    var grandTotal=parseFloat(add);
 			var spSubtotal=add;
 			
-			var gstInRs=(spSubtotal*tax3)/100;
-			$('#gstrs').html(gstInRs);  document.getElementById("gst_rs").setAttribute('value',gstInRs);
+			var mrpBaseRate=parseFloat((spSubtotal*100)/(tax3+100));
+			var gstInRs=(mrpBaseRate*tax3)/100;
+			
+			var taxPerPerc1=parseFloat((tax1*100)/tax3);
+			var taxPerPerc2=parseFloat((tax2*100)/tax3);
+         
+			var tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+			var tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
 
-			var mGstAmt=spSubtotal-gstInRs;
-			$('#mgstamt').html('AMT-'+mGstAmt);  document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
+			$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
+
+			var mGstAmt=mrpBaseRate;
+			$('#mgstamt').html('AMT-'+mGstAmt.toFixed(2));  document.getElementById("m_gst_amt").setAttribute('value',mGstAmt.toFixed(2));
 			
 			$('#price').html(wt*dbRate);
 			$('sp_calc_price').html(wt*dbRate);
@@ -631,11 +645,9 @@ $(document).ready(function() {
 			$('#rmAmt').html(grandTotal);
 			document.getElementById("rm_amount").setAttribute('value',grandTotal);
 			
-			$('#t1amt').html((grandTotal*tax1)/100);
-			document.getElementById("t1amt").setAttribute('value',(grandTotal*tax1)/100);
+			document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 			
-			$('#t2amt').html((grandTotal*tax2)/100);
-			document.getElementById("t2amt").setAttribute('value',(grandTotal*tax2)/100);
+			document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
 			
 	}</script> 
 <!------------------------------------------------END------------------------------------------------>	
@@ -668,6 +680,17 @@ $(document).ready(function() {
 					var totalFlavourAddonRate= wt*flavourAdonRate;
 					
 					 var totalCakeRate= wt*price;
+					 var totalAmount=parseFloat(totalCakeRate+totalFlavourAddonRate);
+					 
+					 var mrpBaseRate=parseFloat((totalAmount*100)/(tax3+100));
+				     var gstInRs=parseFloat((mrpBaseRate*tax3)/100);
+				     
+				        var taxPerPerc1=parseFloat((tax1*100)/tax3);
+						var taxPerPerc2=parseFloat((tax2*100)/tax3);
+			         
+						var tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+						var tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+						
 					  var grandTotal=parseFloat(totalCakeRate+totalFlavourAddonRate);
 					  
 					    $('#price').html(totalCakeRate);$('#sp_calc_price').html(totalCakeRate);
@@ -683,19 +706,14 @@ $(document).ready(function() {
 						$('#rmAmt').html(grandTotal);
 						document.getElementById("rm_amount").setAttribute('value',grandTotal);
 						
-						$('#t1amt').html((grandTotal*tax1)/100);
-						document.getElementById("t1amt").setAttribute('value',(grandTotal*tax1)/100);
+						document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 						
-						$('#t2amt').html((grandTotal*tax2)/100);
-						document.getElementById("t2amt").setAttribute('value',(grandTotal*tax2)/100);
+						document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
 						
-						
-						var gstInRs=(grandTotal*tax3)/100;
-						$('#gstrs').html(gstInRs); 
-						document.getElementById("gst_rs").setAttribute('value',gstInRs);
-						var mGstAmt=grandTotal-gstInRs;
-						$('#mgstamt').html('AMT-'+mGstAmt);  
-						document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
+						$('#gstrs').html(gstInRs.toFixed(2)); 
+						document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
+						$('#mgstamt').html('AMT-'+mrpBaseRate.toFixed(2)); 
+						document.getElementById("m_gst_amt").setAttribute('value',mrpBaseRate.toFixed(2));
 						
 				});
 			});
