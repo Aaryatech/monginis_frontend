@@ -1,5 +1,6 @@
 package com.monginis.ops.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -34,6 +35,7 @@ import com.monginis.ops.util.ImageS3Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.EventList;
 import com.monginis.ops.model.Flavour;
@@ -379,8 +381,8 @@ public class SpCakeController {
 	// ------------------------Order Special Cake Process-----------------------------------------------------
 	@RequestMapping(value = "/orderSpCake", method = RequestMethod.POST)
 	public ModelAndView addItemProcess(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value = "order_photo", required = false) MultipartFile orderPhoto,
-			@RequestParam(value = "cust_choice_ck", required = false) MultipartFile custChoiceCk)
+			@RequestParam(value = "order_photo", required = false) List<MultipartFile> orderPhoto,
+			@RequestParam(value = "cust_choice_ck", required = false) List<MultipartFile> custChoiceCk)
 			throws JsonProcessingException {
 
 		ModelAndView mav = new ModelAndView("order/orderRes");
@@ -536,17 +538,64 @@ public class SpCakeController {
 			if (isSpPhoUpload == 1) {
 
 				System.out.println("Empty image");
-				orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
+				//orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
+				
+				 VpsImageUpload upload = new VpsImageUpload();
+
+					Calendar cal = Calendar.getInstance();
+					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+					System.out.println(sdf.format(cal.getTime()));
+
+					String curTimeStamp = sdf.format(cal.getTime());
+
+					try {
+						orderPhoto1=curTimeStamp + "-" + orderPhoto.get(0).getOriginalFilename();
+						upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, curTimeStamp + "-" + orderPhoto.get(0).getOriginalFilename());
+						System.out.println("upload method called " + orderPhoto.toString());
+						
+					} catch (IOException e) {
+						
+						System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
+						e.printStackTrace();
+					}
+				
+				
+				
+				
+				
 			}
 
 			if (isCustSpCk == 1) {
 
 				System.out.println("Empty image");
-				custChCk = ImageS3Util.uploadPhotoCakeImage(custChoiceCk);
+				//custChCk = ImageS3Util.uploadPhotoCakeImage(custChoiceCk);
 
-				orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
+				//orderPhoto1 = ImageS3Util.uploadPhotoCakeImage(orderPhoto);
+				
+				VpsImageUpload upload = new VpsImageUpload();
+
+				Calendar cal = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				System.out.println(sdf.format(cal.getTime()));
+
+				String curTimeStamp = sdf.format(cal.getTime());
+
+				try {
+					orderPhoto1=curTimeStamp + "-" + orderPhoto.get(0).getOriginalFilename();
+
+					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, curTimeStamp + "-" + orderPhoto.get(0).getOriginalFilename());
+					custChCk=curTimeStamp + "-" + custChoiceCk.get(0).getOriginalFilename();
+					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE, curTimeStamp + "-" + custChoiceCk.get(0).getOriginalFilename());
+
+					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
+					
+				} catch (IOException e) {
+					
+					System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
+					e.printStackTrace();
+				}
+				
 			}
-
 			spCakeOrder = new SpCakeOrder();
 			spCakeOrder.setFrCode(frDetails.getFrCode());
 
