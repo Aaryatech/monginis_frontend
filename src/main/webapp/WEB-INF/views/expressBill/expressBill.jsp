@@ -3,15 +3,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/include/header.jsp"/> --%>
 
-  <script src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
-	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
-	
+  
 
 
-<%-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -54,8 +51,6 @@
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/loader.css">
 
 <!--rightNav-->
 <script type="text/javascript"
@@ -70,9 +65,19 @@
 </script>
 <!--rightNav-->
 
+<!--new css added by kalpesh -->
+	<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
+	
+	<!--new css added by kalpesh -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
+  <script src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
+	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
+	
 </head>
-<body> --%>
+<body>
 
 
 	<c:url var="getItemDetails" value="/findItemDetails" />
@@ -88,12 +93,13 @@
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/logo.jsp">
+		<jsp:include page="/WEB-INF/views/include/header.jsp">
 			<jsp:param name="frDetails" value="${frDetails}" />
 
 		</jsp:include>
 
 		<!--topHeader-->
+<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 		<!--rightContainer-->
 		<div class="fullGrid center">
@@ -198,7 +204,7 @@
 																
 																<select class="selectpicker"  data-show-subtext="true" data-live-search="true"
 																data-placeholder="Enter Item Name"  name="itemName"
-																class="form-control" tabindex="6" id="itemName" onchange="onSelectItem()"
+																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
 																data-rule-required="true">
 																	<option value="">Item Name</option>
 																	<c:forEach items="${itemsList}"
@@ -393,7 +399,7 @@
 														 -->
 														 <select class="selectpicker"  data-show-subtext="true" data-live-search="true"
 																data-placeholder="Enter Item Name"  name="itemName"
-																class="form-control" tabindex="6" id="itemName" onchange="onSelectItem()"
+																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
 																data-rule-required="true">
 																	<option value="">Item Name</option>
 																	<c:forEach items="${itemsList}"
@@ -622,6 +628,8 @@ function  hideMe(startId){
 	});
 	    document.getElementById("input").value="";
 	    document.getElementById("itemName").value="";
+	    
+
 	    
 	}
 		
