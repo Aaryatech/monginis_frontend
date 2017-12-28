@@ -352,7 +352,11 @@ select {
 
 							</div>
 							<input type="hidden" id="t1" name="t1" value=""> <input
-								type="hidden" id="t2" name="t2" value=""> <input
+								type="hidden" id="t2" name="t2" value="">
+								<input type="hidden" id="t1Amt" name="t1Amt" value=""> <input
+								type="hidden" id="t2Amt" name="t2Amt" value="">
+								
+								 <input
 								type="hidden" id="dbAdonRate" name="dbAdonRate"> <input
 								type="hidden" id="dbPrice" name="dbPrice" value=""> <input
 								type="hidden" id="sp_id" name="sp_id" value=""> <input
@@ -445,7 +449,6 @@ select {
 																function(data) {
 
 																	var len = data.length;
-
 																	
 																	var frRateCat = $("#frRateCat").val();
 																	if (frRateCat == 1) {
@@ -471,26 +474,77 @@ select {
 																	$("#subtotal").text(data.itemMrp3);
 																	document.getElementById("sp_sub_total").setAttribute('value',data.itemMrp3);
 
-																	$("#INR").text('INR-'+ data.itemMrp3);
-																	document.getElementById("sp_grand").setAttribute('value',data.itemMrp3);
+																	document.getElementById("t1").setAttribute('value',data.itemTax1);
+																	document.getElementById("t2").setAttribute('value',data.itemTax2);
+
 
 																	$("#tax3").html(data.itemTax3+ ' %');
 																	document.getElementById("t3").setAttribute('value',data.itemTax3);
 
-																	var gstInRs = (data.itemMrp3 * data.itemTax3) / 100;
-																	$('#gstrs').html(gstInRs);
-																	document.getElementById("gst_rs").setAttribute('value',gstInRs);
+																	var mrp=(data.itemMrp3)*100;
+																	var taxPer3=parseFloat(data.itemTax3);
+																	var taxPer2=parseFloat(data.itemTax2);
+																	var taxPer1=parseFloat(data.itemTax1);
 
-																	$('#tot').html('TOTAL-'+ data.itemMrp3);
-																	document.getElementById("total_amt").setAttribute('value',data.itemMrp3);
+																	var mrpBaseRate = parseFloat(mrp/(taxPer3+100));
+																
+                                                        			var gstInRs=0;
+                                                        			var taxPerPerc1=0;
+                                                        			var taxPerPerc2=0;
+                                                        			var tax1Amt=0;
+                                                        			var tax2Amt=0;
+                                                        			 var total=0;
+                                                        			if(taxPer3==0)
+                                                        				{
+                                                        				    gstInRs=0;
+                                                        				    total=mrpBaseRate+gstInRs;
+                                                        				}
+                                                        		    else
+                                                        			{
+                                                        			   gstInRs=(mrpBaseRate*taxPer3)/100;
+                                                        			   total=mrpBaseRate+gstInRs;
+                                                        			   
+                                                        			   if(taxPer1==0)
+                                                        				{
+                                                        				   taxPerPerc1=0;
+                                                        				}
+                                                        			   else
+                                                        				{
+                                                        				    taxPerPerc1=parseFloat((taxPer1*100)/taxPer3);
+                                                        				    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
 
-																	var mGstAmt = (data.itemMrp3)- gstInRs;
+                                                        				}
+                                                        			   if(taxPer2==0)
+                                                        				{
+                                                        				   taxPerPerc2=0;
+                                                        				}
+                                                        			   else
+                                                        				{
+                                                        					taxPerPerc2=parseFloat((taxPer2*100)/taxPer3);
+                                                        					tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
 
-																	$('#mgstamt').html('AMT-'+ mGstAmt);
-																	document.getElementById("m_gst_amt").setAttribute('value',mGstAmt);
+                                                        				}
+                                                        			   
+                                                        			}
+                                                        			
+                                                        			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
+																	document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
+																	
+                                                                    $("#INR").text('INR-'+ total.toFixed(2));
+																	document.getElementById("sp_grand").setAttribute('value',total.toFixed(2));
+																	
+																	$('#gstrs').html(gstInRs.toFixed(2));
+																	document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
-																	$('#rmAmt').html(data.itemMrp3);
-																	document.getElementById("rm_amount").setAttribute('value',data.itemMrp3);
+																	$('#tot').html('TOTAL-'+ total.toFixed(2));
+																	document.getElementById("total_amt").setAttribute('value',total.toFixed(2));
+
+
+																	$('#mgstamt').html('AMT-'+ mrpBaseRate.toFixed(2));
+																	document.getElementById("m_gst_amt").setAttribute('value',mrpBaseRate.toFixed(2));
+
+																	$('#rmAmt').html(total.toFixed(2));
+																	document.getElementById("rm_amount").setAttribute('value',total.toFixed(2));
 
 																	document.getElementById("sp_qty").setAttribute('value',1);
 
@@ -513,46 +567,93 @@ select {
 	<!-------------------------------cALCULATIONS ON QUANTITY CHANGE------------------->
 	<script type="text/javascript">
 		function calculatePerQuantity() {
-			var qty = $("#sp_qty").val();
+			var qty =parseFloat($("#sp_qty").val());
 
-			var price = $("#MRP").val();
+			var price = parseFloat($("#MRP").val());
 
-			var tax = $("#t3").val();
+			var taxPer3 = parseFloat($("#t3").val());
+			
+			var taxPer1 = parseFloat($("#t1").val());
+			var taxPer2 = parseFloat($("#t2").val());
 
-			var calcPrice = (qty * price);
+			var calcPrice = parseFloat(qty * price);
 
-			var calGstRs = (calcPrice * tax) / 100;
 
-			var mGstAmt = calcPrice - calGstRs;
+            var taxPlus100=parseFloat(taxPer3+100);
+			var mrpBaseRate =parseFloat(calcPrice * 100 /(taxPlus100));
+		
+		
+ 			var gstInRs=0;
+			var taxPerPerc1=0;
+			var taxPerPerc2=0;
+			var tax1Amt=0;
+			var tax2Amt=0;
+			 var total=0;
+			if(taxPer3==0)
+				{
+				    gstInRs=0;
+				    total=mrpBaseRate+gstInRs;
+				}
+		    else
+			{
+			   gstInRs=(mrpBaseRate*taxPer3)/100;
+			   total=mrpBaseRate+gstInRs;
+			   
+			   if(taxPer1==0)
+				{
+				   taxPerPerc1=0;
+				}
+			   else
+				{
+				    taxPerPerc1=parseFloat((taxPer1*100)/taxPer3);
+				    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
 
-			$("#price").text(calcPrice);
+				}
+			   if(taxPer2==0)
+				{
+				   taxPerPerc2=0;
+				}
+			   else
+				{
+					taxPerPerc2=parseFloat((taxPer2*100)/taxPer3);
+					tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+				}
+			   
+			}
+			
+			
+ 			document.getElementById("t1Amt").setAttribute('value',tax1Amt.toFixed(2));
+			document.getElementById("t2Amt").setAttribute('value',tax2Amt.toFixed(2));
+			
+			$("#price").text(total);
 			document.getElementById("sp_calc_price").setAttribute('value',
-					calcPrice);
+					total);
 
-			$("#subtotal").text(calcPrice);
+			$("#subtotal").text(total);
 			document.getElementById("sp_sub_total").setAttribute('value',
-					calcPrice);
+					total);
 
-			$("#INR").text('INR-' + calcPrice);
+			$("#INR").text('INR-' + total);
 			document.getElementById("sp_grand")
-					.setAttribute('value', calcPrice);
+					.setAttribute('value', total);
 
-			$("#tax3").html(tax + ' %');
-			document.getElementById("t3").setAttribute('value', tax);
+			$("#tax3").html(taxPer3 + ' %');
+			document.getElementById("t3").setAttribute('value', taxPer3);
 
-			$('#gstrs').html(calGstRs);
-			document.getElementById("gst_rs").setAttribute('value', calGstRs);
+			$('#gstrs').html(gstInRs.toFixed(2));
+			document.getElementById("gst_rs").setAttribute('value', gstInRs.toFixed(2));
 
-			$('#tot').html('TOTAL-' + calcPrice);
+			$('#tot').html('TOTAL-' + total);
 			document.getElementById("total_amt").setAttribute('value',
-					calcPrice);
+					total);
 
-			$('#mgstamt').html('AMT-' + mGstAmt);
-			document.getElementById("m_gst_amt").setAttribute('value', mGstAmt);
+			$('#mgstamt').html('AMT-' + mrpBaseRate.toFixed(2));
+			document.getElementById("m_gst_amt").setAttribute('value', mrpBaseRate.toFixed(2));
 
-			$('#rmAmt').html(calcPrice);
+			$('#rmAmt').html(total);
 			document.getElementById("rm_amount").setAttribute('value',
-					calcPrice);
+					total);
 
 			var advance = $("#adv").val();
 			var rmamt = $("#total_amt").val();

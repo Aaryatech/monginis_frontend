@@ -491,16 +491,16 @@ public class SpCakeController {
 			String spSubTotal = request.getParameter("sp_sub_total");
 			logger.info("26" + spSubTotal);
 
-			String tax1 = request.getParameter("tax1");
+			float tax1 = Float.parseFloat(request.getParameter("tax1"));
 			logger.info("27" + tax1);
 
-			String tax2 = request.getParameter("tax2");
+			float tax2 = Float.parseFloat(request.getParameter("tax2"));
 			logger.info("28" + tax2);
 
-			String tax1Amt = request.getParameter("t1amt");
+			float tax1Amt = Float.parseFloat(request.getParameter("t1amt"));
 			logger.info("29" + tax1Amt);
 
-			String tax2Amt = request.getParameter("t2amt");
+			float tax2Amt = Float.parseFloat(request.getParameter("t2amt"));
 			logger.info("30" + tax2Amt);
 
 			String rmAmount = request.getParameter("rm_amount");
@@ -558,10 +558,6 @@ public class SpCakeController {
 						System.out.println("Exce in File Upload In Sp Cake Photo Insert " + e.getMessage());
 						e.printStackTrace();
 					}
-				
-				
-				
-				
 				
 			}
 
@@ -632,19 +628,28 @@ public class SpCakeController {
 
 			final SimpleDateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-			try {
+			/*try {
 				java.util.Date utilspBookForDOB = dmyFormat.parse(spCustDOB);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-			java.util.Date utilSpCustDOB = new java.util.Date();
+			}*/
+			/*java.util.Date utilSpCustDOB = new java.util.Date();
 			try {
 				utilSpCustDOB = dmyFormat.parse(spCustDOB);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/Date date=new Date();
+			 try {
+
+		             date = dmyFormat.parse(spCustDOB);
+		            System.out.println(date);
+		            System.out.println(dmyFormat.format(date));
+
+		        } catch (ParseException e) {
+		            e.printStackTrace();
+		        }
 
 			java.util.Date utilSpEdt = new java.util.Date();
 			try {
@@ -663,7 +668,7 @@ public class SpCakeController {
 			}
 
 			java.sql.Date sqlBookForDob = new java.sql.Date(deliDateMinusProdTime.getTime());
-			java.sql.Date sqlSpCustDOB = new java.sql.Date(utilSpCustDOB.getTime());
+			java.sql.Date sqlSpCustDOB = new java.sql.Date(date.getTime());
 			java.sql.Date sqlSpEdt = new java.sql.Date(utilSpEdt.getTime());
 
 			java.sql.Date sqlSpDeliveryDt = new java.sql.Date(utilSpDeliveryDt.getTime());
@@ -702,10 +707,10 @@ public class SpCakeController {
 			spCakeOrder.setSpSubTotal(Float.valueOf(spSubTotal));
 			spCakeOrder.setSpType(spType);
 
-			spCakeOrder.setTax1(Float.valueOf(tax1));
-			spCakeOrder.setTax1Amt(Float.valueOf(tax1Amt));
-			spCakeOrder.setTax2Amt(Float.valueOf(tax2Amt));
-			spCakeOrder.setTax2(Float.valueOf(tax2));
+			spCakeOrder.setTax1(tax1);
+			spCakeOrder.setTax1Amt(tax1Amt);
+			spCakeOrder.setTax2Amt(tax2Amt);
+			spCakeOrder.setTax2(tax2);
 
 			spCakeOrder.setMenuId(currentMenuId);
 			spCakeOrder.setIsSlotUsed(isSlotUsed);

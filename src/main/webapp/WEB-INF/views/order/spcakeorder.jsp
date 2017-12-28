@@ -394,8 +394,7 @@ select {
 		</div>
 		
 	    <div class="col1full" id="englishDiv" style="display: none;">
-	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px" >
-	    </textarea>
+	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px"></textarea>
 	    </div>
 	</div>
 	
@@ -469,7 +468,7 @@ select {
 					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="${sprRate*specialCake.spMinwt}">
 				</li>
 				<li>
-					<div class="priceLeft">GST </div>
+					<div class="priceLeft">GST (%)</div>
 					<div class="priceRight" id="taxPer3"> ${specialCake.spTax1+specialCake.spTax2} </div>
 					<input type="hidden" id="tax3" name="tax3" value="${specialCake.spTax1+specialCake.spTax2}">
 				</li>
@@ -516,8 +515,22 @@ select {
 </div>
 <input type="hidden" id="tax1" name="tax1" value="${specialCake.spTax1}">
 <input type="hidden" id="tax2" name="tax2" value="${specialCake.spTax2}">
+
+
+<c:if test="${specialCake.spTax1==0 or specialCake.spTax1==0.00}">
+<input type="hidden" id="t1amt" name="t1amt" value="0.0">
+</c:if>
+<c:if test="${specialCake.spTax1!=0 or specialCake.spTax1!=0.00}">
 <input type="hidden" id="t1amt" name="t1amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1)/100}">
+
+</c:if>
+<c:if test="${specialCake.spTax2==0 or specialCake.spTax2!=0.00}">
+<input type="hidden" id="t2amt" name="t2amt" value="0.0">
+</c:if>
+<c:if test="${specialCake.spTax2!=0 or specialCake.spTax2!=0.00}">
 <input type="hidden" id="t2amt" name="t2amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax2)/100}">
+
+</c:if>
 
 <input type="hidden" id="dbAdonRate" name="dbAdonRate">
  <input type="hidden" id="dbPrice" name="dbPrice"  value="${sprRate}">
@@ -609,6 +622,7 @@ $(document).ready(function() {
 			var tax3 = parseFloat($("#tax3").val());
 			var tax1 = parseFloat($("#tax1").val());
 			var tax2 = parseFloat($("#tax2").val());
+			//alert("tax1:"+tax1+"tax2"+tax2+"tax3"+tax3);
 			
 			
 			var totalCakeRate = wt*dbRate;
@@ -618,13 +632,44 @@ $(document).ready(function() {
 			var spSubtotal=add;
 			
 			var mrpBaseRate=parseFloat((spSubtotal*100)/(tax3+100));
-			var gstInRs=(mrpBaseRate*tax3)/100;
 			
-			var taxPerPerc1=parseFloat((tax1*100)/tax3);
-			var taxPerPerc2=parseFloat((tax2*100)/tax3);
+			var gstInRs=0;
+			var taxPerPerc1=0;
+			var taxPerPerc2=0;
+			var tax1Amt=0;
+			var tax2Amt=0;
+			if(tax3==0)
+				{
+				    gstInRs=0;
+				
+				}
+		    else
+			{
+			   gstInRs=(mrpBaseRate*tax3)/100;
+				
+			   if(tax1==0)
+				{
+				   taxPerPerc1=0;
+				}
+			   else
+				{
+				    taxPerPerc1=parseFloat((tax1*100)/tax3);
+				    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+
+				}
+			   if(tax2==0)
+				{
+				   taxPerPerc2=0;
+				}
+			   else
+				{
+					taxPerPerc2=parseFloat((tax2*100)/tax3);
+					tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+				}
+			}
+			
          
-			var tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
-			var tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
 
 			$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
@@ -683,13 +728,48 @@ $(document).ready(function() {
 					 var totalAmount=parseFloat(totalCakeRate+totalFlavourAddonRate);
 					 
 					 var mrpBaseRate=parseFloat((totalAmount*100)/(tax3+100));
-				     var gstInRs=parseFloat((mrpBaseRate*tax3)/100);
+				    /*  var gstInRs=parseFloat((mrpBaseRate*tax3)/100);
 				     
 				        var taxPerPerc1=parseFloat((tax1*100)/tax3);
 						var taxPerPerc2=parseFloat((tax2*100)/tax3);
 			         
 						var tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
-						var tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+						var tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100); */
+						var gstInRs=0;
+						var taxPerPerc1=0;
+						var taxPerPerc2=0;
+						var tax1Amt=0;
+						var tax2Amt=0;
+						if(tax3==0)
+							{
+							    gstInRs=0;
+							
+							}
+					    else
+						{
+						   gstInRs=(mrpBaseRate*tax3)/100;
+							
+						   if(tax1==0)
+							{
+							   taxPerPerc1=0;
+							}
+						   else
+							{
+							    taxPerPerc1=parseFloat((tax1*100)/tax3);
+							    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+
+							}
+						   if(tax2==0)
+							{
+							   taxPerPerc2=0;
+							}
+						   else
+							{
+								taxPerPerc2=parseFloat((tax2*100)/tax3);
+								tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+							}
+						}
 						
 					  var grandTotal=parseFloat(totalCakeRate+totalFlavourAddonRate);
 					  

@@ -435,7 +435,8 @@ function onChangeDay() {
 					ajax : 'true'
 				},
 				function(data) {
-					//alert(data.deliveryFromDate);
+					alert(data.deliveryFromDate);
+					alert(data.deliveryFromDate);
 
 					  $( function() {
 					    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:data.deliveryFromDate ,maxDate:data.deliveryToDate}

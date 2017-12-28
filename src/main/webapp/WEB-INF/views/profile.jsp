@@ -32,7 +32,12 @@
 	});
 </script>
 <!--rightNav-->
-
+<style>
+.fileUpload {
+     margin: 0px 0px 0px 0px;
+    padding-top: 1px;
+}
+	</style>
 
 </head>
 <body>
@@ -53,6 +58,7 @@
 			<jsp:param name="fr" value="${frDetails}"/>
 		</jsp:include>
 
+<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 
@@ -169,11 +175,10 @@
 								
 							</div>
 							<div class="form-group">
-						
-								<input name="" class="buttonupdateprofile" value="Change Pwd"
-									type="button" id="changePwd2" style="font-size: 9pt; height: 30px; width:70px; "onclick="showDiv1()">
-							
+								<input name="" class="" value="Change Password"
+									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 10pt; height: 33px; width:110px;">
 						</div>	
+						
 						</div>
                          
                
@@ -224,8 +229,8 @@
 						
 							<div class="form-group">
 						
-								<input name="" class="buttonupdateprofile" value="Change Password"
-									type="button" id="changePwd1" onclick="showDiv()">
+								<input name="" class="" value="Change Admin Password"
+									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 10pt; height: 33px; width:143px;">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -252,8 +257,8 @@
 						 
 						 <div class="form-group">
 						
-								<input name="" class="buttonupdateprofile" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 30px; width:70px; "onclick="return checkAuthority()">
+								<input name="" class="btn btn-info" value="Submit"
+									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:70px; "onclick="return checkAuthority()">
 							
 						</div>
 						
@@ -277,7 +282,7 @@
 						 
 						 <div class="form-group">
 						
-								<input name="" class="buttonupdateprofile" value="Submit"
+								<input name="" class="btn btn-info" value="Submit"
 									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 30px; width:70px; "onclick="return checkAuthForPassChange()">
 							
 						</div>
@@ -294,7 +299,7 @@
 					
 					<div class="profile">
 							<div class="profileinput">
-								<input name="" class="buttonupdateprofile" value="SUBMIT"
+								<input name="" class="btn additem_btn" value="SUBMIT"
 									type="submit" id="btnupdate_profile">
 							</div>
 						</div>
@@ -496,4 +501,5 @@ function updateAdminPassword() {
 	);
 }
 </script>
+
 </html>

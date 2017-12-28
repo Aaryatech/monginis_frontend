@@ -231,8 +231,17 @@ public class RegularSpCakeController {
 
 			float tax = Float.parseFloat(request.getParameter("t3"));
 			 logger.info("15" + tax);
-
-			
+			 
+			 float tax1 = Float.parseFloat(request.getParameter("t1"));
+			 logger.info("15" + tax1);
+			 
+			 float tax2 = Float.parseFloat(request.getParameter("t2"));
+			 logger.info("15" + tax2);
+			 
+			 float tax1Amt = Float.parseFloat(request.getParameter("t1Amt"));
+			 logger.info("15" + tax1Amt);
+			 float tax2Amt = Float.parseFloat(request.getParameter("t2Amt"));
+			 logger.info("15" + tax2Amt);
 
 			float rspRemainingAmt = Float.parseFloat(request.getParameter("rm_amount"));
 			 logger.info("16" + rspRemainingAmt);
@@ -310,10 +319,10 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setRspSubCat(rspSubCat);
 			regularSpCakeOrder.setRspSubTotal(rspSubTotal);
 			regularSpCakeOrder.setRspRemainingAmt(rspRemainingAmt);
-			regularSpCakeOrder.setTax1(tax/2);
-			regularSpCakeOrder.setTax1Amt(gstRs/2);
-			regularSpCakeOrder.setTax2(tax/2);
-			regularSpCakeOrder.setTax2Amt(gstRs/2);
+			regularSpCakeOrder.setTax1(tax1);
+			regularSpCakeOrder.setTax1Amt(tax1Amt);
+			regularSpCakeOrder.setTax2(tax2);
+			regularSpCakeOrder.setTax2Amt(tax2Amt);
 			
 			regularSpCakeOrder.setRspEventsName(rspEventsName);
 			regularSpCakeOrder.setRspProduDate(produDate);
