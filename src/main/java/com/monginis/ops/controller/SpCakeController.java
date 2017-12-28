@@ -54,7 +54,7 @@ public class SpCakeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SpCakeController.class);
 
-	FlavourList flavourList;
+ 	FlavourList flavourList;
 	EventList eventList;
 	List<String> configuredSpCodeList;
 
