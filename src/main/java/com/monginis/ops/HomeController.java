@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -246,11 +247,12 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-	public ModelAndView displayHomePage(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+	public ModelAndView displayHomePage( HttpSession  ses,HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
 		logger.info("/loginProcess request mapping.");
 
 		ModelAndView model = new ModelAndView("login");
+		
 		HttpSession session = request.getSession();
 
 		String frCode = request.getParameter("username");
@@ -428,16 +430,29 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/logout" )
-	public String logout(HttpSession session , HttpServletRequest req, HttpServletResponse res) {
+	public  ModelAndView logout(HttpSession session , HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
-		session.invalidate();
-		
-		  HttpServletResponse response=(HttpServletResponse)res;
-	        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        ModelAndView model = new ModelAndView("login");
+        HttpServletResponse response=(HttpServletResponse)res;
+
+		  response.setHeader("Cache-Control", "no-cache");
 	        response.setHeader("Pragma", "no-cache");
-	        response.setDateHeader("Expires", -1);
+	       response.setDateHeader("Expires", -1);
+        System.out.println("session Data befor "+session.getAttribute("frDetails").toString());
+        
+        System.out.println("session ID before ="+session.getId());
+                session.removeAttribute("frId");
+
+        session.removeAttribute("frDetails");
+		session.invalidate();
+		session.setMaxInactiveInterval(0);
+		  
+		System.out.println("session ID  after expire "+session.getId());
 		
-		return "redirect:/";
+	       // session.invalidate();
+	       
+	        return model;
+		//return "redirect:/";
 	}
 
 }

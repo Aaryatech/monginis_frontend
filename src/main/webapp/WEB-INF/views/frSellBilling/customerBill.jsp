@@ -123,8 +123,8 @@
 
 					</div>
 
-					<div class="order-right">
-						<a href="${pageContext.request.contextPath}/viewBill"><button class="pull-right btn view_bill_btn">
+					<div class="order-right" align="justify">
+						<a href="${pageContext.request.contextPath}/viewBill"><button class="btn btn-success">
 							View Bill
 						</button></a>
 					</div>
