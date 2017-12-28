@@ -831,6 +831,21 @@ public class GrnGvnController {
 
 			}
 			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map=new LinkedMultiValueMap<String, Object>();
+			map.add("isFrUsed", 0);
+			map.add("moduleId", 1);
+			map.add("subModuleId", 1); 
+			  getAllRemarksList=restTemplate.postForObject(Constant.URL + "/getAllRemarks",map, GetAllRemarksList.class);
+
+			getAllRemarks = new ArrayList<>();
+			getAllRemarks = getAllRemarksList.getGetAllRemarks();
+			
+			System.out.println("remark list " + getAllRemarks.toString());
+
+			modelAndView.addObject("remarkList", getAllRemarks);
 			modelAndView.addObject("gvnConfList", objShowGvnList);
 			modelAndView.addObject("billNo",billNo);
 

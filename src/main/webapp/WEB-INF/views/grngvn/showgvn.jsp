@@ -152,9 +152,21 @@
 												<td class="col-md-1" id="gvn_amt${gvnConfList.itemId}"><c:out
 														value="00"></c:out></td>
 
-												<td class="col-md-1"><textarea
+												<%-- <td class="col-md-1"><textarea
 														name="gvn_remark${gvnConfList.itemId}"
 														id="gvn_remark${gvnConfList.itemId}"></textarea></td>
+														
+														 --%>
+														
+																<td class="col-md-1">
+																<select name="gvn_remark${gvnConfList.itemId}" style="width: 200px"
+																id="gvn_remark${gvnConfList.itemId}" class="form-control" >
+																<option selected  value="selectRemark">Select Remark</option>
+																<c:forEach items="${remarkList}" var="remarkList">
+																${remarkList.remark}
+																<option value="${remarkList.remark}">${remarkList.remark}</option>
+																</c:forEach>
+																</select></td>
 
 												<td class="col-md-1">
 
@@ -170,9 +182,9 @@
 														</div>
 
 
-														<a href="#" data-dismiss="fileupload"><i
+														<!-- <a href="#" data-dismiss="fileupload"><i
 															class="fa fa-close"></i></a>
-
+ -->
 													</div> <!-- </div> -->
 												</td>
 
@@ -189,8 +201,8 @@
 															</div>
 
 
-															<a href="#" data-dismiss="fileupload"><i
-																class="fa fa-close"></i></a>
+															<!-- <a href="#" data-dismiss="fileupload"><i
+																class="fa fa-close"></i></a> -->
 														</div>
 
 
