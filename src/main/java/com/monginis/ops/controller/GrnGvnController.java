@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.PostFrItemStockHeader;
@@ -860,8 +862,8 @@ public class GrnGvnController {
 	}
 
 	@RequestMapping(value = "/addGvnProcess", method = RequestMethod.POST)
-	public ModelAndView addGvnProcess(@RequestParam("gvn_photo1") MultipartFile[] photo1,
-			@RequestParam("gvn_photo2") MultipartFile[] photo2, HttpServletRequest request,
+	public ModelAndView addGvnProcess(@RequestParam("gvn_photo1") List<MultipartFile> photo1,
+			@RequestParam("gvn_photo2") List<MultipartFile> photo2, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgvn");
 		
@@ -943,22 +945,48 @@ public class GrnGvnController {
 				postGrnGvn.setFrGrnGvnRemark(frGvnRemark);// 13
 				postGrnGvn.setGrnGvnStatus(1);// 16
 				postGrnGvn.setApprovedLoginGate(0);// 17
-				postGrnGvn.setApproveimedDateTimeGate("");// 18
+				postGrnGvn.setApproveimedDateTimeGate("0000-00-00 00:00:00");// 18
 				postGrnGvn.setApprovedRemarkGate("");// 19
 
 				postGrnGvn.setApprovedLoginStore(0);// 20
-				postGrnGvn.setApprovedDateTimeStore(" ");// 21
-				postGrnGvn.setApprovedRemarkStore(" ");// 22
+				postGrnGvn.setApprovedDateTimeStore("0000-00-00 00:00:00");// 21
+				postGrnGvn.setApprovedRemarkStore("");// 22
 				postGrnGvn.setApprovedLoginAcc(0);// 23
-				postGrnGvn.setGrnApprovedDateTimeAcc(" ");// 24
-				postGrnGvn.setApprovedRemarkAcc(" ");// 25
+				postGrnGvn.setGrnApprovedDateTimeAcc("0000-00-00 00:00:00");// 24
+				postGrnGvn.setApprovedRemarkAcc("");// 25
 
 				postGrnGvn.setDelStatus(0);// 26
 				postGrnGvn.setGrnGvnQtyAuto(gvnQty);// 27
 
-				String gvnPhoto1 = ImageS3Util.uploadSpCakeImage(photo1[i]);
+				
+				VpsImageUpload upload = new VpsImageUpload();
+
+				Calendar cale = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				System.out.println(sdf.format(cale.getTime()));
+
+				String curTimeStamp = sdf.format(cale.getTime());
+				String gvnPhoto1=null;
+				String gvnPhoto2 =null;
+				
+				try {
+					gvnPhoto1=curTimeStamp + "-" + photo1.get(i).getOriginalFilename();
+					gvnPhoto2=curTimeStamp + "-" + photo2.get(i).getOriginalFilename();
+					upload.saveUploadedFiles(photo1, Constant.GVN_IMAGE_TYPE, curTimeStamp + "-" + photo1.get(i).getOriginalFilename());
+					upload.saveUploadedFiles(photo2, Constant.GVN_IMAGE_TYPE, curTimeStamp + "-" + photo2.get(i).getOriginalFilename());
+
+					System.out.println("upload method called " + photo1.toString());
+					
+				} catch (IOException e) {
+					
+					System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
+					e.printStackTrace();
+				}
+				
+				
+				//String gvnPhoto1 = ImageS3Util.uploadSpCakeImage(photo1[i]);
 				postGrnGvn.setGvnPhotoUpload1(gvnPhoto1);
-				String gvnPhoto2 = ImageS3Util.uploadSpCakeImage(photo2[i]);
+				//String gvnPhoto2 = ImageS3Util.uploadSpCakeImage(photo2[i]);
 
 				postGrnGvn.setGvnPhotoUpload2(gvnPhoto2);
 
