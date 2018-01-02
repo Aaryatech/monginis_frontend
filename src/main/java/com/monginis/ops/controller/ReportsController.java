@@ -1142,7 +1142,7 @@ public class ReportsController {
 					return model;
 				}  
 
-				@RequestMapping(value = "/pdfCustBill", method = RequestMethod.GET)
+			/*	@RequestMapping(value = "/pdfCustBill", method = RequestMethod.GET)
 				public ModelAndView demoBill(HttpServletRequest request,
 						HttpServletResponse response) {
 					String sellBillNo=request.getParameter("billNo");
@@ -1173,7 +1173,7 @@ public class ReportsController {
 					
 					model.addObject("billList", getCustmoreBillResponseList);
 					return model;
-				}
+				}*/
 				
 				private Dimension format = PD4Constants.A4;
 				private boolean landscapeValue = false;
