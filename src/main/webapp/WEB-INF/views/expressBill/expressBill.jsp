@@ -76,6 +76,67 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
 	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
 	
+	<!-- For Toggle Button  Print on off -->
+	<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 25px;
+  margin-top: 14px;
+  
+    
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+ top: -2px;
+left: -6px;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 26px;
+  left: 4px;
+  bottom: 5px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
 </head>
 <body>
 
@@ -85,24 +146,17 @@
 	<c:url var="insertHeader" value="/insertHeader" />
 	<div class="sidebarOuter"></div>
 	<c:url var="calcStock" value="/calcStock" />
-
+	<c:url var="printExBill" value="/printExBill" />
 	<c:url var="deleteItem" value="/deleteItem" />
-
+	<c:url var="getSelectedIdForPrint" value="/getSelectedIdForPrint" />
 
 	<div class="wrapper">
 
-		<!--topHeader-->
-
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
-			<jsp:param name="frDetails" value="${frDetails}" />
-
-		</jsp:include>
-
-		<!--topHeader-->
+		
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 		<!--rightContainer-->
-		<div class="fullGrid center">
+		<div class="fullGrid">
 			<!--fullGrid-->
 			<div class="wrapperIn2">
 
@@ -120,19 +174,18 @@
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 
-					<div class="order-left">
+					<div class="col-md-2">
 						<h2 class="pageTitle">Express Bill</h2>
 
 					</div>
-
-
-					<!-------------------------------------------------------------->
-
-					<c:choose>
+					
+					
+					<div class="col-md-8 text-left bill-date">
+						<c:choose>
 
 						<c:when test="${count == 0}">
 							<div class="colOuter">
-								<div class="col3full">
+								<div>
 									<input name="" class="buttonsaveorder" value="Start Day"
 										type="button" id="start" onclick="start(); hideMe(this.id);">
 								</div>
@@ -142,18 +195,33 @@
 						<c:when test="${count ==2}">
 						
 						
-						<div class="col3" align="justify" >
-						
-				<h4 style="align-items: center;" >
-					<i class="fa fa-bars"> Bill No :</i>${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp;
-					<i class="fa fa-bars"> Bill Date :</i>${sellBillHeader.billDate}
+						<div>
+					 
+				<h4>
+					<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp;
+					 Bill Date :${sellBillHeader.billDate}</B>
 				</h4>
 				<%-- <h4 style="align-items: center;" >
 					<i class="fa fa-bars">Bill Date :</i>${sellBillHeader.billDate}
 				</h4> --%>
 				
+						
 
+					</div>
+
+
+					<!-------------------------------------------------------------->
+
+					
 			</div>
+			
+			<div class="col-md-2"> 
+								<span style="padding-top: 0px;float: left;margin-top: 13px;font-size: 16px; ">Single Print</span><label class="switch"> 
+  									<input type="checkbox" id="id" checked>
+ 											 <span class="slider round"></span>
+ 								</div>			 
+ 										
+			 
 
 							<%-- <div class="colOuter">
 								<div class="col1">Bill NO:</div>
@@ -166,9 +234,13 @@
 							</div> --%>
 
 							<!--tab1-->
-							<li class="selected">
-								<div class="row"></div> <br /> <br />
-								<div class="table-responsive"">
+							<!-- <li class="selected"> -->
+							
+								<div class="row"></div>
+								
+									 
+								</label>
+								<div class="table">
 									<div class="shInnerwidth">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0"
 											class="table">
@@ -188,8 +260,8 @@
 																oninput='onInput()' id='input1' />
 																 --> 
 																 
-																 <input type='text' onchange='onInput()'
-																class="form-control" placeholder="Enter Barcode"
+																 <input type"selectpicker"  data-show-subtext="true" data-live-search="true"
+																data-placeholder="Enter Barcode"
 																id='input' list='dlist' /> <datalist id='dlist'>
 																	<c:forEach items="${itemsList}" var="itemsList">
 																		<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
@@ -232,8 +304,12 @@
 										<center>
 											<button class="btn btn-primary" onclick="insertItem1()"
 												id="insertItemButton">Submit Item</button>
+												<button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
+						onclick="printExBill()" disabled id="printExBill">Print</button>
 										</center>
+										 		
 									</div>
+									 
 								</div> <br /> <!-- Form End -->
 								<div class="table-responsive">
 									<div class="shInnerwidth">
@@ -241,6 +317,9 @@
 										<table class="table table-bordered" width="100%" border="0"
 											cellspacing="0" cellpadding="0 " id="table_grid1">
 											<tr class="bgpink">
+												<th>Print</th>
+												<th>Sr.No</th>
+												<th>Detail Id</th>
 												<th>Barcode</th>
 												<th>Item Name</th>
 												<th style="width: 130px;">Qty</th>
@@ -248,16 +327,21 @@
 												<th>Amount</th>
 												<th>Action</th>
 											</tr>
-											<c:forEach items="${sellBillDetails}" var="sellBillDetails">
+											<c:forEach items="${sellBillDetails}" var="sellBillDetails" varStatus="count">
 												<tr>
+												<td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
+																id="select_to_print"
+																value="${sellBillDetails.sellBillDetailNo}" ></td>
+																	<td ><c:out value="${count.index+1}" /></td>
+													<td><c:out value="${sellBillDetails.sellBillDetailNo}" /></td>
 													<td><c:out value="${sellBillDetails.itemId}" /></td>
 													<td><c:out value="${sellBillDetails.itemName}" /></td>
 													<td><c:out value="${sellBillDetails.qty}" /></td>
 													<td><c:out value="${sellBillDetails.mrp}" /></td>
 													<td><c:out value="${sellBillDetails.grandTotal}" /></td>
 
-													<td>
-														<a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
+ 											<td>
+								 				<a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
 													</td>
 												</tr>
 											</c:forEach>
@@ -287,13 +371,13 @@
 													value="DAY CLOSE" id="dayClose1"/>
 								</center>
 
-							</li>
+							<!-- </li> -->
 
 						</c:when>
 						<c:when test="${count ==3}">
 							<li>
 								<div class="row"></div> <br /> <br />
-								<div class="table-responsive">
+								<div class="table">
 									<div class="shInnerwidth">
 
 										<table class="table table-bordered" width="100%" border="0"
@@ -307,6 +391,8 @@
 												<th>Action</th>
 											</tr>
 											<tr>
+											
+																
 												<td><c:out value="${sellBillHeader.sellBillNo}" /></td>
 												<td><c:out value="${sellBillHeader.billDate}" /></td>
 												<td><c:out value="${sellBillHeader.taxableAmt}" /></td>
@@ -332,6 +418,9 @@
 										<table class="table table-bordered" width="100%" border="0"
 											cellspacing="0" cellpadding="0 " id="table_grid">
 											<tr class="bgpink">
+											<th>Print</th>
+												<th>Sr.No.</th>
+												<th>Detail Id</th>
 												<th>Barcode</th>
 												<th>Item Name</th>
 												<th style="width: 130px;">Qty</th>
@@ -339,9 +428,11 @@
 												<th>Amount</th>
 											</tr>
 
-											<c:forEach items="${sellBillDetails}" var="sellBillDetails">
+											<c:forEach items="${sellBillDetails}" var="sellBillDetails"  varStatus="count">
 												<tr>
-													<td><c:out value="${sellBillDetails.itemId}" /></td>
+												<td ><c:out value="${count.index+1}" /></td>
+												
+															<td><c:out value="${sellBillDetails.itemId}" /></td>
 													<td><c:out value="${sellBillDetails.itemName}" /></td>
 													<td><c:out value="${sellBillDetails.qty}" /></td>
 													<td><c:out value="${sellBillDetails.mrp}" /></td>
@@ -362,7 +453,7 @@
 					
 					<li class="selected">
 						<div class="row"></div> <br /> <br />
-						<div class="table-responsive" id="div1" style="display: none;">
+						<div class="table" id="div1" style="display: none;">
 							<div class="shInnerwidth">
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
 									class="table">
@@ -425,10 +516,13 @@
 						<div class="row">
 							<div class="col-md-12">
 								<center>
-											<button class="btn btn-primary" onclick="insertItem1()"
-												id="insertItemButton">Submit Item</button>
+											  <button class="btn btn-primary" onclick="insertItem1()"
+												id="insertItemButton">Submit Item</button> 
+												<!-- <button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
+						onclick="printExBill()" disabled id="printExBill">Print</button> --> 
 										</center>
-
+						 
+								
 
 							</div>
 							
@@ -458,13 +552,16 @@
 								</center> --%> <input type="submit" class="btn btn-primary"
 						onclick="todaysDayClose()" style="display: none;" id="dayClose1"
 						value="DAY CLOSE">
+						
+						
 
 					</li>
 				</div>
+				
 				<!--tabNavigation-->
 			</div>
 			<!--rightSidebar-->
-
+						
 		</div>
 		<!--fullGrid-->
 	</div>
@@ -489,7 +586,7 @@ function start(){
     	ajax : 'true',
 
     }, function(data) {
-		alert("inserting Header ")
+		//alert("inserting Header ")
 
 	});
 }
@@ -602,7 +699,12 @@ function  hideMe(startId){
 				$.each(data,function(key, item) {
 
 				var tr = $('<tr></tr>');
-			  
+				tr.append($('<td></td>').html(' <input type="checkbox" onchange="selectToPrint()" name="select_to_print" id="select_to_print" value="'+item.sellBillDetailNo+'" >'));
+				
+				tr.append($('<td></td>').html(key+1));
+				
+				tr.append($('<td></td>').html(item.sellBillDetailNo));
+				
 			  	tr.append($('<td></td>').html(item.itemId));
 
 			  	tr.append($('<td></td>').html(item.itemName));
@@ -622,8 +724,13 @@ function  hideMe(startId){
 				$('#table_grid1 tbody').append(tr);
 
 			});
-		
+				 if(document.getElementById("id").checked){
+					 
+					// alert("print");
+					 window.open("${pageContext.request.contextPath}/printExBill");
+				 }
 	         });
+		
 	}
 	});
 	    document.getElementById("input").value="";
@@ -682,7 +789,15 @@ function  hideMe(startId){
 					$.each(data,function(key, item) {
 
 					var tr = $('<tr></tr>');
-
+					
+					 
+						
+						tr.append($('<td></td>').html(' <input type="checkbox" onchange="selectToPrint()" name="select_to_print" id="select_to_print" value="'+item.sellBillDetailNo+'" >'));
+						
+						tr.append($('<td></td>').html(key+1));
+						
+						tr.append($('<td></td>').html(item.sellBillDetailNo));
+						
 				  	tr.append($('<td></td>').html(item.itemId));
 
 				  	tr.append($('<td></td>').html(item.itemName));
@@ -704,6 +819,58 @@ function  hideMe(startId){
 		         });
 		}
 	
+	
+	function printExBill()
+	{
+		alert("in print");
+		
+		var checkedId=[];
+		var checkboxes=document.getElementsByName("select_to_print");
+		
+		 
+			for (var i = 0, n = checkboxes.length; i < n; i++) {
+				if(checkboxes[i].checked) {
+					
+					checkedId.push(checkboxes[i].value );
+					
+				}
+			}
+			alert(checkboxes);
+			 $.getJSON('${getSelectedIdForPrint}',{
+
+					id :  JSON.stringify(checkedId),
+					ajax : 'true',
+				
+
+				 });
+				  
+		window.open("${pageContext.request.contextPath}/printSelectedOrder");
+	}
+	
+	function selectToPrint()
+	{
+		//alert("hh");
+	 
+		var checkboxes=document.getElementsByName("select_to_print");
+		//alert(checkboxes[0].value);
+		var flag=0;
+			for (var i = 0, n = checkboxes.length; i < n; i++) {
+				if(checkboxes[i].checked) {
+					 
+					flag=1;
+				}
+			}
+		if(flag==1)
+			{
+		 //alert("KK");
+			document.getElementById("printExBill").disabled=false;
+			}
+		else{
+		document.getElementById("printExBill").disabled=true;
+		}
+		
+		 
+	}
 	</script>
 
 </body>

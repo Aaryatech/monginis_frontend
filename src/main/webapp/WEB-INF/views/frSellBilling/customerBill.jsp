@@ -2434,9 +2434,9 @@ jQuery(document).ready(function() {
 	<script type="text/javascript">
 		function generateSellBill(token) {
  
-			var isValid = validation(token);
-
-			if (isValid) {
+			//var isValid = validation(token);
+			var grandtot = $("#grandtot"+token).val();
+			if (validation(token)  && grandtot>0) {
 				var custName = $("#custName"+token).val();
 				var gstNo = $("#gstNo"+token).val();
 				var phoneNo = $("#phoneNo"+token).val();
@@ -2522,7 +2522,7 @@ jQuery(document).ready(function() {
 		{
 			var billNo=document.getElementById("sellBillNo"+token).value;
 			 
-			window.open("${pageContext.request.contextPath}/pdf?reportURL=pdfSellBill?billNo="+billNo);
+			window.open("${pageContext.request.contextPath}/pdfSellBill?billNo="+billNo);
 			clearData(token);
 		}
 		function clearData(token)

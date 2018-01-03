@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.GetItemHsnCode;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
@@ -54,8 +56,10 @@ public class ExpressBillController {
 
 	public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
     public static SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
-    
-	
+    SellBillDetail	sellBillDetailRes;
+   // SellBillDetailList sellBillDetailList;
+    List<SellBillDetail> selectedSellBillDetailList;
+    List<SellBillDetail>  BillDetailList=new ArrayList<SellBillDetail>();
 	
 	@RequestMapping(value = "/showExpressBill", method = RequestMethod.GET)
 	public ModelAndView showExpressBill(HttpServletRequest request, HttpServletResponse response)
@@ -192,7 +196,8 @@ public class ExpressBillController {
 					map, SellBillDetailList.class);
 			
 			List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
-			
+			selectedSellBillDetailList=sellBillDetails;
+			System.out.println("selectedSellBillDetailList  "+selectedSellBillDetailList.toString());
 			model.addObject("sellBillDetails", sellBillDetails);
 	   		model.addObject("count",2);
 	   		
@@ -205,11 +210,12 @@ public class ExpressBillController {
 			
 			map.add("billNo", sellBillHeader.getSellBillNo());
 			
-			SellBillDetailList sellBillDetailList = rest.postForObject(Constant.URL + "/getSellBillDetails",
+			SellBillDetailList  sellBillDetailList = rest.postForObject(Constant.URL + "/getSellBillDetails",
 					map, SellBillDetailList.class);
 					
 			List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
-			
+			selectedSellBillDetailList=sellBillDetails;
+			System.out.println("selectedSellBillDetailList  "+selectedSellBillDetailList.toString());
 			model.addObject("sellBillDetails", sellBillDetails);
 	   		model.addObject("count", 3);
 	   		model.addObject("sellBillHeader",sellBillHeader);
@@ -440,7 +446,7 @@ public class ExpressBillController {
 
 				Float grandTotal = totalTax + taxableAmt;
 				grandTotal = roundUp(grandTotal);
-
+			 
 				sellBillDetail.setCatId(item.getCatId());
 				sellBillDetail.setSgstPer(tax1);
 				sellBillDetail.setSgstRs(sgstRs);
@@ -467,9 +473,9 @@ public class ExpressBillController {
 				sellBillDetail.setTotalTax(totalTax);
 				System.out.println("**SellBillDetail Response:** "+sellBillDetail.toString()+"GlobalBillNo."+sellBillHeaderGlobal.getSellBillNo());
 
-				SellBillDetail	sellBillDetailRes=restTemplate.postForObject(Constant.URL + "saveSellBillDetail", sellBillDetail,
+				   	sellBillDetailRes=restTemplate.postForObject(Constant.URL + "saveSellBillDetail", sellBillDetail,
 						SellBillDetail.class);
-				
+				System.out.println("After Insert Item  "+sellBillDetailRes.toString());
 				if(sellBillDetailRes!=null) {
 					
 					for(int i=0;i<currentStockDetailList.size();i++) {
@@ -503,6 +509,7 @@ public class ExpressBillController {
 				map, SellBillDetailList.class);
 		
 		List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
+		selectedSellBillDetailList=sellBillDetails;
 		
 		return sellBillDetails;
 	}
@@ -701,5 +708,75 @@ public class ExpressBillController {
 		
 		return sellBillDetails;
 	
+	}
+	
+	
+
+	@RequestMapping(value = "/printExBill", method = RequestMethod.GET)
+	public ModelAndView showExpressBillPrint(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView model = new ModelAndView("expressBill/frExBillPrint");
+		
+		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			System.out.println("Item Id "  +sellBillDetailRes.getItemId());
+			map.add("itemId",sellBillDetailRes.getItemId());
+		GetItemHsnCode  getItemHsnCode=new RestTemplate().postForObject(Constant.URL + "/getItemHsnCode",
+					map, GetItemHsnCode.class);
+		//System.out.println("HSN CODE "+getItemHsnCode.toString());
+		
+		model.addObject("exBill",sellBillDetailRes);
+		if(getItemHsnCode!=null) {
+		model.addObject("itemName", getItemHsnCode.getItemName());
+		model.addObject("itemHsn", getItemHsnCode.getHsncd());
+		}
+		model.addObject("date",new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+		System.out.println("After print ");
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/getSelectedIdForPrint", method = RequestMethod.GET)
+	public void getSelectedIdForPrint(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		System.out.println("IN Metjod");
+		
+		BillDetailList=new ArrayList<SellBillDetail>();
+		String selectedId = request.getParameter("id");
+		selectedId=selectedId.substring(1, selectedId.length()-1);
+		selectedId=selectedId.replaceAll("\"", "");
+	
+		 
+		 System.out.println("selectedId  "+selectedId);
+		 
+		List<String> selectedIdList = new ArrayList<>();
+		System.out.println("sellBillDetailList  "+selectedSellBillDetailList.toString());
+		selectedIdList=Arrays.asList(selectedId.split(","));
+		for(int i=0;i<selectedSellBillDetailList.size();i++)
+		{
+			for(int j=0;j<selectedIdList.size();j++)
+			{
+				if(Integer.parseInt(selectedIdList.get(j))==selectedSellBillDetailList.get(i).getSellBillDetailNo())
+				{
+					System.out.println(i);
+					BillDetailList.add(selectedSellBillDetailList.get(i));
+				}
+		}
+		}
+		
+	}
+	@RequestMapping(value = "/printSelectedOrder", method = RequestMethod.GET)
+	public ModelAndView printSelectedOrder(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView model = new ModelAndView("expressBill/frSelectedExBillPrint");
+		System.out.println("IN Print Selected Order");
+		 
+		System.out.println("Selected List "+BillDetailList.toString());
+		model.addObject("exBill",BillDetailList);
+		 
+		model.addObject("date",new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+		System.out.println("After print ");
+		
+		return model;
 	}
 }

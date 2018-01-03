@@ -208,7 +208,16 @@
 			</tr>
 		</tbody>
 	</table>
-
+</body>	<body onload="print()">
+	<script>
+	function print()
+	{
+		//alert("JJ");
+		this.print();
+		//window.close();
+	}
+	
+	</script>
 
 </body>
 </html>
