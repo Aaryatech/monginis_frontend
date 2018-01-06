@@ -55,43 +55,44 @@ import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDataCommon;
 
 @Controller
+@Scope("session")
 public class CustomerBillController {
 
 	
 	
-	public static CustomerBillItem currentNewItem;
-	public static int prevItemId;
-	public static int frGstType=0;
-	public static List<Item> newItemsList;
+	public   CustomerBillItem currentNewItem;
+	public   int prevItemId;
+	public   int frGstType=0;
+	public   List<Item> newItemsList;
 	
-	public static List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<>() ;//
+	public   List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<>() ;//
 
 	// static ItemList
 	
 	public List<CustomerBillItem> customerBillItemList = new ArrayList<CustomerBillItem>();
 
-	public static CustomerBillData customerBillDataToken1 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken1 = new CustomerBillData();
 
-	public static CustomerBillData commonCustomerBillData=new CustomerBillData();
+	public   CustomerBillData commonCustomerBillData=new CustomerBillData();
 	
 	public CustomerBillData customerBillDataToken2 = new CustomerBillData();
 
-	public static CustomerBillData customerBillDataToken3 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken3 = new CustomerBillData();
 
-	public static CustomerBillData customerBillDataToken4 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken4 = new CustomerBillData();
 
-	public static CustomerBillData customerBillDataToken5 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken5 = new CustomerBillData();
 
-	public static CustomerBillData customerBillDataToken6 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken6 = new CustomerBillData();
 
-	public static CustomerBillData customerBillDataToken7 = new CustomerBillData();
+	public   CustomerBillData customerBillDataToken7 = new CustomerBillData();
  
  
 	List<GetSellBillHeader> getSellBillHeaderList;
 	List<GetSellBillDetail> getSellBillDetailList;
 
 	int menuId;
-	private static String itemShowGlobal;
+	private   String itemShowGlobal;
 	
 	
 	

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -53,6 +54,7 @@ import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
 
 @Controller
+@Scope("session")
 public class SpDayCakeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
@@ -60,11 +62,11 @@ public class SpDayCakeController {
 	private  List<GetFrItem> prevFrItemList = new ArrayList<>();
 	Date productionDate;
 	Date deliDate;
-	public static  int spdayId=0;
-	public static String delDate=null;
+	public  int spdayId=0;
+	public String delDate=null;
 
 	
-	private static int currentMenuId = 0;
+	private int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
 	public MultiValueMap<String, Object> map;
 

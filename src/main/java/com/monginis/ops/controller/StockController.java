@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -36,6 +37,7 @@ import com.monginis.ops.model.PostFrItemStockDetail;
 import com.monginis.ops.model.PostFrItemStockHeader;
 
 @Controller
+@Scope("session")
 public class StockController {
 
 	List<MCategory> mAllCategoryList = new ArrayList<MCategory>();

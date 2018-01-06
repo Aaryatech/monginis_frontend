@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -61,6 +62,7 @@ import com.monginis.ops.model.MonthWiseReportList;
 import com.monginis.ops.model.SpCakeResponse;
 
 @Controller
+@Scope("session")
 public class ReportsController {
  
 	public static List<GetRepTaxSell> getRepTaxSell;
@@ -75,8 +77,8 @@ public class ReportsController {
 	public static List<ItemWiseDetail> itemWiseDetailReportList;
 	public static List<ItemWiseReport> itemWiseReportList;
 	public static List<BillWiseTaxReport> billWiseTaxReport;
-	public static 	List<MonthWiseReport> monthWiseReportList;
-	public static int frGstType=0;
+	public static List<MonthWiseReport> monthWiseReportList;
+	public static  int frGstType=0;
 	
 	@RequestMapping(value = "/viewBillWisePurchaseReport", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request,

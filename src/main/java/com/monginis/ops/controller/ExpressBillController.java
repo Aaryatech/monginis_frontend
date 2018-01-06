@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.amazonaws.Request;
+
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
@@ -50,12 +51,13 @@ import com.sun.org.apache.regexp.internal.RE;
 
 
 @Controller
+@Scope("session")
 public class ExpressBillController {
 	
-	public static List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<GetCurrentStockDetails>();
+	public List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<GetCurrentStockDetails>();
 
-	public static List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
-    public static SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
+	public List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
+    public SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
     SellBillDetail	sellBillDetailRes;
    // SellBillDetailList sellBillDetailList;
     List<SellBillDetail> selectedSellBillDetailList;

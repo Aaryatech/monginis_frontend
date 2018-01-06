@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -25,9 +26,10 @@ import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
-import com.monginis.ops.util.ImageS3Util;
+ 
 
 @Controller
+@Scope("session")
 public class ProfileController {
 	
 

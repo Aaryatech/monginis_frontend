@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -41,11 +42,12 @@ import com.monginis.ops.model.GetSellBillHeader;
 
 
 @Controller
+@Scope("session")
 public class BillingController {
 	
 	
 	public GetBillHeaderResponse billHeadeResponse;
-	public static List<GetBillDetail> billDetailsList;
+	public List<GetBillDetail> billDetailsList;
 	
 	
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)

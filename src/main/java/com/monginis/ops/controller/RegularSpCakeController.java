@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
-import com.monginis.ops.util.ImageS3Util;
+ 
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.EventList;
 import com.monginis.ops.model.Flavour;
@@ -50,13 +51,14 @@ import com.monginis.ops.model.RegularSpCkItemResponse;
 import com.monginis.ops.model.SubCategory;
    
 @Controller
+@Scope("session")
 public class RegularSpCakeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	EventList eventList;
 	ArrayList<FrMenu> menuList;
-	private static int currentMenuId = 0;
-	private static int globalIndex = 2;
+	private  int currentMenuId = 0;
+	private  int globalIndex = 2;
  	String itemShow;
 	 List<MCategory>  mCategories;
 	

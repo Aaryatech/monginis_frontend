@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -55,9 +56,10 @@ import com.monginis.ops.model.grngvn.ShowGrnBean;
 import com.monginis.ops.model.grngvn.StockForAutoGrnGvn;
 import com.monginis.ops.model.remarks.GetAllRemarks;
 import com.monginis.ops.model.remarks.GetAllRemarksList;
-import com.monginis.ops.util.ImageS3Util;
+ 
 
 @Controller
+@Scope("session")
 public class GrnGvnController {
 
 	public String incrementDate(String date, int day) {
