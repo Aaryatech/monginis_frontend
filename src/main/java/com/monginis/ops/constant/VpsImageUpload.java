@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class VpsImageUpload {
 
-	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/FR";
-	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/SPCAKE";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/CUSTCHOICEPHOTOCAKE";
-	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/GVN";
+	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/FR/";
+	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/SPCAKE/";
+	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/CUSTCHOICEPHOTOCAKE/";
+	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/GVN/";
 	private static final String FIELDMAP_FOLDER = null;
 	private static final String KYC_FOLDER = null;
 

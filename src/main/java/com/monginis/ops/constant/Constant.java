@@ -4,22 +4,22 @@ import java.io.File;
 
 public class Constant {
 
-	 public static final String URL = "http://localhost:8098/";//http://mongiwebapi.ap-south-1.elasticbeanstalk.com/
+	public static final String URL = "http://localhost:8098/";//http://mongiwebapi.ap-south-1.elasticbeanstalk.com/
 		//public static final String URL = "http://132.148.143.124:8080/webapi/";
 
 	 //public static final String URL = "http://mongiwebapi.ap-south-1.elasticbeanstalk.com/";
 
 	
-	public static final String SPCAKE_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/SPCAKE";
+	public static final String SPCAKE_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/SPCAKE/";
 	
-	public static final String PHOTO_CAKE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/CUSTCHOICEPHOTOCAKE";
+	public static final String PHOTO_CAKE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/CUSTCHOICEPHOTOCAKE/";
 
-	public static final String FR_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/FR";
+	public static final String FR_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/FR/";
 	
-	public static final String GVN_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/GVN";
+	public static final String GVN_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/GVN/";
 
-	public static final String ReportURL ="http://132.148.143.124:8080/ops/";
-	public static final String MESSAGE_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/MSG";
+	public static final String ReportURL ="http://localhost:8895/ops/";
+	public static final String MESSAGE_IMAGE_URL="/opt/apache-tomcat-8.5.6/webapps/webapi/uploads/MSG/";
 
 	
 
