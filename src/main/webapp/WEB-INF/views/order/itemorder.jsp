@@ -38,6 +38,12 @@ jQuery(document).ready(function(){
 .closebtn:hover {
 	color: black;
 }
+a:link {
+    color: black;
+}
+a:hover {
+    color: black;
+}
 </style>
 
 
@@ -231,7 +237,8 @@ jQuery(document).ready(function(){
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
-																	<td class="col-md-2"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-2" ><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
@@ -256,7 +263,8 @@ jQuery(document).ready(function(){
 															<c:when test="${frDetails.frRateCat=='2'}">
 																<tr>
 
-																	<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-1"><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"
@@ -278,7 +286,8 @@ jQuery(document).ready(function(){
 															<c:when test="${frDetails.frRateCat=='3'}">
 																<tr>
 
-																	<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																	<td class="col-md-1"><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"

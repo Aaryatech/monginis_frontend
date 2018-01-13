@@ -324,6 +324,8 @@ public class ItemController {
 		System.out.println("isSameDayApplicable"+isSameDayApplicable);
 		model.addObject("isSameDayApplicable",isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
+		model.addObject("url", Constant.ITEM_IMAGE_URL);
+
 		return model;
      
 	}

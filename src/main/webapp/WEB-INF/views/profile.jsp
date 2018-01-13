@@ -32,12 +32,7 @@
 	});
 </script>
 <!--rightNav-->
-<style>
-.fileUpload {
-     margin: 0px 0px 0px 0px;
-    padding-top: 1px;
-}
-	</style>
+
 
 </head>
 <body>
@@ -53,10 +48,10 @@
 	<div class="wrapper">
 
 		<!--topHeader-->
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
+		<%-- <jsp:include page="/WEB-INF/views/include/header.jsp">
 		
 			<jsp:param name="fr" value="${frDetails}"/>
-		</jsp:include>
+		</jsp:include> --%>
 
 <jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
