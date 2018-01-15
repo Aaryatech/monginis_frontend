@@ -779,7 +779,7 @@ public class ItemController {
 					order.setDeliveryDate(Common.stringToSqlDate(deliveryDate));
 					order.setEditQty(0);
 					order.setFrId(frDetails.getFrId());
-					order.setIsEdit(1);
+					order.setIsEdit(0);
 					order.setIsPositive(1);
 					order.setItemId(frItem.getId().toString());
 					order.setMenuId(frItem.getMenuId());
