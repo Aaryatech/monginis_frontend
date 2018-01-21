@@ -62,9 +62,14 @@
 <!--rightNav-->
 
 <!--new css added by kalpesh -->
+<!-- <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'> -->
+
 	<link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 	
+<%--   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/styles.css" />   --%>
+	
+<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
 	<!--new css added by kalpesh -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
@@ -72,6 +77,96 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
 	  <script src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script><!-- 1 css and 2 js for search item   -->
 	
+	<%-- <script src="${pageContext.request.contextPath}/resources/jquery.confirm/jquery.confirm.js"></script> --%>
+	  <style> 
+	  
+	  body {
+    font-family: sans-serif
+}
+.dialog-ovelay {
+    position: fixed;
+     
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.50);
+    z-index: 999999
+     
+}
+ 
+.dialog-ovelay .dialog {
+    width: 30%;
+    height:25%;
+    border-radius: 25px;
+    margin: 210px auto 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+    
+    overflow: hidden
+}
+.dialog-ovelay .dialog header {
+    padding: 10px 8px;
+     border-radius: 25px 25px 0px 0px;
+    background-color: #f6f7f9;
+    border-bottom: 1px solid #e5e5e5
+}
+.dialog-ovelay .dialog header h3 {
+    font-size: 14px;
+    margin: 0;
+    
+    color: #555;
+    display: inline-block
+}
+ 
+.dialog-ovelay .dialog header .fa-close:active {
+    box-shadow: 0 0 5px #673AB7;
+    color: #a2a2a2
+}
+.dialog-ovelay .dialog .dialog-msg {
+    padding: 12px 10px
+     
+}
+.dialog-ovelay .dialog .dialog-msg p{
+    margin: 0;
+    font-size: 15px;
+    color: #333
+}
+.dialog-ovelay .dialog footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 8px 10px
+     
+}
+.dialog-ovelay .dialog footer .controls {
+margin:10px;
+    direction: rtl
+     
+}
+.dialog-ovelay .dialog footer .controls .button {
+    padding: 5px 15px;
+    border-radius: 3px
+    
+}
+.button {
+  cursor: pointer
+}
+.button-default {
+    background-color: rgb(248, 248, 248);
+    border: 1px solid rgba(204, 204, 204, 0.5);
+    color: #5D5D5D;
+}
+.button-danger {
+    background-color: #f44336;
+    border: 1px solid #d32f2f;
+    color: #f5f5f5
+}
+.link {
+  padding: 5px 10px;
+  cursor: pointer
+}
+
+</style>
+  
 </head>
 <body>
 
@@ -1770,10 +1865,7 @@
 					<!--tabNavigation-->
 
 
-
-
-
-
+ 
 
 
 				</div>
@@ -1994,7 +2086,7 @@ jQuery(document).ready(function() {
 
 		/* 	var isValid = validation1();
 			if (isValid) { */
-
+				var modal = document.getElementById('mypopupMsg');
 				var id = $("#itemName"+token).val();
 				var barcode = $("#barcode"+token).val();
 				//alert(barcode);
@@ -2028,17 +2120,35 @@ jQuery(document).ready(function() {
 									 
 									 //**----------Check first Special Opening Stock is gretor Show Prompt!!---------**
 														if (data.totalSpStock >0) {
-															
-															var retVal = confirm("Use from SP or Reg Avail.Sp Qty: "+data.totalSpStock+"Avail.Reg Qty: "+data.totalRegStock);
+															 
+															//var retVal = confirm("Use from SP or Reg Avail.Sp Qty: "+data.totalSpStock+"Avail.Reg Qty: "+data.totalRegStock);
+															 Confirm('Use Stock', "Use from Special Stock OR Regular Stock", 'Use Reg Stock ('+data.totalRegStock+')', 'Use SpStock ('+data.totalSpStock+')'); /*change*/
+		    
 															
 													//-------------------- Use From Special Opening Stock-----------------------------
-															if (retVal == true) {
+															//if (retVal== true) {
 																
+																
+															
+																       
+																          $('.cancelAction').click(function () {
+																  		    
+																		        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																		          
+																		          $(this).remove();
+																 
+																 
+																 
 																if(data.totalSpStock < qty)
 																	{
-																	var spLess = confirm("  SP Stock Lessthan Qty. You want Avail.Qty: "+data.totalSpStock);
-																	
-																	if(spLess==true){
+																	//var spLess = confirm("  SP Stock Lessthan Qty. You want Avail.Qty: "+data.totalSpStock);
+																	 Confirm('Sp Stock is less than quantity', "Special Stock quantity is less than required quantity if you want use available quantity", 'Cancel', 'Use Availabe Qty ('+data.totalSpStock+')'); /*change*/
+																	    
+																	 $('.cancelAction').click(function () {
+																  		    
+																	        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																	          
+																	          $(this).remove();
 																		
 																		qty=data.totalSpStock;
 																		
@@ -2065,11 +2175,18 @@ jQuery(document).ready(function() {
 																					
 																				});
 																		
-																		
-																	}
-																	else{
+																	        });  //g
+																      });//g
+																	//}
+																	 $('.doAction').click(function () {
+																	       // window.open($link, "_blank"); /*new*/
+																	        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																	           
+																	          $(this).remove();
+			       
 																		return false;
-																	}
+																	        });  //g
+																      });//g
 																	
 																	}
 																else{
@@ -2098,17 +2215,42 @@ jQuery(document).ready(function() {
 																			});
 																}
 																
+																        });  //g
+															      });//g
+															//}  //g
+															//else{   use Regular
+																	 $('.doAction').click(function () {
+																       // window.open($link, "_blank"); /*new*/
+																        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																           
+																          $(this).remove();
+		       
 																
-															}
-															else{   //use Regular
 																if(data.totalRegStock < qty){
-																	if(data.totalRegStock ==0)
+																	if(data.totalRegStock <=0)
 																		{
-																		   alert("Sorry Item Not Available !!");
+																		  // alert("Sorry Item Not Available !!");
+																		   emptyStock('Item not available !!', "Sorry item not available in Regular stock!!", 'Ok'); /*change*/
+																		   $('.doAction').click(function () {
+																		       // window.open($link, "_blank"); /*new*/
+																		        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																		           
+																		          $(this).remove();
+																	          return false;
+																		        });  //g
+																	      });
 																		}
 																	else{
-																		var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
-																		if(regLess==true){
+																		//var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
+																		//if(regLess==true){
+																			 Confirm('Regular Stock is less than quantity', "Regular Stock quantity is less than required quantity if you want use available quantity", 'Cancel', 'Use Availabe Qty ('+data.totalRegStock+')'); /*change*/
+																	    
+																	 $('.cancelAction').click(function () {
+																  		    
+																	        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																	          
+																	          $(this).remove();
+																	          
 																			qty=data.totalRegStock;
 																			$.getJSON(
 																					'${useRegStock}',//function, when  User Selected available Reg Opening Stock
@@ -2133,10 +2275,20 @@ jQuery(document).ready(function() {
 																						calTotal(allTotal,token)
 																						
 																					});
-																		}
-																		else{
+																	        });  //g
+																      });//g
+																		//}
+																		//else{
+																			 $('.doAction').click(function () {
+																       // window.open($link, "_blank"); /*new*/
+																        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																           
+																          $(this).remove();
+		       
 																			return false;
-																		}
+																		//}
+																	  });  //g
+															      });//g
 																	}
 																}
 																else{
@@ -2165,21 +2317,43 @@ jQuery(document).ready(function() {
 																				
 																			});
 																}
-															}
-													
+																
+																
+															//}
+		        });
+															      });													
 													
 															}
 									
 														else{
 															
 															if(data.totalRegStock < qty){
-																if(data.totalRegStock ==0)
+																if(data.totalRegStock <=0)
 																	{
-																	   alert("Sorry Item Not Available !!");
+																	  // alert("Sorry Item Not Available !!");
+																	   
+																	   emptyStock('Item not available !!', "Sorry item not available in Regular stock!!", 'Ok'); /*change*/
+																	    
+																	   $('.doAction').click(function () {
+																	       // window.open($link, "_blank"); /*new*/
+																	        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																	           
+																	          $(this).remove();
+																          return false;
+																	        });  //g
+																      });
 																	}
 																else{
-																	var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
-																	if(regLess==true){
+																	//var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
+																	//if(regLess==true){
+																		 Confirm('Regular Stock is less than quantity', "Regular Stock quantity is less than required quantity if you want use available quantity", 'Cancel', 'Use Availabe Qty ('+data.totalRegStock+')'); /*change*/
+																	    
+																	 $('.cancelAction').click(function () {
+																  		    
+																	        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																	          
+																	          $(this).remove();
+																	          
 																		qty=data.totalRegStock;
 																		$.getJSON(
 																				'${useRegStock}',//function, when  User Selected available Reg Opening Stock
@@ -2206,10 +2380,19 @@ jQuery(document).ready(function() {
 																					calTotal(allTotal,token)
 																					
 																				});
-																	}
-																	else{
+																	        });  //g
+																      });//g
+																//	}
+																	//else{
+																		 $('.doAction').click(function () {
+																       // window.open($link, "_blank"); /*new*/
+																        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+																           
+																          $(this).remove();
 																		return false;
-																	}
+																	//}
+																        });  //g
+																	      });//g
 																}
 															}
 															else{
@@ -2600,7 +2783,71 @@ jQuery(document).ready(function() {
 		}
 		 
 		
+		
+
+		function Confirm(title, msg, $true, $false) { /*change*/
+		        var $content =  "<div class='dialog-ovelay'>" +
+		                        "<div class='dialog'><header>" +
+		                         " <h3> " + title + " </h3> " +
+		                          
+		                     "</header>" +
+		                     "<div class='dialog-msg'>" +
+		                         " <p> " + msg + " </p> " +
+		                     "</div>" +
+		                     "<footer>" +
+		                         "<div class='controls'>" +
+		                             " <button class='button btn btn-primary doAction'>" + $true + "</button> &nbsp;&nbsp;&nbsp;&nbsp;" +
+		                             " <button class='button btn btn-success cancelAction'>" + $false + "</button> " +
+		                         "</div>" +
+		                     "</footer>" +
+		                  "</div>" +
+		                "</div>";
+		         $('body').prepend($content);
+		   
+		 
+		      
+		   }
+		
+		function emptyStock(title, msg, $true) { /*change*/
+	        var $content =  "<div class='dialog-ovelay'>" +
+	                        "<div class='dialog'><header>" +
+	                         " <h3> " + title + " </h3> " +
+	                          
+	                     "</header>" +
+	                     "<div class='dialog-msg'>" +
+	                         " <p> " + msg + " </p> " +
+	                     "</div>" +
+	                     "<footer>" +
+	                         "<div class='controls'>" +
+	                             " <button class='button btn btn-primary doAction'>" + $true + "</button> &nbsp;&nbsp;&nbsp;&nbsp;" +
+	                           
+	                         "</div>" +
+	                     "</footer>" +
+	                  "</div>" +
+	                "</div>";
+	         $('body').prepend($content);
+	   
+	 
+	      
+	   }
+		 $('.doAction').click(function () {
+		       // window.open($link, "_blank"); /*new*/
+		        $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+		           
+		          $(this).remove();
+	          
+		        });  //g
+	      });//g
+
+		 
+		       // Confirm('Go to Google', 'Are you sure you want to visit Google', 'Yes', 'Cancel', "https://www.google.com.eg"); /*change*/
+		     
+
+		
+		
 	</script>
+	
+
  
  <!-- document.getElementById("mySelect").value = "orange"; -->  
 </body>

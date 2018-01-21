@@ -318,6 +318,11 @@ public class HomeController {
 					
 				}else if(frMenu.getSettingType()==2){ // date basis
 					
+					if(frMenu.getDay()==calendar.get(Calendar.DAY_OF_MONTH)) {
+
+						filteredFrMenuList.add(frMenu);
+						
+					} 
 					
 				}else if(frMenu.getSettingType()==1){ // daily basis
 										
