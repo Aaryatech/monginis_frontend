@@ -16,10 +16,12 @@
                <c:otherwise>
               </c:otherwise>
               </c:choose>
+ 
        
-        <div class="logoBarRight"><div id="menuzord" class="menuzord red menuzord-responsive">
-        
-        
+        <div class="logoBarRight">
+      
+        <div id="menuzord" class="menuzord red menuzord-responsive">
+           <div id="chart_div" style="width: 100px;height: 50px;  float: left;margin-right: 20px;"></div>
            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
            
                <c:choose>
@@ -57,4 +59,34 @@
 </div>
 <!--topHeader-->
 
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawMultSeries);
 
+function drawMultSeries() {
+      var data = google.visualization.arrayToDataTable([
+        ['Target In Lakhs', 'Assigned Target', 'Achived Target'],
+        ['Franchise Target',1000000, 2000000],
+       
+      
+      ]);
+
+      var options = {
+        title: 'Franchise Target',
+        chartArea: {width: '100',height: '50'},
+        hAxis: {
+          title: 'Target Details',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Target In Lakhs'
+        }
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+
+</script>
