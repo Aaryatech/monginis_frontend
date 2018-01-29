@@ -150,8 +150,16 @@ jQuery(document).ready(function(){
 								 </tbody>
 								  
 								</table>
-						 
+						
 				</div>
+				 <div class="form-group" style="display: none;" id="range">
+								 
+											 
+											 
+											<div class="col-sm-3  controls">
+											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											</div>
+											</div>
 			</div>
 		<!--table end-->
 		 
@@ -217,7 +225,7 @@ jQuery(document).ready(function(){
 
 								if (data == "") {
 									alert("No records found !!");
-
+									document.getElementById("expExcel").disabled=true;
 								}
 								 
 
@@ -229,7 +237,8 @@ jQuery(document).ready(function(){
 							
 								$.each(data,function(key, sellTaxData) {
 
-									
+									  document.getElementById("expExcel").disabled=false;
+										document.getElementById('range').style.display = 'block';
 									
 									
 									var tr = $('<tr></tr>');
@@ -453,7 +462,12 @@ function showChart(){
   fauxTable.appendChild(clonedElement2);
 })();
 
-
+function exportToExcel()
+{
+	 
+	window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled=true;
+}
 	</script>
 </body>
 </html>

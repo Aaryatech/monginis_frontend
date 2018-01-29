@@ -6,11 +6,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -307,23 +309,38 @@ public class HomeController {
 			
 				FrMenu frMenu=frMenuList.get(i);
 				
+				
+				
 				if(frMenu.getSettingType()==3) { // day basis
+					List<String> dayList = Arrays.asList( frMenu.getDay().split(",") );
+
+					List<Integer> newDayList = dayList.stream()
+											  .map(s -> Integer.parseInt(s))
+											  .collect(Collectors.toList());
 					
-					if(frMenu.getDay()==dayOfWeek) {
+					for(int k=0;k<newDayList.size();k++) {
+					if(newDayList.get(k)==dayOfWeek) {
 
 						filteredFrMenuList.add(frMenu);
 						
 					} 
+					}
 					
 					
 				}else if(frMenu.getSettingType()==2){ // date basis
 					
-					if(frMenu.getDay()==calendar.get(Calendar.DAY_OF_MONTH)) {
+					List<String> dateList = Arrays.asList( frMenu.getDay().split(",") );
+
+					List<Integer> newDateList = dateList.stream()
+											  .map(s -> Integer.parseInt(s))
+											  .collect(Collectors.toList());
+					for(int k=0;k<newDateList.size();k++) {
+					if(newDateList.get(k)==calendar.get(Calendar.DAY_OF_MONTH)) {
 
 						filteredFrMenuList.add(frMenu);
 						
 					} 
-					
+					}
 				}else if(frMenu.getSettingType()==1){ // daily basis
 										
 					filteredFrMenuList.add(frMenu);

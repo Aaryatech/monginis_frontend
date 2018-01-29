@@ -8,12 +8,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+ 
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+ 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,15 +38,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 
+ 
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.BillWisePurchaseList;
 import com.monginis.ops.model.BillWisePurchaseReport;
 import com.monginis.ops.model.BillWiseTaxReport;
 import com.monginis.ops.model.BillWiseTaxReportList;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
-import com.monginis.ops.model.GetCustBillTax;
-import com.monginis.ops.model.GetCustmoreBillResponse;
+ 
 import com.monginis.ops.model.GetRepFrDatewiseSellResponse;
 import com.monginis.ops.model.GetRepFrItemwiseSellResponse;
 import com.monginis.ops.model.GetRepMenuwiseSellResponse;
@@ -59,7 +61,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
-import com.monginis.ops.model.SpCakeResponse;
+ 
 
 @Controller
 @Scope("session")
@@ -185,6 +187,69 @@ public class ReportsController {
 		
 		   System.out.println("BillReportBillWise: "+billWisePurchaseReportList.toString());
 	
+		   
+		 //export to excel
+			 
+			
+			 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+			 		
+			 		ExportToExcel expoExcel=new ExportToExcel();
+			 		List<String> rowData=new ArrayList<String>();
+			 		 
+			 		rowData.add("Purchase Bill No");
+			 	 
+			 		rowData.add("Bill Date");
+			 	 
+			 		rowData.add("cgst");
+			 		rowData.add("sgst");
+			 		
+			 		rowData.add("igst");
+			 	 
+			 		 
+			 		rowData.add("Grand Total");
+			 		rowData.add("Taxable Amount");
+			 		rowData.add("Round Off");
+			 		 
+			  
+			 		  
+			 	 
+			 		expoExcel.setRowData(rowData);
+			 		exportToExcelList.add(expoExcel);
+			 		for(int i=0;i<billWisePurchaseReportList.size();i++)
+			 		{
+			 			  expoExcel=new ExportToExcel();
+			 			 rowData=new ArrayList<String>();
+			 			 
+			 		 
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getBillNo());
+			  
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getBillDate());
+			 			 
+			 			 
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getCgstRs());
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getSgstRs());
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getIgstRs());
+			 		 
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getGrandTotal());
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getTaxableAmt());
+			 			 rowData.add(""+billWisePurchaseReportList.get(i).getRoundOff());
+			 			 
+			 			
+			 			
+			 			
+			 			expoExcel.setRowData(rowData);
+			 			exportToExcelList.add(expoExcel);
+			 			 
+			 		}
+			 		
+			 		
+					HttpSession session = request.getSession();
+					session.setAttribute("exportExcelList", exportToExcelList);
+					session.setAttribute("excelName", "BillWisePurchaseReport");
+					
+					
+					
+					
 	  return billWisePurchaseReportList;
 	
 	}
@@ -237,6 +302,69 @@ public class ReportsController {
 			
 			   System.out.println("ItemWiseDetailReport: "+itemWiseDetailReportList.toString());
 		
+			   
+			   
+				 //export to excel
+					 
+					
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Purchase Bill No");
+					 	 
+					 		rowData.add("Item Id");
+					 	 
+					 		rowData.add("Item Name");
+					 		rowData.add("Rate");
+					 		
+					 		rowData.add("Quantity");
+					 	 
+					 		 
+					 		rowData.add("Grn type");
+					 		rowData.add("Total Amount");
+					 		 
+					 		 
+					   
+					 	 
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<itemWiseDetailReportList.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getBillNo());
+					  
+					 			 
+					 			 
+					 			 
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getItemId());
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getItemName());
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getRate());
+					 		 
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getQty());
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getGrnType());
+					 			 rowData.add(""+itemWiseDetailReportList.get(i).getTotal());
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "ItemWiseDetailPurchaseReport");
+							
+							
+							
+							
 		  return itemWiseDetailReportList;
 		
 		}
@@ -287,6 +415,66 @@ public class ReportsController {
 					
 					   System.out.println("ItemWiseDetailReport: "+itemWiseReportList.toString());
 				
+					   
+
+						 //export to excel
+							 
+							
+							 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+							 		
+							 		ExportToExcel expoExcel=new ExportToExcel();
+							 		List<String> rowData=new ArrayList<String>();
+							 		 
+							 		rowData.add("Purchase Bill Detail No");
+							 	 
+							 		rowData.add("Item Id");
+							 	 
+							 		rowData.add("Item Name");
+							 		rowData.add("Rate");
+							 		
+							 		rowData.add("Quantity");
+							 	  
+							 		rowData.add("Total Amount");
+							 		 
+							  
+							 	 
+							 		expoExcel.setRowData(rowData);
+							 		exportToExcelList.add(expoExcel);
+							 		for(int i=0;i<itemWiseReportList.size();i++)
+							 		{
+							 			  expoExcel=new ExportToExcel();
+							 			 rowData=new ArrayList<String>();
+							 			 
+							 		 
+							 			 rowData.add(""+itemWiseReportList.get(i).getBillDetailNo());
+							  
+							 			 
+							 			 
+							 			 
+							 			 rowData.add(""+itemWiseReportList.get(i).getItemId());
+							 			 rowData.add(""+itemWiseReportList.get(i).getItemName());
+							 			 rowData.add(""+itemWiseReportList.get(i).getRate());
+							 		 
+							 			 rowData.add(""+itemWiseReportList.get(i).getQty());
+							 	 
+							 			 rowData.add(""+itemWiseReportList.get(i).getTotal());
+							 			 
+							 			
+							 			
+							 			
+							 			expoExcel.setRowData(rowData);
+							 			exportToExcelList.add(expoExcel);
+							 			 
+							 		}
+							 		
+							 		
+									HttpSession session = request.getSession();
+									session.setAttribute("exportExcelList", exportToExcelList);
+									session.setAttribute("excelName", "ItemWisePurchaseReport");
+									
+									
+									
+									
 				  return itemWiseReportList;
 				
 				}
@@ -336,6 +524,68 @@ public class ReportsController {
 					
 					   System.out.println("billWiseTaxReport: "+billWiseTaxReport.toString());
 				
+					   
+					   //export to excel
+						 
+						
+						 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+						 		
+						 		ExportToExcel expoExcel=new ExportToExcel();
+						 		List<String> rowData=new ArrayList<String>();
+						 		 
+						 		rowData.add("Purchase Bill No");
+						 	 
+						 		rowData.add("Tax Rate");
+						 		rowData.add("cgst");
+						 	 
+						 		rowData.add("sgst");
+						 		rowData.add("igst");
+						 		
+						 		rowData.add("cess");
+						 	  
+						 		rowData.add("Grand Amount");
+						 		rowData.add("Taxable Amount");
+						 		 
+						 		 
+						 	 
+						 		expoExcel.setRowData(rowData);
+						 		exportToExcelList.add(expoExcel);
+						 		for(int i=0;i<billWiseTaxReport.size();i++)
+						 		{
+						 			  expoExcel=new ExportToExcel();
+						 			 rowData=new ArrayList<String>();
+						 			 
+						 		 
+						 			 rowData.add(""+billWiseTaxReport.get(i).getBillNo());
+						  
+						 			 
+						 			 
+						 			 
+						 			 rowData.add(""+billWiseTaxReport.get(i).getTaxRate());
+						 			 rowData.add(""+billWiseTaxReport.get(i).getCgstRs());
+						 			 rowData.add(""+billWiseTaxReport.get(i).getSgstRs());
+						 		 
+						 			 rowData.add(""+billWiseTaxReport.get(i).getIgstRs());
+						 	 
+						 			 rowData.add(""+billWiseTaxReport.get(i).getCess());
+						 			 rowData.add(""+billWiseTaxReport.get(i).getGrandTotal());
+								 	 
+						 			 rowData.add(""+billWiseTaxReport.get(i).getTaxableAmt());
+						 			
+						 			
+						 			
+						 			expoExcel.setRowData(rowData);
+						 			exportToExcelList.add(expoExcel);
+						 			 
+						 		}
+						 		
+						 		
+								HttpSession session = request.getSession();
+								session.setAttribute("exportExcelList", exportToExcelList);
+								session.setAttribute("excelName", "BillWiseTaxPurchaseReport");
+								
+								
+								
 				  return billWiseTaxReport;
 				
 				}
@@ -395,6 +645,68 @@ public class ReportsController {
 					
 					   System.out.println("monthWiseReportList: "+monthWiseReportList.toString());
 				
+					   
+					 //export to excel
+						 
+						
+						 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+						 		
+						 		ExportToExcel expoExcel=new ExportToExcel();
+						 		List<String> rowData=new ArrayList<String>();
+						 		 
+						 		rowData.add("Purchase Bill No");
+						 		rowData.add("Month");
+						 		 
+						 		rowData.add("cgst");
+						 	 
+						 		rowData.add("sgst");
+						 		rowData.add("igst");
+						 		
+						 		rowData.add("cess");
+						 	  
+						 		rowData.add("Grand Amount");
+						 		rowData.add("Taxable Amount");
+						 		rowData.add("Round Off");
+						 		 
+						 	
+						 		expoExcel.setRowData(rowData);
+						 		exportToExcelList.add(expoExcel);
+						 		for(int i=0;i<monthWiseReportList.size();i++)
+						 		{
+						 			  expoExcel=new ExportToExcel();
+						 			 rowData=new ArrayList<String>();
+						 			 
+						 		 
+						 			 rowData.add(""+monthWiseReportList.get(i).getBillNo());
+						  
+						 			 
+						 			 
+						 			 
+						 			 rowData.add(""+monthWiseReportList.get(i).getMonth());
+						 			 rowData.add(""+monthWiseReportList.get(i).getCgstRs());
+						 			 rowData.add(""+monthWiseReportList.get(i).getSgstRs());
+						 		 
+						 			 rowData.add(""+monthWiseReportList.get(i).getIgstRs());
+						 	 
+						 			 rowData.add(""+monthWiseReportList.get(i).getSess());
+						 			 rowData.add(""+monthWiseReportList.get(i).getGrandTotal());
+								 	 
+						 			 rowData.add(""+monthWiseReportList.get(i).getTaxableAmt());
+						 			 rowData.add(""+monthWiseReportList.get(i).getRoundOff());
+						 			
+						 			
+						 			expoExcel.setRowData(rowData);
+						 			exportToExcelList.add(expoExcel);
+						 			 
+						 		}
+						 		
+						 		
+								HttpSession session = request.getSession();
+								session.setAttribute("exportExcelList", exportToExcelList);
+								session.setAttribute("excelName", "MonthWiseTaxPurchaseReport");
+								
+								
+								
 				  return monthWiseReportList;
 				
 				}
@@ -451,8 +763,67 @@ public class ReportsController {
 					
 						
 								
-					
-				
+					//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Invoice No");
+					 		rowData.add("fr Name");
+					 		rowData.add("Bill Date");
+					 	 
+					 		rowData.add("Total Tax");
+					 		rowData.add("Grand Total");
+					 		rowData.add("Paid Amt");
+					 		rowData.add("Remaining Amt");
+					 		 
+					 		rowData.add("Payment Mode");
+					 		rowData.add("Discount Per");
+					 		rowData.add("Payable Amt");
+					 		rowData.add("Taxable Amt");
+					 	  
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getSellBillHeaderList.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getSellBillNo());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getInvoiceNo());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getFrName());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getBillDate());
+					 			 
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getTotalTax());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getGrandTotal());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getPaidAmt());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getRemainingAmt());
+					 			 
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getPaymentMode());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getDiscountPer());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getPayableAmt());
+					 			 rowData.add(""+getSellBillHeaderList.get(i).getTaxableAmt());
+
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "BillWiseSell");
+					 		 
+					 		 
 				return getSellBillHeaderList;
 				
 				}
@@ -506,7 +877,59 @@ public class ReportsController {
 					 System.out.println("Sell Bill Header "+getRepFrDatewiseSellResponse.toString());
 					
 						
-								
+						
+						//export to excel
+						 
+							
+						 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+						 		
+						 		ExportToExcel expoExcel=new ExportToExcel();
+						 		List<String> rowData=new ArrayList<String>();
+						 		 
+								 
+						 		rowData.add("Sell Bill No");
+						 		rowData.add("Franchise Id");
+						 		rowData.add("Franchise Name");
+						 		rowData.add("Bill Date");
+						 	 
+						 		rowData.add("Cash");
+						 		rowData.add("Card");
+						 		rowData.add("Other");
+						 		 
+						 	  
+						 		 
+						 	  
+						 		expoExcel.setRowData(rowData);
+						 		exportToExcelList.add(expoExcel);
+						 		for(int i=0;i<getRepFrDatewiseSellResponse.size();i++)
+						 		{
+						 			  expoExcel=new ExportToExcel();
+						 			 rowData=new ArrayList<String>();
+						 			 
+						 		 
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getSellBillNo());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getFrId());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getFrName());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getBillDate());
+						 			 
+						 			 
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getCash());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getCard());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getOther());
+						 			 
+						 			 
+						 			
+						 			
+						 			
+						 			expoExcel.setRowData(rowData);
+						 			exportToExcelList.add(expoExcel);
+						 			 
+						 		}
+						 		
+						 		
+								HttpSession session = request.getSession();
+								session.setAttribute("exportExcelList", exportToExcelList);
+								session.setAttribute("excelName", "DateWiseSell");
 					
 				
 				return getRepFrDatewiseSellResponse;
@@ -580,7 +1003,60 @@ public class ReportsController {
 					
 						
 								
-					
+						
+						//export to excel
+						 
+							
+						 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+						 		
+						 		ExportToExcel expoExcel=new ExportToExcel();
+						 		List<String> rowData=new ArrayList<String>();
+						 		 
+						 		rowData.add("Sell Bill No");
+						 		rowData.add("Franchise Id");
+						 		rowData.add("Franchise Name");
+						 	 
+						 		rowData.add("Month");
+						 		rowData.add("Cash");
+						 		rowData.add("Card");
+						 		rowData.add("Other");
+						 		 
+						 	  
+						 		 
+						 	  
+						 		expoExcel.setRowData(rowData);
+						 		exportToExcelList.add(expoExcel);
+						 		for(int i=0;i<getRepFrDatewiseSellResponse.size();i++)
+						 		{
+						 			  expoExcel=new ExportToExcel();
+						 			 rowData=new ArrayList<String>();
+						 			 
+						 		 
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getSellBillNo());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getFrId());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getFrName());
+						 			 
+						 			 
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getMonth());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getCash());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getCard());
+						 			 rowData.add(""+getRepFrDatewiseSellResponse.get(i).getOther());
+						 			 
+						 			 
+
+						 			 
+						 			
+						 			
+						 			
+						 			expoExcel.setRowData(rowData);
+						 			exportToExcelList.add(expoExcel);
+						 			 
+						 		}
+						 		
+						 		
+								HttpSession session = request.getSession();
+								session.setAttribute("exportExcelList", exportToExcelList);
+								session.setAttribute("excelName", "MonthWiseSell");
 				
 				return getRepFrDatewiseSellResponse;
 				
@@ -662,7 +1138,58 @@ public class ReportsController {
 					 System.out.println("Sell Bill Header "+getRepFrMenuwiseSellResponseList.toString());
 					
 						
-								
+						
+						//export to excel
+						 
+							
+						 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+						 		
+						 		ExportToExcel expoExcel=new ExportToExcel();
+						 		List<String> rowData=new ArrayList<String>();
+						 		 
+						 	 
+						 		rowData.add("Franchise Id");
+						 		rowData.add("Franchise Name");
+						 		rowData.add("Cat Id");
+						 	 
+						 		rowData.add("Cat Name");
+						 		rowData.add("Quantity");
+						 		rowData.add("Amount");
+						 		 
+						 	  
+						 		 
+								 
+						 		expoExcel.setRowData(rowData);
+						 		exportToExcelList.add(expoExcel);
+						 		for(int i=0;i<getRepFrMenuwiseSellResponseList.size();i++)
+						 		{
+						 			  expoExcel=new ExportToExcel();
+						 			 rowData=new ArrayList<String>();
+						 			 
+						 		 
+						 		 
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getFrId());
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getFrName());
+						 			 
+						 			 
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getCatId());
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getCatName());
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getQty());
+						 			 rowData.add(""+getRepFrMenuwiseSellResponseList.get(i).getAmount());
+						 		 
+						 			 
+						 			
+						 			
+						 			
+						 			expoExcel.setRowData(rowData);
+						 			exportToExcelList.add(expoExcel);
+						 			 
+						 		}
+						 		
+						 		
+								HttpSession session = request.getSession();
+								session.setAttribute("exportExcelList", exportToExcelList);
+								session.setAttribute("excelName", "MenuWiseSummarySell");
 					
 				
 				return getRepFrMenuwiseSellResponseList;
@@ -716,7 +1243,62 @@ public class ReportsController {
 					
 						
 								
-					
+						//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Item Id");
+						 	 
+					 		rowData.add("Item Name");
+					 		
+					 		rowData.add("Cat Id");
+					 	 
+					 		rowData.add("Cat Name");
+					 		rowData.add("Quantity");
+					 		rowData.add("Amount");
+					 		 
+					 	   
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepFrMenuwiseSellResponseList.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getQty());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getAmount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "ItemWiseSummarySell");
 				
 				return getRepFrItemwiseSellResponseList;
 				
@@ -797,7 +1379,63 @@ public class ReportsController {
 					 System.out.println("Sell Bill Header "+getRepFrItemwiseSellResponseList.toString());
 					
 						
-								
+						
+						//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Item Id");
+						 	 
+					 		rowData.add("Item Name");
+					 		
+					 		rowData.add("Cat Id");
+					 	 
+					 		rowData.add("Cat Name");
+					 		rowData.add("Quantity");
+					 		rowData.add("Amount");
+					 		 
+					 	   
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepFrItemwiseSellResponseList.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getQty());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getAmount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "ItemWiseReportSell");
 					
 				
 				return getRepFrItemwiseSellResponseList;
@@ -850,7 +1488,63 @@ public class ReportsController {
 					 System.out.println("Sell Bill Header "+getRepFrItemwiseSellResponseList.toString());
 					
 						
-								
+						//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Item Id");
+						 	 
+					 		rowData.add("Item Name");
+					 		
+					 		rowData.add("Cat Id");
+					 	 
+					 		rowData.add("Cat Name");
+					 		rowData.add("Quantity");
+					 		rowData.add("Amount");
+					 		 
+					 	   
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepFrItemwiseSellResponseList.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getFrName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getItemName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatId());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatName());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getQty());
+					 			 rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getAmount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "ItemWiseReportSell");
+					
 					
 				
 				return getRepFrItemwiseSellResponseList;
@@ -906,7 +1600,68 @@ public class ReportsController {
 					 System.out.println("Sell Bill Header "+getRepTaxSell.toString());
 					
 						
-								
+						//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Tax %");
+					 		rowData.add("cgst");
+					 		rowData.add("sgst");
+					 		
+					 		rowData.add("igst");
+					 	 
+					 		rowData.add("cess");
+					 		rowData.add("Gst");
+					 		rowData.add("Tax Amount");
+					 		rowData.add("Bill Amount");
+					 		 
+					 	   
+ 				 		
+					 		  
+					 	 
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepTaxSell.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepTaxSell.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrId());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrName());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepTaxSell.get(i).getTax_per());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getSgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getIgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCess());
+					 			 rowData.add(""+getRepTaxSell.get(i).getGstn());
+					 			 rowData.add(""+getRepTaxSell.get(i).getTax_amount());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBill_amount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "TaxReportSell");
 					
 				
 				return getRepTaxSell;
@@ -960,6 +1715,71 @@ public class ReportsController {
 							
 					 System.out.println("Sell Bill Header "+getRepTaxSell.toString());
 					
+					 
+						//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Tax %");
+					 		rowData.add("cgst");
+					 		rowData.add("sgst");
+					 		
+					 		rowData.add("igst");
+					 	 
+					 		rowData.add("cess");
+					 		rowData.add("Gst");
+					 		rowData.add("Tax Amount");
+					 		rowData.add("Bill Amount");
+					 		 
+					 	   
+ 				 		
+					 		  
+					 	 
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepTaxSell.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepTaxSell.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrId());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrName());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepTaxSell.get(i).getTax_per());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getSgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getIgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCess());
+					 			 rowData.add(""+getRepTaxSell.get(i).getGstn());
+					 			 rowData.add(""+getRepTaxSell.get(i).getTax_amount());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBill_amount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "BillWiseSellTaxReport");
+							
+							
 				return getRepTaxSell;
 				
 				}
@@ -1008,6 +1828,73 @@ public class ReportsController {
 							
 					 System.out.println("Sell Bill Header "+getRepTaxSell.toString());
 					
+					 
+					//export to excel
+					 
+						
+					 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+					 		
+					 		ExportToExcel expoExcel=new ExportToExcel();
+					 		List<String> rowData=new ArrayList<String>();
+					 		 
+					 		rowData.add("Sell Bill No");
+					 		rowData.add("Franchise Id");
+					 		rowData.add("Franchise Name");
+					 		rowData.add("Bill Date");
+					 		rowData.add("Tax %");
+					 		rowData.add("cgst");
+					 		rowData.add("sgst");
+					 		
+					 		rowData.add("igst");
+					 	 
+					 		rowData.add("cess");
+					 		rowData.add("Gst");
+					 		rowData.add("Tax Amount");
+					 		rowData.add("Bill Amount");
+					 		 
+					 	   
+ 				 		
+					 		  
+					 	 
+					 		expoExcel.setRowData(rowData);
+					 		exportToExcelList.add(expoExcel);
+					 		for(int i=0;i<getRepTaxSell.size();i++)
+					 		{
+					 			  expoExcel=new ExportToExcel();
+					 			 rowData=new ArrayList<String>();
+					 			 
+					 		 
+					 			 rowData.add(""+getRepTaxSell.get(i).getSellBillNo());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrId());
+					 			 rowData.add(""+getRepTaxSell.get(i).getFrName());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBillDate());
+					 			 
+					 			rowData.add(""+getRepTaxSell.get(i).getTax_per());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getSgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getIgst());
+					 			 rowData.add(""+getRepTaxSell.get(i).getCess());
+					 			 rowData.add(""+getRepTaxSell.get(i).getGstn());
+					 			 rowData.add(""+getRepTaxSell.get(i).getTax_amount());
+					 			 rowData.add(""+getRepTaxSell.get(i).getBill_amount());
+					 		 
+					 			 
+					 			
+					 			
+					 			
+					 			expoExcel.setRowData(rowData);
+					 			exportToExcelList.add(expoExcel);
+					 			 
+					 		}
+					 		
+					 		
+							HttpSession session = request.getSession();
+							session.setAttribute("exportExcelList", exportToExcelList);
+							session.setAttribute("excelName", "DateWiseSellTaxReport");
+							
+							
+							
+							
 				return getRepTaxSell;
 				
 				}
@@ -1060,6 +1947,7 @@ public class ReportsController {
 						HttpServletResponse response) {
 					
 					ModelAndView model=new ModelAndView("report/sellReport/sellReportPdf/repFrDateItemwiseSellPdf");
+					System.out.println("LList "+getRepFrItemwiseSellResponseList.toString());
 					model.addObject("reportList", getRepFrItemwiseSellResponseList);
 					return model;
 				}
@@ -1194,7 +2082,7 @@ public class ReportsController {
 				public void showPDF(HttpServletRequest request, HttpServletResponse response) {
 
 					String url=request.getParameter("reportURL");
-					// http://monginis.ap-south-1.elasticbeanstalk.com
+					 
 					File f = new File("/ordermemo221.pdf");
 
 					try {

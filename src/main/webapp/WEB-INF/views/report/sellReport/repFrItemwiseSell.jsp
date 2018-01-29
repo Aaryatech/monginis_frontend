@@ -129,12 +129,20 @@
 							</tbody>
 
 						</table>
+						
 					</div>
 				</div>
 			</div>	
 				
 
-
+<div class="form-group" style="display: none;" id="range">
+								 
+											 
+											 
+											<div class="col-sm-3  controls">
+											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											</div>
+											</div>
 	<div id="chart" style="display: none"><br><br><br>
 		 <hr><div  >
 	 
@@ -205,7 +213,7 @@
 
 								if (data == "") {
 									alert("No records found !!");
-
+									document.getElementById("expExcel").disabled=true;
 								}
 							 
 
@@ -216,7 +224,8 @@
 								
 								$.each(data,function(key, sellBillData) {
 
-
+									  document.getElementById("expExcel").disabled=false;
+										document.getElementById('range').style.display = 'block';
 									var tr = $('<tr></tr>');
 
 								  	tr.append($('<td></td>').html(key+1));
@@ -314,7 +323,7 @@
 
 								if (data == "") {
 									alert("No records found !!");
-
+									  document.getElementById("expExcel").disabled=true;
 								}
 							 
 
@@ -325,7 +334,8 @@
 								
 								$.each(data,function(key, sellBillData) {
 
-
+									  document.getElementById("expExcel").disabled=false;
+										document.getElementById('range').style.display = 'block';
 									var tr = $('<tr></tr>');
 
 								  	tr.append($('<td></td>').html(key+1));
@@ -422,6 +432,8 @@ function showChart(){
 		document.getElementById('chart').style.display = "block";
 		   document.getElementById("table").style="display:none";
 		   document.getElementById("menuTable").style="display:none";
+		   document.getElementById("range").style="display:none";
+		   
 		   
 		   var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
@@ -628,7 +640,12 @@ function showChart(){
   fauxTable.appendChild(clonedElement);
   fauxTable.appendChild(clonedElement2);
 })();
-
+function exportToExcel()
+{
+	 
+	window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled=true;
+}
 
 	</script>
 

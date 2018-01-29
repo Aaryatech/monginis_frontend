@@ -82,17 +82,18 @@
 	  
 	  body {
     font-family: sans-serif
+       
 }
 .dialog-ovelay {
     position: fixed;
-     
+    
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.50);
-    z-index: 999999
-     
+    z-index: 999999;
+       
 }
  
 .dialog-ovelay .dialog {
@@ -168,7 +169,7 @@ margin:10px;
 </style>
   
 </head>
-<body>
+<body id="myBodyId">
 
 <c:url var="useRegStock" value="/useRegStock"></c:url>
 <c:url var="currentNewItem" value="/currentNewItem"></c:url>
@@ -1012,7 +1013,7 @@ margin:10px;
 									<input name="rate4" id="rate4" type="hidden" value="00" />
 									
 										<center>
-											<button class="btn additem_btn" onclick="addNewRow1(4)"
+											<button class="btn additem_btn" onclick="addNewRow1(4)" 
 												id="b4">Add Item</button>
 										</center>
 									</div>
@@ -2123,8 +2124,10 @@ jQuery(document).ready(function() {
 															 
 															//var retVal = confirm("Use from SP or Reg Avail.Sp Qty: "+data.totalSpStock+"Avail.Reg Qty: "+data.totalRegStock);
 															 Confirm('Use Stock', "Use from Special Stock OR Regular Stock", 'Use Reg Stock ('+data.totalRegStock+')', 'Use SpStock ('+data.totalSpStock+')'); /*change*/
-		    
 															
+															 //document.getElementById("dialog-ovelay").focus();
+															// document.getElementById("ok").focus();
+															 $( ".dialog-ovelay .dialog footer .controls .doAction" ).focus();
 													//-------------------- Use From Special Opening Stock-----------------------------
 															//if (retVal== true) {
 																
@@ -2797,7 +2800,7 @@ jQuery(document).ready(function() {
 		                     "<footer>" +
 		                         "<div class='controls'>" +
 		                             " <button class='button btn btn-primary doAction'>" + $true + "</button> &nbsp;&nbsp;&nbsp;&nbsp;" +
-		                             " <button class='button btn btn-success cancelAction'>" + $false + "</button> " +
+		                             " <button class='button btn btn-success cancelAction' >" + $false + "</button> " +
 		                         "</div>" +
 		                     "</footer>" +
 		                  "</div>" +
@@ -2825,9 +2828,10 @@ jQuery(document).ready(function() {
 	                     "</footer>" +
 	                  "</div>" +
 	                "</div>";
+	               
 	         $('body').prepend($content);
-	   
-	 
+	         
+	         //document.body.appendChild(div);
 	      
 	   }
 		 $('.doAction').click(function () {
@@ -2840,11 +2844,10 @@ jQuery(document).ready(function() {
 	      });//g
 
 		 
-		       // Confirm('Go to Google', 'Are you sure you want to visit Google', 'Yes', 'Cancel', "https://www.google.com.eg"); /*change*/
-		     
+		       
 
 		
-		
+ 
 	</script>
 	
 

@@ -29,7 +29,7 @@ th {
 }
 </style>
 </head>
-<body onload="myFunction()">
+ <body >
 
 	<table width="100%" border="0" cellspacing="0"
 														cellpadding="0" id="table_grid" class="table table-bordered">
@@ -88,5 +88,14 @@ th {
 								</table>
 
 	
+	<!-- <script>
+	function print()
+	{
+		alert("JJ");
+		window.print();
+		//window.close();
+	}
+	
+	</script> -->
 </body>
 </html>
