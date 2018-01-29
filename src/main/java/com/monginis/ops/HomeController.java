@@ -45,6 +45,7 @@ import com.monginis.ops.model.DummyItems;
 import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.FrTotalSale;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
@@ -434,9 +435,23 @@ public class HomeController {
 			
 		session.setAttribute("isSpDayShow",spDayShow);
 
-			
-			
-			
+		map=new LinkedMultiValueMap<String,Object>();
+		map.add("frId", loginResponse.getFranchisee().getFrId());
+		int month=calendar.get(Calendar.MONTH) +1;
+		map.add("month",month);
+		System.out.println("Cuurrr Month "+month);
+		map.add("year", calendar.get(Calendar.YEAR));
+		System.out.println("Cuurrr year"+calendar.get(Calendar.YEAR));
+		FrTotalSale frTotalSale=restTemplate.postForObject(Constant.URL + "/getFrTotalSale",
+				map,FrTotalSale.class);
+		System.out.println("Get Fr Total Sale  "+frTotalSale.toString());
+		float achievedTarget=0;
+			if(frTotalSale!=null)
+			{
+				achievedTarget=frTotalSale.getTotalSale();
+			}
+		session.setAttribute("achievedTarget",achievedTarget);
+		
 			model = new ModelAndView("home");
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);

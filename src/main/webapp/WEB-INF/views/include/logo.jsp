@@ -17,11 +17,12 @@
               </c:otherwise>
               </c:choose>
  
-       
+       <input type="hidden" id="achievedTarget" value="${sessionScope.achievedTarget}">
+       <input type="hidden" id="target" value="${frDetails.frTarget}">
         <div class="logoBarRight">
       
         <div id="menuzord" class="menuzord red menuzord-responsive">
-           <div id="chart_div" style="width: 100px;height: 50px;  float: left;margin-right: 20px;"></div>
+           <div id="chart_div" style="width: 120px;height: 70px;  float: left;margin-right: 20px;"></div>
            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
            
                <c:choose>
@@ -61,30 +62,52 @@
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
+	var achievedTarget=document.getElementById("achievedTarget").value;
+	var target=document.getElementById("target").value;
 google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawMultSeries);
 
 function drawMultSeries() {
+	 
+	achievedTarget=Math.ceil(achievedTarget);
+	 
+	if(achievedTarget>=target)
+		{
+		 
+		target=0;
+		}
+	else{
+		 
+		 
+		target=target-achievedTarget;
+		
+	}
+	
       var data = google.visualization.arrayToDataTable([
-        ['Target In Lakhs', 'Assigned Target', 'Achived Target'],
-        ['Franchise Target',1000000, 2000000],
-       
+        ['Target In Lakhs', 'Assigned Target'],
+        ['Franchise Target',target],
+        ['Franchise Target',achievedTarget],
+     
       
       ]);
 
       var options = {
-        title: 'Franchise Target',
-        chartArea: {width: '100',height: '50'},
-        hAxis: {
-          title: 'Target Details',
-          minValue: 0
-        },
-        vAxis: {
-          title: 'Target In Lakhs'
-        }
-      };
+    	        title: 'Franchise Target',
+    	        chartArea: {width: '100',height: '70'},
+    	        hAxis: {
+    	          title: 'Target Details',
+    	          minValue: 0
+    	        },
+    	        vAxis: {
+    	          title: 'Target In Lakhs'
+    	        }
+    	     
+    	      };
 
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+
+   
       chart.draw(data, options);
     }
 
