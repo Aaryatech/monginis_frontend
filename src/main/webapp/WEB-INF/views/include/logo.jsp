@@ -93,7 +93,7 @@ function drawMultSeries() {
 
       var options = {
     	        title: 'Franchise Target',
-    	        chartArea: {width: '100',height: '70'},
+    	        chartArea: {width: '100',height: '80'},
     	        hAxis: {
     	          title: 'Target Details',
     	          minValue: 0

@@ -300,7 +300,7 @@ public class HomeController {
 			int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
 		
 			
-			System.out.println("Toaday date "+currentDate);
+			System.out.println("Today date "+currentDate);
 			System.out.println("Day of week "+dayOfWeek);
 			
 			
@@ -330,16 +330,16 @@ public class HomeController {
 					
 				}else if(frMenu.getSettingType()==2){ // date basis
 					
-					List<String> dateList = Arrays.asList( frMenu.getDay().split(",") );
-
+					List<String> dateList = Arrays.asList( frMenu.getDate().split(",") );
 					List<Integer> newDateList = dateList.stream()
 											  .map(s -> Integer.parseInt(s))
 											  .collect(Collectors.toList());
+
 					for(int k=0;k<newDateList.size();k++) {
 					if(newDateList.get(k)==calendar.get(Calendar.DAY_OF_MONTH)) {
 
 						filteredFrMenuList.add(frMenu);
-						
+
 					} 
 					}
 				}else if(frMenu.getSettingType()==1){ // daily basis

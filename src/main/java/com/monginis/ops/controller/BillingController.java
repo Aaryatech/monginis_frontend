@@ -51,10 +51,52 @@ public class BillingController {
 	
 	
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
-	public ModelAndView showBill() {
+	public ModelAndView showBill(HttpServletRequest request,
+			HttpServletResponse response) {
 		
 		ModelAndView modelAndView = new ModelAndView("billing/showBill");
+		List<GetBillHeader> billHeader=new ArrayList<GetBillHeader>();
+
+		try {
+		     HttpSession session = request.getSession();
+		     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		
+		     RestTemplate restTemplate = new RestTemplate();
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Date date = new Date();				
+				System.out.println(dateFormat.format(date));
+				
+				
+				int frId=frDetails.getFrId();
+				
+				
+				map.add("fromDate", dateFormat.format(date));
+				
+				map.add("toDate", dateFormat.format(date));
+				
+				map.add("frId", frId);
+				
+			
+				
+				ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
+				};
+				ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeader",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+				
+				billHeadeResponse = responseEntity.getBody();	
+
+				billHeader = billHeadeResponse.getGetBillHeaders();
+				modelAndView.addObject("fromDate", dateFormat.format(date));
+				modelAndView.addObject("toDate", dateFormat.format(date));
+				
+				modelAndView.addObject("billHeader",billHeader);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception in showBill"+e.getMessage());
+		}
 		return modelAndView;
 
 	}
@@ -86,6 +128,9 @@ public class BillingController {
 		
 		String toDate= request.getParameter("to_datepicker");
 		
+		modelAndView.addObject("fromDate",fromDate);
+		modelAndView.addObject("toDate",toDate);
+		
 		int frId=frDetails.getFrId();
 		
 		
@@ -105,7 +150,7 @@ public class BillingController {
 		billHeadeResponse = responseEntity.getBody();	
 
 		billHeader = billHeadeResponse.getGetBillHeaders();
-		
+		System.out.println("billHeader"+billHeader.toString());
 		modelAndView.addObject("billHeader",billHeader);
 		
 		}catch (Exception e) {

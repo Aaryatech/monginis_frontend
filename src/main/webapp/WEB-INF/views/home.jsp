@@ -72,6 +72,27 @@
             
 					<!--slider-->
 					<!--slider thum size : width:850px height:350px-->
+						<div class="latestNews">
+					
+						<h3 class="latestNewsTitle">Latest News</h3>
+							<div class="microsoft marquee">
+						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
+						
+					            <c:set var="colors" value=""/>
+					            <c:choose>
+					            <c:when test="${count.index%2==0}">
+					            <c:set var="colors" value="white"/>
+					           </c:when>
+					           <c:otherwise>
+					            <c:set var="colors" value="lightblue"/>
+					          </c:otherwise>
+					          </c:choose>
+								<span style="color:${colors}"> ${schedulerLists.schMessage} </span>
+							
+						
+						</c:forEach>
+						</div>
+					</div>
 					<div id="owl-example" class="owl-carousel">
 
 
@@ -86,8 +107,8 @@
 									
 
 									</div>
-									<h3 class="homesliderTitle" ><center>${msgList.msgHeader}</center></h3>
-
+									<h3 class="homesliderTitle" style="font-size:15px "><center>${msgList.msgHeader}</center></h3>
+	                                <h3 class="homesliderTitle"  ><center>${msgList.msgDetails}</center></h3>
 
 								</div>
 							</div>
@@ -170,7 +191,7 @@
 					<!--latestNews-->
 					
 					
-					<div class="latestNews">
+				<%-- 	<div class="latestNews">
 					
 						<h3 class="latestNewsTitle">Latest News</h3>
 							<div class="microsoft marquee">
@@ -183,7 +204,7 @@
 						
 						</c:forEach>
 						</div>
-					</div>
+					</div> --%>
 					
 					
 					<!--latestNews-->

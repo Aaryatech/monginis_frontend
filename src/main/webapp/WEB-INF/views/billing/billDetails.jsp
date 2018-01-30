@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -213,20 +213,33 @@ However, delay the fade out process for 2.5 seconds */
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
 												<tr>
-													<td class="col-md-1"><c:out value="${count.index+1}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.itemName}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.catName}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.orderQty}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.billQty}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.mrp}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.rate}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.taxableAmt}" /></td>
-													
-													<c:set var="sgstPer" value="${billDetailsList.sgstPer}"/>
-													<c:set var="cgstPer" value="${billDetailsList.cgstPer}"/>
-													<td class="col-md-1"><c:out value="${sgstPer+cgstPer}" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.totalTax }" /></td>
-													<td class="col-md-1"><c:out value="${billDetailsList.grandTotal }" /></td>
+													<td class="col-md-1" align="left"><c:out value="${count.index+1}" /></td>
+													<td class="col-md-1" align="left"><c:out value="${billDetailsList.itemName}" /></td>
+													<td class="col-md-1" align="left"><c:out value="${billDetailsList.catName}" /></td>
+													<td class="col-md-1"align="right"><c:out value="${billDetailsList.orderQty}" /></td>
+													<td class="col-md-1"align="right"><c:out value="${billDetailsList.billQty}" /></td>
+<fmt:formatNumber var="formattedmrp" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.mrp}" />
+<c:set var="formattedmrp" value="${formattedmrp}" />
+													<td class="col-md-1"align="right"><c:out value="${formattedmrp}" /></td>
+<fmt:formatNumber var="formattedrate" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.rate}" />
+<c:set var="formattedrate" value="${formattedrate}" />													
+													<td class="col-md-1"align="right"><c:out value="${formattedrate}" /></td>
+<fmt:formatNumber var="formattedtaxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.taxableAmt}" />
+<c:set var="formattedtaxableAmt" value="${formattedtaxableAmt}" />														
+													<td class="col-md-1"align="right"><c:out value="${formattedtaxableAmt}" /></td>
+<fmt:formatNumber var="formattedsgstper" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.sgstPer}" />
+<c:set var="formattedsgstper" value="${formattedsgstper}" />															
+													<c:set var="sgstPer" value="${formattedsgstper}"/>
+<fmt:formatNumber var="formattedcgstPer" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.cgstPer}" />
+<c:set var="formattedcgstPer" value="${formattedcgstPer}" />													
+													<c:set var="cgstPer" value="${formattedcgstPer}"/>
+													<td class="col-md-1"align="right"><c:out value="${sgstPer+cgstPer}" /></td>
+<fmt:formatNumber var="formattedtotalTax" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.totalTax}" />
+<c:set var="formattedtotalTax" value="${formattedtotalTax}" />															
+													<td class="col-md-1" align="right"><c:out value="${formattedtotalTax}" /></td>
+<fmt:formatNumber var="formattedgrandTotal" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.grandTotal}" />
+<c:set var="formattedgrandTotal" value="${formattedgrandTotal}" />														
+													<td class="col-md-1" align="right"><c:out value="${formattedgrandTotal}" /></td>
 													
 													<td class="col-md-1"><c:out value="${billDetailsList.remark}" /></td>
 													
