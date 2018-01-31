@@ -169,7 +169,7 @@ margin:10px;
 </style>
   
 </head>
-<body id="myBodyId">
+<body id="myBodyId" onload="setCursor()">
 
 <c:url var="useRegStock" value="/useRegStock"></c:url>
 <c:url var="currentNewItem" value="/currentNewItem"></c:url>
@@ -218,8 +218,8 @@ margin:10px;
 						<h2 class="pageTitle">Customer Bill</h2>
 
 					</div>
-
-					<div class="order-right" align="justify">
+<br>
+					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/viewBill"><button class="btn btn-success">
 							View Bill
 						</button></a>
@@ -294,8 +294,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty1"
-																id="qty1" value="1" onkeypress="onQty(event,1)"></td>
+																class="form-control"  name="qty1"
+																id="qty1" value="1" onkeypress="onQty(event,1)" oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal1">00</td>
 
 
@@ -528,8 +528,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty2"
-																id="qty2" value="1" onkeypress="onQty(event,2)"></td>
+																class="form-control"  name="qty2"
+																id="qty2" value="1" onkeypress="onQty(event,2)"oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal2">00</td>
 
 
@@ -760,8 +760,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty3"
-																id="qty3" value="1" onkeypress="onQty(event,3)"></td>
+																class="form-control"  name="qty3"
+																id="qty3" value="1" onkeypress="onQty(event,3)"oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal3">00</td>
 
 
@@ -990,8 +990,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty4"
-																id="qty4" value="1" onkeypress="onQty(event,4)"></td>
+																class="form-control"  name="qty4"
+																id="qty4" value="1" onkeypress="onQty(event,4)" oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal4">00</td>
 
 
@@ -1220,8 +1220,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty5"
-																id="qty5" value="1" onkeypress="onQty(event,5)"></td>
+																class="form-control" name="qty5"
+																id="qty5" value="1" onkeypress="onQty(event,5)"oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal5">00</td>
 
 
@@ -1450,8 +1450,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty6"
-																id="qty6" value="1" onkeypress="onQty(event,6)"></td>
+																class="form-control" name="qty6"
+																id="qty6" value="1" onkeypress="onQty(event,6)" oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal6">00</td>
 
 
@@ -1680,8 +1680,8 @@ margin:10px;
 
 															</td>
 															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty7"
-																id="qty7" value="1" onkeypress="onQty(event,7)"></td>
+																class="form-control"name="qty7"
+																id="qty7" value="1" onkeypress="onQty(event,7)"oninput="validity.valid||(value='');"></td>
 															<td id="rateTdVal7">00</td>
 
 
@@ -2850,7 +2850,13 @@ jQuery(document).ready(function() {
  
 	</script>
 	
-
+<script type="text/javascript">
+function setCursor()
+{
+	$("#barcode1").focus();
+	
+}
+</script>
  
  <!-- document.getElementById("mySelect").value = "orange"; -->  
 </body>

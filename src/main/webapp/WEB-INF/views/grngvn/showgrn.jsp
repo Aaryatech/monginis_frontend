@@ -75,7 +75,7 @@
 								<tr class="bgpink">
 				<th class="col-md-1" >Bill No.</th>
 				<th  class="col-md-3">Name</th>
-				<th  class="col-md-1">Type</th>
+				<th  class="col-md-2">Type</th>
 				<th  class="col-md-1">QTY</th>
 				<th  class="col-md-1">Rate</th>
 <!-- 				<th  class="col-md-1">Is Edit </th>
@@ -104,26 +104,29 @@
 																<td class="col-md-3"><c:out value="${grnConfList.itemName}"></c:out></td>
 																<c:choose>
 																	<c:when test="${grnConfList.grnType==0}">
-																		<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
+																		<td class="col-md-1"><c:out value="GRN 1(75%)"></c:out></td>
 																	</c:when>
 																	<c:when test="${grnConfList.grnType==1}">
-																		<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
+																		<td class="col-md-1"><c:out value="GRN 2(90%)"></c:out></td>
 																	</c:when>
-																	<c:when test="${grnConfList.grnType== 2}">
-																		<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
+																	<c:when test="${grnConfList.grnType==2}">
+																		<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
+																	</c:when>
+																	<c:when test="${grnConfList.grnType==3}">
+																		<td class="col-md-1"><c:out value="No GRN"></c:out></td>
 																	</c:when>
 																	
-																	<c:when test="${grnConfList.grnType== 4}">
-																		<td class="col-md-1"><c:out value="GRN 4"></c:out></td>
+																	<c:when test="${grnConfList.grnType==4}">
+																		<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
 																	</c:when>
+																	<c:otherwise><c:out value="No GRN"></c:out></c:otherwise>
 																	
-
 																</c:choose>
 <%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer})"
  --%>
-																<td class="col-md-1">
-																<input type="text"
+																<td class="col-md-1"><c:out value="${grnConfList.autoGrnQty}"></c:out>
+																<input type="hidden"
 																	name="grnqty${grnConfList.itemId}"
 																	id="grnqty${grnConfList.itemId}" size="3" readonly="readonly"
 																	value="${grnConfList.autoGrnQty}" /> </td>
@@ -421,6 +424,20 @@ function getGrnData(id){
 }
 	
 </script>
+<script>
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+})();
+
+
+	</script>
 
 </body>
 </html>

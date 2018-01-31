@@ -74,7 +74,6 @@
 						<!--tabMenu-->
 
 						<!--tabMenu-->
-							<div class="clearfix"></div>
 
 
 				<div id="table-scroll" class="table-scroll">
@@ -120,6 +119,12 @@
 																			<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnType==2}">
+																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnType==3}">
+																			<td class="col-md-1"><c:out value="No GRN"></c:out></td>
+																		</c:when>
+																		<c:when test="${grnList.grnType==4}">
 																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 																		</c:when>
 																	</c:choose>
@@ -224,11 +229,15 @@
 						var grnType;
 						var grnStatus;
 						if(grndata.grnType==0)
-							grnType="Grn 1";
+							grnType="GRN 1";
 						if(grndata.grnType==1)
-							grnType="Grn 2";
+							grnType="GRN 2";
 								if(grndata.grnType==2)
-									grnType="Grn 3";
+									grnType="GRN 3";
+								if(grndata.grnType==3)
+									grnType="No GRN";
+								if(grndata.grnType==4)
+									grnType="GRN 4";
 								
 								if(grndata.grnGvnStatus==1)
 									grnStatus="Pending";

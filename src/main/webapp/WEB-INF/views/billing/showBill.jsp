@@ -194,19 +194,19 @@
 											<c:when test="${billHeader.status==2}">
 												<td class="col-md-1"><c:out value="Received"></c:out></td>
 											</c:when>
-											<c:when test="${billHeader.status== 3}">
+											<c:when test="${billHeader.status==3}">
 												<td class="col-md-1"><c:out value="GVN Apply"></c:out></td>
 											</c:when>
-											<c:when test="${billHeader.status== 4}">
+											<c:when test="${billHeader.status==4}">
 												<td class="col-md-1"><c:out value="GVN Approve"></c:out></td>
 											</c:when>
-											<c:when test="${billHeader.status== 5}">
+											<c:when test="${billHeader.status==5}">
 												<td class="col-md-1"><c:out value="GRN Apply"></c:out></td>
 											</c:when>
-											<c:when test="${billHeader.status== 6}">
+											<c:when test="${billHeader.status==6}">
 												<td class="col-md-1"><c:out value="GRN Approve"></c:out></td>
 											</c:when>
-											<c:when test="${billHeader.status== 7}">
+											<c:when test="${billHeader.status==7}">
 												<td class="col-md-1"><c:out value="Closed"></c:out></td>
 											</c:when>
 

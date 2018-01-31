@@ -248,9 +248,11 @@
 												<th class="col-md-1">Item Name</th>
 												<th class="col-md-1">Reg Op Stock</th>
 												<th class="col-md-1">Sp Op Stock</th>
-												<th class="col-md-1">Pur Amt</th>
+												<th class="col-md-1">Reg Pur Qty</th>
+												<th class="col-md-1">Sp Pur Qty</th>
 												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Total Sell</th>
+												<th class="col-md-1">Regular Sell</th>
+												<th class="col-md-1">Sp Sell</th>
 												<th class="col-md-1">Reg Cur Stock</th>
 												<th class="col-md-1">Sp Cur Stock</th>
 
@@ -463,7 +465,7 @@
 
 
 					var len = data.length;
-					$('#stockTable td').remove();
+					$('#table_grid td').remove();
 
 				
 					
@@ -486,9 +488,12 @@
 						tr.append($('<th width=80 align=left>Special Opening Stock</th>'));
 
 						
-						tr.append($('<th width=80 align=left>Total Purchase Amt</th>'));
+						tr.append($('<th width=80 align=left>Reg Purchase Qty</th>'));
+						tr.append($('<th width=80 align=left>Sp Purchase Qty</th>'));
+
 						tr.append($('<th width=80 align=left>GRN / GVN Qty</th>'));
-						tr.append($('<th width=80 align=left>Total Sell</th>'));
+						tr.append($('<th width=80 align=left>Reg Sell</th>'));
+						tr.append($('<th width=80 align=left>Sp Sell</th>'));
 						tr.append($('<th width=80 align=left>Regular Current Stock</th>'));
 						tr.append($('<th width=80 align=left>Special Current Stock</th>'));
 
@@ -508,9 +513,21 @@
 						tr.append($('<td class="col-md-1"></td>').html(item.regOpeningStock));
 						tr.append($('<td class="col-md-1"></td>').html(item.spOpeningStock));
 						tr.append($('<td class="col-md-1"></td>').html(item.regTotalPurchase));
+						tr.append($('<td class="col-md-1"></td>').html(item.spTotalPurchase));
 						tr.append($('<td class="col-md-1"></td>').html(item.regTotalGrnGvn));
-						tr.append($('<td class="col-md-1"></td>').html(item.regTotalSell));
-						
+						if(item.regTotalSell<0)
+							{
+							tr.append($('<td class="col-md-1"></td>').html(0));
+
+							
+							}
+						else
+							{
+							tr.append($('<td class="col-md-1"></td>').html(item.regTotalSell));
+
+							}
+						tr.append($('<td class="col-md-1"></td>').html(item.spTotalSell));
+
 					//	var regOpeningBalance = parseFloat(item.regOpeningStock);
 					//	var regTotalPurchase = parseFloat(item.regTotalPurchase);
 					//	var regTotalGrnGvn = parseFloat(item.regTotalGrnGvn);
@@ -520,9 +537,15 @@
 					//	var totalConsumption = totalGrnGvn + totalSell;
 
 						var regCurrentStock = item.currentRegStock;
+						if(regCurrentStock<0)
+						{
+						tr.append($('<td></td>').html(0));
+						}
+						else
+							{
+							tr.append($('<td></td>').html(regCurrentStock));
 
-						tr.append($('<td></td>').html(regCurrentStock));
-						
+							}
 						tr.append($('<td></td>').html(item.currentSpStock));
 
 						if(isMonthClose && selectedStockOption == 1){

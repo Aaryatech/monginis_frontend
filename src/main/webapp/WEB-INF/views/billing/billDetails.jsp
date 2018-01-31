@@ -192,7 +192,7 @@ However, delay the fade out process for 2.5 seconds */
 							<thead>
 								<tr class="bgpink">
 											<tr class="bgpink">
-												<th width="138" style="width: 18px" align="left">Sr No</th>
+												<th width="138" style="width: 18px" align="left">No</th>
 													<th class="col-md-1">Item Name</th>
 													<th class="col-md-1">Group</th>
 													<th class="col-md-1">Order Qty</th>
@@ -206,7 +206,7 @@ However, delay the fade out process for 2.5 seconds */
 													<th class="col-md-1">Tax Amt</th>
 													<th class="col-md-1">Total</th>
 													
-													<th class="col-md-1">Remark</th>
+													<th class="col-md-1">GRN Type</th>
 											</tr>
 											</thead>
 							<tbody>
@@ -221,7 +221,7 @@ However, delay the fade out process for 2.5 seconds */
 <fmt:formatNumber var="formattedmrp" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.mrp}" />
 <c:set var="formattedmrp" value="${formattedmrp}" />
 													<td class="col-md-1"align="right"><c:out value="${formattedmrp}" /></td>
-<fmt:formatNumber var="formattedrate" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.rate}" />
+<fmt:formatNumber var="formattedrate" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.baseRate}" />
 <c:set var="formattedrate" value="${formattedrate}" />													
 													<td class="col-md-1"align="right"><c:out value="${formattedrate}" /></td>
 <fmt:formatNumber var="formattedtaxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.taxableAmt}" />
@@ -241,8 +241,25 @@ However, delay the fade out process for 2.5 seconds */
 <c:set var="formattedgrandTotal" value="${formattedgrandTotal}" />														
 													<td class="col-md-1" align="right"><c:out value="${formattedgrandTotal}" /></td>
 													
-													<td class="col-md-1"><c:out value="${billDetailsList.remark}" /></td>
-													
+													<td class="col-md-1"align="left">
+											<c:choose>
+											<c:when test="${billDetailsList.grnType==0}">
+										     <c:out value="GRN-1" />
+										    </c:when>
+											<c:when test="${billDetailsList.grnType==1}">
+										     <c:out value="GRN-2" />
+										    </c:when>
+										    <c:when test="${billDetailsList.grnType==2}">
+										     <c:out value="GRN-3" />
+										    </c:when>
+										    <c:when test="${billDetailsList.grnType==3}">
+										     <c:out value="No GRN" />
+										    </c:when>
+										    <c:when test="${billDetailsList.grnType==4}">
+										     <c:out value="GRN-3" />
+										    </c:when>
+										</c:choose>
+										</td>
 												</tr>
 												</c:forEach>
 											
@@ -254,8 +271,8 @@ However, delay the fade out process for 2.5 seconds */
 
 					</div><br>
 					<div align="center">
-								<input name="" class="buttonsaveorder" value="Go Back"
-									 onclick="goBack()" align="center" type="button">
+								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="buttonsaveorder" value="Go Back"
+									  align="center" type="button"></a><!-- onclick="goBack()" -->
 							</div>
 					 
 					<!--tabNavigation-->
@@ -282,7 +299,11 @@ However, delay the fade out process for 2.5 seconds */
 function myFunction(status){
 	//alert(status);
 	if(status==2)
+		{
 		document.getElementById("updateStatus").style="display:none";
+		
+		
+		}
 		
 }
 
