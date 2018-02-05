@@ -1,12 +1,11 @@
 package com.monginis.ops.model;
 
-public class FranchiseSup{
-	
+public class FranchiseSup {
 
 	private boolean error;
 	
 	private String message;
-	
+
 	private int id;
 	
 	private int frId;
@@ -17,20 +16,59 @@ public class FranchiseSup{
 	
 	private String frCountry;
 	
+	private int delStatus;
+
 	private String pass1;
-
+	
 	private String pass2;
-
+	
 	private String pass3;
 
 	private String pass4;
 
 	private String pass5;
 
+	private int frequency;
 	
-	private int delStatus;
+	private String pestControlDate;
+	
+	private String remainderDate;
+	
+	private int isTallySync;
+	
+	
+	public int getFrequency() {
+		return frequency;
+	}
 
-	
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+	public String getPestControlDate() {
+		return pestControlDate;
+	}
+
+	public void setPestControlDate(String pestControlDate) {
+		this.pestControlDate = pestControlDate;
+	}
+
+	public String getRemainderDate() {
+		return remainderDate;
+	}
+
+	public void setRemainderDate(String remainderDate) {
+		this.remainderDate = remainderDate;
+	}
+
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
+
 	public String getPass1() {
 		return pass1;
 	}
@@ -138,10 +176,10 @@ public class FranchiseSup{
 	@Override
 	public String toString() {
 		return "FranchiseSup [error=" + error + ", message=" + message + ", id=" + id + ", frId=" + frId + ", frPanNo="
-				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", pass1=" + pass1 + ", pass2="
-				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", delStatus=" + delStatus
-				+ "]";
+				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", delStatus=" + delStatus
+				+ ", pass1=" + pass1 + ", pass2=" + pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5
+				+ ", frequency=" + frequency + ", pestControlDate=" + pestControlDate + ", remainderDate="
+				+ remainderDate + ", isTallySync=" + isTallySync + "]";
 	}
-
-	
+    
 }

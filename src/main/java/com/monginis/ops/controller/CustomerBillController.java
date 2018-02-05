@@ -102,6 +102,13 @@ public class CustomerBillController {
 	public ModelAndView viewBill(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("frSellBilling/showSellBill");
+		HttpSession ses = request.getSession();
+		 String pattern = "dd-MM-yyyy";
+
+		String dateInString =new SimpleDateFormat(pattern).format(new Date());
+
+		ses.setAttribute("fromSellBillDate",dateInString );
+		ses.setAttribute("toSellBillDate",dateInString);
 		return model;
 	}
 
@@ -115,7 +122,8 @@ public class CustomerBillController {
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
+		ses.setAttribute("fromSellBillDate", fromDate);
+		ses.setAttribute("toSellBillDate", toDate);
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();

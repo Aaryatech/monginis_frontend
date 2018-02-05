@@ -78,9 +78,10 @@
 				<th  class="col-md-2">Type</th>
 				<th  class="col-md-1">QTY</th>
 				<th  class="col-md-1">Rate</th>
-<!-- 				<th  class="col-md-1">Is Edit </th>
- -->				<th  class="col-md-1">Edit Qty</th>
+			    <th  class="col-md-1">Grn Rate</th>
+ 				<th  class="col-md-1">Edit Qty</th>
 				<th  class="col-md-1">Tax %</th>
+				<th  class="col-md-1">Taxable Amt</th>
 				<th  class="col-md-1">Amount</th>
 				<th  class="col-md-1">Remark</th>
   </tr>
@@ -133,6 +134,8 @@
 
 																<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
 																	value="${grnConfList.calcBaseRate}"></c:out></td>
+																<td class="col-md-1"><c:out
+																	 value="${grnConfList.grnRate}"></c:out></td>
 
 															<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
@@ -153,9 +156,14 @@
 
 																<td class="col-md-1" id="tax_per${grnConfList.itemId}"><c:out
 																		value="${grnConfList.taxPer}"></c:out></td>
-
+	<fmt:formatNumber var="taxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${grnConfList.taxableAmt}" />
+<c:set var="taxableAmt" value="${taxableAmt}" />																	
+                                                       <td class="col-md-1"><c:out
+																	 value="${taxableAmt}"></c:out></td>
+	<fmt:formatNumber var="grnAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${grnConfList.grnAmt}" />
+<c:set var="grnAmt" value="${grnAmt}" />
 																<td class="col-md-1" id="grn_amt${grnConfList.itemId}"><c:out
-																		value="${grnConfList.grnAmt}"></c:out></td>
+																		value="${grnAmt}"></c:out></td>
 
 																<td class="col-md-1">
 																<select name="grn_remark${grnConfList.itemId}" style="width: 200px"

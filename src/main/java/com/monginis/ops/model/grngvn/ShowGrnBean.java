@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ShowGrnBean {
 
-	 private Integer billDetailNo;
+	    private Integer billDetailNo;
 	    private Integer itemId;
 	    private Integer frId;
 	    private String itemName;
@@ -13,36 +13,39 @@ public class ShowGrnBean {
 	    private Integer rate;
 	    private Integer mrp;
 	    private Integer billQty;
-	    
 	    Date billDate;
-	    
 	    float sgstPer;
 	    float cgstPer;
 	    float igstPer;
-	    
 	    float calcBaseRate;
-	    
-	    
-	    
-	    
-	    
 	    private int menuId;
-		
 		private int catId;
-		
 		private String invoiceNo;
-		
-	    
-	private int autoGrnQty;
-	
-	private float taxPer;
-	private float grnAmt;
-	
-	private String billDateTime;
-		
-		
+	    private int autoGrnQty;
+    	private float taxPer;
+	    private float grnAmt;
+	    private String billDateTime;
+        private float taxableAmt;
+        private float grnRate;
+        
+        
+	    public float getTaxableAmt() {
+			return taxableAmt;
+		}
 
-	    public int getMenuId() {
+		public void setTaxableAmt(float taxableAmt) {
+			this.taxableAmt = taxableAmt;
+		}
+
+		public float getGrnRate() {
+			return grnRate;
+		}
+
+		public void setGrnRate(float grnRate) {
+			this.grnRate = grnRate;
+		}
+
+		public int getMenuId() {
 			return menuId;
 		}
 
@@ -66,8 +69,6 @@ public class ShowGrnBean {
 			this.invoiceNo = invoiceNo;
 		}
 
-	    
-	    
 		public Integer getBillDetailNo() {
 			return billDetailNo;
 		}

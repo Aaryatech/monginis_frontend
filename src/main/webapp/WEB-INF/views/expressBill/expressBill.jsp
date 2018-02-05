@@ -180,14 +180,14 @@ input:checked + .slider:before {
 					</div>
 					
 					
-					<div class="col-md-8 text-left bill-date">
+					<div class="col-md-12 text-left bill-date">
 						<c:choose>
 
 						<c:when test="${count == 0}">
 							<div class="colOuter">
-								<div>
+								<div><center>
 									<input name="" class="buttonsaveorder" value="Start Day"
-										type="button" id="start" onclick="start(); hideMe(this.id);">
+										type="button" id="start" onclick="start(); hideMe(this.id);"></center>
 								</div>
 							</div>
 						</c:when>
@@ -260,13 +260,13 @@ input:checked + .slider:before {
 																oninput='onInput()' id='input1' />
 																 --> 
 																 
-																 <input type"selectpicker"  data-show-subtext="true" data-live-search="true"
+																 <input type="number"  class="form-control"
 																data-placeholder="Enter Barcode"
-																id='input' list='dlist' /> <datalist id='dlist'>
+																id='input'  onchange='onInput()' /> <%-- <datalist id='dlist'>
 																	<c:forEach items="${itemsList}" var="itemsList">
 																		<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
 																	</c:forEach>
-																</datalist>
+																</datalist> --%>
 															</td>
 															<td>
 															
@@ -317,7 +317,7 @@ input:checked + .slider:before {
 										<table class="table table-bordered" width="100%" border="0"
 											cellspacing="0" cellpadding="0 " id="table_grid1">
 											<tr class="bgpink">
-												<th>Print</th>
+												<th>Print</th> 
 												<th>Sr.No</th>
 												<th>Detail Id</th>
 												<th>Barcode</th>
@@ -329,7 +329,7 @@ input:checked + .slider:before {
 											</tr>
 											<c:forEach items="${sellBillDetails}" var="sellBillDetails" varStatus="count">
 												<tr>
-												<td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
+											 <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
 																id="select_to_print"
 																value="${sellBillDetails.sellBillDetailNo}" ></td>
 																	<td ><c:out value="${count.index+1}" /></td>
@@ -418,7 +418,7 @@ input:checked + .slider:before {
 										<table class="table table-bordered" width="100%" border="0"
 											cellspacing="0" cellpadding="0 " id="table_grid">
 											<tr class="bgpink">
-											<th>Print</th>
+										<th>Print</th>
 												<th>Sr.No.</th>
 												<th>Detail Id</th>
 												<th>Barcode</th>
@@ -430,8 +430,11 @@ input:checked + .slider:before {
 
 											<c:forEach items="${sellBillDetails}" var="sellBillDetails"  varStatus="count">
 												<tr>
+												 <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
+																id="select_to_print"
+																value="${sellBillDetails.sellBillDetailNo}" ></td>
 												<td ><c:out value="${count.index+1}" /></td>
-												
+													<td><c:out value="${sellBillDetails.sellBillNo}" /></td>
 															<td><c:out value="${sellBillDetails.itemId}" /></td>
 													<td><c:out value="${sellBillDetails.itemName}" /></td>
 													<td><c:out value="${sellBillDetails.qty}" /></td>
@@ -450,8 +453,185 @@ input:checked + .slider:before {
 						</c:otherwise>
 					</c:choose>
 					<!--tab1-->
+					<div class="row"></div> <br /> <br />
+						<div class="table" id="div1" style="display: none;">
+							<div>
+					 
+				<h4>
+					<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp;
+					 Bill Date :${sellBillHeader.billDate}</B>
+				</h4>
+				<%-- <h4 style="align-items: center;" >
+					<i class="fa fa-bars">Bill Date :</i>${sellBillHeader.billDate}
+				</h4> --%>
+				
+						
+
+					</div>
+
+
+					<!-------------------------------------------------------------->
+
 					
-					<li class="selected">
+			
+			
+			<div class="col-md-2"> 
+								<span style="padding-top: 0px;float: left;margin-top: 13px;font-size: 16px; ">Single Print</span><label class="switch"> 
+  									<input type="checkbox" id="id" checked>
+ 											 <span class="slider round"></span>
+ 								</div>			 
+ 										
+			 
+
+							<%-- <div class="colOuter">
+								<div class="col1">Bill NO:</div>
+								<div class="col1">${sellBillHeader.sellBillNo}</div>
+							</div>
+
+							<div class="colOuter">
+								<div class="col1">Bill Date:</div>
+								<div class="col1">${sellBillHeader.billDate}</div>
+							</div> --%>
+
+							<!--tab1-->
+							<!-- <li class="selected"> -->
+							
+								<div class="row"></div>
+								
+									 
+								</label>
+								<div class="table">
+									<div class="shInnerwidth">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0"
+											class="table">
+											<tr>
+												<td align="center" valign="middle" style="padding: 0px;">
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr class="bgpink">
+															<td>Barcode</td>
+															<td>Item Name</td>
+															<td>Qty</td>
+															<td>Rate</td>
+														</tr>
+														<tr>
+															<td>
+																<!--  new Input <input type='text' class="form-control"
+																oninput='onInput()' id='input1' />
+																 --> 
+																 
+																 <input type="number"  class="form-control"
+																data-placeholder="Enter Barcode"
+																id='input'  onchange='onInput()' /> <%-- <datalist id='dlist'>
+																	<c:forEach items="${itemsList}" var="itemsList">
+																		<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
+																	</c:forEach>
+																</datalist> --%>
+															</td>
+															<td>
+															
+															<!-- <input type="text" class="form-control"
+																id="itemName" name="itemName" placeholder="Item Name"
+																disabled onchange="changeFocus()"> -->
+																
+																<select class="selectpicker"  data-show-subtext="true" data-live-search="true"
+																data-placeholder="Enter Item Name"  name="itemName"
+																class="form-control" tabindex="-1" id="itemName" onchange="onSelectItem()"
+																data-rule-required="true">
+																	<option value="">Item Name</option>
+																	<c:forEach items="${itemsList}"
+																		var="itemsList">
+																		<option value="${itemsList.itemId}">${itemsList.itemName}</option>
+																	</c:forEach>
+															</select> 
+																</td>
+																
+															<td><input type="number" min="0" max="500"
+																class="form-control" placeholder="1" name="qty1"
+																id="qty1" value="1"></td>
+															<td id="rateTdVal1">00</td>
+
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+										</table>
+									</div>
+								</div> <input name="rate1" id="rate1" type="hidden" value="00" />
+								<div class="row">
+									<div class="col-md-12">
+										<center>
+											<button class="btn btn-primary" onclick="insertItem1()"
+												id="insertItemButton">Submit Item</button>
+												<button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
+						onclick="printExBill()" disabled id="printExBill">Print</button>
+										</center>
+										 		
+									</div>
+									 
+								</div> <br /> <!-- Form End -->
+								<div class="table-responsive">
+									<div class="shInnerwidth">
+
+										<table class="table table-bordered" width="100%" border="0"
+											cellspacing="0" cellpadding="0 " id="table_grid1">
+											<tr class="bgpink">
+												<th>Print</th> 
+												<th>Sr.No</th>
+												<th>Detail Id</th>
+												<th>Barcode</th>
+												<th>Item Name</th>
+												<th style="width: 130px;">Qty</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Action</th>
+											</tr>
+											<c:forEach items="${sellBillDetails}" var="sellBillDetails" varStatus="count">
+												<tr>
+											 <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
+																id="select_to_print"
+																value="${sellBillDetails.sellBillDetailNo}" ></td>
+																	<td ><c:out value="${count.index+1}" /></td>
+													<td><c:out value="${sellBillDetails.sellBillDetailNo}" /></td>
+													<td><c:out value="${sellBillDetails.itemId}" /></td>
+													<td><c:out value="${sellBillDetails.itemName}" /></td>
+													<td><c:out value="${sellBillDetails.qty}" /></td>
+													<td><c:out value="${sellBillDetails.mrp}" /></td>
+													<td><c:out value="${sellBillDetails.grandTotal}" /></td>
+
+ 											<td>
+								 				<a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
+													</td>
+												</tr>
+											</c:forEach>
+
+										</table>
+									</div>
+
+
+							<!-- Loader Div -->
+									<div align="center" id="loader" style="display: none">
+										<span>
+											<h4>
+												<font color="#343690">Loading</font>
+											</h4>
+										</span> <span class="l-1"></span> <span class="l-2"></span> <span
+											class="l-3"></span> <span class="l-4"></span> <span
+											class="l-5"></span> <span class="l-6"></span>
+									</div>
+									
+																<!--End of  Loader Div -->
+									
+								</div>
+								<hr /> <br />
+								<center>
+									<input type="submit" class="btn btn-primary"
+													onclick="todaysDayClose(${sellBillHeader.sellBillNo})"
+													value="DAY CLOSE" id="dayClose1"/>
+								</center>
+					</li>
+					<%-- <li class="selected">
 						<div class="row"></div> <br /> <br />
 						<div class="table" id="div1" style="display: none;">
 							<div class="shInnerwidth">
@@ -471,7 +651,7 @@ input:checked + .slider:before {
 													<td>
 														
 														 <input type='text'
-														class="form-control" onchange='onInput()' min='0' max='500'
+														class="form-control" onkeypress='onInput()' min='0' max='500'
 														placeholder="Enter Barcode" id='input' list='dlist' /> <datalist
 															id='dlist'>
 															<c:forEach items="${itemsList}" var="itemsList">
@@ -547,15 +727,15 @@ input:checked + .slider:before {
 								</table>
 							</div>
 						</div>
-						<hr /> <br /> <%-- <center>
+						<hr /> <br /> <center>
 									<button class="btn additem_btn"  onclick="todaysDayClose()"style="display: none;" id="dayClose1">DAY CLOSE</button>
-								</center> --%> <input type="submit" class="btn btn-primary"
+								</center><center> <input type="submit" class="btn btn-primary"
 						onclick="todaysDayClose()" style="display: none;" id="dayClose1"
-						value="DAY CLOSE">
+						value="DAY CLOSE"></center>
 						
 						
 
-					</li>
+					</li> --%>
 				</div>
 				
 				<!--tabNavigation-->
@@ -604,7 +784,7 @@ function  hideMe(startId){
 		
 	    var val = document.getElementById("input").value;
 	    
-	     var opts = document.getElementById('dlist').childNodes;
+	    /*  var opts = document.getElementById('dlist').childNodes;
 	    for (var i = 0; i < opts.length; i++) {
 	      if (opts[i].value === val) {
 	        // An item was selected from the list!
@@ -612,7 +792,7 @@ function  hideMe(startId){
 	       // alert(opts[i].value);
 	        break;
 	      }
-	    } 
+	    }  */
 
 	    $.getJSON('${getItemDetails}',{
 			
@@ -626,7 +806,7 @@ function  hideMe(startId){
 			
 			$("#rateTdVal1").html(data.mrp);
 			
-			$('#insertItemButton').focus();
+		//	$('#insertItemButton').focus();
 			
 		});
 

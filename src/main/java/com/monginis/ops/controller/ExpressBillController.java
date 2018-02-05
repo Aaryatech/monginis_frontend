@@ -57,7 +57,7 @@ public class ExpressBillController {
 	public List<GetCurrentStockDetails> currentStockDetailList=new ArrayList<GetCurrentStockDetails>();
 
 	public List<CustomerBillItem> customerBillItemList=new ArrayList<CustomerBillItem>();
-    public SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
+    SellBillHeader sellBillHeaderGlobal=new SellBillHeader();
     SellBillDetail	sellBillDetailRes;
    // SellBillDetailList sellBillDetailList;
     List<SellBillDetail> selectedSellBillDetailList;

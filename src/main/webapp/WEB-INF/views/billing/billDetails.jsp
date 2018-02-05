@@ -143,28 +143,28 @@ However, delay the fade out process for 2.5 seconds */
 		    <h2 class="pull-left">Grand Total:- <b> ${grandTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 		<div class="col-md-4 ">
-			  <h2 class="pull-left">Bill Status:- <c:choose>
+			  <h2 class="pull-left">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
 																	<c:when test="${billStatus==1}">
-																		<b><c:out value="Pending"></c:out></b>
+																		<b><label  id="status1">Pending</label></b>
 																	</c:when>
 																	<c:when test="${billStatus==2}">
-																		<b><c:out value="Received"></c:out></b>
+																		<b><label  id="status2">Received</label></b>
 																		
 																	</c:when>
 																	<c:when test="${billStatus== 3}">
-																		<b><c:out value="GVN Apply"></c:out></b>
+																		<b><label  id="status3">GVN Apply</label></b>
 																	</c:when>
 																	<c:when test="${billStatus== 4}">
-																		<b><c:out value="GVN Approve"></c:out></b>
+																		<b><label  id="status4">GVN Approve</label></b>
 																	</c:when>
 																	<c:when test="${billStatus== 5}">
-																		<b><c:out value="GRN Apply"></c:out></b>
+																		<b><label  id="status5">GRN Apply</label></b>
 																	</c:when>
 																		<c:when test="${billStatus== 6}">
-																		<b><c:out value="GRN Approve"></c:out></b>
+																		<b><label  id="status6">GRN Approve</label></b>
 																	</c:when>
 																		<c:when test="${billStatus== 7}">
-							 									<b><c:out value="Closed"></c:out></b>
+							 									<b><label  id="status7">Closed</label></b>
 																	</c:when>
 
 																</c:choose></h2>
@@ -302,14 +302,15 @@ function myFunction(status){
 		{
 		document.getElementById("updateStatus").style="display:none";
 		
-		
 		}
-		
+	
 }
 
 function updateStatus(billNo)
 {
 	var x = document.getElementById("snackbar")
+	var status=document.getElementById("billstatus").value;
+	document.getElementById("status"+status).innerHTML = "Recieved";	
 	$.getJSON('${updateBillStatus}',{
 		
 		billNo : billNo,

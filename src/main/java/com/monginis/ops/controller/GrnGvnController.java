@@ -453,8 +453,10 @@ public class GrnGvnController {
 					grnBaseRate = baseRate;
 					grnRate = objShowGrn.getRate();
 				}
+				objShowGrn.setGrnRate(grnRate);
 
 				float taxableAmt = grnBaseRate * objShowGrn.getAutoGrnQty();
+				objShowGrn.setTaxableAmt(taxableAmt);
 
 				float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer())) / 100;
 

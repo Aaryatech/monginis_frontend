@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
 		<div class="col-md-2 ">
 			
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-3">
 		    <h4 class="pull-left">Bill Date:- <b> ${billDate}</b></h4>
 		</div>
 		<div class="col-md-2 ">
@@ -162,7 +162,11 @@ jQuery(document).ready(function(){
 		 
 		</div>	
     </div>
-
+	<div align="center">
+								<a href="${pageContext.request.contextPath}/viewBill"><input name="" class="buttonsaveorder" value="Go Back"
+									  align="center" type="button"></a><!-- onclick="goBack()" -->
+							</div>
+					 
 
 				
 				

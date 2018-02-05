@@ -34,7 +34,25 @@
 
 </head>
 <body> comment by sachin --%>
-
+<style type="text/css">
+.fit-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  max-width: 60%;
+  max-height: 60%
+}
+.fit-img-bottom {
+  top: auto;
+}
+.fit-img-tight {
+  max-width: 60%;
+  max-height: 60%
+}
+</style>
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 	<!--topLeft-nav-->
@@ -103,7 +121,7 @@
 							<div class="item">
 								<div class="screen4plan">
 									<div class="homesliderImg">
-									 <img src="${url}${msgList.msgImage}" height="300" width="300" />
+									 <img src="${url}${msgList.msgImage}"  />
 									
 
 									</div>
