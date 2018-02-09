@@ -38,11 +38,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.billing.Info;
+import com.monginis.ops.billing.SellBillDataCommon;
+import com.monginis.ops.billing.SellBillDetail;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.PostFrItemStockHeader;
+import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.grngvn.GetBillsForFr;
 import com.monginis.ops.model.grngvn.GetBillsForFrList;
 import com.monginis.ops.model.grngvn.GetGrnConfResponse;
@@ -90,7 +94,7 @@ public class GrnGvnController {
 	List<GetAllRemarks> getAllRemarks;
 	
 
-	public GetGrnGvnConfResponse grnGvnConfResponse;
+	public GetGrnGvnConfResponse grnGvnConfResponse=new GetGrnGvnConfResponse();
 	public List<GetGrnItemConfig> grnConfList;
 	public List<GetGrnGvnDetails> grnGvnDetailsList;
 	GetGrnGvnDetailsList getGrnGvnDetailsList;
@@ -204,6 +208,7 @@ public class GrnGvnController {
 				System.out.println("fr Id = " + frDetails.getFrId());
 				grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,
 						GetGrnGvnConfResponse.class);
+				grnConfList=new ArrayList<>();
 
 				grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
 
@@ -249,10 +254,27 @@ public class GrnGvnController {
 				Calendar cal3 = Calendar.getInstance();
 				cal3.setTime(billDate);
 				cal3.add(Calendar.DATE, -1);*/
+				String strBillDateTime=grnConfList.get(i).getBillDateTime();
+				java.util.Date date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strBillDateTime);
+				
+				Calendar caleInstance=Calendar.getInstance();
+				
+				caleInstance.setTime(date);
+				
+				caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND)-1));
+				
+				
+				System.out.println("*****Calender Gettime == "+caleInstance.getTime());
+				
+				java.util.Date beforeBillAcceptDate=caleInstance.getTime();
+				
+				String strBeforeBillAcceptDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(beforeBillAcceptDate);
 
 				stockMap.add("frId", frDetails.getFrId());
 				stockMap.add("fromDate", dateFormat.format(grnConfList.get(i).getBillDate()));
-				stockMap.add("fromDateTime", grnConfList.get(i).getBillDateTime());
+				//stockMap.add("fromDateTime", grnConfList.get(i).getBillDateTime());
+				
+				stockMap.add("fromDateTime", strBeforeBillAcceptDate);
 				stockMap.add("toDateTime",dateFmt.format(cale.getTime()));
 
 				stockMap.add("currentMonth", currentDate.getMonth() + 1);
@@ -285,6 +307,8 @@ public class GrnGvnController {
 				int purQty=grnConfList.get(i).getBillQty();
 				
 				int tempGQty=grnConfList.get(i).getAutoGrnQty();
+				
+				//System.out.println("Temo GQty "+tempGQty+"Item Name ="+grnConfList.get(i).getItemName());
 				
 				for(int k=0;k<i;k++) {
 					
@@ -319,6 +343,8 @@ public class GrnGvnController {
 										- (stockForAutoGrn.get(j).getRegSellQty()
 												+ stockForAutoGrn.get(j).getGrnGvnQty()+tempGQty);
 								
+								System.out.println("*********");
+								
 									System.out.println("item Id= "+grnConfList.get(i).getItemId());
 									System.out.println("bill date ="+grnConfList.get(i).getBillDate());
 									System.out.println("cur reg stock =  "+stockForAutoGrn.get(j).getRegCurrentStock());
@@ -329,6 +355,8 @@ public class GrnGvnController {
 								
 									System.out.println(
 										"auto Grn Qty " + autoGrnQty + "for item id " + grnConfList.get(i).getItemId());
+									
+									System.out.println("*********");
 									
 						grnConfList.get(i).setAutoGrnQty(autoGrnQty);
 
@@ -440,20 +468,25 @@ public class GrnGvnController {
 				if (objShowGrn.getGrnType() == 0) {
 					grnBaseRate = baseRate * 75 / 100;
 
-					grnRate = (objShowGrn.getRate() * 75) / 100;
+					//grnRate = (objShowGrn.getRate() * 75) / 100;
+					
+					grnRate = (baseRate * 75) / 100;
 				}
 
 				if (objShowGrn.getGrnType() == 1) {
 					grnBaseRate = baseRate * 90 / 100;
-					grnRate = (objShowGrn.getRate() * 90) / 100;
+					//grnRate = (objShowGrn.getRate() * 90) / 100;
+					
+					grnRate = (baseRate * 90) / 100;
 				}
 
 				if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
 
 					grnBaseRate = baseRate;
-					grnRate = objShowGrn.getRate();
+					//grnRate = objShowGrn.getRate();
+					grnRate=baseRate;
 				}
-				objShowGrn.setGrnRate(grnRate);
+				objShowGrn.setGrnRate(roundUp(grnRate));
 
 				float taxableAmt = grnBaseRate * objShowGrn.getAutoGrnQty();
 				objShowGrn.setTaxableAmt(taxableAmt);
@@ -477,6 +510,14 @@ public class GrnGvnController {
 				
 
 				objShowGrnList.add(objShowGrn);
+				
+				//objShowGrnList.add(objShowGrn);
+				
+				//objShowGrnList.add(objShowGrn);
+				
+				//objShowGrnList.add(objShowGrn);
+				
+				
 				
 				}//end of if
 			
@@ -686,10 +727,53 @@ public class GrnGvnController {
 			System.out.println("post grn for rest size " + postGrnList.getGrnGvn().size());
 
 			Info insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+			
+			
+			if(insertGrn.getError()==false) {
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				
+				map.add("frId",frDetails.getFrId());
+
+				SellBillDataCommon sellBillResponse=restTemplate.postForObject(Constant.URL+"/showNotDayClosedRecord",
+					map,SellBillDataCommon.class);
+				
+				List<SellBillHeader> sellBillHeaderList=sellBillResponse.getSellBillHeaderList();
+				
+				int  count=sellBillHeaderList.size();
+				SellBillHeader billHeader=sellBillResponse.getSellBillHeaderList().get(0);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				
+				map.add("billNo", billHeader.getSellBillNo());
+				
+				SellBillDetailList sellBillDetailList = restTemplate.postForObject(Constant.URL + "/getSellBillDetails",
+						map, SellBillDetailList.class);
+				
+				List<SellBillDetail> sellBillDetails=sellBillDetailList.getSellBillDetailList();
+				
+				for(int x=0;x<sellBillDetails.size();x++) {
+					
+					billHeader.setTaxableAmt(billHeader.getTaxableAmt()+sellBillDetails.get(x).getTaxableAmt());
+					
+					billHeader.setTotalTax(billHeader.getTotalTax()+sellBillDetails.get(x).getTotalTax());
+					billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal()+billHeader.getGrandTotal());
+					
+					//billHeader.setBillDate(billHeader.getBillDate());
+					
+					billHeader.setDiscountPer(billHeader.getDiscountPer());
+					
+				}
+				
+				billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+						SellBillHeader.class);
+			
+				System.out.println("Bill Header Response "+billHeader.toString());
+			}
 
 		} catch (Exception e) {
 
-			System.out.println("exce in grn insert " + e.getMessage());
+			System.out.println("exce in grn insert or Express Bill Day close " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -834,7 +918,7 @@ public class GrnGvnController {
 				objShowGvn.setCalcBaseRate(roundUp(calcBaseRate));
 
 				objShowGvnList.add(objShowGvn);
-
+				
 			}
 			
 			

@@ -186,11 +186,11 @@ However, delay the fade out process for 2.5 seconds */
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+					<div id="faux-table" class="faux-table" aria="hidden">
+<!-- 					<div class="table-wrap">
+ -->						<table id="table_grid" class="main-table">
 							<thead>
-								<tr class="bgpink">
+								
 											<tr class="bgpink">
 												<th width="138" style="width: 18px" align="left">No</th>
 													<th class="col-md-1">Item Name</th>
@@ -208,7 +208,31 @@ However, delay the fade out process for 2.5 seconds */
 													
 													<th class="col-md-1">GRN Type</th>
 											</tr>
-											</thead>
+											</thead></table></div>
+							<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								
+											<tr class="bgpink">
+												<th width="138" style="width: 18px" align="left">No</th>
+													<th class="col-md-1"></th>
+													<th class="col-md-1">Group</th>
+													<th class="col-md-1"></th>
+													<th class="col-md-1"></th>
+												
+													<th class="col-md-1">MRP</th>
+														<th class="col-md-1"></th>
+														<th class="col-md-1"></th>
+													<th class="col-md-1">GST %</th>
+													
+													<th class="col-md-1"></th>
+													<th class="col-md-1">Total</th>
+													
+													<th class="col-md-1"></th>
+											</tr>
+											</thead>				
+											
+											
 							<tbody>
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
@@ -266,7 +290,7 @@ However, delay the fade out process for 2.5 seconds */
 										</tbody>
 
 						</table>
-					</div>
+					</div></div>
 				</div>
 
 					</div><br>

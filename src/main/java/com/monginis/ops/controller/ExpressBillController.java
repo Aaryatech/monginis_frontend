@@ -202,6 +202,7 @@ public class ExpressBillController {
 			System.out.println("selectedSellBillDetailList  "+selectedSellBillDetailList.toString());
 			model.addObject("sellBillDetails", sellBillDetails);
 	   		model.addObject("count",2);
+	   		model.addObject("listSize", sellBillDetails.size());
 	   		
 	   		model.addObject("sellBillHeader",sellBillHeader);
 
@@ -219,6 +220,7 @@ public class ExpressBillController {
 			selectedSellBillDetailList=sellBillDetails;
 			System.out.println("selectedSellBillDetailList  "+selectedSellBillDetailList.toString());
 			model.addObject("sellBillDetails", sellBillDetails);
+	   		model.addObject("listSize", sellBillDetails.size());
 	   		model.addObject("count", 3);
 	   		model.addObject("sellBillHeader",sellBillHeader);
 		}
@@ -456,8 +458,8 @@ public class ExpressBillController {
 				sellBillDetail.setCgstRs(cgstRs);
 				sellBillDetail.setDelStatus(0);
 				sellBillDetail.setGrandTotal(grandTotal);
-				sellBillDetail.setIgstPer(tax3);
-				sellBillDetail.setIgstRs(igstRs);
+				sellBillDetail.setIgstPer(0);
+				sellBillDetail.setIgstRs(0);
 				sellBillDetail.setItemId(item.getId());
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
@@ -615,7 +617,7 @@ public class ExpressBillController {
 	
 	
 	@RequestMapping(value = "/dayClose", method = RequestMethod.GET)
-	public @ResponseBody ModelAndView dayClose(HttpServletRequest request, HttpServletResponse response)
+	public @ResponseBody int dayClose(HttpServletRequest request, HttpServletResponse response)
 	{
    		RestTemplate restTemplate = new RestTemplate();
    		System.out.println("inside day close ");
@@ -633,6 +635,8 @@ public class ExpressBillController {
 			System.out.println("sellBillDetails "+sellBillDetails.toString());
 			
 			map = new LinkedMultiValueMap<String, Object>();
+			
+			System.out.println("global BILL NO ************"+sellBillHeaderGlobal.getSellBillNo());
 	
 			map.add("sellBillNo", sellBillHeaderGlobal.getSellBillNo());
 			
@@ -642,8 +646,28 @@ public class ExpressBillController {
 			
 			System.out.println("billHeader "+billHeader.toString());
 			
+			if(sellBillDetails.isEmpty()) {
+				
+				/*System.out.println("Bill Detail is Empty ");
+				billHeader.setTaxableAmt(0);
+				
+				billHeader.setTotalTax(1);
+				
+				billHeader.setGrandTotal(1);
+				
+				billHeader.setDiscountPer(1);*/
+				
+				int responseDelete=restTemplate.postForObject(Constant.URL + "deleteExBillHeader", map,
+						Integer.class);
+				
+				System.out.println("Bill Header Response if Bill Detail Is Empty "+billHeader.toString());
 			
+				
+			}else {
+				System.out.println("Bill Detail Not Empty ");
+
 			for(int x=0;x<sellBillDetails.size();x++) {
+				
 				
 				
 				billHeader.setTaxableAmt(billHeader.getTaxableAmt()+sellBillDetails.get(x).getTaxableAmt());
@@ -657,17 +681,25 @@ public class ExpressBillController {
 				
 			}
 			
-			System.out.println("billHeader new "+billHeader.toString());
 			
-			
+
 			billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 					SellBillHeader.class);
 		
+			
+			System.out.println("Bill Header Response if Bill Detail Not Empty "+billHeader.toString());
+
+			System.out.println("billHeader new "+billHeader.toString());
+			
+			}
+			/*billHeader=restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+					SellBillHeader.class);
+		*/
 			ModelAndView model = new ModelAndView("expressBill/expressBill");
 			
 			System.out.println("redirecting to model ex bill ");
 			
-		return model;
+		return 1;
 	}
 
 	

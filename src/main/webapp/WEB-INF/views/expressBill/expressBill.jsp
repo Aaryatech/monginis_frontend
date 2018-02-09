@@ -149,6 +149,9 @@ input:checked + .slider:before {
 	<c:url var="printExBill" value="/printExBill" />
 	<c:url var="deleteItem" value="/deleteItem" />
 	<c:url var="getSelectedIdForPrint" value="/getSelectedIdForPrint" />
+	
+		<c:url var="dayClose" value="/dayClose" />
+	
 
 	<div class="wrapper">
 
@@ -260,7 +263,7 @@ input:checked + .slider:before {
 																oninput='onInput()' id='input1' />
 																 --> 
 																 
-																 <input type="number"  class="form-control"
+																 <input type="text"  class="form-control"
 																data-placeholder="Enter Barcode"
 																id='input'  onchange='onInput()' /> <%-- <datalist id='dlist'>
 																	<c:forEach items="${itemsList}" var="itemsList">
@@ -307,8 +310,18 @@ input:checked + .slider:before {
 												<button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
 						onclick="printExBill()" disabled id="printExBill">Print</button>
 										</center>
-										 		
+										 <div align="center" id="loader11" style="display: none">
+										<span>
+											<h4>
+												<font color="#343690">Loading</font>
+											</h4>
+										</span> <span class="l-1"></span> <span class="l-2"></span> <span
+											class="l-3"></span> <span class="l-4"></span> <span
+											class="l-5"></span> <span class="l-6"></span>
+									</div>		
 									</div>
+									
+									<hr></hr>
 									 
 								</div> <br /> <!-- Form End -->
 								<div class="table-responsive">
@@ -332,7 +345,10 @@ input:checked + .slider:before {
 											 <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
 																id="select_to_print"
 																value="${sellBillDetails.sellBillDetailNo}" ></td>
-																	<td ><c:out value="${count.index+1}" /></td>
+																
+																
+																	<td ><c:out value="${listSize}" /></td>
+																	<c:set value="${listSize-1}" var="listSize"></c:set>
 													<td><c:out value="${sellBillDetails.sellBillDetailNo}" /></td>
 													<td><c:out value="${sellBillDetails.itemId}" /></td>
 													<td><c:out value="${sellBillDetails.itemName}" /></td>
@@ -367,10 +383,10 @@ input:checked + .slider:before {
 								<hr /> <br />
 								<center>
 									<input type="submit" class="btn btn-primary"
-													onclick="todaysDayClose(${sellBillHeader.sellBillNo})"
+													onclick="todaysDayClose()"              
 													value="DAY CLOSE" id="dayClose1"/>
 								</center>
-
+<!--here input para was bill No  -->
 							<!-- </li> -->
 
 						</c:when>
@@ -400,8 +416,11 @@ input:checked + .slider:before {
 												<td><c:out value="${sellBillHeader.grandTotal}" /></td>
 												<td>
 													 <input type="submit" class="btn btn-primary" id="dayClose1"
-													onclick="todaysDayClose(${sellBillHeader.sellBillNo})"
+													onclick="todaysDayClose()"
 													value="DAY CLOSE" id="callSubmit"/>
+													
+													<!--here input para was bill No  -->
+													
 													
 												</td>
 											</tr>
@@ -433,7 +452,8 @@ input:checked + .slider:before {
 												 <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
 																id="select_to_print"
 																value="${sellBillDetails.sellBillDetailNo}" ></td>
-												<td ><c:out value="${count.index+1}" /></td>
+												<td ><c:out value="${listSize}" /></td>
+																	<c:set value="${listSize-1}" var="listSize"></c:set>
 													<td><c:out value="${sellBillDetails.sellBillNo}" /></td>
 															<td><c:out value="${sellBillDetails.itemId}" /></td>
 													<td><c:out value="${sellBillDetails.itemName}" /></td>
@@ -452,7 +472,7 @@ input:checked + .slider:before {
 
 						</c:otherwise>
 					</c:choose>
-					<!--tab1-->
+			<%-- 		<!--tab1-->
 					<div class="row"></div> <br /> <br />
 						<div class="table" id="div1" style="display: none;">
 							<div>
@@ -461,9 +481,9 @@ input:checked + .slider:before {
 					<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp; &nbsp;
 					 Bill Date :${sellBillHeader.billDate}</B>
 				</h4>
-				<%-- <h4 style="align-items: center;" >
+				<h4 style="align-items: center;" >
 					<i class="fa fa-bars">Bill Date :</i>${sellBillHeader.billDate}
-				</h4> --%>
+				</h4>
 				
 						
 
@@ -483,7 +503,7 @@ input:checked + .slider:before {
  										
 			 
 
-							<%-- <div class="colOuter">
+							<div class="colOuter">
 								<div class="col1">Bill NO:</div>
 								<div class="col1">${sellBillHeader.sellBillNo}</div>
 							</div>
@@ -491,7 +511,7 @@ input:checked + .slider:before {
 							<div class="colOuter">
 								<div class="col1">Bill Date:</div>
 								<div class="col1">${sellBillHeader.billDate}</div>
-							</div> --%>
+							</div>
 
 							<!--tab1-->
 							<!-- <li class="selected"> -->
@@ -520,13 +540,13 @@ input:checked + .slider:before {
 																oninput='onInput()' id='input1' />
 																 --> 
 																 
-																 <input type="number"  class="form-control"
+																 <input type="text"  class="form-control"
 																data-placeholder="Enter Barcode"
-																id='input'  onchange='onInput()' /> <%-- <datalist id='dlist'>
+																id='input'  onchange='onInput()' /> <datalist id='dlist'>
 																	<c:forEach items="${itemsList}" var="itemsList">
 																		<option value="${itemsList.itemId}"><c:out value="${itemsList.itemId}"/></option>
 																	</c:forEach>
-																</datalist> --%>
+																</datalist>
 															</td>
 															<td>
 															
@@ -630,8 +650,8 @@ input:checked + .slider:before {
 													onclick="todaysDayClose(${sellBillHeader.sellBillNo})"
 													value="DAY CLOSE" id="dayClose1"/>
 								</center>
-					</li>
-					<%-- <li class="selected">
+					</li> --%>
+					 <li class="selected">
 						<div class="row"></div> <br /> <br />
 						<div class="table" id="div1" style="display: none;">
 							<div class="shInnerwidth">
@@ -696,7 +716,7 @@ input:checked + .slider:before {
 						<div class="row">
 							<div class="col-md-12">
 								<center>
-											  <button class="btn btn-primary" onclick="insertItem1()"
+											  <button class="btn btn-primary" onclick="insertItem1()" style="display: none;"
 												id="insertItemButton">Submit Item</button> 
 												<!-- <button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
 						onclick="printExBill()" disabled id="printExBill">Print</button> --> 
@@ -735,7 +755,7 @@ input:checked + .slider:before {
 						
 						
 
-					</li> --%>
+					</li>
 				</div>
 				
 				<!--tabNavigation-->
@@ -759,14 +779,20 @@ function start(){
     $("#div2").show();
     $("#insertItemButton").show();
     $("#dayClose1").show();
-    alert("started");
+    
+    $("#insertItemButton").show();
+    $("#loader").show();
+
+  //  alert("started");
     
     $.getJSON('${insertHeader}',{
 
     	ajax : 'true',
 
     }, function(data) {
-		//alert("inserting Header ")
+		window.location.reload();
+	    $("#loader").hide();
+
 
 	});
 }
@@ -784,32 +810,32 @@ function  hideMe(startId){
 		
 	    var val = document.getElementById("input").value;
 	    
-	    /*  var opts = document.getElementById('dlist').childNodes;
-	    for (var i = 0; i < opts.length; i++) {
-	      if (opts[i].value === val) {
-	        // An item was selected from the list!
-	        // yourCallbackHere()
-	       // alert(opts[i].value);
-	        break;
-	      }
-	    }  */
-
+	  
+	    
+	   // alert("Barcode "+val);
+	 
 	    $.getJSON('${getItemDetails}',{
 			
-            itemId : JSON.stringify(val),
-			
+            //itemId : JSON.stringify(val),
+			 itemId : val,
 			ajax : 'true',
 
 		}, function(data) {
+			//alert("name="+data.itemName);
 			
-		$('#itemName').val(data.itemId).prop('selected', true);
 			
+			$('#itemName').selectpicker('val',''+data.itemId);
+
 			$("#rateTdVal1").html(data.mrp);
 			
-		//	$('#insertItemButton').focus();
+			//$('#insertItemButton').focus();
+			
+			  insertItem1();
+			 $('#input').focus();
 			
 		});
-
+		//$('#insertItemButton').focus();
+	    $('#input').focus();
 	  }
 	
 	function onSelectItem() {
@@ -817,19 +843,27 @@ function  hideMe(startId){
 		var iId=document.getElementById("itemName").value;
 	  
 	    	val=iId;
+	    	
+	    
 		  
 	    $.getJSON('${getItemDetails}',{
 	  
-            itemId : JSON.stringify(val),
+           // itemId : JSON.stringify(val),
+           
+           itemId : val,
 			ajax : 'true',
 
 		}, function(data) {
 
-		$('#itemName').val(data.itemId).prop('selected', true);
+		//$('#itemName').val(data.itemId).prop('selected', true);
+			$('#itemName').selectpicker('val',''+data.itemId);
 		document.getElementById("input").value=val;
 			
 			$("#rateTdVal1").html(data.mrp);
-			$('#insertItemButton').focus();
+			//$('#insertItemButton').focus();
+			 $('#input').focus();
+			 
+				insertItem1();
 			
 		});
 		
@@ -838,7 +872,7 @@ function  hideMe(startId){
 	<script type="text/javascript">
 	function insertItem1() {
 		
-		$('#loader').show();
+		$('#loader11').show();
 
 	    var val = document.getElementById("input").value;
 	    var qty = document.getElementById("qty1").value;
@@ -854,10 +888,13 @@ function  hideMe(startId){
 	}, function(data) {
 		if(data<qty)
 			{
-			$('#loader').hide();
+			$('#loader11').hide();
 
 			alert("Stock Not Available. Can not place Item ");
+			document.getElementById("input").value="";
 			
+			 $('#input').focus();
+			 
 			}
 		else
 	{
@@ -870,19 +907,22 @@ function  hideMe(startId){
 
 			}, function(data) {
 
-				$('#loader').hide();
+				$('#loader11').hide();
 				var len = data.length;
-
 
 				$('#table_grid1 td').remove();
 
 				$.each(data,function(key, item) {
-
+					key=len;
 				var tr = $('<tr></tr>');
 				tr.append($('<td></td>').html(' <input type="checkbox" onchange="selectToPrint()" name="select_to_print" id="select_to_print" value="'+item.sellBillDetailNo+'" >'));
-				
-				tr.append($('<td></td>').html(key+1));
-				
+			
+					//tr.append($('<td></td>').html(key));
+					
+					tr.append($('<td></td>').html(len));
+						
+						len=len-1;
+
 				tr.append($('<td></td>').html(item.sellBillDetailNo));
 				
 			  	tr.append($('<td></td>').html(item.itemId));
@@ -914,17 +954,46 @@ function  hideMe(startId){
 	}
 	});
 	    document.getElementById("input").value="";
-	    document.getElementById("itemName").value="";
-	    
-
+	   // document.getElementById("itemName").val("");
+		$('#itemName').selectpicker('val',''+"");
+		
+		 $('#input').focus();
 	    
 	}
 		
 	</script>
+	
+	
+	
+	
 	<script type="text/javascript">
 	function todaysDayClose(){
-			//alert("Hello");
-							$('#loader').show();
+			//alert("Hi ");
+							$('#loader11').show();
+
+							$.getJSON('${dayClose}',{
+
+								ajax : 'true',
+							 },
+							 function(data) {
+								 //alert(data);
+								 
+								 window.location.reload();
+								 
+			});
+			$('#loader11').hide();
+		//	alert("Hi End  ");
+	}
+	
+	</script>
+	
+	
+	
+	
+	<!-- <script type="text/javascript">
+	function todaysDayClose(){
+			alert("Hi ");
+							$('#loader11').show();
 
 			$.ajax({
 
@@ -936,11 +1005,11 @@ function  hideMe(startId){
 					 window.location.reload();
 				 }
 			});
-			$('#loader').hide();
-		
+			$('#loader11').hide();
+			alert("Hi End  ");
 	}
 	
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 	function deleteItem(sellBillDetailNo){
@@ -974,7 +1043,11 @@ function  hideMe(startId){
 						
 						tr.append($('<td></td>').html(' <input type="checkbox" onchange="selectToPrint()" name="select_to_print" id="select_to_print" value="'+item.sellBillDetailNo+'" >'));
 						
-						tr.append($('<td></td>').html(key+1));
+						//tr.append($('<td></td>').html(key+1));
+						
+						tr.append($('<td></td>').html(len));
+						
+						len=len-1;
 						
 						tr.append($('<td></td>').html(item.sellBillDetailNo));
 						

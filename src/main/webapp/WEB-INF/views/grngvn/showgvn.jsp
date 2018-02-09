@@ -252,7 +252,19 @@
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
+<script>
+(function() {
+  var fauxTable = document.getElementById("faux-table");
+  var mainTable = document.getElementById("table_grid");
+  var clonedElement = table_grid.cloneNode(true);
+  var clonedElement2 = table_grid.cloneNode(true);
+  clonedElement.id = "";
+  clonedElement2.id = "";
+  fauxTable.appendChild(clonedElement);
+  fauxTable.appendChild(clonedElement2);
+});
 
+	</script>
 <script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";
@@ -387,21 +399,6 @@ $(document).ready(function() {
 });
 </script> -->
 
-<script>
-
-(function() {
-  var fauxTable = document.getElementById("faux-table");
-  var mainTable = document.getElementById("table_grid");
-  var clonedElement = table_grid.cloneNode(true);
-  var clonedElement2 = table_grid.cloneNode(true);
-  clonedElement.id = "";
-  clonedElement2.id = "";
-  fauxTable.appendChild(clonedElement);
-  fauxTable.appendChild(clonedElement2);
-});
-
-
-	</script>
-
+	
 </body>
 </html>
