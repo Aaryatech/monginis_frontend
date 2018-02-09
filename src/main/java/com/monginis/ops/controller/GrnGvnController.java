@@ -842,6 +842,11 @@ public class GrnGvnController {
 		int frId = frDetails.getFrId();
 			
 			map.add("frId", frId);
+			java.util.Date cDate=new java.util.Date();
+			
+			String curDate=new SimpleDateFormat("dd-MM-yyyy").format(cDate);
+			
+			map.add("curDate",curDate );
 
 			GetBillsForFrList billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFr", map,
 					GetBillsForFrList.class);
