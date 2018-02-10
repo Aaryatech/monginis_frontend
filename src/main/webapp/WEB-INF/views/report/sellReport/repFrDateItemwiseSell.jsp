@@ -122,6 +122,7 @@ jQuery(document).ready(function(){
 		<div class="col3"><div class="col3title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="30" style="height:35px;">
 		</div></div>
+					<input type="hidden" name="frId" id="frId" value="${frId}">
 		
 	</div>
  
@@ -138,8 +139,8 @@ jQuery(document).ready(function(){
 		<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
-		 
+<%-- 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
+ --%>		 	<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 		 
 		<br> 
     </div></div>
@@ -254,7 +255,7 @@ jQuery(document).ready(function(){
 	{ 
 		
 		   document.getElementById('chart').style="display:none";
-		   document.getElementById('btn_pdf').style.display = "block";
+		 //  document.getElementById('btn_pdf').style.display = "block";
 		$('#table_grid td').remove();
 		
 		
@@ -391,7 +392,7 @@ function showChart(){
 		   var isValid = validate();
 			
 			if (isValid) {
-				   document.getElementById('btn_pdf').style.display = "block";
+				  // document.getElementById('btn_pdf').style.display = "block";
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
 				var category=$("#category").val();
@@ -618,5 +619,21 @@ function exportToExcel()
 			document.getElementById("expExcel").disabled=true;
 }
 	</script>
+	<script type="text/javascript">
+function genPdf()
+{		
+	var isValid=validate();
+	if(isValid==true)
+		{
+	var category=$("#category").val();
+
+	var fromDate = document.getElementById("fromdatepicker").value;
+	var toDate = document.getElementById("todatepicker").value;
+	var frId=document.getElementById("frId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellDateItemwisewiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/'+category);
+		}
+	}
+
+</script>	
 </body>
 </html>

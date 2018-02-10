@@ -17,11 +17,10 @@ table {
 
 th, td {
     text-align: left;
-    padding: 2px;
+      padding: 2px;
     font-size: 10;
 }
 
-tr:nth-child(even){background-color: #A9A9A9}
 
 th {
     background-color: #EA3291;

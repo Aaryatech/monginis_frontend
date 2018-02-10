@@ -80,6 +80,7 @@
 	
 	
 	<div class="row">
+						<input type="hidden" name="frId" id="frId" value="${frId}">
 	
 		<div class="col-md-2 from_date">
 		    <h4 class="pull-left">From Date:-</h4>
@@ -95,8 +96,8 @@
 		</div>
 		<div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="itemWiseReport()">Search </button>
-		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
-		 
+<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+ --%>		 <button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 		</div>
 		
     </div>
@@ -174,7 +175,7 @@
 		
 		if (isValid) {
 
-			document.getElementById('btn_pdf').style.display = "block";
+			//document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var catId = document.getElementById("catId").value;   
@@ -370,7 +371,22 @@ function exportToExcel()
 			document.getElementById("expExcel").disabled=true;
 }
 	</script>
-	
+<script type="text/javascript">
+function genPdf()
+{		
+	var isValid=validate();
+	if(isValid==true)
+		{
+	var catId = document.getElementById("catId").value;   
+
+	var fromDate = document.getElementById("fromdatepicker").value;
+	var toDate = document.getElementById("todatepicker").value;
+	var frId=document.getElementById("frId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseItemwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/'+catId+'/');
+		}
+}
+
+</script>		
 	
 </body>
 </html>

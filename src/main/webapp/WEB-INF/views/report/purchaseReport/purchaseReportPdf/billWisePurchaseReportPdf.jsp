@@ -21,7 +21,6 @@ th, td {
     font-size: 10;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #EA3291;

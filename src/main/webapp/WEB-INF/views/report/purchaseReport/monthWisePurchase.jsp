@@ -103,6 +103,7 @@ jQuery(document).ready(function(){
 	</div>
 	
 	<div class="row">
+				<input type="hidden" name="frId" id="frId" value="${frId}">
 	
 		<div class="col-md-2">
 		    <h4 class="pull-left">Month From :-</h4>
@@ -122,8 +123,8 @@ jQuery(document).ready(function(){
 		    <button class="btn search_btn" onclick="monthWisePurchase()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
 		    	   
-		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
-		 
+<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseMonthwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
+ --%>		 <button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 		</div>
 		
     </div>
@@ -219,7 +220,7 @@ jQuery(document).ready(function(){
 		$('#table_grid td').remove();
 		
 
-		document.getElementById('btn_pdf').style.display = "block";
+		//document.getElementById('btn_pdf').style.display = "block";
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
 			
@@ -384,7 +385,7 @@ jQuery(document).ready(function(){
 		
 	} */
 	</script>
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
 	function validate() {
 	
 	
@@ -407,7 +408,7 @@ jQuery(document).ready(function(){
 		return isValid;
 
 	}
-</script> -->
+</script> 
 <!-- 	Select Only Month and Year 
  --><script>
 
@@ -415,7 +416,7 @@ $(document).ready(function() {
    $('#txtDate').datepicker({
      changeMonth: true,
      changeYear: true,
-     dateFormat: 'mm/yy',
+     dateFormat: 'mm-yy',
        
      
      onClose: function() {
@@ -446,7 +447,7 @@ $(document).ready(function() {
    $('#txtDateto').datepicker({
      changeMonth: true,
      changeYear: true,
-     dateFormat: 'mm/yy',
+     dateFormat: 'mm-yy',
        
      onClose: function() {
         var iMonth = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
@@ -474,7 +475,7 @@ $(document).ready(function() {
 	 
 function showChart(){
 
-	document.getElementById('btn_pdf').style.display = "block";
+	//document.getElementById('btn_pdf').style.display = "block";
 	//$("#PieChart_div").empty();
 	$("#chart_div").empty();
 		document.getElementById('chart').style.display = "block";
@@ -661,6 +662,19 @@ function exportToExcel()
 			document.getElementById("expExcel").disabled=true;
 }
 	</script>
-	
+<script type="text/javascript">
+function genPdf()
+{
+	var isValid=validate();
+	if(isValid==true)
+		{
+	var fromDate = document.getElementById("txtDate").value;
+	var toDate = document.getElementById("txtDateto").value;
+	var frId=document.getElementById("frId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseMonthwiseReportPdf/'+fromDate+'/'+toDate+'/'+frId);
+		}
+	}
+
+</script>		
 </body>
 </html>

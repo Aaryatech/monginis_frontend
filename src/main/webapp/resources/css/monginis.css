@@ -303,8 +303,8 @@ padding:20px 60px 20px 20px; text-align:left;}
 .listareaBox:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .listareaBox img{ position:absolute; left:6px; top:4px;}
 .listareaBoximg{position:absolute; left:6px; top:4px;}
-.listareaBox h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;}
-.listareaBox h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;}
+.listareaBox h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;color:#fff;}
+.listareaBox h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;color:#fff;}
 .listareaBoxdown{ float:left; padding-right:13px;font-size:13px;}
 .listareaBoxdown a{ text-decoration:none;font-size:13px; color:#fff; padding:0px!important;}
 .listareaBoxdown i{ margin-left:4px;}
@@ -322,8 +322,8 @@ padding:20px 60px 20px 20px; text-align:left;}
 .listareaBoxBlue:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .listareaBoxBlue img{ position:absolute; left:6px; top:4px;}
 .listareaBoximgBlue{position:absolute; left:6px; top:4px;}
-.listareaBoxBlue h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;}
-.listareaBoxBlue h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;}
+.listareaBoxBlue h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;color:#fff;}
+.listareaBoxBlue h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;color:#fff;}
 .listareaBoxdownBlue{ float:left; padding-right:13px;font-size:13px;}
 .listareaBoxdownBlue a{ text-decoration:none;font-size:13px; color:#fff; padding:0px!important;}
 .listareaBoxdownBlue i{ margin-left:4px;}
@@ -336,10 +336,10 @@ padding:20px 60px 20px 20px; text-align:left;}
 
 
 
-a.listareaBoximg{ position:absolute; left:0px; top:0px; width:65px; height:65px; padding:0px!important;}
-a.listareaBoximg img:last-child{display:none}
-.listareaBox:hover a.listareaBoximg img:first-child{display:none}
-.listareaBox:hover a.listareaBoximg img:last-child{display:inline-block}
+.listareaBoximg{ position:absolute; left:0px; top:0px; width:65px; height:65px; padding:0px!important;}
+.listareaBoximg img:last-child{display:none}
+.listareaBox:hover .listareaBoximg img:first-child{display:none}
+.listareaBox:hover .listareaBoximg img:last-child{display:inline-block}
 
 .profileinsite{ display:inline-block; vertical-align:top; width:100%; text-align:left; padding:0px 50px;}
 .textcen{ text-align:center;}

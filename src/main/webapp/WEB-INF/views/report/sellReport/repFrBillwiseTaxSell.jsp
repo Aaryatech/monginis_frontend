@@ -67,15 +67,16 @@
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
 		</div></div>
+										<input type="hidden" name="frId" id="frId" value="${frId}">
 		
 	</div>
  
 	
  	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		  &nbsp;&nbsp;&nbsp;
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
-		 
+		<%--   &nbsp;&nbsp;&nbsp;
+		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
+		  <button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 		<br>
     </div>
 	</div>
@@ -161,7 +162,7 @@
 		var isValid = validate();
 		
 		if (isValid) {
-			document.getElementById('btn_pdf').style.display = "block";
+			//document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			   
@@ -340,7 +341,20 @@ function exportToExcel()
 			document.getElementById("expExcel").disabled=true;
 }
 	</script>
-	
+<script type="text/javascript">
+function genPdf()
+{			
+	var isValid=validate();
+	if(isValid==true)
+		{ 
+	var fromDate = document.getElementById("fromdatepicker").value;
+	var toDate = document.getElementById("todatepicker").value;
+	var frId=document.getElementById("frId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxBillwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/');
+		}
+}
+
+</script>	
 	
 </body>
 </html>

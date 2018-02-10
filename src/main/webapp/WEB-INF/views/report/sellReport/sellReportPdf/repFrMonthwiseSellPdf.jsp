@@ -8,7 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Month wise Sell Report</title>
-
 <style type="text/css">
 table {
     border-collapse: collapse;
@@ -21,7 +20,6 @@ th, td {
     font-size: 10;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #EA3291;

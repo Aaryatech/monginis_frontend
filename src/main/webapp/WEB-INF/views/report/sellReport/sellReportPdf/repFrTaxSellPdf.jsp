@@ -11,7 +11,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sell Tax PDF</title>
-
 <style type="text/css">
 table {
     border-collapse: collapse;
@@ -20,11 +19,10 @@ table {
 
 th, td {
     text-align: left;
-     padding: 2px;
+      padding: 2px;
     font-size: 10;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #EA3291;

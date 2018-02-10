@@ -21,7 +21,6 @@ th, td {
     font-size: 10;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
 
 th {
     background-color: #EA3291;
@@ -54,13 +53,12 @@ th {
 													<td align="center"><c:out value="${count.index+1}" /></td>
 													
 													<td>GFPL</td>
-													<td><c:out value="${reportList.billNo}" /></td>
 													<td><c:out value="${reportList.itemName}" /></td>
 													
 														<td><c:out value="${reportList.qty}" /></td>
 															<td><c:out value="${reportList.rate}" /></td>
 													<td><c:out value="${reportList.total}" /></td>
-														<c:set var="grandTotal"  value="${grandTotal+reportList.total }"/>
+														<c:set var="grandTotal"  value="${grandTotal+reportList.total}"/>
 													
 												</tr>
 												</c:forEach>

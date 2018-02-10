@@ -69,14 +69,15 @@
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
 		</div></div>
-		
+												<input type="hidden" name="frId" id="frId" value="${frId}"/>
+		                                        <input type="hidden" name="catId" id="catId"/>
 	</div>
  
 	
- 	<div align="center">
+ 	<div align="left">
 		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	<br> <br>   <button id="btn_pdf" class="btn search_btn" onclick="showPdf()"  style="display: none">PDF </button>
+		    	
 		</div>
 	</div>
 		 
@@ -142,7 +143,10 @@
 											<div class="col-sm-3  controls">
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
+																								    <button id="btn_pdf" class="btn btn-primary" onclick="genPdf()"  style="display: none">PDF </button>
+											
 											</div>
+											
 	<div id="chart" style="display: none"><br><br><br>
 		 <hr><div  >
 	 
@@ -290,6 +294,7 @@
 	<script type="text/javascript">
 	function itemSellBill(id)
 	{ 
+		 document.getElementById("catId").value=id;
 		document.getElementById('btn_pdf').style.display = "block";
 		document.getElementById('table').style.display = "block";
 		   document.getElementById('chart').style="display:none";
@@ -648,6 +653,20 @@ function exportToExcel()
 }
 
 	</script>
+<script type="text/javascript">
+function genPdf()
+{			
+	var isValid=validate();
+	if(isValid==true)
+		{
+	var fromDate = document.getElementById("fromdatepicker").value;
+	var toDate = document.getElementById("todatepicker").value;
+	var frId=document.getElementById("frId").value;
+	var catId=document.getElementById("catId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellItemwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/'+catId+'/');
+		}
+}
 
+</script>	
 </body>
 </html>

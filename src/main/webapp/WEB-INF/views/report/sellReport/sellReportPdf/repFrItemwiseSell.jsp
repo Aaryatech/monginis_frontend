@@ -105,6 +105,7 @@ jQuery(document).ready(function(){
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
 		</div></div>
+					<input type="hidden" name="frId" id="frId" value="${frId}">
 		
 	</div>
  
@@ -112,8 +113,10 @@ jQuery(document).ready(function(){
  	<div align="center">
 		     <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
-		    	 <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellItemwiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none" >PDF</a>
-		    	</div>
+<%-- 		    	 <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellItemwiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none" >PDF</a>
+ --%>		    		<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
+ 
+ 	</div>
 	</div>
 		 
 	
@@ -217,7 +220,7 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 	function searchSellBill()
 	{ 
-		document.getElementById('btn_pdf').style="display:none";
+		//document.getElementById('btn_pdf').style="display:none";
 		document.getElementById('menuTable').style.display = "block";
 		document.getElementById('table').style="display:none";
 		   document.getElementById('chart').style="display:none";
@@ -337,7 +340,7 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 		
 		if (isValid) {
-			document.getElementById('btn_pdf').style.display = "block";
+		//	document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var category=$("#category").val();
@@ -473,7 +476,7 @@ function showChart(){
 			var isValid = validate();
 			
 			if (isValid) {
-				document.getElementById("btn_pdf").style="display:none";
+			//	document.getElementById("btn_pdf").style="display:none";
 			$.getJSON('${getMenuwiselReport}',{
 				
 								fromDate : fromDate,
@@ -642,5 +645,16 @@ function showChart(){
 			}
 }
 </script>
+<script type="text/javascript">
+function genPdf()
+{
+	var fromDate = document.getElementById("fromdatepicker").value;
+	var toDate = document.getElementById("todatepicker").value;
+	var frId=document.getElementById("frId").value;
+	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellItemwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId);
+	
+	}
+
+</script>	
 </body>
 </html>
