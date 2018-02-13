@@ -28,6 +28,8 @@ public class ShowGrnBean {
         private float taxableAmt;
         private float grnRate;
         
+        private float taxAmt;
+        
         
 	    public float getTaxableAmt() {
 			return taxableAmt;
@@ -191,6 +193,14 @@ public class ShowGrnBean {
 			this.billDateTime = billDateTime;
 		}
 
+		public float getTaxAmt() {
+			return taxAmt;
+		}
+
+		public void setTaxAmt(float taxAmt) {
+			this.taxAmt = taxAmt;
+		}
+
 		@Override
 		public String toString() {
 			return "ShowGrnBean [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId + ", itemName="
@@ -198,9 +208,8 @@ public class ShowGrnBean {
 					+ ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
 					+ cgstPer + ", igstPer=" + igstPer + ", calcBaseRate=" + calcBaseRate + ", menuId=" + menuId
 					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", autoGrnQty=" + autoGrnQty + ", taxPer="
-					+ taxPer + ", grnAmt=" + grnAmt + ", billDateTime=" + billDateTime + "]";
+					+ taxPer + ", grnAmt=" + grnAmt + ", billDateTime=" + billDateTime + ", taxableAmt=" + taxableAmt
+					+ ", grnRate=" + grnRate + ", taxAmt=" + taxAmt + "]";
 		}
-
-		
 		
 }

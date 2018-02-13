@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -85,7 +86,7 @@
 
 																<th class="col-md-1">Bill No</th>
 																<th class="col-md-1">Date</th>
-																<th class="col-md-1">Item Name</th>
+																<th class="col-md-2">Item Name</th>
 																<th class="col-md-1">Rate</th>
 																<th class="col-md-1">Quantity</th>
 																<th class="col-md-1"> Type</th>
@@ -128,11 +129,28 @@
 																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 																		</c:when>
 																	</c:choose>
-																	<td class="col-md-1"><c:out value="${grnList.taxableAmt}" /></td>
+																	
+																	
+																	<td class="col-md-1">
+																	<fmt:formatNumber type="number"
+												minFractionDigits="2" maxFractionDigits="2"
+												value="${grnList.taxableAmt}" />
+																	
+																	<%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
 																	<td class="col-md-1"><c:out
 																			value="${grnList.sgstPer + grnList.cgstPer}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.totalTax}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.grnGvnAmt}" /></td>
+																	<td class="col-md-1">
+																	<fmt:formatNumber type="number"
+												minFractionDigits="2" maxFractionDigits="2"
+												value="${grnList.totalTax}" />
+																	
+																	<%-- <c:out value="${grnList.totalTax}" /> --%></td>
+																	
+																	
+																	<td class="col-md-1">	<fmt:formatNumber  type="number"
+												minFractionDigits="2" maxFractionDigits="2"
+												value="${grnList.grnGvnAmt}" />
+																	<%-- <c:out value="${grnList.grnGvnAmt}" /> --%></td>
 																	
 																	<c:choose>
 																		<c:when test="${grnList.grnGvnStatus==1}">
@@ -258,14 +276,14 @@
 
 						tr.append($('<td class="col-md-1"></td>').html(grndata.billNo));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnDate));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.itemName));
+						tr.append($('<td class="col-md-2"></td>').html(grndata.itemName));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.baseRate));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnQty));
 						tr.append($('<td class="col-md-1"></td>').html(grnType));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt.toFixed(2)));
 						tr.append($('<td class="col-md-1"></td>').html(calcTaxPer));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.totalTax));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.totalTax.toFixed(2)));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt.toFixed(2)));
 						tr.append($('<td class="col-md-1"></td>').html(grnStatus));
 
 						

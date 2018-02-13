@@ -58,8 +58,8 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="7">
   <tbody>
     <tr>
-      <td  align="left">Bill No: </td>
-      <td align="left">${exBill.sellBillNo} </td>
+      <td  align="left">Invoice No: </td>
+      <td align="left">${invNo}(${exBill.sellBillNo}) </td>
       <td >Date:</td>
         
       <td >${date} </td>

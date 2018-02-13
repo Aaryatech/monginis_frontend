@@ -301,22 +301,16 @@ public class GrnGvnController {
 			
 			// calculate autogrnQty
 			for (int i = 0; i < grnConfList.size(); i++) {
-				
-				
 				//nw code
 				int purQty=grnConfList.get(i).getBillQty();
-				
 				int tempGQty=grnConfList.get(i).getAutoGrnQty();
 				
-				//System.out.println("Temo GQty "+tempGQty+"Item Name ="+grnConfList.get(i).getItemName());
-				
 				for(int k=0;k<i;k++) {
-					
-					if(grnConfList.get(i).getItemId()==grnConfList.get(k).getItemId()) {
-						
+					System.out.println("I Item = " + grnConfList.get(i).getItemId()+ " K Item "+grnConfList.get(k).getItemId());
+					if(grnConfList.get(i).getItemId() == grnConfList.get(k).getItemId()) {
 						purQty=purQty+grnConfList.get(k).getBillQty();
-						
 						tempGQty=tempGQty+grnConfList.get(k).getAutoGrnQty();
+						System.out.println("/////////// Item Name " + grnConfList.get(i).getItemName() +" Pur Qty "+purQty+"Temp G qty "+ tempGQty);
 						
 					}//end of item Id match
 					
@@ -328,15 +322,6 @@ public class GrnGvnController {
 						if (grnConfList.get(i).getItemId() == stockForAutoGrn.get(j).getId()) {
 
 							if (grnConfList.get(i).getGrnType() != 4) {
-/*
-								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
-										+ grnConfList.get(i).getBillQty())
-										- (stockForAutoGrn.get(j).getRegSellQty()
-												+ stockForAutoGrn.get(j).getGrnGvnQty());
-												
-												
-								*/
-								
 
 								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
 										+ purQty)
@@ -344,30 +329,38 @@ public class GrnGvnController {
 												+ stockForAutoGrn.get(j).getGrnGvnQty()+tempGQty);
 								
 								System.out.println("*********");
-								
 									System.out.println("item Id= "+grnConfList.get(i).getItemId());
-									System.out.println("bill date ="+grnConfList.get(i).getBillDate());
 									System.out.println("cur reg stock =  "+stockForAutoGrn.get(j).getRegCurrentStock());
-								
 									System.out.println( " bill qty = "+ grnConfList.get(i).getBillQty() );
 									System.out.println("tot sell = "+stockForAutoGrn.get(j).getRegSellQty());
 									System.out.println("grn = "+stockForAutoGrn.get(j).getGrnGvnQty());
-								
-									System.out.println(
-										"auto Grn Qty " + autoGrnQty + "for item id " + grnConfList.get(i).getItemId());
-									
 									System.out.println("*********");
-									
 						grnConfList.get(i).setAutoGrnQty(autoGrnQty);
-
 							}//end of inner if
 							else {
-								
+								System.out.println("In Else ");
 								int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock()
 										+ purQty)
 										- (stockForAutoGrn.get(j).getRegSellQty()
 												+ stockForAutoGrn.get(j).getGrnGvnQty()+tempGQty);
+								System.out.println("4444444");
+								System.out.println("item Id= "+grnConfList.get(i).getItemId());
+								System.out.println("Pur Qty "+purQty);
+								System.out.println("Temp G Qty "+tempGQty);
+								System.out.println("bill date ="+grnConfList.get(i).getBillDate());
+								System.out.println("cur reg stock =  "+stockForAutoGrn.get(j).getRegCurrentStock());
+								System.out.println( " bill qty = "+ grnConfList.get(i).getBillQty() );
+								System.out.println("tot sell = "+stockForAutoGrn.get(j).getRegSellQty());
+								System.out.println("grn = "+stockForAutoGrn.get(j).getGrnGvnQty());
+								System.out.println(
+									"auto Grn Qty " + autoGrnQty + "for item id " + grnConfList.get(i).getItemId());
+								System.out.println("5555555");
 								grnConfList.get(i).setAutoGrnQty(autoGrnQty);
+							}//end of else
+						}//end of outer if
+				}
+			} // end of calc autogrnQty
+
 								/*System.out.println("");
 								//calculate autoGrnQty for pushed item 
 								
@@ -418,12 +411,6 @@ public class GrnGvnController {
 													+ stockForAutoGrn.get(j).getGrnGvnQty());
 									grnConfList.get(i).setAutoGrnQty(autoGrnQty);
 								}*/
-
-							}//end of else
-						}//end of outer if
-					
-				}
-			} // end of calc autogrnQty
 
 			
 			objShowGrnList = new ArrayList<>();
@@ -488,8 +475,8 @@ public class GrnGvnController {
 				}
 				objShowGrn.setGrnRate(roundUp(grnRate));
 
-				float taxableAmt = grnBaseRate * objShowGrn.getAutoGrnQty();
-				objShowGrn.setTaxableAmt(taxableAmt);
+				float taxableAmt = grnRate * objShowGrn.getAutoGrnQty();
+				objShowGrn.setTaxableAmt(roundUp(taxableAmt));
 
 				float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer())) / 100;
 
@@ -508,7 +495,7 @@ public class GrnGvnController {
 				objShowGrn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
 				objShowGrn.setBillDateTime(grnConfList.get(i).getBillDateTime());
 				
-
+				objShowGrn.setTaxAmt(roundUp(totalTax));
 				objShowGrnList.add(objShowGrn);
 				
 				//objShowGrnList.add(objShowGrn);
@@ -675,14 +662,14 @@ public class GrnGvnController {
 					postGrnGvn.setGvnPhotoUpload2("grn:no photo");
 					postGrnGvn.setGrnGvnStatus(1);
 					postGrnGvn.setApprovedLoginGate(0);
-					postGrnGvn.setApproveimedDateTimeGate("0000-00-00 00:00:00");
+					postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
 					postGrnGvn.setApprovedRemarkGate(" ");
 
 					postGrnGvn.setApprovedLoginStore(0);
-					postGrnGvn.setApprovedDateTimeStore("0000-00-00 00:00:00");
+					postGrnGvn.setApprovedDateTimeStore(dateFormat.format(cal.getTime()));
 					postGrnGvn.setApprovedRemarkStore(" ");
 					postGrnGvn.setApprovedLoginAcc(0);
-					postGrnGvn.setGrnApprovedDateTimeAcc("0000-00-00 00:00:00");
+					postGrnGvn.setGrnApprovedDateTimeAcc(dateFormat.format(cal.getTime()));
 					postGrnGvn.setApprovedRemarkAcc(" ");
 
 					postGrnGvn.setDelStatus(0);
@@ -696,9 +683,9 @@ public class GrnGvnController {
 					postGrnGvn.setCgstPer(objShowGrnList.get(i).getCgstPer());
 					postGrnGvn.setIgstPer(objShowGrnList.get(i).getIgstPer());
 
-					postGrnGvn.setTaxableAmt(taxableAmt);
-					postGrnGvn.setTotalTax(totalTax);
-					postGrnGvn.setFinalAmt(finalAmt);
+					postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
+					postGrnGvn.setTotalTax(roundUp(totalTax));
+					postGrnGvn.setFinalAmt(roundUp(finalAmt));
 					postGrnGvn.setRoundUpAmt(roundUpAmt);
 
 					postGrnGvn.setIsCreditNote(0);
@@ -769,6 +756,8 @@ public class GrnGvnController {
 						SellBillHeader.class);
 			
 				System.out.println("Bill Header Response "+billHeader.toString());
+				
+				postGrnList=new PostGrnGvnList();
 			}
 
 		} catch (Exception e) {
@@ -846,12 +835,14 @@ public class GrnGvnController {
 			
 			String curDate=new SimpleDateFormat("dd-MM-yyyy").format(cDate);
 			
-			map.add("curDate",curDate );
+			map.add("curDate",curDate);
 
 			GetBillsForFrList billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFr", map,
 					GetBillsForFrList.class);
 
 			frBillList = billsForFr.getGetBillsForFr();
+			
+			System.out.println("FR BILL LIST "+ frBillList.toString());
 
 			modelAndView.addObject("frBillList", frBillList);
 
@@ -1038,14 +1029,14 @@ public class GrnGvnController {
 				postGrnGvn.setFrGrnGvnRemark(frGvnRemark);// 13
 				postGrnGvn.setGrnGvnStatus(1);// 16
 				postGrnGvn.setApprovedLoginGate(0);// 17
-				postGrnGvn.setApproveimedDateTimeGate("0000-00-00 00:00:00");// 18
+				postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));// 18
 				postGrnGvn.setApprovedRemarkGate("");// 19
 
 				postGrnGvn.setApprovedLoginStore(0);// 20
-				postGrnGvn.setApprovedDateTimeStore("0000-00-00 00:00:00");// 21
+				postGrnGvn.setApprovedDateTimeStore(dateFormat.format(cal.getTime()));// 21
 				postGrnGvn.setApprovedRemarkStore("");// 22
 				postGrnGvn.setApprovedLoginAcc(0);// 23
-				postGrnGvn.setGrnApprovedDateTimeAcc("0000-00-00 00:00:00");// 24
+				postGrnGvn.setGrnApprovedDateTimeAcc(dateFormat.format(cal.getTime()));// 24
 				postGrnGvn.setApprovedRemarkAcc("");// 25
 
 				postGrnGvn.setDelStatus(0);// 26

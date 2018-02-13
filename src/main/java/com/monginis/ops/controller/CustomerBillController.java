@@ -38,6 +38,7 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillData;
 import com.monginis.ops.model.CustomerBillItem;
+import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
@@ -1742,8 +1743,10 @@ case 6:
 				sellBillHeader.setDelStatus(0);
 				sellBillHeader.setUserName(custName);
 				sellBillHeader.setBillDate(dtf.format(localDate));
-
-				sellBillHeader.setInvoiceNo(0);// hardcoded
+				
+				String invNo=ExpressBillController.getInvoiceNo();
+				
+				sellBillHeader.setInvoiceNo(invNo);// hardcoded
 				sellBillHeader.setPaidAmt(paidAmount);
 				sellBillHeader.setPaymentMode(paymentMode);
 				sellBillHeader.setBillType('R');
@@ -1896,10 +1899,27 @@ case 6:
 				RestTemplate restTemplate = new RestTemplate();
 
 				  sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader, SellBillHeader.class);
+				  
+				  
 
 				System.out.println("info :" + sellBillHeaderRes.toString());
 				if (sellBillHeaderRes!= null) {
 					resetData1();
+					
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					String settingKey = new String();
+					settingKey = "sell_bill_invoice_no";
+					map.add("settingKeyList", settingKey);
+					FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue",
+							map, FrItemStockConfigureList.class);
+					System.out.println("SettingKeyList" + settingList.toString());
+					int settingValue=settingList.getFrItemStockConfigure().get(0).getSettingValue();
+					settingValue = settingValue + 1;
+					System.out.println("inside update setting Value "+settingValue);
+					map.add("settingValue", settingValue);
+					map.add("settingKey", "sell_bill_invoice_no");
+					Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map,
+							Info.class);
 
 				}  
 			} catch (Exception e) {

@@ -10,7 +10,7 @@ public class SellBillHeader implements Serializable{
 	private int sellBillNo;
 	
 
-	private int invoiceNo;
+	private String invoiceNo;
 	
 	
 	private String billDate;
@@ -87,15 +87,14 @@ public class SellBillHeader implements Serializable{
 		this.sellBillNo = sellBillNo;
 	}
 
-	public int getInvoiceNo() {
+
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
-
-	
 
 	public String getBillDate() {
 		return billDate;

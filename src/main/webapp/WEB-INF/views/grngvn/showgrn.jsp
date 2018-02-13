@@ -4,177 +4,195 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-	<div class="sidebarOuter"></div>
+<div class="sidebarOuter"></div>
 
-	<div class="wrapper">
+<div class="wrapper">
 
-		<!--topHeader-->
+	<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/logo.jsp">
-			<jsp:param name="frDetails" value="${frDetails}" />
+	<jsp:include page="/WEB-INF/views/include/logo.jsp">
+		<jsp:param name="frDetails" value="${frDetails}" />
 
-		</jsp:include>
+	</jsp:include>
 
-		<!--topHeader-->
+	<!--topHeader-->
 
-		<!--rightContainer-->
-		<div class="fullGrid center">
-			<!--fullGrid-->
-			<div class="wrapperIn2">
-			
-			
-				<c:url var="getGrnData" value="/getGrnData" />
-			
-
-							
-				<!--leftNav-->
-
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
-					<jsp:param name="myMenu" value="${menuList}" />
-
-				</jsp:include>
+	<!--rightContainer-->
+	<div class="fullGrid center">
+		<!--fullGrid-->
+		<div class="wrapperIn2">
 
 
-				<!--leftNav-->
-				<!--rightSidebar-->
+			<c:url var="getGrnData" value="/getGrnData" />
 
-				<!-- Place Actual content of page inside this div -->
-				<div class="sidebarright">
-				
-				
-			<%-- 	<form
+
+
+			<!--leftNav-->
+
+			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:param name="myMenu" value="${menuList}" />
+
+			</jsp:include>
+
+
+			<!--leftNav-->
+			<!--rightSidebar-->
+
+			<!-- Place Actual content of page inside this div -->
+			<div class="sidebarright">
+
+
+				<%-- 	<form
 								action="${pageContext.request.contextPath}/insertGrnProcess"
 								name="validation_form" id="validation_form" method="post">
 								
  --%>
-<c:if test="${not empty alert}">
-   <!-- here would be a message with a result of processing -->
-    <div class="messages messagesErr"> ${alert} </div>
-</c:if>
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="pageTitle">Apply GRN </h2>
-						</div>
+				<c:if test="${not empty alert}">
+					<!-- here would be a message with a result of processing -->
+					<div class="messages messagesErr">${alert}</div>
+				</c:if>
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="pageTitle">Apply GRN</h2>
 					</div>
+				</div>
 
-<div class="clearfix"></div>
-	<form
-								action="${pageContext.request.contextPath}/insertGrnProcess"
-								name="validation_form" id="validation_form" method="post">
-								
+				<div class="clearfix"></div>
+				<form action="${pageContext.request.contextPath}/insertGrnProcess"
+					name="validation_form" id="validation_form" method="post">
 
 
-<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
-							<thead>
-								<tr class="bgpink">
-				<th class="col-md-1" >Bill No.</th>
-				<th  class="col-md-3">Name</th>
-				<th  class="col-md-2">Type</th>
-				<th  class="col-md-1">QTY</th>
-				<th  class="col-md-1">Rate</th>
-			    <th  class="col-md-1">Grn Rate</th>
- 				<th  class="col-md-1">Edit Qty</th>
-				<th  class="col-md-1">Tax %</th>
-				<th  class="col-md-1">Taxable Amt</th>
-				<th  class="col-md-1">Amount</th>
-				<th  class="col-md-1">Remark</th>
-  </tr>
-  
-	</thead>
-							<tbody>
 
-						
-						<%-- 	
+					<div id="table-scroll" class="table-scroll">
+						<div id="faux-table" class="faux-table" aria="hidden"></div>
+						<div class="table-wrap">
+							<table id="table_grid" class="main-table">
+								<thead>
+									<tr class="bgpink">
+										<th class="col-md-1">Bill No.</th>
+										<th class="col-md-3">Name</th>
+										<th class="col-md-2">Type</th>
+										<th class="col-md-1">QTY</th>
+										<th class="col-md-1">Rate</th>
+										<th class="col-md-1">Grn Rate</th>
+										<th class="col-md-1">Edit Qty</th>
+										<th class="col-md-1">Tax %</th>
+										<th class="col-md-1">Taxable Amt</th>
+										<th class="col-md-1">Tax Amt</th>
+										<th class="col-md-1">Amount</th>
+										<th class="col-md-1">Remark</th>
+									</tr>
+
+								</thead>
+								<tbody>
+
+
+									<%-- 	
 							<form
 								action="${pageContext.request.contextPath}/insertGrnProcess"
 								name="grn" id="grn" method="post">
 								 --%>
 
-														<c:forEach items="${grnConfList}" var="grnConfList"
-															varStatus="count">
-															<tr>
+									<c:forEach items="${grnConfList}" var="grnConfList"
+										varStatus="count">
+										<tr>
 
-															<%-- 	<td>${count.index+1}</td> --%>
-																<td class="col-md-1"><c:out value="${grnConfList.billNo}"></c:out></td>
-																<td class="col-md-3"><c:out value="${grnConfList.itemName}"></c:out></td>
-																<c:choose>
-																	<c:when test="${grnConfList.grnType==0}">
-																		<td class="col-md-1"><c:out value="GRN 1(75%)"></c:out></td>
-																	</c:when>
-																	<c:when test="${grnConfList.grnType==1}">
-																		<td class="col-md-1"><c:out value="GRN 2(90%)"></c:out></td>
-																	</c:when>
-																	<c:when test="${grnConfList.grnType==2}">
-																		<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
-																	</c:when>
-																	<c:when test="${grnConfList.grnType==3}">
-																		<td class="col-md-1"><c:out value="No GRN"></c:out></td>
-																	</c:when>
-																	
-																	<c:when test="${grnConfList.grnType==4}">
-																		<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
-																	</c:when>
-																	<c:otherwise><c:out value="No GRN"></c:out></c:otherwise>
-																	
-																</c:choose>
-<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+											<%-- 	<td>${count.index+1}</td> --%>
+											<td class="col-md-1"><c:out
+													value="${grnConfList.billNo}"></c:out></td>
+											<td class="col-md-3"><c:out
+													value="${grnConfList.itemName}"></c:out></td>
+											<c:choose>
+												<c:when test="${grnConfList.grnType==0}">
+													<td class="col-md-1"><c:out value="GRN 1(75%)"></c:out></td>
+												</c:when>
+												<c:when test="${grnConfList.grnType==1}">
+													<td class="col-md-1"><c:out value="GRN 2(90%)"></c:out></td>
+												</c:when>
+												<c:when test="${grnConfList.grnType==2}">
+													<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
+												</c:when>
+												<c:when test="${grnConfList.grnType==3}">
+													<td class="col-md-1"><c:out value="No GRN"></c:out></td>
+												</c:when>
+
+												<c:when test="${grnConfList.grnType==4}">
+													<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
+												</c:when>
+												<c:otherwise>
+													<c:out value="No GRN"></c:out>
+												</c:otherwise>
+
+											</c:choose>
+											<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer})"
  --%>
-																<td class="col-md-1"><c:out value="${grnConfList.autoGrnQty}"></c:out>
-																<input type="hidden"
-																	name="grnqty${grnConfList.itemId}"
-																	id="grnqty${grnConfList.itemId}" size="3" readonly="readonly"
-																	value="${grnConfList.autoGrnQty}" /> </td>
+											<td class="col-md-1"><c:out
+													value="${grnConfList.autoGrnQty}"></c:out> <input
+												type="hidden" name="grnqty${grnConfList.itemId}"
+												id="grnqty${grnConfList.itemId}" size="3"
+												readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
-																<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
-																	value="${grnConfList.calcBaseRate}"></c:out></td>
-																<td class="col-md-1"><c:out
-																	 value="${grnConfList.grnRate}"></c:out></td>
+											<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
+													value="${grnConfList.calcBaseRate}"></c:out></td>
+											<td class="col-md-1"><c:out
+													value="${grnConfList.grnRate}"></c:out></td>
 
-															<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
+											<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
 																	onchange="showEdit(this.id,${grnConfList.itemId},${grnConfList.autoGrnQty})" onclick="me()">
 																		<option selected value="0">No</option>
 																		<option value="1">Yes</option>
 																</select></td> --%>
-																
-																<td class="col-md-1"><input type="text"
-																	name= "grnqtyauto${grnConfList.itemId}"  value="${grnConfList.autoGrnQty}" 
-																	id="grnqtyauto${grnConfList.itemId}"  size="3"
-																	onchange="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})"/>
 
-																
-																	</td>
-																	
+											<td class="col-md-1"><input type="text"
+												name="grnqtyauto${grnConfList.itemId}"
+												value="${grnConfList.autoGrnQty}"
+												id="grnqtyauto${grnConfList.itemId}" size="3"
+												onchange="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+																	${grnConfList.sgstPer},${grnConfList.cgstPer})" />
 
-																<td class="col-md-1" id="tax_per${grnConfList.itemId}"><c:out
-																		value="${grnConfList.taxPer}"></c:out></td>
-	<fmt:formatNumber var="taxableAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${grnConfList.taxableAmt}" />
-<c:set var="taxableAmt" value="${taxableAmt}" />																	
-                                                       <td class="col-md-1"><c:out
-																	 value="${taxableAmt}"></c:out></td>
-	<fmt:formatNumber var="grnAmt" type="number" minFractionDigits="2" maxFractionDigits="2" value="${grnConfList.grnAmt}" />
-<c:set var="grnAmt" value="${grnAmt}" />
-																<td class="col-md-1" id="grn_amt${grnConfList.itemId}"><c:out
-																		value="${grnAmt}"></c:out></td>
 
-																<td class="col-md-1">
-																<select name="grn_remark${grnConfList.itemId}" style="width: 200px"
-																id="grn_remark${grnConfList.itemId}" class="form-control" >
-																<option selected  value="selectRemark">Select Remark</option>
-																<c:forEach items="${remarkList}" var="remarkList">
+											</td>
+
+
+											<td class="col-md-1" id="tax_per${grnConfList.itemId}"><c:out
+													value="${grnConfList.taxPer}"></c:out></td>
+
+											<fmt:formatNumber var="taxableAmt" type="number"
+												minFractionDigits="2" maxFractionDigits="2"
+												value="${grnConfList.taxableAmt}" />
+
+											<c:set var="taxableAmt" value="${taxableAmt}" />
+
+											<td class="col-md-1"><c:out value="${taxableAmt}"></c:out></td>
+
+
+											<td class="col-md-1"><c:out value="${grnConfList.taxAmt}"></c:out></td>
+
+											<fmt:formatNumber var="grnAmt" type="number"
+												minFractionDigits="2" maxFractionDigits="2"
+												value="${grnConfList.grnAmt}" />
+
+											<c:set var="grnAmt" value="${grnAmt}" />
+
+											<td class="col-md-1" id="grn_amt${grnConfList.itemId}"><c:out
+													value="${grnAmt}"></c:out></td>
+
+											<td class="col-md-1"><select
+												name="grn_remark${grnConfList.itemId}" style="width: 200px"
+												id="grn_remark${grnConfList.itemId}" class="form-control">
+													<option selected value="selectRemark">Select Remark</option>
+													<c:forEach items="${remarkList}" var="remarkList">
 																${remarkList.remark}
 																<option value="${remarkList.remark}">${remarkList.remark}</option>
-																</c:forEach>
-																</select></td>
-															 	<%-- <input type="text"
+													</c:forEach>
+											</select></td>
+
+											<%-- <input type="text"
 																	name="grn_remark${grnConfList.itemId}"
 																	id="grn_remark${grnConfList.itemId}" class="remark" /></td>
  --%>
@@ -183,58 +201,58 @@
 
 
 
-																<%-- <td id="grn_rate${grnConfList.itemId}"><c:out
+											<%-- <td id="grn_rate${grnConfList.itemId}"><c:out
 																		value="${grnConfList.calcBaseRate}"></c:out></td>
  --%>
 
-																<!-- <td><label><input type="radio"
+											<!-- <td><label><input type="radio"
 																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
 																<label><input type="radio" name="is-edit"
 																	id=is_edit value="1">Yes</label></td> -->
 
-															</tr>
-														</c:forEach>
+										</tr>
+									</c:forEach>
 
-												
-							</tbody>
 
-						</table>
+								</tbody>
+
+							</table>
+						</div>
 					</div>
-				</div>
-									
-										<button type="submit" class="buttonsaveorder" id="submit"
-											onclick="checkRemark()">
-											<i class="fa fa-check"></i> Save
-										</button>
+
+					<button type="submit" class="buttonsaveorder" id="submit"
+						onclick="checkRemark()">
+						<i class="fa fa-check"></i> Save
+					</button>
 
 
-							</form>
-							</div>
-							<!--table end-->
-
-
-
-					
-					
-
-
-
-				</div>
-				<!--rightSidebar-->
-
+				</form>
 			</div>
-			<!--fullGrid-->
+			<!--table end-->
+
+
+
+
+
+
+
+
 		</div>
-		<!--rightContainer-->
+		<!--rightSidebar-->
 
 	</div>
-	<!--wrapper-end-->
+	<!--fullGrid-->
+</div>
+<!--rightContainer-->
 
-	<!--easyTabs-->
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<!--easyTabs-->
+</div>
+<!--wrapper-end-->
 
-	<script type="text/javascript">
+<!--easyTabs-->
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<!--easyTabs-->
+
+<script type="text/javascript">
 	
 	
 	 function showEdit(id,itemId,autoGrnQty) {
@@ -256,8 +274,8 @@
 			}
 	}
 	</script>
-	
-	<script type="text/javascript">
+
+<script type="text/javascript">
 	
 	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer){
 		
@@ -366,7 +384,7 @@
 	</script>
 
 
-	<script>
+<script>
 
 (function() {
   var fauxTable = document.getElementById("faux-table");
@@ -380,10 +398,10 @@
 });
 
 	</script>
-	
-	
-	
-	<script>
+
+
+
+<script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";
 		}
@@ -406,9 +424,9 @@
 			document.getElementById("mySidenav3").style.width = "0";
 		}
 	</script>
-	
-	
-		<script type="text/javascript">
+
+
+<script type="text/javascript">
 
 function getGrnData(id){
 	
