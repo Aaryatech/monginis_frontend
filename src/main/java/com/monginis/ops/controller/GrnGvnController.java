@@ -1145,7 +1145,7 @@ public class GrnGvnController {
 
 		model.addObject("gvnList", grnGvnDetailsList);
 
-		model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+		model.addObject("url", Constant.GVN_IMAGE_URL);
 		model.addObject("cDate", cDate);
 	}catch (Exception e) {
 		

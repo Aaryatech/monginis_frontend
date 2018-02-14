@@ -140,7 +140,7 @@
 
 												<td class="col-md-1"><input type="text"
 													name="gvn_qty${gvnConfList.itemId}"
-													id="gvn_qty${gvnConfList.itemId}" size="5"
+													id="gvn_qty${gvnConfList.itemId}" size="5" value="0"
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer})" /></td>
 
 												<td class="col-md-1">${gvnConfList.calcBaseRate}</td>
