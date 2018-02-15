@@ -63,6 +63,8 @@ public class ExpressBillController {
 	List<SellBillDetail> BillDetailList = new ArrayList<SellBillDetail>();
 	
 	String sellInvoiceGlobal;
+	
+	int globalFrId;
 
 	@RequestMapping(value = "/showExpressBill", method = RequestMethod.GET)
 	public ModelAndView showExpressBill(HttpServletRequest request, HttpServletResponse response) {
@@ -494,15 +496,14 @@ public class ExpressBillController {
 
 	}
 
-	public static String getInvoiceNo() {
+	public  String getInvoiceNo() {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
 
 		String settingKey = new String();
 
-		settingKey = "sell_bill_invoice_no";
-
+		settingKey = ""+globalFrId;
 		map.add("settingKeyList", settingKey);
 
 		FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
@@ -581,7 +582,9 @@ public class ExpressBillController {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
+		
+			 globalFrId=frDetails.getFrId();
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.now();
 		System.out.println(dtf.format(localDate)); // 2016/11/16
@@ -629,16 +632,18 @@ public class ExpressBillController {
 		if (sellBillHeader != null) {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			String settingKey = new String();
-			settingKey = "sell_bill_invoice_no";
+			settingKey = ""+globalFrId;
 			map.add("settingKeyList", settingKey);
 			FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
 					FrItemStockConfigureList.class);
-			System.out.println("SettingKeyList" + settingList.toString());
+			System.out.println("SettingKeyList in EX BILL " + settingList.toString());
 			int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
 			settingValue = settingValue + 1;
 			System.out.println("inside update setting Value " + settingValue);
+			
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("settingValue", settingValue);
-			map.add("settingKey", "sell_bill_invoice_no");
+			map.add("settingKey", ""+globalFrId);
 			Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map, Info.class);
 		}
 		return sellBillHeader;

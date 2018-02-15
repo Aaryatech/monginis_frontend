@@ -1083,9 +1083,9 @@ public class GrnGvnController {
 				postGrnGvn.setCgstPer(grnConfList.get(i).getCgstPer());
 				postGrnGvn.setIgstPer(grnConfList.get(i).getIgstPer());
 
-				postGrnGvn.setTaxableAmt(taxableAmt);
-				postGrnGvn.setTotalTax(totalTax);
-				postGrnGvn.setFinalAmt(finalAmt);
+				postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
+				postGrnGvn.setTotalTax(roundUp(totalTax));
+				postGrnGvn.setFinalAmt(roundUp(finalAmt));
 				postGrnGvn.setRoundUpAmt(roundUpAmt);
 
 				postGrnGvn.setIsCreditNote(0);

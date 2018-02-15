@@ -157,24 +157,24 @@
 																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==2}">
-																			<td class="col-md-1"><c:out value="Approved By Gate"></c:out></td>
+																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==3}">
-																			<td class="col-md-1"><c:out value="Reject By Gate"></c:out></td>
+																			<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
 																		</c:when>
 																		
 																		<c:when test="${grnList.grnGvnStatus==4}">
-																			<td class="col-md-1"><c:out value="Approve By Store"></c:out></td>
+																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
 																		</c:when>
 																		
 																		<c:when test="${grnList.grnGvnStatus==5}">
 																			<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==6}">
-																			<td class="col-md-1"><c:out value="Approve By Account"></c:out></td>
+																			<td class="col-md-1"><c:out value="Approved"></c:out></td>
 																		</c:when>
 																		<c:when test="${grnList.grnGvnStatus==7}">
-																			<td class="col-md-1"><c:out value="Reject By Account"></c:out></td>
+																			<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
 																		</c:when>
 																		
 																	</c:choose>
@@ -260,18 +260,17 @@
 								if(grndata.grnGvnStatus==1)
 									grnStatus="Pending";
 								if(grndata.grnGvnStatus==2)
-									grnStatus="Approve By Gate";
+									grnStatus="Pending";
 								if(grndata.grnGvnStatus==3)
-									grnStatus="Reject By Gate";
+									grnStatus="Reject By Dispatch";
 								if(grndata.grnGvnStatus==4)
-									grnStatus="Approve By Store";
+									grnStatus="Pending";
 								if(grndata.grnGvnStatus==5)
 									grnStatus="Reject By Store";
 								if(grndata.grnGvnStatus==6)
-									grnStatus="Approve By Account";
+									grnStatus="Approved";
 								if(grndata.grnGvnStatus==7)
-									grnStatus="Reject By Account";
-								
+									grnStatus="Reject By Acc";
 								
 
 						tr.append($('<td class="col-md-1"></td>').html(grndata.billNo));
@@ -286,9 +285,6 @@
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt.toFixed(2)));
 						tr.append($('<td class="col-md-1"></td>').html(grnStatus));
 
-						
-
-						
 
 /* 
 						var index = key + 1;

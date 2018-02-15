@@ -97,6 +97,7 @@
 							<tbody>
 
 
+										<c:set var="status" value=""></c:set>
 
 								<c:forEach items="${gvnList}" var="gvnList" varStatus="count">
 									<tr>
@@ -111,18 +112,43 @@
 
 										<td class="col-md-1"><c:out value="${gvnList.totalTax}" /></td>
 
-
 										<td class="col-md-1"><c:out value="${gvnList.grnGvnAmt}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.grnGvnStatus}" /></td>
+										<c:choose>
+										<c:when test="${gvnList.grnGvnStatus==1}">
+										<c:set var="status" value="Pending"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==2}">
+										<c:set var="status" value="Pending"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==3}">
+										<c:set var="status" value="Reject By Dispatch"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==4}">
+										<c:set var="status" value="Pending"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==5}">
+										<c:set var="status" value="Reject By Store"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==6}">
+										<c:set var="status" value="Approved"></c:set>
+										</c:when>
+										
+										<c:when test="${gvnList.grnGvnStatus==7}">
+										<c:set var="status" value="Reject By Acc"></c:set>
+										</c:when>
+										</c:choose>
+										<td class="col-md-1"><c:out value="${status}" /></td>
 										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload1}"
 											data-lightbox="image-1">Image 1</a></td>
 										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 										<td class="col-md-1"><c:out value="${gvnList.frGrnGvnRemark}" /></td>
 								</c:forEach>
-
-
-
 
 							</tbody>
 
@@ -213,11 +239,23 @@
 													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.baseRate));
 													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnQty));
 														var calcTaxPer=parseFloat(gvndata.sgstPer)+parseFloat(gvndata.cgstPer);
+														var status;
+														if(gvndata.grnGvnStatus==1 || gvndata.grnGvnStatus==2 || gvndata.grnGvnStatus==4){
+															status="Pending";
+														}else if(gvndata.grnGvnStatus==3){
+															status="Reject By Dispatch";
+														}else if(gvndata.grnGvnStatus==5){
+															status="Reject By Store";
+														}else if(gvndata.grnGvnStatus==7){
+															status="Reject By Acc";
+														}else if(gvndata.grnGvnStatus==6){
+															status="Approved";
+														}
 
 													 	tr.append($('<td class="col-md-1"></td>').html(calcTaxPer));
-													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.totalTax));
-													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnAmt));
-													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnStatus));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.totalTax.toFixed(2)));
+													 	tr.append($('<td class="col-md-1"></td>').html(gvndata.grnGvnAmt.toFixed(2)));
+													 	tr.append($('<td class="col-md-1"></td>').html(status));
 													 	tr.append($('<td class="col-md-1"></td>').html('<a href="'
 																							+gvndata.gvnPhotoUpload1+'" data-lightbox="image-1" data-title="My caption"><i class="fa fa-image icon2"></i></a>'));
 													 	tr.append($('<td class="col-md-1"></td>').html('<a href="'
