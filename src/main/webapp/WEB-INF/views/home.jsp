@@ -85,7 +85,7 @@
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-										<h2 class="pageTitle">Hi <span>${frDetails.frName},</span> Welcome back</h2>
+										<h2 class="pageTitle">Hi <span>${frDetails.frOwner},</span> Welcome Back</h2>
             
             
 					<!--slider-->

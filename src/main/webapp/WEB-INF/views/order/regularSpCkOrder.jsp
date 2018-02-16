@@ -72,8 +72,9 @@ select {
 				<!--rightSidebar-->
 				<div class="sidebarright">
 					<div class="order-left">
-						<h2 class="pageTitle">Regular Special Cake Order</h2>
+						<h2 class="pageTitle">Regular Cake as Special Order</h2>
 					</div>
+					<br><br><br>
 					<form
 						action="${pageContext.request.contextPath}/orderRegularSpCake"
 						method="post" class="form-horizontal" name="from_reg_ord"
@@ -89,8 +90,8 @@ select {
 								<div class="fullform">
 									<div class="cackleft">Category</div>
 									<div class="cackright">
-										<select name="regular_sp_cake" id="regular_sp_cake" required>
-											<option value="">Select Special Cake</option>
+										<select name="regular_sp_cake" id="regular_sp_cake" class="form-control" required>
+											<option value="">Select Category</option>
 
 											<c:forEach items="${categoryResponse}"
 												var="mCategoryWithSubCat">
@@ -100,16 +101,16 @@ select {
 									</div>
 								</div>
 								<div class="fullform">
-									<div class="cackleft2">Regular Special Cake</div>
+									<div class="cackleft2">Regular Cake</div>
 									<div class="cackrighttexbox">
-										<select data-placeholder="Select Item" tabindex="7"
+										<select data-placeholder="Select Item" class="form-control" tabindex="7"
 											id="regSpCkItem" name="regSpCkItem" required>
 											
 										</select>
 
 									</div>
 								</div>
-
+                                &nbsp; &nbsp; 
 								<div class="fullform">
 									<div class="cackleft">Name</div>
 									<div class="cackright" id="sp_name">
@@ -117,15 +118,15 @@ select {
 									</div>
 								</div>
 								&nbsp; &nbsp; &nbsp;
-
-								<div class="fullform">
+                                     <br>
+								<%-- <div class="fullform">
 									<div class="cackimg">
 										<div class="cackimglable"></div>
 										<img src="${url}${specialCake.spImage}"
 											onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
 									</div>
 								</div>
-								&nbsp;
+								&nbsp; --%>
 
 								<div class="fullform">
 									<div class="cackleft">Description</div>
@@ -167,28 +168,30 @@ select {
 							<input type="hidden" name="rg_sp_name" id="rg_sp_name"> <input
 								type="hidden" name="rg_sp_desc" id="rg_sp_desc" value="NA">
 
-							<div class="center">
+							 <div class="center">
 
-								<div class="colOuter">
+							<!--	<div class="colOuter">
 									<div class="col1">
 										<div class="col1title">Event</div>
 									</div>
-									<div class="col2">
-										<select name="sp_event" id="sp_event">
+									<div class="col2"> 
+										<select name="sp_event" id="sp_event" >
 
 											<c:forEach items="${eventList.getEvent()}" var="eventList">
 												<option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
 											</c:forEach>
-										</select>
-									</div>
-									<div class="col3">
-										<input class="texboxitemcode" placeholder="Name"
-											name="event_name" type="text" id="event_name" required>
-									</div>
-								</div>
+										</select>-->
+										<input 
+											name="sp_event" type="hidden" id="sp_event" value="Birthday" required>
+									<!-- </div>
+									<div class="col3"> -->
+										<input class="texboxitemcode"placeholder="Name" 
+											name="event_name" type="hidden" id="event_name" value="Happy Birthday" required>
+								<!-- 	</div>
+								</div> -->
 
-								<div class="colOuter"></div>
-								&nbsp;
+								<!-- <div class="colOuter"></div>
+								&nbsp; -->
 
 								<div class="colOuter">
 									<div class="col1">
@@ -202,7 +205,7 @@ select {
 								</div>
 
 								<div class="colOuter"></div>
-								&nbsp;
+							
 
 
 
@@ -218,7 +221,6 @@ select {
 								</div>
 								<div class="colOuter"></div>
 
-								&nbsp;&nbsp;
 								<div class="colOuter">
 									<div class="col1">
 										<div class="col1title">Place of Delivery</div>
@@ -231,7 +233,6 @@ select {
 
 
 								<div class="colOuter"></div>
-								&nbsp;&nbsp;
 
 
 								<div class="colOuter">
@@ -245,7 +246,6 @@ select {
 									</div>
 								</div>
 
-								&nbsp;&nbsp;
 								<div class="colOuter"></div>
 
 								<div class="colOuter">
@@ -259,7 +259,6 @@ select {
 									</div>
 								</div>
 
-								&nbsp;&nbsp;
 								<div class="colOuter"></div>
 
 								<div class="colOuter">
@@ -273,7 +272,6 @@ select {
 									</div>
 								</div>
 
-								&nbsp;&nbsp;
 								<div class="colOuter"></div>
 
 
@@ -405,7 +403,7 @@ select {
 
 	<script type="text/javascript">
 		$(document).ready(function() {$('#regular_sp_cake').change(function() {
-			
+			$('#regSpCkItem').find('option').remove().end()
 			                                        $.getJSON('${findAllRegularSpCk}',
 																{
 																	regular_sp_cake : $(this).val(),
@@ -417,7 +415,7 @@ select {
 
 																	$('#regSpCkItem').find('option').remove().end()
 
-																	$("#regSpCkItem").append($("<option></option>").attr("value",'-1').text('Select Regular SP Cake'));
+																	$("#regSpCkItem").append($("<option></option>").attr("value",'-1').text('Select Regular Cake'));
 
 																	for (var i = 0; i < len; i++) {
 

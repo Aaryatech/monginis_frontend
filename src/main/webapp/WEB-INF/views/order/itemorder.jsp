@@ -18,6 +18,9 @@ jQuery(document).ready(function(){
 
 
 <style>
+ .main-table tbody > tr:hover{
+  background-color: #ffa;
+}
 .alert {
 	padding: 15px;
 	background-color: #f44336;
@@ -238,7 +241,7 @@ a:hover {
 																<tr>
 
 																	<td class="col-md-2" ><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
@@ -264,7 +267,7 @@ a:hover {
 																<tr>
 
 																	<td class="col-md-1"><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"
@@ -287,7 +290,7 @@ a:hover {
 																<tr>
 
 																	<td class="col-md-1"><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"><c:out value='${items.itemName}' /></a></td>
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																		value='${items.itemQty}' class="tableInput"

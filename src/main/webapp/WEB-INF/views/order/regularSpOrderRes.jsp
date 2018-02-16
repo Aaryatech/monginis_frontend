@@ -78,13 +78,13 @@ select {
 	</div>
  &nbsp; &nbsp; &nbsp;
  
-	<div class="fullform">
+	<%-- <div class="fullform">
 		<div class="cackimg">
 		<div class="cackimglable"></div>
 		<img src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg' onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 	</div>
 	&nbsp;
-	
+	 --%>
      <div class="fullform">
 		<div class="cackleft">Description</div>
 		<div class="cackright" id="spDesc"><span class="cakename" id="reg_desc">- - - -</span></div>
@@ -123,22 +123,21 @@ String fDate1 = formatter1.format(date);%>
  <input type="hidden" name="rg_sp_desc" id="rg_sp_desc" value="NA">
 
 <!--centerForm-->	
-<div class="center">
-	<div class="colOuter">
+ <div class="center">
+<%--	<div class="colOuter">
 		<div class="col1"><div class="col1title">Event</div></div>
 		<div class="col2"><div class="col1title">${rspEvents}</div></div>
 		<div class="col3"><div class="col1title">${rspEventsName}</div>
 		</div>
 	</div>
 <div class="colOuter">
-	</div>
+	</div> --%>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Quantity</div></div>
 		   <div class="col1"> <div class="col1title"> ${qty}</div>    </div>
 	</div>
 	<div class="colOuter"></div>
-	&nbsp;
 
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
@@ -147,7 +146,6 @@ String fDate1 = formatter1.format(date);%>
 	</div>
 	<div class="colOuter"></div>
 	
-	&nbsp;&nbsp;
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Place of Delivery</div></div>
 		<div class="col2full"><div class="col1title">${spPlace}</div> </div>
@@ -157,28 +155,27 @@ String fDate1 = formatter1.format(date);%>
 	<div class="colOuter">
 		
 	</div>
-	&nbsp;&nbsp;
 	
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">Customer Name</div></div>
 	<div class="col2full"><div class="col1title">${rspCustName}</div></div>
 	</div>
 	
-	&nbsp;&nbsp;<div class="colOuter"></div>
+	<div class="colOuter"></div>
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Customer DOB</div></div>
 		<div class="col2full"><div class="col1title">${spCustDOB}</div></div>
 	</div>
 	
-	&nbsp;&nbsp;<div class="colOuter"></div>
+	<div class="colOuter"></div>
 	
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Customer Mobile No.</div></div>
 		   <div class="col2full"><div class="col1title">${rspCustMobileNo}</div></div>
 	</div>
 	
-	&nbsp;&nbsp;<div class="colOuter"></div>
+	<div class="colOuter"></div>
 	
 	<div class="colOuter">
 		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Booked For" name="sp_booked_for_name" type="hidden"id="sp_booked_for_name"></div>

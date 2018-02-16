@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,7 @@ import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpecialCake;
  
 @Controller
+@Scope("session")
 public class SpCakeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SpCakeController.class);
@@ -57,10 +59,10 @@ public class SpCakeController {
 	EventList eventList;
 	List<String> configuredSpCodeList;
 
-	private static int globalIndex = 2;
+	private  int globalIndex = 2;
 	ArrayList<FrMenu> menuList;
 
-	private static int currentMenuId = 0;
+	private  int currentMenuId = 0;
 	SpCakeOrder spCakeOrder = new SpCakeOrder();
 
 	List<SpecialCake> specialCakeList;
@@ -80,7 +82,7 @@ public class SpCakeController {
 		logger.info("/Special Cake order request mapping. index:" + index);
 
 		RestTemplate restTemplate = new RestTemplate();
-
+		String menuTitle="Order Special Cake";
 		try {
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
@@ -89,6 +91,7 @@ public class SpCakeController {
 			currentMenuId = menuList.get(index).getMenuId();
 			System.out.println("MenuList" + currentMenuId);
 			globalIndex = index;
+			 menuTitle=menuList.get(index).getMenuTitle();
 
 			SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "/showSpecialCakeList",
 					SpCakeResponse.class);
@@ -131,6 +134,7 @@ public class SpCakeController {
 			model.addObject("spBookb4", 0);
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
 			model.addObject("isSameDayApplicable", isSameDayApplicable);
+			model.addObject("menuTitle",menuTitle);
 
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
 
@@ -144,6 +148,7 @@ public class SpCakeController {
 			model.addObject("spBookb4", 0);
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
 			model.addObject("url", Constant.SPCAKE_IMAGE_URL);
+			model.addObject("menuTitle",menuTitle);
 
 		}
 

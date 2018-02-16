@@ -21,7 +21,11 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
     	HttpSession session = request.getSession();
 
          String path = request.getRequestURI().substring(request.getContextPath().length());
-
+         System.out.println("path is: "+path);
+       
+ 		/*if(path.startsWith("/pdf")) {
+ 			return true;
+ 		}*/
          if(request.getServletPath().equals("/") || request.getServletPath().equals("/loginProcess") ||request.getServletPath().equals("/logout") ||request.getServletPath().equals("/login")){ //||request.getServletPath().equals("/logout")
         	 System.out.println("Login request");
              return true;

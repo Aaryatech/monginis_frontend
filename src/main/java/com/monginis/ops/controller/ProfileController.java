@@ -49,7 +49,8 @@ public class ProfileController {
 
 	FranchiseSup frSup= rest.postForObject(Constant.URL + "/getFrSupByFrId",
 			map, FranchiseSup.class);
-	
+	System.out.println("Franchisee frSup Rsponse"+frSup.toString());
+
 	model.addObject("frSup", frSup);
 	return model;
 	

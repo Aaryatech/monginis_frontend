@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+  <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,9 +31,24 @@
 	$(".toggle").on("click", function() {
 		$(".marquee").toggleClass("microsoft");
 	});
-</script>
+</script> --%>
+<style>
+.fileUpload1 input.upload1{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 100%;
+    height: 33px;
+}
+</style>
 <!--rightNav-->
-
+<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -123,14 +139,14 @@
 							<div class="profileinput">
 								<div class="editimg">
 									<div class="editpics">
-										<div class="fileUpload">
+										<div class="fileUpload1">
 											<span><i class="fa fa-pencil"></i></span> <input type="file"
-												class="upload"name="fr_image" id="fr_image"/>
+												class="upload1"name="fr_image" id="fr_image"/>
 										</div>
 									</div>
 									<img
-										src="${pageContext.request.contextPath}/resources/images/editimg.jpg"
-										alt="img">
+										src="${frDetails.frImage}"
+										alt="img" id="img">
 								</div>
 							</div>
 						</div>
@@ -153,25 +169,25 @@
 							</div>
 						</div>  
 						 <div class="profile">
-							<div class="profilefildset">User1 Password</div>
+							<div class="profilefildset">Owner Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="User1 Password"
+								<input class="texboxitemcode" placeholder="Owner Password"
 									name="user1_password" type="password"  value="${frSup.pass1}" id="user1_password" 
 									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
 								
 							</div>
 						</div>
 						<div class="profile">
-							<div class="profilefildset">User3 Password</div>
+							<div class="profilefildset">CSP Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="User3 Password"
+								<input class="texboxitemcode" placeholder="CSP Password"
 									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
-									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
+									style="font-size: 10pt; height: 33px; width:120px; background-color:LightGrey;"disabled="disabled">
 								
 							</div>
 							<div class="form-group">
 								<input name="" class="" value="Change Password"
-									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 10pt; height: 33px; width:110px;">
+									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 8pt; height: 33px; width:90px;">
 						</div>	
 						
 						</div>
@@ -225,7 +241,7 @@
 							<div class="form-group">
 						
 								<input name="" class="" value="Change Admin Password"
-									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 10pt; height: 33px; width:143px;">
+									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 8pt; height: 33px; width:143px;">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -234,9 +250,9 @@
 						</div>
 						
                       <div class="profile">
-							<div class="profilefildset">User2 Password</div>
+							<div class="profilefildset">Captain Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="User2 Password"
+								<input class="texboxitemcode" placeholder="Captain Password"
 									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
 									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
 								
@@ -253,7 +269,7 @@
 						 <div class="form-group">
 						
 								<input name="" class="btn btn-info" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:70px; "onclick="return checkAuthority()">
+									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthority()">
 							
 						</div>
 						
@@ -278,7 +294,7 @@
 						 <div class="form-group">
 						
 								<input name="" class="btn btn-info" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 30px; width:70px; "onclick="return checkAuthForPassChange()">
+									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthForPassChange()">
 							
 						</div>
 						
@@ -352,10 +368,14 @@ $(document).ready(function () {
 <script type="text/javascript">
 function showDiv() {
 	   document.getElementById('adminDiv').style.display = "block";
+	   document.getElementById('adminDiv1').style.display = "none";
+
 	   document.getElementById('admin_password').value = "";
 	}
 function showDiv1() {
 	   document.getElementById('adminDiv1').style.display = "block";
+	   document.getElementById('adminDiv').style.display = "none";
+
 	   document.getElementById('admin_password1').value = "";
 
 	}
@@ -496,5 +516,17 @@ function updateAdminPassword() {
 	);
 }
 </script>
+<script>
+ document.getElementById("fr_image").onchange = function () {
+    var reader = new FileReader();
 
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("img").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
 </html>

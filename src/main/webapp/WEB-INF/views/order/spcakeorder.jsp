@@ -119,7 +119,7 @@ select {
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
-<h2 class="pageTitle">Order Special Cake</h2>
+<h2 class="pageTitle">${menuTitle}</h2>
 </div>
  <!--formBox-->
 <div class="ordercake">
@@ -311,7 +311,7 @@ select {
 	
 	         
 	<div class="colOuter">
-		<div class="col1"><div class="col1title">Event</div></div>
+		<div class="col1"><div class="col1title">Message</div></div>
 		<div class="col2"><select name="sp_event" id="sp_event"required>
   
               <c:forEach items="${eventList.getEvent()}" var="eventList">
@@ -390,7 +390,7 @@ select {
 	    <div class="col1"><div class="col1title">Special Instructions</div></div>
 		
 		<div class="col1full" id="marathiDiv">
-		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:200px;height:90px" ></textarea>
+		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:250px;height:60px" ></textarea>
 		</div>
 		
 	    <div class="col1full" id="englishDiv" style="display: none;">
@@ -400,7 +400,7 @@ select {
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
+		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
 		</div><div class="col2"> 
         <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	</div>
@@ -419,9 +419,22 @@ select {
 	
 	
 	<div class="colOuter">
-		<div class="col1"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
-		<div class="col2"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
-		<div class="col3"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required ></div>
+	    <div class="col1"><div class="col1title">Customer Name</div></div>
+		<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
+		
+		
+<%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
+ --%>	</div>
+	<div class="colOuter">
+	<div class="col1"><div class="col1title">DOB</div></div>
+		
+		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
+      </div>
+	<div class="colOuter">
+			<div class="col1"><div class="col1title">Mobile</div></div>
+	
+			<div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required ></div>
+	
 	</div>
 	 <span class="cakename"id="slotsNotAvailable"></span>
 	
@@ -857,7 +870,7 @@ function validate() {
   
         isValid=false;
     }else  if (eventName == "") {
-        alert("Please Enter Event Name");
+        alert("Please Enter Message");
         document.getElementById('event_name').focus();
         
         isValid=false;

@@ -2,8 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,7 +34,7 @@ jQuery(document).ready(function(){
 
 
 </head>
-<body>
+<body> --%>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -44,11 +45,10 @@ jQuery(document).ready(function(){
 
 		<!--topHeader-->
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp">
-			<jsp:param name="frDetails" value="${frDetails}" />
+	<jsp:include page="/WEB-INF/views/include/logo.jsp">
+		<jsp:param name="frDetails" value="${frDetails}" />
 
-		</jsp:include>
-
+	</jsp:include>
 		<!--topHeader-->
 
 		<!--rightContainer-->
