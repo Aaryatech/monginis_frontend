@@ -113,7 +113,8 @@
 
 							<option value="-1">Select Category</option>
 							<c:forEach items="${category}" var="category" varStatus="count">
-								<option value="${category.catId}"><c:out value="${category.catName}"/></option>
+								<option value="${category.catId}"><c:out
+										value="${category.catName}" /></option>
 							</c:forEach>
 
 						</select>
@@ -130,7 +131,8 @@
 
 							<option value="-1">Select Option</option>
 							<option value="1" id="currentStock">Get Current Stock</option>
-							<option value="2" id="monthStock">Get Stock Between Month</option>
+							<option value="2" id="monthStock">Get Stock Between
+								Month</option>
 							<option value="3" id="dateStock">Get Stock Between Dates</option>
 
 						</select>
@@ -202,21 +204,21 @@
 					<div class="col2">
 						<input name="search_stock" class="buttonsaveorder" value="Search"
 							type="button" onclick="searchStock()">
-							
-							<div align="center" id="loader" style="display: none">
 
-					<span>
-						<h4>
-							<font color="#343690">Loading</font>
-						</h4>
-					</span> <span class="l-1"></span> <span class="l-2"></span> <span
-						class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-					<span class="l-6"></span>
-				</div>
+						<div align="center" id="loader" style="display: none">
+
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
 					</div>
-					
-					
-					
+
+
+
 				</div>
 
 
@@ -244,22 +246,23 @@
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
-												<th class="col-md-1">Item Id</th>
-												<th class="col-md-1">Item Name</th>
-												<th class="col-md-1">Reg Op Stock</th>
-												<th class="col-md-1">Sp Op Stock</th>
-												<th class="col-md-1">Reg Pur Qty</th>
-												<th class="col-md-1">Sp Pur Qty</th>
-												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Regular Sell</th>
-												<th class="col-md-1">Sp Sell</th>
-												<th class="col-md-1">Reg Cur Stock</th>
-												<th class="col-md-1">Sp Cur Stock</th>
+												<th>Item Id</th>
+												<th>Item Name</th>
+												<th>Reg Op Stock</th>
+												<th>Sp Op Stock</th>
+												<th>Reg Pur Qty</th>
+												<th>Sp Pur Qty</th>
+												<th>Grn-Gvn Qty</th>
+												<th>Regular Sale</th>
+												<th>Sp Sale</th>
+												<th>Reorder Qty</th>
+												<th>Reg Cur Stock</th>
+												<th>Sp Cur Stock</th>
 
-												<%-- <c:if test="${isMonthCloseApplicable eq true}">
-																<th width="105" align="left">Physical Stock</th>
-																<th width="105" align="left">Stock Difference</th>
-															</c:if> --%>
+												<c:if test="${isMonthCloseApplicable eq true}">
+													<th>Physical Stock</th>
+													<th>Stock Difference</th>
+												</c:if>
 
 											</tr>
 										</thead>
@@ -278,18 +281,20 @@
 									<input name="" class="buttonsaveorder" value="Month End"
 										type="submit">
 								</div>
-						</form>	</div>
+								</div>
+						</form>
 					</div>
-					
 				</div>
+
 			</div>
-
-			<!--rightSidebar-->
-
 		</div>
-		<!--fullGrid-->
+
+		<!--rightSidebar-->
+
 	</div>
-	<!--rightContainer-->
+	<!--fullGrid-->
+</div>
+<!--rightContainer-->
 
 </div>
 <!--wrapper-end-->
@@ -446,12 +451,9 @@
 			function searchStock() {
 				
 				$('#loader').show();
-
-				
 				
 				var isMonthClose= ${isMonthCloseApplicable};
-			
-				
+						
 				var selectedCat = $("#selectCategory").val();
 				
 				var selectedStockOption=$("#selectStock").val();
@@ -463,99 +465,95 @@
 				}, function(data) {
 					$('#loader').hide();
 
-
 					var len = data.length;
 					$('#table_grid td').remove();
-
+								
+					
+				/* 	if(isMonthClose && selectedStockOption == 1){
+					
 				
-					
-					
-					
-					
-					if(isMonthClose && selectedStockOption == 1){
-					
-						
 						document.getElementById('monthEnd').style.display = "block";
 
 						$('#stockTable th').remove();
-						var tr = $('<tr class=bgpink></tr>');
+						/* 		var tr = $('<tr class=bgpink></tr>');
 						
-						tr.append($('<th width=100 align=left>Item Id</th>'));
+						tr.append($('<th width=60 align=left>Item Id</th>'));
 						
-						tr.append($('<th width=100 align=left>Item Name</th>'));
+						tr.append($('<th width=60 align=left>Item Name</th>'));
 						
-						tr.append($('<th width=80 align=left>Regular Opening Stock</th>'));
-						tr.append($('<th width=80 align=left>Special Opening Stock</th>'));
+						tr.append($('<th width=60 align=left>Regular Opening Stock</th>'));
+						tr.append($('<th width=60 align=left>Special Opening Stock</th>'));
 
 						
-						tr.append($('<th width=80 align=left>Reg Purchase Qty</th>'));
-						tr.append($('<th width=80 align=left>Sp Purchase Qty</th>'));
+						tr.append($('<th width=60 align=left>Reg Purchase Qty</th>'));
+						tr.append($('<th width=60 align=left>Sp Purchase Qty</th>'));
 
-						tr.append($('<th width=80 align=left>GRN / GVN Qty</th>'));
-						tr.append($('<th width=80 align=left>Reg Sell</th>'));
-						tr.append($('<th width=80 align=left>Sp Sell</th>'));
-						tr.append($('<th width=80 align=left>Regular Current Stock</th>'));
-						tr.append($('<th width=80 align=left>Special Current Stock</th>'));
-
-						tr.append($('<th width=80 align=left>Physical Stock</th>'));
+						tr.append($('<th width=60 align=left>GRN / GVN Qty</th>'));
+						tr.append($('<th width=60 align=left>Reg Sale</th>'));
+						tr.append($('<th width=60 align=left>Sp Sale</th>'));
 						
-						tr.append($('<th width=80 align=left>Stock Difference</th>'));
+						tr.append($('<th width=60 align=left>Reorder Qty</th>'));
+						tr.append($('<th width=60 align=left>Regular Current Stock</th>'));
+						tr.append($('<th width=60 align=left>Special Current Stock</th>'));
+
+						tr.append($('<th width=60 align=left>Physical Stock</th>'));
+						
+						tr.append($('<th width=60 align=left>Stock Difference</th>'));
 					
-						$('#stockTable').append(tr);
-					}
+						$('#stockTable').append(tr); */
+				//	}
 					
 					
 					$.each(data, function(key, item) {
 
-						var tr = $('<tr></tr>');
-						tr.append($('<td class="col-md-1" ></td>').html(item.itemId));
-						tr.append($('<td class="col-md-1"></td>').html(item.itemName));
-						tr.append($('<td class="col-md-1"></td>').html(item.regOpeningStock));
-						tr.append($('<td class="col-md-1"></td>').html(item.spOpeningStock));
-						tr.append($('<td class="col-md-1"></td>').html(item.regTotalPurchase));
-						tr.append($('<td class="col-md-1"></td>').html(item.spTotalPurchase));
-						tr.append($('<td class="col-md-1"></td>').html(item.regTotalGrnGvn));
+						
+						var regCurrentStock = item.currentRegStock;
+						 var reOrderQty =item.reOrderQty;
+						 
+						 if(regCurrentStock > reOrderQty){
+								var tr = $('<tr ></tr>');
+
+						 }else{
+								var tr = $('<tr class="re-order" ></tr>');
+						 }
+						
+						tr.append($('<td ></td>').html(item.itemId));
+						tr.append($('<td style=width:20px; ></td>').html(item.itemName));
+						tr.append($('<td ></td>').html(item.regOpeningStock));
+						tr.append($('<td ></td>').html(item.spOpeningStock));
+						tr.append($('<td ></td>').html(item.regTotalPurchase));
+						tr.append($('<td ></td>').html(item.spTotalPurchase));
+						tr.append($('<td ></td>').html(item.regTotalGrnGvn));
 						if(item.regTotalSell<0)
 							{
-							tr.append($('<td class="col-md-1"></td>').html(0));
-
-							
+							tr.append($('<td ></td>').html(0));
 							}
 						else
 							{
-							tr.append($('<td class="col-md-1"></td>').html(item.regTotalSell));
-
+							tr.append($('<td></td>').html(item.regTotalSell));
 							}
-						tr.append($('<td class="col-md-1"></td>').html(item.spTotalSell));
-
-					//	var regOpeningBalance = parseFloat(item.regOpeningStock);
-					//	var regTotalPurchase = parseFloat(item.regTotalPurchase);
-					//	var regTotalGrnGvn = parseFloat(item.regTotalGrnGvn);
-					//	var regTotalSell = parseFloat(item.regTotalSell);
-
-					//	var totalStock = openingBalance + totalPurchase;
-					//	var totalConsumption = totalGrnGvn + totalSell;
-
-						var regCurrentStock = item.currentRegStock;
-						if(regCurrentStock<0)
-						{
-						tr.append($('<td></td>').html(0));
-						}
-						else
-							{
-							tr.append($('<td></td>').html(regCurrentStock));
-
+						tr.append($('<td></td>').html(item.spTotalSell));
+			
+					
+						tr.append($('<td  > </td>').html(reOrderQty));
+						
+					 
+						if(regCurrentStock<0){
+						tr.append($('<td > </td>').html(0));
+						}else{
+							tr.append($('<td > </td>').html(regCurrentStock));
 							}
-						tr.append($('<td></td>').html(item.currentSpStock));
-
+						tr.append($('<td > </td>').html(item.currentSpStock));
+					
 						if(isMonthClose && selectedStockOption == 1){
-							tr.append($('<td><input type=number min=0   onkeyup= updateStockDiff('
-									+ item.itemId +','+regCurrentStock+') onchange= updateStockDiff('+ item.itemId + ','+regCurrentStock+')  id= physicalStockQty'+ item.itemId+ ' name=physicalStockQty'+item.itemId+' value = '+ regCurrentStock+ '></td>'));
-							tr.append($('<td  name=stockDiff'+ item.itemId + ' id=stockDiff'+ item.itemId + ' value =' + 0 + '  > 0</td>'));
 							
-						}
-						
-						
+						 	tr.append($('<td > <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
+									+ item.itemId +','+regCurrentStock+') onchange= updateStockDiff('+ item.itemId + ','+regCurrentStock+')  id= physicalStockQty'+ item.itemId+ ' name=physicalStockQty'+item.itemId+' value = '+ regCurrentStock+ '></td>'));
+							
+							tr.append($('<td  name=stockDiff'+ item.itemId + ' id=stockDiff'+ item.itemId + ' value =' + 0 + '  > 0</td>'));					
+						} 
+																		    
+							
 						$('#table_grid tbody').append(tr);
 
 					})

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,9 +36,9 @@ import com.itextpdf.text.log.SysoCounter;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.CustomerBillData;
 import com.monginis.ops.model.CustomerBillItem;
-import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
@@ -96,87 +95,9 @@ public class CustomerBillController {
 	int menuId;
 	private   String itemShowGlobal;
 	
-	int globalFrId;
 	
 	
-	public  String getInvoiceNo() {
-
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		RestTemplate restTemplate = new RestTemplate();
-
-		String settingKey = new String();
-
-		settingKey = ""+globalFrId;
-		map.add("settingKeyList", settingKey);
-
-		FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
-				FrItemStockConfigureList.class);
-
-		int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
-
-		System.out.println("Setting Value Received " + settingValue);
-		int year = Year.now().getValue();
-		String curStrYear = String.valueOf(year);
-		curStrYear = curStrYear.substring(2);
-
-		int preMarchYear = Year.now().getValue() - 1;
-		String preMarchStrYear = String.valueOf(preMarchYear);
-		preMarchStrYear = preMarchStrYear.substring(2);
-
-		System.out.println("Pre MArch year ===" + preMarchStrYear);
-
-		int nextYear = Year.now().getValue() + 1;
-		String nextStrYear = String.valueOf(nextYear);
-		nextStrYear = nextStrYear.substring(2);
-
-		System.out.println("Next  year ===" + nextStrYear);
-
-		int postAprilYear = nextYear + 1;
-		String postAprilStrYear = String.valueOf(postAprilYear);
-		postAprilStrYear = postAprilStrYear.substring(2);
-
-		System.out.println("Post April   year ===" + postAprilStrYear);
-
-		java.util.Date date = new Date();
-		Calendar cale = Calendar.getInstance();
-		cale.setTime(date);
-		int month = cale.get(Calendar.MONTH);
-
-		if (month <= 3) {
-
-			curStrYear = preMarchStrYear + curStrYear;
-			System.out.println("Month <= 3::Cur Str Year " + curStrYear);
-		} else if (month >= 4) {
-
-			curStrYear = curStrYear + nextStrYear;
-			System.out.println("Month >=4::Cur Str Year " + curStrYear);
-		}
-
-		////
-
-		int length = String.valueOf(settingValue).length();
-
-		String invoiceNo = null;
-
-		if (length == 1)
-
-			invoiceNo = curStrYear + "-" + "0000" + settingValue;
-		if (length == 2)
-
-			invoiceNo = curStrYear + "-" + "000" + settingValue;
-
-		if (length == 3)
-
-			invoiceNo = curStrYear + "-" + "00" + settingValue;
-
-		if (length == 4)
-
-			invoiceNo = curStrYear + "-" + "0" + settingValue;
-
-		System.out.println("*** settingValue= " + settingValue);
-		return invoiceNo;
-
-	}
+	
 
 	@RequestMapping(value = "/viewBill", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request, HttpServletResponse response) {
@@ -316,10 +237,18 @@ public class CustomerBillController {
 			items = builder.toString();
 			items = items.substring(1, items.length());
 
+			
+			
 			System.out.println("Item Show List is " + items);
 			itemShowGlobal = items;
 
+			//getAllSubCategories
+			
 			RestTemplate restTemplate = new RestTemplate();
+
+			CategoryList  catergoryList =restTemplate.getForObject(Constant.URL+"/showAllCategory", CategoryList.class);
+			System.out.println("Category List "+catergoryList.toString());
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("itemList", items);
 
@@ -363,7 +292,7 @@ public class CustomerBillController {
 			}
 
 			System.out.println("*********customerBillItemList***********" + customerBillItemList.toString());
-
+			model.addObject("catList", catergoryList.getmCategoryList());
 			model.addObject("itemListResponse", customerBillItemList);
 		} catch (Exception e) {
 			System.out.println("Exception in Display Customer Bill");
@@ -1684,8 +1613,6 @@ case 6:
 			System.out.println("Token "+token);
 
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			
-			 globalFrId=frDetails.getFrId();
 			java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 			SellBillHeader sellBillHeaderRes=new SellBillHeader();
 			try {
@@ -1824,10 +1751,8 @@ case 6:
 				sellBillHeader.setDelStatus(0);
 				sellBillHeader.setUserName(custName);
 				sellBillHeader.setBillDate(dtf.format(localDate));
-				
-				String invNo=getInvoiceNo();
-				
-				sellBillHeader.setInvoiceNo(invNo);// hardcoded
+
+				sellBillHeader.setInvoiceNo("0");// hardcoded
 				sellBillHeader.setPaidAmt(paidAmount);
 				sellBillHeader.setPaymentMode(paymentMode);
 				sellBillHeader.setBillType('R');
@@ -1980,28 +1905,10 @@ case 6:
 				RestTemplate restTemplate = new RestTemplate();
 
 				  sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader, SellBillHeader.class);
-				  
-				  
 
 				System.out.println("info :" + sellBillHeaderRes.toString());
 				if (sellBillHeaderRes!= null) {
 					resetData1();
-					
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					String settingKey = new String();
-					settingKey = ""+globalFrId;
-					map.add("settingKeyList", settingKey);
-					FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue",
-							map, FrItemStockConfigureList.class);
-					System.out.println("SettingKeyList" + settingList.toString());
-					int settingValue=settingList.getFrItemStockConfigure().get(0).getSettingValue();
-					settingValue = settingValue + 1;
-					System.out.println("inside update setting Value "+settingValue);
-					map = new LinkedMultiValueMap<String, Object>();
-					map.add("settingValue", settingValue);
-					map.add("settingKey", ""+globalFrId);
-					Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map,
-							Info.class);
 
 				}  
 			} catch (Exception e) {

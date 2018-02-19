@@ -74,6 +74,7 @@ public class StockController {
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
 			
+			System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
 			runningMonth = frItemStockHeader.getMonth();
 
 		} catch (Exception e) {
@@ -98,9 +99,11 @@ public class StockController {
 
 		System.out.println("Day Of Month is: " + dayOfMonth);
 
-		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth < calCurrentMonth) {
+		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth == calCurrentMonth) {
 
 			isMonthCloseApplicable = true;
+			System.out.println("Day Of Month End ......" );
+
 		}
 
 		try {
@@ -192,6 +195,7 @@ public class StockController {
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
+			map.add("frStockType", frDetails.getStockType());
 			map.add("fromDate", dateFormat.format(firstDay));
 			map.add("toDate", dateFormat.format(todaysDate));
 			map.add("currentMonth", String.valueOf(runningMonth));
@@ -245,9 +249,7 @@ public class StockController {
 	@RequestMapping(value = "/monthEndProcess", method = RequestMethod.POST)
 	public String showCurrentMonthStock(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("in end month");
-
-		ModelAndView model = new ModelAndView("stock/stockdetails");
-
+	
 		PostFrItemStockHeader postFrItemStockHeader = new PostFrItemStockHeader();
 		postFrItemStockHeader.setFrId(frItemStockHeader.getFrId());
 		postFrItemStockHeader.setMonth(runningMonth);
@@ -280,8 +282,8 @@ public class StockController {
 
 			int currentStock = (stockDetails.getCurrentRegStock() + stockDetails.getRegTotalPurchase())
 					- (stockDetails.getRegTotalGrnGvn() + stockDetails.getRegTotalSell());
-			if (currentStock > intPhysicalStock) {
 
+			if (currentStock > intPhysicalStock) {
 				intStockDiff = currentStock - intPhysicalStock;
 			} else {
 				intStockDiff = intPhysicalStock - currentStock;
@@ -309,8 +311,6 @@ public class StockController {
 		return "redirect:/showstockdetail";
 
 	}
-	
-	
-	
+		
 	
 }

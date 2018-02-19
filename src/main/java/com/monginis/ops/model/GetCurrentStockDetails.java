@@ -30,7 +30,16 @@ public class GetCurrentStockDetails {
 	
 	private int currentSpStock;
 	
+	private int reOrderQty;
+
 	
+	public int getReOrderQty() {
+		return reOrderQty;
+	}
+
+	public void setReOrderQty(int reOrderQty) {
+		this.reOrderQty = reOrderQty;
+	}
 
 	public int getId() {
 		return id;
@@ -152,10 +161,7 @@ public class GetCurrentStockDetails {
 				+ spOpeningStock + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
-				+ ", currentSpStock=" + currentSpStock + "]";
+				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + "]";
 	}
-
-	
-	
 
 }
