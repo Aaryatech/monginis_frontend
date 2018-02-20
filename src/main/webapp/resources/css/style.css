@@ -7,6 +7,9 @@
     text-align:left;
 }
 
+.re-order {
+    background: #f4353f !important;
+}
 .edit-radio input[type=radio] {
   position: absolute;
   visibility: hidden;
@@ -429,6 +432,7 @@ width:100px
     overflow: auto;
     height:630px;
 }
+
 }
 
 
