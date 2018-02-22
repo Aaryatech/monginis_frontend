@@ -1,6 +1,5 @@
 package com.monginis.ops.model;
 
-import java.sql.Date;
 
 
 public class GetRepFrDatewiseSellResponse {
@@ -8,17 +7,25 @@ public class GetRepFrDatewiseSellResponse {
 	
 private int sellBillNo;
 	
- 	private Date billDate;
+ 	private String billDate;
 	
  	private int frId;
 	
  	private int month;
- 	
+ 	private String day;
 	private float cash;
 	private float card;
 	private float other;
 	
  	private String frName;
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
 
 	public int getSellBillNo() {
 		return sellBillNo;
@@ -28,11 +35,11 @@ private int sellBillNo;
 		this.sellBillNo = sellBillNo;
 	}
 
-	public Date getBillDate() {
+	public String getBillDate() {
 		return billDate;
 	}
 
-	public void setBillDate(Date billDate) {
+	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
 

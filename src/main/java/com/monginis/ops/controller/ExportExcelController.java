@@ -73,7 +73,7 @@ public class ExportExcelController {
 	 
 	    private XSSFWorkbook createWorkbook() throws IOException {
 	        XSSFWorkbook wb = new XSSFWorkbook();
-	        XSSFSheet sheet = wb.createSheet("Cities to visit");
+	        XSSFSheet sheet = wb.createSheet("Sheet1");
 	 
 	       /* writeHeaders(wb, sheet);
 	        writeHeaders(wb, sheet);

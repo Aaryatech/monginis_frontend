@@ -6,6 +6,8 @@ public class BillWisePurchaseReport {
 	
 	private int billNo;
 	
+	private String invoiceNo;
+	
 	private String billDate;
 	
 	private float taxableAmt;
@@ -21,6 +23,15 @@ public class BillWisePurchaseReport {
 	private float grandTotal;
 	
 	private float roundOff;
+
+	
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
 
 	public int getBillNo() {
 		return billNo;

@@ -2,7 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <!--rightNav-->
@@ -58,7 +62,7 @@
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Item wise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Categorywise- Itemwise Sale Report</h2></div>
 	</div>
 	
 	<div class="colOuter">
@@ -85,26 +89,45 @@
 	
 	<div class="row" id="table" style="display: none">
 								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
+									<div id="faux-table" class="faux-table" aria="hidden">
+											
 										<table id="table_grid" class="main-table">
 											<thead>
 													<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
+									<th style="text-align:center;" class="col-md-1">Sr no.</th>
 									<!-- <th align="center">Bill No</th> -->
-									<th align="center">Item Name</th>
-									<th align="center">Item Id</th>
-									<th align="center">Group Name</th>
-								 	<th align="center">Quantity</th>
-									<th align="center">Amount</th> 
+									<th style="text-align:center;"class="col-md-2">Item Name</th>
+									<th style="text-align:center;"class="col-sm-1">Item Id</th>
+									<th style="text-align:center;"class="col-md-1">Group Name</th>
+								 	<th style="text-align:center;"class="col-md-1">Quantity</th>
+									<th style="text-align:center;"class="col-md-1">Amount</th> 
 								  </tr>
 												</thead>
 												<tbody>
 							</tbody>
 
 						</table>
-					</div>
-				</div>
+				
+							</div></div><div id="table-scroll" class="table-scroll">
+									<div class="table-wrap">
+										<table id="table_grid" class="main-table">
+											<thead>
+													<tr class="bgpink">
+									<th style="text-align:center;" class="col-md-1">Sr no.</th>
+									<!-- <th align="center">Bill No</th> -->
+									<th style="text-align:center;"class="col-md-2">Item Name</th>
+									<th style="text-align:center;"class="col-sm-1">Item Id</th>
+									<th style="text-align:center;"class="col-md-1">Group Name</th>
+								 	<th style="text-align:center;"class="col-md-1">Quantity</th>
+									<th style="text-align:center;"class="col-md-1">Amount</th> 
+								  </tr>
+												</thead>
+												<tbody>
+							</tbody>
+
+						</table>
+					</div></div>
+				
     </div>
     
     
@@ -112,17 +135,19 @@
 
     <div id="menuTable" >
 								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+									<div id="faux-table" class="faux-table" aria="hidden">
+									
+									</div>
 									<div class="table-wrap">
 										<table id="table_menu" class="main-table">
 											<thead>
 												<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
+									<th style="text-align:center;" >Sr no.</th>
 									<!-- <th align="center">Bill No</th> -->
-									<th align="center">Category Name</th>
+									<th  style="text-align:center;">Category Name</th>
 								
-								 	<th align="center">Quantity</th>
-									<th align="center">Amount</th> 
+								 	<th style="text-align:center;">Quantity</th>
+									<th style="text-align:center;">Amount</th> 
 								  </tr>
 												</thead>
 												<tbody>
@@ -135,7 +160,7 @@
 				</div>
 			</div>	
 				
-
+<br>
 <div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -238,12 +263,12 @@
 								  	
 								   
 								  	
-								  	tr.append($('<td></td>').html('<p style="color:blue;"  onclick=itemSellBill('+sellBillData.catId+');>'+sellBillData.catName+'</p>'));
+								  	tr.append($('<td style=text-align:center;></td>').html('<p style="color:blue;"  onclick=itemSellBill('+sellBillData.catId+');>'+sellBillData.catName+'</p>'));
 								  	
-									tr.append($('<td></td>').html(sellBillData.qty));
+									tr.append($('<td style=text-align:right;></td>').html(sellBillData.qty));
 									totalQty=totalQty + sellBillData.qty;
 								  	
-								  	tr.append($('<td></td>').html(sellBillData.amount));
+								  	tr.append($('<td style=text-align:right;></td>').html(sellBillData.amount));
 								  	
 								  	amtTotal=amtTotal + sellBillData.amount;
 								  	
@@ -260,10 +285,10 @@
 							var tr = "<tr>";
 								 var total = "<td colspan='2'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 									+ amtTotal
 									+ "</b></td>";
-								 var totalQty = "<td><b>&nbsp;&nbsp;&nbsp;"
+								 var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
 									+  totalQty
 									+ "</b></td>";
 							
@@ -343,18 +368,18 @@
 										document.getElementById('range').style.display = 'block';
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td></td>').html(key+1));
+								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
 
-								  	tr.append($('<td></td>').html(sellBillData.itemName));
+								  	tr.append($('<td class="col-md-2"></td>').html(sellBillData.itemName));
 								  	
-								  	tr.append($('<td></td>').html(sellBillData.itemId));
+								  	tr.append($('<td style=text-align:center; class="col-sm-1"></td>').html(sellBillData.itemId));
 								  	
-								  	tr.append($('<td></td>').html(sellBillData.catName));
+								  	tr.append($('<td style=text-align:center; class="col-md-1"></td>').html(sellBillData.catName));
 								  	
-									tr.append($('<td></td>').html(sellBillData.qty));
+									tr.append($('<td style=text-align:right; class="col-md-1"></td>').html((sellBillData.qty).toFixed(2)));
 									totalQty=totalQty + sellBillData.qty;
 								  	
-								  	tr.append($('<td></td>').html(sellBillData.amount));
+								  	tr.append($('<td style=text-align:right; class="col-md-1"></td>').html((sellBillData.amount).toFixed(2)));
 								  	
 								  	amtTotal=amtTotal + sellBillData.amount;
 								  	
@@ -371,11 +396,11 @@
 							var tr = "<tr>";
 								 var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ amtTotal
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (amtTotal).toFixed(2)
 									+ "</b></td>";
-								 var totalQty = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  totalQty
+								 var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+  (totalQty).toFixed(2)
 									+ "</b></td>";
 							
 									

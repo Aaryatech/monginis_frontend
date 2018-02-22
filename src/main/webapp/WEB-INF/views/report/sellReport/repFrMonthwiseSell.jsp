@@ -4,9 +4,16 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
-
-<%-- <!DOCTYPE html>
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+.hide-calendar .ui-datepicker-calendar {
+    display: none;
+}
+</style>
+<%-- 
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,20 +54,25 @@ jQuery(document).ready(function(){
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-
-
+ --%>
+<%-- 
 </head>
 <body> --%>
 <!--datepicker-->
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+
 <script>
   $( function() {
-    $( "#todatepicker" ).datepicker({ dateFormat: 'mm-yy' });
+    $( "#todatepicker" ).datepicker({ dateFormat: 'dd-mm-yy' 
+    	
+    
+    });
   } );
   $( function() {
-    $( "#fromdatepicker" ).datepicker({ dateFormat: 'mm-yy' });
+    $( "#fromdatepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
  
-  </script>
+  </script> --%>
 
 
 <c:url var="getMonthwiselReport" value="/getMonthwiselReport" />
@@ -99,7 +111,7 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Month wise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Monthwise Sale Report</h2></div>
 	</div>
 	
 	<div class="colOuter">
@@ -133,20 +145,20 @@ jQuery(document).ready(function(){
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
+					<div id="faux-table" class="faux-table" aria="hidden">
+						<div class="table-wrap">
 						<table id="table_grid" class="main-table">
 							<thead>
 								<tr class="bgpink">
 
-									<th class="col-md-1">Sr.No.</th>
+									<th class="col-md-1"style="text-align:center;">Sr.No.</th>
 
 									<!-- <th class="col-md-1">Bill No</th> -->
-									<th class="col-md-1">Month</th>
-									<th class="col-md-1">Amount</th>
-									<th class="col-md-1">Cash</th>
-								 	<th class="col-md-1">Card</th>
-									<th class="col-md-1">Other</th> 
+									<th class="col-md-1" style="text-align:center;">Month</th>
+									<th class="col-md-1" style="text-align:center;">Amount</th>
+									<th class="col-md-1" style="text-align:center;">Cash</th>
+								 	<th class="col-md-1" style="text-align:center;">Card</th>
+									<!-- <th class="col-md-1" style="text-align:center;">Other</th>  -->
 								  </tr>
 								</thead>
 								
@@ -156,6 +168,29 @@ jQuery(document).ready(function(){
 								</table>
 					
 				</div>
+					</div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+									<th class="col-md-1"style="text-align:center;">Sr.No.</th>
+
+									<!-- <th class="col-md-1">Bill No</th> -->
+									<th class="col-md-1"style="text-align:center;">Month</th>
+									<th class="col-md-1" style="text-align:center;">Amount</th>
+									<th class="col-md-1" style="text-align:center;">Cash</th>
+								 	<th class="col-md-1" style="text-align:center;">Card</th>
+									<!-- <th class="col-md-1" style="text-align:center;">Other</th>  -->
+								  </tr>
+								</thead>
+								
+								 <tbody >
+								 </tbody>
+								  
+								</table>
+					
+				</div>	</div><br>
 				 <div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -164,7 +199,7 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
+		
 		<!--table end-->
 		 
 		</div>	
@@ -258,21 +293,21 @@ jQuery(document).ready(function(){
 								    
 								    var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-							 tr.append($('<td class="col-md-1"></td>').html(monthNames[monthNumber]));
+							 tr.append($('<td class="col-md-1"style="text-align:center;"></td>').html(monthNames[monthNumber]));
 								  	
 								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td class="col-md-1"></td>').html(amt));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(amt));
 								  	
 								  	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 									
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.cash));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(sellBillData.cash));
 								  	cashTotal=cashTotal + sellBillData.cash;
 
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.card));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(sellBillData.card));
 								  	cardTotal=cardTotal + sellBillData.card;
 								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.other));
-								  	otherTotal=otherTotal + sellBillData.other;
+								 /*  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(sellBillData.other));
+								  	otherTotal=otherTotal + sellBillData.other; */
 
 								  	
 
@@ -287,18 +322,18 @@ jQuery(document).ready(function(){
 							var tr = "<tr>";
 								 var total = "<td colspan='2'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 									+ amtTotal
 									+ "</b></td>";
-								 var cash = "<td><b>&nbsp;&nbsp;&nbsp;"
+								 var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
 									+  cashTotal
 									+ "</b></td>";
-								var card = "<td><b>&nbsp;&nbsp;&nbsp;"
+								var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
 									+ cardTotal
 									+ "</b></td>";
-								var other = "<td><b>&nbsp;&nbsp;&nbsp;"
+							/* 	var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
 									+ otherTotal
-									+ "</b></td>"; 
+									+ "</b></td>";  */
 									
 								
 								var trclosed = "</tr>";
@@ -314,8 +349,8 @@ jQuery(document).ready(function(){
 									.append(cash);
 								 $('#table_grid tbody')
 								.append(card);
-								$('#table_grid tbody')
-								.append(other); 
+							/* 	$('#table_grid tbody')
+								.append(other);  */
 								$('#table_grid tbody')
 								.append(trclosed); 
 								 
@@ -576,5 +611,65 @@ function genPdf()
 	}
 
 </script>
+<script>
+
+$(document).ready(function() {
+   $('#fromdatepicker').datepicker({
+     changeMonth: true,
+     changeYear: true,
+     dateFormat: 'mm-yy',
+       
+     
+     onClose: function() {
+        var iMonth = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+        var iYear = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+     },
+       
+     beforeShow: function() {
+        $('#ui-datepicker-div').addClass('hide-calendar');
+
+    	 
+      /*  if ((selDate = $(this).val()).length > 0) 
+       {
+          iYear = selDate.substring(selDate.length - 4, selDate.length);
+          iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+          $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+           $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+       } */
+    }
+  });
+});
+</script>
+
+<script>
+
+$(document).ready(function() {
+   $('#todatepicker').datepicker({
+     changeMonth: true,
+     changeYear: true,
+     dateFormat: 'mm-yy',
+       
+     onClose: function() {
+        var iMonth = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+        var iYear = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+     },
+       
+     beforeShow: function() {
+        $('#ui-datepicker-div').addClass('hide-calendar');
+
+     /*   if ((selDate = $(this).val()).length > 0) 
+       {
+          iYear = selDate.substring(selDate.length - 4, selDate.length);
+          iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+          $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+          $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+       } */
+    }
+  });
+});
+</script>
+
 </body>
 </html>

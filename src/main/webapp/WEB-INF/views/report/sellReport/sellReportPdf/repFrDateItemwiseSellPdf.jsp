@@ -29,17 +29,18 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-
-	<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
+<h4 align="center">Datewise-Itemwise Sale Report</h4>
+<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+	<table width="100%" border="1" cellspacing="0"
+														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
-									<th align="center">Bill Date</th>
-									<th align="center">Item Name</th>
-									<th align="center">Group Name</th>
-								 	<th align="center">Quantity</th>
-									<th align="center">Amount</th> 
+									<th style="text-align:center;">Sr no.</th>
+									<th style="text-align:center;">Bill Date</th>
+									<th style="text-align:center;">Item Name</th>
+									<th style="text-align:center;">Group Name</th>
+								 	<th style="text-align:center;">Quantity</th>
+									<th style="text-align:center;">Amount</th> 
 								  </tr>
 								</thead>
 								 <tbody >
@@ -47,14 +48,14 @@ th {
 								<c:set var="qty"  value="${0 }"/>
 									  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
-													<td align="center"><c:out value="${count.index+1}" /></td>
+													<td ><c:out value="${count.index+1}" /></td>
 													<td><c:out value="${reportList.billDate}" /></td>
 													<td><c:out value="${reportList.itemName}" /></td>
 													
-													<td><c:out value="${reportList.catName}" /></td>
-													<td><c:out value="${reportList.qty}" /></td>
+													<td style="text-align:center;"> <c:out value="${reportList.catName}" /></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.qty}" /></td>
 													<c:set var="qty"  value="${qty + reportList.qty }"/>
-													<td><fmt:formatNumber type = "number"  maxFractionDigits = "2" value="${reportList.amount}" /></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.amount}" /></td>
 													 <c:set var="totalAmount" value="${totalAmount + reportList.amount}"/>
 													 
 													
@@ -63,8 +64,8 @@ th {
 										</c:forEach>
 								  <tr>
 								  <td colspan='4'><b>Total</b></td>
-								  <td><b><c:out value="${qty}" /></b></td>
-								     <td><b><fmt:formatNumber type = "number"  maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${qty}" /></b></td>
+								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
 								     
 								     <!--  <td><b>Total</b></td> -->
 								  </tr>

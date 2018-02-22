@@ -1,6 +1,6 @@
 package com.monginis.ops.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class GetRepFrItemwiseSellResponse {
 
@@ -13,7 +13,7 @@ private int sellBillNo;
 	
 	private int itemId;
 	
-	private Date billDate;
+	private String billDate;
 	
 	private String itemName;
 	
@@ -97,11 +97,11 @@ private int sellBillNo;
 		this.amount = amount;
 	}
 
-	public Date getBillDate() {
+	public String getBillDate() {
 		return billDate;
 	}
 
-	public void setBillDate(Date billDate) {
+	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
 

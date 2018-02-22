@@ -4,7 +4,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 
 <%-- <!DOCTYPE html>
 <html>
@@ -100,12 +104,13 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Date & Item wise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Datewise-Itemwise Sale Report</h2></div>
 	</div>
+	<br>
+<div class="row">
 	
-	<div class="colOuter">
-		<div align="center" >
-		<div class="col1"><b>Group </b><select id="category" class="form-control chosen" placeholder="Select Category"  name="category" tabindex="6"    >
+	<div class="col-sm-1"><div class="pull-left"><b>Group</b></div></div>
+		<div class="col-md-3"><select id="category" class="form-control chosen"  style="width: 230px" placeholder="Select Category"  name="category" tabindex="4"    >
 		<option value="-1">Select Option</option>
 								
 											
@@ -116,17 +121,19 @@ jQuery(document).ready(function(){
 
 							</select>
 							</div>
-		<div class="col2"><div class="col2title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="30" style="height:35px;" >
-		</div></div>
-		<div class="col3"><div class="col3title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="30" style="height:35px;">
+		<div class="col-sm-1"><div class="pull-left"><b>From</b></div></div>
+	    <div class="col-md-3">
+		<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" type="text" style="width: 230px; text-align:left;" size="30"  class="form-control">
+		</div>
+			<div class="col-sm-1"><div class="pull-left"><b>TO</b></div></div>
+			  <div class="col-md-3">
+		<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" size="30" style="width: 230px;  text-align:left;"  class="form-control">
 		</div></div>
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 		
-	</div>
- 
-	
+	<!-- </div>
+ </div> -->
+	<br>
  <!-- 	<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
@@ -134,16 +141,16 @@ jQuery(document).ready(function(){
 		 
 		<br>
     </div> -->
-	</div>
+	<!-- </div> -->
 	<div class="row">
 		<div align="center"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
 <%-- 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
  --%>		 	<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
-		 
+		
+    </div></div> 
 		<br> 
-    </div></div>
 	<%-- <div class="row">
 	
 	<div class="colOuter">
@@ -197,13 +204,13 @@ jQuery(document).ready(function(){
 							<thead>
 								<tr class="bgpink">
 
-									<th class="col-md-1">Sr.No.</th>
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th>
 									<!-- <th class="col-md-1">Bill No</th> -->
-									<th class="col-md-1">Bill Date</th>
-									<th class="col-md-1">Item Name</th>
-									<th class="col-md-1">Group Name</th>
-								 	<th class="col-md-1">Quantity</th>
-									<th class="col-md-1">Amount</th> 
+									<th class="col-md-1" style="text-align:center;">Bill Date</th>
+									<th class="col-md-1" style="text-align:center;">Item Name</th>
+									<th class="col-md-1" style="text-align:center;">Group Name</th>
+								 	<th class="col-md-1" style="text-align:center;">Quantity</th>
+									<th class="col-md-1" style="text-align:center;">Amount</th> 
 								  </tr>
 								</thead>
 								
@@ -213,6 +220,9 @@ jQuery(document).ready(function(){
 								</table>
 						 
 				</div>
+				</div>
+		<!--table end-->
+		<br>
 				 <div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -221,8 +231,7 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
-		<!--table end-->
+			
 		 
 		</div>	
     </div>
@@ -305,12 +314,12 @@ jQuery(document).ready(function(){
 
 								  	tr.append($('<td class ="col-md-1"></td>').html(sellBillData.itemName));
 								  									  	
-								  	tr.append($('<td class ="col-md-1"></td>').html(sellBillData.catName));
+								  	tr.append($('<td class ="col-md-1" style="text-align:center;"></td>').html(sellBillData.catName));
 								  	
-									tr.append($('<td class ="col-md-1"></td>').html(sellBillData.qty));
+									tr.append($('<td class ="col-md-1" style="text-align:right;"></td>').html((sellBillData.qty).toFixed(2)));
 									totalQty=totalQty + sellBillData.qty;
 								  	
-								  	tr.append($('<td class ="col-md-1"></td>').html(sellBillData.amount));
+								  	tr.append($('<td class ="col-md-1" style="text-align:right;"></td>').html((sellBillData.amount).toFixed(2)));
 								  	
 								  	amtTotal=amtTotal + sellBillData.amount;
 								  	
@@ -327,11 +336,11 @@ jQuery(document).ready(function(){
 							var tr = "<tr>";
 								 var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ amtTotal
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (amtTotal).toFixed(2)
 									+ "</b></td>";
-								 var totalQty = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  totalQty
+								 var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+  (totalQty).toFixed(2)
 									+ "</b></td>";
 							
 									

@@ -4,7 +4,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 		
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 
 <%-- <!DOCTYPE html>
 <html>
@@ -96,7 +100,7 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">BillWise Purchase Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Billwise Purchase Report</h2></div>
 	</div>
 	
 	<div class="row">
@@ -128,23 +132,46 @@ jQuery(document).ready(function(){
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+					<div id="faux-table" class="faux-table" aria="hidden">
+								<table id="table_grid" class="main-table"  border="1"  >
 							<thead>
 								<tr class="bgpink">
 									
-									<th class="col-md-1">Sr.No.</th>
-									<th class="col-md-1">Party Name</th>
-									<th class="col-md-1">GSTIN</th>
-									<th class="col-md-1">Bill No</th>
-									<th class="col-md-1">Bill Date</th>
-									<th class="col-md-1">Taxable Amt</th>
+									<th class="col-sm-1">Sr.No.</th>
+									<!-- <th class="col-md-1">Party Name</th> -->
+<!-- 									<th class="col-md-1">GSTIN</th>
+ -->									<th class="col-sm-1">Invoice No</th>
+									<th class="col-sm-2">Bill Date</th>
+									<th class="col-md-2">Taxable Amt</th>
 									<th class="col-md-1">IGST Amt</th>
 									<th class="col-md-1">CGST Amt</th>
 									<th class="col-md-1">SGST Amt</th>
 									<th class="col-md-1">R.off</th>
-									<th class="col-md-1">BILL Amount</th>
+									<th class="col-md-2">Bill Amount</th>
+								  </tr>
+								
+								 </thead>
+							<tbody>
+								 
+								  
+								</table>
+					</div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table"  border="1"  >
+							<thead>
+								<tr class="bgpink">
+									
+									<th class="col-sm-1">Sr.No.</th>
+									<!-- <th class="col-md-1">Party Name</th> -->
+<!-- 									<th class="col-md-1">GSTIN</th>
+ -->									<th class="col-sm-1">Invoice No</th>
+									<th class="col-sm-2">Bill Date</th>
+									<th class="col-md-2">Taxable Amt</th>
+									<th class="col-md-1">IGST Amt</th>
+									<th class="col-md-1">CGST Amt</th>
+									<th class="col-md-1">SGST Amt</th>
+									<th class="col-md-1">R.off</th>
+									<th class="col-md-2">Bill Amount</th>
 								  </tr>
 								
 								 </thead>
@@ -154,7 +181,10 @@ jQuery(document).ready(function(){
 								</table>
 						
 				</div>
-					<div class="form-group" style="display: none;" id="range">
+					
+			</div>
+		<!--table end--><br>
+		 <div class="form-group" style="display: none;" id="range">
 								 
 											 
 											 
@@ -162,9 +192,6 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
-		<!--table end-->
-		 
 		</div>	
     </div>
 
@@ -232,25 +259,25 @@ jQuery(document).ready(function(){
 
 							  
 								tr.append($('<td class="col-md-1"></td>').html(key+1));
-							  	tr.append($('<td class="col-md-1" ></td>').html(partyname));
+							  /* 	tr.append($('<td class="col-md-1" ></td>').html(partyname));
+ */
+/* 							  	tr.append($('<td class="col-md-1"></td>').html(gstNo));
+ */
+							  	tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.invoiceNo));
 
-							  	tr.append($('<td class="col-md-1"></td>').html(gstNo));
+							  	tr.append($('<td class="col-md-2"></td>').html(billWisePurchaseData.billDate));
 
-							  	tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.billNo));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.taxableAmt).toFixed(2)));
 
-							  	tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.billDate));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.igstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.taxableAmt));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.cgstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.igstRs));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.sgstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.cgstRs));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.roundOff).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.sgstRs));
-
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.roundOff));
-
-								tr.append($('<td class="col-md-1"></td>').html(billWisePurchaseData.grandTotal));
+								tr.append($('<td class="col-md-1"style="text-align:right"></td>').html((billWisePurchaseData.grandTotal).toFixed(2)));
 
 								
 								$('#table_grid tbody').append(tr);

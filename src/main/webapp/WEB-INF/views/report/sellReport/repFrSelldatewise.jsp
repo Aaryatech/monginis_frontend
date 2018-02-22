@@ -4,11 +4,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
 
-
- 
-
-
+</style>
 </head>
 <body>
 <!--datepicker-->
@@ -59,7 +60,7 @@
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Date wise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Datewise Sale Report</h2></div>
 	</div>
 	
 	<div class="colOuter">
@@ -92,26 +93,48 @@
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+					<div id="faux-table" class="faux-table" aria="hidden">
+						<div class="table-wrap">
+						<table id="table_grid" class="main-table" >
 							<thead>
 								<tr class="bgpink">
 
-									<th class="col-md-1">Sr.No.</th>
-									<!-- <th class="col-md-1">Bill No</th> -->
-									<th class="col-md-1">Date</th>
-									<th class="col-md-1">Amount</th>
-									<th class="col-md-1">Cash</th>
-								 	<th class="col-md-1">Card</th>
-									<th class="col-md-1">Other</th> 
+									<th class="col-md-1"style="text-align:center;">Sr.No.</th>
+								<!--       <th class="col-md-1" style="text-align:center;">Bill No</th>  -->
+									<th class="col-md-1"style="text-align:center;">Day</th>
+									<th class="col-md-1"style="text-align:center;">Date</th>
+									<th class="col-md-1"style="text-align:center;">Amount</th>
+									<th class="col-md-1"style="text-align:center;">Cash</th>
+								 	<th class="col-md-1"style="text-align:center;">Card</th>
+								 	<th class="col-md-1"style="text-align:center;">Other</th> 
 								  </tr>
 								</thead>
 								
 								 <tbody >
 								 </tbody>
 								  
-								</table>
+								</table></div>
+				</div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table" >
+							<thead>
+								<tr class="bgpink">
+
+									<th class="col-md-1"style="text-align:center;">Sr.No.</th>
+									<!--  <th class="col-md-1"style="text-align:center;">Bill No</th> -->
+									<th class="col-md-1"style="text-align:center;">Day</th>
+									<th class="col-md-1"style="text-align:center;">Date</th>
+									<th class="col-md-1"style="text-align:center;">Amount</th>
+									<th class="col-md-1"style="text-align:center;">Cash</th>
+								 	<th class="col-md-1"style="text-align:center;">Card</th>
+								 <th class="col-md-1"style="text-align:center;">Other</th>
+								  </tr>
+								</thead>
+								
+								 <tbody >
+								 </tbody>
+								  
+								</table></div><br>
 								<div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -123,7 +146,7 @@
 						<div align="center" id="showchart" style="display: none">
 		    
 		    
-		</div>
+		
 				</div>
 			</div>
 		<!--table end-->
@@ -210,23 +233,25 @@
 										document.getElementById('range').style.display = 'block';
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
+								  	tr.append($('<td class="col-md-1" style="text-align:left;"></td>').html(key+1));
 
+									/* tr.append($('<td class="col-md-1"></td>').html(sellBillData.billNo)); */
+									tr.append($('<td class="col-md-1"></td>').html(sellBillData.day));
 								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.billDate));
 								  	
 								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td class="col-md-1"></td>').html(amt));
+								  	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((amt).toFixed(2)));
 								  	
 								  	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 									
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.cash));
+								  	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((sellBillData.cash).toFixed(2)));
 								  	cashTotal=cashTotal + sellBillData.cash;
 
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.card));
+								  	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((sellBillData.card).toFixed(2)));
 								  	cardTotal=cardTotal + sellBillData.card;
 								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.other));
-								  	otherTotal=otherTotal + sellBillData.other;
+								   	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((sellBillData.other).toFixed(2)));
+								  	otherTotal=otherTotal + sellBillData.other; 
 
 								  	
 
@@ -238,19 +263,19 @@
 												})
 												
 							var tr = "<tr>";
-								 var total = "<td colspan='2'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								 var total = "<td colspan='3'style=text-align:left;>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ amtTotal
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (amtTotal).toFixed(2);
 									+ "</b></td>";
-								 var cash = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  cashTotal
+								 var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+  (cashTotal).toFixed(2);
 									+ "</b></td>";
-								var card = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ cardTotal
+								var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+ (cardTotal).toFixed(2);
 									+ "</b></td>";
-								var other = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ otherTotal
+								var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+ (otherTotal).toFixed(2);
 									+ "</b></td>"; 
 									
 								
@@ -305,7 +330,6 @@
 	<script type="text/javascript">
 	 
 function showChart(){
-		
 	$("#PieChart_div").empty();
 	$("#chart_div").empty();
 		document.getElementById('chart').style.display = "block";
@@ -317,7 +341,8 @@ function showChart(){
 			var isValid = validate();
 			
 			if (isValid) {
-				  document.getElementById('btn_pdf').style.display = "block";
+				 // document.getElementById('btn_pdf').style.display = "block";
+				  
 			$.getJSON('${getDatewiselReport}',{
 				
 								fromDate : fromDate,

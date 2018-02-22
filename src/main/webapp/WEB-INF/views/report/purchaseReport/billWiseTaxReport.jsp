@@ -54,7 +54,7 @@
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">BillWise Tax Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Purchase Billwise Tax (Input) Report</h2></div>
 	</div>
 	
 	<div class="row">
