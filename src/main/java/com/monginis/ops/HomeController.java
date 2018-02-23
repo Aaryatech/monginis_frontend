@@ -475,9 +475,7 @@ public class HomeController {
 		  response.setHeader("Cache-Control", "no-cache");
 	        response.setHeader("Pragma", "no-cache");
 	       response.setDateHeader("Expires", -1);
-        System.out.println("session Data befor "+session.getAttribute("frDetails").toString());
-        
-        System.out.println("session ID before ="+session.getId());
+   
                 session.removeAttribute("frId");
 
         session.removeAttribute("frDetails");
