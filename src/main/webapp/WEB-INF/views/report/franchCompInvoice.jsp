@@ -86,11 +86,18 @@
           <tr>
             <td rowspan="3">&nbsp;</td>
             <td colspan="2" align="right"><span class="style5"><strong>Total :</strong></span></td>
-            <td align="right"><span class="style5"><strong>${billList[0].bill_amount}</strong></span></td>
+            
+            
+            <td align="right"><span class="style5"><strong>${billList[0].discountAmt}</strong></span></td>
+          </tr>
+          <tr>
+           <td colspan="2" align="right"><span class="style5"><strong>Discount ${billList[0].discountPer}% :</strong></span></td>
+           <td colspan="2" align="right"><span class="style5"><strong>${billList[0].intDiscAmt}</strong></span></td>
+         
           </tr>
           <tr>
             <td colspan="2" align="right"><span class="style7">Bill Total:</span></td>
-            <td align="right"><span class="style7">${billList[0].bill_amount}</span></td>
+            <td align="right"><span class="style7">${billList[0].intBillAmt}</span></td>
           </tr>
         </tbody>
       </table></td>
@@ -103,7 +110,7 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="7" >
   
     <tr>
-      <td align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p class="style8">Thank You, VIsit Again !!! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E. &amp; O.E.</p>        </td>
+      <td align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p class="style8">Thank You, Visit Again !!! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E. &amp; O.E.</p>        </td>
     </tr>
     <tr>
       <td style="border-top:1px solid #E7E7E7; padding:5px 7px;">We declare that this invoice shows the actual price of the goods<br />
