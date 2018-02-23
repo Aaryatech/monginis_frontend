@@ -36,7 +36,7 @@ private float discountPer;
 
 private float discountAmt;
 
-
+ 
 private int intBillAmt;
 
 private int intDiscAmt;
