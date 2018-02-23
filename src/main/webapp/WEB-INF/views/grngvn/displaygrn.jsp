@@ -49,22 +49,21 @@
 					
 					<div class="colOuter"><!-- copy div kalpesh -->
 					
-							<div class="calender-title">From</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
-								value="${cDate}" name="from_Date" type="text">
+							<div class="calender-title"></div>
+						<div class="col-md-2">GRN Date -<b> ${grnDate}</b>
+							
 						</div>
 					
-							<div class="calender-title">TO</div>
+							<%-- <div class="calender-title">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
 						</div>
-						
-						<div class="col-md-1">
+						 --%>
+						<!-- <div class="col-md-1">
 						<button type="button" class="btn  buttonsaveorder"  onclick="searchGRN()">Search</button>
 						</div>
-														
+									 -->					
 						</div>
 
 
@@ -84,8 +83,7 @@
 							<thead>
 								<tr class="bgpink">
 
-																<th class="col-md-1">Bill No</th>
-																<th class="col-md-1">Date</th>
+																<th class="col-md-1">Invoice No</th>
 																<th class="col-md-2">Item Name</th>
 																<th class="col-md-1">Rate</th>
 																<th class="col-md-1">Quantity</th>
@@ -107,8 +105,7 @@
 															<c:forEach items="${grnList}" var="grnList"
 																varStatus="count">
 																<tr>
-																	<td class="col-md-1"><c:out value="${grnList.billNo}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.grnGvnDate}" /></td>
+																	<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
 																	<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
 																	<td class="col-md-1"><c:out value="${grnList.baseRate}" /></td>
 																	<td class="col-md-1"><c:out value="${grnList.grnGvnQty}" /></td>
@@ -274,7 +271,6 @@
 								
 
 						tr.append($('<td class="col-md-1"></td>').html(grndata.billNo));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnDate));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.itemName));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.baseRate));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnQty));

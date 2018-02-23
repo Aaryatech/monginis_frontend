@@ -72,7 +72,7 @@
 							<table id="table_grid" class="main-table">
 								<thead>
 									<tr class="bgpink">
-										<th class="col-md-1">Bill No.</th>
+										<th class="col-md-1">Invoice No</th>
 										<th class="col-md-3">Name</th>
 										<th class="col-md-2">Type</th>
 										<th class="col-md-1">QTY</th>
@@ -102,7 +102,7 @@
 
 											<%-- 	<td>${count.index+1}</td> --%>
 											<td class="col-md-1"><c:out
-													value="${grnConfList.billNo}"></c:out></td>
+													value="${grnConfList.invoiceNo}"></c:out></td>
 											<td class="col-md-3"><c:out
 													value="${grnConfList.itemName}"></c:out></td>
 											<c:choose>
@@ -150,14 +150,13 @@
 
 											<td class="col-md-1"><input type="text"
 												name="grnqtyauto${grnConfList.itemId}"
-												value="${grnConfList.autoGrnQty}"
-												id="grnqtyauto${grnConfList.itemId}" size="3"
-												onchange="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+												value="${grnConfList.autoGrnQty}" 
+												id='grnqtyauto${grnConfList.itemId}' size="3" readonly
+												onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer})" />
 
 
 											</td>
-
 
 											<td class="col-md-1" id="tax_per${grnConfList.itemId}"><c:out
 													value="${grnConfList.taxPer}"></c:out></td>
@@ -184,8 +183,8 @@
 
 											<td class="col-md-1"><select
 												name="grn_remark${grnConfList.itemId}" style="width: 200px"
-												id="grn_remark${grnConfList.itemId}" class="form-control">
-													<option selected value="selectRemark">Select Remark</option>
+												id="grn_remark${grnConfList.itemId}" class="form-control" onchange="changeQty(${grnConfList.itemId},${grnConfList.autoGrnQty})">
+													<option selected value="0">Select Remark</option>
 													<c:forEach items="${remarkList}" var="remarkList">
 																${remarkList.remark}
 																<option value="${remarkList.remark}">${remarkList.remark}</option>
@@ -231,12 +230,6 @@
 			<!--table end-->
 
 
-
-
-
-
-
-
 		</div>
 		<!--rightSidebar-->
 
@@ -255,7 +248,7 @@
 <script type="text/javascript">
 	
 	
-	 function showEdit(id,itemId,autoGrnQty) {
+	/*  function showEdit(id,itemId,autoGrnQty) {
 		
 		 var x=$("#is_edit"+itemId).val();
 		 
@@ -268,11 +261,29 @@
 			{
 			$("#grnqtyauto"+itemId).html(autoGrnQty);
 
-			 $("#grnqtyauto"+itemId).setAttr("readonly"); 
+			 $("#grnqtyauto" +itemId).setAttr("readonly"); 
 			// document.getElementById("grnqtyauto"+itemId).prop="disabled"; 
 			
 			}
+	} */
+	</script>
+	
+	<script type="text/javascript">
+	
+	function changeQty(itemId,autoQty){
+		//alert("HIII "+ itemId);
+		
+		var remark = document.getElementById("grn_remark"+itemId).value;
+	 //	alert(remark);
+	 	if(remark==0){
+	 		alert("In remark ==0");
+			    document.getElementById("grnqtyauto"+itemId).value=autoQty;
+	 	}else{
+			 $("#grnqtyauto"+itemId).removeAttr("readonly"); 
+	 	}
+		 
 	}
+	
 	</script>
 
 <script type="text/javascript">
@@ -460,7 +471,7 @@ function getGrnData(id){
   clonedElement2.id = "";
   fauxTable.appendChild(clonedElement);
   fauxTable.appendChild(clonedElement2);
-})();
+})();}
 
 
 	</script>

@@ -49,7 +49,7 @@
 				<input type="hidden" name="mod_ser" id="mod_ser"
 					value="search_result">
 
-				<div class="colOuter">
+				<%-- <div class="colOuter">
 					<!-- copy div kalpesh -->
 
 					<div class="calender-title">From</div>
@@ -69,7 +69,7 @@
 							onclick="searchGVN()">Search</button>
 					</div>
 
-				</div>
+				</div> --%>
 
 				<div class="clearfix"></div>
 
@@ -80,7 +80,7 @@
 						<table id="table_grid" class="main-table">
 							<thead>
 								<tr class="bgpink">
-<th class="col-md-1">Bill No</th>
+<th class="col-md-1">Invoice No</th>
 <th class="col-md-1">Date</th>
 <th class="col-md-2">Name</th>
 <th class="col-md-1">Rate</th>
@@ -103,7 +103,7 @@
 									<tr>
 
 
-										<td class="col-md-1"><c:out value="${gvnList.billNo}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.invoiceNo}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.grnGvnDate}" /></td>
 										<td class="col-md-2"><c:out value="${gvnList.itemName}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.baseRate}" /></td>

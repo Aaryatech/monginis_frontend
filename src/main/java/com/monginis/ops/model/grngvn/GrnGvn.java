@@ -140,6 +140,8 @@ public class GrnGvn {
 
 	private Date refInvoiceDate;
 	
+	int billDetailNo;
+	String frGrngvnSrno;
 	
 	
 
@@ -568,6 +570,25 @@ public class GrnGvn {
 	}
 
 
+	public int getBillDetailNo() {
+		return billDetailNo;
+	}
+
+
+	public void setBillDetailNo(int billDetailNo) {
+		this.billDetailNo = billDetailNo;
+	}
+
+
+	public String getFrGrngvnSrno() {
+		return frGrngvnSrno;
+	}
+
+
+	public void setFrGrngvnSrno(String frGrngvnSrno) {
+		this.frGrngvnSrno = frGrngvnSrno;
+	}
+
 	@Override
 	public String toString() {
 		return "GrnGvn [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo + ", frId=" + frId
@@ -584,10 +605,9 @@ public class GrnGvn {
 				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt="
 				+ taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt
 				+ ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
-				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + "]";
+				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + ", billDetailNo=" + billDetailNo
+				+ ", frGrngvnSrno=" + frGrngvnSrno + "]";
 	}
 
-
-	
 
 }

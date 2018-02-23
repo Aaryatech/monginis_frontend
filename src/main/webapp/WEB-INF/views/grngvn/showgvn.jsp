@@ -4,9 +4,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
+<style type="text/css">
+label::before {
+    width: 0px;
+    height: 0px;
+    border: 0px;
+    }
+
+
+</style>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
+<c:url var="getViewGvnOption" value="/getViewGvnOption" />
 
 <div class="sidebarOuter"></div>
 
@@ -40,11 +51,40 @@
 			<!-- Place Actual content of page inside this div -->
 			<div class="sidebarright">
 
-
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-2">
 						<h2 class="pageTitle">Apply GVN</h2>
 					</div>
+
+
+					<div class="col-md-3">
+						<br> <select name="view_opt" id="view_opt" class="form-control"
+							style="width: 250px; background-color: white; height: 40px" onchange="showDate()">
+							<option value="0">--Select BILL--</option>
+
+							<option value="1">--Select Date--</option>
+
+						</select>
+					</div>
+
+					<br>
+
+
+					<div class="col-md-2">
+						<input id="datepicker" class="texboxitemcode texboxcal" value="0" class="form-control"
+							name="bill_date" type="text" style="display: none;">
+					</div>
+
+
+					<div class="col-md-2">
+
+						<button type="button" class="buttonsaveorder"
+							onclick="getViewOption()" style="width: 100px; height: 40px">Search
+							</button>
+						<!--<button type="button" class="btn">Cancel</button>-->
+
+					</div>
+
 				</div>
 
 				<br />
@@ -57,50 +97,58 @@
 							name="grn" id="grn" method="get">
 
 							<div class="colOuter">
-<div class="col-md-2">
-					<h4>Select Bill </h4>
-				</div>
+								<div class="col-md-2">
+									<h5>Select Bill</h5>
+								</div>
 
 								<div class="col-md-3">
-									<select name="bill_no" id="bill_no"  style="width: 250px; background-color: white; height: 40px" >
-										<option value="0">--Select BILL--</option>
+									<select name="bill_no" id="bill_no" class="form-control"
+										style="width: 250px; background-color: white; height: 40px">
+										<option value="0">-- BILL NO--</option>
 
 										<c:forEach items="${frBillList}" var="frBillList">
+											<c:choose>
 
+												<c:when test="${selctedBillNo == frBillList.billNo}">
+													<option selected value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+												</c:when>
 
-											<option value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+												<c:otherwise>
+													<option value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+												</c:otherwise>
 
+											</c:choose>
 										</c:forEach>
 
 									</select>
 
 								</div>
 
-								<br>
+								<!-- <div class="form-group"> -->
+									<div class="col-sm-2 col-sm-offset-1 col-lg-1 col-lg-offset-0">
 
+										<button type="submit" class="buttonsaveorder"
+											style="width: 110px; height:40px">BillDetail</button>
+										<!--<button type="button" class="btn">Cancel</button>-->
 
-								<!-- 	<div class="form-group"> -->
-																	<div class="col-sm-9 col-sm-offset-6 col-lg-5 col-lg-offset-0">
+									</div>
 
-
-<!-- 								<div class="col-md-4">
- -->
-									<button type="submit" class="buttonsaveorder" style=" width: 100px; height: 40px">
-										 Search
-									</button>
-									<!--<button type="button" class="btn">Cancel</button>-->
-
-								</div>
+								<!-- </div> -->
 							</div>
-							<!-- </div> -->
 						</form>
 
 					</div>
 					<!-- 						</form>
  -->
-					<form action="${pageContext.request.contextPath}/addGvnProcess"
-						name="grn_add" id="grn_add" enctype="multipart/form-data"
-						method="post">
+					<form action="${pageContext.request.contextPath}/addTempGvn"
+						name="grn_add" id="grn_add" method="post">
+						
+						<div class="col-md-9" ></div> 
+					<label for="search" class="col-md-3" id="search">
+    <i class="fa fa-search" style="font-size:20px"></i>
+									<input type="text"  id="myInput" onkeyup="myFunction()" placeholder="Search items by name.." title="Type in a name">
+										</label>  
+						
 
 						<div class="clearfix"></div>
 
@@ -110,17 +158,18 @@
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
-										<!-- 	<th class="col-md-1">Sr No.</th>
+											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
-											<th class="col-md-2">Item Name</th>
-											<th class="col-md-1">QTY</th>
-											<th class="col-md-1">Rate</th>
-											<th class="col-md-1">Tax %</th>
-											<th class="col-md-1">Amount</th>
-											<th class="col-md-1">Remark</th>
-											<th class="col-md-1">PHOTO 1</th>
-											<th class="col-md-1">PHOTO 2</th>
+
+											<th class="col-md-1">SELECT</th>
+											<th class="col-md-3">Item Name</th>
+											<th class="col-md-2">Purchase</th>
+
+											<th class="col-md-1">Quantity</th>
+											<th class="col-md-2">Rate</th>
+											<th class="col-md-2">Tax %</th>
+											<th class="col-md-2">Amount</th>
 
 										</tr>
 									</thead>
@@ -128,87 +177,29 @@
 
 										<c:forEach items="${gvnConfList}" var="gvnConfList"
 											varStatus="count">
+
+											<input type="hidden" id="b_qty${gvnConfList.itemId}"
+												value="${gvnConfList.billQty}" />
+
 											<tr>
+												<td class="col-md-1"><input type="checkbox"
+													name="select_to_gvn" id="${gvnConfList.billDetailNo}"
+													value="${gvnConfList.billDetailNo}" /></td>
 
-												<%-- <td class="col-md-1">${count.index+1}<input
-													type="hidden" name="gvnIdForPhoto"
-													value="${gvnConfList.itemId * 2}"></td>
-
-												<td class="col-md-1">${gvnConfList.billNo}</td>
-												<td class="col-md-1">${gvnConfList.billDate}</td> --%>
-												<td class="col-md-2">${gvnConfList.itemName}</td>
-
+												<td class="col-md-3">${gvnConfList.itemName}</td>
+												<td class="col-md-2">${gvnConfList.billQty}</td>
 												<td class="col-md-1"><input type="text"
 													name="gvn_qty${gvnConfList.itemId}"
-													id="gvn_qty${gvnConfList.itemId}" size="5" value="0"
+													id='gvn_qty${gvnConfList.itemId}' size="5" value="0"
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer})" /></td>
 
-												<td class="col-md-1">${gvnConfList.calcBaseRate}</td>
+												<td class="col-md-2">${gvnConfList.calcBaseRate}</td>
 
-												<td class="col-md-1" id="tax_per${gvnConfList.itemId}"><c:out
+												<td class="col-md-2" id="tax_per${gvnConfList.itemId}"><c:out
 														value="00"></c:out></td>
 
-
-												<td class="col-md-1" id="gvn_amt${gvnConfList.itemId}"><c:out
+												<td class="col-md-2" id="gvn_amt${gvnConfList.itemId}"><c:out
 														value="00"></c:out></td>
-
-												<%-- <td class="col-md-1"><textarea
-														name="gvn_remark${gvnConfList.itemId}"
-														id="gvn_remark${gvnConfList.itemId}"></textarea></td>
-														
-														 --%>
-														
-																<td class="col-md-1">
-																<select name="gvn_remark${gvnConfList.itemId}" style="width: 200px"
-																id="gvn_remark${gvnConfList.itemId}" class="form-control" >
-																<option selected  value="selectRemark">Select Remark</option>
-																<c:forEach items="${remarkList}" var="remarkList">
-																${remarkList.remark}
-																<option value="${remarkList.remark}">${remarkList.remark}</option>
-																</c:forEach>
-																</select></td>
-
-												<td class="col-md-1">
-
-													<div class="form-group">
-
-
-														<div class="fileUpload">
-															<input class="upload upld" type='file' name="gvn_photo1"
-																id="gvn_photo1${gvnConfList.itemId}"
-																data-rule-required="true" /> <img style="width: 45px"
-																src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-																alt="" />
-														</div>
-
-
-														<!-- <a href="#" data-dismiss="fileupload"><i
-															class="fa fa-close"></i></a>
- -->
-													</div> <!-- </div> -->
-												</td>
-
-												<td class="col-md-1">
-
-													<div class="form-group">
-														<div>
-															<div class="fileUpload">
-																<input class="upload upld" type='file' name="gvn_photo2"
-																	id="gvn_photo2${gvnConfList.itemId}"
-																	data-rule-required="true" /> <img style="width: 45px"
-																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-																	alt="" />
-															</div>
-
-
-															<!-- <a href="#" data-dismiss="fileupload"><i
-																class="fa fa-close"></i></a> -->
-														</div>
-
-
-													</div> <!-- 								</div>
- -->
-												</td>
 
 											</tr>
 
@@ -224,7 +215,7 @@
 						<div class="form-group">
 
 							<button type="submit" class="buttonsaveorder">
-								<i class="fa fa-check"></i> Save
+								<i class="fa fa-check"></i> Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->
 
@@ -308,7 +299,17 @@
 <script type="text/javascript">
 function calcGvn(baseRate,itemId,sgstPer,cgstPer){
 	
-	var gvnQty=$("#gvn_qty"+itemId).val()
+	var gvnQty=$("#gvn_qty"+itemId).val();
+	var billQty=$("#b_qty"+itemId).val();
+//	alert("gvnQty ="+gvnQty+ "Bill Qty "+billQty);
+	if(parseInt(gvnQty) > parseInt(billQty)){
+		
+		document.getElementById("gvn_qty"+itemId).value=0;
+		alert("GVN Qty can not be greater than Purchase Qty ");
+		//var zero=0;
+		//$("#gvn_qty"+itemId).value=0;
+	}
+	else{
 	//alert(gvnQty);
 	//$("#gvn_qty"+itemId).html(gvnQty);
 
@@ -325,21 +326,13 @@ function calcGvn(baseRate,itemId,sgstPer,cgstPer){
 		
 		$("#gvn_amt"+itemId).html(grandTotal.toFixed(2));
 		
-		
 		var taxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
 		$("#tax_per"+itemId).html(taxPer.toFixed(2));
 
 var x=$("#gvn_remark"+itemId).val();
-if(gvnQty>0){
-		
-		if(x ==null ||x == ""){
-			alert("Enter Remark");
-			
-		    document.getElementById("gvn_remark"+itemId).focus();
-		    
-		}
-}
+
 };
+}
 
 
 </script>
@@ -363,42 +356,64 @@ $(".upld").change(function () {
 });
 
 </script>
-<!-- <script type="text/javascript">
-$(document).ready(function() {
+<script type="text/javascript">
+
+function getViewOption(){
 	
+	//alert("HJFHKJ");
 	
-    $('#menu').change(
-            function() {
-            	
-                $.getJSON('${findItemsByCatId}', {
-                    catId : $(this).val(),
-                    ajax : 'true'
-                }, function(data) {
-                
-                    var len = data.length;
-
-					$('#items')
-				    .find('option')
-				    .remove()
-				    .end()
-				 $("#items").append($("<option></option>").attr( "value",-1).text("ALL"));
-                    for ( var i = 0; i < len; i++) {
-                            
-                                
-                        $("#items").append(
-                                $("<option></option>").attr(
-                                    "value", data[i].id).text(data[i].itemName)
-                            );
-                    }
-
-                    $("#items").trigger("chosen:updated");
-
-
-                });
-            });
-});
-</script> -->
-
+	var viewOpt = $("#view_opt").val();
+	var bill_date = $("#datepicker").val();
 	
+	//alert("option "+viewOpt);
+	//alert("bill_date "+bill_date);
+
+	$.getJSON('${getViewGvnOption}', {
+		view_opt : viewOpt,
+		bill_date : bill_date,
+		ajax : 'true',
+
+	});
+	
+	window.location.reload();
+}
+
+</script>
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table_grid");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function showDate(){
+//	alert("HELlo");
+	var viewOpt = $("#view_opt").val();
+	
+	if(viewOpt==1){
+		document.getElementById("datepicker").style.display= "block";
+	}
+	else{
+		document.getElementById("datepicker").style="display:none";
+	}
+}
+</script>
+
+
+
 </body>
 </html>
