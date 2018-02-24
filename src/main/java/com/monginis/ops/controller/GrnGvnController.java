@@ -752,7 +752,7 @@ public class GrnGvnController {
 					postGrnGvn.setApprovedRemarkAcc(" ");
 
 					postGrnGvn.setDelStatus(0);
-					postGrnGvn.setGrnGvnQtyAuto(grnQty);
+					postGrnGvn.setGrnGvnQtyAuto(fixedGrnQty);
 
 					// newly added
 
@@ -799,7 +799,7 @@ public class GrnGvnController {
 			grnHeader.setIsCreditNote(0);
 			grnHeader.setIsGrn(1);
 			grnHeader.setApporvedAmt(0);
-
+			
 			grnHeader.setTaxableAmt(sumTaxableAmt);
 			grnHeader.setTaxAmt(sumTaxAmt);
 			grnHeader.setTotalAmt(sumTotalAmt);
@@ -827,6 +827,8 @@ public class GrnGvnController {
 
 				SellBillDataCommon sellBillResponse = restTemplate
 						.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
+				
+				if(sellBillResponse!=null) {
 
 				List<SellBillHeader> sellBillHeaderList = sellBillResponse.getSellBillHeaderList();
 
@@ -859,6 +861,8 @@ public class GrnGvnController {
 						SellBillHeader.class);
 
 				System.out.println("Bill Header Response " + billHeader.toString());
+				
+				}//end of if ex bill not null
 
 				postGrnList = new PostGrnGvnList();
 
@@ -916,7 +920,7 @@ public class GrnGvnController {
 
 		}
 
-		ModelAndView modelAndView2 = new ModelAndView("grngvn/displaygrn");
+		ModelAndView modelAndView2 = new ModelAndView("grngvn/viewGrn");
 
 		try {
 
@@ -931,22 +935,32 @@ public class GrnGvnController {
 
 			String cDate = sdFormat.format(grnDate);
 
-			map.add("frId", frId);
+			map.add("frIdList", frId);
 			map.add("fromDate", cDate);
 			map.add("toDate", cDate);
-
-			GetGrnGvnDetailsList grnListResponse = null;
+			map.add("isGrn", 0);
 			// getFrGrnDetail
+			List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
 
-			grnListResponse = restTemplate.postForObject(Constant.URL + "getFrGrnDetails", map,
-					GetGrnGvnDetailsList.class);
-			System.out.println("inside try " + grnListResponse.toString());
+			try {
+				grnHeaderList = new ArrayList<>();
 
-			grnGvnDetailsList = new ArrayList<>();
+				GrnGvnHeaderList headerList = restTemplate.postForObject(Constant.URL + "getGrnGvnHeader", map,
+						GrnGvnHeaderList.class);
 
-			grnGvnDetailsList = grnListResponse.getGrnGvnDetails();
+				grnHeaderList = headerList.getGrnGvnHeader();
 
-			modelAndView2.addObject("grnList", grnGvnDetailsList);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("EXCE in getting gvn Header List "+e.getMessage());
+			}
+
+			//model.addObject("gvnList", gvnHeaderList);
+
+			//model.addObject("url", Constant.GVN_IMAGE_URL);
+			modelAndView2.addObject("cDate", cDate); // End comment
+			modelAndView2.addObject("grnList",grnHeaderList);
+			//modelAndView2.addObject("grnList", grnGvnDetailsList);
 
 			modelAndView2.addObject("cDate", cDate);
 		} catch (Exception e) {
@@ -1408,7 +1422,7 @@ public class GrnGvnController {
 			}
 			// Redirect to Gvn List after insert
 
-			model = new ModelAndView("grngvn/displaygvn");
+			model = new ModelAndView("grngvn/viewGvn");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			int frId = frDetails.getFrId();
@@ -1419,23 +1433,31 @@ public class GrnGvnController {
 
 			String cDate = sdFormat.format(grnDate);
 
-			map.add("frId", frId);
+			map.add("frIdList", frId);
 			map.add("fromDate", cDate);
 			map.add("toDate", cDate);
+			map.add("isGrn", 0);
+			// getFrGrnDetail
+			List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
 
-			GetGrnGvnDetailsList grnListResponse = null; // getFrGvnDetail try {
+			try {
+				gvnHeaderList = new ArrayList<>();
 
-			grnListResponse = restTemplate.postForObject(Constant.URL + "getFrGvnDetails", map,
-					GetGrnGvnDetailsList.class);
+				GrnGvnHeaderList headerList = restTemplate.postForObject(Constant.URL + "getGrnGvnHeader", map,
+						GrnGvnHeaderList.class);
 
-			grnGvnDetailsList = new ArrayList<>();
+				gvnHeaderList = headerList.getGrnGvnHeader();
 
-			grnGvnDetailsList = grnListResponse.getGrnGvnDetails();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("EXCE in getting gvn Header List "+e.getMessage());
+			}
 
-			model.addObject("gvnList", grnGvnDetailsList);
+			//model.addObject("gvnList", gvnHeaderList);
 
-			model.addObject("url", Constant.GVN_IMAGE_URL);
+			//model.addObject("url", Constant.GVN_IMAGE_URL);
 			model.addObject("cDate", cDate); // End comment
+			model.addObject("gvnList",gvnHeaderList);
 		} catch (Exception e) {
 			System.out.println("failed to insert Gvn " + e.getMessage());
 			e.printStackTrace();
@@ -1451,6 +1473,7 @@ public class GrnGvnController {
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 		String grnSrNO = request.getParameter("headerId");
+		
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");

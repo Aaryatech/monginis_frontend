@@ -130,32 +130,38 @@
 													
 
 											<c:choose>
-												<c:when test="${grnList.grnGvnStatus==1}">
+												<c:when test="${grnList.grngvnStatus==1}">
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
-												<c:when test="${grnList.grnGvnStatus==2}">
+												<c:when test="${grnList.grngvnStatus==2}">
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
-												<c:when test="${grnList.grnGvnStatus==3}">
+												<c:when test="${grnList.grngvnStatus==3}">
 													<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
 												</c:when>
 
-												<c:when test="${grnList.grnGvnStatus==4}">
+												<c:when test="${grnList.grngvnStatus==4}">
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
 
-												<c:when test="${grnList.grnGvnStatus==5}">
+												<c:when test="${grnList.grngvnStatus==5}">
 													<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
 												</c:when>
-												<c:when test="${grnList.grnGvnStatus==6}">
+												<c:when test="${grnList.grngvnStatus==6}">
 													<td class="col-md-1"><c:out value="Approved"></c:out></td>
 												</c:when>
-												<c:when test="${grnList.grnGvnStatus==7}">
+												<c:when test="${grnList.grngvnStatus==7}">
 													<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
 												</c:when>
 
 											</c:choose>
-											<td class="col-md-1"><input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td>
+											<td class="col-md-1">
+											
+											<a href='#' class='action_btn'
+														onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr title='Detail'><i
+															class='fa fa-list'></i></abbr></a> 
+											
+											<%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
 
 										</tr>
 									</c:forEach>
@@ -283,9 +289,9 @@ $('#table_grid tbody')
 
 function getGvnDetail(headerId){
 	
-	alert("PPP");
+	//alert("PPP");
 			//alert("HIII");
-			alert("header ID "+headerId)
+			//alert("header ID "+headerId)
 		    var form = document.getElementById("validation-form");
 		    form.action ="getGvnDetailList/"+headerId;
 		    form.submit();
