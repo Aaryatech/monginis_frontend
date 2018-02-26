@@ -4,7 +4,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 
 <%-- <!DOCTYPE html>
 <html>
@@ -99,14 +103,14 @@ jQuery(document).ready(function(){
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">Item Wise Tax Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Itemwise-Billwise-Datewise Purchase Report</h2></div>
 	</div>
 	
 	
 	
 <div class="row">
 	
-	<div class="col-md-2"><div class="pull-left">Group</div></div>
+	<div class="col-md-2"><div class="pull-left"><b>Group</b></div></div>
 		<div class="col-md-5"><select name="catId" id="catId" class="form-control chosen"required>
               <option value=""selected>Select Group</option>
         
@@ -159,15 +163,15 @@ jQuery(document).ready(function(){
 
 															
 								
-									<th class="col-md-1">Sr.No.</th>
-									<th class="col-md-1">Item Name</th>
-									<th class="col-md-1">Party Name</th>
-									<th class="col-md-1">Bill No</th>
-									<th class="col-md-1">Bill Date</th>
-									<th class="col-md-1">Qty</th>
-									<th class="col-md-1">Rate</th>
-									<th class="col-md-1">Amount</th>
-									<th class="col-md-1">GRN TYPE</th>
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th>
+									<th class="col-md-1" style="text-align:center;">Bill Date</th>
+									<th class="col-md-1" style="text-align:center;">Bill No</th>
+									<th class="col-md-1" style="text-align:center;">Party Name</th>
+									<th class="col-md-2" style="text-align:center;">Item Name</th>
+									<th class="col-md-1" style="text-align:center;">Qty</th>
+									<th class="col-md-1" style="text-align:center;">Rate</th>
+									<th class="col-md-1" style="text-align:center;">Amount</th>
+									<th class="col-md-1" style="text-align:center;">GRN TYPE</th>
 								
 								  </tr>
 								
@@ -178,6 +182,8 @@ jQuery(document).ready(function(){
 								
 						
 				</div>
+				</div>
+		<!--table end--><br>
 				<div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -186,8 +192,7 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
-		<!--table end-->
+			
 		 
 		</div>	
     </div>
@@ -255,36 +260,37 @@ jQuery(document).ready(function(){
 								var grnType;
 								
 								if(itemWiseTaxData.grnType==0)
-									grnType="Grn 1";
+									grnType="GRN 1";
 								
 								if(itemWiseTaxData.grnType==1)
-									grnType="Grn 2";
+									grnType="GRN 2";
 								
 								if(itemWiseTaxData.grnType==2)
-									grnType="Grn 3";
-								
-							
+									grnType="GRN 3";
+								if(itemWiseTaxData.grnType==3)
+									grnType="No GRN";
+								if(itemWiseTaxData.grnType==4)
+									grnType="GRN 4";
 								
 									
 								var tr = $('<tr></tr>');
 
 								tr.append($('<td  class="col-md-1"></td>').html(key+1));
+							  	tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.billDate));
+								tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.billNo));
 
-							  	tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.itemName));
 
 							  	tr.append($('<td  class="col-md-1"></td>').html(partyname));
+							 	tr.append($('<td  class="col-md-2"></td>').html(itemWiseTaxData.itemName));
+							  
 
-							  	tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.billNo));
+								tr.append($('<td  class="col-md-1" style="text-align:right;"></td>').html((itemWiseTaxData.qty).toFixed(2)));
 
-							  	tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.billDate));
+								tr.append($('<td  class="col-md-1" style="text-align:right;"></td>').html((itemWiseTaxData.rate).toFixed(2)));
 
-								tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.qty));
+								tr.append($('<td  class="col-md-1" style="text-align:right;"></td>').html((itemWiseTaxData.total).toFixed(2)));
 
-								tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.rate));
-
-								tr.append($('<td  class="col-md-1"></td>').html(itemWiseTaxData.total));
-
-								tr.append($('<td  class="col-md-1"></td>').html(grnType));
+								tr.append($('<td  class="col-md-1" style="text-align:center;"></td>').html(grnType));
 
 								
 

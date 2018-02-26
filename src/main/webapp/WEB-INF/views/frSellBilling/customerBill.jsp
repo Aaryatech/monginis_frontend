@@ -83,94 +83,100 @@
 <!-- 1 css and 2 js for search item   -->
 
 <%-- <script src="${pageContext.request.contextPath}/resources/jquery.confirm/jquery.confirm.js"></script> --%>
-  <style> 
-	  
-	  body {
-    font-family: sans-serif
-       
-}
-.dialog-ovelay {
-    position: fixed;
-    
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.50);
-    z-index: 999999;
-       
-}
- 
-.dialog-ovelay .dialog {
-    width: 30%;
-    height:25%;
-    border-radius: 25px;
-    margin: 210px auto 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,.2);
-    
-    overflow: hidden
-}
-.dialog-ovelay .dialog header {
-    padding: 10px 8px;
-     border-radius: 25px 25px 0px 0px;
-    background-color: #f6f7f9;
-    border-bottom: 1px solid #e5e5e5
-}
-.dialog-ovelay .dialog header h3 {
-    font-size: 14px;
-    margin: 0;
-    
-    color: #555;
-    display: inline-block
-}
- 
-.dialog-ovelay .dialog header .fa-close:active {
-    box-shadow: 0 0 5px #673AB7;
-    color: #a2a2a2
-}
-.dialog-ovelay .dialog .dialog-msg {
-    padding: 12px 10px
-     
-}
-.dialog-ovelay .dialog .dialog-msg p{
-    margin: 0;
-    font-size: 15px;
-    color: #333
-}
-.dialog-ovelay .dialog footer {
-    border-top: 1px solid #e5e5e5;
-    padding: 8px 10px
-     
-}
-.dialog-ovelay .dialog footer .controls {
-margin:10px;
-    direction: rtl
-     
-}
-.dialog-ovelay .dialog footer .controls .button {
-    padding: 5px 15px;
-    border-radius: 3px
-    
-}
-.button {
-  cursor: pointer
-}
-.button-default {
-    background-color: rgb(248, 248, 248);
-    border: 1px solid rgba(204, 204, 204, 0.5);
-    color: #5D5D5D;
-}
-.button-danger {
-    background-color: #f44336;
-    border: 1px solid #d32f2f;
-    color: #f5f5f5
-}
-.link {
-  padding: 5px 10px;
-  cursor: pointer
+<style>
+body {
+	font-family: sans-serif
 }
 
+.option {
+	padding-left: 5px;
+}
+
+.dialog-ovelay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.50);
+	opacity: 1;
+	z-index: 1000;
+}
+
+.dialog-ovelay .dialog {
+	width: 25%;
+	height: 18%;
+	border-radius: 25px;
+	margin: 320px auto 0;
+	background-color: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+	overflow: hidden
+}
+
+.dialog-ovelay .dialog header {
+	padding: 10px 8px;
+	border-radius: 25px 25px 0px 0px;
+	background-color: #beccd8;
+	border-bottom: 1px solid #e5e5e5
+}
+
+.dialog-ovelay .dialog header h3 {
+	font-size: 15px;
+	margin: 0;
+	color: #000;
+	display: inline-block
+}
+
+.dialog-ovelay .dialog header .fa-close:active {
+	box-shadow: 0 0 5px #673AB7;
+	color: #a2a2a2
+}
+
+.dialog-ovelay .dialog .dialog-msg {
+	padding: 15px 10px
+}
+
+.dialog-ovelay .dialog .dialog-msg p {
+	margin: 0;
+	font-size: 15px;
+	color: #333
+}
+
+.dialog-ovelay .dialog footer {
+	border-top: 1px solid #e5e5e5;
+	padding: 8px 8px
+}
+
+.dialog-ovelay .dialog footer .controls {
+	margin: 8px;
+	direction: rtl
+}
+
+.dialog-ovelay .dialog footer .controls .button {
+	padding: 5px 15px;
+	border-radius: 3px
+}
+
+.button {
+	cursor: pointer
+}
+
+.button-default {
+	background-color: rgb(248, 248, 248);
+	border: 1px solid rgba(204, 204, 204, 0.5);
+	color: #5D5D5D;
+}
+
+.button-danger {
+	background-color: #f44336;
+	border: 1px solid #d32f2f;
+	color: #f5f5f5
+}
+
+.link {
+	padding: 5px 10px;
+	cursor: pointer
+}
 </style>
 
 </head>
@@ -467,9 +473,9 @@ margin:10px;
 									<button class="btn additem_btn" id="generateBill1"
 										onclick="generateSellBill(1)">Generate Bill</button>
 
-									<button class="btn additem_btn" id="pdfBtn1" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn1" 
 										onclick="pdfBtn(1)">Print Bill</button>
-									<button class="btn additem_btn" id="clear1" disabled="true"
+									<button class="btn additem_btn" id="clear1" 
 										onclick="clearData(1)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo1"
 								value="" />
@@ -712,7 +718,7 @@ margin:10px;
 								<center>
 									<button class="btn additem_btn" id="generateBill2"
 										onclick="generateSellBill(2)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn2" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn2" disabled="false"
 										onclick="pdfBtn(2)">Print Bill</button>
 									<button class="btn additem_btn" id="clear2" disabled="true"
 										onclick="clearData(2)">Clear</button>
@@ -1320,20 +1326,11 @@ margin:10px;
 											<tbody>
 
 
-
-
-
-
-
 											</tbody>
 
 										</table>
 									</div>
 								</div>
-
-
-
-
 
 
 
@@ -2767,14 +2764,14 @@ margin:10px;
 
 			var container = document.getElementById('table-scroll');
 		
-			//var rowToScrollTo = document.getElementById("edit"+token+""+key);
-			//rowToScrollTo.scrollIntoView(true); 
+			var rowToScrollTo = document.getElementById("edit"+token+""+key);
+			rowToScrollTo.scrollIntoView(true); 
 
 			
 
 			container.scrollTop = rowToScrollTo.offsetTop;
 		
-		//$('.table-scroll').scrollTop(0);
+		$('.table-scroll').scrollTop(0);
 
 		
 			return total;
@@ -2862,6 +2859,10 @@ margin:10px;
 			$('#grandtotal' + token).html(grandAmt);
 			document.getElementById("grandtot" + token).setAttribute('value',
 					grandAmt);
+			
+			$('#paidAmount' + token).html(grandAmt);
+			document.getElementById("paidAmount" + token).setAttribute('value',
+					grandAmt);
 
 			var paidAmount = $("#paidAmount" + token).val();
 
@@ -2923,6 +2924,8 @@ margin:10px;
 
 			//var isValid = validation(token);
 			var grandtot = $("#grandtot" + token).val();
+			
+		//	alert(grandtot);
 			if (validation(token) && grandtot > 0) {
 				var custName = $("#custName" + token).val();
 				var gstNo = $("#gstNo" + token).val();
@@ -2932,6 +2935,7 @@ margin:10px;
 				var paidAmount = $("#paidAmount" + token).val();
 
 				$('#loader').show();
+		     //   var loginWindow = window.open('', 'UserLogin');
 
 				$
 						.getJSON(
@@ -2953,7 +2957,10 @@ margin:10px;
 									if (data == "") {
 										alert("Order Not Placed !!");
 									} else {
-
+										
+										
+									  //  loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='
+									//		+ data.sellBillNo;
 										document.getElementById("sellBillNo"
 												+ token).value = data.sellBillNo;
 										document.getElementById("pdfBtn"
@@ -2989,9 +2996,12 @@ margin:10px;
 										document.getElementById(
 												"remAmount" + token)
 												.setAttribute('value', 0.0);
+										$("#discount" + token).html(0);
 
 										document.getElementById(
 												"barcode" + token).focus();
+
+					                
 
 									}
 								});
@@ -3019,6 +3029,93 @@ margin:10px;
 		}
 
 		function pdfBtn(token) {
+			//var isValid = validation(token);
+			var grandtot = $("#grandtot" + token).val();
+			
+		//	alert(grandtot);
+			if (validation(token) && grandtot > 0) {
+				var custName = $("#custName" + token).val();
+				var gstNo = $("#gstNo" + token).val();
+				var phoneNo = $("#phoneNo" + token).val();
+				var discount = $("#discount" + token).val();
+				var paymentMode = $("#paymentMode" + token).val();
+				var paidAmount = $("#paidAmount" + token).val();
+
+				$('#loader').show();
+		        var loginWindow = window.open('', 'UserLogin');
+
+				$
+						.getJSON(
+								'${generateBill}',
+								{
+									custName : custName,
+									gstNo : gstNo,
+									phoneNo : phoneNo,
+									discount : discount,
+									paymentMode : paymentMode,
+									paidAmount : paidAmount,
+									token : token,
+									ajax : 'true'
+
+								},
+								function(data) {
+
+									$('#loader').hide();
+									if (data == "") {
+										alert("Order Not Placed !!");
+									} else {
+										
+										
+									    loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='
+											+ data.sellBillNo;
+										document.getElementById("sellBillNo"
+												+ token).value = data.sellBillNo;
+										document.getElementById("pdfBtn"
+												+ token).disabled = false;
+										document
+												.getElementById("clear" + token).disabled = false;
+
+										$('#table_grid' + token + ' td')
+												.remove();
+										// alert(data.sellBillNo);
+
+										document.getElementById(
+												"barcode" + token)
+												.setAttribute('value', 0);
+
+										$("#rateTdVal" + token).html(0);
+
+										$("#total" + token).html(0.0);
+										document.getElementById("tot" + token)
+												.setAttribute('value', 0.0);
+
+										document.getElementById(
+												"paidAmount" + token)
+												.setAttribute('value', 0.0);
+
+										$('#grandtotal' + token).html(0.0);
+										document.getElementById(
+												"grandtot" + token)
+												.setAttribute('value', 0.0);
+
+										$('#remAmt' + token).html(
+												grandMinusPaidAmt);
+										document.getElementById(
+												"remAmount" + token)
+												.setAttribute('value', 0.0);
+										$("#discount" + token).html(0);
+
+										document.getElementById(
+												"barcode" + token).focus();
+										
+					                
+									}
+								});
+			}
+			document.getElementById("clear" + token).focus();
+		}
+function pdfPrint(token) {
+						
 			var billNo = document.getElementById("sellBillNo" + token).value;
 
 			window
@@ -3026,13 +3123,14 @@ margin:10px;
 							+ billNo);
 			clearData(token);
 		}
+		
 		function clearData(token) {
 			$.getJSON('${clearData}', {
 				token : token,
 				ajax : 'true'
 			}, function(data) {
 
-				document.getElementById("pdfBtn" + token).disabled = true;
+			//	document.getElementById("pdfBtn" + token).disabled = true;
 				document.getElementById("clear" + token).disabled = true;
 
 			});

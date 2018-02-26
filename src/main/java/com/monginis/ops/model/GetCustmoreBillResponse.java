@@ -4,11 +4,10 @@ import java.util.List;
 
 
 
-
 public class GetCustmoreBillResponse {
 
 
-	private int sellBillDetailNo;
+private int sellBillDetailNo;
 
 private int sellBillNo;
 
@@ -31,6 +30,16 @@ private int itemId;
 private String itemName;
 
 private float taxableAmt;
+
+private float discountPer;
+
+
+private float discountAmt;
+
+ 
+private int intBillAmt;
+
+private int intDiscAmt;
 
 private float cgstPer;
 
@@ -229,19 +238,49 @@ public void setSgstRs(float sgstRs) {
 	this.sgstRs = sgstRs;
 }
 
+public float getDiscountPer() {
+	return discountPer;
+}
+
+public void setDiscountPer(float discountPer) {
+	this.discountPer = discountPer;
+}
+
+public float getDiscountAmt() {
+	return discountAmt;
+}
+
+public void setDiscountAmt(float discountAmt) {
+	this.discountAmt = discountAmt;
+}
+
+public int getIntBillAmt() {
+	return intBillAmt;
+}
+
+public void setIntBillAmt(int intBillAmt) {
+	this.intBillAmt = intBillAmt;
+}
+
+public int getIntDiscAmt() {
+	return intDiscAmt;
+}
+
+public void setIntDiscAmt(int intDiscAmt) {
+	this.intDiscAmt = intDiscAmt;
+}
+
 @Override
 public String toString() {
 	return "GetCustmoreBillResponse [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo
 			+ ", invoiceNo=" + invoiceNo + ", billDate=" + billDate + ", custName=" + custName + ", frAddress="
 			+ frAddress + ", frId=" + frId + ", frMob=" + frMob + ", frName=" + frName + ", itemId=" + itemId
-			+ ", itemName=" + itemName + ", taxableAmt=" + taxableAmt + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
-			+ ", igstPer=" + igstPer + ", gstn=" + gstn + ", bill_amount=" + bill_amount + ", mrp=" + mrp + ", qty="
-			+ qty + ", igstRs=" + igstRs + ", cgstRs=" + cgstRs + ", sgstRs=" + sgstRs + "]";
+			+ ", itemName=" + itemName + ", taxableAmt=" + taxableAmt + ", discountPer=" + discountPer
+			+ ", discountAmt=" + discountAmt + ", intBillAmt=" + intBillAmt + ", intDiscAmt=" + intDiscAmt
+			+ ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", gstn=" + gstn
+			+ ", bill_amount=" + bill_amount + ", mrp=" + mrp + ", qty=" + qty + ", igstRs=" + igstRs + ", cgstRs="
+			+ cgstRs + ", sgstRs=" + sgstRs + "]";
 }
 
- 
- 
-
-  
 
 }

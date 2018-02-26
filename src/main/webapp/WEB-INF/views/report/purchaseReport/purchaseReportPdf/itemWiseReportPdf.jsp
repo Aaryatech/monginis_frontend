@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Item wise Purchase Tax Report</title>
+<title>Item wise Purchase Report</title>
 
 <style type="text/css">
 table {
@@ -29,17 +29,18 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-
-	<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
+<h4 align="center">Itemwise Purchase Report</h4>
+<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+	<table width="100%" border="1" cellspacing="0"
+														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
-									<th>Sr.No.</th>
-									<th>Party Name</th>
-									<th>Item Name</th>
-									<th>Qty</th>
-									<th>Rate</th>
-									<th>Amount</th>
+									<th style="text-align:center;">Sr.No.</th>
+									<th style="text-align:center;">Party Name</th>
+									<th style="text-align:center;">Item Name</th>
+									<th style="text-align:center;">Qty</th>
+									<th style="text-align:center;">Rate</th>
+									<th style="text-align:center;">Amount</th>
 								
 								  </tr>
 								</thead>
@@ -52,12 +53,12 @@ th {
 												<tr>
 													<td align="center"><c:out value="${count.index+1}" /></td>
 													
-													<td>GFPL</td>
+													<td >GFPL</td>
 													<td><c:out value="${reportList.itemName}" /></td>
 													
-														<td><c:out value="${reportList.qty}" /></td>
-															<td><c:out value="${reportList.rate}" /></td>
-													<td><c:out value="${reportList.total}" /></td>
+													<td style="text-align:right;"><c:out value="${reportList.qty}" /></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.rate}"/></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.total}"/></td>
 														<c:set var="grandTotal"  value="${grandTotal+reportList.total}"/>
 													
 												</tr>
@@ -65,8 +66,8 @@ th {
 								  <tr>
 								  <td colspan='5'><b>Total</b></td>
 							
-								     <td><b><fmt:formatNumber type = "number"  maxFractionDigits = "2" value = "${grandTotal}"/></b></td>
-								       <td></td>
+								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${grandTotal}"/></b></td>
+								      
 								  </tr>
 							 </tbody>
 								</table>

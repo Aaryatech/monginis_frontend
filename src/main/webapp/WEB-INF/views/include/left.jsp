@@ -436,11 +436,13 @@
 						
 							<div class="ibox">
 						<div class="ibox-head">
-						<div class="ibox-title">Bill Reports</div>
+						<div class="ibox-title">Punching Based Reports</div>
 						</div>
-						<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i class="fa fa-files-o icon"></i>Sell Report (Sell) </a>
-					
-					<a href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i class="fa fa-files-o icon"></i>Purchase  Report (Pur) </a>
+						<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i class="fa fa-files-o icon"></i>Billwise Sale Report</a>
+						<a href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i class="fa fa-calendar-o icon"></i>Datewise Sale Report</a>
+						<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a>
+						<a href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i class="fa fa-chevron-circle-down icon"></i>Categorywise- Itemwise Sale Report</a>
+					<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill"> <i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise Sale Report</a>
 						
 								
 						</div>
@@ -451,33 +453,29 @@
 	 						
 	 						<div class="ibox">
 						<div class="ibox-head">
-						<div class="ibox-title">Day and Month</div>
+						<div class="ibox-title">Purchase Reports</div>
 						</div>
-						<a href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i class="fa fa-calendar-o icon"></i> Day Summary (Sell)  </a>
-						
-						
-						<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i class="fa fa-calendar-o  icon"></i> Month Summary (Sell) </a>
-										
-						<a href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i class="fa fa-files-o icon"></i>Month Summary Report (Pur) </a>
-						
+					
+						 <a href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i class="fa fa-files-o icon"></i>Billwise Purchase Report</a> 
+						<a href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i class="fa fa-files-o icon"></i>Monthwise Purchase Report</a>
+						<a href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise Purchase Report</a>
+						<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
+						<a href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i class="fa fa-files-o icon"></i>Purchase Billwise Tax (Input) Report</a>
 								
 						</div>
 						</li>
-							
+						<!-- 	
 							<li class="small-box">
 							
 								<div class="ibox">
 						<div class="ibox-head">
 						<div class="ibox-title">Item wise</div>
 						</div>
-						<a href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i class="fa fa-chevron-circle-down icon"></i> Item Summary(Sell)  </a>
-						<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill"> <i class="fa fa-chevron-circle-down icon"></i> Item Report (Sell)</a>
-							<a href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i class="fa fa-files-o icon"></i>ItemWise Detail Report (Pur) </a>
-								<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i class="fa fa-files-o icon"></i>ItemWise  Report (Pur) </a>
+						
 								
 						</div>
 						
-							</li>
+							</li> -->
 							
 								<li class="small-box">
 								
@@ -490,7 +488,6 @@
 						<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill"><i class="fa fa-calendar icon"></i> Date Report (Sell) </a>
 						<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i class="fa fa-files-o icon"></i> Bill Report (Sell)</a>
 						
-												<a href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i class="fa fa-files-o icon"></i>Bill Wise Tax Report(Pur) </a>
 						
 								
 						</div>

@@ -336,6 +336,7 @@ public class ExpressBillController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
+			map.add("frStockType", frDetails.getStockType());
 			map.add("fromDate", dateFormat.format(firstDay));
 			map.add("toDate", dateFormat.format(todaysDate));
 			map.add("currentMonth", String.valueOf(runningMonth));

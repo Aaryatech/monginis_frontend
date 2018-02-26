@@ -1,6 +1,6 @@
 package com.monginis.ops.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 public class GetSellBillHeader {
@@ -8,9 +8,9 @@ public class GetSellBillHeader {
 	
 	private int sellBillNo;
 	
-	private int invoiceNo;
+	private String invoiceNo;
 	
-	private Date billDate;
+	private String billDate;
  
 	private float taxableAmt;
 	
@@ -38,19 +38,19 @@ public class GetSellBillHeader {
 		this.sellBillNo = sellBillNo;
 	}
 
-	public int getInvoiceNo() {
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public Date getBillDate() {
+	public String getBillDate() {
 		return billDate;
 	}
 
-	public void setBillDate(Date billDate) {
+	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
 

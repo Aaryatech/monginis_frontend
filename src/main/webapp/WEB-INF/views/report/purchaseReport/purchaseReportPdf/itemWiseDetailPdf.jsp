@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Item wise Purchase Tax Detail</title>
+<title>Item wise Purchase Detail</title>
 
 <style type="text/css">
 table {
@@ -29,20 +29,21 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-
-	<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
+<h4 align="center">Itemwise-Billwise-Datewise Purchase Report</h4>
+<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+	<table width="100%" border="1" cellspacing="0"
+														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
-									<th>Sr.No.</th>
-									<th>Item Name</th>
-									<th>Party Name</th>
-									<th>Bill No</th>
-									<th>Bill Date</th>
-									<th>Qty</th>
-									<th>Rate</th>
-									<th>Amount</th>
-									<th>GRN TYPE</th>
+									<th style="text-align:center;">Sr.No.</th>
+									<th style="text-align:center;">Bill Date</th>
+									<th style="text-align:center;">Bill No</th>
+									<th style="text-align:center;">Party Name</th>
+									<th style="text-align:center;">Item Name</th>
+									<th style="text-align:center;">Qty</th>
+									<th style="text-align:center;">Rate</th>
+									<th style="text-align:center;">Amount</th>
+									<th style="text-align:center;">GRN TYPE</th>
 								
 								  </tr>
 								</thead>
@@ -54,21 +55,41 @@ th {
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
 													<td align="center"><c:out value="${count.index+1}" /></td>
-													<td><c:out value="${reportList.itemName}" /></td>
-													<td>GFPL</td>
-													<td><c:out value="${reportList.billNo}" /></td>
-													<td><c:out value="${reportList.billDate}" /></td>
-														<td><c:out value="${reportList.qty}" /></td>
-															<td><c:out value="${reportList.rate}" /></td>
-													<td><c:out value="${reportList.total}" /></td>
-														<c:set var="grandTotal"  value="${grandTotal+reportList.total }"/>
-													<td>GRN <c:out value="${reportList.grnType}" /></td>
+														<td><c:out value="${reportList.billDate}" /></td>
+														<td><c:out value="${reportList.billNo}" /></td>
+												
+													<td style="text-align:center;">GFPL</td>
+														<td><c:out value="${reportList.itemName}" /></td>
+												
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.qty}"/></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.rate}"/></td>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.total}"/></td>
+													<c:set var="grandTotal"  value="${grandTotal+reportList.total }"/>
+													<td style="text-align:center;">
+														<c:choose>
+														<c:when test="${reportList.grnType==0}">
+														<c:out value="GRN 1" />
+														</c:when>
+													    <c:when test="${reportList.grnType==1}">
+														<c:out value="GRN 2" />
+														</c:when>
+														<c:when test="${reportList.grnType==2}">
+														<c:out value="GRN 3" />
+														</c:when>
+														<c:when test="${reportList.grnType==3}">
+														<c:out value="No GRN" />
+														</c:when>
+														<c:when test="${reportList.grnType==4}">
+														<c:out value="GRN 4" />
+														</c:when>
+												     	</c:choose>
+													</td>
 												</tr>
 												</c:forEach>
 								  <tr>
 								  <td colspan='7'><b>Total</b></td>
 							
-								     <td><b><fmt:formatNumber type = "number"  maxFractionDigits = "2" value = "${grandTotal}"/></b></td>
+								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${grandTotal}"/></b></td>
 								       <td></td>
 								  </tr>
 							 </tbody>

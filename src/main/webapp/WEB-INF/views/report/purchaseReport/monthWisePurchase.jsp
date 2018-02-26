@@ -3,7 +3,14 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+.hide-calendar .ui-datepicker-calendar {
+    display: none;
+}
+</style>
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +58,7 @@ jQuery(document).ready(function(){
 </head>
 <body> --%>
 <!--datepicker-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
     $( "#todatepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
@@ -60,7 +67,7 @@ jQuery(document).ready(function(){
     $( "#fromdatepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
  
-  </script>
+  </script> --%>
 <!--datepicker--> 
 
 <c:url var="monthWisePurchaseReport" value="/getMonthWisePurchaseReport" />
@@ -99,7 +106,7 @@ jQuery(document).ready(function(){
 				
 
     <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">MonthWise Purchase Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Monthwise Purchase Report</h2></div>
 	</div>
 	
 	<div class="row">
@@ -109,12 +116,12 @@ jQuery(document).ready(function(){
 		    <h4 class="pull-left">Month From :-</h4>
 		</div>
 		<div class="col-md-2 ">
-                  <input type='text' placeholder="Select From Month" id='txtDate' name="from_stockdate" required />		</div>
+                  <input type='text' placeholder="Select From Month" id='txtDate' name="from_stockdate" required size="25"  />		</div>
 		<div class="col-md-2">
 		    <h4 class="pull-left">To Month:-</h4>
 		</div>
 		<div class="col-md-2 ">
-			<input type='text' placeholder="Select To Month" id=txtDateto name="to_stockdate" required />
+			<input type='text' placeholder="Select To Month" id=txtDateto name="to_stockdate" required size="25" />
 		</div>
 		<!-- <div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
@@ -136,23 +143,23 @@ jQuery(document).ready(function(){
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
+					<div id="faux-table" class="faux-table" aria="hidden">
+						<div class="table-wrap">
 						<table id="table_grid" class="main-table">
 							<thead>
 								<tr class="bgpink">
 
 															
 								
-									<th class="col-md-1">Sr.No.</th>
-									<th class="col-md-1">MONTH</th>
-									<th class="col-md-1">Taxable Amt</th>
-									<th class="col-md-1">IGST</th>
-									<th class="col-md-1">CGST</th>
-									<th class="col-md-1">SGST</th>
-									<th class="col-md-1">CESS</th>
-									<th class="col-md-1">ROFF</th>
-									<th class="col-md-1">TOTAL</th>
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th>
+									<th class="col-md-1" style="text-align:center;">MONTH</th>
+									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align:center;">IGST</th>
+									<th class="col-md-1" style="text-align:center;">CGST</th>
+									<th class="col-md-1" style="text-align:center;">SGST</th>
+									<th class="col-md-1" style="text-align:center;">CESS</th>
+									<th class="col-md-1" style="text-align:center;">ROFF</th>
+									<th class="col-md-1" style="text-align:center;">TOTAL</th>
 								
 								  </tr>
 								  </thead>
@@ -162,7 +169,34 @@ jQuery(document).ready(function(){
 								  
 								</table>
 						
-				</div>
+				</div></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+															
+								
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th>
+									<th class="col-md-1" style="text-align:center;">MONTH</th>
+									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
+									<th class="col-md-1"style="text-align:center;">IGST</th>
+									<th class="col-md-1" style="text-align:center;">CGST</th>
+									<th class="col-md-1"style="text-align:center;" >SGST</th>
+									<th class="col-md-1"style="text-align:center;" >CESS</th>
+									<th class="col-md-1"style="text-align:center;">ROFF</th>
+									<th class="col-md-1"style="text-align:center;">TOTAL</th>
+								
+								  </tr>
+								  </thead>
+								  <tbody>
+								
+								 
+								  
+								</table>
+						
+				</div>	</div>
+		<!--table end--><br>
 				<div class="form-group" style="display: none;" id="range">
 								 
 											 
@@ -171,8 +205,7 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
-		<!--table end-->
+		
 		 
 		</div>	
     </div>
@@ -263,23 +296,23 @@ jQuery(document).ready(function(){
 								tr.append($('<td class="col-md-1"></td>').html(index));
 
 
-							  	tr.append($('<td class="col-md-1"></td>').html(monthNames[monthNumber]));
+							  	tr.append($('<td class="col-md-1"style="text-align:center;"></td>').html(monthNames[monthNumber]));
 
 
-							  	tr.append($('<td class="col-md-1"></td>').html(monthWisePurchaseData.taxableAmt));
+							  	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((monthWisePurchaseData.taxableAmt).toFixed(2)));
 
-							  	tr.append($('<td class="col-md-1"></td>').html(monthWisePurchaseData.igstRs));
+							  	tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((monthWisePurchaseData.igstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(parseFloat(Math.round(monthWisePurchaseData.cgstRs * 100) / 100).toFixed(2)));
+								tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html(parseFloat(Math.round(monthWisePurchaseData.cgstRs * 100) / 100).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(parseFloat(Math.round(monthWisePurchaseData.sgstRs * 100) / 100).toFixed(2)));
+								tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html(parseFloat(Math.round(monthWisePurchaseData.sgstRs * 100) / 100).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(monthWisePurchaseData.sess));
+								tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((monthWisePurchaseData.sess).toFixed(2)));
 
 
-								tr.append($('<td class="col-md-1"></td>').html(monthWisePurchaseData.roundOff));
+								tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((monthWisePurchaseData.roundOff).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(monthWisePurchaseData.grandTotal));
+								tr.append($('<td class="col-md-1"style="text-align:right;"></td>').html((monthWisePurchaseData.grandTotal).toFixed(2)));
 
 								
 								$('#table_grid tbody').append(tr);
@@ -426,16 +459,16 @@ $(document).ready(function() {
      },
        
      beforeShow: function() {
-         $('#ui-datepicker-div').addClass('hide-calendar');
+        $('#ui-datepicker-div').addClass('hide-calendar');
 
     	 
-       if ((selDate = $(this).val()).length > 0) 
+      /*  if ((selDate = $(this).val()).length > 0) 
        {
           iYear = selDate.substring(selDate.length - 4, selDate.length);
           iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
           $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
            $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
-       }
+       } */
     }
   });
 });
@@ -456,16 +489,15 @@ $(document).ready(function() {
      },
        
      beforeShow: function() {
-    	 
-      //   $('#ui-datepicker-div').addClass('hide-calendar');
+        $('#ui-datepicker-div').addClass('hide-calendar');
 
-       if ((selDate = $(this).val()).length > 0) 
+     /*   if ((selDate = $(this).val()).length > 0) 
        {
           iYear = selDate.substring(selDate.length - 4, selDate.length);
           iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
           $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
-           $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
-       }
+          $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+       } */
     }
   });
 });

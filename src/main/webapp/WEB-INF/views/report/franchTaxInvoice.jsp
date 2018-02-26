@@ -17,7 +17,6 @@
 
 </head>
 <style type="text/css">
-
 .style2 {
 	font-size: 14px
 }
@@ -50,25 +49,26 @@
 		style="padding: 5px; font-family: verdana; font-size: 12px; border: 1px solid #E7E7E7;">
 		<tbody>
 			<tr>
-				<td colspan="2" align="center" style="padding: 3px;"><p>TAX INVOICE</p></td>
+				<td colspan="2" align="center" style="padding: 3px;"><p>TAX
+						INVOICE</p></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><p
 						class="style2">
-						<b>${billList[0].frName}</b><br />
-						<span style="font-size: 10px; font-family: Arial;">(The
-							Monginis Cake Shop)</span>
+						<b>${billList[0].frName}</b><br /> <span
+							style="font-size: 10px; font-family: Arial;">(The Monginis
+							Cake Shop)</span>
 					</p></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">${billList[0].frAddress}
-						<br /> Phone:<strong>${billList[0].frMob}</strong><br />
-						<br /> <span style="font-size: 9px; font-family: Arial;">GSTN :${billList[0].gstn}<br/>
-						State: 27-Maharashtra<br/>
-						FSSAI : 11515031000866
+						<br /> Phone:<strong>${billList[0].frMob}</strong><br /> <br />
+						<span style="font-size: 9px; font-family: Arial;">GSTN
+							:${billList[0].gstn}<br /> State: 27-Maharashtra<br /> FSSAI :
+							11515031000866
 						</span></td>
 			</tr>
 			<tr>
@@ -91,8 +91,8 @@
 										cellspacing="0" cellpadding="5" class="tbl-inner">
 										<tbody>
 											<tr>
-												<th width="43%" align="left" bgcolor="#ECECEC">Item <span style="font-size: 8">
-												(HSN Code)</span></th>
+												<th width="43%" align="left" bgcolor="#ECECEC">Item <span
+													style="font-size: 8"> (HSN Code)</span></th>
 												<th width="8%" bgcolor="#ECECEC">GST</th>
 												<th width="8%" bgcolor="#ECECEC">Qty</th>
 												<th width="13%" bgcolor="#ECECEC">Rate</th>
@@ -101,8 +101,9 @@
 											<c:forEach items="${billList}" var="billList"
 												varStatus="count">
 												<tr>
-													<td><p style="font-size: 12px">${billList.itemName}<br/>
-														<span style="font-size: 8">hsn123456789</span></p></td>
+													<td><p style="font-size: 12px">${billList.itemName}<br />
+															<span style="font-size: 8">hsn123456789</span>
+														</p></td>
 													<td align="center"><p style="font-size: 12px">${billList.cgstPer+billList.sgstPer}%</p></td>
 													<td align="center"><p style="font-size: 12px">${billList.qty}</p></td>
 													<td align="center"><p style="font-size: 12px">${billList.mrp}</p></td>
@@ -113,12 +114,18 @@
 												<td rowspan="3">&nbsp;</td>
 												<td colspan="3" align="right"><span class="style5"><strong>Total
 															:</strong></span></td>
-												<td align="right"><span class="style5"><strong>${billList[0].bill_amount}</strong></span></td>
+												<td align="right"><span class="style5"><strong>${billList[0].discountAmt}</strong></span></td>
+											</tr>
+											<tr>
+												<td colspan="2" align="right"><span class="style5"><strong>Discount
+															${billList[0].discountPer}% :</strong></span></td>
+												<td colspan="2" align="right"><span class="style5"><strong>${billList[0].intDiscAmt}</strong></span></td>
+
 											</tr>
 											<tr>
 												<td colspan="3" align="right"><span class="style7">Bill
 														Total:</span></td>
-												<td align="right"><span class="style7">${billList[0].bill_amount}</span></td>
+												<td align="right"><span class="style7">${billList[0].intBillAmt}</span></td>
 											</tr>
 										</tbody>
 									</table></td>
@@ -150,7 +157,8 @@
 						<c:set var="totaltax" value="${0 }" />
 						<c:set var="cgst" value="${0 }" />
 						<c:set var="sgst" value="${0 }" />
-						<c:forEach items="${custBilltax}" var="custBilltax" varStatus="count">
+						<c:forEach items="${custBilltax}" var="custBilltax"
+							varStatus="count">
 							<tr>
 								<td>${custBilltax.taxableAmt}</td>
 								<c:set var="taxAmount"
@@ -185,7 +193,7 @@
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
-								colspan="6"><p class="style8">Thank You, VIsit Again
+								colspan="6"><p class="style8">Thank You, Visit Again
 									!!!
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E.
 									&amp; O.E.</p></td>
@@ -194,9 +202,10 @@
 							<td style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
 								colspan="6">We declare that this invoice shows the actual
 								price of the goods<br /> described and that all particulars are
-								true and correct.<br/>
-								<span style="font-size: 10px"> I/ We hereby certify that food/oods mentioned in this invoice are warranted
-								to be the nature and quality which this purports/purport to be.</span>
+								true and correct.<br /> <span style="font-size: 10px"> I/
+									We hereby certify that food/oods mentioned in this invoice are
+									warranted to be the nature and quality which this
+									purports/purport to be.</span>
 							</td>
 						</tr>
 					</table></td>
@@ -208,15 +217,14 @@
 			</tr>
 		</tbody>
 	</table>
-</body>	<body onload="print()">
+</body>
+<body onload="print()">
 	<script>
-	function print()
-	{
-		//alert("JJ");
-		this.print();
-		//window.close();
-	}
-	
+		function print() {
+			//alert("JJ");
+			this.print();
+			//window.close();
+		}
 	</script>
 
 </body>

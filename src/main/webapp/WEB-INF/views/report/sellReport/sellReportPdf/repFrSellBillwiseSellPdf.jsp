@@ -28,16 +28,19 @@ th {
 </style>
 </head>
  <body >
-
-	<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
+<h4 align="center">Billwise Sale Report</h4>
+<div align="center"> <h6> ${frName}  &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+	<table  align="center" border="1" cellspacing="0" cellpadding="1" 
+		id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
-									<th align="right" style="width:100px">Sr no.</th>
-									<th align="center">Bill No</th>
-									<th align="center">Date</th>
-									<th align="center">Amount</th>
-									<th align="center">Payment Mode</th>
+									<th style="text-align:center;width:60px" >Sr no.</th>
+									<th style="text-align:center;width:100px">Bill No</th>
+									<th style="text-align:center;width:100px">Invoice No</th>
+									<th style="text-align:center;width:100px">Franchisee Name</th>
+									<th style="text-align:center;width:100px">Bill Date</th>
+									<th style="text-align:center;width:100px">Amount</th>
+									<th style="text-align:center;width:100px">Payment Mode</th>
 								
 									
 									
@@ -50,25 +53,27 @@ th {
 							
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
-													<td align="center"><c:out value="${count.index+1}" /></td>
-												<td><c:out value="${reportList.sellBillNo}" /></td>
-												<td><c:out value="${reportList.billDate}" /></td>
+													<td ><c:out value="${count.index+1}" /></td>
+														<td ><c:out value="${reportList.sellBillNo}" /></td>
+													<td ><c:out value="${reportList.invoiceNo}" /></td>
+												<td style="text-align:left;"><c:out value="${reportList.frName}" /></td>
+												<td ><c:out value="${reportList.billDate}" /></td>
 												
-													<td><fmt:formatNumber type = "number"  maxFractionDigits = "2" value="${reportList.payableAmt}" /></td>
+													<td  style="text-align:right;"> <fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.payableAmt}" /></td>
 													 <c:set var="totalAmount" value="${totalAmount + reportList.payableAmt}"/>
 													 
 													 <c:choose>
 																	<c:when test="${reportList.paymentMode==1}">
 																	
-																		<td><c:out value="Cash" /></td>
+																		<td style="text-align:center;"><c:out value="Cash" /></td>
 																	</c:when>
 																	<c:when test="${reportList.paymentMode==2}">
 																	
-																		<td><c:out value="Card" /></td>
+																		<td style="text-align:center;"><c:out value="Card" /></td>
 																	</c:when>
 																	<c:when test="${reportList.paymentMode==3}">
 																	
-																		<td><c:out value="Other" /></td>
+																		<td style="text-align:center;"><c:out value="Other" /></td>
 																	</c:when>
 													</c:choose>
 												
@@ -78,8 +83,9 @@ th {
 												</tr>
 												</c:forEach>
 								  <tr>
-								  <td colspan='3'><b>Total</b></td>
-								  <td><b><fmt:formatNumber type = "number"  maxFractionDigits = "2" value ="${totalAmount}"/></b></td>
+								  <td colspan='5' ><b>Total</b></td>
+								  
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number"  minFractionDigits = "2" maxFractionDigits = "2" value ="${totalAmount}"/></b></td>
 								    
 								  </tr>
 							 </tbody>

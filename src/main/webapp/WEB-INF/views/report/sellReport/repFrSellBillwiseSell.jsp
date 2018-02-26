@@ -6,7 +6,11 @@
 
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
- 
+ <style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 <body>
 
 <!--datepicker-->
@@ -58,7 +62,7 @@
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Billwise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">Billwise Sale Report</h2></div>
 	</div>
 	
 	<div class="colOuter">
@@ -92,17 +96,41 @@
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div id="faux-table" class="faux-table" aria="hidden">
+					<table id="table_grid" class="main-table">
+							<thead>
+								<tr class="bgpink">
+
+									<th class="col-sm-1"style="text-align:center;">Sr.No.</th>
+									<th class="col-sm-1"style="text-align:center;">Bill No</th>
+									<th class="col-sm-1"style="text-align:center;">Invoice No</th>
+								    <th class="col-md-2"style="text-align:center;">Franchisee Name</th>
+									<th class="col-md-2"style="text-align:center;">Bill Date</th>
+									<th class="col-md-1"style="text-align:center;">Amount</th>
+									<th class="col-md-2"style="text-align:center;">Payment Mode</th>
+								<!-- 	<th class="col-md-1">Card</th>
+									<th class="col-md-1">Other</th> -->
+									
+								  </tr>
+								</thead>
+								
+								 <tbody >
+								
+								 </tbody>
+								 </table>
+					</div>
 					<div class="table-wrap">
 						<table id="table_grid" class="main-table">
 							<thead>
 								<tr class="bgpink">
 
-									<th class="col-md-1">Sr.No.</th>
-									<th class="col-md-1">Bill No</th>
-									<th class="col-md-1">Date</th>
-									<th class="col-md-1">Amount</th>
-									<th class="col-md-1">Payment Mode</th>
+									<th class="col-sm-1"style="text-align:center;">Sr.No.</th>
+									<th class="col-sm-1"style="text-align:center;">Bill No</th>
+									<th class="col-sm-1"style="text-align:center;">Invoice No</th>
+								    <th class="col-md-2"style="text-align:center;">Franchisee Name</th>
+									<th class="col-md-2"style="text-align:center;">Bill Date</th>
+									<th class="col-md-1"style="text-align:center;">Amount</th>
+									<th class="col-md-2"style="text-align:center;">Payment Mode</th>
 								<!-- 	<th class="col-md-1">Card</th>
 									<th class="col-md-1">Other</th> -->
 									
@@ -116,7 +144,10 @@
 								</table>
 						 	
 				</div>
-				<div class="form-group" style="display: none;" id="range">
+			
+			</div>
+		<!--table end--><br>
+		 	<div class="form-group" style="display: none;" id="range">
 								 
 											 
 											 
@@ -124,9 +155,6 @@
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-			</div>
-		<!--table end-->
-		 
 		</div>	
     </div>
 
@@ -196,14 +224,16 @@
 
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
-								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.sellBillNo));
-								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.billDate));
+								  	tr.append($('<td class="col-sm-1"></td>').html(key+1));
+									
+								  	tr.append($('<td class="col-sm-1"></td>').html(sellBillData.sellBillNo));
+								  	tr.append($('<td class="col-sm-1"></td>').html(sellBillData.invoiceNo));
+								  	tr.append($('<td class="col-md-2"></td>').html(sellBillData.frName));
+
+								  	tr.append($('<td class="col-md-2"></td>').html(sellBillData.billDate));
 								  	
 								  	//var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td class="col-md-1"></td>').html(sellBillData.payableAmt));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.payableAmt).toFixed(2)));
 								  	
 									amtTotal=amtTotal + sellBillData.payableAmt;
 									
@@ -228,7 +258,7 @@
 										//otherTotal==otherTotal + sellBillData.paidAmt;
 									}
 									
-								  	tr.append($('<td class="col-md-1"></td>').html(mode));
+								  	tr.append($('<td class="col-md-2" style="text-align:center;"></td>').html(mode));
 								  	
 
 								  	
@@ -314,11 +344,12 @@
 												})
 												
 							var tr = "<tr>";
-								 var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								 var total = "<td colspan='5'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								var totalAmt = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ amtTotal
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (amtTotal).toFixed(2);
 									+ "</b></td>";
+									var td = "<td></td>";
 								/* var cash = "<td>&nbsp;&nbsp;&nbsp;"
 									+  cashTotal
 									+ "</td>";
@@ -340,7 +371,8 @@
 								.append(total);
 								$('#table_grid tbody')
 								.append(totalAmt);
-								
+								$('#table_grid tbody')
+								.append(td);
 								 /*$('#table_grid tbody')
 								.append(card);
 								$('#table_grid tbody')

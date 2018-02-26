@@ -22,8 +22,8 @@
         <div class="logoBarRight">
       
         <div id="menuzord" class="menuzord red menuzord-responsive">
-           <div id="chart_div" style="width: 120px;height: 70px;  float: left;margin-right: 20px;"></div>
-           <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+<!--            <div id="chart_div" style="width: 120px;height: 70px;  float: left;margin-right: 20px;"></div>
+ -->           <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
            
                <c:choose>
                   <c:when test="${frDetails.frRate=='0'}"> <li><img class="mngimg" src="${pageContext.request.contextPath}/resources/images/star0.5.png" alt="monginis"></li> </c:when>
@@ -61,7 +61,7 @@
 <!--topHeader-->
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
+ <!--  <script type="text/javascript">
 	var achievedTarget=document.getElementById("achievedTarget").value;
 	var target=document.getElementById("target").value;
 google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -112,4 +112,4 @@ function drawMultSeries() {
     }
 
 
-</script>
+</script> -->
