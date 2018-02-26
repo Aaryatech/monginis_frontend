@@ -774,6 +774,24 @@ public class GrnGvnController {
 
 					postGrnGvn.setRefInvoiceDate(objShowGrnList.get(i).getBillDate());
 					postGrnGvn.setInvoiceNo(objShowGrnList.get(i).getInvoiceNo());
+					
+					
+					
+					//setting new field added on 23 FEB
+					
+					postGrnGvn.setAprQtyGate(0);
+					postGrnGvn.setAprQtyStore(0);
+					postGrnGvn.setAprQtyAcc(0);
+					postGrnGvn.setAprTaxableAmt(0);
+					postGrnGvn.setAprTotalTax(0);
+					postGrnGvn.setAprSgstRs(0);
+					postGrnGvn.setAprCgstRs(0);
+					postGrnGvn.setAprIgstRs(0);
+					postGrnGvn.setAprGrandTotal(0);
+					postGrnGvn.setAprROff(0);
+					postGrnGvn.setIsSameState(frDetails.getIsSameState());
+					
+					
 
 					System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
 
@@ -1359,6 +1377,26 @@ public class GrnGvnController {
 
 					postGrnGvn.setRefInvoiceDate(gvnList.get(i).getBillDate());
 					postGrnGvn.setInvoiceNo(gvnList.get(i).getInvoiceNo());
+					
+					
+					
+					
+
+					//setting new field added on 23 FEB
+					
+					postGrnGvn.setAprQtyGate(0);
+					postGrnGvn.setAprQtyStore(0);
+					postGrnGvn.setAprQtyAcc(0);
+					postGrnGvn.setAprTaxableAmt(0);
+					postGrnGvn.setAprTotalTax(0);
+					postGrnGvn.setAprSgstRs(0);
+					postGrnGvn.setAprCgstRs(0);
+					postGrnGvn.setAprIgstRs(0);
+					postGrnGvn.setAprGrandTotal(0);
+					postGrnGvn.setAprROff(0);
+					postGrnGvn.setIsSameState(frDetails.getIsSameState());
+					
+					//
 
 					sumTaxableAmt = sumTaxableAmt + postGrnGvn.getTaxableAmt();
 					sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();

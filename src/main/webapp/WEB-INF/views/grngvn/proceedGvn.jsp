@@ -56,7 +56,7 @@
 							action="${pageContext.request.contextPath}/getGvnBillDetails"
 							name="grn" id="grn" method="get">
 
-							<div class="colOuter">
+			<%-- 				<div class="colOuter">
 								<div class="col-md-2">
 									<h4>Select Bill</h4>
 								</div>
@@ -98,7 +98,7 @@
 									<!--<button type="button" class="btn">Cancel</button>-->
 
 								</div>
-							</div>
+							</div> --%>
 							<!-- </div> -->
 						</form>
 
