@@ -30,6 +30,18 @@ public class GrnGvnHeader {
 	private int creditNoteId;
 	
 	private String approvedDatetime;
+	
+	
+	//new
+	
+	float aprTaxableAmt;
+	float aprTotalTax;
+	float aprSgstRs;
+	float aprCgstRs;
+	float aprIgstRs;
+	float aprGrandTotal;
+	
+	float aprROff;//new 
 
 	List<GrnGvn> grnGvn;
 
@@ -146,14 +158,61 @@ public class GrnGvnHeader {
 		this.grnGvn = grnGvn;
 	}
 
-	@Override
-	public String toString() {
-		return "GrnGvnHeader [grnGvnHeaderId=" + grnGvnHeaderId + ", frId=" + frId + ", grngvnSrno=" + grngvnSrno
-				+ ", grngvnDate=" + grngvnDate + ", isGrn=" + isGrn + ", taxableAmt=" + taxableAmt + ", taxAmt="
-				+ taxAmt + ", totalAmt=" + totalAmt + ", grngvnStatus=" + grngvnStatus + ", apporvedAmt=" + apporvedAmt
-				+ ", isCreditNote=" + isCreditNote + ", creditNoteId=" + creditNoteId + ", approvedDatetime="
-				+ approvedDatetime + ", grnGvn=" + grnGvn + "]";
+	public float getAprTaxableAmt() {
+		return aprTaxableAmt;
 	}
-	
 
+	public void setAprTaxableAmt(float aprTaxableAmt) {
+		this.aprTaxableAmt = aprTaxableAmt;
+	}
+
+	public float getAprTotalTax() {
+		return aprTotalTax;
+	}
+
+	public void setAprTotalTax(float aprTotalTax) {
+		this.aprTotalTax = aprTotalTax;
+	}
+
+	public float getAprSgstRs() {
+		return aprSgstRs;
+	}
+
+	public void setAprSgstRs(float aprSgstRs) {
+		this.aprSgstRs = aprSgstRs;
+	}
+
+	public float getAprCgstRs() {
+		return aprCgstRs;
+	}
+
+	public void setAprCgstRs(float aprCgstRs) {
+		this.aprCgstRs = aprCgstRs;
+	}
+
+	public float getAprIgstRs() {
+		return aprIgstRs;
+	}
+
+	public void setAprIgstRs(float aprIgstRs) {
+		this.aprIgstRs = aprIgstRs;
+	}
+
+	public float getAprGrandTotal() {
+		return aprGrandTotal;
+	}
+
+	public void setAprGrandTotal(float aprGrandTotal) {
+		this.aprGrandTotal = aprGrandTotal;
+	}
+
+	public float getAprROff() {
+		return aprROff;
+	}
+
+	public void setAprROff(float aprROff) {
+		this.aprROff = aprROff;
+	}
+
+	
 }
