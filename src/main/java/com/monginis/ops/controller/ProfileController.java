@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.FrLoginResponse;
@@ -81,12 +83,16 @@ public class ProfileController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			
 			map.add("frName", frName);
+			frDetails.setFrName(frName);
 			map.add("frCity", frCity);
-			map.add("frPassword", frPassword);
+			frDetails.setFrCity(frCity);
+			map.add("frPassword",frDetails.getFrPassword());
+			frDetails.setFrEmail(frEmail);
 			map.add("frEmail", frEmail);
 			map.add("frMob", frMob);
+			frDetails.setFrMob(frMob);
 			map.add("frOwner", frOwner);
-			
+			frDetails.setFrOwner(frOwner);
 			map.add("grnTwo", frDetails.getGrnTwo());
 			map.add("delStatus", frDetails.getDelStatus());
 			map.add("ownerBirthDate", frDetails.getOwnerBirthDate());
@@ -107,7 +113,7 @@ public class ProfileController {
 			map.add("frImage", frDetails.getFrImage());
 			map.add("frRouteId", frDetails.getFrRouteId());
 			map.add("frRateCat", frDetails.getFrRateCat());
-			
+			map.add("isSameState",frDetails.getIsSameState());
 			int intFrRate=(int) frDetails.getFrRate();
 			map.add("frRate",intFrRate);
 			map.add("frRmn1", frDetails.getFrRmn1());
@@ -115,19 +121,32 @@ public class ProfileController {
 			 System.out.println(frName+""+frEmail+""+frMob+""+frOwner+""+frCity+""+frPassword);
 			
 			//ErrorMessage errorMessage
-			String s= rest.postForObject(Constant.URL+"updateFranchisee", map, String.class);
+			 ErrorMessage errorMessage= rest.postForObject(Constant.URL+"updateFranchisee", map, ErrorMessage.class);
 			 System.out.println("REst");
 			
-			/*if (errorMessage.getError()) {
+			if (errorMessage.getError()) {
 				return "redirect:/showeditprofile";
+				
 			} else {
-
+				ses.setAttribute("frDetails", frDetails);
+				 try {
+					   map = new LinkedMultiValueMap<String, Object>();
+					   map.add("frId",frDetails.getFrId());
+					   
+                       String token= rest.postForObject(Constant.URL+"getFrToken", map, String.class);
+					
+			           Firebase.sendPushNotifForCommunication(token,"Profile Updated","Your Profile has been changed. If you have not done the changes, Kindly report us. Team Monginis","profile");
+					
+			         }
+			         catch(Exception e2)
+			         {
+				       e2.printStackTrace();
+			         }
 				return "redirect:/showeditprofile";
 
-			}*/
+			}
 
 			}catch(Exception e)
-			
 			{
 				
 				System.out.println(e.getMessage());
