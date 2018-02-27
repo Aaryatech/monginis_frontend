@@ -44,146 +44,156 @@
 					<h2 class="pageTitle">GRN Headers</h2>
 
 				</div>
-<form id="validation-form">
+				<form id="validation-form">
 
-				<div class="colOuter">
-					<!-- copy div kalpesh -->
+					<div class="colOuter">
+						<!-- copy div kalpesh -->
 
-					<div class="calender-title">From</div>
-					<div class="col-md-2">
-						<input id="datepicker" class="texboxitemcode texboxcal"
-							value="${cDate}" name="from_Date" type="text">
-					</div>
+						<div class="calender-title">From</div>
+						<div class="col-md-2">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								value="${cDate}" name="from_Date" type="text">
+						</div>
 
-					<div class="calender-title">TO</div>
-					<div class="col-md-2">
-						<input id="datepicker2" class="texboxitemcode texboxcal"
-							value="${cDate}" name="to_Date" type="text">
-					</div>
+						<div class="calender-title">TO</div>
+						<div class="col-md-2">
+							<input id="datepicker2" class="texboxitemcode texboxcal"
+								value="${cDate}" name="to_Date" type="text">
+						</div>
 
 
 
-<div class="col-md-1"><label>OR Grn No</label>
-						<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
+						<div class="col-md-1">
+							<label>OR Grn No</label>
+							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
 						 name="headerCheckBox" id="headerCheckBox"
 							/> -->
+						</div>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="headeIdText"
+								name="headeIdText" value="0" />
+						</div>
+
+						<div class="col-md-1">
+							<button type="button" class="btn  buttonsaveorder"
+								onclick="searchGRN()">Search</button>
+						</div>
+
 					</div>
-<div class="col-md-1">
-						<input type="text" class="form-control" id="headeIdText"
-						 name="headeIdText" value="0"
-							/>
-					</div>
-
-					<div class="col-md-1">
-						<button type="button" class="btn  buttonsaveorder"
-							onclick="searchGRN()">Search</button>
-					</div>
-
-				</div>
 
 
 
 
-				<!--tabNavigation-->
-				<div class="cd-tabs">
-					<!--tabMenu-->
+					<!--tabNavigation-->
+					<div class="cd-tabs">
+						<!--tabMenu-->
 
-					<!--tabMenu-->
-
-
-					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden"></div>
-						<div class="table-wrap">
-							<table id="table_grid" class="main-table">
-								<thead>
-									<tr class="bgpink">
-										<th class="col-md-2">GrnSr No</th>
-										<th class="col-md-1">Date</th>
-										<th class="col-md-2">Taxable Amt</th>
-										<th class="col-md-2">Tax Amt</th>
-										<th class="col-md-2">Amount</th>
-										<th class="col-md-2">Approved Amt</th>
-										<th class="col-md-2">Status</th>
-										<th class="col-md-2">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-
-									<c:forEach items="${grnList}" var="grnList" varStatus="count">
-										<tr>
-											<td class="col-md-1"><c:out
-													value="${grnList.grngvnSrno}" />
-													
-													<input type="hidden" name="headerId" id="headerId" value="${grnList.grnGvnHeaderId}">
-													</td>
-											<td class="col-md-1"><c:out
-													value="${grnList.grngvnDate}" /></td>
-											<td class="col-md-1"><c:out
-													value="${grnList.taxableAmt}" /></td>
-											<td class="col-md-1"><c:out value="${grnList.taxAmt}" /></td>
-											<td class="col-md-1"><c:out value="${grnList.totalAmt}" /></td>
+						<!--tabMenu-->
 
 
-
-											<td class="col-md-1"><fmt:formatNumber type="number"
-													minFractionDigits="2" maxFractionDigits="2"
-													value="${grnList.apporvedAmt}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
-
-											<c:choose>
-												<c:when test="${grnList.grngvnStatus==1}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grngvnStatus==2}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grngvnStatus==3}">
-													<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
-												</c:when>
-
-												<c:when test="${grnList.grngvnStatus==4}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
-												</c:when>
-
-												<c:when test="${grnList.grngvnStatus==5}">
-													<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grngvnStatus==6}">
-													<td class="col-md-1"><c:out value="Approved"></c:out></td>
-												</c:when>
-												<c:when test="${grnList.grngvnStatus==7}">
-													<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
-												</c:when>
-
-											</c:choose>
-											<td class="col-md-1">
-											
-											<a href='#' class='action_btn'
-														onclick="getGrnDetail(${grnList.grnGvnHeaderId})"><abbr title='Detail'><i
-															class='fa fa-list'></i></abbr></a> </td>
-											
-											<%-- <input type="button" onclick="getGrnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td> --%>
+						<div id="table-scroll" class="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div class="table-wrap">
+								<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
+											<th class="col-md-2">GrnSr No</th>
+											<th class="col-md-1">Date</th>
+											<th class="col-md-2">Taxable Amt</th>
+											<th class="col-md-2">Tax Amt</th>
+											<th class="col-md-2">Amount</th>
+											<th class="col-md-2">Approved Amt</th>
+											<th class="col-md-2">Status</th>
+											<th class="col-md-1">Credited?</th>
+											<th class="col-md-1">Credit No</th>
+											<th class="col-md-2">Action</th>
 
 										</tr>
-									</c:forEach>
+									</thead>
+									<tbody>
+
+										<c:forEach items="${grnList}" var="grnList" varStatus="count">
+											<tr>
+												<td class="col-md-1"><c:out
+														value="${grnList.grngvnSrno}" /> <input type="hidden"
+													name="headerId" id="headerId"
+													value="${grnList.grnGvnHeaderId}"></td>
+												<td class="col-md-1"><c:out
+														value="${grnList.grngvnDate}" /></td>
+												<td class="col-md-1"><c:out
+														value="${grnList.taxableAmt}" /></td>
+												<td class="col-md-1"><c:out value="${grnList.taxAmt}" /></td>
+												<td class="col-md-1"><c:out value="${grnList.totalAmt}" /></td>
 
 
 
-								</tbody>
+												<td class="col-md-1"><fmt:formatNumber type="number"
+														minFractionDigits="2" maxFractionDigits="2"
+														value="${grnList.apporvedAmt}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
 
-							</table>
+												<c:choose>
+													<c:when test="${grnList.grngvnStatus==1}">
+														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==2}">
+														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==3}">
+														<td class="col-md-1"><c:out
+																value="Reject By Dispatch"></c:out></td>
+													</c:when>
+
+													<c:when test="${grnList.grngvnStatus==4}">
+														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+													</c:when>
+
+													<c:when test="${grnList.grngvnStatus==5}">
+														<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==6}">
+														<td class="col-md-1"><c:out value="Approved"></c:out></td>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==7}">
+														<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==8}">
+														<td class="col-md-1"><c:out
+																value="Partially Approved"></c:out></td>
+													</c:when>
+
+												</c:choose>
+												
+												<td class="col-md-1"><c:out
+																value="${grnList.isCreditNote}"></c:out></td>
+																
+																<td class="col-md-1"><c:out
+																value="${grnList.creditNoteId}"></c:out></td>
+												<td class="col-md-1"><a href='#' class='action_btn'
+													onclick="getGrnDetail(${grnList.grnGvnHeaderId})"><abbr
+														title='Detail'><i class='fa fa-list'></i></abbr></a></td>
+
+												<%-- <input type="button" onclick="getGrnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td> --%>
+
+											</tr>
+										</c:forEach>
+
+
+
+									</tbody>
+
+								</table>
+							</div>
 						</div>
+
+
+
 					</div>
+					<!--tabNavigation-->
 
 
-
-				</div>
-				<!--tabNavigation-->
-
-
-</form>
+				</form>
 			</div>
-			
+
 			<!--rightSidebar-->
 
 		</div>
@@ -255,6 +265,15 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.grngvnStatus==7)
 									grnStatus="Reject By Acc";
 								
+								if(grndata.grngvnStatus==8)
+									grnStatus="Partially Approved";
+								
+								var isCredit;
+								if(grndata.isCreditNote==1)
+									isCredit="Yes";
+								if(grndata.isCreditNote==0)
+									isCredit="Pending";
+								
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
@@ -263,6 +282,12 @@ document.getElementById("headeIdText").value=0;
 						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.apporvedAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
+						
+						tr.append($('<td class="col-md-2"></td>').html(isCredit));
+
+						tr.append($('<td class="col-md-2"></td>').html(grndata.creditNoteId));	
+
+						
 
 						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
 						

@@ -1602,6 +1602,8 @@ public class GrnGvnController {
 			System.out.println("Ex in grn Detail " + e.getMessage());
 		}
 		String grnDate = grnDetailList.get(0).getGrnGvnDate();
+		
+		
 		modelAndView.addObject("grnList", grnDetailList);
 		modelAndView.addObject("grnDate", grnDate);
 

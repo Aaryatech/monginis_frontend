@@ -167,10 +167,10 @@
 
 											<c:set var="taxableAmt" value="${taxableAmt}" />
 
-											<td class="col-md-1"><c:out value="${taxableAmt}"></c:out></td>
+											<td id='taxable_amt${grnConfList.itemId}' class="col-md-1"><c:out value="${taxableAmt}"></c:out></td>
 
 
-											<td class="col-md-1"><c:out value="${grnConfList.taxAmt}"></c:out></td>
+											<td id='tax_amt${grnConfList.itemId}' class="col-md-1"><c:out value="${grnConfList.taxAmt}"></c:out></td>
 
 											<fmt:formatNumber var="grnAmt" type="number"
 												minFractionDigits="2" maxFractionDigits="2"
@@ -381,6 +381,10 @@
 		$("#grn_amt"+itemId).html(grandTotal.toFixed(2));
 		$("#tax_per"+itemId).html(totTaxPer.toFixed(2));
 		
+		$("#taxable_amt"+itemId).html(taxableAmt.toFixed(2));
+
+		$("#tax_amt"+itemId).html(totalTax.toFixed(2));
+
 		var x=$("#grn_remark"+itemId).val();
 		if(grnQty>0){
 		

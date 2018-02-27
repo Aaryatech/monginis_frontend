@@ -5,85 +5,78 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	
-	<!--topLeft-nav-->
-	<div class="sidebarOuter"></div>
-	<!--topLeft-nav-->
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-	<!--wrapper-start-->
-	<div class="wrapper">
+<!--topLeft-nav-->
+<div class="sidebarOuter"></div>
+<!--topLeft-nav-->
 
-		<!--topHeader-->
-		<c:url var="getGrnList" value="/getGrnList" />
+<!--wrapper-start-->
+<div class="wrapper">
+
+	<!--topHeader-->
+	<c:url var="getGrnList" value="/getGrnList" />
 	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
 
-		<!--topHeader-->
+	<!--topHeader-->
 
-		<!--rightContainer-->
-		<div class="fullGrid center">
-			<!--fullGrid-->
-			<div class="wrapperIn2">
+	<!--rightContainer-->
+	<div class="fullGrid center">
+		<!--fullGrid-->
+		<div class="wrapperIn2">
 
-				<!--leftNav-->
+			<!--leftNav-->
 
-				<jsp:include page="/WEB-INF/views/include/left.jsp">
-					<jsp:param name="myMenu" value="${menuList}" />
+			<jsp:include page="/WEB-INF/views/include/left.jsp">
+				<jsp:param name="myMenu" value="${menuList}" />
 
-				</jsp:include>
-
-
-				<!--leftNav-->
+			</jsp:include>
 
 
+			<!--leftNav-->
 
-				<!--rightSidebar-->
-				<div class="sidebarright">
-					<div class="order-left">
-						<h2 class="pageTitle">GRN Details</h2>
+
+
+			<!--rightSidebar-->
+			<div class="sidebarright">
+				<div class="order-left">
+					<h2 class="pageTitle">GRN Details</h2>
+
+				</div>
+
+
+				<div class="colOuter">
+					<!-- copy div kalpesh -->
+
+					<div class="calender-title"></div>
+					<div class="col-md-2">
+						GRN Date -<b> ${grnDate}</b>
 
 					</div>
-					
-					
-					<div class="colOuter"><!-- copy div kalpesh -->
-					
-							<div class="calender-title"></div>
-						<div class="col-md-2">GRN Date -<b> ${grnDate}</b>
-							
-						</div>
-					
-							<%-- <div class="calender-title">TO</div>
-						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
-								value="${cDate}" name="to_Date" type="text">
-						</div>
-						 --%>
-						<!-- <div class="col-md-1">
-						<button type="button" class="btn  buttonsaveorder"  onclick="searchGRN()">Search</button>
-						</div>
-									 -->					
-						</div>
 
 
-					
-
-					<!--tabNavigation-->
-					<div class="cd-tabs">
-						<!--tabMenu-->
-
-						<!--tabMenu-->
+				</div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
-							<thead>
-								<tr class="bgpink">
 
-																<th class="col-md-1">Invoice No</th>
+
+				<!--tabNavigation-->
+				<div class="cd-tabs">
+					<!--tabMenu-->
+
+					<!--tabMenu-->
+
+
+					<div id="table-scroll" class="table-scroll">
+						<div id="faux-table" class="faux-table" aria="hidden"></div>
+						<div class="table-wrap">
+							<table id="table_grid" class="main-table">
+								<thead>
+									<tr class="bgpink">
+
+										<!-- <th class="col-md-1">Invoice No</th>
 																<th class="col-md-2">Item Name</th>
 																<th class="col-md-1">Rate</th>
 																<th class="col-md-1">Quantity</th>
@@ -93,123 +86,165 @@
 																<th class="col-md-1">Tax %</th>
 
 																<th class="col-md-1">Tax Amt</th>
-
-
 																<th class="col-md-1">Amount</th>
 																<th class="col-md-1">Status</th>
+ -->
+										<th class="col-md-1">Invoice No</th>
+										<th class="col-md-2">Item Name</th>
+										<th class="col-md-1">Type</th>
+										<th class="col-md-1">Bill Rate</th>
+										<th class="col-md-1">Refund Rate</th>
+										<th class="col-md-1">Qnty</th>
+										<th class="col-md-1">Tot Refund requested</th>
+										<th class="col-md-1">Approved Qnty</th>
+										<th class="col-md-1">Approved Tot Refund</th>
+										<th class="col-md-1">Approved BaseRate</th>
+										<th class="col-md-1">Approved Tax Amt</th>
+										<th class="col-md-1">Status</th>
 
-															</tr>
-														</thead>
-							<tbody>
+									</tr>
+								</thead>
+								<tbody>
 
-															<c:forEach items="${grnList}" var="grnList"
-																varStatus="count">
-																<tr>
-																	<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.baseRate}" /></td>
-																	<td class="col-md-1"><c:out value="${grnList.grnGvnQty}" /></td>
-																	<c:choose>
-																		<c:when test="${grnList.grnType==0}">
-																			<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnType==1}">
-																			<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnType==2}">
-																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnType==3}">
-																			<td class="col-md-1"><c:out value="No GRN"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnType==4}">
-																			<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
-																		</c:when>
-																	</c:choose>
-																	
-																	
-																	<td class="col-md-1">
-																	<fmt:formatNumber type="number"
-												minFractionDigits="2" maxFractionDigits="2"
-												value="${grnList.taxableAmt}" />
-																	
-																	<%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
-																	<td class="col-md-1"><c:out
-																			value="${grnList.sgstPer + grnList.cgstPer}" /></td>
-																	<td class="col-md-1">
-																	<fmt:formatNumber type="number"
-												minFractionDigits="2" maxFractionDigits="2"
-												value="${grnList.totalTax}" />
-																	
-																	<%-- <c:out value="${grnList.totalTax}" /> --%></td>
-																	
-																	
-																	<td class="col-md-1">	<fmt:formatNumber  type="number"
-												minFractionDigits="2" maxFractionDigits="2"
-												value="${grnList.grnGvnAmt}" />
-																	<%-- <c:out value="${grnList.grnGvnAmt}" /> --%></td>
-																	
-																	<c:choose>
-																		<c:when test="${grnList.grnGvnStatus==1}">
-																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnGvnStatus==2}">
-																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnGvnStatus==3}">
-																			<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
-																		</c:when>
-																		
-																		<c:when test="${grnList.grnGvnStatus==4}">
-																			<td class="col-md-1"><c:out value="Pending"></c:out></td>
-																		</c:when>
-																		
-																		<c:when test="${grnList.grnGvnStatus==5}">
-																			<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnGvnStatus==6}">
-																			<td class="col-md-1"><c:out value="Approved"></c:out></td>
-																		</c:when>
-																		<c:when test="${grnList.grnGvnStatus==7}">
-																			<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
-																		</c:when>
-																		
-																	</c:choose>
-																																													
-																</tr>
-															</c:forEach>
+									<c:forEach items="${grnList}" var="grnList" varStatus="count">
+										<tr>
+											<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
+											<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
 
-														
+											<c:choose>
+												<c:when test="${grnList.grnType==0}">
+													<td class="col-md-1"><c:out value="GRN 1"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnType==1}">
+													<td class="col-md-1"><c:out value="GRN 2"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnType==2}">
+													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnType==3}">
+													<td class="col-md-1"><c:out value="No GRN"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnType==4}">
+													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
+												</c:when>
+											</c:choose>
 
-							</tbody>
+											<td class="col-md-1"><c:out value="${grnList.itemRate}" /></td>
 
-						</table>
+											<td class="col-md-1"><c:out value="${grnList.baseRate}" /></td>
+											<td class="col-md-1"><c:out value="${grnList.grnGvnQty}" /></td>
+
+											<td class="col-md-1"><c:out value="${grnList.grnGvnAmt}" /></td>
+
+											<td class="col-md-1"><c:out value="${grnList.aprQtyAcc}" /></td>
+
+											<td class="col-md-1"><c:out value="${grnList.aprGrandTotal}" /></td>
+
+											<td class="col-md-1"><c:out value="${grnList.aprTaxableAmt}" /></td>
+											<td class="col-md-1"><c:out value="${grnList.aprTotalTax}" /></td>
+<c:choose>
+												<c:when test="${grnList.grnGvnStatus==1}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==2}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==3}">
+													<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
+												</c:when>
+
+												<c:when test="${grnList.grnGvnStatus==4}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+
+												<c:when test="${grnList.grnGvnStatus==5}">
+													<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==6}">
+													<td class="col-md-1"><c:out value="Approved"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==7}">
+													<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
+												</c:when>
+
+											</c:choose>
+
+
+											<%-- <td class="col-md-1"><fmt:formatNumber type="number"
+													minFractionDigits="2" maxFractionDigits="2"
+													value="${grnList.taxableAmt}" /> <c:out value="${grnList.taxableAmt}" /></td>
+											<td class="col-md-1"><c:out
+													value="${grnList.sgstPer + grnList.cgstPer}" /></td>
+											<td class="col-md-1"><fmt:formatNumber type="number"
+													minFractionDigits="2" maxFractionDigits="2"
+													value="${grnList.totalTax}" /> <c:out value="${grnList.totalTax}" /></td>
+
+
+											<td class="col-md-1"><fmt:formatNumber type="number"
+													minFractionDigits="2" maxFractionDigits="2"
+													value="${grnList.grnGvnAmt}" /> <c:out value="${grnList.grnGvnAmt}" /></td>
+
+											<c:choose>
+												<c:when test="${grnList.grnGvnStatus==1}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==2}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==3}">
+													<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
+												</c:when>
+
+												<c:when test="${grnList.grnGvnStatus==4}">
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:when>
+
+												<c:when test="${grnList.grnGvnStatus==5}">
+													<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==6}">
+													<td class="col-md-1"><c:out value="Approved"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==7}">
+													<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
+												</c:when>
+
+											</c:choose>
+ --%>
+										</tr>
+									</c:forEach>
+
+
+
+								</tbody>
+
+							</table>
+						</div>
 					</div>
-				</div>
-
-
-
-					</div>
-					<!--tabNavigation-->
 
 
 
 				</div>
-				<!--rightSidebar-->
+				<!--tabNavigation-->
+
+
 
 			</div>
-			<!--fullGrid-->
+			<!--rightSidebar-->
+
 		</div>
-		<!--rightContainer-->
-
+		<!--fullGrid-->
 	</div>
-	<!--wrapper-end-->
+	<!--rightContainer-->
+
+</div>
+<!--wrapper-end-->
 
 
-	
 
 
-	<script type="text/javascript">
+
+<script type="text/javascript">
 		function searchGRN() {
 
 			$('#table_grid td').remove();
@@ -270,15 +305,24 @@
 									grnStatus="Reject By Acc";
 								
 
-						tr.append($('<td class="col-md-1"></td>').html(grndata.billNo));
+						tr.append($('<td class="col-md-1"></td>').html(grndata.invoiceNo));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.itemName));
+						tr.append($('<td class="col-md-1"></td>').html(grnType));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.baseRate));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnQty));
-						tr.append($('<td class="col-md-1"></td>').html(grnType));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt.toFixed(2)));
-						tr.append($('<td class="col-md-1"></td>').html(calcTaxPer));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.totalTax.toFixed(2)));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt.toFixed(2)));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.grnGvnAmt));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.aprQtyAcc));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.aprGrandTotal));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.aprTotalTax));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.aprGrandTotal));
+
+						tr.append($('<td class="col-md-1"></td>').html(grndata.aprGrandTotal));
+
 						tr.append($('<td class="col-md-1"></td>').html(grnStatus));
 
 
@@ -406,7 +450,7 @@
 
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		function validate() {
 		
 		
