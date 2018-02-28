@@ -77,7 +77,7 @@
 										<th class="col-md-2">Type</th>
 										<th class="col-md-1">QTY</th>
 										<th class="col-md-1">Rate</th>
-										<th class="col-md-1">Grn Rate</th>
+									<!-- 	<th class="col-md-1">Grn Rate</th> -->
 										<th class="col-md-1">Edit Qty</th>
 										<th class="col-md-1">Tax %</th>
 										<th class="col-md-1">Taxable Amt</th>
@@ -138,8 +138,8 @@
 
 											<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
 													value="${grnConfList.calcBaseRate}"></c:out></td>
-											<td class="col-md-1"><c:out
-													value="${grnConfList.grnRate}"></c:out></td>
+											<%-- <td class="col-md-1"><c:out
+													value="${grnConfList.grnRate}"></c:out></td> --%>
 
 											<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
 																	id="is_edit${grnConfList.itemId}"
@@ -153,7 +153,7 @@
 												value="${grnConfList.autoGrnQty}" 
 												id='grnqtyauto${grnConfList.itemId}' size="3" readonly
 												onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})" />
+																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.autoGrnQty})" />
 
 
 											</td>
@@ -288,7 +288,7 @@
 
 <script type="text/javascript">
 	
-	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer){
+	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty){
 		
 		
 		var baseRate=rate*100/(sgstPer+cgstPer+100);
@@ -296,10 +296,17 @@
 		var grnBaseRate;
 		
 		var grnRate;
+		var grnQty=$("#grnqtyauto"+itemId).val();
+		
+		if(parseInt(grnQty)>autoQty){
+			alert("Edit Quantity can not be greater than Auto Quantity");
+			document.getElementById("grnqtyauto"+itemId).value=autoQty;
+			//calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty)
+		}else{
 		
 		if(grnType==0){
 			
-			var grnQty=$("#grnqtyauto"+itemId).val();
+		
 			/* $("#hidden_auto_qty"+itemId).html(grnQty);
 
 			var hidden=$("#hidden_auto_qty"+itemId).val();
@@ -318,7 +325,7 @@
 		}
 	 if(grnType==1){
 
-		 var grnQty=$("#grnqtyauto"+itemId).val();
+		// var grnQty=$("#grnqtyauto"+itemId).val();
 			/* $("#hidden_auto_qty"+itemId).html(grnQty);
 
 			var hidden=$("#hidden_auto_qty"+itemId).val();
@@ -338,7 +345,7 @@
 			if(grnType==2){
 			
 			
-			var grnQty=$("#grnqtyauto"+itemId).val();
+			//var grnQty=$("#grnqtyauto"+itemId).val();
 			/* $("#hidden_auto_qty"+itemId).html(grnQty);
 			
 			var hidden=$("#hidden_auto_qty"+itemId).val();
@@ -360,7 +367,7 @@
 			
 			if(grnType==4){
 				
-				var grnQty=$("#grnqtyauto"+itemId).val();
+				//var grnQty=$("#grnqtyauto"+itemId).val();
 				var grnRate=$("#grn_rate"+itemId).text();
 				grnBaseRate=baseRate;
 				grnRate=rate;
@@ -385,7 +392,7 @@
 
 		$("#tax_amt"+itemId).html(totalTax.toFixed(2));
 
-		var x=$("#grn_remark"+itemId).val();
+		/* var x=$("#grn_remark"+itemId).val();
 		if(grnQty>0){
 		
 		if(x ==null ||x == ""){
@@ -394,7 +401,9 @@
 		    document.getElementById("grn_remark"+itemId).focus();
 		    
 		}
-		}
+		} */
+		
+		}//end of else
 	}
 	</script>
 

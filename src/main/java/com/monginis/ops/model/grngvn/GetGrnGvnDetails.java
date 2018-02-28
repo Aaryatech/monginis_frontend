@@ -143,7 +143,7 @@ private int isTallySync;
 	private String invoiceNo;
 	
 
-	private Date refInvoiceDate;
+	private String refInvoiceDate;
 	
 	
 	
@@ -607,12 +607,12 @@ private int isTallySync;
 	}
 
 
-	public Date getRefInvoiceDate() {
+	public String getRefInvoiceDate() {
 		return refInvoiceDate;
 	}
 
 
-	public void setRefInvoiceDate(Date refInvoiceDate) {
+	public void setRefInvoiceDate(String refInvoiceDate) {
 		this.refInvoiceDate = refInvoiceDate;
 	}
 

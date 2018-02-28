@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ShowGrnBean {
 
-	    private Integer billDetailNo;
+	    private int billDetailNo;
 	    private Integer itemId;
 	    private Integer frId;
 	    private String itemName;
@@ -71,10 +71,10 @@ public class ShowGrnBean {
 			this.invoiceNo = invoiceNo;
 		}
 
-		public Integer getBillDetailNo() {
+		public int getBillDetailNo() {
 			return billDetailNo;
 		}
-		public void setBillDetailNo(Integer billDetailNo) {
+		public void setBillDetailNo(int billDetailNo) {
 			this.billDetailNo = billDetailNo;
 		}
 		public Integer getItemId() {
