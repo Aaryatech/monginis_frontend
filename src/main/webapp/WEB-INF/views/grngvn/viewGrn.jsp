@@ -123,9 +123,7 @@
 												<td class="col-md-1"><c:out
 														value="${grnList.taxableAmt}" /></td>
 												<td class="col-md-1"><c:out value="${grnList.taxAmt}" /></td>
-												<td class="col-md-1"><c:out value="${grnList.totalAmt}" /></td>
-
-
+												<td class="col-md-1"><c:out value="${grnList.aprGrandTotal}" /></td>
 
 												<td class="col-md-1"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
