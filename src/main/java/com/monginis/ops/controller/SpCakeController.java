@@ -444,7 +444,7 @@ public class SpCakeController {
 			String spFlavour = request.getParameter("spFlavour");
 			logger.info("10" + spFlavour);
 
-			String spWeight = request.getParameter("spwt");
+			float spWeight = Float.parseFloat(request.getParameter("spwt"));
 			logger.info("11" + spWeight);
 
 			String spEvents = request.getParameter("sp_event");
@@ -491,6 +491,7 @@ public class SpCakeController {
 
 			String spAddRate = request.getParameter("sp_add_rate");
 			logger.info("25" + spAddRate);
+			float dbAdonRate=Float.parseFloat(request.getParameter("dbAdonRate"));
 
 			String spSubTotal = request.getParameter("sp_sub_total");
 			logger.info("26" + spSubTotal);
@@ -534,7 +535,7 @@ public class SpCakeController {
 
 			String addonRatePerKG = request.getParameter("addonRatePerKG");
 
-			String backendSpRate = request.getParameter("dbRate");
+			float backendSpRate = Float.parseFloat(request.getParameter("spBackendRate"));
 
 			String custChCk = "";
 			String orderPhoto1 = "";
@@ -702,7 +703,7 @@ public class SpCakeController {
 			spCakeOrder.setSpId(spId);
 			spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
 			spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
-			spCakeOrder.setSpSelectedWeight(Float.valueOf(spWeight));
+			spCakeOrder.setSpSelectedWeight(spWeight);
 
 			spCakeOrder.setSpDeliveryPlace(spPlace);
 			spCakeOrder.setSpPrice(Float.valueOf(spPrice));
@@ -720,16 +721,15 @@ public class SpCakeController {
 			spCakeOrder.setIsSlotUsed(isSlotUsed);
 			spCakeOrder.setIsAllocated(0);
 
-			Float floatBackEndRate = Float.valueOf(backendSpRate);
-			int intAddonRatePerKG = Integer.parseInt(spAddRate);
+			//Float floatBackEndRate = backendSpRate*spWeight;
+			//float intAddonRatePerKG = Float.parseFloat(spAddRate);
 
-			intAddonRatePerKG = (intAddonRatePerKG * 20) / 100;
-
+			float intAddonRatePerKG = (dbAdonRate * 0.8f);
+			float floatBackEndRate = (backendSpRate+intAddonRatePerKG)*spWeight;
 			System.out.println("Placing Order: \n Back End Rate " + floatBackEndRate);
 			System.out.println("Placing Order: \n Add On Rate " + intAddonRatePerKG);
 
 			spCakeOrder.setSpBackendRate(floatBackEndRate);
-
 			try {
 				HttpHeaders httpHeaders = new HttpHeaders();
 				httpHeaders.set("Content-Type", "application/json");
@@ -743,7 +743,7 @@ public class SpCakeController {
 				RestTemplate restTemplate = new RestTemplate();
 				SpCakeOrderRes spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder",httpEntity, SpCakeOrderRes.class);
 				System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
-
+				spCakeOrder.setSpInstructions(spCakeOrderRes.getSpCakeOrder().getSpInstructions());
 				SpCakeOrder spCake = spCakeOrderRes.getSpCakeOrder();
 
 				List<Flavour> flavoursList = new ArrayList<Flavour>();

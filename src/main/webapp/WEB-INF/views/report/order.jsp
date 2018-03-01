@@ -9,10 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<html lang="en">
+<html >
   <head>
-    <meta charset="UTF-8" />
-    <title>
+<!--     <meta charset="UTF-8" />
+ -->    <title>
     </title>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" />
   </head>
@@ -116,7 +116,7 @@ document.body.onload = function()
              -->
             
             <tr>
-            <td><p style="font-size:17px">${spCakeOrder.spInstructions}</p></td>
+            <td><p style="font-size:12px">${spCakeOrder.spInstructions}</p></td>
             <td align="center"><p style="font-size:12px"></p></td>
             <td align="center"><p style="font-size:12px"></p></td>
             <td align="right"><p style="font-size:12px"></p></td>

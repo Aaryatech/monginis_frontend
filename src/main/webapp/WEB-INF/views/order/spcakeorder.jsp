@@ -297,7 +297,7 @@ select {
 		<div class="col2">
 		      <c:set var = "dbRate" scope = "session" value = "${sprRate}"/>
 		      <input type="hidden" name="dbRate" id="dbRate" value="${sprRate}">
-		      
+		          <input type="hidden" name="spBackendRate" id="spBackendRate" value="${spBackendRate}">
 		 
           <select name="spwt" id="spwt" onchange="onChange('${dbRate}')"required>
             <c:forEach items="${weightList}" var="weightList">
@@ -400,7 +400,7 @@ select {
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2full"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
+		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
 		</div><div class="col2"> 
         <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	</div>
