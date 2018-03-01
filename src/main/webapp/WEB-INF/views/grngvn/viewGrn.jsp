@@ -123,49 +123,54 @@
 												<td class="col-md-1"><c:out
 														value="${grnList.taxableAmt}" /></td>
 												<td class="col-md-1"><c:out value="${grnList.taxAmt}" /></td>
-												<td class="col-md-1"><c:out value="${grnList.aprGrandTotal}" /></td>
+												<td class="col-md-1"><c:out
+														value="${grnList.aprGrandTotal}" /></td>
 
 												<td class="col-md-1"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
-														value="${grnList.apporvedAmt}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
-
+														value="${grnList.apporvedGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
+												<c:set var="status" value="a"></c:set>
 												<c:choose>
 													<c:when test="${grnList.grngvnStatus==1}">
-														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+														<c:set var="status" value="Pending"></c:set>
+
 													</c:when>
 													<c:when test="${grnList.grngvnStatus==2}">
-														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+														<c:set var="status" value="Pending"></c:set>
 													</c:when>
+
 													<c:when test="${grnList.grngvnStatus==3}">
-														<td class="col-md-1"><c:out
-																value="Reject By Dispatch"></c:out></td>
+														<c:set var="status" value="Reject By Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<td class="col-md-1"><c:out value="Pending"></c:out></td>
+														<c:set var="status" value="Pending"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
-														<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
-													</c:when>
-													<c:when test="${grnList.grngvnStatus==6}">
-														<td class="col-md-1"><c:out value="Approved"></c:out></td>
-													</c:when>
-													<c:when test="${grnList.grngvnStatus==7}">
-														<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
-													</c:when>
-													<c:when test="${grnList.grngvnStatus==8}">
-														<td class="col-md-1"><c:out
-																value="Partially Approved"></c:out></td>
+														<c:set var="status" value="Reject By Store"></c:set>
 													</c:when>
 
+													<c:when test="${grnList.grngvnStatus==6}">
+														<c:set var="status" value="Approved"></c:set>
+													</c:when>
+
+													<c:when test="${grnList.grngvnStatus==7}">
+														<c:set var="status" value="Reject By Acc"></c:set>
+													</c:when>
+
+													<c:otherwise>
+														<c:set var="status" value="Partially Approved"></c:set>
+													</c:otherwise>
+
 												</c:choose>
-												
+												<td class="col-md-1"><c:out value="${status}"></c:out></td>
+
 												<td class="col-md-1"><c:out
-																value="${grnList.isCreditNote}"></c:out></td>
-																
-																<td class="col-md-1"><c:out
-																value="${grnList.creditNoteId}"></c:out></td>
+														value="${grnList.isCreditNote}"></c:out></td>
+
+												<td class="col-md-1"><c:out
+														value="${grnList.creditNoteId}"></c:out></td>
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGrnDetail(${grnList.grnGvnHeaderId})"><abbr
 														title='Detail'><i class='fa fa-list'></i></abbr></a></td>
@@ -250,20 +255,20 @@ document.getElementById("headeIdText").value=0;
 								
 								if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
-								if(grndata.grngvnStatus==2)
+								else if(grndata.grngvnStatus==2)
 									grnStatus="Pending";
-								if(grndata.grngvnStatus==3)
+								else if(grndata.grngvnStatus==3)
 									grnStatus="Reject By Dispatch";
-								if(grndata.grngvnStatus==4)
+								else if(grndata.grngvnStatus==4)
 									grnStatus="Pending";
-								if(grndata.grngvnStatus==5)
+								else if(grndata.grngvnStatus==5)
 									grnStatus="Reject By Store";
-								if(grndata.grngvnStatus==6)
+								else if(grndata.grngvnStatus==6)
 									grnStatus="Approved";
-								if(grndata.grngvnStatus==7)
+								else if(grndata.grngvnStatus==7)
 									grnStatus="Reject By Acc";
 								
-								if(grndata.grngvnStatus==8)
+								else(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
 								
 								var isCredit;
@@ -278,7 +283,7 @@ document.getElementById("headeIdText").value=0;
 						tr.append($('<td class="col-md-2"></td>').html(grndata.taxableAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.taxAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.apporvedAmt));
+						tr.append($('<td class="col-md-2"></td>').html(grndata.aprGrandTotal));
 						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
 						
 						tr.append($('<td class="col-md-2"></td>').html(isCredit));

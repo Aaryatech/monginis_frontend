@@ -214,5 +214,16 @@ public class GrnGvnHeader {
 		this.aprROff = aprROff;
 	}
 
+	@Override
+	public String toString() {
+		return "GrnGvnHeader [grnGvnHeaderId=" + grnGvnHeaderId + ", frId=" + frId + ", grngvnSrno=" + grngvnSrno
+				+ ", grngvnDate=" + grngvnDate + ", isGrn=" + isGrn + ", taxableAmt=" + taxableAmt + ", taxAmt="
+				+ taxAmt + ", totalAmt=" + totalAmt + ", grngvnStatus=" + grngvnStatus + ", apporvedAmt=" + apporvedAmt
+				+ ", isCreditNote=" + isCreditNote + ", creditNoteId=" + creditNoteId + ", approvedDatetime="
+				+ approvedDatetime + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax
+				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs
+				+ ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", grnGvn=" + grnGvn + "]";
+	}
+
 	
 }
