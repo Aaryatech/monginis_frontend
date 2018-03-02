@@ -10,7 +10,6 @@ int grnGvnId;
 int grnGvnHeaderId;//16 feb added
 	
 	String grnGvnDate;
-	
 
 	
 	private int billNo;
