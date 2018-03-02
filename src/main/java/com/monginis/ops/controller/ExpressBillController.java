@@ -844,16 +844,22 @@ public class ExpressBillController {
 	public ModelAndView printSelectedOrder(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("expressBill/frSelectedExBillPrint");
 		System.out.println("IN Print Selected Order");
+		try {
+		HttpSession session = request.getSession();
 
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		System.out.println("Selected List " + BillDetailList.toString());
 		model.addObject("exBill", BillDetailList);
 		
 		model.addObject("invNo",sellInvoiceGlobal);
-
+        model.addObject("frGstType", frDetails.getFrGstType());
 
 		model.addObject("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 		System.out.println("After print ");
-
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		return model;
 	}
 }

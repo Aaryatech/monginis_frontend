@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Custmore Bill</title>
+<title>Express Bill</title>
 
 <html lang="en">
   <head>
@@ -40,7 +40,17 @@
   <tbody> 
   <tr>
   <td align="right" style="padding:0px;">EX</td>  </tr><tr>
-      <td colspan="2" align="center" style="padding:1px;"><p>BILL OF SUPPLY</p></td> 
+      <td colspan="2" align="center" style="padding:1px;"><p>
+      <c:choose>
+      <c:when test="${frGstType==10000000 }">
+      TAX INVOICE
+      
+      </c:when>
+      <c:otherwise>
+        BILL OF SUPPLY
+      </c:otherwise>
+    
+      </c:choose></p></td> 
     </tr>
     <tr>
       <td colspan="2" align="center" style="padding:2px; border-bottom:1px solid #E7E7E7;"><p class="style2" ><b>${sessionScope.frDetails.frName}</b><br /><span style="font-size: 10px; font-family: Arial;">(The Monginis Cake Shop)</span></p>

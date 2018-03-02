@@ -1851,16 +1851,16 @@ public class CustomerBillController {
 		// String fr_Id=request.getParameter("frId");
 		int billNo = Integer.parseInt(sellBillNo);
 		// int billNo=Integer.parseInt(fr_Id);
-		// HttpSession ses = request.getSession();
-		// Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
+		HttpSession ses = request.getSession();
+		 Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		 frGstType=frDetails.getFrGstType();
 		ModelAndView model = new ModelAndView("report/franchCompInvoice");
 
 		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("billNo", billNo);
-		if (frGstType != 0) {
+		if (frGstType==10000000) {
 			model = new ModelAndView("report/franchTaxInvoice");
 			List<GetCustBillTax> getCustBilTaxList = rest.postForObject(Constant.URL + "getCustomerBillTax", map,
 					List.class);
