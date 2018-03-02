@@ -17,8 +17,8 @@
               </c:otherwise>
               </c:choose>
  
-       <input type="hidden" id="achievedTarget" value="${sessionScope.achievedTarget}">
-       <input type="hidden" id="target" value="${frDetails.frTarget}">
+ <input type="hidden" id="achievedTarget" value="${sessionScope.achievedTarget}">
+       <input type="hidden" id="target" value="${sessionScope.fraTarget}">
         <div class="logoBarRight">
       
         <div id="menuzord" class="menuzord red menuzord-responsive">

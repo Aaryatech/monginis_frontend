@@ -9,8 +9,17 @@ public class FrTotalSale implements Serializable{
 	private int month;
 
 	private int frId;
-	
+	private float targetAmt;
+
 	private float totalSale;
+
+	public float getTargetAmt() {
+		return targetAmt;
+	}
+
+	public void setTargetAmt(float targetAmt) {
+		this.targetAmt = targetAmt;
+	}
 
 	public int getMonth() {
 		return month;
@@ -38,8 +47,8 @@ public class FrTotalSale implements Serializable{
 
 	@Override
 	public String toString() {
-		return "FrTotalSale [month=" + month + ", frId=" + frId + ", totalSale=" + totalSale + "]";
+		return "FrTotalSale [month=" + month + ", frId=" + frId + ", targetAmt=" + targetAmt + ", totalSale="
+				+ totalSale + "]";
 	}
-	
-	
+    	
 }

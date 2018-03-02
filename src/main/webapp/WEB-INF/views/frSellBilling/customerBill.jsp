@@ -105,7 +105,7 @@ body {
 
 .dialog-ovelay .dialog {
 	width: 25%;
-	height: 18%;
+	height: 25%;
 	border-radius: 25px;
 	margin: 320px auto 0;
 	background-color: #fff;

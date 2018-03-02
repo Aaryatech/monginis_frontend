@@ -375,7 +375,8 @@ public class HomeController {
 
 			// Managing session
 			session.setAttribute("menuList", filteredFrMenuList);
-			session.setAttribute("frDetails", loginResponse.getFranchisee());
+			session.setAttribute("frDetails", loginResponse.getFranchisee()); 
+			session.setAttribute("loginInfo", loginResponse.getLoginInfo());
 			session.setAttribute("msgList", msgList);
 			session.setAttribute("schedulerLists",schedulerLists);
 			session.setAttribute("frId",loginResponse.getFranchisee().getFrId());
@@ -446,11 +447,13 @@ public class HomeController {
 				map,FrTotalSale.class);
 		System.out.println("Get Fr Total Sale  "+frTotalSale.toString());
 		float achievedTarget=0;
+		
 			if(frTotalSale!=null)
 			{
 				achievedTarget=frTotalSale.getTotalSale();
 			}
 		session.setAttribute("achievedTarget",achievedTarget);
+		session.setAttribute("fraTarget",frTotalSale.getTargetAmt());
 		
 			model = new ModelAndView("home");
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());

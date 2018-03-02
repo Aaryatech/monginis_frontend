@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Custmore Bill</title>
+<title>Customer Bill</title>
 
 <html lang="en">
   <head>

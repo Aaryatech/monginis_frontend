@@ -1,6 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<style>
+	.pageTitle {
+   margin-top:0px;
+}
+	</style>
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +87,15 @@
 					<jsp:param name="myMenu" value="${menuList}" />
 
 				</jsp:include>
+   <%--     <input type="hidden" id="achievedTarget" value="${sessionScope.achievedTarget}">
+       <input type="hidden" id="target" value="${sessionScope.fraTarget}"> --%>
+       <c:choose>
+       <c:when test="${loginInfo.accessRight==1}">
+                    <div id="chart_div" style="width: 220px;height: 70px;  float:right;margin-right: 60px;margin-top: 10px;"></div>
+       
+       </c:when>
+       
+       </c:choose>
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
@@ -238,6 +252,58 @@
 	</div>
 	<!--wrapper-end-->
 
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+	var achievedTarget=document.getElementById("achievedTarget").value;
+	var target=document.getElementById("target").value;
+	var monthTarget=target;
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawMultSeries);
+
+function drawMultSeries() {
+	 
+	achievedTarget=Math.ceil(achievedTarget);
+	 
+	if(achievedTarget>=target)
+		{
+		 
+		target=0;
+		}
+	else{
+		 
+		 
+		target=target-achievedTarget;
+		
+	}
+	
+      var data = google.visualization.arrayToDataTable([
+        ['Target In Lakhs', 'Assigned Target'],
+        ['Monthly Target:'+monthTarget,target],
+        ['Achieved Target:'+achievedTarget,achievedTarget],
+      ]);
+
+      var options = {
+    	        title: 'Franchise Target',
+    	        chartArea: {width: '1220',height: '1220'},
+    	        hAxis: {
+    	          title: 'Target Details',
+    	          minValue: 0
+    	        },
+    	        vAxis: {
+    	          title: 'Target In Lakhs'
+    	        }
+    	     
+    	      };
+
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+
+   
+      chart.draw(data, options);
+    }
+
+
+</script> 
 
 
 
