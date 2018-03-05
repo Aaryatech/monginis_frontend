@@ -10,7 +10,7 @@ int grnGvnId;
 int grnGvnHeaderId;//16 feb added
 	
 	String grnGvnDate;
-
+String itemHsncd;
 	
 	private int billNo;
 
@@ -726,32 +726,40 @@ private int isTallySync;
 	}
 
 
+	public String getItemHsncd() {
+		return itemHsncd;
+	}
+
+
+	public void setItemHsncd(String itemHsncd) {
+		this.itemHsncd = itemHsncd;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnDetails [grnGvnId=" + grnGvnId + ", grnGvnHeaderId=" + grnGvnHeaderId + ", grnGvnDate="
-				+ grnGvnDate + ", billNo=" + billNo + ", frId=" + frId + ", itemId=" + itemId + ", itemRate=" + itemRate
-				+ ", itemMrp=" + itemMrp + ", grnGvnQty=" + grnGvnQty + ", grnGvnAmt=" + grnGvnAmt + ", grnType="
-				+ grnType + ", isGrn=" + isGrn + ", isGrnEdit=" + isGrnEdit + ", grnGvnEntryDateTime="
-				+ grnGvnEntryDateTime + ", frGrnGvnRemark=" + frGrnGvnRemark + ", gvnPhotoUpload1=" + gvnPhotoUpload1
-				+ ", gvnPhotoUpload2=" + gvnPhotoUpload2 + ", grnGvnStatus=" + grnGvnStatus + ", approvedLoginGate="
-				+ approvedLoginGate + ", approveimedDateTimeGate=" + approveimedDateTimeGate + ", approvedRemarkGate="
-				+ approvedRemarkGate + ", approvedLoginStore=" + approvedLoginStore + ", approvedDateTimeStore="
-				+ approvedDateTimeStore + ", approvedRemarkStore=" + approvedRemarkStore + ", approvedLoginAcc="
-				+ approvedLoginAcc + ", grnApprovedDateTimeAcc=" + grnApprovedDateTimeAcc + ", approvedRemarkAcc="
-				+ approvedRemarkAcc + ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName="
-				+ itemName + ", frName=" + frName + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate
-				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt="
-				+ taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt
-				+ ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
-				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + ", aprQtyGate=" + aprQtyGate + ", aprQtyStore="
-				+ aprQtyStore + ", aprQtyAcc=" + aprQtyAcc + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax="
-				+ aprTotalTax + ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs
-				+ ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", isSameState=" + isSameState + "]";
+				+ grnGvnDate + ", itemHsncd=" + itemHsncd + ", billNo=" + billNo + ", frId=" + frId + ", itemId="
+				+ itemId + ", itemRate=" + itemRate + ", itemMrp=" + itemMrp + ", grnGvnQty=" + grnGvnQty
+				+ ", grnGvnAmt=" + grnGvnAmt + ", grnType=" + grnType + ", isGrn=" + isGrn + ", isGrnEdit=" + isGrnEdit
+				+ ", grnGvnEntryDateTime=" + grnGvnEntryDateTime + ", frGrnGvnRemark=" + frGrnGvnRemark
+				+ ", gvnPhotoUpload1=" + gvnPhotoUpload1 + ", gvnPhotoUpload2=" + gvnPhotoUpload2 + ", grnGvnStatus="
+				+ grnGvnStatus + ", approvedLoginGate=" + approvedLoginGate + ", approveimedDateTimeGate="
+				+ approveimedDateTimeGate + ", approvedRemarkGate=" + approvedRemarkGate + ", approvedLoginStore="
+				+ approvedLoginStore + ", approvedDateTimeStore=" + approvedDateTimeStore + ", approvedRemarkStore="
+				+ approvedRemarkStore + ", approvedLoginAcc=" + approvedLoginAcc + ", grnApprovedDateTimeAcc="
+				+ grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc + ", delStatus=" + delStatus
+				+ ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName + ", frName=" + frName
+				+ ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer=" + sgstPer + ", cgstPer="
+				+ cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax
+				+ ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote=" + isCreditNote
+				+ ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", refInvoiceDate="
+				+ refInvoiceDate + ", aprQtyGate=" + aprQtyGate + ", aprQtyStore=" + aprQtyStore + ", aprQtyAcc="
+				+ aprQtyAcc + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax + ", aprSgstRs="
+				+ aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs + ", aprGrandTotal="
+				+ aprGrandTotal + ", aprROff=" + aprROff + ", isSameState=" + isSameState + "]";
 	}
-	
-	
 
 
-	
 
 }

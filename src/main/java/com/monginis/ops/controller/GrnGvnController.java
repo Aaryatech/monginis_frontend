@@ -60,6 +60,7 @@ import com.monginis.ops.model.grngvn.GetGrnItemConfig;
 import com.monginis.ops.model.grngvn.GrnGvn;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
 import com.monginis.ops.model.grngvn.GrnGvnHeaderList;
+import com.monginis.ops.model.grngvn.GrnGvnPdf;
 import com.monginis.ops.model.grngvn.PostGrnGvnList;
 import com.monginis.ops.model.grngvn.ShowGrnBean;
 import com.monginis.ops.model.grngvn.StockForAutoGrnGvn;
@@ -1507,7 +1508,7 @@ public class GrnGvnController {
 	}
 
 	@RequestMapping(value = "/getGrnHeaderList", method = RequestMethod.GET)
-	public @ResponseBody List<GrnGvnHeader> getGrnDetails(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<GrnGvnHeader> getGrnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
 
 		System.out.println("in method");
@@ -1598,6 +1599,10 @@ public class GrnGvnController {
 
 			grnDetailList = ab.getGrnGvnDetails();
 			System.out.println("GRN Detail   " + grnDetailList.toString());
+			
+			
+
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1660,12 +1665,18 @@ public class GrnGvnController {
 					.exchange(Constant.URL + "getFrGvnDetails", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			getGrnGvnDetailsList = responseEntity.getBody();
+			
+			
+			
+			
+			//System.err.println("Assigned "+grnpdfList.toString());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 		grnGvnDetailsList = getGrnGvnDetailsList.getGrnGvnDetails();
-
+		
 		System.out.println("gvn  list " + grnGvnDetailsList);
 
 		for (int i = 0; i < grnGvnDetailsList.size(); i++) {
@@ -1774,7 +1785,8 @@ public class GrnGvnController {
 
 			grnDetailList = ab.getGrnGvnDetails();
 			System.out.println("GRN Detail   " + grnDetailList.toString());
-
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Ex in getting GVN  Detail " + e.getMessage());
@@ -1786,5 +1798,58 @@ public class GrnGvnController {
 		return modelAndView;
 
 	}
+	
+	
 
+	int globalHeaderId;
+	@RequestMapping(value = "/getGrnPdf/{fromDate}/{toDate}/{headerId}", method = RequestMethod.GET)
+	public ModelAndView getGrnPdf(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("headerId") int headerId) {
+
+		ModelAndView model = new ModelAndView("grngvn/pdf/grnPdf");
+		try {
+			
+		//System.out.println("Inside getGrnPdf " +grnpdfList.toString());
+		List<GetGrnGvnDetails> grnDetailList = new ArrayList<>();
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		RestTemplate restTemplate = new RestTemplate();
+		GrnGvnPdf grnPdf=new GrnGvnPdf();
+		
+	//	List<GetGrnGvnDetails> grnpdfList;
+
+		map.add("grnGvnHeaderId", headerId);
+
+			GetGrnGvnDetailsList details = restTemplate.postForObject(Constant.URL + "getFrGrnDetails", map,
+					GetGrnGvnDetailsList.class);
+
+			grnDetailList = details.getGrnGvnDetails();
+			System.out.println("GRN Detail   " + grnDetailList.toString());
+		
+			GrnGvnHeader header=new GrnGvnHeader();
+			 map = new LinkedMultiValueMap<String, Object>();
+			 map.add("headerId", headerId);
+			header=restTemplate.postForObject(Constant.URL + "getHeaderByHeaderId", map,
+					GrnGvnHeader.class);
+			
+			System.err.println("Header received "+header.toString());
+		
+		grnPdf.setDate(header.getGrngvnDate());
+		
+		grnPdf.setFrName(grnDetailList.get(0).getFrName());
+		
+		grnPdf.setSrNo(header.getGrngvnSrno());
+		
+		grnPdf.setDetail(grnDetailList);
+		
+		model.addObject("grnPdf",grnPdf);
+		
+		
+		}catch (Exception e) {
+			System.err.println("Err in get Grn Pdf "+e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
 }

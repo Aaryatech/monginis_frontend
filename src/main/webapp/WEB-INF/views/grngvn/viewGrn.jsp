@@ -77,6 +77,7 @@
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
+								
 						</div>
 
 					</div>
@@ -107,6 +108,8 @@
 											<th class="col-md-1">Credited?</th>
 											<th class="col-md-1">Credit No</th>
 											<th class="col-md-2">Action</th>
+											<th class="col-md-1">PDF</th>
+
 
 										</tr>
 									</thead>
@@ -174,6 +177,11 @@
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGrnDetail(${grnList.grnGvnHeaderId})"><abbr
 														title='Detail'><i class='fa fa-list'></i></abbr></a></td>
+
+
+												<td class="col-md-1"><a href='#' class='action_btn'
+													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+														title='Pdf'><i class='fa fa-list'></i></abbr></a></td>
 
 												<%-- <input type="button" onclick="getGrnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td> --%>
 
@@ -277,7 +285,6 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.isCreditNote==0)
 									isCredit="Pending";
 								
-
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.taxableAmt));
@@ -290,11 +297,12 @@ document.getElementById("headeIdText").value=0;
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.creditNoteId));	
 
-						
 
 						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
 						
 							tr.append($('<td ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a></td>'));
+							
+							tr.append($('<td ><a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><abbr title="Pdf"><i class="fa fa-list"></i></abbr></a></td>'));
 
 						//tr.append($('<td class="col-md-2"><a href=''#' class='action_btn' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")'> <abbr title='Detail'><i class="fa fa-trash"></i></abbr></a></td>'));
 $('#table_grid tbody')
@@ -319,6 +327,9 @@ $('#table_grid tbody')
 function getGrnDetail(headerId){
 			//alert("HIII");
 			//alert("header ID "+headerId)
+			
+			var fromDate =$("#datepicker").val();
+			var toDate =$("#datepicker2").val();
 		    var form = document.getElementById("validation-form");
 		    form.action ="getGrnDetailList/"+headerId;
 		    form.submit();
@@ -377,8 +388,28 @@ jQuery(document).ready(function() {
 
 	</script>
 
+<script>
 
+function genPdf(headerId) {
+		alert("Inside Gen Pdf ");
+//var srNo=$("#srNo"+headerId).html();
 
+//var srNo = document.getElementById("srNo"+headerId).innerHTML;
+
+//alert("Sr No= "+srNo);
+		var fromDate =$("#datepicker").val();
+		var toDate =$("#datepicker2").val();
+		
+		// var form = document.getElementById("grnForm");
+		    window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
+			//window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxBillwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/');
+
+		    
+			//window.open('${pageContext.request.contextPath}/pdfForReport?url=pdf/showSaleBillwiseByFrPdf/'+from_date+'/'+to_date+'/'+selectedFr+'/'+routeId+'/');
+
+		   // form.submit();
+	}
+	</script>
 
 </body>
 </html>
