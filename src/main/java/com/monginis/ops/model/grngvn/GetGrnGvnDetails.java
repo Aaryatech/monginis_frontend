@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class GetGrnGvnDetails {
 
-	int grnGvnId;
+ 	int grnGvnId;
 
 	int grnGvnHeaderId;// 16 feb added
 
