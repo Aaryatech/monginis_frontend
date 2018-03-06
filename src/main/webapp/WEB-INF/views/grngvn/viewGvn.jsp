@@ -95,23 +95,13 @@
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
-											<!-- <th class="col-md-2">GvnSr No</th>
-											<th class="col-md-1">Date</th>
-											<th class="col-md-2">Taxable Amt</th>
-											<th class="col-md-2">Tax Amt</th>
-											<th class="col-md-2">Amount</th>
-											<th class="col-md-2">Approved Amt</th>
-											<th class="col-md-2">Status</th>
-											<th class="col-md-2">Action</th>
- -->
-
 											<th class="col-md-2">GvnSr No</th>
 											<th class="col-md-1">Date</th>
 											<th class="col-md-2">Total Refund Requested</th>
 											<th class="col-md-2">Approved Refund</th>
 											<th class="col-md-2">Status</th>
 											<th class="col-md-2">Action</th>
-
+											<th class="col-md-1">PDF</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -124,8 +114,7 @@
 													value="${grnList.grnGvnHeaderId}"></td>
 												<td class="col-md-1"><c:out
 														value="${grnList.grngvnDate}" /></td>
-												<td class="col-md-1"><c:out
-														value="${grnList.totalAmt}" /></td>
+												<td class="col-md-1"><c:out value="${grnList.totalAmt}" /></td>
 
 												<td class="col-md-1"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
@@ -170,6 +159,10 @@
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
 														title='Detail'><i class='fa fa-list'></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
+
+												<td class="col-md-1"><a href='#' class='action_btn'
+													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+														title='Pdf'><i class='fa fa-list'></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
 
 											</tr>
 										</c:forEach>
@@ -276,6 +269,7 @@ document.getElementById("headeIdText").value=0;
 						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
 						
 							tr.append($('<td ><a href="#" class="action_btn" onclick="getGvnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a></td>'));
+							tr.append($('<td ><a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><abbr title="Pdf"><i class="fa fa-list"></i></abbr></a></td>'));
 
 						//tr.append($('<td class="col-md-2"><a href=''#' class='action_btn' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")'> <abbr title='Detail'><i class="fa fa-trash"></i></abbr></a></td>'));
 $('#table_grid tbody')
@@ -361,7 +355,20 @@ jQuery(document).ready(function() {
 	</script>
 
 
+<script>
 
+function genPdf(headerId) {
+		alert("Inside Gen Pdf ");
+
+		var fromDate =$("#datepicker").val();
+		var toDate =$("#datepicker2").val();
+		
+		    //window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
+		    
+		     window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0);
+			
+	}
+	</script>
 
 </body>
 </html>

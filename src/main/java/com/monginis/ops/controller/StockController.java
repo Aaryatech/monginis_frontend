@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,6 +77,12 @@ public class StockController {
 			
 			System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
 			runningMonth = frItemStockHeader.getMonth();
+			
+			int monthNumber = runningMonth;
+			String mon=Month.of(monthNumber).name();
+			
+			System.err.println("Month name "+mon);
+			
 
 		} catch (Exception e) {
 			System.out.println("Exception in runningMonth" + e.getMessage());
@@ -99,7 +106,7 @@ public class StockController {
 
 		System.out.println("Day Of Month is: " + dayOfMonth);
 
-		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth == calCurrentMonth) {
+		if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
 
 			isMonthCloseApplicable = true;
 			System.out.println("Day Of Month End ......" );

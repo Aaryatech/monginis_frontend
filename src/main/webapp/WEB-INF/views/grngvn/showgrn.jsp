@@ -88,6 +88,27 @@
 
 								</thead>
 								<tbody>
+								</table>
+								<div class="table-wrap">
+							<table id="table_grid" class="main-table">
+								<thead>
+									<tr class="bgpink">
+										<th class="col-md-1">Invoice No</th>
+										<th class="col-md-3">Name</th>
+										<th class="col-md-2">Type</th>
+										<th class="col-md-1">QTY</th>
+										<th class="col-md-1">Rate</th>
+									<!-- 	<th class="col-md-1">Grn Rate</th> -->
+										<th class="col-md-1">Edit Qty</th>
+										<th class="col-md-1">Tax %</th>
+										<th class="col-md-1">Taxable Amt</th>
+										<th class="col-md-1">Tax Amt</th>
+										<th class="col-md-1">Amount</th>
+										<th class="col-md-1">Remark</th>
+									</tr>
+
+								</thead>
+								<tbody>
 
 
 									<%-- 	

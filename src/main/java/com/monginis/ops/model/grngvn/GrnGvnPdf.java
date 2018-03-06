@@ -10,6 +10,7 @@ public class GrnGvnPdf {
 	
 	String date;
 	
+	int type;// 1 for GRN , 0 for GVN
 	
 	List<GetGrnGvnDetails> detail;
 
@@ -54,10 +55,20 @@ public class GrnGvnPdf {
 	}
 
 
+	public int getType() {
+		return type;
+	}
+
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+
 	@Override
 	public String toString() {
-		return "GrnGvnPdf [frName=" + frName + ", srNo=" + srNo + ", date=" + date + ", detail=" + detail + "]";
+		return "GrnGvnPdf [frName=" + frName + ", srNo=" + srNo + ", date=" + date + ", type=" + type + ", detail="
+				+ detail + "]";
 	}
 	
-
 }

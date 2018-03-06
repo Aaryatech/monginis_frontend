@@ -450,9 +450,12 @@
 <script type="text/javascript">
 			function searchStock() {
 				
+			
+				
 				$('#loader').show();
 				
 				var isMonthClose= ${isMonthCloseApplicable};
+				//alert(isMonthClose);
 						
 				var selectedCat = $("#selectCategory").val();
 				
@@ -467,15 +470,15 @@
 
 					var len = data.length;
 					$('#table_grid td').remove();
-								
+					//alert(isMonthClose+ "month close");			
 					
-				/* 	if(isMonthClose && selectedStockOption == 1){
+					if(isMonthClose && selectedStockOption == 1){
 					
 				
 						document.getElementById('monthEnd').style.display = "block";
 
-						$('#stockTable th').remove();
-						/* 		var tr = $('<tr class=bgpink></tr>');
+						$('#table_grid th').remove();
+							var tr = $('<tr class=bgpink></tr>');
 						
 						tr.append($('<th width=60 align=left>Item Id</th>'));
 						
@@ -500,8 +503,8 @@
 						
 						tr.append($('<th width=60 align=left>Stock Difference</th>'));
 					
-						$('#stockTable').append(tr); */
-				//	}
+						$('#table_grid').append(tr); 
+					}
 					
 					
 					$.each(data, function(key, item) {

@@ -392,22 +392,14 @@ jQuery(document).ready(function() {
 
 function genPdf(headerId) {
 		alert("Inside Gen Pdf ");
-//var srNo=$("#srNo"+headerId).html();
 
-//var srNo = document.getElementById("srNo"+headerId).innerHTML;
-
-//alert("Sr No= "+srNo);
 		var fromDate =$("#datepicker").val();
 		var toDate =$("#datepicker2").val();
 		
-		// var form = document.getElementById("grnForm");
-		    window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
-			//window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxBillwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/');
-
+		    //window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
 		    
-			//window.open('${pageContext.request.contextPath}/pdfForReport?url=pdf/showSaleBillwiseByFrPdf/'+from_date+'/'+to_date+'/'+selectedFr+'/'+routeId+'/');
-
-		   // form.submit();
+		     window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
+			
 	}
 	</script>
 
