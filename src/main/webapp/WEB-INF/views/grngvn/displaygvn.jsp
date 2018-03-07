@@ -44,7 +44,34 @@
 					<h2 class="pageTitle">GVN Details</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
-
+<div class="colOuter">
+					<!-- copy div kalpesh -->
+					<div class="calender-title"></div>
+					
+					<div class="col-md-6">
+					<form action="" id="gvnForm" method="get">
+					
+					<table border="1">
+					<tr bgcolor="orange">
+					<th width="30%" align="left">Grn Date </th>
+					<th width="40%" align="left">Grn SrNo </th>
+					<th width="30%" align="left">Aprroved Amt </th>
+					</tr>
+					<tbody>
+					<tr>
+					<td align="center">${gvnDate}</td>
+					<td align="center">${gvnSrNo}</td>
+					<td align="center">${aprAmt}</td>
+					</tr>
+					</tbody>
+					</table>
+				<%-- 	GVN Date -<b> ${gvnDate}</b><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${gvnSrNo}</b>
+				    Appproved Amt -<b>${aprAmt}</b>
+				     --%>
+						</form>
+					</div>
+				</div>
 
 				<input type="hidden" name="mod_ser" id="mod_ser"
 					value="search_result">
@@ -101,7 +128,7 @@
 										<td class="col-md-1"><c:out value="${gvnList.invoiceNo}" /></td>
 										<td class="col-md-2"><c:out value="${gvnList.itemName}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
-										<td class="col-md-1"><c:out value="${gvnList.baseRate}" /></td>
+										<td class="col-md-1"><c:out value="${gvnList.itemRate}" /></td>
 
 										<td class="col-md-1"><c:out value="${gvnList.grnGvnQty}" /></td>
 
@@ -243,7 +270,7 @@
 															.append($(
 																	'<td class="col-md-1"></td>')
 																	.html(
-																			gvndata.baseRate));
+																			gvndata.itemRate));
 													tr
 															.append($(
 																	'<td class="col-md-1"></td>')

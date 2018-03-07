@@ -577,19 +577,16 @@ public class GrnGvnController {
 
 			if (length == 1)
 
-				invoiceNo = curStrYear + "-" + "0000" + grnGvnSrNo;
-			if (length == 2)
-
 				invoiceNo = curStrYear + "-" + "000" + grnGvnSrNo;
-
-			if (length == 3)
+			if (length == 2)
 
 				invoiceNo = curStrYear + "-" + "00" + grnGvnSrNo;
 
-			if (length == 4)
+			if (length == 3)
 
 				invoiceNo = curStrYear + "-" + "0" + grnGvnSrNo;
 
+			
 			System.out.println("*** settingValue= " + grnGvnSrNo);
 
 			grnGvnNo = frDetails.getFrCode() + invoiceNo;
@@ -1508,6 +1505,8 @@ public class GrnGvnController {
 
 	String gstType;
 
+	
+	List<GrnGvnHeader> grnHeaderList;
 	@RequestMapping(value = "/getGrnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGrnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
@@ -1531,7 +1530,7 @@ public class GrnGvnController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
+		 grnHeaderList = new ArrayList<>();
 
 		int frId = frDetails.getFrId();
 
@@ -1602,12 +1601,44 @@ public class GrnGvnController {
 		map.add("grnGvnHeaderId", headerId);
 		// getFrGrnDetail
 		try {
+			GrnGvnHeader grnHeader= new GrnGvnHeader();
+			
+			for(int i=0;i<grnHeaderList.size();i++) {
+				
+				if(grnHeaderList.get(i).getGrnGvnHeaderId()==headerId) {
+					
+					 grnHeader=grnHeaderList.get(i);
+				}
+			}
 
 			GetGrnGvnDetailsList ab = restTemplate.postForObject(Constant.URL + "getFrGrnDetails", map,
 					GetGrnGvnDetailsList.class);
 
 			grnDetailList = ab.getGrnGvnDetails();
+			
+			
+			for(int i=0;i<grnDetailList.size();i++) {
+				float refRate = 0;
+				if(grnDetailList.get(i).getGrnType()==0) {
+					
+					 refRate=grnDetailList.get(i).getItemRate()*75/100;
+				}
+				if(grnDetailList.get(i).getGrnType()==1) {
+					
+					 refRate=grnDetailList.get(i).getItemRate()*90/100;
+				}
+				if(grnDetailList.get(i).getGrnType()==2|| grnDetailList.get(i).getGrnType()==4) {
+					
+					 refRate=grnDetailList.get(i).getItemRate();
+				}
+				
+				grnDetailList.get(i).setBaseRate(refRate);
+			}
+			
 			System.out.println("GRN Detail   " + grnDetailList.toString());
+
+			modelAndView.addObject("grnSrNo", grnHeader.getGrngvnSrno());
+			modelAndView.addObject("aprAmt", grnHeader.getAprGrandTotal());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1692,7 +1723,7 @@ public class GrnGvnController {
 		return grnGvnDetailsList;
 
 	}
-
+	List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
 	@RequestMapping(value = "/getGvnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGvnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
@@ -1716,7 +1747,7 @@ public class GrnGvnController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
+		
 
 		int frId = frDetails.getFrId();
 
@@ -1791,19 +1822,38 @@ public class GrnGvnController {
 		// getFrGrnDetail
 		try {
 
+		GrnGvnHeader gvnHeader=new GrnGvnHeader();
+		
+		
+		for(int i=0;i<gvnHeaderList.size();i++) {
+			
+			if(gvnHeaderList.get(i).getGrnGvnHeaderId()== headerId) {
+				
+				gvnHeader=gvnHeaderList.get(i);
+
+				break;
+			}
+			
+		}
 			GetGrnGvnDetailsList ab = restTemplate.postForObject(Constant.URL + "getFrGvnDetails", map,
 					GetGrnGvnDetailsList.class);
 
 			grnDetailList = ab.getGrnGvnDetails();
+			
+			modelAndView.addObject("gvnSrNo", gvnHeader.getGrngvnSrno());
+
+			modelAndView.addObject("aprAmt", gvnHeader.getAprGrandTotal());
+
 			System.out.println("GRN Detail   " + grnDetailList.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Ex in getting GVN  Detail " + e.getMessage());
 		}
-		String grnDate = grnDetailList.get(0).getGrnGvnDate();
+		
+		String gvnDate = grnDetailList.get(0).getGrnGvnDate();
 		modelAndView.addObject("gvnList", grnDetailList);
-		modelAndView.addObject("grnDate", grnDate);
+		modelAndView.addObject("gvnDate", gvnDate);
 
 		return modelAndView;
 

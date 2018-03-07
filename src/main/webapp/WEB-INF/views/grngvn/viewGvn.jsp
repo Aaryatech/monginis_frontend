@@ -63,18 +63,20 @@
 
 
 
-						<div class="col-md-1">
-							<label>OR Gvn No</label>
+						<div class="col-sm-2">
+							<label>OR Gvn Sr No</label>
 							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
 						 name="headerCheckBox" id="headerCheckBox"
 							/> -->
 						</div>
 						<div class="col-md-1">
 							<input type="text" class="form-control" id="headeIdText"
-								name="headeIdText" value="0" />
+								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
-
 						<div class="col-md-1">
+						</div>
+						<div class="col-md-1">
+						
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
 						</div>
@@ -127,7 +129,7 @@
 
 													</c:when>
 													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Pending"></c:set>
+														<c:set var="status" value="Approved By Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==3}">
@@ -135,7 +137,7 @@
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Pending"></c:set>
+														<c:set var="status" value="Approved By Store"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
@@ -155,6 +157,7 @@
 													</c:otherwise>
 
 												</c:choose>
+												
 												<td class="col-md-1"><c:out value="${status}"></c:out></td>
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
@@ -243,7 +246,7 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
 							 if(grndata.grngvnStatus==2)
-									grnStatus="Pending";
+									grnStatus="Approved By Dispatch";
 									if(grndata.grngvnStatus==3)
 									grnStatus="Reject By Dispatch";
 								 if(grndata.grngvnStatus==4)
@@ -257,8 +260,6 @@ document.getElementById("headeIdText").value=0;
 								
 								if(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
-								
-								
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));

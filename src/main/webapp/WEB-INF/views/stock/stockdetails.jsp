@@ -131,8 +131,7 @@
 
 							<option value="-1">Select Option</option>
 							<option value="1" id="currentStock">Get Current Stock</option>
-							<option value="2" id="monthStock">Get Stock Between
-								Month</option>
+						
 							<option value="3" id="dateStock">Get Stock Between Dates</option>
 
 						</select>
@@ -143,7 +142,7 @@
 
 
 
-				<div class="colOuter" style="display: none" id=select_month_year>
+				<!-- <div class="colOuter" style="display: none" id=select_month_year>
 					<div class="col-md-2">
 						<div class="col1title">Select Month From :</div>
 					</div>
@@ -165,7 +164,7 @@
 							name="to_stockdate" required />
 					</div>
 
-				</div>
+				</div> -->
 
 
 

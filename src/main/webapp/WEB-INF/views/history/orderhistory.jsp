@@ -472,8 +472,8 @@ jQuery(document).ready(function(){
 	</script>
 <script type="text/javascript">
 	function Print() {
-		alert("Inside Print ");
-		window.print();
+		//alert("Inside Print ");
+		//window.print();
 		
 	}
 	</script>

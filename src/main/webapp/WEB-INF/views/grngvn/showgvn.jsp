@@ -11,7 +11,10 @@ label::before {
     height: 0px;
     border: 0px;
     }
-
+    
+ .main-table tbody > tr:hover{
+  background-color: #ffa;
+}
 
 </style>
 
@@ -53,7 +56,7 @@ label::before {
 
 				<div class="row">
 					<div class="col-md-2">
-						<h2 class="pageTitle">Apply GVN</h2>
+						<h2 class="pageTitle">Request GVN</h2>
 					</div>
 
 
@@ -153,7 +156,31 @@ label::before {
 						<div class="clearfix"></div>
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div id="faux-table" class="faux-table" aria="hidden" >
+							<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
+											<!-- 	<th class="col-md-1">Sr No.</th>
+											<th class="col-md-1">Bill No</th>
+											<th class="col-md-1">Date</th> -->
+
+											<th class="col-md-1">SELECT</th>
+											<th class="col-md-3">Item Name</th>
+											<th class="col-md-2">Purchase</th>
+
+											<th class="col-md-1">Quantity</th>
+											<th class="col-md-2">Rate</th>
+											<th class="col-md-2">Tax %</th>
+											<th class="col-md-2">Amount</th>
+
+										</tr>
+									</thead>
+							</table>
+							
+							
+							
+							
+							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>
@@ -172,6 +199,7 @@ label::before {
 											<th class="col-md-2">Amount</th>
 
 										</tr>
+										
 									</thead>
 									<tbody>
 
@@ -255,7 +283,7 @@ label::before {
   fauxTable.appendChild(clonedElement2);
 });
 
-	</script>
+	</script>	
 <script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";

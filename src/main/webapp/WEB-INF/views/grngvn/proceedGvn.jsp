@@ -6,7 +6,18 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<style type="text/css">
+label::before {
+    width: 0px;
+    height: 0px;
+    border: 0px;
+    }
+    
+ .main-table tbody > tr:hover{
+  background-color: #ffa;
+}
 
+</style>
 
 <div class="sidebarOuter"></div>
 
@@ -112,7 +123,24 @@
 						<div class="clearfix"></div>
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div id="faux-table" class="faux-table" aria="hidden">
+							<!-- 	<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
+											<th class="col-md-1">Item Name</th>
+											<th class="col-md-1">Purchase</th>
+											<th class="col-md-1">QTY</th>
+											<th class="col-md-1">Rate</th>
+											<th class="col-md-1">Tax %</th>
+											<th class="col-md-1">Amount</th>
+											<th class="col-md-1">Remark</th>
+											<th class="col-md-1">PHOTO 1</th>
+											<th class="col-md-1">PHOTO 2</th>
+										</tr>
+									</thead>
+									</table> -->
+							
+							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>

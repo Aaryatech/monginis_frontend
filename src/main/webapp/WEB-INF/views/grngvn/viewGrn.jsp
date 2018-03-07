@@ -63,17 +63,18 @@
 
 
 
-						<div class="col-md-1">
-							<label>OR Grn No</label>
+						<div class="col-sm-2">
+							<label>OR Grn Sr No</label>
 							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
 						 name="headerCheckBox" id="headerCheckBox"
 							/> -->
 						</div>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="headeIdText"
+							<input type="text" class="form-control" id="headeIdText" style="width: 120px"
 								name="headeIdText" value="0" />
 						</div>
-
+	<div class="col-md-1">
+	</div>
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
@@ -139,7 +140,7 @@
 
 													</c:when>
 													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Pending"></c:set>
+														<c:set var="status" value="Approved By Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==3}">
@@ -147,7 +148,7 @@
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Pending"></c:set>
+														<c:set var="status" value="Approved By Store"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
@@ -264,11 +265,11 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
 								else if(grndata.grngvnStatus==2)
-									grnStatus="Pending";
+									grnStatus="Approved  By Dispatch";
 								else if(grndata.grngvnStatus==3)
 									grnStatus="Reject By Dispatch";
 								else if(grndata.grngvnStatus==4)
-									grnStatus="Pending";
+									grnStatus="Approved By Store";
 								else if(grndata.grngvnStatus==5)
 									grnStatus="Reject By Store";
 								else if(grndata.grngvnStatus==6)
@@ -276,7 +277,7 @@ document.getElementById("headeIdText").value=0;
 								else if(grndata.grngvnStatus==7)
 									grnStatus="Reject By Acc";
 								
-								else(grndata.grngvnStatus==8)
+								else if(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
 								
 								var isCredit;

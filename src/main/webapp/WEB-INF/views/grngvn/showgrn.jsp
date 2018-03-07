@@ -56,7 +56,7 @@
 				</c:if>
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Apply GRN</h2>
+						<h2 class="pageTitle">Request GRN</h2>
 					</div>
 				</div>
 
@@ -76,13 +76,13 @@
 										<th class="col-md-3">Name</th>
 										<th class="col-md-2">Type</th>
 										<th class="col-md-1">QTY</th>
-										<th class="col-md-1">Rate</th>
+										<th class="col-md-1">Bill Rate</th>
 									<!-- 	<th class="col-md-1">Grn Rate</th> -->
 										<th class="col-md-1">Edit Qty</th>
 										<th class="col-md-1">Tax %</th>
 										<th class="col-md-1">Taxable Amt</th>
 										<th class="col-md-1">Tax Amt</th>
-										<th class="col-md-1">Amount</th>
+										<th class="col-md-1">Total Amt</th>
 										<th class="col-md-1">Remark</th>
 									</tr>
 
@@ -297,7 +297,7 @@
 		var remark = document.getElementById("grn_remark"+itemId).value;
 	 //	alert(remark);
 	 	if(remark==0){
-	 		alert("In remark ==0");
+	 		//alert("In remark ==0");
 			    document.getElementById("grnqtyauto"+itemId).value=autoQty;
 	 	}else{
 			 $("#grnqtyauto"+itemId).removeAttr("readonly"); 

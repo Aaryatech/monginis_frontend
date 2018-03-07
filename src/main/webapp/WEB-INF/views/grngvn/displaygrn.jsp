@@ -40,11 +40,16 @@
 				<div class="colOuter">
 					<!-- copy div kalpesh -->
 					<div class="calender-title"></div>
-					<div class="col-md-2">
+					
+					
+					<div class="col-md-3">
 					<form action="" id="grnForm" method="get">
 					
-						GRN Date -<b> ${grnDate}</b>
-						
+					GRN Date -<b> ${grnDate}</b><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${grnSrNo}</b>
+				    Appproved Amt -<b>${aprAmt}</b>
+				    
+				
 						</form>
 					</div>
 				</div>
