@@ -325,6 +325,9 @@ function serchOtherBill()
 							  	tr.append($('<td></td>').html(itemList.taxableAmt)); 
 							  	tr.append($('<td></td>').html(itemList.totalTax));
 							  	tr.append($('<td></td>').html(itemList.grandTotal));
+							  	tr.append($('<td></td>').html('<a href="${pageContext.request.contextPath}/viewOtherBillDetail/'+itemList.billNo+'" class="action_btn" '+
+										'title="Detail"><i class="fa fa-list"></i></abbr></a>'));
+							  	
 							    $('#table_grid tbody').append(tr);
 
 								 

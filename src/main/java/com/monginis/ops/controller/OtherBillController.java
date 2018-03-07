@@ -482,5 +482,38 @@ public class OtherBillController {
 		 
 		return otherBillHeaderlist; 
 	}
+	
+	@RequestMapping(value = "/viewOtherBillDetail/{billNo}", method = RequestMethod.GET)
+	public ModelAndView viewOtherBillDetail(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("frSellBilling/viewOtherBillDetail"); 
+		try
+		{
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billNo", billNo);
+			RestTemplate rest = new RestTemplate(); 
+			OtherBillHeader otherBillHeader = rest.postForObject(Constant.URL + "/getOtherBillHeaderAndDetailByBillNo",map,
+					OtherBillHeader.class);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("suppId", otherBillHeader.getSuppId());
+			FrSupplier supplier = rest.postForObject(Constant.URL + "/getFrSupplierById",map,
+					FrSupplier.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("itemGrp1", 2); 
+			Item[] items  = rest.postForObject(Constant.URL + "/getItemsByCatId", map,
+					Item[].class);  
+			ArrayList<Item> itemsList =new ArrayList<>(Arrays.asList(items));
+			 
+			
+			model.addObject("otherBillHeader", otherBillHeader);
+			model.addObject("supplier", supplier);
+			model.addObject("itemsList", itemsList);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return model; 
+	}
 
 }

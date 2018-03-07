@@ -178,6 +178,18 @@ body {
 	cursor: pointer
 }
 </style>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script>
+	$(function() {
+
+		 
+		$("#datepicker").datepicker({
+			dateFormat : 'dd-mm-yy', 
+		});
+	});
+	 
+</script>
 
 </head>
 <body id="myBodyId" onload="setCursor()">
@@ -283,7 +295,7 @@ body {
 													<b>Select Bill Date:-</b>
 												</h4>
 													<div class="col-md-8">
-														<input id="datepicker" class="texboxitemcode texboxcal"
+														<input id="datepicker" placeholder="Bill Date" class="texboxitemcode texboxcal"
 															name="billDate" type="text" required>
 													</div>
  											</div>
@@ -331,8 +343,8 @@ body {
 																			class="form-control" name="discPer" id="discPer" value="0"
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
-																		 <td ><button class="btn additem_btn" onclick="addItem();"
-												id="b1">Add Item</button></td>
+																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
+												id="b1"/> </td>
 																	</tr>
 																</table>
 															</td>
@@ -440,8 +452,8 @@ body {
 
 
 								<center>
-									<input type="submit" class="btn additem_btn" id="generateBill1"
-										 value="Submit">  
+									<input type="submit" class="btn additem_btn" id="insert"
+										 value="Submit" disabled>  
 								 
 								</center>  
 
@@ -568,6 +580,7 @@ body {
 						  				document.getElementById("grandTotalText").value = (total+taxAmt).toFixed(2);
 						  				document.getElementById("discTotal").innerText = (discTotal).toFixed(2);
 						  				document.getElementById("discTotalText").value = (discTotal).toFixed(2);
+						  				document.getElementById("insert").disabled =false; 
 						  				
 						});
 
@@ -695,6 +708,7 @@ body {
 
 					if (data == "") {
 						alert("No records found !!");
+						document.getElementById("insert").disabled =true;
 
 					}
 					var total=0;
