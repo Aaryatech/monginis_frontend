@@ -42,14 +42,23 @@
 					<div class="calender-title"></div>
 					
 					
-					<div class="col-md-3">
+					<div class="col-md-6">
 					<form action="" id="grnForm" method="get">
 					
-					GRN Date -<b> ${grnDate}</b><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${grnSrNo}</b>
-				    Appproved Amt -<b>${aprAmt}</b>
-				    
-				
+				<table border="1">
+					<tr bgcolor="orange">
+					<th width="30%" align="left">Grn Date </th>
+					<th width="40%" align="left">Grn SrNo </th>
+					<th width="30%" align="left">Aprroved Amt </th>
+					</tr>
+					<tbody>
+					<tr>
+					<td align="center">${grnDate}</td>
+					<td align="center">${grnSrNo}</td>
+					<td align="center">${aprAmt}</td>
+					</tr>
+					</tbody>
+					</table>
 						</form>
 					</div>
 				</div>
@@ -125,24 +134,24 @@
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==2}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+													<td class="col-md-1"><c:out value="Approved From Dispatch"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==3}">
-													<td class="col-md-1"><c:out value="Reject By Dispatch"></c:out></td>
+													<td class="col-md-1"><c:out value="Reject From Dispatch"></c:out></td>
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==4}">
-													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+													<td class="col-md-1"><c:out value="Approved From Store"></c:out></td>
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==5}">
-													<td class="col-md-1"><c:out value="Reject By Store"></c:out></td>
+													<td class="col-md-1"><c:out value="Reject From Store"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==6}">
-													<td class="col-md-1"><c:out value="Approved"></c:out></td>
+													<td class="col-md-1"><c:out value="Approved From Account"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==7}">
-													<td class="col-md-1"><c:out value="Reject By Acc"></c:out></td>
+													<td class="col-md-1"><c:out value="Reject From Account"></c:out></td>
 												</c:when>
 
 											</c:choose>
@@ -216,17 +225,17 @@
 					if (grndata.grnGvnStatus == 1)
 						grnStatus = "Pending";
 					if (grndata.grnGvnStatus == 2)
-						grnStatus = "Pending";
+						grnStatus = "Approved From Dispatch";
 					if (grndata.grnGvnStatus == 3)
-						grnStatus = "Reject By Dispatch";
+						grnStatus = "Reject From Dispatch";
 					if (grndata.grnGvnStatus == 4)
-						grnStatus = "Pending";
+						grnStatus = "Approved From Sell";
 					if (grndata.grnGvnStatus == 5)
-						grnStatus = "Reject By Store";
+						grnStatus = "Reject From Sell";
 					if (grndata.grnGvnStatus == 6)
-						grnStatus = "Approved";
+						grnStatus = "Approved From Account";
 					if (grndata.grnGvnStatus == 7)
-						grnStatus = "Reject By Acc";
+						grnStatus = "Reject From Account";
 
 					tr.append($('<td class="col-md-1"></td>').html(
 							grndata.invoiceNo));

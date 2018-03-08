@@ -1503,7 +1503,7 @@ public class GrnGvnController {
 		return model;
 	}
 
-	String gstType;
+	String gstType,frAddress;
 
 	
 	List<GrnGvnHeader> grnHeaderList;
@@ -1518,15 +1518,15 @@ public class GrnGvnController {
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
-		if (frDetails.getFrGstType().equals(2000000)) {
+System.err.println("GST TYpe from session "+frDetails.getFrGstType());
+		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
 
 		} else {
 			gstType = "Composite";
 		}
-
+frAddress=frDetails.getFrAddress();
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -1735,14 +1735,17 @@ public class GrnGvnController {
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
-		if (frDetails.getFrGstType().equals(2000000)) {
+		
+		
+		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
 
 		} else {
 			gstType = "Composite";
 		}
+		frAddress=frDetails.getFrAddress();
+
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -1918,9 +1921,10 @@ public class GrnGvnController {
 			grnPdf.setFrName(grnDetailList.get(0).getFrName());
 
 			grnPdf.setSrNo(header.getGrngvnSrno());
-
+grnPdf.setTaxableAmt(header.getTaxableAmt());
 			grnPdf.setDetail(grnDetailList);
 			grnPdf.setType(type);
+			grnPdf.setFrAddress(frAddress);
 
 			model.addObject("grnPdf", grnPdf);
 

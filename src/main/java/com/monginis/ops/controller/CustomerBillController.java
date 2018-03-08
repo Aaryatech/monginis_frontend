@@ -94,6 +94,7 @@ public class CustomerBillController {
 	int menuId;
 	private String itemShowGlobal;
 	Franchisee frDetails;
+
 	@RequestMapping(value = "/viewBill", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request, HttpServletResponse response) {
 
@@ -117,7 +118,7 @@ public class CustomerBillController {
 		String toDate = request.getParameter("toDate");
 
 		HttpSession ses = request.getSession();
-		 frDetails = (Franchisee) ses.getAttribute("frDetails");
+		frDetails = (Franchisee) ses.getAttribute("frDetails");
 		ses.setAttribute("fromSellBillDate", fromDate);
 		ses.setAttribute("toSellBillDate", toDate);
 		RestTemplate restTemplate = new RestTemplate();
@@ -203,13 +204,14 @@ public class CustomerBillController {
 		resetData6();
 		resetData7();
 		currentStockDetailList = new ArrayList<GetCurrentStockDetails>();
-	//	System.out.println(" new currentStockDetail List " + currentStockDetailList.toString());
+		// System.out.println(" new currentStockDetail List " +
+		// currentStockDetailList.toString());
 
 		HttpSession session = request.getSession();
 		try {
 
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-			 frDetails = (Franchisee) session.getAttribute("frDetails");
+			frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			System.out.println("menuList" + menuList.toString());
 			ArrayList<Integer> itemList = new ArrayList<Integer>();
@@ -1435,7 +1437,6 @@ public class CustomerBillController {
 		System.out.println("Token " + token);
 		System.out.println("Token Data " + customerBillDataToken1.toString());
 
-		
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		SellBillHeader sellBillHeaderRes = new SellBillHeader();
@@ -1612,7 +1613,7 @@ public class CustomerBillController {
 				customerBillItemList = customerBillDataToken7.getCustomerBillList();
 				break;
 			}
-			float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0 ,sumMrp=0;
+			float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
 
 			for (int i = 0; i < customerBillItemList.size(); i++) {
 				System.out.println("dddd");
@@ -1638,8 +1639,8 @@ public class CustomerBillController {
 				taxableAmt = roundUp(taxableAmt);
 
 				// -----------------------------------------
-				
-				float discAmt=((taxableAmt * discountPer) / 100);
+
+				float discAmt = ((taxableAmt * discountPer) / 100);
 				taxableAmt = taxableAmt - discAmt;
 
 				float sgstRs = (taxableAmt * tax1) / 100;
@@ -1681,17 +1682,16 @@ public class CustomerBillController {
 
 				sellBillDetail.setTaxableAmt(taxableAmt);
 				sellBillDetail.setTotalTax(totalTax);
-									
 
 				sellBillDetailList.add(sellBillDetail);
 
 			}
 			sellBillHeader.setTaxableAmt(sumTaxableAmt);
 			sellBillHeader.setDiscountPer(discountPer);
-		//	float discountAmt = 0;
+			// float discountAmt = 0;
 			// if(discountPer!=0.0)
-		//	discountAmt = ((sumGrandTotal * discountPer) / 100);
-			float payableAmt = sumGrandTotal ;
+			// discountAmt = ((sumGrandTotal * discountPer) / 100);
+			float payableAmt = sumGrandTotal;
 
 			payableAmt = roundUp(payableAmt);
 
@@ -1702,13 +1702,13 @@ public class CustomerBillController {
 			sellBillHeader.setGrandTotal(sumGrandTotal);
 
 			float calRemainingTotal = (payableAmt - paidAmount);
-			
-			if(calRemainingTotal<0) {
+
+			if (calRemainingTotal < 0) {
 				sellBillHeader.setRemainingAmt(0);
 
-			}else {
+			} else {
 
-			sellBillHeader.setRemainingAmt(calRemainingTotal);
+				sellBillHeader.setRemainingAmt(calRemainingTotal);
 			}
 			if (calRemainingTotal <= 0) {
 
@@ -1730,24 +1730,26 @@ public class CustomerBillController {
 					SellBillHeader.class);
 
 			System.out.println("info :" + sellBillHeaderRes.toString());
-			
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			String settingKey = new String();
-			settingKey = ""+frDetails.getFrId();
-			map.add("settingKeyList", settingKey);
-			FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
-					FrItemStockConfigureList.class);
-			System.out.println("SettingKeyList in EX BILL " + settingList.toString());
-			int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
-			settingValue = settingValue + 1;
-			System.out.println("inside update setting Value " + settingValue);
-			
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("settingValue", settingValue);
-			map.add("settingKey", ""+frDetails.getFrId());
-			Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map, Info.class);
-			
+
+			if (sellBillHeaderRes != null) {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				String settingKey = new String();
+				settingKey = "" + frDetails.getFrId();
+				map.add("settingKeyList", settingKey);
+				FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue",
+						map, FrItemStockConfigureList.class);
+				System.out.println("SettingKeyList in EX BILL " + settingList.toString());
+				int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
+				settingValue = settingValue + 1;
+				System.out.println("inside update setting Value " + settingValue);
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("settingValue", settingValue);
+				map.add("settingKey", "" + frDetails.getFrId());
+				Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map, Info.class);
+
+			}
 			if (sellBillHeaderRes != null) {
 				resetData1();
 
@@ -1764,15 +1766,15 @@ public class CustomerBillController {
 		return sellBillHeaderRes;
 
 	}
-	
-	public  String getInvoiceNo() {
+
+	public String getInvoiceNo() {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
 
 		String settingKey = new String();
 
-		settingKey = ""+frDetails.getFrId();
+		settingKey = "" + frDetails.getFrId();
 		map.add("settingKeyList", settingKey);
 
 		FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
@@ -1843,7 +1845,6 @@ public class CustomerBillController {
 		return invoiceNo;
 
 	}
-	
 
 	@RequestMapping(value = "/pdfSellBill", method = RequestMethod.GET)
 	public ModelAndView demoBill(HttpServletRequest request, HttpServletResponse response) {
@@ -1852,15 +1853,15 @@ public class CustomerBillController {
 		int billNo = Integer.parseInt(sellBillNo);
 		// int billNo=Integer.parseInt(fr_Id);
 		HttpSession ses = request.getSession();
-		 Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-		 frGstType=frDetails.getFrGstType();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		frGstType = frDetails.getFrGstType();
 		ModelAndView model = new ModelAndView("report/franchCompInvoice");
 
 		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("billNo", billNo);
-		if (frGstType==10000000) {
+		if (frGstType == 10000000) {
 			model = new ModelAndView("report/franchTaxInvoice");
 			List<GetCustBillTax> getCustBilTaxList = rest.postForObject(Constant.URL + "getCustomerBillTax", map,
 					List.class);
@@ -1868,25 +1869,23 @@ public class CustomerBillController {
 			model.addObject("custBilltax", getCustBilTaxList);
 		}
 
-		
-
 		ParameterizedTypeReference<List<GetCustmoreBillResponse>> typeRef = new ParameterizedTypeReference<List<GetCustmoreBillResponse>>() {
 		};
-		ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest
-				.exchange(Constant.URL + "getCustomerBill", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+		ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest.exchange(Constant.URL + "getCustomerBill",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-		List<GetCustmoreBillResponse> getCustmoreBillResponseList=responseEntity.getBody();
-		
-		GetCustmoreBillResponse billResponse=	getCustmoreBillResponseList.get(0);
-		
-		int billAmt=billResponse.getIntDiscAmt();
-		float discPer=billResponse.getDiscountPer();
-		
-		int intDiscAmt= Math.round((billAmt * discPer)/100);
+		List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
+
+		GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
+
+		int billAmt = billResponse.getIntDiscAmt();
+		float discPer = billResponse.getDiscountPer();
+
+		int intDiscAmt = Math.round((billAmt * discPer) / 100);
 
 		getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
-		
-		System.out.println("bill no:"+billNo +"Custmore Bill : " + getCustmoreBillResponseList.toString());
+
+		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
 
 		model.addObject("billList", getCustmoreBillResponseList);
 		return model;

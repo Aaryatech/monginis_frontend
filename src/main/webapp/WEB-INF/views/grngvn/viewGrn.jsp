@@ -140,27 +140,27 @@
 
 													</c:when>
 													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Approved By Dispatch"></c:set>
+														<c:set var="status" value="Approved From Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==3}">
-														<c:set var="status" value="Reject By Dispatch"></c:set>
+														<c:set var="status" value="Reject From Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Approved By Store"></c:set>
+														<c:set var="status" value="Approved From Sell"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
-														<c:set var="status" value="Reject By Store"></c:set>
+														<c:set var="status" value="Reject From Sell"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==6}">
-														<c:set var="status" value="Approved"></c:set>
+														<c:set var="status" value="Approved From Account"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==7}">
-														<c:set var="status" value="Reject By Acc"></c:set>
+														<c:set var="status" value="Reject From Account"></c:set>
 													</c:when>
 
 													<c:otherwise>
@@ -265,17 +265,17 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
 								else if(grndata.grngvnStatus==2)
-									grnStatus="Approved  By Dispatch";
+									grnStatus="Approved  From Dispatch";
 								else if(grndata.grngvnStatus==3)
-									grnStatus="Reject By Dispatch";
+									grnStatus="Reject From Dispatch";
 								else if(grndata.grngvnStatus==4)
-									grnStatus="Approved By Store";
+									grnStatus="Approved From Sell";
 								else if(grndata.grngvnStatus==5)
-									grnStatus="Reject By Store";
+									grnStatus="Reject From Sell";
 								else if(grndata.grngvnStatus==6)
-									grnStatus="Approved";
+									grnStatus="Approved From Account";
 								else if(grndata.grngvnStatus==7)
-									grnStatus="Reject By Acc";
+									grnStatus="Reject From Account";
 								
 								else if(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
@@ -392,14 +392,14 @@ jQuery(document).ready(function() {
 <script>
 
 function genPdf(headerId) {
-		alert("Inside Gen Pdf ");
+		//alert("Inside Gen Pdf ");
 
 		var fromDate =$("#datepicker").val();
 		var toDate =$("#datepicker2").val();
 		
-		    //window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
+		    window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
 		    
-		     window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
+		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
 			
 	}
 	</script>

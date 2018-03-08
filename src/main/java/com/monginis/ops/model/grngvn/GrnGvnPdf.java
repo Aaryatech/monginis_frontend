@@ -12,6 +12,11 @@ public class GrnGvnPdf {
 	
 	int type;// 1 for GRN , 0 for GVN
 	
+	float taxableAmt;
+	
+	String frAddress;
+	
+	
 	List<GetGrnGvnDetails> detail;
 
 
@@ -65,10 +70,31 @@ public class GrnGvnPdf {
 	}
 
 
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
+
+
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
+	}
+
+
+	public String getFrAddress() {
+		return frAddress;
+	}
+
+
+	public void setFrAddress(String frAddress) {
+		this.frAddress = frAddress;
+	}
+
+
 	@Override
 	public String toString() {
-		return "GrnGvnPdf [frName=" + frName + ", srNo=" + srNo + ", date=" + date + ", type=" + type + ", detail="
-				+ detail + "]";
+		return "GrnGvnPdf [frName=" + frName + ", srNo=" + srNo + ", date=" + date + ", type=" + type + ", taxableAmt="
+				+ taxableAmt + ", frAddress=" + frAddress + ", detail=" + detail + "]";
 	}
-	
+
+
 }

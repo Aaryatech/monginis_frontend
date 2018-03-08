@@ -73,10 +73,9 @@
 							<input type="text" class="form-control" id="headeIdText"
 								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
+						<div class="col-md-1"></div>
 						<div class="col-md-1">
-						</div>
-						<div class="col-md-1">
-						
+
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
 						</div>
@@ -99,6 +98,9 @@
 										<tr class="bgpink">
 											<th class="col-md-2">GvnSr No</th>
 											<th class="col-md-1">Date</th>
+											<th class="col-md-2">Taxable Amt</th>
+											<th class="col-md-2">Tax Amt</th>
+
 											<th class="col-md-2">Total Refund Requested</th>
 											<th class="col-md-2">Approved Refund</th>
 											<th class="col-md-2">Status</th>
@@ -116,6 +118,12 @@
 													value="${grnList.grnGvnHeaderId}"></td>
 												<td class="col-md-1"><c:out
 														value="${grnList.grngvnDate}" /></td>
+
+
+												<td class="col-md-1"><c:out
+														value="${grnList.taxableAmt}" /></td>
+												<td class="col-md-1"><c:out value="${grnList.taxAmt}" /></td>
+
 												<td class="col-md-1"><c:out value="${grnList.totalAmt}" /></td>
 
 												<td class="col-md-1"><fmt:formatNumber type="number"
@@ -129,27 +137,27 @@
 
 													</c:when>
 													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Approved By Dispatch"></c:set>
+														<c:set var="status" value="Approved From Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==3}">
-														<c:set var="status" value="Reject By Dispatch"></c:set>
+														<c:set var="status" value="Reject From Dispatch"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Approved By Store"></c:set>
+														<c:set var="status" value="Approved From Sell"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
-														<c:set var="status" value="Reject By Store"></c:set>
+														<c:set var="status" value="Reject From Sell"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==6}">
-														<c:set var="status" value="Approved"></c:set>
+														<c:set var="status" value="Approved From Account"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==7}">
-														<c:set var="status" value="Reject By Acc"></c:set>
+														<c:set var="status" value="Reject From Account"></c:set>
 													</c:when>
 
 													<c:otherwise>
@@ -157,7 +165,7 @@
 													</c:otherwise>
 
 												</c:choose>
-												
+
 												<td class="col-md-1"><c:out value="${status}"></c:out></td>
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
@@ -246,23 +254,24 @@ document.getElementById("headeIdText").value=0;
 								if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
 							 if(grndata.grngvnStatus==2)
-									grnStatus="Approved By Dispatch";
-									if(grndata.grngvnStatus==3)
-									grnStatus="Reject By Dispatch";
-								 if(grndata.grngvnStatus==4)
-									grnStatus="Pending";
-									if(grndata.grngvnStatus==5)
-									grnStatus="Reject By Store";
-								 if(grndata.grngvnStatus==6)
-									grnStatus="Approved";
-								 if(grndata.grngvnStatus==7)
-									grnStatus="Reject By Acc";
-								
-								if(grndata.grngvnStatus==8)
+									grnStatus="Approved From Dispatch";
+							 else if(grndata.grngvnStatus==3)
+									grnStatus="Reject From Dispatch";
+							 else if(grndata.grngvnStatus==4)
+									grnStatus="Approved From Sell";
+							 else	if(grndata.grngvnStatus==5)
+									grnStatus="Reject From Sell";
+							 else if(grndata.grngvnStatus==6)
+									grnStatus="Approved From Account";
+							 else if(grndata.grngvnStatus==7)
+									grnStatus="Reject From Account";
+							 else if(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
+				tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt));
+				tr.append($('<td class="col-md-1"></td>').html(grndata.taxAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.aprGrandTotal));
 						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
@@ -359,14 +368,14 @@ jQuery(document).ready(function() {
 <script>
 
 function genPdf(headerId) {
-		alert("Inside Gen Pdf ");
+		//alert("Inside Gen Pdf ");
 
 		var fromDate =$("#datepicker").val();
 		var toDate =$("#datepicker2").val();
 		
-		    //window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId);
+		    window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0);
 		    
-		     window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0);
+		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0);
 			
 	}
 	</script>

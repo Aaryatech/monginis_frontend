@@ -53,8 +53,8 @@
 					
 					<table border="1">
 					<tr bgcolor="orange">
-					<th width="30%" align="left">Grn Date </th>
-					<th width="40%" align="left">Grn SrNo </th>
+					<th width="30%" align="left">Gvn Date </th>
+					<th width="40%" align="left">Gvn SrNo </th>
 					<th width="30%" align="left">Aprroved Amt </th>
 					</tr>
 					<tbody>
@@ -155,27 +155,27 @@
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==2}">
-												<c:set var="status" value="Pending"></c:set>
+												<c:set var="status" value="Approved From Dispatch"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==3}">
-												<c:set var="status" value="Reject By Dispatch"></c:set>
+												<c:set var="status" value="Reject From Dispatch"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==4}">
-												<c:set var="status" value="Pending"></c:set>
+												<c:set var="status" value="Approved By Sell"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==5}">
-												<c:set var="status" value="Reject By Store"></c:set>
+												<c:set var="status" value="Reject From Sell"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==6}">
-												<c:set var="status" value="Approved"></c:set>
+												<c:set var="status" value="Approved From Account"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==7}">
-												<c:set var="status" value="Reject By Acc"></c:set>
+												<c:set var="status" value="Reject From Account"></c:set>
 											</c:when>
 										</c:choose>
 										<td class="col-md-1"><c:out value="${status}" /></td>
@@ -278,19 +278,21 @@
 																			gvndata.grnGvnQty));
 												
 													var status;
-													if (gvndata.grnGvnStatus == 1
-															|| gvndata.grnGvnStatus == 2
-															|| gvndata.grnGvnStatus == 4) {
+													if (gvndata.grnGvnStatus == 1)
 														status = "Pending";
-													} else if (gvndata.grnGvnStatus == 3) {
-														status = "Reject By Dispatch";
-													} else if (gvndata.grnGvnStatus == 5) {
-														status = "Reject By Store";
-													} else if (gvndata.grnGvnStatus == 7) {
-														status = "Reject By Acc";
-													} else if (gvndata.grnGvnStatus == 6) {
-														status = "Approved";
-													}
+													else if (gvndata.grnGvnStatus == 2)
+														status = "Approved From Dispatch";
+													else if (gvndata.grnGvnStatus == 3)
+														status = "Reject From Dispatch";
+													else if (gvndata.grnGvnStatus == 4)
+														status = "Approved From Sell";
+													else if (gvndata.grnGvnStatus == 5)
+														status = "Reject From Sell";
+													else if (gvndata.grnGvnStatus == 6)
+														status = "Approved From Account";
+													else	if (gvndata.grnGvnStatus == 7)
+														status = "Reject From Account";
+
 
 													tr
 															.append($(

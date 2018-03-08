@@ -63,9 +63,9 @@ label::before {
 					<div class="col-md-3">
 						<br> <select name="view_opt" id="view_opt" class="form-control"
 							style="width: 250px; background-color: white; height: 40px" onchange="showDate()">
-							<option value="0">--Select BILL--</option>
+							<option value="0">Select From Bill</option>
 
-							<option value="1">--Select Date--</option>
+							<option value="1">Select From Date</option>
 
 						</select>
 					</div>
@@ -81,8 +81,7 @@ label::before {
 
 					<div class="col-md-2">
 
-						<button type="button" class="buttonsaveorder"
-							onclick="getViewOption()" style="width: 100px; height: 40px">Search
+						<button type="button" class="buttonsaveorder" style="display: none;" id='searchButton'							onclick="getViewOption()" style="width: 100px; height: 40px">Search
 							</button>
 						<!--<button type="button" class="btn">Cancel</button>-->
 
@@ -101,13 +100,13 @@ label::before {
 
 							<div class="colOuter">
 								<div class="col-md-2">
-									<h5>Select Bill</h5>
+									<h6>Select Bill</h6>
 								</div>
 
 								<div class="col-md-3">
 									<select name="bill_no" id="bill_no" class="form-control"
 										style="width: 250px; background-color: white; height: 40px">
-										<option value="0">-- BILL NO--</option>
+									
 
 										<c:forEach items="${frBillList}" var="frBillList">
 											<c:choose>
@@ -157,7 +156,7 @@ label::before {
 
 						<div id="table-scroll" class="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden" >
-							<table id="table_grid" class="main-table">
+							<table id="table_grid1" class="main-table">
 									<thead>
 										<tr class="bgpink">
 											<!-- 	<th class="col-md-1">Sr No.</th>
@@ -434,9 +433,16 @@ function showDate(){
 	
 	if(viewOpt==1){
 		document.getElementById("datepicker").style.display= "block";
+		document.getElementById("searchButton").style.display= "block";
+
+		$('#table_grid td').remove();
+		
 	}
 	else{
 		document.getElementById("datepicker").style="display:none";
+		
+		document.getElementById("searchButton").style="display:none";
+		$('#table_grid td').remove();
 	}
 }
 </script>

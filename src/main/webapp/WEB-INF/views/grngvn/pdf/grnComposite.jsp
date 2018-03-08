@@ -20,18 +20,18 @@
 					<c:when test="${grnPdf.type==1}">
 						<td
 							style="padding: 10px; font-family: Calibri; text-align: center; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-top: 1px solid; border-bottom: 1px solid; border-left-color: #000000; border-top-color: #000000; border-bottom-color: #000000;"
-							colspan=3><nobr> GOODS RETURN NOTE- GRN</nobr></td>
+							colspan=3><nobr> GOODS RETURN NOTE - GRN</nobr></td>
 					</c:when>
 					<c:otherwise>
 
 						<td
 							style="padding: 10px; font-family: Calibri; text-align: center; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-top: 1px solid; border-bottom: 1px solid; border-left-color: #000000; border-top-color: #000000; border-bottom-color: #000000;"
-							colspan=3><nobr> GOODS Verification NOTE- GVN</nobr></td>
+							colspan=3><nobr> GOODS VARIATION NOTE - GVN</nobr></td>
 					</c:otherwise>
 				</c:choose>
 				<td
 					style="padding: 10px; font-family: Calibri; font-size: 20px; color: #000000; font-weight: bold; border-top: 1px solid; border-bottom: 1px solid; border-top-color: #000000; border-bottom-color: #000000;"
-					colspan=8><nobr>No.${grnPdf.srNo }</nobr> <nobr>&nbsp;</nobr>
+					colspan=8><nobr>Date-${grnPdf.date}</nobr> <nobr>&nbsp;</nobr>
 					<nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr></td>
 			</tr>
 			<tr style="height: 33.2px;">
@@ -40,13 +40,13 @@
 					colspan=3><nobr> DEBIT NOTE </nobr></td>
 				<td
 					style="padding: 10px; font-family: Calibri; font-size: 12px; color: #000000; font-weight: bold; border-left: 1px solid; border-bottom: 1px solid; border-left-color: #000000; border-bottom-color: #000000;"
-					colspan=8><nobr>Date- ${grnPdf.date}</nobr> <nobr>&nbsp;</nobr>
+					colspan=8><nobr>Sr No : ${grnPdf.srNo}</nobr> <nobr>&nbsp;</nobr>
 					<nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr></td>
 			</tr>
 			<tr style="height: 33.2px;">
 				<td
 					style="padding: 10px; font-family: Calibri; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-top: 1px solid; border-left-color: #000000; border-top-color: #000000;"
-					colspan=3 rowspan=4><nobr> From M/s, ${grnPdf.frName}</nobr> <nobr>STAMP
+					colspan=3 rowspan=4><nobr> From, M/s ${grnPdf.frName}</nobr><br>${grnPdf.frAddress}</br> <nobr>
 					</nobr></td>
 				<td
 					style="padding: 10px; font-family: Calibri; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-top: 1px solid; border-left-color: #000000; border-top-color: #000000;"
@@ -147,6 +147,25 @@
 					<c:set var="totalSum" value="${totalSum+ detail.grnGvnAmt}"></c:set>
 				</tr>
 			</c:forEach>
+			
+			
+			<tr style="height: 40px;">
+				<td
+					style="padding: 10px; font-family: Calibri; text-align: center; font-size: 14px; color: #000000; font-weight: bold; border: 1px solid; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-color: #000000;">
+					<nobr>&nbsp;</nobr>
+				</td>
+				<td
+					style="padding: 10px; font-family: Calibri; text-align: center; font-size: 14px; color: #000000; font-weight: bold; border: 1px solid; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-color: #000000;">
+					<nobr>&nbsp;</nobr>
+				</td>
+				<td
+					style="padding: 10px; text-align: right; font-family: Calibri; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-top: 1px solid; border-bottom: 1px solid; border-left-color: #000000; border-top-color: #000000; border-bottom-color: #000000;"
+					colspan=2><nobr> Taxable Amt  </nobr></td>
+				<td colspan="7"
+					style="font-family: Calibri; text-align: center; font-size: 14px; color: #FF0000; font-weight: bold; border: 1px solid; border-left-color: #000000; border-right-color: #000000; border-top-color: #000000; border-bottom-color: #000000;">
+					<fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" value ="${grnPdf.taxableAmt}" /></td>
+			</tr>
 
 			<tr style="height: 40px">
 				<td
