@@ -64,7 +64,7 @@
 						Customer Bill <span></span>
 					</div></a></li>
 					
-					
+				 
 					<li><a href="${pageContext.request.contextPath}/showExpressBill"><div
 						class="img">
 						<i class="fa fa-file-pdf-o icon"></i>
@@ -81,6 +81,21 @@
 						View <span>Bills</span>
 					</div></a></li>
 					
+						<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
+						class="img">
+						<i class="fa fa-file-pdf-o icon"></i>
+					</div>
+					<div class="title">
+						Other Bill <span></span>
+					</div></a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/showRuleFilePdf"><div
+						class="img">
+						<i class="fa fa-file-pdf-o icon"></i>
+					</div>
+					<div class="title">
+						Rule And Regulation <span></span>
+					</div></a></li>
 					
 					
 					<li><a href="${pageContext.request.contextPath}/showstockdetail" ><div class="img">
