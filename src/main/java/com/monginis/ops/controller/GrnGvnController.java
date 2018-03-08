@@ -1714,9 +1714,9 @@ frAddress=frDetails.getFrAddress();
 
 		for (int i = 0; i < grnGvnDetailsList.size(); i++) {
 			grnGvnDetailsList.get(i)
-					.setGvnPhotoUpload1(Constant.SPCAKE_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload1());
+					.setGvnPhotoUpload1(Constant.GVN_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload1());
 			grnGvnDetailsList.get(i)
-					.setGvnPhotoUpload2(Constant.SPCAKE_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload2());
+					.setGvnPhotoUpload2(Constant.GVN_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload2());
 
 		}
 
