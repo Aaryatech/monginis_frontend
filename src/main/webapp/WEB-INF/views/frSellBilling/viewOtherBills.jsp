@@ -42,23 +42,47 @@
 			<div class="sidebarright">
 				<div class="order-left">
 					<h2 class="pageTitle">Other Bills</h2>
+					
 
 				</div>
+				<div class="col1title" align="right"> 
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn btn-info">
+										</a>
+										</div>
 				<form id="validation-form">
 
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="calender-title">From</div>
+						<div class="col-md-3">From</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" name="from_Date" type="text">
 						</div>
 
-						<div class="calender-title">TO</div>
+						<div class="col-md-3">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
+						</div>
+						
+					 
+
+					</div>
+					
+					<div class="colOuter">
+						 
+						
+						<div class="col-md-3">Select Supplier: </div>
+						<div class="col-md-2">
+							<select class="form-control" data-live-search="true" title="Please Select Item" name="suppId" id="suppId"
+																			data-rule-required="true">
+																			<option value="0">All</option>
+																				<c:forEach items="${supplierList}" var="supplierList"> 
+																				<option value="${supplierList.suppId}">${supplierList.suppName}</option> 
+																				</c:forEach>
+
+																		</select>
 						</div>
 
  
@@ -295,6 +319,7 @@ function serchOtherBill()
 {
 	var fromDate=document.getElementById("datepicker").value;
 	var toDate=document.getElementById("datepicker2").value; 
+	var suppId=document.getElementById("suppId").value;
 	$
 	.getJSON(
 			'${getOtherBillBetweenDate}',
@@ -303,6 +328,7 @@ function serchOtherBill()
 				 
 				fromDate : fromDate,
 				toDate : toDate, 
+				suppId : suppId,
 			
 				ajax : 'true'
 

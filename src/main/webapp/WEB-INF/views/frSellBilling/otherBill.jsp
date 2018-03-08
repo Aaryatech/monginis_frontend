@@ -244,8 +244,11 @@ body {
 					</div>
 					<br>
 					<div class="order-right" align="right">
-						<a href="${pageContext.request.contextPath}/viewBill"><button
-								class="btn btn-success">View Bill</button></a>
+					 
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
+										</a>
+						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Bill" class="btn btn-info">
+										</a>
 					</div>
 
 					<!--tabNavigation-->

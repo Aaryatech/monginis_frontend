@@ -1,6 +1,13 @@
 package com.monginis.ops.controller;
   
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -18,6 +25,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.common.DateConvertor;
@@ -36,6 +44,7 @@ import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
+import com.monginis.ops.model.MRule;
 import com.monginis.ops.model.OtherBillDetail;
 import com.monginis.ops.model.OtherBillHeader;
    
@@ -446,7 +455,15 @@ public class OtherBillController {
 		ModelAndView model = new ModelAndView("frSellBilling/viewOtherBills"); 
 		try
 		{
-			 
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			RestTemplate rest = new RestTemplate(); 
+			FrSupplier[] list = rest.postForObject(Constant.URL + "/getAllFrSupplierListByFrId",map,
+					FrSupplier[].class);
+			ArrayList<FrSupplier> supplierList = new ArrayList<>(Arrays.asList(list)); 
+			model.addObject("supplierList",supplierList);
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -464,10 +481,12 @@ public class OtherBillController {
 		{
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
+			int suppId = Integer.parseInt(request.getParameter("suppId"));
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("suppId", suppId);
 			System.out.println("map" + map);
 			RestTemplate rest = new RestTemplate(); 
 			OtherBillHeader[] list = rest.postForObject(Constant.URL + "/getOtherBillHeaderBetweenDate",map,
@@ -514,6 +533,82 @@ public class OtherBillController {
 			e.printStackTrace();
 		}
 		return model; 
+	}
+	
+	String document1;
+	String document2;
+	
+	@RequestMapping(value = "/showRuleFilePdf", method = RequestMethod.GET)
+	public ModelAndView showRuleFilePdf(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("frSellBilling/showRuleFilePdf"); 
+		try
+		{
+			RestTemplate rest = new RestTemplate(); 
+			MRule[] list = rest.getForObject(Constant.URL + "getRuleFile",
+					MRule[].class);
+			ArrayList<MRule> fileList = new ArrayList<>(Arrays.asList(list));
+			System.out.println("fileList"+fileList);
+			document1=fileList.get(0).getFileName();
+			document2=fileList.get(1).getFileName();
+			
+			model.addObject("date1", fileList.get(0).getDate());
+			model.addObject("date2", fileList.get(1).getDate());
+			   
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return model; 
+	}
+	
+	@RequestMapping(value = "/viewRuleDocumentFile/{flag}", method = RequestMethod.GET)
+	public void viewDocumentFile(@PathVariable int flag,HttpServletRequest request, HttpServletResponse response) {
+
+		File file = null;
+		 if(flag==1)
+		 {
+			 file = new File(Constant.LOGIS_BILL_URL+document1);
+		 }
+		 else if(flag==2)
+		 {
+			file = new File(Constant.LOGIS_BILL_URL+document2);
+		 }
+		  
+			System.out.println("file"+file);
+			if(file != null) {
+
+                String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+                if (mimeType == null) {
+
+                    mimeType = "application/pdf";
+
+                }
+
+                response.setContentType(mimeType);
+
+                response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+ 
+
+                response.setContentLength((int) file.length());
+
+                InputStream inputStream = null;
+				try {
+					inputStream = new BufferedInputStream(new FileInputStream(file));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+                try {
+                    FileCopyUtils.copy(inputStream, response.getOutputStream());
+                } catch (IOException e) {
+                    System.out.println("Excep in Opening a Pdf File");
+                    e.printStackTrace();
+                }
+            }
+ 
 	}
 
 }
