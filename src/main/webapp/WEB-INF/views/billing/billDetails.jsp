@@ -188,7 +188,9 @@ However, delay the fade out process for 2.5 seconds */
 				<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden">
 <!-- 					<div class="table-wrap">
- -->						<table id="table_grid" class="main-table">
+ -->						 </div>
+							<div class="table-wrap">
+						<table id="table_grid" class="main-table">
 							<thead>
 								
 											<tr class="bgpink">
@@ -208,28 +210,6 @@ However, delay the fade out process for 2.5 seconds */
 													
 													<th class="col-md-1">GRN Type</th>
 											</tr>
-											</thead></table></div>
-							<div class="table-wrap">
-						<table id="table_grid" class="main-table">
-							<thead>
-								
-											<tr class="bgpink">
-												<th width="138" style="width: 18px" align="left">No</th>
-													<th class="col-md-1"></th>
-													<th class="col-md-1">Group</th>
-													<th class="col-md-1"></th>
-													<th class="col-md-1"></th>
-												
-													<th class="col-md-1">MRP</th>
-														<th class="col-md-1"></th>
-														<th class="col-md-1"></th>
-													<th class="col-md-1">GST %</th>
-													
-													<th class="col-md-1"></th>
-													<th class="col-md-1">Total</th>
-													
-													<th class="col-md-1"></th>
-											</tr>
 											</thead>				
 											
 											
@@ -237,11 +217,11 @@ However, delay the fade out process for 2.5 seconds */
 													
 											<c:forEach items="${billDetailsList}" var="billDetailsList" varStatus="count">
 												<tr>
-													<td class="col-md-1" align="left"><c:out value="${count.index+1}" /></td>
-													<td class="col-md-1" align="left"><c:out value="${billDetailsList.itemName}" /></td>
-													<td class="col-md-1" align="left"><c:out value="${billDetailsList.catName}" /></td>
-													<td class="col-md-1"align="right"><c:out value="${billDetailsList.orderQty}" /></td>
-													<td class="col-md-1"align="right"><c:out value="${billDetailsList.billQty}" /></td>
+													<td class="col-md-1" align="right"><c:out value="${count.index+1}" /></td>
+													<td class="col-md-1" align="right"><c:out value="${billDetailsList.itemName}" /></td>
+													<td class="col-md-1" align="right"><c:out value="${billDetailsList.catName}" /></td>
+													<td class="col-md-1" align="right"><c:out value="${billDetailsList.orderQty}" /></td>
+													<td class="col-md-1" align="right"><c:out value="${billDetailsList.billQty}" /></td>
 <fmt:formatNumber var="formattedmrp" type="number" minFractionDigits="2" maxFractionDigits="2" value="${billDetailsList.mrp}" />
 <c:set var="formattedmrp" value="${formattedmrp}" />
 													<td class="col-md-1"align="right"><c:out value="${formattedmrp}" /></td>

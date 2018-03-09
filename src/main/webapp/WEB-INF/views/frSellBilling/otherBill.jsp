@@ -608,13 +608,13 @@ body {
 		var discPer=document.getElementById("discPer"+key).value;
 		var value = qty*baseRate;
 		var discAmt=(discPer/100)*value;
-		document.getElementById("discAmt"+key).innerText=(discAmt).toFixed(2);
-		var taxableAmt =(value-discAmt).toFixed(2); 
+		document.getElementById("discAmt"+key).innerText=(discAmt).toFixed(5);
+		var taxableAmt =(value-discAmt).toFixed(5); 
 		 document.getElementById("total"+key).innerText=taxableAmt;
-		 var taxRs = ((taxRate/100)*taxableAmt).toFixed(2); 
+		 var taxRs = ((taxRate/100)*taxableAmt).toFixed(5); 
 		 document.getElementById("taxRs"+key).innerText=taxRs;
 		 var grndTotal=parseFloat(taxableAmt)+parseFloat(taxRs); 
-		 document.getElementById("grndTotal"+key).innerText=(grndTotal).toFixed(2);
+		 document.getElementById("grndTotal"+key).innerText=(grndTotal).toFixed(5);
 		
 	}
 	function submit(key)

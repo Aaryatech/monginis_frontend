@@ -161,6 +161,7 @@
 								<tr class="bgpink">
 								
 									<th class="col-sm-1">Bill No</th>
+									<th class="col-sm-1">Invoice No</th>
 									<th class="col-md-1">Date</th>
 
 									<th class="col-md-1">Taxable Amt</th>
@@ -178,6 +179,7 @@
 									varStatus="count">
 									<tr>
 										<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td>
+										<td class="col-sm-1"><c:out value="${billHeader.invoiceNo}" /></td>
 										<td class="col-md-1"><c:out
 												value="${billHeader.billDate}" /></td>
 										<td class="col-md-1"><c:out

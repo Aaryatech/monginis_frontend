@@ -105,6 +105,72 @@
 
 				<div class="colOuter">
 					<div class="col-md-2">
+						<div class="col1title">Current Month: </div>
+					</div>
+					<div class="col-md-8">
+						 
+							<c:forEach items="${category}" var="category" varStatus="count">
+								<c:forEach items="${getMonthList}" var="getMonthList" varStatus="count">
+										<c:choose>
+											<c:when test="${(getMonthList.catId!=5) and (getMonthList.catId!=7)}">
+												<c:choose>
+													 <c:when test="${getMonthList.catId==category.catId}">
+													 	<c:choose>
+													 		<c:when test="${getMonthList.month==1}">
+													 		<c:set var="month" value="January"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==2}">
+													 		<c:set var="month" value="February"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==3}">
+													 		<c:set var="month" value="March"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==4}">
+													 		<c:set var="month" value="April"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==5}">
+													 		<c:set var="month" value="May"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==6}">
+													 		<c:set var="month" value="June"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==7}">
+													 		<c:set var="month" value="July"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==8}">
+													 		<c:set var="month" value="Augast"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==9}">
+													 		<c:set var="month" value="September"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==10}">
+													 		<c:set var="month" value="Octomber"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==11}">
+													 		<c:set var="month" value="November"></c:set>
+													 		</c:when>
+													 		<c:when test="${getMonthList.month==12}">
+													 		<c:set var="month" value="December"></c:set>
+													 		</c:when>
+													 		<c:otherwise>
+													 		<c:set var="month" value=""></c:set>
+													 		</c:otherwise>
+													 	</c:choose>
+													 	${category.catName} : ${month}, 
+													 
+													 </c:when>
+								 				</c:choose>
+											</c:when>
+										</c:choose> 
+									</c:forEach> 
+							</c:forEach>
+
+						 
+					</div>
+ 
+				</div>
+				<div class="colOuter">
+					<div class="col-md-2">
 						<div class="col1title">Select Category</div>
 					</div>
 					<div class="col-md-2">

@@ -82,7 +82,7 @@
 							 <font size="4"><b>Last Upload Date: ${date1}</b></font>
 						</div>
 						<div class="col-md-1">
-							 <a href="${pageContext.request.contextPath}/viewRuleDocumentFile/${1}" target="blank" ><input type="button" value="View Document" class="btn btn-info">
+							 <a href="${url}${document1}" target="blank" ><input type="button" value="View Document" class="btn btn-info">
 										</a>
 						</div>
  
@@ -104,7 +104,7 @@
 
 						</div>
 						<div class="col-md-1">
-							 <a href="${pageContext.request.contextPath}/viewRuleDocumentFile/${2}" target="blank" ><input type="button" value="View Document" class="btn btn-info">
+							 <a href="${url}${document2}" target="blank" ><input type="button" value="View Document" class="btn btn-info">
 										</a>
 						</div>
  
