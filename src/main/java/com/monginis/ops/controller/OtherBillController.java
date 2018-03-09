@@ -239,7 +239,7 @@ public class OtherBillController {
 	@RequestMapping(value = "/addItemInList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<AddItemInOtherBill> addItemInList(HttpServletRequest request, HttpServletResponse response) {
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("#.00000");
 		AddItemInOtherBill item = new AddItemInOtherBill(); 
 		try
 		{
@@ -290,7 +290,7 @@ public class OtherBillController {
 	@ResponseBody
 	public List<AddItemInOtherBill> updateQtyOtherBill(HttpServletRequest request, HttpServletResponse response) {
 
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("#.00000");
 		try
 		{
 			int index = Integer.parseInt(request.getParameter("index"));
@@ -336,7 +336,7 @@ public class OtherBillController {
 	
 	@RequestMapping(value = "/submitOtherBill", method = RequestMethod.POST)
 	public String submitOtherBill(HttpServletRequest request, HttpServletResponse response) {
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("#.00000");
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try
@@ -551,7 +551,9 @@ public class OtherBillController {
 			System.out.println("fileList"+fileList);
 			document1=fileList.get(0).getFileName();
 			document2=fileList.get(1).getFileName();
-			
+			model.addObject("url", Constant.LOGIS_BILL_URL);
+			model.addObject("document1", document1);
+			model.addObject("document2", document2);
 			model.addObject("date1", fileList.get(0).getDate());
 			model.addObject("date2", fileList.get(1).getDate());
 			   

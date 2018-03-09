@@ -71,6 +71,11 @@ public class StockController {
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
+			
+			List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
+					List.class);
+			
+			System.out.println("list " + list);
 
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
@@ -82,6 +87,7 @@ public class StockController {
 			String mon=Month.of(monthNumber).name();
 			
 			System.err.println("Month name "+mon);
+			model.addObject("getMonthList", list);
 			
 
 		} catch (Exception e) {
