@@ -43,6 +43,7 @@ import com.monginis.ops.billing.Info;
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
+import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.Franchisee;
@@ -169,7 +170,7 @@ public class GrnGvnController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("isFrUsed", 0);
+			map.add("isFrUsed", 1);
 			map.add("moduleId", 1);
 			map.add("subModuleId", 1);
 			getAllRemarksList = restTemplate.postForObject(Constant.URL + "/getAllRemarks", map,
@@ -586,7 +587,6 @@ public class GrnGvnController {
 
 				invoiceNo = curStrYear + "-" + "0" + grnGvnSrNo;
 
-			
 			System.out.println("*** settingValue= " + grnGvnSrNo);
 
 			grnGvnNo = frDetails.getFrCode() + invoiceNo;
@@ -922,6 +922,28 @@ public class GrnGvnController {
 				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
 
 				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + info.toString());
+				
+				
+				
+				
+				//-----------------------For Notification-----------------
+				String frToken="";
+			
+				try {
+					map = new LinkedMultiValueMap<String, Object>();
+					  map.add("frId",frDetails.getFrId());
+					   
+                     frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
+			         Firebase.sendPushNotifForCommunication(frToken,"Grn Punched","Grn no has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Monginis","inbox");
+			   	
+			        }
+			        catch(Exception e2)
+			        {
+				      e2.printStackTrace();
+			        }
+				
+				//-----------------------------------------------------
+
 
 			}
 
@@ -952,7 +974,7 @@ public class GrnGvnController {
 			map.add("toDate", cDate);
 			map.add("isGrn", 1);
 			// getFrGrnDetail
-			List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
+			//List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
 
 			try {
 				grnHeaderList = new ArrayList<>();
@@ -1138,9 +1160,9 @@ public class GrnGvnController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("isFrUsed", 0);
+			map.add("isFrUsed", 1);
 			map.add("moduleId", 1);
-			map.add("subModuleId", 1);
+			map.add("subModuleId", 2);
 			getAllRemarksList = restTemplate.postForObject(Constant.URL + "/getAllRemarks", map,
 					GetAllRemarksList.class);
 
@@ -1176,9 +1198,9 @@ public class GrnGvnController {
 		try {
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("isFrUsed", 0);
+			map.add("isFrUsed", 1);
 			map.add("moduleId", 1);
-			map.add("subModuleId", 1);
+			map.add("subModuleId", 2);
 			getAllRemarksList = restTemplate.postForObject(Constant.URL + "/getAllRemarks", map,
 					GetAllRemarksList.class);
 
@@ -1193,11 +1215,11 @@ public class GrnGvnController {
 
 			String[] gvnItemBillDetailNo = request.getParameterValues("select_to_gvn");
 
-			for (int i = 0; i < gvnItemBillDetailNo.length; i++) {
+		/*	for (int i = 0; i < gvnItemBillDetailNo.length; i++) {
 
 				System.out.println("Selected Bill Detail No ::: " + gvnItemBillDetailNo[i]);
 			}
-
+*/
 			gvnList = new ArrayList<>();
 
 			System.out.println("OBJ BEAN " + objShowGrnList.toString());
@@ -1262,7 +1284,7 @@ public class GrnGvnController {
 			float sumTaxAmt = 0;
 			float sumTotalAmt = 0;
 			String curDateTime = null;
-
+boolean isCustComplaint=false;
 			for (int i = 0; i < gvnList.size(); i++) {
 
 				// String strGvnQty = request.getParameter("gvn_qty" +
@@ -1277,6 +1299,21 @@ public class GrnGvnController {
 				Calendar calDate = Calendar.getInstance();
 
 				String frGvnRemark = request.getParameter("gvn_remark" + gvnList.get(i).getItemId());
+				
+				if(frGvnRemark.equalsIgnoreCase("Customer Complaint")) {
+					
+					isCustComplaint=true;
+					grnHeader.setIsGrn(2);
+				}
+				
+				if(isCustComplaint) {
+					grnHeader.setIsGrn(2);
+				}
+				
+				else {
+					grnHeader.setIsGrn(0);
+				}
+				
 
 				if (frGvnRemark == null || frGvnRemark.equals("")) {
 					frGvnRemark = "no remark from franchisee";
@@ -1420,7 +1457,7 @@ public class GrnGvnController {
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response));
 			grnHeader.setGrngvnStatus(1);
 			grnHeader.setIsCreditNote(0);
-			grnHeader.setIsGrn(0);
+			//grnHeader.setIsGrn(0);
 			grnHeader.setApporvedAmt(0);
 
 			grnHeader.setTaxableAmt(sumTaxableAmt);
@@ -1456,6 +1493,27 @@ public class GrnGvnController {
 				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
 
 				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + info.toString());
+				
+				
+				//-----------------------For Notification-----------------
+				String frToken="";
+			
+				try {
+					map = new LinkedMultiValueMap<String, Object>();
+					  map.add("frId",frDetails.getFrId());
+					   
+                     frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
+			         Firebase.sendPushNotifForCommunication(frToken,"GVN Punched","Gvn no has been punched against value of Rs."+grnHeader.getTotalAmt() + " Thank You..Team Monginis","inbox");
+			   	
+			        }
+			        catch(Exception e2)
+			        {
+				      e2.printStackTrace();
+			        }
+				
+				//-----------------------------------------------------
+
+
 
 			}
 			// Redirect to Gvn List after insert
@@ -1476,7 +1534,7 @@ public class GrnGvnController {
 			map.add("toDate", cDate);
 			map.add("isGrn", 0);
 			// getFrGrnDetail
-			List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
+			//List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
 
 			try {
 				gvnHeaderList = new ArrayList<>();
@@ -1503,10 +1561,10 @@ public class GrnGvnController {
 		return model;
 	}
 
-	String gstType,frAddress;
+	String gstType, frAddress;
 
-	
-	List<GrnGvnHeader> grnHeaderList;
+	List<GrnGvnHeader> grnHeaderList=new ArrayList<>();
+
 	@RequestMapping(value = "/getGrnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGrnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
@@ -1518,7 +1576,7 @@ public class GrnGvnController {
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-System.err.println("GST TYpe from session "+frDetails.getFrGstType());
+		System.err.println("GST TYpe from session " + frDetails.getFrGstType());
 		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
@@ -1526,11 +1584,11 @@ System.err.println("GST TYpe from session "+frDetails.getFrGstType());
 		} else {
 			gstType = "Composite";
 		}
-frAddress=frDetails.getFrAddress();
+		frAddress = frDetails.getFrAddress();
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		 grnHeaderList = new ArrayList<>();
+		grnHeaderList = new ArrayList<>();
 
 		int frId = frDetails.getFrId();
 
@@ -1601,13 +1659,13 @@ frAddress=frDetails.getFrAddress();
 		map.add("grnGvnHeaderId", headerId);
 		// getFrGrnDetail
 		try {
-			GrnGvnHeader grnHeader= new GrnGvnHeader();
-			
-			for(int i=0;i<grnHeaderList.size();i++) {
-				
-				if(grnHeaderList.get(i).getGrnGvnHeaderId()==headerId) {
-					
-					 grnHeader=grnHeaderList.get(i);
+			GrnGvnHeader grnHeader = new GrnGvnHeader();
+
+			for (int i = 0; i < grnHeaderList.size(); i++) {
+
+				if (grnHeaderList.get(i).getGrnGvnHeaderId() == headerId) {
+
+					grnHeader = grnHeaderList.get(i);
 				}
 			}
 
@@ -1615,26 +1673,25 @@ frAddress=frDetails.getFrAddress();
 					GetGrnGvnDetailsList.class);
 
 			grnDetailList = ab.getGrnGvnDetails();
-			
-			
-			for(int i=0;i<grnDetailList.size();i++) {
+
+			for (int i = 0; i < grnDetailList.size(); i++) {
 				float refRate = 0;
-				if(grnDetailList.get(i).getGrnType()==0) {
-					
-					 refRate=grnDetailList.get(i).getItemRate()*75/100;
+				if (grnDetailList.get(i).getGrnType() == 0) {
+
+					refRate = grnDetailList.get(i).getItemRate() * 75 / 100;
 				}
-				if(grnDetailList.get(i).getGrnType()==1) {
-					
-					 refRate=grnDetailList.get(i).getItemRate()*90/100;
+				if (grnDetailList.get(i).getGrnType() == 1) {
+
+					refRate = grnDetailList.get(i).getItemRate() * 90 / 100;
 				}
-				if(grnDetailList.get(i).getGrnType()==2|| grnDetailList.get(i).getGrnType()==4) {
-					
-					 refRate=grnDetailList.get(i).getItemRate();
+				if (grnDetailList.get(i).getGrnType() == 2 || grnDetailList.get(i).getGrnType() == 4) {
+
+					refRate = grnDetailList.get(i).getItemRate();
 				}
-				
+
 				grnDetailList.get(i).setBaseRate(refRate);
 			}
-			
+
 			System.out.println("GRN Detail   " + grnDetailList.toString());
 
 			modelAndView.addObject("grnSrNo", grnHeader.getGrngvnSrno());
@@ -1723,7 +1780,9 @@ frAddress=frDetails.getFrAddress();
 		return grnGvnDetailsList;
 
 	}
+
 	List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
+
 	@RequestMapping(value = "/getGvnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGvnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
@@ -1735,8 +1794,7 @@ frAddress=frDetails.getFrAddress();
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-		
-		
+
 		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
@@ -1744,13 +1802,11 @@ frAddress=frDetails.getFrAddress();
 		} else {
 			gstType = "Composite";
 		}
-		frAddress=frDetails.getFrAddress();
-
+		frAddress = frDetails.getFrAddress();
 
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		
 
 		int frId = frDetails.getFrId();
 
@@ -1825,24 +1881,23 @@ frAddress=frDetails.getFrAddress();
 		// getFrGrnDetail
 		try {
 
-		GrnGvnHeader gvnHeader=new GrnGvnHeader();
-		
-		
-		for(int i=0;i<gvnHeaderList.size();i++) {
-			
-			if(gvnHeaderList.get(i).getGrnGvnHeaderId()== headerId) {
-				
-				gvnHeader=gvnHeaderList.get(i);
+			GrnGvnHeader gvnHeader = new GrnGvnHeader();
 
-				break;
+			for (int i = 0; i < gvnHeaderList.size(); i++) {
+
+				if (gvnHeaderList.get(i).getGrnGvnHeaderId() == headerId) {
+
+					gvnHeader = gvnHeaderList.get(i);
+
+					break;
+				}
+
 			}
-			
-		}
 			GetGrnGvnDetailsList ab = restTemplate.postForObject(Constant.URL + "getFrGvnDetails", map,
 					GetGrnGvnDetailsList.class);
 
 			grnDetailList = ab.getGrnGvnDetails();
-			
+
 			modelAndView.addObject("gvnSrNo", gvnHeader.getGrngvnSrno());
 
 			modelAndView.addObject("aprAmt", gvnHeader.getAprGrandTotal());
@@ -1853,7 +1908,7 @@ frAddress=frDetails.getFrAddress();
 			e.printStackTrace();
 			System.out.println("Ex in getting GVN  Detail " + e.getMessage());
 		}
-		
+
 		String gvnDate = grnDetailList.get(0).getGrnGvnDate();
 		modelAndView.addObject("gvnList", grnDetailList);
 		modelAndView.addObject("gvnDate", gvnDate);
@@ -1921,7 +1976,7 @@ frAddress=frDetails.getFrAddress();
 			grnPdf.setFrName(grnDetailList.get(0).getFrName());
 
 			grnPdf.setSrNo(header.getGrngvnSrno());
-grnPdf.setTaxableAmt(header.getTaxableAmt());
+			grnPdf.setTaxableAmt(header.getTaxableAmt());
 			grnPdf.setDetail(grnDetailList);
 			grnPdf.setType(type);
 			grnPdf.setFrAddress(frAddress);
