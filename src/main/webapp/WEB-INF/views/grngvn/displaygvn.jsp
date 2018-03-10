@@ -143,10 +143,10 @@
 												value="${gvnList.aprTotalTax}" /></td>
 
 										<td class="col-md-1"><a
-											href="${url}${gvnList.gvnPhotoUpload1}"
+											href="${gvnList.gvnPhotoUpload1}"
 											data-lightbox="image-1">Image 1</a></td>
 										<td class="col-md-1"><a
-											href="${url}${gvnList.gvnPhotoUpload2}"
+											href="${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 
 										<c:choose>

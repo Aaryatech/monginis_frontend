@@ -220,7 +220,7 @@ label::before {
 													id='gvn_qty${gvnConfList.itemId}' size="5" value="0"
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer})" /></td>
 
-												<td class="col-md-2">${gvnConfList.calcBaseRate}</td>
+												<td class="col-md-2">${gvnConfList.rate}</td>
 
 												<td class="col-md-2" id="tax_per${gvnConfList.itemId}"><c:out
 														value="00"></c:out></td>

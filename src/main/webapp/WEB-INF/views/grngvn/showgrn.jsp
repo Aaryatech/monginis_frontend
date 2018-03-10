@@ -148,9 +148,7 @@
 												</c:otherwise>
 
 											</c:choose>
-											<%-- onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer})"
- --%>
+										
 											<td class="col-md-1"><c:out
 													value="${grnConfList.autoGrnQty}"></c:out> <input
 												type="hidden" name="grnqty${grnConfList.itemId}"
@@ -159,15 +157,7 @@
 
 											<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
 													value="${grnConfList.rate}"></c:out></td>
-											<%-- <td class="col-md-1"><c:out
-													value="${grnConfList.grnRate}"></c:out></td> --%>
-
-											<%-- 	<td class="col-md-1"><select name="is_edit${grnConfList.itemId}"
-																	id="is_edit${grnConfList.itemId}"
-																	onchange="showEdit(this.id,${grnConfList.itemId},${grnConfList.autoGrnQty})" onclick="me()">
-																		<option selected value="0">No</option>
-																		<option value="1">Yes</option>
-																</select></td> --%>
+											
 
 											<td class="col-md-1"><input type="text"
 												name="grnqtyauto${grnConfList.itemId}"
@@ -212,23 +202,6 @@
 													</c:forEach>
 											</select></td>
 
-											<%-- <input type="text"
-																	name="grn_remark${grnConfList.itemId}"
-																	id="grn_remark${grnConfList.itemId}" class="remark" /></td>
- --%>
-
-
-
-
-
-											<%-- <td id="grn_rate${grnConfList.itemId}"><c:out
-																		value="${grnConfList.calcBaseRate}"></c:out></td>
- --%>
-
-											<!-- <td><label><input type="radio"
-																	name="is-edit" id=is_edit value="0" checked="checked">No</label>
-																<label><input type="radio" name="is-edit"
-																	id=is_edit value="1">Yes</label></td> -->
 
 										</tr>
 									</c:forEach>

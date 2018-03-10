@@ -170,7 +170,7 @@ label::before {
 												<td class="col-md-1">${gvnConfList.billQty}</td>
 												<td class="col-md-1">${gvnConfList.autoGrnQty}</td>
 
-												<td class="col-md-1">${gvnConfList.calcBaseRate}</td>
+												<td class="col-md-1">${gvnConfList.rate}</td>
 
 												<td class="col-md-1" id="tax_per${gvnConfList.itemId}"><c:out
 														value="${gvnConfList.sgstPer + gvnConfList.cgstPer}"></c:out></td>
