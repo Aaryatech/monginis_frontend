@@ -158,7 +158,7 @@
 												readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
 											<td class="col-md-1" id="grn_rate${grnConfList.itemId}"><c:out
-													value="${grnConfList.calcBaseRate}"></c:out></td>
+													value="${grnConfList.rate}"></c:out></td>
 											<%-- <td class="col-md-1"><c:out
 													value="${grnConfList.grnRate}"></c:out></td> --%>
 
@@ -205,7 +205,7 @@
 											<td class="col-md-1"><select
 												name="grn_remark${grnConfList.itemId}" style="width: 200px"
 												id="grn_remark${grnConfList.itemId}" class="form-control" onchange="changeQty(${grnConfList.itemId},${grnConfList.autoGrnQty})">
-													<option selected value="0">Select Remark</option>
+													
 													<c:forEach items="${remarkList}" var="remarkList">
 																${remarkList.remark}
 																<option value="${remarkList.remark}">${remarkList.remark}</option>
@@ -239,11 +239,11 @@
 							</table>
 						</div>
 					</div>
+					</div>
 
-					<button type="submit" class="buttonsaveorder" id="submit"
-						onclick="checkRemark()">
-						<i class="fa fa-check"></i> Save
-					</button>
+					<input type="submit" class="btn btn-primary" id="submit"
+						value="Save">
+					
 
 
 				</form>
