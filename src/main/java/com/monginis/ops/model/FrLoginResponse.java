@@ -16,13 +16,14 @@ public class FrLoginResponse {
 		this.loginInfo = loginInfo;
 	}
 
-	public Franchisee getFranchisee() {
-        return franchisee;
-    }
 
-    public void setFranchisee(Franchisee franchisee) {
-        this.franchisee = franchisee;
-    }
+	public Franchisee getFranchisee() {
+		return franchisee;
+	}
+
+	public void setFranchisee(Franchisee franchisee) {
+		this.franchisee = franchisee;
+	}
 
 	@Override
 	public String toString() {

@@ -28,7 +28,6 @@ public class DateResponse implements Serializable{
 	public String toString() {
 		return "DateResponse [deliveryToDate=" + deliveryToDate + ", deliveryFromDate=" + deliveryFromDate + "]";
 	}
-	
-	
-	
+
+    
 }

@@ -6,9 +6,12 @@
 <%@ page import="java.time.ZoneId"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
-
-
-
+<style type="text/css">
+.topSlide2 {
+   
+    padding: 20px 60px 20px 20px;
+}
+</style>
  	<div class="sidebarhome">
 	<div class="content mCustomScrollbar">
 		<ul>
@@ -78,7 +81,7 @@
 						<i class="fa fa-money icon"></i>
 					</div>
 					<div class="title">
-						View <span>Bills</span>
+						View Purchase <span>Bills</span>
 					</div></a></li>
 					
 						<li><a href="${pageContext.request.contextPath}/showOtherBill"><div

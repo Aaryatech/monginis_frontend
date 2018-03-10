@@ -17,9 +17,11 @@ public class Franchisee {
     private Integer frKg3;
     private Integer frKg4;
     private String frEmail;
+    private String routeName;
     private String frPassword;
     private String frMob;
     private String frOwner;
+
     private Integer frRateCat;
     private Integer grnTwo;
     private Integer delStatus;
@@ -47,7 +49,17 @@ public class Franchisee {
       
       private Integer frTarget;
 	
-    public int getIsSameState() {
+      
+
+	public String getRouteName() {
+		return routeName;
+	}
+
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
+	}
+
+	public int getIsSameState() {
 		return isSameState;
 	}
 

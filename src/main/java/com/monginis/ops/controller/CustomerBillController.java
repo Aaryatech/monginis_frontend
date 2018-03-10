@@ -1888,6 +1888,7 @@ public class CustomerBillController {
 		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
 
 		model.addObject("billList", getCustmoreBillResponseList);
+		model.addObject("frGstType", frGstType);
 		return model;
 	}
 

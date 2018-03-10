@@ -18,14 +18,17 @@ $(function() {
 
 		$("#datepicker").datepicker({
 			dateFormat : 'dd-mm-yy',
-			minDate : min
+			//minDate : min,
+			//maxDate: min
 		});
 	});
 	$(function() {
 		$("#datepicker2").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
+		
 });
+
 </script>
 <!--selectlistbox-->
 <script type="text/javascript"
@@ -173,6 +176,7 @@ $("#tech").change(function() {
 								</select>
 							</div>
 						</div>
+						 <div class="col2full" id="availDate" style="text-align:right; text-color:red;">  </div>
 						<div class="colOuter">
 							<div class="col1">
 								<div class="col1title">Delivery Date</div>
@@ -183,13 +187,17 @@ $("#tech").change(function() {
 									value="${delDate}" >
 							</div>
 						</div>
-
+                    
+					<input id="fromDate" name="fromDate" type="hidden" value="${fromDate}"/>
+					<input id="toDate"  name="toDate" type="hidden" value="${toDate}"/>
+							
 						<div class="colOuter">
 							<div class="col2full">
 								<input name="" class="buttonsaveorder" value="Search..."
 									type="submit" >
 							</div>
 						</div>
+						
 					</form>
 					<form
 						action="${pageContext.request.contextPath}/saveSpDayCakeOrder"
@@ -358,8 +366,13 @@ function closeNav3() {
            
             function button1()
             {
-
+            	var isValidated=validate();
+            	//alert(isValidated)
+            	 if(isValidated)
+            		{
                 form1.submit();
+            		} 
+            	
             }    
            
 </script>
@@ -435,12 +448,16 @@ function onChangeDay() {
 					ajax : 'true'
 				},
 				function(data) {
-					alert(data.deliveryFromDate);
-					alert(data.deliveryFromDate);
+					//alert(data.deliveryFromDate);
+					//alert(data.orderFromDate);
 
 					  $( function() {
-					    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:data.deliveryFromDate ,maxDate:data.deliveryToDate}
-					    	);
+					   // $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:data.orderFromDate ,maxDate:data.orderToDate}
+					    	/* ); */
+						  document.getElementById("availDate").innerHTML=" <strong>Delivery From Date: </strong>&nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryFromDate+", &nbsp; &nbsp; &nbsp;<strong>To Date :</strong> &nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryToDate;
+						  document.getElementById("availDate").style.color = "green";
+						  document.getElementById("fromDate").value=data.deliveryFromDate;
+						  document.getElementById("toDate").value=data.deliveryToDate;
 					  } );
 				
 				});
@@ -467,7 +484,9 @@ function onChangeDay() {
 	
 		var spdayId = $('#spdayId').find(":selected").val();
 		var selectedDate = $('#datepicker').val();//delivery Date
-
+		//alert(selectedDate);
+		var fromDate = $('#fromDate').val();//alert(fromDate);
+		var toDate = $('#toDate').val();//alert(toDate);
 		var isValid=true;
 		
 		if(spdayId==-1)
@@ -475,16 +494,24 @@ function onChangeDay() {
 			  
 			 alert("Please Select Special Day.")
 			 return false;
-			}else if(selectedDate==""||selectedDate==null)
+			}
+		 
+		else if(Date.parse(selectedDate)-Date.parse(fromDate)<0 || Date.parse(selectedDate)-Date.parse(toDate)>0)
 			{
-				 alert("Please Select Delivery Date.")
+				 alert("Please Select Delivery Date Between  --"+   fromDate+"-&-"+toDate)
 				 return false;
 
 			}
-		
+		 else if(selectedDate=="")
+			{
+				 alert("Please Select Valid Delivery Date")
+				 return false;
+
+			}
            return isValid;
 		
 	}
+	
 	</script>
 </body>
 </html>

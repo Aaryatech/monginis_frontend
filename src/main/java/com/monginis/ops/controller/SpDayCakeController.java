@@ -64,8 +64,8 @@ public class SpDayCakeController {
 	Date deliDate;
 	public  int spdayId=0;
 	public String delDate=null;
-
-	
+	String fromDate=null;
+	String toDate=null;
 	private int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
 	public MultiValueMap<String, Object> map;
@@ -165,6 +165,9 @@ public class SpDayCakeController {
 	   System.out.println("Special Day Cake Response:"+spDayCk.toString());
 	   
 		 delDate=request.getParameter("datepicker");
+		 fromDate=request.getParameter("fromDate");
+		 toDate=request.getParameter("toDate");
+		 
 		try {
 			
 	       Date deliveryDate=Main.stringToDate(delDate);
@@ -214,7 +217,8 @@ public class SpDayCakeController {
 			model.addObject("frDetails", frDetails);
 			model.addObject("itemList", frItemList);
 			model.addObject("menuId", spDayCk.getMenuId());
-			
+			model.addObject("fromDate",fromDate);
+			model.addObject("toDate",toDate);
 			model.addObject("delDate",delDate );
 			model.addObject("spdayId",spdayId);
 
@@ -309,7 +313,8 @@ public class SpDayCakeController {
 				
 				model.addObject("delDate",delDate );
 				model.addObject("spdayId",spdayId);
-
+				model.addObject("fromDate",fromDate);
+				model.addObject("toDate",toDate);
 				model.addObject("configureSpDayFrList", configureSpDayFrList);
 		       } catch (Exception e) {
 
@@ -338,7 +343,9 @@ public class SpDayCakeController {
 		orderDate = todaysDate;
 		String prodDate = dateFrmt.format(productionDate);
 		String deliveryDt = dateFrmt.format(deliDate);
-		
+		//String fromDate=request.getParameter("fromDate");//
+		//String toDate=request.getParameter("toDate");//
+		System.out.println(fromDate);
 		int menuId = Integer.parseInt(request.getParameter("menuId"));
 		int rateCat = frDetails.getFrRateCat();
 		
@@ -427,7 +434,7 @@ public class SpDayCakeController {
     			order.setDeliveryDate(Common.stringToSqlDate(deliveryDt));
 				order.setEditQty(0);
 				order.setFrId(frDetails.getFrId());
-				order.setIsEdit(1);
+				order.setIsEdit(0);
 				order.setIsPositive(1);
 				order.setItemId(frItem.getId().toString());
 				order.setMenuId(menuId);

@@ -381,7 +381,7 @@ public class HomeController {
 			session.setAttribute("schedulerLists",schedulerLists);
 			session.setAttribute("frId",loginResponse.getFranchisee().getFrId());
 			session.setAttribute("info", loginResponse.getLoginInfo());
-			
+			session.setAttribute("frImage",loginResponse.getFranchisee().getFrImage());
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
 			

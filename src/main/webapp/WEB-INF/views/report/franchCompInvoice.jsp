@@ -45,10 +45,21 @@
     </tr>
     <tr>
       <td colspan="2" align="center" style="padding:3px;font-family: Arial; border-bottom:1px solid #E7E7E7; font-size:12px;"><p class="style5">${billList[0].frAddress}
-         <br />
+         <br /> 
+         
+         <c:choose>
+            <c:when test="${frGstType==2000000}">
+                GSTIN:<b> ${billList[0].gstn}</b> <br />
+             </c:when>
+        </c:choose>
           Phone:<strong>${billList[0].frMob}</strong><br/><br/>
-          <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE PERSON, NOT TO<br />
-          COLLECT TAX ON SUPPLIES        </span></td>
+        <c:choose>
+          <c:when test="${frGstType==2000000}">
+              <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE FIRM, NOT SUPPOSED TO<br />
+                BE COLLECT TAX ON SUPPLIES</span>
+          </c:when>
+        </c:choose></td>
+        
     </tr>
     <tr>
       <td colspan="2">
@@ -110,7 +121,7 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="7" >
   
     <tr>
-      <td align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p class="style8">Thank You, Visit Again !!! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E. &amp; O.E.</p>        </td>
+      <td align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p class="style8">Thank You, Visit Again !!!</p>        </td>
     </tr>
     <tr>
       <td style="border-top:1px solid #E7E7E7; padding:5px 7px;">We declare that this invoice shows the actual price of the goods<br />
@@ -119,7 +130,7 @@
 </table>      </td>
     </tr>
     <tr>
-      <td width="200" align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>for ${billList[0].frName}</strong></td>
+      <td width="200" align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>For ${billList[0].frName}</strong></td>
     </tr>
   </tbody>
 </table>

@@ -164,7 +164,7 @@ $("#tech").change(function() {
 	
 	<div class="fullform">
 		<div class="cackimg">
-	<img src="${URL}${spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
+	<img src="${url}${spImage}" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></div>
 		<!--<div class="cackimglable"><img src="http://monginisaurangabad.com/images/lable-regular.png" alt="img"></div>-->
 		<%-- <img src="${url}${spImage}" alt="Tier -Series"></div> --%>
 	</div>
@@ -236,13 +236,13 @@ $("#tech").change(function() {
 	<div class="fullform">
 		<div class="cackleft">Order Photo</div>
 		<div class="cackright">
-       <img src="${PHOTO_URL}${specialCake.orderPhoto}"alt="img"/>
+       <img src="${SPCAKE_URL}${specialCake.orderPhoto}"alt="image"/>
         </div>
 	</div>
 	<div class="fullform">
 		<div class="cackleft">Customer Choice Photo</div>
 		<div class="cackright">
-       <img src="${PHOTO_URL}${specialCake.orderPhoto2}"alt="img"/>
+       <img src="${PHOTO_URL}${specialCake.orderPhoto2}"alt="image"/>
         </div>
 	</div>
 	
@@ -252,7 +252,7 @@ $("#tech").change(function() {
     <div class="fullform">
 		<div class="cackleft">Order Photo</div>
 		<div class="cackright">
-       <img src="${url}${specialCake.orderPhoto}"alt="img"/>
+       <img src="${SPCAKE_URL}${specialCake.orderPhoto}"alt="img"/>
         </div>
 	</div>
     

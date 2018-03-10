@@ -66,8 +66,7 @@
 					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">${billList[0].frAddress}
 						<br /> Phone:<strong>${billList[0].frMob}</strong><br /> <br />
-						<span style="font-size: 9px; font-family: Arial;">GSTN
-							:${billList[0].gstn}<br /> State: 27-Maharashtra<br /> FSSAI :
+						<span style="font-size: 9px; font-family: Arial;">GSTN:<b> ${billList[0].gstn}</b><br /> State: 27-Maharashtra<br /> FSSAI :
 							11515031000866
 						</span></td>
 			</tr>
@@ -195,8 +194,7 @@
 								style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
 								colspan="6"><p class="style8">Thank You, Visit Again
 									!!!
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E.
-									&amp; O.E.</p></td>
+									</p></td>
 						</tr>
 						<tr>
 							<td style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
@@ -212,20 +210,22 @@
 			</tr>
 			<tr>
 				<td width="200" align="center"
-					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>for
+					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>For
 						${billList[0].frName}</strong></td>
 			</tr>
 		</tbody>
 	</table>
 </body>
-<body onload="print()">
+	<body onload="directPrint()">
 	<script>
-		function print() {
-			//alert("JJ");
-			this.print();
-			//window.close();
-		}
+	function directPrint()
+	{
+		//alert("JJ");
+		window.print();
+		window.close();
+	}
+	
 	</script>
-
 </body>
+
 </html>

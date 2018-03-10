@@ -120,6 +120,7 @@ select {
 <div class="sidebarright">
 <div class="order-left">
 <h2 class="pageTitle">${menuTitle}</h2>
+
 </div>
  <!--formBox-->
 <div class="ordercake">
@@ -199,9 +200,10 @@ select {
 
 
 									<c:set var="increment" value="${spBookb4}"></c:set>
-
+                                    <c:set var="menuId" value="${menuId}"></c:set>
 									<%
 										int incr = (int) pageContext.getAttribute("increment");
+									    int menuId = (int) pageContext.getAttribute("menuId");
 										// Create a Calendar object
 										Calendar calendar = Calendar.getInstance();
 
@@ -218,8 +220,10 @@ select {
 										year = calendar.get(Calendar.YEAR);
 
 										Calendar cal = Calendar.getInstance();
-
-										cal.set(year, month, day);
+										cal.setTime(new Date()); // Now use today date.
+										if(menuId!=46){
+										cal.add(Calendar.DATE, 1); // Adding 1 days
+										}
 										Date date = cal.getTime();
 										SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -238,7 +242,7 @@ select {
 
 <!----------------------------------------Form Start-------------------------------------------------->
 <form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data"onsubmit="return validate()">
-
+<input type="hidden" name="menuTitle" value="${menuTitle}"> 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 <input type="hidden" name="sp_id" id="sp_id" value="${specialCake.spId}">
 <input type="hidden" name="sp_min_weight" id="sp_min_weight" value="${specialCake.spMinwt}">
@@ -314,8 +318,8 @@ select {
 		<div class="col1"><div class="col1title">Message</div></div>
 		<div class="col2"><select name="sp_event" id="sp_event"required>
   
-              <c:forEach items="${eventList.getEvent()}" var="eventList">
-              <option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
+              <c:forEach items="${eventList}" var="eventList">
+              <option value="${eventList.spMsgText}"><c:out value="${eventList.spMsgText}" /></option>
              </c:forEach>
             </select></div>
 		 <div class="col3"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name">
@@ -938,7 +942,7 @@ function validate() {
 <script>
 
 var todaysDate=new Date();
-var min=new Date(todaysDate.setDate(todaysDate.getDate()));
+var min=new Date(todaysDate.setDate(todaysDate.getDate()+1));
 
   $( function() {
     $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , minDate:min,

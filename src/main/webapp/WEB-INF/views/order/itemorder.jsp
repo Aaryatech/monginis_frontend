@@ -104,7 +104,8 @@ a:hover {
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
 						${deliveryDate}</h3>
 
-					<input type="hidden" name="menuId" value="${menuId}"> <input
+					<input type="hidden" name="menuId" value="${menuId}">
+						 <input
 						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
 					<input type="hidden" value="${isSameDayApplicable}"
 						id="isSameDayApplicable" />
@@ -146,7 +147,7 @@ a:hover {
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
 					name="form1" method="post">
-
+<input type="hidden" name="menuTitle" value="${menuTitle}">
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->

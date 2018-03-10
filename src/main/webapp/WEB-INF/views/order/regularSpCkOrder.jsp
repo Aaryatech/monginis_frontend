@@ -17,7 +17,7 @@
 	$(function() {
 
 		var todaysDate = new Date();
-		var min = new Date(todaysDate.setDate(todaysDate.getDate()));
+		var min = new Date(todaysDate.setDate(todaysDate.getDate()+1));
 
 		$("#datepicker").datepicker({
 			dateFormat : 'dd-mm-yy',
@@ -152,14 +152,15 @@ select {
 									year = calendar.get(Calendar.YEAR);
 
 									Calendar cal = Calendar.getInstance();
-
-									cal.set(year, month, day);
+									cal.setTime(new Date()); // Now use today date.
+									cal.add(Calendar.DATE, 1); // Adding 1 days
+								
 									Date date = cal.getTime();
-									SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+									SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 									String fDate = formatter.format(date);
 									System.out.println("" + fDate);
-									SimpleDateFormat formatter1 = new SimpleDateFormat("dd MMM yyyy");
+									SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
 
 									String fDate1 = formatter1.format(date);
 								%>
@@ -215,7 +216,7 @@ select {
 									</div>
 									<div class="col2full">
 										<input id="datepicker" class="texboxitemcode texboxcal"
-											placeholder="Delivery Date" name="datepicker" type="text"
+											placeholder="Delivery Date" name="datepicker" type="text" value="<%=fDate %>"
 											required>
 									</div>
 								</div>

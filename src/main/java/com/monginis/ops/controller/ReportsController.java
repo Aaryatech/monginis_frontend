@@ -2624,7 +2624,7 @@ public class ReportsController {
 					String appPath = context.getRealPath("");
 					String filename = "ordermemo221.pdf";
 					String filePath = "/opt/tomcat-latest/webapps/webapi/uploads/ordermemo.pdf";
-
+					// String filePath="/home/ats-12/pdf/ordermemo221.pdf";
 					// construct the complete absolute path of the file
 					String fullPath = appPath + filePath;
 					File downloadFile = new File(filePath);

@@ -45,6 +45,11 @@
     width: 100%;
     height: 33px;
 }
+/* div.topSlide {
+    width: auto;
+    height: 600px;
+    overflow: scroll;
+} */
 </style>
 <!--rightNav-->
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
@@ -145,12 +150,12 @@
 										</div>
 									</div>
 									<img
-										src="${frDetails.frImage}"
+										src="${URL}${frImageName}"
 										alt="img" id="img">
 								</div>
 							</div>
 						</div>
-                         
+                         <input type="hidden" name="prevImage" value="${frImageName}">
 						<div class="profile">
 							<div class="profilefildset">City</div>
 							<div class="profileinput">
@@ -160,6 +165,49 @@
 									
 							</div>
 						</div>
+						<div class="profile">
+							<div class="profilefildset">Route</div>
+							<div class="profileinput mardis">${frDetails.routeName}</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Tax Type</div>
+							<div class="profileinput mardis">
+							<c:choose>
+							<c:when test="${frDetails.frGstType==0}">
+							Non-Registered
+							</c:when>
+							<c:when test="${frDetails.frGstType==2000000}">
+							Composite
+							</c:when>
+							<c:when test="${frDetails.frGstType==10000000}">
+							Regular
+							</c:when>
+							<c:otherwise>
+							Composite
+							</c:otherwise>
+							</c:choose>
+							
+							</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">1/2 KG Limit</div>
+							<div class="profileinput mardis">${frDetails.frKg2}</div>
+							
+						</div>
+						
+						<div class="profile">
+							<div class="profilefildset">Owner's Birthdate</div>
+							<div class="profileinput mardis">${frDetails.ownerBirthDate}</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">FDA License Date</div>
+							<div class="profileinput mardis">${frDetails.fbaLicenseDate}</div>
+							
+						</div>
+						
                         <div class="profile">
 							<div class="profilefildset">Edit Admin Password</div>
 							<div class="col2">
@@ -168,7 +216,7 @@
 									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
 							</div>
 						</div>  
-						 <div class="profile">
+						 <%-- <div class="profile">
 							<div class="profilefildset">Owner Password</div>
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Owner Password"
@@ -176,21 +224,17 @@
 									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
 								
 							</div>
-						</div>
-						<div class="profile">
-							<div class="profilefildset">CSP Password</div>
+						</div> --%>
+						  <div class="profile">
+							<div class="profilefildset">Captain Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="CSP Password"
-									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
-									style="font-size: 10pt; height: 33px; width:120px; background-color:LightGrey;"disabled="disabled">
+								<input class="texboxitemcode" placeholder="Captain Password"
+									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
+									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
 								
 							</div>
-							<div class="form-group">
-								<input name="" class="" value="Change Password"
-									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 8pt; height: 33px; width:90px;">
-						</div>	
-						
 						</div>
+						
                          
                
 					</div>
@@ -209,7 +253,7 @@
 						<div class="profile">
 							<div class="profilefildset">Mobile No.</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="9876543201"
+								<input class="texboxitemcode" placeholder="Mobile No."
 									name="fr_mobile" type="text" value="${frDetails.frMob}">
 							</div>
 						</div>
@@ -221,12 +265,51 @@
 									name="fr_owner" type="text" value="${frDetails.frOwner}">
 							</div>
 						</div>
-
+                        <div class="profile">
+							<div class="profilefildset">Rate Type</div>
+							<div class="profileinput mardis">
+							<c:choose>
+							<c:when test="${frDetails.frRateCat==1}">
+							Local Rate
+							</c:when>
+							<c:when test="${frDetails.frRateCat==2}">
+							Out-Station Rate
+							</c:when>
+							<c:when test="${frDetails.frRateCat==3}">
+							Special Rate
+							</c:when>
+							</c:choose></div>
+							
+						</div>
+						 <div class="profile">
+							<div class="profilefildset">1 KG Limit</div>
+							<div class="profileinput mardis">${frDetails.frKg3}</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Pastries Limit</div>
+							<div class="profileinput mardis">${frDetails.frKg1}</div>
+							
+						</div>
 						<div class="profile">
 							<div class="profilefildset">Shop Opening Date</div>
-							<div class="profileinput mardis">26 Feb. 2017</div>
+							<div class="profileinput mardis">${frDetails.frOpeningDate}</div>
 						</div>
-
+                        <div class="profile">
+							<div class="profilefildset">Agreement Date</div>
+							<div class="profileinput mardis">${frDetails.frAgreementDate}</div>
+							
+						</div>
+						<div class="profile">
+							<div class="profilefildset">Pest Control Date</div>
+							<div class="profileinput mardis">${frSup.pestControlDate}</div>
+							
+						</div>
+						<!--  <div class="profile">
+							<div class="profilefildset"></div>
+							<div class="profileinput mardis"></div>
+							
+						</div> -->
 						
 
 						<div class="profile">
@@ -249,14 +332,19 @@
 							
 						</div>
 						
-                      <div class="profile">
-							<div class="profilefildset">Captain Password</div>
+                  <div class="profile">
+							<div class="profilefildset">CSP Password</div>
 							<div class="col2">
-								<input class="texboxitemcode" placeholder="Captain Password"
-									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
-									style="font-size: 10pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
+								<input class="texboxitemcode" placeholder="CSP Password"
+									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
+									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
 								
 							</div>
+							<div class="form-group">
+								<input name="" class="" value="Change Password"
+									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 8pt; height: 33px; width:90px;">
+						</div>	
+						
 						</div>
 						          <div class="profile" style="display: none;"id="adminDiv">
 							<div class="profilefildset">Admin Password</div>
@@ -426,11 +514,11 @@ function checkAuthForPassChange() {
 				if(data.accessRight==1)
 					{
 					 document.getElementById("changePwd2").disabled = true;
-					document.getElementById('user1_password').removeAttribute('disabled');
+				//	document.getElementById('user1_password').removeAttribute('disabled');
 					document.getElementById('user2_password').removeAttribute('disabled');
 					document.getElementById('user3_password').removeAttribute('disabled');
 					
-					  $('#user1_password').css('background-color' , 'white'); // change the background color
+					//  $('#user1_password').css('background-color' , 'white'); // change the background color
 					  $('#user2_password').css('background-color' , 'white'); // change the background color
 					  $('#user3_password').css('background-color' , 'white'); // change the background color
 
@@ -450,14 +538,14 @@ function checkAuthForPassChange() {
 }
 function updateUserPasswords() {
 	
-	var pass1=document.getElementById('user1_password').value;
+	//var pass1=document.getElementById('user1_password').value;
 
 	var pass2=document.getElementById('user2_password').value;
 
 	var pass3=document.getElementById('user3_password').value;
 	$.getJSON('${updateUserPasswords}', {
 		
-		pass1:pass1,
+		//pass1:pass1,
 		pass2:pass2,
 		pass3:pass3,
 
@@ -467,11 +555,11 @@ function updateUserPasswords() {
 		{
 			
 			document.getElementById("changePwd2").removeAttribute('disabled');
-			document.getElementById('user1_password').disabled = true;
+		//	document.getElementById('user1_password').disabled = true;
 			document.getElementById('user2_password').disabled = true;
 			document.getElementById('user3_password').disabled = true;
 			
-			  $('#user1_password').css('background-color' , 'LightGrey'); // change the background color
+			//  $('#user1_password').css('background-color' , 'LightGrey'); // change the background color
 			  $('#user2_password').css('background-color' , 'LightGrey'); // change the background color
 			  $('#user3_password').css('background-color' , 'LightGrey');
 			   document.getElementById('updateDiv1').style.display = "none";

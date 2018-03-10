@@ -42,6 +42,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Common;
+import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrMenu;
@@ -252,21 +253,25 @@ public class ItemController {
 				if(subCat.equalsIgnoreCase("Pastries"))
 				{
 					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg1() + ")");
+					
 				}
 				else
 					if(subCat.equalsIgnoreCase("1/2 Kg Cake"))
 					{
 						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg2() + ")");
+					
 					}
 					else
 						if(subCat.equalsIgnoreCase("1 Kg Cake"))
 						{
 							tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg3() + ")");
+						
 						}
 						else
 							if(subCat.equalsIgnoreCase("Above 1 Kg Cake"))
 							{
 								tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")"+ "(Limit- " + frDetails.getFrKg4() + ")");
+							
 							}
 				
 				
@@ -459,13 +464,18 @@ public class ItemController {
 		String productionDate = "";
 		String deliveryDate = "";
 
+		int kg1QtyN = 0;//Notification
+		int kg2QtyN = 0;//Notification
+		int kg3QtyN = 0;//Notification
+		int kg4QtyN = 0;//Notification
+
 		String menuId = request.getParameter("menuId");
 		int rateCat = frDetails.getFrRateCat();
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 		
 
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
-
+		String menuTitle = request.getParameter("menuTitle");//For Notification
 		System.out.println("Fr Rate Cat " + rateCat);
 
 		System.out.println("Current menu id: " + currentMenuId + " menu id from jsp: " + menuId);
@@ -530,18 +540,22 @@ public class ItemController {
 				if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
 
 					kg1Qty = kg1Qty + item.getItemQty();
+				
 
 				} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
 				
 					kg2Qty = kg2Qty + item.getItemQty();
+				
 					
 				} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
 				
 					kg3Qty = kg3Qty + item.getItemQty();
+				
 					
 				} else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
 					
 					kg4Qty = kg4Qty + item.getItemQty();
+					
 				}
 
 			}
@@ -550,8 +564,7 @@ public class ItemController {
 			System.out.println("limit : "+frDetails.getFrKg2()+"new qty:  kg2:"+kg2Qty);
 			System.out.println("limit : "+frDetails.getFrKg3()+"new qty:  kg3:"+kg3Qty);
 			System.out.println("limit : "+frDetails.getFrKg4()+"new qty:  kg4:"+kg4Qty);
-
-		
+			
 			
 			if(frDetails.getFrKg1()<kg1Qty) {
 				isValidQty=false;
@@ -792,7 +805,12 @@ public class ItemController {
 					order.setRefId(frItem.getId());
 					order.setUserId(0);
 					order.setMenuId(currentMenuId);
+					
 					System.out.println("order qty===***************"+frItem.getItemQty());
+					
+					
+				
+					
 					if (rateCat == 1) {
 						order.setOrderMrp(frItem.getItemMrp1());
 						order.setOrderRate(frItem.getItemRate1());
@@ -830,6 +848,168 @@ public class ItemController {
 						String.class);
 
 				System.out.println("Place Order Response" + orderListResponse.toString());
+				
+				for (int i = 0; i < prevFrItemList.size(); i++) {
+
+					GetFrItem tempFrItem = prevFrItemList.get(i);
+
+					try {
+						Integer id = tempFrItem.getId();
+						System.out.println("id " + id);
+						System.out.println("prev qty " + tempFrItem.getItemQty());
+
+						String strQty = request.getParameter(String.valueOf(id));
+						int qty = Integer.parseInt(strQty);
+
+						System.out.println(" " + id + ":" + strQty);
+					
+					
+
+							tempFrItem.setItemQty(qty);
+							tempOrderList.add(tempFrItem);
+
+						
+						
+
+					} catch (Exception e) {
+						System.out.println("Except OrderList " + e.getMessage());
+					}
+
+				}
+				
+			//------------------------------------------------For Notification-----------------------------------------------------	
+				int catId = 0;
+				for (int i = 0; i < tempOrderList.size(); i++) {
+
+					GetFrItem item = tempOrderList.get(i);
+                  System.out.println("Item111"+item.toString());
+
+				if(Integer.parseInt(item.getItemGrp1())==2)
+				{
+					catId=2;
+					
+					if (Integer.parseInt(item.getItemGrp2())==14) {
+
+						kg1QtyN = kg1QtyN + item.getItemQty();
+					
+
+					} else if (Integer.parseInt(item.getItemGrp2())==15) {
+					
+						kg2QtyN = kg2QtyN + item.getItemQty();
+					
+						
+					} else if (Integer.parseInt(item.getItemGrp2())==16) {
+					
+						kg3QtyN = kg3QtyN + item.getItemQty();
+					
+						
+					} else if (Integer.parseInt(item.getItemGrp2())==17) {
+						
+						kg4QtyN = kg4QtyN + item.getItemQty();
+						
+					}
+				}
+				else
+					if(Integer.parseInt(item.getItemGrp1())==1)
+					{
+						catId=1;
+						
+						if (Integer.parseInt(item.getItemGrp2())==11) {
+
+							kg1QtyN = kg1QtyN + item.getItemQty();
+						
+
+						} else if (Integer.parseInt(item.getItemGrp2())==12) {
+						
+							kg2QtyN = kg2QtyN + item.getItemQty();
+						
+							
+						} else if (Integer.parseInt(item.getItemGrp2())==13) {
+						
+							kg3QtyN = kg3QtyN + item.getItemQty();
+						
+							
+						} 
+						
+						
+					}
+					else
+						if(Integer.parseInt(item.getItemGrp1())==3)
+						{
+							catId=3;
+							
+							if (Integer.parseInt(item.getItemGrp2())==18) {
+
+								kg1QtyN = kg1QtyN + item.getItemQty();
+							
+
+							} else if (Integer.parseInt(item.getItemGrp2())==19) {
+							
+								kg2QtyN = kg2QtyN + item.getItemQty();
+							
+								
+							} 
+							
+							
+						}
+						else
+							if(Integer.parseInt(item.getItemGrp1())==4)
+							{
+								catId=4;
+								
+								if (Integer.parseInt(item.getItemGrp2())==20) {
+
+									kg1QtyN = kg1QtyN + item.getItemQty();
+								
+
+								} 
+								
+								
+							}
+				}
+				
+				//-----------------------For Notification-----------------
+				String frToken="";
+			
+				 try {
+					 String strMessage="";
+					 if(catId==1)
+					 {
+						   strMessage="Your Order has been saved. Total Ordered- Puffs & Pattice --["+kg1QtyN+"]-Breads--["+kg2QtyN+"]-Long Shelf--["+kg3QtyN+"] Thank You..Team Monginis";
+ 
+					 }else
+					   if(catId==2)
+					   {
+						   strMessage="Your Order has been saved. Total Ordered- Pastries --["+kg1QtyN+"]-1/2 Kg Cake--["+kg2QtyN+"]-1 Kg Cake--["+kg3QtyN+"]-Above 1 Kg Cake--["+kg4QtyN+"] Thank You..Team Monginis";
+					   }
+					   else if(catId==3) {
+						   
+						   strMessage="Your Order has been saved. Total Ordered- Packing Materials --["+kg1QtyN+"]-Celebrations & Party Items--["+kg2QtyN+"]- Thank You..Team Monginis";
+					   }
+					   else if(catId==4)
+					   {
+						   strMessage="Your Order has been saved. Total Ordered- Pack Product --["+kg1QtyN+"]-- Thank You..Team Monginis";
+
+					   }
+					 
+					 
+					 
+					   MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					   map.add("frId",frDetails.getFrId());
+					    
+                      frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
+			          Firebase.sendPushNotifForCommunication(frToken,menuTitle+" Order Placed Successfully",strMessage,"inbox");
+			    	
+			         }
+			         catch(Exception e2)
+			         {
+				       e2.printStackTrace();
+			         }
+				
+				//-----------------------------------------------------End- Notif------------------------------------------------------------
+				
+				
+				
 
 			} catch (Exception e) {
 				System.out.println("Except Placing order " + e.getMessage());

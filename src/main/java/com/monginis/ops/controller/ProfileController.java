@@ -1,6 +1,9 @@
 package com.monginis.ops.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
@@ -36,13 +40,15 @@ public class ProfileController {
 	
 
 	@RequestMapping(value = "/showeditprofile")
-	public ModelAndView displaySavouries(HttpServletRequest request,
-		HttpServletResponse response) {
-	ModelAndView model = new ModelAndView("profile");
+	public ModelAndView displaySavouries(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView model = new ModelAndView("profile");
+
+	try {
 	System.out.println("I am here");
 	
 	HttpSession ses = request.getSession();
 	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+	String frImageName = (String)ses.getAttribute("frImage");
 	System.out.println("Franchisee Rsponse"+frDetails);
 	
 	MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -54,13 +60,19 @@ public class ProfileController {
 	System.out.println("Franchisee frSup Rsponse"+frSup.toString());
 
 	model.addObject("frSup", frSup);
+	model.addObject("URL", Constant.FR_IMAGE_URL);
+	model.addObject("frImageName", frImageName);
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
 	return model;
 	
 	
 }
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
 	public String editProfile(HttpServletRequest request,
-		HttpServletResponse response) {
+		HttpServletResponse response,@RequestParam("fr_image") List<MultipartFile> file) {
 		//,@RequestParam("fr_image") MultipartFile file
 		//ModelAndView model = new ModelAndView("profile");
 		System.out.println("I am here");
@@ -80,6 +92,34 @@ public class ProfileController {
 		
 		try {
 			RestTemplate rest = new RestTemplate();
+			
+			String frImage = request.getParameter("prevImage");
+
+			if (!file.get(0).getOriginalFilename().equalsIgnoreCase("")) {
+
+				VpsImageUpload upload = new VpsImageUpload();
+
+				//Calendar cal = Calendar.getInstance();
+				//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				//System.out.println(sdf.format(cal.getTime()));
+
+			//	String curTimeStamp = sdf.format(cal.getTime());
+		 
+				try {
+					frImage=file.get(0).getOriginalFilename();
+					upload.saveUploadedFiles(file, Constant.FR_IMAGE_TYPE,file.get(0).getOriginalFilename());
+					System.out.println("upload method called " + file.toString());
+					frDetails.setFrImage(Constant.FR_IMAGE_URL+frImage);
+					ses.setAttribute("frDetails",frDetails);
+					ses.setAttribute("frImage",frImage);
+
+				} catch (IOException e) {
+					
+					System.out.println("Exce in File Upload In Fr Update Process " + e.getMessage());
+					e.printStackTrace();
+				}
+			}
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			
 			map.add("frName", frName);
@@ -110,7 +150,7 @@ public class ProfileController {
 			map.add("frId",frDetails.getFrId() );
 			map.add("frCode", frDetails.getFrCode());
 			map.add("frOpeningDate",frDetails.getFrOpeningDate());
-			map.add("frImage", frDetails.getFrImage());
+			map.add("frImage",frImage);
 			map.add("frRouteId", frDetails.getFrRouteId());
 			map.add("frRateCat", frDetails.getFrRateCat());
 			map.add("isSameState",frDetails.getIsSameState());
@@ -135,7 +175,7 @@ public class ProfileController {
 					   
                        String token= rest.postForObject(Constant.URL+"getFrToken", map, String.class);
 					
-			           Firebase.sendPushNotifForCommunication(token,"Profile Updated","Your Profile has been changed. If you have not done the changes, Kindly report us. Team Monginis","profile");
+			           Firebase.sendPushNotifForCommunication(token,"Profile Updated","Your Profile has been changed. If you have not done the changes, Kindly report us. Team Monginis","inbox");
 					
 			         }
 			         catch(Exception e2)
@@ -192,7 +232,7 @@ public class ProfileController {
 	@RequestMapping(value = "/updateUserPasswords", method = RequestMethod.GET)
 	public @ResponseBody Info updateUserPasswords(HttpServletRequest request,HttpServletResponse response) {
 		
-		String pass1=request.getParameter("pass1");
+		//String pass1=request.getParameter("pass1");
 		String pass2=request.getParameter("pass2");
 		String pass3=request.getParameter("pass3");
 
@@ -202,7 +242,7 @@ public class ProfileController {
 			
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("frId", frDetails.getFrId());
-		map.add("pass1", pass1);
+		//map.add("pass1", pass1);
 		map.add("pass2",pass2);
 		map.add("pass3",pass3);
 
