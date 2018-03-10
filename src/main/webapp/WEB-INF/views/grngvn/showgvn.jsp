@@ -100,7 +100,7 @@ label::before {
 
 							<div class="colOuter">
 								<div class="col-md-2">
-									<h6>Select Bill</h6>
+									
 								</div>
 
 								<div class="col-md-3">
@@ -167,7 +167,7 @@ label::before {
 											<th class="col-md-3">Item Name</th>
 											<th class="col-md-2">Purchase</th>
 
-											<th class="col-md-1">Quantity</th>
+											<th class="col-md-2">Gvn Qty</th>
 											<th class="col-md-2">Rate</th>
 											<th class="col-md-2">Tax %</th>
 											<th class="col-md-2">Amount</th>
@@ -192,7 +192,7 @@ label::before {
 											<th class="col-md-3">Item Name</th>
 											<th class="col-md-2">Purchase</th>
 
-											<th class="col-md-1">Quantity</th>
+											<th class="col-md-2">Gvn Qty</th>
 											<th class="col-md-2">Rate</th>
 											<th class="col-md-2">Tax %</th>
 											<th class="col-md-2">Amount</th>
@@ -215,7 +215,7 @@ label::before {
 
 												<td class="col-md-3">${gvnConfList.itemName}</td>
 												<td class="col-md-2">${gvnConfList.billQty}</td>
-												<td class="col-md-1"><input type="text"
+												<td class="col-md-2"><input type="text"
 													name="gvn_qty${gvnConfList.itemId}"
 													id='gvn_qty${gvnConfList.itemId}' size="5" value="0"
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer})" /></td>

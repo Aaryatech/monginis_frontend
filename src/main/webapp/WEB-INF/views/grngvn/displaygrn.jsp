@@ -141,11 +141,11 @@
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==4}">
-													<td class="col-md-1"><c:out value="Approved From Store"></c:out></td>
+													<td class="col-md-1"><c:out value="Approved From Sales"></c:out></td>
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==5}">
-													<td class="col-md-1"><c:out value="Reject From Store"></c:out></td>
+													<td class="col-md-1"><c:out value="Reject From Sales"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==6}">
 													<td class="col-md-1"><c:out value="Approved From Account"></c:out></td>
@@ -229,9 +229,9 @@
 					if (grndata.grnGvnStatus == 3)
 						grnStatus = "Reject From Dispatch";
 					if (grndata.grnGvnStatus == 4)
-						grnStatus = "Approved From Sell";
+						grnStatus = "Approved From Sales";
 					if (grndata.grnGvnStatus == 5)
-						grnStatus = "Reject From Sell";
+						grnStatus = "Reject From Sales";
 					if (grndata.grnGvnStatus == 6)
 						grnStatus = "Approved From Account";
 					if (grndata.grnGvnStatus == 7)

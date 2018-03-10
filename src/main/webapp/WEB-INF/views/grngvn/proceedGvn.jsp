@@ -147,7 +147,7 @@ label::before {
 										<tr class="bgpink">
 											<th class="col-md-2">Item Name</th>
 											<th class="col-md-1">Purchase</th>
-											<th class="col-md-1">QTY</th>
+											<th class="col-md-1">GVN Qty</th>
 											<th class="col-md-1">Rate</th>
 											<th class="col-md-1">Tax %</th>
 											<th class="col-md-1">Amount</th>
@@ -220,7 +220,6 @@ label::before {
 												</td>
 
 												<td class="col-md-1">
-
 													<div class="form-group">
 														<div>
 															<div class="fileUpload">
@@ -230,7 +229,6 @@ label::before {
 																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
 																	alt="" />
 															</div>
-
 
 
 														</div>

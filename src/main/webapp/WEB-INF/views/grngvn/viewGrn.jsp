@@ -148,11 +148,11 @@
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Approved From Sell"></c:set>
+														<c:set var="status" value="Approved From Sales"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==5}">
-														<c:set var="status" value="Reject From Sell"></c:set>
+														<c:set var="status" value="Reject From Sales"></c:set>
 													</c:when>
 
 													<c:when test="${grnList.grngvnStatus==6}">
@@ -269,9 +269,9 @@ document.getElementById("headeIdText").value=0;
 								else if(grndata.grngvnStatus==3)
 									grnStatus="Reject From Dispatch";
 								else if(grndata.grngvnStatus==4)
-									grnStatus="Approved From Sell";
+									grnStatus="Approved From Sales";
 								else if(grndata.grngvnStatus==5)
-									grnStatus="Reject From Sell";
+									grnStatus="Reject From Sales";
 								else if(grndata.grngvnStatus==6)
 									grnStatus="Approved From Account";
 								else if(grndata.grngvnStatus==7)

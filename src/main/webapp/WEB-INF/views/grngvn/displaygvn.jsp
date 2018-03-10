@@ -105,7 +105,7 @@
 									<th class="col-md-1">Item Name</th>
 									<th class="col-md-2">Bill Rate</th>
 									<th class="col-md-1">Refund Rate</th>
-									<th class="col-md-1">Qnty</th>
+									<th class="col-md-1">Gvn Qty</th>
 									<th class="col-md-1">Total Refund Requested</th>
 									<th class="col-md-1">Approved Qty</th>
 									<th class="col-md-1">Approved total Refund</th>
@@ -163,11 +163,11 @@
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==4}">
-												<c:set var="status" value="Approved By Sell"></c:set>
+												<c:set var="status" value="Approved By Sales"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==5}">
-												<c:set var="status" value="Reject From Sell"></c:set>
+												<c:set var="status" value="Reject From Sales"></c:set>
 											</c:when>
 
 											<c:when test="${gvnList.grnGvnStatus==6}">
@@ -285,9 +285,9 @@
 													else if (gvndata.grnGvnStatus == 3)
 														status = "Reject From Dispatch";
 													else if (gvndata.grnGvnStatus == 4)
-														status = "Approved From Sell";
+														status = "Approved From Sales";
 													else if (gvndata.grnGvnStatus == 5)
-														status = "Reject From Sell";
+														status = "Reject From Sales";
 													else if (gvndata.grnGvnStatus == 6)
 														status = "Approved From Account";
 													else	if (gvndata.grnGvnStatus == 7)

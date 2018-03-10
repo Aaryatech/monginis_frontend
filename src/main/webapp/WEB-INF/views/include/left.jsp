@@ -376,7 +376,7 @@
 						</div>
 						
 						
-						<a href="${pageContext.request.contextPath}/showGrn"><i class="fa fa-plus-circle icon"></i> Add GRN </a>
+						<a href="${pageContext.request.contextPath}/showGrn"><i class="fa fa-plus-circle icon"></i> Request GRN </a>
 						<div class="clearfix"></div>
 						<a href="${pageContext.request.contextPath}/displayGrn"><i class="fa fa-search-plus icon"></i> View GRN </a>
 								
@@ -391,7 +391,7 @@
 						</div>
 						
 						
-						<a href="${pageContext.request.contextPath}/showGvn"><i	class="fa fa-plus-circle icon"></i> Add GVN 
+						<a href="${pageContext.request.contextPath}/showGvn"><i	class="fa fa-plus-circle icon"></i> Request GVN 
 									</a>
 									<a href="${pageContext.request.contextPath}/displayGvn"><i class="fa fa-search-plus icon"></i> View GVN </a>
 								

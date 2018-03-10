@@ -830,7 +830,7 @@ public class GrnGvnController {
 			// postGrnList.getGrnGvn().size());
 
 			Info insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
-
+			//Info insertGrn=null;
 			if (insertGrn.getError() == false) {
 
 				map = new LinkedMultiValueMap<String, Object>();
@@ -934,7 +934,7 @@ public class GrnGvnController {
 					  map.add("frId",frDetails.getFrId());
 					   
                      frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			         Firebase.sendPushNotifForCommunication(frToken,"Grn Punched","Grn no has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Monginis","inbox");
+			         Firebase.sendPushNotifForCommunication(frToken,"GRN Punched","GRN has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Monginis","inbox");
 			   	
 			        }
 			        catch(Exception e2)
@@ -1503,7 +1503,7 @@ boolean isCustComplaint=false;
 					  map.add("frId",frDetails.getFrId());
 					   
                      frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			         Firebase.sendPushNotifForCommunication(frToken,"GVN Punched","Gvn no has been punched against value of Rs."+grnHeader.getTotalAmt() + " Thank You..Team Monginis","inbox");
+			         Firebase.sendPushNotifForCommunication(frToken,"GVN Punched","GVN has been punched against value of Rs."+grnHeader.getTotalAmt() + " Thank You..Team Monginis","inbox");
 			   	
 			        }
 			        catch(Exception e2)
@@ -1528,11 +1528,12 @@ boolean isCustComplaint=false;
 			DateFormat sdFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 			String cDate = sdFormat.format(grnDate);
-
+			String s=new String();
+			s="0"+","+"2";
 			map.add("frIdList", frId);
 			map.add("fromDate", cDate);
 			map.add("toDate", cDate);
-			map.add("isGrn", 0);
+			map.add("isGrn", s);
 			// getFrGrnDetail
 			//List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
 
@@ -1811,12 +1812,17 @@ boolean isCustComplaint=false;
 		int frId = frDetails.getFrId();
 
 		// if(fromDate==null || fromDate=="") {
+		
+		String s=new String();
+		s="0"+","+"2";
 		if (!grnSrNO.equals("0") || grnSrNO == "") {
 
 			System.out.println("NULL DATE");
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
-			map.add("isGrn", 0);
+			//map.add("isGrn", 0);
+			map.add("isGrn", "0" + "," + "2");
+
 			map.add("grnGvnSrNo", grnSrNO);
 
 			try {
@@ -1839,7 +1845,7 @@ boolean isCustComplaint=false;
 			map.add("frIdList", frId);
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
-			map.add("isGrn", 0);
+			map.add("isGrn", "0" + "," + "2");
 			// getFrGrnDetail
 
 			try {
