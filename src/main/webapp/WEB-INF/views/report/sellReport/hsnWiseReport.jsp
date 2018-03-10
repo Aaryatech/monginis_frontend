@@ -56,7 +56,7 @@
 				
 
 <div class="row">
-	    <div class="col-md-12"><h2 class="pageTitle">View Sell Tax Bill wise Report</h2></div>
+	    <div class="col-md-12"><h2 class="pageTitle">View HSN Code wise Report</h2></div>
 	</div>
 	
 <div class="colOuter">
@@ -68,6 +68,7 @@
 		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
 		</div></div>
 										<input type="hidden" name="frId" id="frId" value="${frId}">
+										<input type="hidden" name="frName" id="frName" value="${frName}">
 		
 	</div>
  
@@ -100,9 +101,9 @@
 									<th class="col-md-1" >HSN No.</th>
 									<th class="col-md-1" >CGST</th>
 									<th class="col-md-1" >SGST</th>
-									<th class="col-md-1" >IGST</th>
-									<th class="col-md-1" >Total Tax</th>
+									<th class="col-md-1" >IGST</th> 
 									<th class="col-md-1" >Taxable Amt</th>
+									<th class="col-md-1" >Total Tax</th>
 								 	<th class="col-md-1" >Total</th>  
 								  </tr>
 								</thead>
@@ -212,12 +213,12 @@
 								  	
 								   	tr.append($('<td class="col-md-1"></td>').html(list.igst));
 								   	igstTotal=igstTotal + list.igst;
-								  	 
-									tr.append($('<td class="col-md-1"></td>').html(list.totalTax));
-									taxTotal=taxTotal + list.totalTax;
-									
+								  	  
 									tr.append($('<td class="col-md-1"></td>').html(list.taxableAmt));
 									taxableTotal=taxableTotal + list.taxableAmt;
+									
+									tr.append($('<td class="col-md-1"></td>').html(list.totalTax));
+									taxTotal=taxTotal + list.totalTax;
 									
 								  	tr.append($('<td class="col-md-1"></td>').html(list.grandTotal));
 								  	grandTotal=grandTotal + list.grandTotal;
@@ -339,8 +340,8 @@ function genPdf()
 		{ 
 	var fromDate = document.getElementById("fromdatepicker").value;
 	var toDate = document.getElementById("todatepicker").value;
-	var frId=document.getElementById("frId").value;
-	window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxBillwiseReportpPdf/'+fromDate+'/'+toDate+'/'+frId+'/');
+	var frId = document.getElementById("frId").value; 
+	window.open('${pageContext.request.contextPath}/tSellReport?reportURL=pdf/getHsnWiseReportPdf/'+fromDate+'/'+toDate+'/'+frId+'/');
 		}
 }
 
