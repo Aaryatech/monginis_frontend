@@ -33,6 +33,7 @@ import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GrnGvnReport;
 import com.monginis.ops.model.TSellReport;
 
 @Controller
@@ -164,6 +165,268 @@ public class SellReport {
 
 	}
 	
+	@RequestMapping(value = "/grnReport", method = RequestMethod.GET)
+	public ModelAndView grnGvnReport(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("report/sellReport/grnReport");
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			 
+			model.addObject("frId", frDetails.getFrId());
+			model.addObject("frName", frDetails.getFrName());
+			 
+			return model;			
+	}
+	
+	@RequestMapping(value = "/getgrnReport", method = RequestMethod.GET)
+	@ResponseBody
+	public List<GrnGvnReport> getgrnReport(HttpServletRequest request,
+				HttpServletResponse response) {
+
+		List<GrnGvnReport> getgrnReport = new ArrayList<GrnGvnReport>();
+			try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			String isGrn="1";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("isGrn", isGrn);
+			System.out.println("map " + map);
+			RestTemplate rest = new RestTemplate();
+			GrnGvnReport grnGvnReportList[] = rest.postForObject(Constant.URL + "/grnGvnReport",map,
+					GrnGvnReport[].class);
+			 
+			getgrnReport = new ArrayList<>(Arrays.asList(grnGvnReportList));
+			System.out.println("getgrnReport " +getgrnReport);
+			System.out.println("grnGvnReportList " +grnGvnReportList);
+			 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+		 		
+		 		ExportToExcel expoExcel=new ExportToExcel();
+		 		List<String> rowData=new ArrayList<String>();
+		 		 
+		 		rowData.add("Sr No");
+		 		rowData.add("Grn Gvn Date");
+		 		rowData.add("Item Name");
+		 		rowData.add("Tax Rate");
+		 		rowData.add("Taxable Amt"); 
+		 		rowData.add("Total Tax");
+		 		rowData.add("Grn Gvn Amt");
+		 		rowData.add("Approved Taxable Amt");
+		 		rowData.add("Approved CGST Amt");
+		 		rowData.add("Approved SGST Amt");
+		 		rowData.add("Approved IGST Amt");
+		 		rowData.add("Approved Grand Total");
+		 		expoExcel.setRowData(rowData);
+		 		
+		 		exportToExcelList.add(expoExcel);
+		 		
+		 		for(int i=0;i<getgrnReport.size();i++)
+		 		{
+		 			  expoExcel=new ExportToExcel();
+		 			 rowData=new ArrayList<String>();
+		 			 
+		 			 rowData.add(""+(i+1));
+		 			 rowData.add(""+getgrnReport.get(i).getItemName());
+		 			 rowData.add(""+getgrnReport.get(i).getTaxRate());
+		 			 rowData.add(""+getgrnReport.get(i).getTaxableAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getTotalTax()); 
+		 			 rowData.add(""+getgrnReport.get(i).getGrnGvnAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getAprTaxableAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getAprCgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprSgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprIgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprGrandTotal());
+		 			 
+		 			expoExcel.setRowData(rowData);
+		 			exportToExcelList.add(expoExcel);
+		 			 
+		 		}
+		 		
+		 		
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelList", exportToExcelList);
+				session.setAttribute("excelName", "GrnGvnReport");
+			
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				
+			}
+			return getgrnReport;			
+	}
+	
+	@RequestMapping(value = "pdf/getgrnReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView getgrnReportPdf(@PathVariable String fromDate,@PathVariable String toDate,@PathVariable int frId,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/grnReportPdf");
+		try {
+			List<GrnGvnReport> getgrnReport = new ArrayList<GrnGvnReport>();
+			  String isGrn="1";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("isGrn", isGrn);
+			RestTemplate rest = new RestTemplate();
+			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReport",map,
+					List.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			Franchisee franchisee = rest.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+							Franchisee.class, frId);
+			 
+			System.out.println("getgrnReport " + getgrnReport);
+			 model.addObject("reportList",getgrnReport);
+			 model.addObject("fromDate",fromDate);
+			 model.addObject("toDate",toDate);
+			 model.addObject("frName", franchisee.getFrName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/gvnReport", method = RequestMethod.GET)
+	public ModelAndView gvnReport(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("report/sellReport/gvnReport");
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			 
+			model.addObject("frId", frDetails.getFrId());
+			model.addObject("frName", frDetails.getFrName());
+			 
+			return model;			
+	}
+	
+	@RequestMapping(value = "/getgvnReport", method = RequestMethod.GET)
+	@ResponseBody
+	public List<GrnGvnReport> getgvnReport(HttpServletRequest request,
+				HttpServletResponse response) {
+
+		List<GrnGvnReport> getgrnReport = new ArrayList<GrnGvnReport>();
+			try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			String isGrn="0,2";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("isGrn", isGrn);
+			System.out.println("map " + map);
+			RestTemplate rest = new RestTemplate();
+			GrnGvnReport grnGvnReportList[] = rest.postForObject(Constant.URL + "/grnGvnReport",map,
+					GrnGvnReport[].class);
+			 
+			getgrnReport = new ArrayList<>(Arrays.asList(grnGvnReportList));
+			System.out.println("getgrnReport " +getgrnReport);
+			System.out.println("grnGvnReportList " +grnGvnReportList);
+			 List<ExportToExcel> exportToExcelList=new ArrayList<ExportToExcel>();
+		 		
+		 		ExportToExcel expoExcel=new ExportToExcel();
+		 		List<String> rowData=new ArrayList<String>();
+		 		 
+		 		rowData.add("Sr No");
+		 		rowData.add("Grn Gvn Date");
+		 		rowData.add("Item Name");
+		 		rowData.add("Tax Rate");
+		 		rowData.add("Taxable Amt"); 
+		 		rowData.add("Total Tax");
+		 		rowData.add("Grn Gvn Amt");
+		 		rowData.add("Approved Taxable Amt");
+		 		rowData.add("Approved CGST Amt");
+		 		rowData.add("Approved SGST Amt");
+		 		rowData.add("Approved IGST Amt");
+		 		rowData.add("Approved Grand Total");
+		 		expoExcel.setRowData(rowData);
+		 		
+		 		exportToExcelList.add(expoExcel);
+		 		
+		 		for(int i=0;i<getgrnReport.size();i++)
+		 		{
+		 			  expoExcel=new ExportToExcel();
+		 			 rowData=new ArrayList<String>();
+		 			 
+		 			 rowData.add(""+(i+1));
+		 			 rowData.add(""+getgrnReport.get(i).getItemName());
+		 			 rowData.add(""+getgrnReport.get(i).getTaxRate());
+		 			 rowData.add(""+getgrnReport.get(i).getTaxableAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getTotalTax()); 
+		 			 rowData.add(""+getgrnReport.get(i).getGrnGvnAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getAprTaxableAmt());
+		 			 rowData.add(""+getgrnReport.get(i).getAprCgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprSgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprIgstRs());
+		 			 rowData.add(""+getgrnReport.get(i).getAprGrandTotal());
+		 			 
+		 			expoExcel.setRowData(rowData);
+		 			exportToExcelList.add(expoExcel);
+		 			 
+		 		}
+		 		
+		 		
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelList", exportToExcelList);
+				session.setAttribute("excelName", "GrnGvnReport");
+			
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				
+			}
+			return getgrnReport;			
+	}
+	
+	@RequestMapping(value = "pdf/getgvnReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView getgvnReportPdf(@PathVariable String fromDate,@PathVariable String toDate,@PathVariable int frId,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/gvnReportPdf");
+		try {
+			List<GrnGvnReport> getgrnReport = new ArrayList<GrnGvnReport>();
+			  String isGrn="0,2";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("isGrn", isGrn);
+			RestTemplate rest = new RestTemplate();
+			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReport",map,
+					List.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			Franchisee franchisee = rest.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+							Franchisee.class, frId);
+			 
+			System.out.println("getgrnReport " + getgrnReport);
+			 model.addObject("reportList",getgrnReport);
+			 model.addObject("fromDate",fromDate);
+			 model.addObject("toDate",toDate);
+			 model.addObject("frName", franchisee.getFrName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
 	
 	private Dimension format = PD4Constants.A4;
 	private boolean landscapeValue = false;
@@ -183,8 +446,8 @@ public class SellReport {
 
 		String url=request.getParameter("reportURL");
 		 
-		File f = new File("/opt/tomcat-latest/webapps/webapi/uploads/ordermemo.pdf");
-		//File f = new File("C:/pdf/ordermemo221.pdf");
+		//File f = new File("/opt/tomcat-latest/webapps/webapi/uploads/ordermemo.pdf");
+		File f = new File("C:/pdf/ordermemo221.pdf");
 		try {
 			runConverter(Constant.ReportURL+url, f,request,response);
 		} catch (IOException e) {
@@ -197,8 +460,8 @@ public class SellReport {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
-		String filePath = "/opt/tomcat-latest/webapps/webapi/uploads/ordermemo.pdf";
-		//String filePath = "C:/pdf/ordermemo221.pdf";
+		//String filePath = "/opt/tomcat-latest/webapps/webapi/uploads/ordermemo.pdf";
+		String filePath = "C:/pdf/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
