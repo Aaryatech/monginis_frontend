@@ -265,7 +265,20 @@ jQuery(document).ready(function(){
 
 
 							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="faux-table" class="faux-table" aria="hidden">
+								<table id="table_grid" class="main-table">
+										<thead>
+											<tr class="bgpink">
+
+												<th class="col-md-1">Item Name</th>
+												<th class="col-md-1">MRP</th>
+												<th class="col-sm-1">Quantity</th>
+												<th class="col-md-1">Rate</th>
+												<th class="col-md-1">Total</th>
+											</tr>
+											</thead></table>
+								
+								</div>
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table">
 										<thead>
