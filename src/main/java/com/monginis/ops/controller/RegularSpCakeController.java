@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
  
@@ -371,6 +372,23 @@ public class RegularSpCakeController {
 				mav.addObject("rspName","");
 				mav.addObject("rgGstAmount",rgGstAmount);
 				mav.addObject("globalIndex", globalIndex);
+				//-----------------------For Notification-----------------
+				String frToken="";
+			
+				 try {
+					   MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					   map.add("frId",frDetails.getFrId());
+					    
+                      frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
+			          Firebase.sendPushNotifForCommunication(frToken,"Regular Cake as Special Order Placed Sucessfully","Your Regular cake Order has been saved. Order Saved is--Item name--"+spName+"--Qty--"+qty+"--Total Amount-"+rgCkGrand+". Thank You.Team Monginis","inbox");
+			    	
+			         }
+			         catch(Exception e2)
+			         {
+				       e2.printStackTrace();
+			         }
+				
+				//-----------------------------------------------------
 
 			} catch (Exception e) {
 				 

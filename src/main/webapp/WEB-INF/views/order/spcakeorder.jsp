@@ -242,7 +242,7 @@ select {
 
 <!----------------------------------------Form Start-------------------------------------------------->
 <form action="${pageContext.request.contextPath}/orderSpCake"  method="post" class="form-horizontal" name="from_ord" id="validation-form" enctype="multipart/form-data"onsubmit="return validate()">
-<input type="hidden" name="menuTitle" value="${menuTitle}"> 
+<input type="hidden" name="menu_title" value="${menuTitle}"> 
 <input type="hidden" name="mode_add" id="mode_add" value="add_book">
 <input type="hidden" name="sp_id" id="sp_id" value="${specialCake.spId}">
 <input type="hidden" name="sp_min_weight" id="sp_min_weight" value="${specialCake.spMinwt}">
@@ -404,7 +404,15 @@ select {
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
+		<div class="col2"><c:choose><c:when test="${menuId==46}">
+			<input id="date" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" readonly>
+			<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="hidden" />
+
+		</c:when>
+		<c:otherwise>
+		<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
+		</c:otherwise>
+		</c:choose>
 		</div><div class="col2"> 
         <c:if test = "${specialCake.isSlotUsed=='1'}"> <span class="cakename"id="slotUsedSpan">Check Slots availability</span> </c:if></div>
 	</div>

@@ -1434,6 +1434,20 @@ public class CustomerBillController {
 
 		HttpSession session = request.getSession();
 		int token = Integer.parseInt(request.getParameter("token"));
+		int isB2b=0;
+		if(token==1)
+		{   try {
+			 isB2b=Integer.parseInt(request.getParameter("isb2b"));
+			 
+			  }
+		catch (NullPointerException e) {
+			isB2b=0;
+			
+		}catch (Exception e) {
+			isB2b=0;
+		}
+		 
+		}
 		System.out.println("Token " + token);
 		System.out.println("Token Data " + customerBillDataToken1.toString());
 
@@ -1576,7 +1590,14 @@ public class CustomerBillController {
 			sellBillHeader.setInvoiceNo(getInvoiceNo());
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
-			sellBillHeader.setBillType('R');
+			if(isB2b==1)
+			{
+				sellBillHeader.setBillType('B');
+			}else
+			{
+				sellBillHeader.setBillType('R');
+			}
+			
 
 			sellBillHeader.setSellBillNo(0);
 

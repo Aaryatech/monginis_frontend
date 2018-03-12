@@ -39,7 +39,7 @@ public class Firebase {
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
 		conn.setRequestProperty("Content-Type", "application/json");
-System.out.println("deviceToken"+deviceToken.toString());
+//System.out.println("deviceToken"+deviceToken.toString());
 		JSONObject json = new JSONObject();
 		JSONObject info = new JSONObject();
 		try {

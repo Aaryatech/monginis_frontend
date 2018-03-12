@@ -171,7 +171,7 @@ public class SpCakeController {
 
 		String spCode = request.getParameter("sp_code");
 		ModelAndView model = new ModelAndView("order/spcakeorder");
-
+		String menuTitle="";
 		List<Float> weightList = new ArrayList<>();
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -188,6 +188,7 @@ public class SpCakeController {
 
 				String itemShow = menuList.get(globalIndex).getItemShow();
 				currentMenuId = menuList.get(globalIndex).getMenuId();
+				 menuTitle=menuList.get(globalIndex).getMenuTitle();
 				HttpSession session = request.getSession();
 
 				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -219,6 +220,7 @@ public class SpCakeController {
 					model.addObject("specialCakeList", specialCakeList);
 					model.addObject("weightList", weightList);
 					model.addObject("menuId",currentMenuId);
+					model.addObject("menuTitle", menuTitle);
 					return model;
 
 				}
@@ -281,6 +283,7 @@ public class SpCakeController {
 				model.addObject("configuredSpCodeList", configuredSpCodeList);
 				model.addObject("weightList", weightList);
 				model.addObject("menuId",currentMenuId);
+				model.addObject("menuTitle", menuTitle);
 			} else {
 
 				System.out.println(" inside else:");
@@ -295,6 +298,7 @@ public class SpCakeController {
 				model.addObject("specialCakeList", specialCakeList);
 				model.addObject("weightList", weightList);
 				model.addObject("menuId",currentMenuId);
+				model.addObject("menuTitle", menuTitle);
 				return model;
 
 			}
@@ -313,6 +317,7 @@ public class SpCakeController {
 			model.addObject("configuredSpCodeList", configuredSpCodeList);
 			model.addObject("weightList", weightList);
 			model.addObject("menuId",currentMenuId);
+			model.addObject("menuTitle", menuTitle);
 			return model;
 		}
 
@@ -324,6 +329,7 @@ public class SpCakeController {
 		model.addObject("specialCakeList", specialCakeList);
 		model.addObject("configuredSpCodeList", configuredSpCodeList);
 		model.addObject("menuId",currentMenuId);
+		model.addObject("menuTitle", menuTitle);
 		return model;
 	}
 
@@ -426,7 +432,8 @@ public class SpCakeController {
 			logger.info("1" + spId);
 			String spCode = request.getParameter("sp_code");
 			logger.info("2" + spCode);
-			String menuTitle = request.getParameter("menuTitle");//For Notification
+			String menuTitle = request.getParameter("menu_title");//For Notification
+			logger.info("menuTitle" + menuTitle);
 			String spName = request.getParameter("sp_name");
 			logger.info("3" + spName);
 
@@ -768,7 +775,8 @@ public class SpCakeController {
 
 				String flavourName = filteredFlavour.getSpfName();
 				System.out.println("Sptype=" + spType);
-
+				mav.addObject("spType", spType);
+				mav.addObject("menuTitle", menuTitle);
 				mav.addObject("spType", spType);
 				mav.addObject("specialCake", spCake);
 				mav.addObject("spImage", spImage);
@@ -791,7 +799,7 @@ public class SpCakeController {
 					   map.add("frId",frDetails.getFrId());
 					    
                       frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			          Firebase.sendPushNotifForCommunication(frToken,""+menuTitle+" Order Placed Sucessfully","Your SP Order has been saved. Order Saved is--SP Code--"+spCode+"-Sp name--"+spName+"--Weight--"+spWeight+"--Flavour--"+flavourName+"--Message--"+spCakeOrderRes.getSpCakeOrder().getSpInstructions()+"--Total Amount-"+spGrand+". Thank You.Team Monginis","inbox");
+			          Firebase.sendPushNotifForCommunication(frToken,menuTitle+" Order Placed Sucessfully","Your SP Order has been saved. Order Saved is--SP Code--"+spCode+"-Sp name--"+spName+"--Weight--"+spWeight+"--Flavour--"+flavourName+"--Message--"+spCakeOrderRes.getSpCakeOrder().getSpInstructions()+"--Total Amount-"+spGrand+". Thank You.Team Monginis","inbox");
 			    	
 			         }
 			         catch(Exception e2)

@@ -136,7 +136,7 @@ $("#tech").change(function() {
 <!--rightSidebar-->
 <div class="sidebarright">
 <div class="order-left">
-<h2 class="pageTitle">Order Special Cake</h2>
+<h2 class="pageTitle">${menuTitle}</h2>
 </div>
 
 
@@ -227,7 +227,7 @@ $("#tech").change(function() {
 	</div>
 	
 	<div class="fullform">
-		<div class="cackleft">Event</div>
+		<div class="cackleft">Message</div>
 		<div class="cackright">
        ${specialCake.spEvents} - ${specialCake.spEventsName}		</div>
 	</div>

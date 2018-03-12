@@ -110,7 +110,7 @@ jQuery(document).ready(function(){
 		<div class="col-md-2 ">
 			<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="fromDate" type="text" value="<%=frmDate%>">
 		</div>
-		<div class="col-md-1">
+		<div class="col-md-2">
 		    <h4 class="pull-left">To Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
@@ -125,28 +125,51 @@ jQuery(document).ready(function(){
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
-			<div class="table-responsive">
-				<div class="shInnerwidth">
-					
-								<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="table_grid" class="table table-bordered">
-									<tr class="bgpink">
-									<th >Bill No</th>
-										<th >Invoice No</th>
-									<th>Bill Date</th>
-										<th >Grand Total</th>
-									<th>Payable Amount</th>
-									<th>Paid Amount</th>
-									<th>Paymode</th>
-									<th>Action</th>
+			<div class="clearfix"></div>
+
+
+				<div id="table-scroll" class="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden">
+				<table width="100%" border="1" cellspacing="0"
+														cellpadding="1" id="table_grid"  class="main-table">
+								<thead>	<tr class="bgpink">
+									<th style="text-align:center;">Bill No</th>
+										<th style="text-align:center;">Invoice No</th>
+									<th style="text-align:center;">Bill Date</th>
+										<th style="text-align:center;">Grand Total</th>
+									<th style="text-align:center;">Payable Amount</th>
+									<th style="text-align:center;">Paid Amount</th>
+									<th style="text-align:center;">Paymode</th>
+									<th style="text-align:center;">Action</th>
 								  </tr>
+								</thead>
+								  <tbody >
 								
-								 
+								</tbody></table>
+					</div>
+					<div class="table-wrap">
+					
+								<table width="100%" border="1" cellspacing="0"
+														cellpadding="1" id="table_grid"  class="main-table">
+								<thead>	<tr class="bgpink">
+									<th style="text-align:center;">Bill No</th>
+										<th style="text-align:center;" >Invoice No</th>
+									<th style="text-align:center;">Bill Date</th>
+										<th style="text-align:center;">Grand Total</th>
+									<th style="text-align:center;">Payable Amount</th>
+									<th style="text-align:center;">Paid Amount</th>
+									<th style="text-align:center;">Paymode</th>
+									<th style="text-align:center;">Action</th>
+								  </tr>
+								</thead>
+								  <tbody >
+								
+								</tbody>
 								  
 								</table>
 						
 				</div>
-			</div>
+			</div></div>
 		<!--table end-->
 		 
 		</div>	
@@ -209,7 +232,26 @@ jQuery(document).ready(function(){
 
 													var index = key + 1;
 
-													var tr = "<tr>";
+													var tr = $('<tr></tr>');
+													tr.append($('<td></td>').html(key+1));
+													tr.append($('<td></td>').html(sellBillData.invoiceNo));
+													tr.append($('<td></td>').html(sellBillData.billDate));
+													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.grandTotal).toFixed(2)));
+													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.payableAmt).toFixed(2)));
+													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.paidAmt).toFixed(2)));
+													var payMode="";
+													if(sellBillData.paymentMode==0)
+													payMode="Cash";
+													else if(sellBillData.paymentMode==1)
+													payMode="Card";	
+													else if(sellBillData.paymentMode==2)
+													payMode="Other";	
+													
+													tr.append($('<td style="text-align:center;"></td>').html(payMode));
+													tr.append($('<td style="text-align:center;"></td>').html("<a href=${pageContext.request.contextPath}/viewBillDetails?sellBillNo="+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+' class="action_btn" name='+'><abbr title="Details"><i class="fa fa-list"></i></abbr></a> &nbsp; <a href=""onclick="return custBillPdf('+sellBillData.sellBillNo+');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
+													
+													$('#table_grid tbody').append(tr);
+													/* var tr = "<tr>";
 
 													
 
@@ -223,18 +265,19 @@ jQuery(document).ready(function(){
 																	+ sellBillData.billDate
 																	+ "</td>";
 
-																	var grandTotal = "<td>&nbsp;&nbsp;&nbsp;"
-																		+ sellBillData.grandTotal
+																	var grandTotal = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
+																		+ (sellBillData.grandTotal).toFixed(2)
 																		+ "</td>";
 
-																		var PayableAmt = "<td>&nbsp;&nbsp;&nbsp;"
-						 													+ sellBillData.payableAmt
+																		var PayableAmt = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
+						 													+ (sellBillData.payableAmt).toFixed(2)
 						 													+ "</td>";
 																			
-						  													var paidAmt = "<td>&nbsp;&nbsp;&nbsp;"
-																				+ sellBillData.paidAmt
+						  													var paidAmt = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
+																				+ (sellBillData.paidAmt).toFixed(2)
 																				+ "</td>";
-
+                                                                            
+																		   
 																			var paymentMode = "<td>&nbsp;&nbsp;&nbsp;"
 																				+ sellBillData.paymentMode
 																				+ "</td>";
@@ -271,7 +314,7 @@ jQuery(document).ready(function(){
 													.append(viewBill);
 													
 													$('#table_grid tbody')
-													.append(trclosed);
+													.append(trclosed); */
 													
 													
 
@@ -281,6 +324,16 @@ jQuery(document).ready(function(){
 							});
 
 		}
+	}
+	
+	function custBillPdf(sellBillNo)
+	{
+		
+		   var loginWindow = window.open('', 'UserLogin');
+			
+		    loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='+ sellBillNo;
+		
+		    
 	}
 	</script>
 	<script type="text/javascript">
@@ -306,6 +359,17 @@ jQuery(document).ready(function(){
 		return isValid;
 
 	}
+	
+	(function() {
+	  var fauxTable = document.getElementById("faux-table");
+	  var mainTable = document.getElementById("table_grid");
+	  var clonedElement = table_grid.cloneNode(true);
+	  var clonedElement2 = table_grid.cloneNode(true);
+	  clonedElement.id = "";
+	  clonedElement2.id = "";
+	  fauxTable.appendChild(clonedElement);
+	  fauxTable.appendChild(clonedElement2);
+	})();
 </script>
 	
 </body>
