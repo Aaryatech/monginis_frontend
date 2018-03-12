@@ -96,18 +96,18 @@
 
 															
 								
-									<th class="col-md-1" >Sr.No.</th> 
-									<th class="col-md-1" >Grn Gvn Date</th>
-									<th class="col-md-1" >Item Name</th>
-									<th class="col-md-1" >Tax Rate</th>
-									<th class="col-md-1" >Taxable Amt</th>
-									<th class="col-md-1" >Total Tax</th>
-									<th class="col-md-1" >Grn Gvn Amt</th> 
-									<th class="col-md-1" >Aprv. Taxable Amt</th>
-									<th class="col-md-1" >Aprv. CGST Amt</th>
-									<th class="col-md-1" >Aprv. SGST Amt</th>
-									<th class="col-md-1" >Aprv. IGST Amt</th> 
-								 	<th class="col-md-1" >Total</th>  
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th> 
+									<th class="col-md-1" style="text-align:center;">Grn Gvn Date</th>
+									<th class="col-md-1" style="text-align:center;">Item Name</th>
+									<th class="col-md-1" style="text-align:center;">Tax Rate</th>
+									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align:center;">Total Tax</th>
+									<th class="col-md-1" style="text-align:center;">Grn Gvn Amt</th> 
+									<th class="col-md-1" style="text-align:center;">Aprv. Taxable Amt</th>
+									<th class="col-md-1" style="text-align:center;">Aprv. CGST Amt</th>
+									<th class="col-md-1" style="text-align:center;">Aprv. SGST Amt</th>
+									<th class="col-md-1" style="text-align:center;">Aprv. IGST Amt</th> 
+								 	<th class="col-md-1" style="text-align:center;">Total</th>  
 								  </tr>
 								</thead>
 								
@@ -188,71 +188,80 @@
 
 								
 								
-							 	var taxTotal=0;
+								var taxTotal=0;
 								var igstTotal=0;
 								var cgstTotal=0;
 								var sgstTotal=0;
 								var taxableTotal=0;
 								var grandTotal=0;
+								var grnGvnAmt=0;
+								var aprTaxableTotal=0;
 								$.each(data,function(key, list) {
 
 									
 									  document.getElementById("expExcel").disabled=false;
 										document.getElementById('range').style.display = 'block';
 									
-									var tr = $('<tr></tr>');
+										var tr = $('<tr></tr>');
 
-								  	tr.append($('<td class="col-md-1"></td>').html(key+1));
-								  	tr.append($('<td class="col-md-1"></td>').html(list.grnGvnDate));
-								  	tr.append($('<td class="col-md-1"></td>').html(list.itemName)); 
-								  	tr.append($('<td class="col-md-1"></td>').html(list.taxRate)); 
-								  	tr.append($('<td class="col-md-1"></td>').html(list.taxableAmt));
-								  	 
-								  	tr.append($('<td class="col-md-1"></td>').html(list.totalTax));
-								  	 
-								   	tr.append($('<td class="col-md-1"></td>').html(list.grnGvnAmt));
-								    
-									tr.append($('<td class="col-md-1"></td>').html(list.aprTaxableAmt));
-									 
-									tr.append($('<td class="col-md-1"></td>').html(list.aprCgstRs));
-									 
-									tr.append($('<td class="col-md-1"></td>').html(list.aprSgstRs));
-									
-								  	tr.append($('<td class="col-md-1"></td>').html(list.aprIgstRs));
-								  	 
-									tr.append($('<td class="col-md-1"></td>').html(list.aprGrandTotal));
-   
-									$('#table_grid tbody').append(tr);
+									  	tr.append($('<td class="col-md-1"></td>').html(key+1));
+									  	tr.append($('<td class="col-md-1"></td>').html(list.grnGvnDate));
+									  	tr.append($('<td class="col-md-1"></td>').html(list.itemName)); 
+									  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.taxRate)); 
+									  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.taxableAmt.toFixed(2)));
+									  	taxableTotal=taxableTotal+list.taxableAmt;
+									  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.totalTax.toFixed(2)));
+									  	taxTotal=taxTotal+list.totalTax;
+									   	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.grnGvnAmt.toFixed(2)));
+									   	grnGvnAmt=grnGvnAmt+list.grnGvnAmt;
+										tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprTaxableAmt.toFixed(2)));
+										aprTaxableTotal=aprTaxableTotal+list.aprTaxableAmt;
+										tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprCgstRs.toFixed(2)));
+										cgstTotal=cgstTotal+list.aprCgstRs;
+										tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprSgstRs.toFixed(2)));
+										sgstTotal=sgstTotal+list.aprSgstRs;
+									  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprIgstRs.toFixed(2)));
+									  	igstTotal=igstTotal+list.aprIgstRs;
+										tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.aprGrandTotal.toFixed(2)));
+										grandTotal=grandTotal+list.aprGrandTotal;
+										$('#table_grid tbody').append(tr);
 
 									 	
 
 												})
 												
-							var tr = "<tr>";
+												var tr = "<tr>";
 								 var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
 								 
-								 var totalAmt="<td>&nbsp;&nbsp;&nbsp;<b>"
-										+ billTotal.toFixed(2);
-										+ "</b></td>";
-								var totalTax = "<td>&nbsp;&nbsp;&nbsp;<b>"
+								  var totalAmt="<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ taxableTotal.toFixed(2);
+										+ "</b></td>"; 
+								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 									+ taxTotal.toFixed(2);
 									+ "</b></td>";
-									var blank = "<td>&nbsp;&nbsp;&nbsp;<b>"
-										
+									
+								var totalGrnGvn = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ grnGvnAmt.toFixed(2);
 										+ "</b></td>";
-								var igst = "<td><b>&nbsp;&nbsp;&nbsp;"
+								var totalAprTaxableTotal = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+											+ aprTaxableTotal.toFixed(2);
+											+ "</b></td>";
+								var cgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+												+  cgstTotal.toFixed(2);
+												+ "</b></td>";
+								var sgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+													+ sgstTotal.toFixed(2);
+													+ "</b></td>";
+										 
+								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+  igstTotal.toFixed(2);
 										+ "</b></td>";
-								 var cgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  cgstTotal.toFixed(2);
-									+ "</b></td>";
-								var sgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ sgstTotal.toFixed(2);
-									+ "</b></td>";
-								var grand = "<td><b>&nbsp;&nbsp;&nbsp;"
+								 
+								
+								var grand = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 									+ grandTotal.toFixed(2);
-									+ "</b></td>"; 
+									+ "</b></td>";
 									
 								
 								var trclosed = "</tr>";
@@ -263,22 +272,26 @@
 								$('#table_grid tbody')
 								.append(total);
 								
-								$('#table_grid tbody')
+								 $('#table_grid tbody')
 								.append(totalAmt);
-								$('#table_grid tbody')
+								 	$('#table_grid tbody')
 								.append(totalTax)
 								 $('#table_grid tbody')
-									.append(blank);
+									.append(totalGrnGvn);
 								 $('#table_grid tbody')
+										.append(totalAprTaxableTotal);
+								 $('#table_grid tbody')
+									.append(cgst);
+								 $('#table_grid tbody')
+									.append(sgst); 
+								  $('#table_grid tbody')
 									.append(igst);
-								 $('#table_grid tbody')
-								.append(cgst);
-								$('#table_grid tbody')
-								.append(sgst); 
+								
+								
 								$('#table_grid tbody')
 								.append(grand); 
 								$('#table_grid tbody')
-								.append(trclosed); 
+								.append(trclosed);  
 								 
 							});
 

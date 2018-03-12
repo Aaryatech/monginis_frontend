@@ -96,15 +96,15 @@
 
 															
 								
-									<th class="col-md-1" >Sr.No.</th> 
-									<th class="col-md-1" >Item Name</th>
-									<th class="col-md-1" >HSN No.</th>
-									<th class="col-md-1" >CGST</th>
-									<th class="col-md-1" >SGST</th>
-									<th class="col-md-1" >IGST</th> 
-									<th class="col-md-1" >Taxable Amt</th>
-									<th class="col-md-1" >Total Tax</th>
-								 	<th class="col-md-1" >Total</th>  
+									<th class="col-md-1" style="text-align:center;">Sr.No.</th> 
+									<th class="col-md-1" style="text-align:center;">Item Name</th>
+									<th class="col-md-1" style="text-align:center;">HSN No.</th>
+									<th class="col-md-1" style="text-align:center;">CGST</th>
+									<th class="col-md-1" style="text-align:center;">SGST</th>
+									<th class="col-md-1" style="text-align:center;">IGST</th> 
+									<th class="col-md-1" style="text-align:center;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align:center;">Total Tax</th>
+								 	<th class="col-md-1" style="text-align:center;">Total</th>  
 								  </tr>
 								</thead>
 								
@@ -203,24 +203,24 @@
 								  	
 								  	tr.append($('<td class="col-md-1"></td>').html(list.itemName));
 								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(list.hsnNo));
+								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.hsnNo));
 
-								  	tr.append($('<td class="col-md-1"></td>').html(list.cgst));
+								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.cgst.toFixed(2)));
 								  	cgstTotal=cgstTotal + list.cgst;
 								  	
-								  	tr.append($('<td class="col-md-1"></td>').html(list.sgst));
+								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.sgst.toFixed(2)));
 								  	sgstTotal=sgstTotal + list.sgst;
 								  	
-								   	tr.append($('<td class="col-md-1"></td>').html(list.igst));
+								   	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.igst.toFixed(2)));
 								   	igstTotal=igstTotal + list.igst;
 								  	  
-									tr.append($('<td class="col-md-1"></td>').html(list.taxableAmt));
+									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.taxableAmt.toFixed(2)));
 									taxableTotal=taxableTotal + list.taxableAmt;
 									
-									tr.append($('<td class="col-md-1"></td>').html(list.totalTax));
+									tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.totalTax.toFixed(2)));
 									taxTotal=taxTotal + list.totalTax;
 									
-								  	tr.append($('<td class="col-md-1"></td>').html(list.grandTotal));
+								  	tr.append($('<td class="col-md-1" style="text-align:right"></td>').html(list.grandTotal.toFixed(2)));
 								  	grandTotal=grandTotal + list.grandTotal;
    
 									$('#table_grid tbody').append(tr);
@@ -230,28 +230,29 @@
 												})
 												
 							var tr = "<tr>";
-								 var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								 var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
-								 
-								 var totalAmt="<td>&nbsp;&nbsp;&nbsp;<b>"
-										+ billTotal.toFixed(2);
-										+ "</b></td>";
-								var totalTax = "<td>&nbsp;&nbsp;&nbsp;<b>"
-									+ taxTotal.toFixed(2);
-									+ "</b></td>";
-									var blank = "<td>&nbsp;&nbsp;&nbsp;<b>"
-										
-										+ "</b></td>";
-								var igst = "<td><b>&nbsp;&nbsp;&nbsp;"
+								  
+								 var cgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+											+  cgstTotal.toFixed(2);
+											+ "</b></td>";
+											
+								var sgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+											+ sgstTotal.toFixed(2);
+											+ "</b></td>";
+											
+								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+  igstTotal.toFixed(2);
 										+ "</b></td>";
-								 var cgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+  cgstTotal.toFixed(2);
-									+ "</b></td>";
-								var sgst = "<td><b>&nbsp;&nbsp;&nbsp;"
-									+ sgstTotal.toFixed(2);
-									+ "</b></td>";
-								var grand = "<td><b>&nbsp;&nbsp;&nbsp;"
+										
+								 var totalAmt="<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+												+ taxableTotal.toFixed(2);
+												+ "</b></td>";
+								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+											+ taxTotal.toFixed(2);
+											+ "</b></td>";
+								
+								var grand = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 									+ grandTotal.toFixed(2);
 									+ "</b></td>"; 
 									
@@ -263,19 +264,19 @@
 								.append(tr);
 								$('#table_grid tbody')
 								.append(total);
-								
 								$('#table_grid tbody')
-								.append(totalAmt);
-								$('#table_grid tbody')
-								.append(totalTax)
-								 $('#table_grid tbody')
-									.append(blank);
-								 $('#table_grid tbody')
-									.append(igst);
-								 $('#table_grid tbody')
 								.append(cgst);
 								$('#table_grid tbody')
 								.append(sgst); 
+							 $('#table_grid tbody')
+								.append(igst);
+							
+								 $('#table_grid tbody')
+								.append(totalTax)
+								   
+									$('#table_grid tbody')
+									.append(totalAmt);
+								
 								$('#table_grid tbody')
 								.append(grand); 
 								$('#table_grid tbody')
