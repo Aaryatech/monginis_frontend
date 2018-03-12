@@ -210,7 +210,7 @@ public class CustomerBillController {
 		HttpSession session = request.getSession();
 		try {
 
-			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 			frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			System.out.println("menuList" + menuList.toString());

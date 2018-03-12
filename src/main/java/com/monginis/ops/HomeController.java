@@ -132,78 +132,72 @@ public class HomeController {
 
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
-	    RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 
-		
-		ArrayList<SchedulerList> schedulerLists=  (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
-		ArrayList<Message> msgList=  (ArrayList<Message>) session.getAttribute("msgList");
+		ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
+		ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
 		int frId = (Integer) session.getAttribute("frId");
 
-		System.out.println("***************Schedular List*****************"+schedulerLists);
-		System.out.println("***************msgList*****************"+msgList);
-		System.out.println("***************frId*****************"+frId);
+		System.out.println("***************Schedular List*****************" + schedulerLists);
+		System.out.println("***************msgList*****************" + msgList);
+		System.out.println("***************frId*****************" + frId);
 
-		
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			
-			map.add("frId", frId);
-			
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		map.add("frId", frId);
+
 		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
-			        	map,ConfiguredSpDayCkResponse.class);
-			
-	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+				map, ConfiguredSpDayCkResponse.class);
 
-	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+		List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
-	    List<GetConfiguredSpDayCk> configureSpDayCk=new ArrayList<GetConfiguredSpDayCk>();
-	    
-	    boolean flag=false,spDayShow=false;
-	    int count=0;
-	    
-	   for(GetConfiguredSpDayCk getConfSpDayCk:configureSpDayFrList)
-	   {
-	    
-	    DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date startDate;
+		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
 
-		startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
-		System.out.println("startDate"+startDate);
-				
-		Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
-		System.out.println("endDate"+endDate);
-		
-		String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-		Date dateToCheck = dmyFormat.parse(todaysDate);
-		
-		System.out.println("dateToCheck"+dateToCheck);
-		
-		 flag=checkBetween(dateToCheck,startDate, endDate) ;
-		System.out.println("ShowSpDayCk:"+flag);
-		
-		if(flag==true)
-		{   count=count+1;
-			configureSpDayCk.add(getConfSpDayCk);
-			System.out.println("Configure SpDay Cake To And From Date: "+configureSpDayCk.toString());
+		List<GetConfiguredSpDayCk> configureSpDayCk = new ArrayList<GetConfiguredSpDayCk>();
+
+		boolean flag = false, spDayShow = false;
+		int count = 0;
+
+		for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
+
+			DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date startDate;
+
+			startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+			System.out.println("startDate" + startDate);
+
+			Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+			System.out.println("endDate" + endDate);
+
+			String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			Date dateToCheck = dmyFormat.parse(todaysDate);
+
+			System.out.println("dateToCheck" + dateToCheck);
+
+			flag = checkBetween(dateToCheck, startDate, endDate);
+			System.out.println("ShowSpDayCk:" + flag);
+
+			if (flag == true) {
+				count = count + 1;
+				configureSpDayCk.add(getConfSpDayCk);
+				System.out.println("Configure SpDay Cake To And From Date: " + configureSpDayCk.toString());
+			}
+
 		}
-	   
-	   }
-	   
-	   if(count>0)
-	   {
-		   spDayShow=true;
-	   }
-		session.setAttribute("isSpDayShow",spDayShow);
-        System.out.println("isSpDayShow"+spDayShow);
 
-	   model.addObject("configureSpDayFrList", configureSpDayCk);
-		
-		
-		
+		if (count > 0) {
+			spDayShow = true;
+		}
+		session.setAttribute("isSpDayShow", spDayShow);
+		System.out.println("isSpDayShow" + spDayShow);
+
+		model.addObject("configureSpDayFrList", configureSpDayCk);
+
 		model.addObject("schedulerLists", schedulerLists);
 		model.addObject("msgList", msgList);
 		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 		model.addObject("isSpDayShow", spDayShow);
-		
+
 		logger.info("/login request mapping.");
 
 		return model;
@@ -211,8 +205,8 @@ public class HomeController {
 	}
 
 	private boolean checkBetween(Date dateToCheck, Date startDate, Date endDate) {
-		 return dateToCheck.compareTo(startDate) >= 0 && dateToCheck.compareTo(endDate) <=0;
-		
+		return dateToCheck.compareTo(startDate) >= 0 && dateToCheck.compareTo(endDate) <= 0;
+
 	}
 
 	@RequestMapping(value = "/showforgotpassword", method = RequestMethod.GET)
@@ -250,12 +244,13 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-	public ModelAndView displayHomePage( HttpSession  ses,HttpServletRequest request, HttpServletResponse response) throws ParseException {
+	public ModelAndView displayHomePage(HttpSession ses, HttpServletRequest request, HttpServletResponse response)
+			throws ParseException {
 
 		logger.info("/loginProcess request mapping.");
 
 		ModelAndView model = new ModelAndView("login");
-		
+
 		HttpSession session = request.getSession();
 
 		String frCode = request.getParameter("username");
@@ -288,74 +283,62 @@ public class HomeController {
 
 			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
-			//filter fr menus
-			
-			List<FrMenu> frMenuList=getFrMenus.getFrMenus();
-			List<FrMenu> filteredFrMenuList=new ArrayList<>();
-			
+			// filter fr menus
+
+			List<FrMenu> frMenuList = getFrMenus.getFrMenus();
+			List<FrMenu> filteredFrMenuList = new ArrayList<>();
+
 			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
 			Date date = calendar.getTime();
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String currentDate = df.format(date);
-			int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
-		
-			
-			System.out.println("Today date "+currentDate);
-			System.out.println("Day of week "+dayOfWeek);
-			
-			
-			
-			for(int i=0;i<frMenuList.size();i++) {
-				
-			
-				FrMenu frMenu=frMenuList.get(i);
-				
-				
-				
-				if(frMenu.getSettingType()==3) { // day basis
-					List<String> dayList = Arrays.asList( frMenu.getDay().split(",") );
+			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-					List<Integer> newDayList = dayList.stream()
-											  .map(s -> Integer.parseInt(s))
-											  .collect(Collectors.toList());
-					
-					for(int k=0;k<newDayList.size();k++) {
-					if(newDayList.get(k)==dayOfWeek) {
+			System.out.println("Today date " + currentDate);
+			System.out.println("Day of week " + dayOfWeek);
 
-						filteredFrMenuList.add(frMenu);
-						
-					} 
+			for (int i = 0; i < frMenuList.size(); i++) {
+
+				FrMenu frMenu = frMenuList.get(i);
+
+				if (frMenu.getSettingType() == 3) { // day basis
+					List<String> dayList = Arrays.asList(frMenu.getDay().split(","));
+
+					List<Integer> newDayList = dayList.stream().map(s -> Integer.parseInt(s))
+							.collect(Collectors.toList());
+
+					for (int k = 0; k < newDayList.size(); k++) {
+						if (newDayList.get(k) == dayOfWeek) {
+
+							filteredFrMenuList.add(frMenu);
+
+						}
 					}
-					
-					
-				}else if(frMenu.getSettingType()==2){ // date basis
-					
-					List<String> dateList = Arrays.asList( frMenu.getDate().split(",") );
-					List<Integer> newDateList = dateList.stream()
-											  .map(s -> Integer.parseInt(s))
-											  .collect(Collectors.toList());
 
-					for(int k=0;k<newDateList.size();k++) {
-					if(newDateList.get(k)==calendar.get(Calendar.DAY_OF_MONTH)) {
+				} else if (frMenu.getSettingType() == 2) { // date basis
 
-						filteredFrMenuList.add(frMenu);
+					List<String> dateList = Arrays.asList(frMenu.getDate().split(","));
+					List<Integer> newDateList = dateList.stream().map(s -> Integer.parseInt(s))
+							.collect(Collectors.toList());
 
-					} 
+					for (int k = 0; k < newDateList.size(); k++) {
+						if (newDateList.get(k) == calendar.get(Calendar.DAY_OF_MONTH)) {
+
+							filteredFrMenuList.add(frMenu);
+
+						}
 					}
-				}else if(frMenu.getSettingType()==1){ // daily basis
-										
+				} else if (frMenu.getSettingType() == 1) { // daily basis
+
 					filteredFrMenuList.add(frMenu);
-					
-				}
-				
-				
-				
-			}
-				
-			System.out.println("Fr is: "+loginResponse.getFranchisee().toString());
 
-			System.out.println("filteredFrMenuList is: "+filteredFrMenuList.toString());
-		
+				}
+
+			}
+
+			System.out.println("Fr is: " + loginResponse.getFranchisee().toString());
+
+			System.out.println("filteredFrMenuList is: " + filteredFrMenuList.toString());
 
 			// Getting news and messages
 
@@ -375,91 +358,90 @@ public class HomeController {
 
 			// Managing session
 			session.setAttribute("menuList", filteredFrMenuList);
-			session.setAttribute("frDetails", loginResponse.getFranchisee()); 
+			session.setAttribute("allMenuList", frMenuList);
+
+			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			session.setAttribute("loginInfo", loginResponse.getLoginInfo());
 			session.setAttribute("msgList", msgList);
-			session.setAttribute("schedulerLists",schedulerLists);
-			session.setAttribute("frId",loginResponse.getFranchisee().getFrId());
+			session.setAttribute("schedulerLists", schedulerLists);
+			session.setAttribute("frId", loginResponse.getFranchisee().getFrId());
 			session.setAttribute("info", loginResponse.getLoginInfo());
-			session.setAttribute("frImage",loginResponse.getFranchisee().getFrImage());
+			session.setAttribute("frImage", loginResponse.getFranchisee().getFrImage());
 			loginResponse.getFranchisee()
 					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
-			
-			
-	//---------------------------------Special Day Show Button Logic-------------------------------------------
-			
-        MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
-			
+
+			// ---------------------------------Special Day Show Button
+			// Logic-------------------------------------------
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+
 			map.add("frId", loginResponse.getFranchisee().getFrId());
-			
-		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
-				map,ConfiguredSpDayCkResponse.class);
-		
-	    List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
-	    configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+			ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate
+					.postForObject(Constant.URL + "/getSpDayCkList", map, ConfiguredSpDayCkResponse.class);
 
-	    boolean flag=false,spDayShow=false;
-	    int count=0;
-	    
-	   for(GetConfiguredSpDayCk getConfSpDayCk:configureSpDayFrList)
-	   {
-	    
-	    DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date startDate;
+			List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
-		startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
-		System.out.println("startDate"+startDate);
-				
-		Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
-		System.out.println("endDate"+endDate);
-		
-		String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-		Date dateToCheck = dmyFormat.parse(todaysDate);
-		
-		System.out.println("dateToCheck"+dateToCheck);
-		
-		 flag=checkBetween(dateToCheck,startDate, endDate) ;
-		System.out.println("ShowSpDayCk:"+flag);
-		
-		if(flag==true)
-		{   count=count+1;
-		}
-	   
-	   }
-	   
-	   if(count>0)
-	   {
-		   spDayShow=true;
-	   }
-	//-------------------------------------------------------------------------------------------
-			
-		session.setAttribute("isSpDayShow",spDayShow);
+			configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
 
-		map=new LinkedMultiValueMap<String,Object>();
-		map.add("frId", loginResponse.getFranchisee().getFrId());
-		int month=calendar.get(Calendar.MONTH) +1;
-		map.add("month",month);
-		System.out.println("Cuurrr Month "+month);
-		map.add("year", calendar.get(Calendar.YEAR));
-		System.out.println("Cuurrr year"+calendar.get(Calendar.YEAR));
-		FrTotalSale frTotalSale=restTemplate.postForObject(Constant.URL + "/getFrTotalSale",
-				map,FrTotalSale.class);
-		System.out.println("Get Fr Total Sale  "+frTotalSale.toString());
-		float achievedTarget=0;
-		
-			if(frTotalSale!=null)
-			{
-				achievedTarget=frTotalSale.getTotalSale();
+			boolean flag = false, spDayShow = false;
+			int count = 0;
+
+			for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
+
+				DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Date startDate;
+
+				startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+				System.out.println("startDate" + startDate);
+
+				Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+				System.out.println("endDate" + endDate);
+
+				String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				Date dateToCheck = dmyFormat.parse(todaysDate);
+
+				System.out.println("dateToCheck" + dateToCheck);
+
+				flag = checkBetween(dateToCheck, startDate, endDate);
+				System.out.println("ShowSpDayCk:" + flag);
+
+				if (flag == true) {
+					count = count + 1;
+				}
+
 			}
-		session.setAttribute("achievedTarget",achievedTarget);
-		session.setAttribute("fraTarget",frTotalSale.getTargetAmt());
-		
+
+			if (count > 0) {
+				spDayShow = true;
+			}
+			// -------------------------------------------------------------------------------------------
+
+			session.setAttribute("isSpDayShow", spDayShow);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", loginResponse.getFranchisee().getFrId());
+			int month = calendar.get(Calendar.MONTH) + 1;
+			map.add("month", month);
+			System.out.println("Curr Month " + month);
+			map.add("year", calendar.get(Calendar.YEAR));
+			System.out.println("Curr Year" + calendar.get(Calendar.YEAR));
+			FrTotalSale frTotalSale = restTemplate.postForObject(Constant.URL + "/getFrTotalSale", map,
+					FrTotalSale.class);
+			System.out.println("Get Fr Total Sale  " + frTotalSale.toString());
+			float achievedTarget = 0;
+
+			if (frTotalSale != null) {
+				achievedTarget = frTotalSale.getTotalSale();
+			}
+			session.setAttribute("achievedTarget", achievedTarget);
+			session.setAttribute("fraTarget", frTotalSale.getTargetAmt());
+
 			model = new ModelAndView("home");
 			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
-			model.addObject("isSpDayShow",spDayShow);
+			model.addObject("isSpDayShow", spDayShow);
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
@@ -469,28 +451,28 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/logout" )
-	public  ModelAndView logout(HttpSession session , HttpServletRequest req, HttpServletResponse res) {
+	@RequestMapping(value = "/logout")
+	public ModelAndView logout(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
-        ModelAndView model = new ModelAndView("login");
-        HttpServletResponse response=(HttpServletResponse)res;
+		ModelAndView model = new ModelAndView("login");
+		HttpServletResponse response = (HttpServletResponse) res;
 
-		  response.setHeader("Cache-Control", "no-cache");
-	        response.setHeader("Pragma", "no-cache");
-	       response.setDateHeader("Expires", -1);
-   
-                session.removeAttribute("frId");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", -1);
 
-        session.removeAttribute("frDetails");
+		session.removeAttribute("frId");
+
+		session.removeAttribute("frDetails");
 		session.invalidate();
 		session.setMaxInactiveInterval(0);
-		  
-		System.out.println("session ID  after expire "+session.getId());
-		
-	       // session.invalidate();
-	       
-	        return model;
-		//return "redirect:/";
+
+		System.out.println("session ID  after expire " + session.getId());
+
+		// session.invalidate();
+
+		return model;
+		// return "redirect:/";
 	}
 
 }
