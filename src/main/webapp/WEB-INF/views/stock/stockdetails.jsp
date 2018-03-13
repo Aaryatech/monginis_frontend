@@ -292,15 +292,7 @@
 					<div class="col-md-12">
 						<!--table-->
 						<form action="monthEndProcess" method="POST">
-							<!-- <div class="table-responsive">
-									<div class="shInnerwidth">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0"
-											class="table">
-											<tr>
-												<td align="center" valign="middle" style="padding: 0px;">
-													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" id="stockTable">
-														<tr class="bgpink"> -->
+						
 
 							<div class="clearfix"></div>
 
@@ -526,9 +518,16 @@
 				
 				var selectedStockOption=$("#selectStock").val();
 
+				var selectedFromDate=$("#fromdatepicker").val();
+				var selectedToDate=$("#todatepicker").val();
+				
+				
+				
 				$.getJSON('${getStock}', {
 					cat_id : selectedCat,
 					show_option : selectedStockOption,
+					fromDate : selectedFromDate,
+					toDate : selectedToDate,
 					ajax : 'true'
 				}, function(data) {
 					$('#loader').hide();

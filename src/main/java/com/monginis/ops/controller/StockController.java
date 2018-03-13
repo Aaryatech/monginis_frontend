@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
@@ -229,22 +230,46 @@ public class StockController {
 
 		} else {
 			
-			System.out.println("Current Stock Details Between Months  ");
+			System.out.println("inside get stock between dates");
 
+			
+			String fromDate = request.getParameter("fromDate");
+
+			String toDate = request.getParameter("toDate");
+			
+			
+			
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
+			String fr = null;
+			String to = null;
+			try {
+				fr = sdf1.format(sdf2.parse(fromDate));
+
+				to = sdf1.format(sdf2.parse(toDate));
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+			}
+			System.out.println("FromDate "+fr);
+
+			System.out.println("toDate "+to);
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
-			map.add("fromMonth", "10");
-			map.add("toMonth", "11");
-			map.add("currentMonth", String.valueOf(runningMonth));
+			map.add("fromDate", fr);
+			map.add("toDate", to);
 			map.add("itemIdList", itemShow);
-
+			map.add("catId",catId );
+			map.add("frStockType", frDetails.getStockType());
+			
 			RestTemplate restTemplate = new RestTemplate();
 
 			try {
 			ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
 			};
 			ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate
-					.exchange(Constant.URL + "/getMonthwiseStock", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					.exchange(Constant.URL + "/getStockBetweenDates", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			currentStockDetailList = responseEntity.getBody();
 			System.out.println("Current Stock Details Monthwise : " + currentStockDetailList.toString());
