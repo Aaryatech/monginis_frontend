@@ -1768,7 +1768,7 @@ boolean isCustComplaint=false;
 		}
 		grnGvnDetailsList = getGrnGvnDetailsList.getGrnGvnDetails();
 
-		System.out.println("gvn  list " + grnGvnDetailsList);
+	
 
 		for (int i = 0; i < grnGvnDetailsList.size(); i++) {
 			grnGvnDetailsList.get(i)
@@ -1777,7 +1777,7 @@ boolean isCustComplaint=false;
 					.setGvnPhotoUpload2(Constant.GVN_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload2());
 
 		}
-
+		System.out.println("gvn  list " + grnGvnDetailsList);
 		return grnGvnDetailsList;
 
 	}
@@ -1916,6 +1916,8 @@ boolean isCustComplaint=false;
 		}
 
 		String gvnDate = grnDetailList.get(0).getGrnGvnDate();
+		
+		modelAndView.addObject("url",Constant.GVN_IMAGE_URL);
 		modelAndView.addObject("gvnList", grnDetailList);
 		modelAndView.addObject("gvnDate", gvnDate);
 
