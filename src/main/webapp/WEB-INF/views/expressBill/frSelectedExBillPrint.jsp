@@ -35,7 +35,7 @@
 </head>
 <body >
 	 
-				  <table width="250" border="0" cellspacing="0" cellpadding="0" style="padding:5px; font-family:verdana; font-size:12px; border:1px solid #E7E7E7;">
+ <table width="250" border="0" cellspacing="0" cellpadding="0" style="padding:5px; font-family:verdana; font-size:12px; border:1px solid #E7E7E7;">
 
   <tbody> 
   <tr>
@@ -58,21 +58,39 @@
     </tr>
     <tr>
       <td colspan="2" align="center" style="padding:3px;font-family: Arial; border-bottom:1px solid #E7E7E7; font-size:12px;"><p class="style5">${billList[0].frAddress}
-         <br />
-          Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/><br/>
-          <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE PERSON, NOT TO<br />
-          COLLECT TAX ON SUPPLIES        </span></td>
+     
+       <strong>${sessionScope.frDetails.frAddress}</strong><br/><br/>
+            <c:choose>
+            <c:when test="${frGstType>=2000000}">
+                GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong><br/>
+             </c:when>
+        </c:choose>
+      
+          Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/><br />
+        <c:choose>
+          <c:when test="${frGstType==2000000}">
+              <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE FIRM, NOT SUPPOSED TO<br />
+                BE COLLECT TAX ON SUPPLIES</span>
+          </c:when>
+          <c:when test="${frGstType==10000000}">
+           <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE PERSON, NOT TO<br />
+          COLLECT TAX ON SUPPLIES        </span>
+          
+          </c:when>
+        </c:choose>
+          
+          </td>
     </tr>
     <tr>
       <td colspan="2">
       <table width="100%" border="0" cellspacing="0" cellpadding="7">
   <tbody>
     <tr>
-      <td  align="left">Invoice  No: </td>
-      <td align="left">${invNo}(${exBill[0].sellBillNo}) </td>
-      <td >Date:</td>
+      <td style="font-size:9px">Invoice  No: </td>
+      <td style="font-size:10px">${invNo}(${exBill[0].sellBillNo}) </td>
+      <td style="font-size:9px">Date:</td>
         
-      <td >${date} </td>
+      <td style="font-size:10px">${date} </td>
     </tr >
      <tr>
      <%--  <td>Det No</td>
@@ -86,7 +104,7 @@
             <th width="43%" align="left" bgcolor="#ECECEC">Item</th>
             <th width="8%" bgcolor="#ECECEC">Qty</th>
             <th width="13%" bgcolor="#ECECEC">Rate</th>
-            <th width="29%" align="center" bgcolor="#ECECEC">Amt</th>
+            <th width="29%" align="right" bgcolor="#ECECEC">Amt</th>
           </tr>
            <c:set var = "total" value = "0"/>
            <c:forEach items="${exBill}" var="exBill" varStatus="count">  
@@ -114,19 +132,94 @@
   </tbody>
 </table>      </td>
     </tr>
-    <tr>
-      <td colspan="2">
-        <table width="100%" border="0" cellspacing="0" cellpadding="7" >
-  
-    <tr>
-      <td align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p class="style8">Thank You, VIsit Again !!!         </td>
-    </tr>
-    <tr>
-      <td style="border-top:1px solid #E7E7E7; padding:5px 7px;">We declare that this invoice shows the actual price of the goods<br />
-        described and that all particulars are true and correct.</td>
-    </tr>
-</table>      </td>
-    </tr>
+    
+     <c:choose>
+      <c:when test="${frGstType==10000000}">
+    		<tr>
+				<td colspan="2"><table width="100%" border="0" cellspacing="0"
+						cellpadding="7">
+						<tr>
+							<th width="17%" align="left" bgcolor="#ECECEC" rowspan="2">Taxable<br />
+								Value
+							</th>
+							<th bgcolor="#ECECEC" colspan="2">CGST</th>
+							<th bgcolor="#ECECEC" colspan="2">SGST</th>
+							<th width="25%" align="center" bgcolor="#ECECEC">Total</th>
+						</tr>
+
+						<tr>
+							<th width="14%" bgcolor="#ECECEC">%</th>
+							<th width="15%" bgcolor="#ECECEC">Amt</th>
+							<th width="16%" bgcolor="#ECECEC">%</th>
+							<th width="13%" bgcolor="#ECECEC">Amt</th>
+							<th width="25%" align="center" bgcolor="#ECECEC">GST</th>
+						</tr>
+						<c:set var="taxAmount" value="${0}" />
+						<c:set var="totaltax" value="${0 }" />
+						<c:set var="cgst" value="${0 }" />
+						<c:set var="sgst" value="${0 }" />
+				 	<c:forEach items="${custBilltax}" var="custBilltax"
+							varStatus="count"> 
+							<tr>
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.taxableAmt}" /></td>
+								<c:set var="taxAmount"
+									value="${taxAmount + custBilltax.taxableAmt}" />
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.cgstPer}" /></td>
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.cgstRs}" /></td>
+								<c:set var="cgst" value="${cgst+custBilltax.cgstRs }" />
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.sgstPer}" /></td>
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.sgstRs}" /></td>
+								<c:set var="sgst" value="${sgst+custBilltax.sgstRs }" />
+								
+								<td><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${custBilltax.cgstRs+custBilltax.sgstRs}" /></td>
+								<c:set var="totaltax"
+									value="${totaltax+custBilltax.sgstRs+custBilltax.cgstRs }" />
+							</tr>
+					</c:forEach> 
+						<td width="14%" colspan="6">&nbsp;</td>
+
+						</tr>
+						<tr>
+							<td bgcolor="#ECECEC"><b><fmt:formatNumber type="number"
+										maxFractionDigits="2" minFractionDigits="2"  value="${taxAmount}" /></b></td>
+
+							<td bgcolor="#ECECEC"></td>
+							<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2"  value="${cgst}" /></td>
+							<td bgcolor="#ECECEC"></td>
+							<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2"  value="${sgst}" /></td>
+							<td align="center" bgcolor="#ECECEC"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${totaltax}" /></td>
+						</tr>
+					
+					</table></td>
+			</tr>
+			</c:when>
+			</c:choose>
+   	<tr>
+							<td align="center"
+								style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
+								colspan="6"><p class="style8">Thank You, Visit Again
+									!!!
+									</p></td>
+						</tr>
+						<tr>
+							<td style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
+								colspan="6">We declare that this invoice shows the actual
+								price of the goods<br /> described and that all particulars are
+								true and correct.<br /> <span style="font-size: 10px"> I/
+									We hereby certify that food/Foods mentioned in this invoice are
+									warranted to be the nature and quality which this
+									purports/purport to be.</span>
+							</td>
+						</tr>
     <tr>
       <td width="200" align="center" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>For ${sessionScope.frDetails.frName}</strong></td>
     </tr>

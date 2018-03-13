@@ -481,14 +481,25 @@ function onChangeDay() {
 	<script type="text/javascript">
 	function validate()
 	{
-	
+
 		var spdayId = $('#spdayId').find(":selected").val();
 		var selectedDate = $('#datepicker').val();//delivery Date
-		//alert(selectedDate);
-		var fromDate = $('#fromDate').val();//alert(fromDate);
-		var toDate = $('#toDate').val();//alert(toDate);
+		var fromDate = $('#fromDate').val();
+		var toDate = $('#toDate').val();
 		var isValid=true;
 		
+		var firstValue = fromDate.split('-');
+		var secondValue = toDate.split('-');
+		var selectedValue = selectedDate.split('-');
+		
+		var frDate=new Date();
+		frDate.setFullYear(firstValue[0],(firstValue[1] - 1 ),firstValue[2]);
+		var tDate=new Date();
+		tDate.setFullYear(secondValue[0],(secondValue[1] - 1 ),secondValue[2]);
+		var sDate=new Date();
+		sDate.setFullYear(selectedValue[0],(selectedValue[1] - 1 ),selectedValue[2]);
+
+	
 		if(spdayId==-1)
 			{
 			  
@@ -496,7 +507,7 @@ function onChangeDay() {
 			 return false;
 			}
 		 
-		else if(Date.parse(selectedDate)-Date.parse(fromDate)<0 || Date.parse(selectedDate)-Date.parse(toDate)>0)
+		else if(sDate<frDate || sDate>tDate)
 			{
 				 alert("Please Select Delivery Date Between  --"+   fromDate+"-&-"+toDate)
 				 return false;

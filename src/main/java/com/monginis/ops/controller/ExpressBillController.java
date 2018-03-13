@@ -41,6 +41,8 @@ import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.GetCustBillTax;
+import com.monginis.ops.model.GetCustmoreBillResponse;
 import com.monginis.ops.model.GetItemHsnCode;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
@@ -61,7 +63,7 @@ public class ExpressBillController {
 	// SellBillDetailList sellBillDetailList;
 	List<SellBillDetail> selectedSellBillDetailList;
 	List<SellBillDetail> BillDetailList = new ArrayList<SellBillDetail>();
-	
+	List<GetCustBillTax> getCustBillTaxList;
 	String sellInvoiceGlobal;
 	
 	int globalFrId;
@@ -793,23 +795,44 @@ public class ExpressBillController {
 		ModelAndView model = new ModelAndView("expressBill/frExBillPrint");
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		try {
 		System.out.println("Item Id " + sellBillDetailRes.getItemId());
 		map.add("itemId", sellBillDetailRes.getItemId());
 		GetItemHsnCode getItemHsnCode = new RestTemplate().postForObject(Constant.URL + "/getItemHsnCode", map,
 				GetItemHsnCode.class);
 		// System.out.println("HSN CODE "+getItemHsnCode.toString());
+	
 
 		model.addObject("exBill", sellBillDetailRes);
+	
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		int frGstType = frDetails.getFrGstType();
+		
+		
+		GetCustBillTax getCustBillTax=new GetCustBillTax();
+		getCustBillTax.setSellBillDetailNo(sellBillDetailRes.getSellBillDetailNo());
+		getCustBillTax.setCgstPer(sellBillDetailRes.getCgstPer());
+		getCustBillTax.setSgstPer(sellBillDetailRes.getSgstPer());
+		getCustBillTax.setCgstRs(sellBillDetailRes.getCgstRs());
+		getCustBillTax.setSgstRs(sellBillDetailRes.getSgstRs());
+		getCustBillTax.setTaxableAmt(sellBillDetailRes.getTaxableAmt());
+		
 		if (getItemHsnCode != null) {
 			model.addObject("itemName", getItemHsnCode.getItemName());
 			model.addObject("itemHsn", getItemHsnCode.getHsncd());
 		}
 		model.addObject("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 		
-		
+		model.addObject("custBilltax",getCustBillTax);
 		model.addObject("invNo",sellInvoiceGlobal);
 		System.out.println("After print ");
-
+		model.addObject("frGstType", frGstType);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		return model;
 	}
 
@@ -817,7 +840,7 @@ public class ExpressBillController {
 	public void getSelectedIdForPrint(HttpServletRequest request, HttpServletResponse response) {
 
 		System.out.println("IN Metjod");
-
+        try {
 		BillDetailList = new ArrayList<SellBillDetail>();
 		String selectedId = request.getParameter("id");
 		selectedId = selectedId.substring(1, selectedId.length() - 1);
@@ -837,7 +860,40 @@ public class ExpressBillController {
 				}
 			}
 		}
-
+		getCustBillTaxList=new ArrayList<GetCustBillTax>();
+	
+		for (int i = 0; i < BillDetailList.size(); i++) {
+			boolean innerLoop=false;
+			
+			for (int j= 0; j < getCustBillTaxList.size(); j++) {
+				
+				if((BillDetailList.get(i).getCgstPer()==getCustBillTaxList.get(j).getCgstPer())&&(BillDetailList.get(i).getSgstPer()==getCustBillTaxList.get(j).getSgstPer()))
+				{
+					innerLoop=true;
+					
+					getCustBillTaxList.get(j).setCgstRs(getCustBillTaxList.get(j).getCgstRs()+BillDetailList.get(i).getCgstRs());
+					getCustBillTaxList.get(j).setSgstRs(getCustBillTaxList.get(j).getSgstRs()+BillDetailList.get(i).getSgstRs());
+					getCustBillTaxList.get(j).setTaxableAmt(getCustBillTaxList.get(j).getTaxableAmt()+BillDetailList.get(i).getTaxableAmt());
+				}
+			}
+			if(innerLoop==false)
+			{
+				GetCustBillTax getCustBillTax=new GetCustBillTax();
+				getCustBillTax.setCgstPer(BillDetailList.get(i).getCgstPer());
+				getCustBillTax.setSgstPer(BillDetailList.get(i).getSgstPer());
+				getCustBillTax.setCgstRs(BillDetailList.get(i).getCgstRs());
+				getCustBillTax.setSgstRs(BillDetailList.get(i).getSgstRs());
+				getCustBillTax.setSellBillDetailNo(BillDetailList.get(i).getSellBillDetailNo());
+				getCustBillTax.setTaxableAmt(BillDetailList.get(i).getTaxableAmt());
+				getCustBillTaxList.add(getCustBillTax);
+			}
+		}
+		System.out.println("getCustBillTaxList"+getCustBillTaxList.toString());
+        }
+        catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
 
 	@RequestMapping(value = "/printSelectedOrder", method = RequestMethod.GET)
@@ -848,9 +904,42 @@ public class ExpressBillController {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+	/*	RestTemplate rest = new RestTemplate();
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		map.add("billNo", BillDetailList.get(0).getSellBillNo());
+		if (frGstType == 10000000) {
+			model = new ModelAndView("report/franchTaxInvoice");
+			List<GetCustBillTax> getCustBilTaxList = rest.postForObject(Constant.URL + "getCustomerBillTax", map,
+					List.class);
+
+			ParameterizedTypeReference<List<GetCustmoreBillResponse>> typeRef = new ParameterizedTypeReference<List<GetCustmoreBillResponse>>() {
+			};
+			ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest.exchange(Constant.URL + "getCustomerBill",
+					HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
+
+			GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
+
+			int billAmt = billResponse.getIntDiscAmt();
+			float discPer = billResponse.getDiscountPer();
+
+			int intDiscAmt = Math.round((billAmt * discPer) / 100);
+
+			getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
+
+			System.out.println("bill no:" + BillDetailList.get(0).getSellBillNo() + "Custmore Bill : " + getCustmoreBillResponseList.toString());
+
+			model.addObject("billList", BillDetailList);
+			model.addObject("frGstType", frGstType);
+			model.addObject("custBilltax", getCustBillTaxList);
+		}*/
+		
 		System.out.println("Selected List " + BillDetailList.toString());
 		model.addObject("exBill", BillDetailList);
-		
+		model.addObject("custBilltax", getCustBillTaxList);
 		model.addObject("invNo",sellInvoiceGlobal);
         model.addObject("frGstType", frDetails.getFrGstType());
 
