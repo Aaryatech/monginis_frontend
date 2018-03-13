@@ -93,7 +93,24 @@
 
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div id="faux-table" class="faux-table" aria="hidden">
+								<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
+											<th class="col-md-3">GrnSr No</th>
+											<th  class="col-md-2" align="left">Date</th>
+											<th class="col-md-2">Taxable Amt</th>
+											<th class="col-md-2">Tax Amt</th>
+											<th class="col-md-2">Amount</th>
+											<th class="col-md-2">Approved Amt</th>
+											<th class="col-md-2">Status</th>
+											<th class="col-md-1">Credited?</th>
+											<th class="col-md-1">Credit Number</th>
+											<th class="col-md-2">Action</th>
+										
+
+										</tr>
+									</thead></table></div>
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>
@@ -104,10 +121,10 @@
 											<th class="col-md-2">Tax Amt</th>
 											<th class="col-md-2">Amount</th>
 											<th class="col-md-2">Approved Amt</th>
-											<th class="col-md-3">Status</th>
+											<th class="col-md-2">Status</th>
 											<th class="col-md-1">Credited?</th>
 											<th class="col-md-1">Credit Number</th>
-											<th class="col-md-2">Action</th>
+											<th class="col-md-1" style="color: pink;">Action</th>
 										
 
 										</tr>

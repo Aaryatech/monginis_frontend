@@ -82,38 +82,43 @@
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table" style="width: 80%">
+					<div id="faux-table" class="faux-table" aria="hidden">
+						<table id="table_grid1" class="main-table" style="width: 100%">
 							<thead>
 								<tr class="bgpink">
-									<!-- <th class="col-md-1">Invoice No</th>
-<th class="col-md-1">Date</th>
-<th class="col-md-2">Name</th>
-<th class="col-md-1">Rate</th>
-<th class="col-md-1">Quantity</th>
-<th class="col-md-1">Tax %</th>
-<th class="col-md-1">Tax Amt</th>
-<th class="col-md-1">Amount</th>
-<th class="col-md-1">Status</th>
-<th class="col-md-1">Photo 1</th>
-<th class="col-md-1">Photo 2</th>
-<th class="col-md-1">Remark</th> -->
-
-
-									<th class="col-md-1">Invoice No</th>
-									<th class="col-md-2">Item Name</th>
-									<th class="col-md-1s">Bill Rate</th>
-									<th class="col-md-1">Refund Rate</th>
-									<th class="col-md-1">Gvn Qty</th>
-									<th class="col-md-1">Total Refund Requested</th>
-									<th class="col-md-1">Approved Qty</th>
-									<th class="col-md-1">Approved total Refund</th>
-									<th class="col-md-1">Approved Base Rate</th>
-									<th class="col-md-1">Approved Tax Amount</th>
-									<th class="col-md-1">Photo 1</th>
-									<th class="col-md-1">Photo 2</th>
-									<th class="col-md-1">Status</th>
+									<th class="col-md-1"style="text-align:center;">Invoice No</th>
+									<th class="col-md-2"style="text-align:center;">Item Name</th>
+									<th class="col-md-1"style="text-align:center;">Bill Rate</th>
+									<th class="col-md-1"style="text-align:center;">Refund Rate</th>
+									<th class="col-md-1"style="text-align:center;">Gvn Qty</th>
+									<th class="col-md-1"style="text-align:center;">Total Refund Requested</th>
+									<th class="col-md-1"style="text-align:center;">Approved Qty</th>
+									<th class="col-md-1"style="text-align:center;">Approved total Refund</th>
+									<th class="col-md-1"style="text-align:center;">Approved Base Rate</th>
+									<th class="col-md-1"style="text-align:center;">Approved Tax Amount</th>
+									<th class="col-md-1"style="text-align:center;">Photo 1</th>
+									<th class="col-md-1"style="text-align:center;">Photo 2</th>
+									<th class="col-md-1"style="text-align:center;">Status</th>
+								</tr>
+							</thead></table></div>
+					<div class="table-wrap">
+						<table id="table_grid" class="main-table" style="width: 100%">
+							<thead>
+								<tr class="bgpink">
+						
+									<th class="col-md-1"style="text-align:center;">Invoice No</th>
+									<th class="col-md-2"style="text-align:center;">Item Name</th>
+									<th class="col-md-1"style="text-align:center;">Bill Rate</th>
+									<th class="col-md-1"style="text-align:center;">Refund Rate</th>
+									<th class="col-md-1"style="text-align:center;">Gvn Qty</th>
+									<th class="col-md-1"style="text-align:center;">Total Refund Requested</th>
+									<th class="col-md-1"style="text-align:center;">Approved Qty</th>
+									<th class="col-md-1"style="text-align:center;">Approved total Refund</th>
+									<th class="col-md-1"style="text-align:center;">Approved Base Rate</th>
+									<th class="col-md-1"style="text-align:center;">Approved Tax Amount</th>
+									<th class="col-md-1"style="text-align:center;">Photo 1</th>
+									<th class="col-md-1"style="text-align:center;">Photo 2</th>
+									<th class="col-md-1"style="text-align:center;">Status</th>
 								</tr>
 							</thead>
 							<tbody>
