@@ -40,25 +40,25 @@
 				<div class="colOuter">
 					<!-- copy div kalpesh -->
 					<div class="calender-title"></div>
-					
-					
+
+
 					<div class="col-md-6">
-					<form action="" id="grnForm" method="get">
-					
-				<table border="1">
-					<tr bgcolor="orange">
-					<th width="30%" align="left">Grn Date </th>
-					<th width="40%" align="left">Grn SrNo </th>
-					<th width="30%" align="left">Aprroved Amt </th>
-					</tr>
-					<tbody>
-					<tr>
-					<td align="center">${grnDate}</td>
-					<td align="center">${grnSrNo}</td>
-					<td align="center">${aprAmt}</td>
-					</tr>
-					</tbody>
-					</table>
+						<form action="" id="grnForm" method="get">
+
+							<table border="1">
+								<tr bgcolor="orange">
+									<th width="30%" align="left">Grn Date</th>
+									<th width="40%" align="left">Grn SrNo</th>
+									<th width="30%" align="left">Aprroved Amt</th>
+								</tr>
+								<tbody>
+									<tr>
+										<td align="center">${grnDate}</td>
+										<td align="center">${grnSrNo}</td>
+										<td align="center">${aprAmt}</td>
+									</tr>
+								</tbody>
+							</table>
 						</form>
 					</div>
 				</div>
@@ -89,9 +89,18 @@
 									</tr>
 								</thead>
 								<tbody>
-
 									<c:forEach items="${grnList}" var="grnList" varStatus="count">
-										<tr>
+										<c:set var="color" value="a"></c:set>
+										<c:set var="color" value="white"></c:set>
+										<c:choose>
+											<c:when test="${grnList.grnGvnQty!=grnList.aprQtyAcc}">
+												<c:set var="color" value="re-order"></c:set>
+											</c:when>
+											<c:otherwise>
+												<c:set var="color" value="white"></c:set>
+											</c:otherwise>
+										</c:choose>
+										<tr class="${color}">
 											<td class="col-md-1"><c:out value="${grnList.invoiceNo}" /></td>
 											<td class="col-md-1"><c:out value="${grnList.itemName}" /></td>
 
@@ -134,24 +143,29 @@
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==2}">
-													<td class="col-md-1"><c:out value="Approved From Dispatch"></c:out></td>
+													<td class="col-md-1"><c:out
+															value="Approved From Dispatch"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==3}">
-													<td class="col-md-1"><c:out value="Reject From Dispatch"></c:out></td>
+													<td class="col-md-1"><c:out
+															value="Reject From Dispatch"></c:out></td>
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==4}">
-													<td class="col-md-1"><c:out value="Approved From Sales"></c:out></td>
+													<td class="col-md-1"><c:out
+															value="Approved From Sales"></c:out></td>
 												</c:when>
 
 												<c:when test="${grnList.grnGvnStatus==5}">
 													<td class="col-md-1"><c:out value="Reject From Sales"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==6}">
-													<td class="col-md-1"><c:out value="Approved From Account"></c:out></td>
+													<td class="col-md-1"><c:out
+															value="Approved From Account"></c:out></td>
 												</c:when>
 												<c:when test="${grnList.grnGvnStatus==7}">
-													<td class="col-md-1"><c:out value="Reject From Account"></c:out></td>
+													<td class="col-md-1"><c:out
+															value="Reject From Account"></c:out></td>
 												</c:when>
 
 											</c:choose>
@@ -295,8 +309,6 @@
 		}
 		return isValid;
 	}
-	
-	
 </script>
 
 <script>

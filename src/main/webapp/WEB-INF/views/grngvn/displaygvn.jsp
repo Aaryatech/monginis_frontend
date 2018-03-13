@@ -44,28 +44,28 @@
 					<h2 class="pageTitle">GVN Details</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
-<div class="colOuter">
+				<div class="colOuter">
 					<!-- copy div kalpesh -->
 					<div class="calender-title"></div>
-					
+
 					<div class="col-md-6">
-					<form action="" id="gvnForm" method="get">
-					
-					<table border="1">
-					<tr bgcolor="orange">
-					<th width="30%" align="left">Gvn Date </th>
-					<th width="40%" align="left">Gvn SrNo </th>
-					<th width="30%" align="left">Aprroved Amt </th>
-					</tr>
-					<tbody>
-					<tr>
-					<td align="center">${gvnDate}</td>
-					<td align="center">${gvnSrNo}</td>
-					<td align="center">${aprAmt}</td>
-					</tr>
-					</tbody>
-					</table>
-				<%-- 	GVN Date -<b> ${gvnDate}</b><br>
+						<form action="" id="gvnForm" method="get">
+
+							<table border="1">
+								<tr bgcolor="orange">
+									<th width="30%" align="left">Gvn Date</th>
+									<th width="40%" align="left">Gvn SrNo</th>
+									<th width="30%" align="left">Aprroved Amt</th>
+								</tr>
+								<tbody>
+									<tr>
+										<td align="center">${gvnDate}</td>
+										<td align="center">${gvnSrNo}</td>
+										<td align="center">${aprAmt}</td>
+									</tr>
+								</tbody>
+							</table>
+							<%-- 	GVN Date -<b> ${gvnDate}</b><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grn SrNo -<b>${gvnSrNo}</b>
 				    Appproved Amt -<b>${aprAmt}</b>
 				     --%>
@@ -84,7 +84,7 @@
 				<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden"></div>
 					<div class="table-wrap">
-						<table id="table_grid" class="main-table" style="width:80%">
+						<table id="table_grid" class="main-table" style="width: 80%">
 							<thead>
 								<tr class="bgpink">
 									<!-- <th class="col-md-1">Invoice No</th>
@@ -102,8 +102,8 @@
 
 
 									<th class="col-md-1">Invoice No</th>
-									<th class="col-md-1">Item Name</th>
-									<th class="col-md-2">Bill Rate</th>
+									<th class="col-md-2">Item Name</th>
+									<th class="col-md-1s">Bill Rate</th>
 									<th class="col-md-1">Refund Rate</th>
 									<th class="col-md-1">Gvn Qty</th>
 									<th class="col-md-1">Total Refund Requested</th>
@@ -122,7 +122,20 @@
 								<c:set var="status" value=""></c:set>
 
 								<c:forEach items="${gvnList}" var="gvnList" varStatus="count">
-									<tr>
+
+									<c:set var="color" value="a"></c:set>
+
+									<c:set var="color" value="white"></c:set>
+									<c:choose>
+										<c:when test="${gvnList.grnGvnQty!=gvnList.aprQtyAcc}">
+											<c:set var="color" value="re-order"></c:set>
+										</c:when>
+										<c:otherwise>
+											<c:set var="color" value="white"></c:set>
+										</c:otherwise>
+									</c:choose>
+
+									<tr class="${color}">
 
 
 										<td class="col-md-1"><c:out value="${gvnList.invoiceNo}" /></td>
@@ -142,11 +155,9 @@
 										<td class="col-md-1"><c:out
 												value="${gvnList.aprTotalTax}" /></td>
 
-										<td class="col-md-1"><a
-											href="${gvnList.gvnPhotoUpload1}"
+										<td class="col-md-1"><a href="${gvnList.gvnPhotoUpload1}"
 											data-lightbox="image-1">Image 1</a></td>
-										<td class="col-md-1"><a
-											href="${gvnList.gvnPhotoUpload2}"
+										<td class="col-md-1"><a href="${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 
 										<c:choose>
@@ -258,12 +269,12 @@
 																			gvndata.invoiceNo));
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td class="col-md-2"></td>')
 																	.html(
 																			gvndata.itemName));
 													tr
 															.append($(
-																	'<td class="col-md-2"></td>')
+																	'<td class="col-md-1"></td>')
 																	.html(
 																			gvndata.itemRate));
 													tr

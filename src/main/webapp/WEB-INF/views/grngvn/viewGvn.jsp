@@ -96,16 +96,17 @@
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-2">GvnSr No</th>
-											<th class="col-md-1">Date</th>
+											<th class="col-md-3">GvnSr No</th>
+											<th  class="col-md-2" align="left">Date</th>
 											<th class="col-md-2">Taxable Amt</th>
 											<th class="col-md-2">Tax Amt</th>
-
-											<th class="col-md-2">Total Refund Requested</th>
-											<th class="col-md-2">Approved Refund</th>
-											<th class="col-md-2">Status</th>
+											<th class="col-md-2">Amount</th>
+											<th class="col-md-2">Approved Amt</th>
+											<th class="col-md-3">Status</th>
+											<th class="col-md-1">Credited?</th>
+											<th class="col-md-1">Credit Number</th>
 											<th class="col-md-2">Action</th>
-											<th class="col-md-1">PDF</th>
+										
 										</tr>
 									</thead>
 									<tbody>
@@ -167,13 +168,33 @@
 												</c:choose>
 
 												<td class="col-md-1"><c:out value="${status}"></c:out></td>
+												
+												
+												<c:choose>
+													<c:when test="${grnList.isCreditNote==1}">
+														<c:set var="isCredit" value="Yes"></c:set>
+													</c:when>
+													<c:otherwise>
+														<c:set var="isCredit" value="No"></c:set>
+													</c:otherwise>
+												</c:choose>
+
+												<td class="col-md-1"><c:out
+														value="${isCredit}"></c:out></td>
+
+												<td class="col-md-1"><c:out
+														value="${grnList.creditNoteId}"></c:out></td>
+												
+												
 												<td class="col-md-1"><a href='#' class='action_btn'
 													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
-														title='Detail'><i class='fa fa-list'></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
-
-												<td class="col-md-1"><a href='#' class='action_btn'
+														title='Detail'><i class='fa fa-list'></i></abbr></a><a href='#' class='action_btn'
 													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
 														title='Pdf'><i class='fa fa-list'></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
+
+												<%-- <td class="col-md-1"><a href='#' class='action_btn'
+													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+														title='Pdf'><i class='fa fa-list'></i></abbr></a> --%> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
 
 											</tr>
 										</c:forEach>
@@ -267,6 +288,11 @@ document.getElementById("headeIdText").value=0;
 									grnStatus="Reject From Account";
 							 else if(grndata.grngvnStatus==8)
 									grnStatus="Partially Approved";
+							 
+							 var credited;
+							 if(grndata.isCreditNote==1){
+								 credited="Yes";
+							 }else{credited="No";}
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
 						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
@@ -275,11 +301,15 @@ document.getElementById("headeIdText").value=0;
 						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.aprGrandTotal));
 						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
+						tr.append($('<td class="col-md-2"></td>').html(credited));
+						tr.append($('<td class="col-md-2"></td>').html(grndata.creditNoteId));
+
 
 						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
-						
-							tr.append($('<td ><a href="#" class="action_btn" onclick="getGvnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a></td>'));
-							tr.append($('<td ><a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><abbr title="Pdf"><i class="fa fa-list"></i></abbr></a></td>'));
+						tr.append($('<td class="col-md-2" ><a href="#" class="action_btn" onclick="getGvnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a>&nbsp; <a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><i class="fa fa-file-pdf-o" style="color:red"></i></a></td>'));
+
+							//tr.append($('<td ><a href="#" class="action_btn" onclick="getGvnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a></td>'));
+							//tr.append($('<td ><a href="#" class="action_btn" onclick="genPdf('+grndata.grnGvnHeaderId+')"><abbr title="Pdf"><i class="fa fa-list"></i></abbr></a></td>'));
 
 						//tr.append($('<td class="col-md-2"><a href=''#' class='action_btn' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")'> <abbr title='Detail'><i class="fa fa-trash"></i></abbr></a></td>'));
 $('#table_grid tbody')
@@ -360,7 +390,6 @@ jQuery(document).ready(function() {
   fauxTable.appendChild(clonedElement);
   fauxTable.appendChild(clonedElement2);
 })();
-
 
 	</script>
 
