@@ -230,7 +230,7 @@ jQuery(document).ready(function(){
 
 						<!-- <div class="colOuter"> -->
 						<div class="col-md-3">
-							<div class="col1title">Delivery Order Date</div>
+							<div class="col1title">Delivery Date</div>
 						</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"

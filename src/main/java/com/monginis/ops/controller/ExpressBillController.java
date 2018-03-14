@@ -87,7 +87,7 @@ public class ExpressBillController {
 
 		HttpSession session = request.getSession();
 
-		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		try {
@@ -99,7 +99,7 @@ public class ExpressBillController {
 			for (FrMenu frMenu : menuList) {
 
 				if (frMenu.getMenuId() == 26 || frMenu.getMenuId() == 31 || frMenu.getMenuId() == 33
-						|| frMenu.getMenuId() == 34) {
+						|| frMenu.getMenuId() == 34 || frMenu.getMenuId()==63) {
 
 					String str = frMenu.getItemShow();
 					System.out.println("getItemShow" + frMenu.getItemShow());
