@@ -86,19 +86,19 @@
 						<table id="table_grid1" class="main-table" style="width: 100%">
 							<thead>
 								<tr class="bgpink">
-									<th class="col-md-1"style="text-align:center;">Invoice No</th>
-									<th class="col-md-2"style="text-align:center;">Item Name</th>
-									<th class="col-md-1"style="text-align:center;">Bill Rate</th>
-									<th class="col-md-1"style="text-align:center;">Refund Rate</th>
-									<th class="col-md-1"style="text-align:center;">Gvn Qty</th>
-									<th class="col-md-1"style="text-align:center;">Total Refund Requested</th>
-									<th class="col-md-1"style="text-align:center;">Approved Qty</th>
-									<th class="col-md-1"style="text-align:center;">Approved total Refund</th>
-									<th class="col-md-1"style="text-align:center;">Approved Base Rate</th>
-									<th class="col-md-1"style="text-align:center;">Approved Tax Amount</th>
-									<th class="col-md-1"style="text-align:center;">Photo 1</th>
-									<th class="col-md-1"style="text-align:center;">Photo 2</th>
-									<th class="col-md-1"style="text-align:center;">Status</th>
+									<th class="col-md-1">Invoice No</th>
+									<th class="col-md-2">Item Name</th>
+									<th class="col-md-1">Bill Rate</th>
+									<th class="col-md-1">Refund Rate</th>
+									<th class="col-md-1">Gvn Qty</th>
+									<th class="col-md-2">Total Refund Requested</th>
+									<th class="col-md-1">Approved Qty</th>
+									<th class="col-md-1">Approved total Refund</th>
+									<th class="col-md-1">Approved Base Rate</th>
+									<th class="col-md-1">Approved Tax Amount</th>
+									<th class="col-md-1">Photo 1</th>
+									<th class="col-md-1">Photo 2</th>
+									<th class="col-md-1">Status</th>
 								</tr>
 							</thead></table></div>
 					<div class="table-wrap">
@@ -106,19 +106,19 @@
 							<thead>
 								<tr class="bgpink">
 						
-									<th class="col-md-1"style="text-align:center;">Invoice No</th>
-									<th class="col-md-2"style="text-align:center;">Item Name</th>
-									<th class="col-md-1"style="text-align:center;">Bill Rate</th>
-									<th class="col-md-1"style="text-align:center;">Refund Rate</th>
-									<th class="col-md-1"style="text-align:center;">Gvn Qty</th>
-									<th class="col-md-1"style="text-align:center;">Total Refund Requested</th>
-									<th class="col-md-1"style="text-align:center;">Approved Qty</th>
-									<th class="col-md-1"style="text-align:center;">Approved total Refund</th>
-									<th class="col-md-1"style="text-align:center;">Approved Base Rate</th>
-									<th class="col-md-1"style="text-align:center;">Approved Tax Amount</th>
-									<th class="col-md-1"style="text-align:center;">Photo 1</th>
-									<th class="col-md-1"style="text-align:center;">Photo 2</th>
-									<th class="col-md-1"style="text-align:center;">Status</th>
+									<th class="col-md-1">Invoice No</th>
+									<th class="col-md-2">Item Name</th>
+									<th class="col-md-1">Bill Rate</th>
+									<th class="col-md-1">Refund Rate</th>
+									<th class="col-md-1">Gvn Qty</th>
+									<th class="col-md-2">Total Refund Requested</th>
+									<th class="col-md-1">Approved Qty</th>
+									<th class="col-md-1">Approved total Refund</th>
+									<th class="col-md-1">Approved Base Rate</th>
+									<th class="col-md-1">Approved Tax Amount</th>
+									<th class="col-md-1">Photo 1</th>
+									<th class="col-md-1">Photo 2</th>
+									<th class="col-md-1">Status</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -132,7 +132,7 @@
 
 									<c:set var="color" value="white"></c:set>
 									<c:choose>
-										<c:when test="${gvnList.grnGvnQty!=gvnList.aprQtyAcc}">
+										<c:when test="${gvnList.grnGvnQty!=gvnList.aprQtyAcc or gvnList.grnGvnStatus==7}">
 											<c:set var="color" value="re-order"></c:set>
 										</c:when>
 										<c:otherwise>
@@ -151,7 +151,7 @@
 										<td class="col-md-1"><c:out value="${gvnList.grnGvnQty}" /></td>
 
 
-										<td class="col-md-1"><c:out value="${gvnList.grnGvnAmt}" /></td>
+										<td class="col-md-2"><c:out value="${gvnList.grnGvnAmt}" /></td>
 										<td class="col-md-1"><c:out value="${gvnList.aprQtyAcc}" /></td>
 										<td class="col-md-1"><c:out
 												value="${gvnList.aprGrandTotal}" /></td>
@@ -160,9 +160,9 @@
 										<td class="col-md-1"><c:out
 												value="${gvnList.aprTotalTax}" /></td>
 
-										<td class="col-md-1"><a href="${gvnList.gvnPhotoUpload1}"
+										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload1}"
 											data-lightbox="image-1">Image 1</a></td>
-										<td class="col-md-1"><a href="${gvnList.gvnPhotoUpload2}"
+										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 
 										<c:choose>
@@ -312,7 +312,7 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td class="col-md-2"></td>')
 																	.html(
 																			grnGvnAmt));
 													tr

@@ -283,7 +283,6 @@ document.getElementById("headeIdText").value=0;
 					}
 
 					$.each(data, function(key, grndata) {
-
 						
 						var tr = $('<tr></tr>');
 						

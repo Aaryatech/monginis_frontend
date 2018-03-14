@@ -90,10 +90,9 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${grnList}" var="grnList" varStatus="count">
-										<c:set var="color" value="a"></c:set>
 										<c:set var="color" value="white"></c:set>
 										<c:choose>
-											<c:when test="${grnList.grnGvnQty!=grnList.aprQtyAcc}">
+											<c:when test="${grnList.grnGvnQty!=grnList.aprQtyAcc || grnList.grnGvnStatus==7}">
 												<c:set var="color" value="re-order"></c:set>
 											</c:when>
 											<c:otherwise>
