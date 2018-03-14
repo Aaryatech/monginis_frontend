@@ -6,7 +6,11 @@
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
-
+<style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+</style>
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -266,17 +270,7 @@ jQuery(document).ready(function(){
 
 							<div id="table-scroll" class="table-scroll">
 								<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table">
-										<thead>
-											<tr class="bgpink">
-
-												<th class="col-md-1">Item Name</th>
-												<th class="col-md-1">MRP</th>
-												<th class="col-sm-1">Quantity</th>
-												<th class="col-md-1">Rate</th>
-												<th class="col-md-1">Total</th>
-											</tr>
-											</thead></table>
+								
 								
 								</div>
 								<div class="table-wrap">
@@ -284,30 +278,53 @@ jQuery(document).ready(function(){
 										<thead>
 											<tr class="bgpink">
 
-												<th class="col-md-1">Item Name</th>
-												<th class="col-md-1">MRP</th>
-												<th class="col-sm-1">Quantity</th>
-												<th class="col-md-1">Rate</th>
-												<th class="col-md-1">Total</th>
+												<th class="col-md-2" style="text-align: center;">Item Name</th>
+												<th class="col-md-1" style="text-align: center;">MRP</th>
+												<th class="col-sm-1" style="text-align: center;">Quantity</th>
+												<th class="col-md-1" style="text-align: center;">Rate</th>
+												<th class="col-md-1"style="text-align: center;" >Total</th>
 											</tr>
 											</thead>
 										<tbody>
+										<c:choose>
+					                     	<c:when test="${selectedMenu.menuId==42}">
 											<c:forEach items="${orderHistory}" var="orderList">
 
 												<tr>
 
-													<td class="col-md-1"><c:out
+													<td class="col-md-2" ><c:out
 															value="${orderList.itemName}" /></td>
-													<td class="col-md-1"><c:out
+													<td class="col-md-1"style="text-align: right;"><c:out
+															value="${orderList.mrp}" /></td>
+													<td style="text-align: center;" class="col-sm-1"><c:out
+															value="${orderList.qty}" /></td>
+													<td class="col-md-1" style="text-align: right;"><c:out
+															value="${orderList.rate}" /></td>
+													<td class="col-md-1" style="text-align: right;"><c:out
+															value="${orderList.qty * orderList.rate}" /></td>
+												</tr>
+											</c:forEach>
+											</c:when>
+										<c:otherwise>
+										
+											<c:forEach items="${orderHistory}" var="orderList">
+
+												<tr>
+
+													<td class="col-md-2"><c:out
+															value="${orderList.itemName}" /></td>
+													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.orderMrp}" /></td>
-													<td align="center" class="col-sm-1"><c:out
+													<td style="text-align: center;" class="col-sm-1"><c:out
 															value="${orderList.orderQty}" /></td>
-													<td class="col-md-1"><c:out
+													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.orderRate}" /></td>
-													<td class="col-md-1"><c:out
+													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.orderQty * orderList.orderRate}" /></td>
 												</tr>
 											</c:forEach>
+										</c:otherwise>
+												</c:choose>
 										</tbody>
 
 									</table>
@@ -360,35 +377,34 @@ jQuery(document).ready(function(){
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-1">Item Name</th>
-											<th class="col-md-1">Flavour</th>
-											<th class="col-md-1">Event</th>
-											<th class="col-md-1">Delivery Date</th>
-											<th class="col-md-1">Rate</th>
-											<th class="col-md-1">Add Rate</th>
-											<th class="col-md-1">Total</th>
+											<th class="col-md-2" style="text-align: center;">Item Name</th>
+											<th class="col-md-1"style="text-align: center;">Flavour</th>
+											<th class="col-md-1"style="text-align: center;">Event</th>
+											<th class="col-md-1"style="text-align: center;">Delivery Date</th>
+											<th class="col-md-1"style="text-align: center;">Rate</th>
+											<th class="col-md-1"style="text-align: center;">Add Rate</th>
+											<th class="col-md-1"style="text-align: center;">Total</th>
+											<th class="col-md-1"style="text-align: center;">PDF</th>
 										
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${orderHistory}" var="orderList">
 											<tr>
-												<td class="col-md-1"><c:out value="${orderList.spName}" /></td>
+												<td class="col-md-2"><c:out value="${orderList.spName}" /></td>
 												<td class="col-md-1"><c:out
 														value="${orderList.spfName}" /></td>
 												<td class="col-md-1"><c:out
 														value="${orderList.spEvents}" /></td>
-												<td class="col-md-1"><c:out
+												<td class="col-md-1" ><c:out
 														value="${orderList.spDeliveryDate}" /></td>
-												<td class="col-md-1"><c:out
+												<td class="col-md-1" style="text-align: right;"><c:out
 														value="${orderList.spPrice}" /></td>
-												<td class="col-md-1"><c:out
+												<td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spTotalAddRate}" /></td>
-												<td class="col-md-1"><c:out
+												<td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spGrandTotal}" /></td>
-												
-												
-
+												<td class="col-md-1"style="text-align: center;">Remaining</td>
 											</tr>
 										</c:forEach>
 

@@ -29,6 +29,8 @@ import com.monginis.ops.model.ItemOrderHis;
 import com.monginis.ops.model.ItemOrderList;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.Menus;
+import com.monginis.ops.model.RegularSpCake;
+import com.monginis.ops.model.RegularSpCkOrders;
 import com.monginis.ops.model.SpOrderHis;
 import com.monginis.ops.model.SpOrderHisList;
 
@@ -101,6 +103,7 @@ public class HistoryController {
 	        
 	
 		List<SpOrderHis> spOrderHistory;
+		List<RegularSpCkOrders> regSpHistory;
 		List<ItemOrderHis> itemOrderHistory;
 		for(Menus menu:menusList)
 		{
@@ -112,7 +115,7 @@ public class HistoryController {
 			System.out.println("menu id matched ");
 				selectedMenu=menu;
 				System.out.println("selected1:"+menu.getMainCatId());
-				if(menu.getMainCatId()!=5)
+				if(menu.getMainCatId()!=5 && menu.getMenuId()!=42)
 				{
 					System.out.println("item order ");
 
@@ -120,6 +123,12 @@ public class HistoryController {
 					System.out.println("selected1:"+itemOrderHistory.toString());
 					model.addObject("orderHistory", itemOrderHistory);
 				
+				}
+				else if(menu.getMenuId()==42)
+				{
+					regSpHistory=regHistory(parsedDate,frId);
+						System.out.println("selected2:"+regSpHistory.toString());
+					 model.addObject("orderHistory", regSpHistory);
 				}
 				else
 				{
@@ -195,5 +204,18 @@ public class HistoryController {
 		return spCkHisList;
 		
 	}
-	
+   public List<RegularSpCkOrders> regHistory(String parsedDate,int frId)
+   {
+	   
+	   System.out.println("spHistory");
+	 		RestTemplate rest=new RestTemplate();
+	 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	 	        map.add("spDeliveryDt",parsedDate);
+	 	        map.add("frId",frId);
+	 	        
+	 		List<RegularSpCkOrders> spOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistory",map,List.class);
+	 	
+	 		System.out.println("OrderList"+spOrderList.toString());
+	 		return spOrderList;
+   }
 }
