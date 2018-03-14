@@ -766,6 +766,15 @@ public class CustomerBillController {
 			e.printStackTrace();
 
 		}
+		
+		
+if(currentNewItem.getCatId()==7) {
+	currentNewItem.setTotalRegStock(itemQty+5);
+	currentNewItem.setTotalSpStock(0);
+	
+
+	
+}		
 
 		System.out.println("Customer   " + currentNewItem.toString());
 
