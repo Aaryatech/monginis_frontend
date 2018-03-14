@@ -209,7 +209,7 @@ label::before {
 												value="${gvnConfList.billQty}" />
 
 											<tr>
-												<td class="col-md-1"><input type="checkbox" class="form-control"
+												<td class="col-md-1" style="text-align: right;"><input type="checkbox" 
 													name="select_to_gvn" id="${gvnConfList.billDetailNo}"
 													value="${gvnConfList.billDetailNo}" /></td>
 
