@@ -27,7 +27,7 @@
 					</div></a>
 			</li>
 		</c:if>
-		<c:if test="${info.accessRight==1 or info.accessRight==2 or info.accessRight==3}">	
+		<c:if test="${info.accessRight==1 or info.accessRight==2}">	
 			<li><a href="#" onClick="openNav1()"><div class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images/nav-goodsreturn.png"
@@ -100,7 +100,7 @@
 						Rule And Regulation <span></span>
 					</div></a></li>
 					
-					
+						<c:if test="${info.accessRight==1 or info.accessRight==2}">	
 					<li><a href="${pageContext.request.contextPath}/showstockdetail" ><div class="img">
 						<img
 							src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
@@ -108,7 +108,7 @@
 					</div>
 					<div class="title">
 						Stock <span>Details</span>
-					</div></a></li>
+					</div></a></li></c:if>
 					
 					
 					

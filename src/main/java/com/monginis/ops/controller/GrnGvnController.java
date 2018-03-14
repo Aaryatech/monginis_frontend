@@ -1726,7 +1726,16 @@ boolean isCustComplaint=false;
 	public ModelAndView showGvnDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/viewGvn");
-
+		try {
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+        System.out.println("GST"+frDetails.getFrGstType());
+	
+		modelAndView.addObject("gstType", frDetails.getFrGstType());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		return modelAndView;
 
 	}
@@ -1795,7 +1804,7 @@ boolean isCustComplaint=false;
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
+        System.out.println("GST"+frDetails.getFrGstType());
 		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
@@ -1927,17 +1936,17 @@ boolean isCustComplaint=false;
 
 	int globalHeaderId;
 
-	@RequestMapping(value = "/getGrnPdf/{fromDate}/{toDate}/{headerId}/{type}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/getGrnPdf/{fromDate}/{toDate}/{headerId}/{type}/{gsttype}", method = RequestMethod.GET)
 	public ModelAndView getGrnPdf(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
-			@PathVariable("headerId") int headerId, @PathVariable("type") int type) {
+			@PathVariable("headerId") int headerId, @PathVariable("type") int type,@PathVariable("gsttype") int gsttype) {
 
 		ModelAndView model;
 		System.out.println("type=== " + type);
 
-		System.err.println("Gst Type Received " + gstType);
+		System.err.println("Gst Type Received " + gsttype);
 
-		if (gstType.equalsIgnoreCase("Composite")) {
+		if (gsttype==10000000) {
 
 			model = new ModelAndView("grngvn/pdf/grnComposite");
 

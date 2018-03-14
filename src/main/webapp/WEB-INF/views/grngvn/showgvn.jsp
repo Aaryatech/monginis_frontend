@@ -58,7 +58,7 @@ label::before {
 					<div class="col-md-2">
 						<h2 class="pageTitle">Request GVN</h2>
 					</div>
-
+                   
 
 					<div class="col-md-3">
 						<br> <select name="view_opt" id="view_opt" class="form-control"
@@ -98,11 +98,10 @@ label::before {
 							action="${pageContext.request.contextPath}/getGvnBillDetails"
 							name="grn" id="grn" method="get">
 
-							<div class="colOuter">
-								<div class="col-md-2">
-									
-								</div>
-
+							<div class="row">
+							<div class="col-md-2">
+						<h2 class="pageTitle"> </h2>
+					</div>
 								<div class="col-md-3">
 									<select name="bill_no" id="bill_no" class="form-control"
 										style="width: 250px; background-color: white; height: 40px">
