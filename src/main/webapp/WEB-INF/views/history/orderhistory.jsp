@@ -379,11 +379,12 @@ jQuery(document).ready(function(){
 										<tr class="bgpink">
 											<th class="col-md-2" style="text-align: center;">Item Name</th>
 											<th class="col-md-1"style="text-align: center;">Flavour</th>
-											<th class="col-md-1"style="text-align: center;">Event</th>
+										
 											<th class="col-md-1"style="text-align: center;">Delivery Date</th>
 											<th class="col-md-1"style="text-align: center;">Rate</th>
-											<th class="col-md-1"style="text-align: center;">Add Rate</th>
+											<th class="col-md-1"style="text-align: center;">Add On Rate</th>
 											<th class="col-md-1"style="text-align: center;">Total</th>
+												<th class="col-md-1"style="text-align: center;">Advance</th>
 											<th class="col-md-1"style="text-align: center;">PDF</th>
 										
 										</tr>
@@ -394,16 +395,17 @@ jQuery(document).ready(function(){
 												<td class="col-md-2"><c:out value="${orderList.spName}" /></td>
 												<td class="col-md-1"><c:out
 														value="${orderList.spfName}" /></td>
-												<td class="col-md-1"><c:out
-														value="${orderList.spEvents}" /></td>
+											<c:set var="price" value="${orderList.spGrandTotal-orderList.spTotalAddRate}"></c:set>
 												<td class="col-md-1" ><c:out
 														value="${orderList.spDeliveryDate}" /></td>
 												<td class="col-md-1" style="text-align: right;"><c:out
-														value="${orderList.spPrice}" /></td>
+														value="${price}" /></td>
 												<td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spTotalAddRate}" /></td>
 												<td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spGrandTotal}" /></td>
+												<td class="col-md-1"style="text-align: right;"><c:out
+														value="${orderList.spAdvance}" /></td>
 												<td class="col-md-1"style="text-align: center;">Remaining</td>
 											</tr>
 										</c:forEach>

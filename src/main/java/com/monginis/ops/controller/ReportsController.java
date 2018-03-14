@@ -2629,8 +2629,8 @@ public class ReportsController {
 
 					String url=request.getParameter("reportURL");
 					 
-					//File f = new File("/opt/tomcat-latest/webapps/uploads/ordermemo.pdf");
-					File f = new File("/home/ats-12/pdf/ordermemo221.pdf");
+					File f = new File("/opt/tomcat-latest/webapps/uploads/ordermemo.pdf");
+					//File f = new File("/home/ats-12/pdf/ordermemo221.pdf");
 					try {
 						runConverter(Constant.ReportURL+url, f,request,response);
 					} catch (IOException e) {
@@ -2643,8 +2643,8 @@ public class ReportsController {
 					ServletContext context = request.getSession().getServletContext();
 					String appPath = context.getRealPath("");
 					String filename = "ordermemo221.pdf";
-					//String filePath = "/opt/tomcat-latest/webapps/uploads/ordermemo.pdf";
-					 String filePath="/home/ats-12/pdf/ordermemo221.pdf";
+					String filePath = "/opt/tomcat-latest/webapps/uploads/ordermemo.pdf";
+					// String filePath="/home/ats-12/pdf/ordermemo221.pdf";
 					// construct the complete absolute path of the file
 					String fullPath = appPath + filePath;
 					File downloadFile = new File(filePath);
