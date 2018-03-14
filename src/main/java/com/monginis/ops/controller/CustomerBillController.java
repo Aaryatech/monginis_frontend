@@ -56,6 +56,7 @@ import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDataCommon;
+import com.monginis.ops.model.frsetting.FrSetting;
 
 @Controller
 @Scope("session")
@@ -1764,20 +1765,22 @@ if(currentNewItem.getCatId()==7) {
 			if (sellBillHeaderRes != null) {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				String settingKey = new String();
-				settingKey = "" + frDetails.getFrId();
-				map.add("settingKeyList", settingKey);
-				FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue",
-						map, FrItemStockConfigureList.class);
-				System.out.println("SettingKeyList in EX BILL " + settingList.toString());
-				int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
-				settingValue = settingValue + 1;
-				System.out.println("inside update setting Value " + settingValue);
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+						FrSetting.class);
+
+				int sellBillNo = frSetting.getSellBillNo();
+
+				sellBillNo = sellBillNo + 1;
 
 				map = new LinkedMultiValueMap<String, Object>();
-				map.add("settingValue", settingValue);
-				map.add("settingKey", "" + frDetails.getFrId());
-				Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map, Info.class);
+
+				map.add("frId", frDetails.getFrId());
+				map.add("sellBillNo", sellBillNo);
+
+				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
 			}
 			if (sellBillHeaderRes != null) {
@@ -1802,15 +1805,16 @@ if(currentNewItem.getCatId()==7) {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
 
-		String settingKey = new String();
+		int frId = frDetails.getFrId();
 
-		settingKey = "" + frDetails.getFrId();
-		map.add("settingKeyList", settingKey);
+		// String frCode = frDetails.getFrCode();
 
-		FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
-				FrItemStockConfigureList.class);
+		map.add("frId", frId);
+		FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map, FrSetting.class);
 
-		int settingValue = settingList.getFrItemStockConfigure().get(0).getSettingValue();
+		int billNo = frSetting.getSellBillNo();
+
+		int settingValue =billNo;
 
 		System.out.println("Setting Value Received " + settingValue);
 		int year = Year.now().getValue();
