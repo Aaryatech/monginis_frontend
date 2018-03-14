@@ -561,6 +561,7 @@ public class OtherBillController {
 	
 	String document1;
 	String document2;
+	String document5;
 	
 	@RequestMapping(value = "/showRuleFilePdf", method = RequestMethod.GET)
 	public ModelAndView showRuleFilePdf(HttpServletRequest request, HttpServletResponse response) {
@@ -575,11 +576,14 @@ public class OtherBillController {
 			System.out.println("fileList"+fileList);
 			document1=fileList.get(0).getFileName();
 			document2=fileList.get(1).getFileName();
+			document5=fileList.get(4).getFileName(); 
 			model.addObject("url", Constant.LOGIS_BILL_URL);
 			model.addObject("document1", document1);
 			model.addObject("document2", document2);
+			model.addObject("document5", document5);
 			model.addObject("date1", fileList.get(0).getDate());
 			model.addObject("date2", fileList.get(1).getDate());
+			model.addObject("date5", fileList.get(4).getDate());
 			   
 		}catch(Exception e)
 		{

@@ -109,6 +109,27 @@
 						</div>
  
 					</div>
+					
+					<div class="col-md -3">
+							
+								<div class="col1title" align="left"><font size="8">SpCake Undertaking</font></div>
+								<div class="col1title" align="right"> 
+						 
+							</div>
+						</div>
+						
+					<div class="colOuter">
+						 
+						<div class="col-md-3">
+						<font size="4"><b>Last Upload Date: ${date5}</b></font> 
+
+						</div>
+						<div class="col-md-1">
+							 <a href="${url}${document5}" target="blank" ><input type="button" value="View Document" class="btn btn-info">
+										</a>
+						</div>
+ 
+					</div>
 					 
 				</form>
 
@@ -140,73 +161,7 @@
 <!--easyTabs-->
 
 
-<script>
-function edit(suppId) {
  
-	  
-	$('#loader').show();
-
-	$
-			.getJSON(
-					'${editFrSupplier}',
-
-					{
-						 
-						suppId : suppId, 
-						ajax : 'true'
-
-					},
-					function(data) { 
-						
-						document.getElementById("suppId").value=data.suppId;
-						document.getElementById("suppName").value=data.suppName;  
-						document.getElementById("suppAdd").value=data.suppAddr;
-						document.getElementById("city").value=data.suppCity;
-						document.getElementById("mob").value=data.mobileNo;
-						document.getElementById("email").value=data.email;
-						document.getElementById("gstnNo").value=data.gstnNo;
-						document.getElementById("panNo").value=data.panNo;
-						document.getElementById("liceNo").value=data.suppFdaLic;
-						document.getElementById("creditDays").value=data.suppCreditDays;
-						document.getElementById("isSameState").value=data.isSameState; 
-						document.getElementById("cancel").disabled=false;
-					});
-
- 
-	   
-
-}
-
-function cancel1() {
-
-    //alert("cancel");
-	document.getElementById("suppId").value="";
-	document.getElementById("suppName").value="";  
-	document.getElementById("suppAdd").value="";
-	document.getElementById("city").value="";
-	document.getElementById("mob").value="";
-	document.getElementById("email").value="";
-	document.getElementById("gstnNo").value="";
-	document.getElementById("panNo").value="";
-	document.getElementById("liceNo").value="";
-	document.getElementById("creditDays").value="";
-	document.getElementById("isSameState").value=""; 
-	document.getElementById("cancel").disabled=false;
-
-}
-(function() {
-  var fauxTable = document.getElementById("faux-table");
-  var mainTable = document.getElementById("table_grid");
-  var clonedElement = table_grid.cloneNode(true);
-  var clonedElement2 = table_grid.cloneNode(true);
-  clonedElement.id = "";
-  clonedElement2.id = "";
-  fauxTable.appendChild(clonedElement);
-  fauxTable.appendChild(clonedElement2);
-})();
-
-
-	</script>
 
 </body>
 </html>
