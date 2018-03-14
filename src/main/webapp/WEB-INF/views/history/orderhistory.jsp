@@ -367,8 +367,7 @@ jQuery(document).ready(function(){
 											<th class="col-md-1">Rate</th>
 											<th class="col-md-1">Add Rate</th>
 											<th class="col-md-1">Total</th>
-											<th class="col-md-1">View</th>
-											<th class="col-md-1">PDF</th>
+										
 										</tr>
 									</thead>
 									<tbody>
@@ -380,17 +379,15 @@ jQuery(document).ready(function(){
 												<td class="col-md-1"><c:out
 														value="${orderList.spEvents}" /></td>
 												<td class="col-md-1"><c:out
-														value="${orderList.spDeliveryDt}" /></td>
+														value="${orderList.spDeliveryDate}" /></td>
 												<td class="col-md-1"><c:out
 														value="${orderList.spPrice}" /></td>
 												<td class="col-md-1"><c:out
-														value="${orderList.spAddRate}" /></td>
+														value="${orderList.spTotalAddRate}" /></td>
 												<td class="col-md-1"><c:out
-														value="${orderList.spGrand}" /></td>
-												<td class="col-md-1"><c:out
-														value="${orderList.spGrand}" /></td>
-												<td class="col-md-1"><c:out
-														value="${orderList.spGrand}" /></td>
+														value="${orderList.spGrandTotal}" /></td>
+												
+												
 
 											</tr>
 										</c:forEach>

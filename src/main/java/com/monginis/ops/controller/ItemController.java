@@ -486,7 +486,7 @@ public class ItemController {
 
 		if (isSameDayApplicable == 2) { // if category is cake and pastries with limit then check for limit
 
-			List<GetFrItem> tempFrItemList =  new ArrayList<GetFrItem>();;
+			List<GetFrItem> tempFrItemList =  new ArrayList<GetFrItem>();
 			tempFrItemList=prevFrItemList;
 	
 			for (int i = 0; i < prevFrItemList.size(); i++) {
@@ -879,6 +879,10 @@ public class ItemController {
 				
 			//------------------------------------------------For Notification-----------------------------------------------------	
 				int catId = 0;
+				int kg1QtyN1 = 0;//Notification
+				int kg2QtyN1 = 0;//Notification
+				int kg3QtyN1 = 0;//Notification
+				int kg4QtyN1= 0;//Notification
 				for (int i = 0; i < tempOrderList.size(); i++) {
 
 					GetFrItem item = tempOrderList.get(i);
@@ -887,26 +891,27 @@ public class ItemController {
 				if(Integer.parseInt(item.getItemGrp1())==2)
 				{
 					catId=2;
-					
+                    
+                    	
 					if (Integer.parseInt(item.getItemGrp2())==14) {
 
-						kg1QtyN = kg1QtyN + item.getItemQty();
+						kg1QtyN1 = kg1QtyN1 + item.getItemQty();
 					
 
 					} else if (Integer.parseInt(item.getItemGrp2())==15) {
 					
-						kg2QtyN = kg2QtyN + item.getItemQty();
-					
+						kg2QtyN1 = kg2QtyN1 + item.getItemQty();
+						
 						
 					} else if (Integer.parseInt(item.getItemGrp2())==16) {
 					
-						kg3QtyN = kg3QtyN + item.getItemQty();
+						kg3QtyN1 = kg3QtyN1 + item.getItemQty();
 					
 						
 					} else if (Integer.parseInt(item.getItemGrp2())==17) {
 						
-						kg4QtyN = kg4QtyN + item.getItemQty();
-						
+						kg4QtyN1 = kg4QtyN1 + item.getItemQty();
+					
 					}
 				}
 				else
@@ -980,8 +985,15 @@ public class ItemController {
 					 }else
 					   if(catId==2)
 					   {
-						   strMessage="Your Order has been saved. Total Ordered- Pastries --["+kg1QtyN+"]-1/2 Kg Cake--["+kg2QtyN+"]-1 Kg Cake--["+kg3QtyN+"]-Above 1 Kg Cake--["+kg4QtyN+"] Thank You..Team Monginis";
-					   }
+						   if(isSameDayApplicable==2)
+						   {
+						   strMessage="Your Order has been saved. Total Ordered- Pastries --["+kg1QtyN1/2+"]-1/2 Kg Cake--["+kg2QtyN1/2+"]-1 Kg Cake--["+kg3QtyN1/2+"]-Above 1 Kg Cake--["+kg4QtyN1/2+"] Thank You..Team Monginis";
+						   }
+						   else {
+							   strMessage="Your Order has been saved. Total Ordered- Pastries --["+kg1QtyN1+"]-1/2 Kg Cake--["+kg2QtyN1+"]-1 Kg Cake--["+kg3QtyN1+"]-Above 1 Kg Cake--["+kg4QtyN1+"] Thank You..Team Monginis";
+							   
+						   }
+						 }
 					   else if(catId==3) {
 						   
 						   strMessage="Your Order has been saved. Total Ordered- Packing Materials --["+kg1QtyN+"]-Celebrations & Party Items--["+kg2QtyN+"]- Thank You..Team Monginis";

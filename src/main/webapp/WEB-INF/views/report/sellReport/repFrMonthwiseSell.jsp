@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
  
   </script> --%>
 
-
+<body onload="showGraph()"> 
 <c:url var="getMonthwiselReport" value="/getMonthwiselReport" />
 	
 	<div class="sidebarOuter"></div>
@@ -117,10 +117,10 @@ jQuery(document).ready(function(){
 	<div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" value="${frommonth}">
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" value="${tomonth}">
 		</div></div>
 				<input type="hidden" name="frId" id="frId" value="${frId}">
 		
@@ -670,6 +670,14 @@ $(document).ready(function() {
   });
 });
 </script>
+<script type="text/javascript">
+function showGraph()
+{
 
+	showChart();
+
+}
+
+</script>
 </body>
 </html>
