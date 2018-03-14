@@ -11,7 +11,7 @@
 <title></title>
 </head>
 <body>
-	<table width="250" class="" cellspacing=0 border=1>
+	<table  class="" cellspacing=0 border=1>
 		<tbody>
 			<tr style="height: 50px;">
 

@@ -1717,6 +1717,11 @@ boolean isCustComplaint=false;
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/viewGrn");
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+        System.out.println("GST"+frDetails.getFrGstType());
+	
+		modelAndView.addObject("gstType", frDetails.getFrGstType());
 
 		return modelAndView;
 
