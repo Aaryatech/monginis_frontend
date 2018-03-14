@@ -184,7 +184,7 @@ public class OtherBillController {
 		try
 		{
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("itemGrp1", 2);
+			map.add("itemGrp1", 6);
 			RestTemplate rest = new RestTemplate();
 			Item[] items  = rest.postForObject(Constant.URL + "/getItemsByCatId", map,
 					Item[].class);
@@ -502,6 +502,30 @@ public class OtherBillController {
 		return otherBillHeaderlist; 
 	}
 	
+	@RequestMapping(value = "/frSupplierList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<FrSupplier> frSupplierList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		ArrayList<FrSupplier> supplierList = new ArrayList<>();
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			RestTemplate rest = new RestTemplate(); 
+			FrSupplier[] list = rest.postForObject(Constant.URL + "/getAllFrSupplierListByFrId",map,
+					FrSupplier[].class);
+			supplierList = new ArrayList<>(Arrays.asList(list)); 
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		 
+		return supplierList; 
+	}
+	
 	@RequestMapping(value = "/viewOtherBillDetail/{billNo}", method = RequestMethod.GET)
 	public ModelAndView viewOtherBillDetail(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response) {
 
@@ -519,7 +543,7 @@ public class OtherBillController {
 					FrSupplier.class);
 			
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("itemGrp1", 2); 
+			map.add("itemGrp1", 6); 
 			Item[] items  = rest.postForObject(Constant.URL + "/getItemsByCatId", map,
 					Item[].class);  
 			ArrayList<Item> itemsList =new ArrayList<>(Arrays.asList(items));

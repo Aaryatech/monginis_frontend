@@ -239,7 +239,7 @@ body {
 			<form name="frm_search" id="frm_search" method="post"
 					action="${pageContext.request.contextPath}/submitOtherBill">
 					<div class="order-left">
-						<h2 class="pageTitle">Customer Bill</h2>
+						<h2 class="pageTitle">Other Purchase Bill</h2>
 
 					</div>
 					<br>
@@ -247,7 +247,7 @@ body {
 					 
 						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
 										</a>
 					</div>
 
@@ -286,7 +286,8 @@ body {
 		
 												<select class="form-control" data-live-search="true" title="Please Select Item"
 																			name="suppId" id="suppId"
-																			data-rule-required="true">
+																			required>
+																			<option value="">Select Supplier</option>
 																				<c:forEach items="${supplierList}" var="supplierList"> 
 																				<option value="${supplierList.suppId}">${supplierList.suppName}</option> 
 																				</c:forEach>
@@ -317,7 +318,7 @@ body {
 																<table width="100%" border="0" cellspacing="0"
 																	cellpadding="0">
 																	<tr class="bgpink">
-																		<td>Barcode</td>
+																		<td>Item Code</td>
 																		<td>Item Name</td>
 																		<td>Qty</td>
 																		<td>Rate</td>
@@ -331,6 +332,7 @@ body {
 																		<td><select class="form-control" data-live-search="true" title="Please Select Item"
 																			name="itemName1" id="itemName1"
 																			data-rule-required="true">
+																			<option value="">Select Item</option> 
 																				<c:forEach items="${itemsList}" var="itemsList"> 
 																				<option value="${itemsList.id}">${itemsList.itemName}</option> 
 																				</c:forEach>
@@ -342,7 +344,7 @@ body {
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
 																		<td id="rateTdVal1">00</td>
-																		<td><input type="number" min="0" max="500"
+																		<td><input type="text" min="0" max="500"
 																			class="form-control" name="discPer" id="discPer" value="0"
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
@@ -384,7 +386,7 @@ body {
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
-													<th class="col-md-1">Barcode</th>
+													<th class="col-md-1">Item Code</th>
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Qty</th>
 													<th class="col-md-1">Rate</th>
@@ -519,7 +521,25 @@ body {
 		var id = $("#itemName1").val();
 		var qty1 = $("#qty").val(); 
 		var discPer = $("#discPer").val();
+		var valid=0;
 		//alert("ala");
+		if(id=="")
+			{
+			alert("Select Item");
+			valid=1;
+			}
+		else if(qty1=="" || isNaN(qty1))
+			{
+			alert("Enter Qty ");
+			valid=1;
+			}
+		else if(discPer=="" || isNaN(discPer))
+			{
+			alert("Enter Disc Percentage ");
+			valid=1;
+			}
+		if(valid==0)
+			{
 		$('#loader').show();
 
 		$
@@ -559,16 +579,16 @@ body {
 										  	tr.append($('<td></td>').html(itemList.itemId));
 										  	tr.append($('<td></td>').html(itemList.itemName));
 										  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
-										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true">'+itemList.baseRate+'')); 
+										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 										  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
-										  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt+'</h4> ')); 
-										  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt+'</h4> ')); 
+										  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
+										  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt.toFixed(2)+'</h4> ')); 
 										  	total=total+itemList.taxableAmt;
 										  	taxAmt=taxAmt+itemList.itemTax3rs;
 										  	discTotal=discTotal+itemList.discAmt;
-										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true">'+itemList.itemTax3+''));
-										  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs+'</h4>'));
-										  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal+'</h4>'));
+										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemTax3.toFixed(2)+'</h4>'));
+										  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs.toFixed(2)+'</h4>'));
+										  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal.toFixed(2)+'</h4>'));
 										  	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
 										    $('#table_grid1 tbody').append(tr);
 
@@ -587,7 +607,7 @@ body {
 						  				
 						});
 
-		
+			}
 		
 	
 	}
@@ -608,13 +628,13 @@ body {
 		var discPer=document.getElementById("discPer"+key).value;
 		var value = qty*baseRate;
 		var discAmt=(discPer/100)*value;
-		document.getElementById("discAmt"+key).innerText=(discAmt).toFixed(5);
-		var taxableAmt =(value-discAmt).toFixed(5); 
+		document.getElementById("discAmt"+key).innerText=(discAmt).toFixed(2);
+		var taxableAmt =(value-discAmt).toFixed(2); 
 		 document.getElementById("total"+key).innerText=taxableAmt;
-		 var taxRs = ((taxRate/100)*taxableAmt).toFixed(5); 
+		 var taxRs = ((taxRate/100)*taxableAmt).toFixed(2); 
 		 document.getElementById("taxRs"+key).innerText=taxRs;
 		 var grndTotal=parseFloat(taxableAmt)+parseFloat(taxRs); 
-		 document.getElementById("grndTotal"+key).innerText=(grndTotal).toFixed(5);
+		 document.getElementById("grndTotal"+key).innerText=(grndTotal).toFixed(2);
 		
 	}
 	function submit(key)
@@ -651,20 +671,20 @@ body {
 
 									var tr = $('<tr></tr>');
 									 
-								  	tr.append($('<td></td>').html(key+1));
+									tr.append($('<td></td>').html(key+1));
 								  	tr.append($('<td></td>').html(itemList.itemId));
 								  	tr.append($('<td></td>').html(itemList.itemName));
 								  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
-								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true">'+itemList.baseRate+'')); 
+								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 								  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
-								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt+'</h4> ')); 
-								  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt+'</h4> ')); 
+								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
+								  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt.toFixed(2)+'</h4> ')); 
 								  	total=total+itemList.taxableAmt;
 								  	taxAmt=taxAmt+itemList.itemTax3rs;
 								  	discTotal=discTotal+itemList.discAmt;
-								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true">'+itemList.itemTax3+''));
-								  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs+'</h4>'));
-								  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal+'</h4>'));
+								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemTax3.toFixed(2)+'</h4>'));
+								  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs.toFixed(2)+'</h4>'));
+								  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal.toFixed(2)+'</h4>'));
 								  	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
 								    $('#table_grid1 tbody').append(tr);
 
@@ -725,20 +745,20 @@ body {
 
 									var tr = $('<tr></tr>');
 									 
-								  	tr.append($('<td></td>').html(key+1));
+									tr.append($('<td></td>').html(key+1));
 								  	tr.append($('<td></td>').html(itemList.itemId));
 								  	tr.append($('<td></td>').html(itemList.itemName));
 								  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
-								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true">'+itemList.baseRate+'')); 
+								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 								  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
-								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt+'</h4> ')); 
-								  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt+'</h4> ')); 
+								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
+								  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt.toFixed(2)+'</h4> ')); 
 								  	total=total+itemList.taxableAmt;
 								  	taxAmt=taxAmt+itemList.itemTax3rs;
 								  	discTotal=discTotal+itemList.discAmt;
-								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true">'+itemList.itemTax3+''));
-								  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs+'</h4>'));
-								  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal+'</h4>'));
+								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemTax3.toFixed(2)+'</h4>'));
+								  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs.toFixed(2)+'</h4>'));
+								  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal.toFixed(2)+'</h4>'));
 								  	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
 								    $('#table_grid1 tbody').append(tr);
 

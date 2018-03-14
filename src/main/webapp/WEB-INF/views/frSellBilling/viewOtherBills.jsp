@@ -16,6 +16,7 @@
 
 	<!--topHeader-->
 	<c:url var="getOtherBillBetweenDate" value="/getOtherBillBetweenDate" />
+	<c:url var="frSupplierList" value="/frSupplierList" />
 	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
@@ -41,7 +42,7 @@
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
-					<h2 class="pageTitle">Other Bills</h2>
+					<h2 class="pageTitle">Other Purchase Bills</h2>
 					
 
 				</div>
@@ -54,13 +55,14 @@
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-3">From</div>
+						<div class="col-md-2" align="left">From:</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" name="from_Date" type="text">
 						</div>
-
-						<div class="col-md-3">TO</div>
+						<div class="col-md-1" align="left"></div>
+						 
+						<div class="col-md-1" align="left">TO:</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" name="to_Date" type="text">
@@ -73,7 +75,7 @@
 					<div class="colOuter">
 						 
 						
-						<div class="col-md-3">Select Supplier: </div>
+						<div class="col-md-2" align="left">Select Supplier: </div>
 						<div class="col-md-2">
 							<select class="form-control" data-live-search="true" title="Please Select Item" name="suppId" id="suppId"
 																			data-rule-required="true">
@@ -86,7 +88,7 @@
 						</div>
 
  
-
+<div class="col-md-1" align="left"></div>
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="serchOtherBill()">Search</button>
@@ -110,14 +112,15 @@
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
-										<th class="col-md-2">Sr No</th>
-											<th class="col-md-2">Invoice No</th>
+										<th class="col-md-1">Sr No</th>
+											<th class="col-md-1">Invoice No</th>
 											<th class="col-md-1">Date</th>
-											<th class="col-md-2">Discount</th>
-											<th class="col-md-2">Taxable Amt</th>
-											<th class="col-md-2">Tax Amt</th>
-											<th class="col-md-2">Grand Total</th> 
-											<th class="col-md-2">Action</th>
+											<th class="col-md-1">Supplier</th>
+											<th class="col-md-1" style="text-align:right;">Discount</th>
+											<th class="col-md-1" style="text-align:right;">Taxable Amt</th>
+											<th class="col-md-1" style="text-align:right;">Tax Amt</th>
+											<th class="col-md-1" style="text-align:right;">Grand Total</th> 
+											<th class="col-md-1"style="text-align:center;" >Action</th>
 
 										</tr>
 									</thead>
@@ -147,125 +150,8 @@
 
 </div>
 <!--wrapper-end-->
-
-
-
-
-
-<script type="text/javascript">
-		function searchGRN() {
-
-			$('#table_grid td').remove();
-			var headeIdText=$("#headeIdText").val();
-			
-			//if(!headeIdText==null || headeIdText=="")
-			//var isValid = validate();
-
-			//if (isValid) {
-
-				var fromDate = document.getElementById("datepicker").value;
-				var toDate = document.getElementById("datepicker2").value;
-				//var headeIdText=$("#headeIdText").val();
-				
-				
-				//var headerCheckBox = document.getElementById("headerCheckBox").value;
-				//alert("CHK "+headerCheckBox);
-
-				$.getJSON('${getGrnList}', {
-
-					fromDate : fromDate,
-					toDate : toDate,
-					headerId : headeIdText,
-					ajax : 'true'
-
-				}, function(data) {
-
-					//$('#table_grid td').remove();
-document.getElementById("headeIdText").value=0;
-					if (data == "") {
-						alert("No records found !!");
-
-					}
-
-					$.each(data, function(key, grndata) {
-
-						
-						var tr = $('<tr></tr>');
-						
-						var grnStatus;
-								
-								if(grndata.grngvnStatus==1)
-									grnStatus="Pending";
-								else if(grndata.grngvnStatus==2)
-									grnStatus="Pending";
-								else if(grndata.grngvnStatus==3)
-									grnStatus="Reject By Dispatch";
-								else if(grndata.grngvnStatus==4)
-									grnStatus="Pending";
-								else if(grndata.grngvnStatus==5)
-									grnStatus="Reject By Store";
-								else if(grndata.grngvnStatus==6)
-									grnStatus="Approved";
-								else if(grndata.grngvnStatus==7)
-									grnStatus="Reject By Acc";
-								
-								else(grndata.grngvnStatus==8)
-									grnStatus="Partially Approved";
-								
-								var isCredit;
-								if(grndata.isCreditNote==1)
-									isCredit="Yes";
-								if(grndata.isCreditNote==0)
-									isCredit="Pending";
-								
-
-						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.taxableAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.taxAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.aprGrandTotal));
-						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
-						
-						tr.append($('<td class="col-md-2"></td>').html(isCredit));
-
-						tr.append($('<td class="col-md-2"></td>').html(grndata.creditNoteId));	
-
-						
-
-						//tr.append($('<td class="col-md-2"></td>').html("<input type='button' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")' id='grnDetailButton' value='Detail'>"));
-						
-							tr.append($('<td ><a href="#" class="action_btn" onclick="getGrnDetail('+grndata.grnGvnHeaderId+')"><abbr title="Detail"><i class="fa fa-list"></i></abbr></a></td>'));
-
-						//tr.append($('<td class="col-md-2"><a href=''#' class='action_btn' onclick='getGrnDetail("+grndata.grnGvnHeaderId+")'> <abbr title='Detail'><i class="fa fa-trash"></i></abbr></a></td>'));
-$('#table_grid tbody')
-	.append(
-			tr);
-			
-})
-
-});
-				
-
-			
-//}//if block
-}
-		
-	
-	</script>
-
-
-<script type="text/javascript">
-
-function getGrnDetail(headerId){
-			//alert("HIII");
-			//alert("header ID "+headerId)
-		    var form = document.getElementById("validation-form");
-		    form.action ="getGrnDetailList/"+headerId;
-		    form.submit();
-		}
-</script>
-
+ 
+  
 <script type="text/javascript">
 		function validate() {
 		
@@ -335,6 +221,19 @@ function serchOtherBill()
 			},
 			function(data) {
 				
+				$
+				.getJSON(
+						'${frSupplierList}',
+
+						{
+							  
+							ajax : 'true'
+
+						},
+						function(supplierList) {
+							 
+							var len=supplierList.length; 
+							var suppName;
 				$('#table_grid td').remove(); 
 				  
 			  $.each(
@@ -346,12 +245,20 @@ function serchOtherBill()
 								 
 							  	tr.append($('<td></td>').html(key+1));
 							  	tr.append($('<td></td>').html(itemList.invoiceNo));
-							  	tr.append($('<td></td>').html(itemList.billDate));  
-							  	tr.append($('<td></td>').html(itemList.discAmt)); 
-							  	tr.append($('<td></td>').html(itemList.taxableAmt)); 
-							  	tr.append($('<td></td>').html(itemList.totalTax));
-							  	tr.append($('<td></td>').html(itemList.grandTotal));
-							  	tr.append($('<td></td>').html('<a href="${pageContext.request.contextPath}/viewOtherBillDetail/'+itemList.billNo+'" class="action_btn" '+
+							  	tr.append($('<td></td>').html(itemList.billDate)); 
+							  	for(var i=0;i<len;i++)
+							  		{
+							  			if(supplierList[i].suppId==itemList.suppId)
+							  				{
+							  				suppName=supplierList[i].suppName;
+							  				}
+							  		}
+							  	tr.append($('<td></td>').html(suppName)); 
+							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.discAmt)); 
+							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.taxableAmt)); 
+							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.totalTax));
+							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.grandTotal));
+							  	tr.append($('<td style="text-align:center;"></td>').html('<a href="${pageContext.request.contextPath}/viewOtherBillDetail/'+itemList.billNo+'" class="action_btn" '+
 										'title="Detail"><i class="fa fa-list"></i></abbr></a>'));
 							  	
 							    $('#table_grid tbody').append(tr);
@@ -359,7 +266,7 @@ function serchOtherBill()
 								 
 
 							})  
-						 
+						});
 				
 			});
 	

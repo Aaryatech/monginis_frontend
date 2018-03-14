@@ -9,7 +9,6 @@
 
 </head>
 <body>
- --%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <c:url var="editFrSupplier" value="/editFrSupplier"></c:url>
@@ -29,6 +28,12 @@
 			});
 		});
 	</script>
+	<!-- <style>
+table, th, td {
+    border: 1px solid #9da88d;
+}
+
+</style> -->
 <!--datepicker-->
 
 <!--topLeft-nav-->
@@ -70,14 +75,14 @@
 					
 						<div class="col-md -3">
 							
-								<div class="col1title" align="left"><h3>Other Bill Detail</h3></div>
+								<div class="col1title" align="left"><h3>Other Purchase Bill Detail</h3></div>
 						</div>
 						
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">Invoice No. </div>
+							<div class="col1title" align="left">Invoice No.: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.invoiceNo}
 
 						</div>
@@ -86,9 +91,9 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Bill Date </div>
+							<div class="col1title" align="left">Bill Date: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.billDate}
 
 						</div>
@@ -96,10 +101,10 @@
 					</div>
 					
 					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title">Supplier Name </div>
+						<div class="col-md-2" align="left">
+							<div class="col1title">Supplier Name: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${supplier.suppName}
 
 						</div>
@@ -108,9 +113,9 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Discount AMT </div>
+							<div class="col1title" align="left">Discount AMT: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.discAmt}
 					 
 
@@ -119,10 +124,10 @@
 					</div>
 					
 					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title">Taxable AMT* </div>
+						<div class="col-md-2" >
+							<div class="col1title" align="left">Taxable AMT: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.taxableAmt}
 
 						</div>
@@ -131,9 +136,9 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">CGST AMT </div>
+							<div class="col1title" align="left">CGST AMT: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.cgstSum}
 						</div>
 				 
@@ -141,9 +146,9 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">SGST AMT </div>
+							<div class="col1title" align="left">SGST AMT: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.sgstSum}
 
 						</div>
@@ -152,9 +157,9 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">IGST AMT </div>
+							<div class="col1title" align="left">IGST AMT: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.igstSum}
 
 						</div>
@@ -163,9 +168,9 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">Total </div>
+							<div class="col1title" align="left">Total: </div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" align="left">
 							${otherBillHeader.grandTotal}
 
 						</div>
@@ -178,19 +183,19 @@
 					<div id="table-scroll" class="table-scroll">
 					<div id="faux-table" class="faux-table" aria="hidden"></div>
 					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+						<table   id="table_grid" class="main-table">
 
 							<thead>
 								<tr class="bgpink">
 								
-									<th class="col-sm-1">Sr No</th>
-									<th class="col-md-1">Item Name</th> 
-									<th class="col-md-1">Qty</th>
-									<th class="col-md-1">Base Rate</th> 
-									<th class="col-md-1">Discount Amt</th>
-									<th class="col-md-1">Taxable Amt</th>
-									<th class="col-md-1">Tax Amt</th>
-									<th class="col-md-1">Total Amt</th>
+									<th class="col-md-1" >Sr No</th>
+									<th class="col-md-1" >Item Name</th> 
+									<th class="col-md-1" style="text-align:right;">Qty</th>
+									<th class="col-md-1" style="text-align:right;">Base Rate</th> 
+									<th class="col-md-1" style="text-align:right;">Discount Amt</th>
+									<th class="col-md-1" style="text-align:right;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align:right;">Tax Amt</th>
+									<th class="col-md-1" style="text-align:right;">Total Amt</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -198,7 +203,7 @@
 								<c:forEach items="${otherBillHeader.otherBillDetailList}" var="otherBillDetailList"
 									varStatus="count">
 									<tr>
-										 <td class="col-sm-1"><c:out value="${count.index+1}" /></td>
+										 <td class="col-md-1"><c:out value="${count.index+1}" /></td>
 										  <c:forEach items="${itemsList}" var="itemsList" >
 												 <c:choose> 
 												 <c:when test="${otherBillDetailList.itemId==itemsList.itemId}">
@@ -208,17 +213,17 @@
 												 </c:choose>
 										 </c:forEach>
 										
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.billQty}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.baseRate}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.discRs}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.taxableAmt}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.totalTax}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align:right"><c:out
 												value="${otherBillDetailList.grandTotal}" /></td>
 										 
 									</tr>
@@ -258,73 +263,7 @@
 <!--easyTabs-->
 
 
-<script>
-function edit(suppId) {
  
-	  
-	$('#loader').show();
-
-	$
-			.getJSON(
-					'${editFrSupplier}',
-
-					{
-						 
-						suppId : suppId, 
-						ajax : 'true'
-
-					},
-					function(data) { 
-						
-						document.getElementById("suppId").value=data.suppId;
-						document.getElementById("suppName").value=data.suppName;  
-						document.getElementById("suppAdd").value=data.suppAddr;
-						document.getElementById("city").value=data.suppCity;
-						document.getElementById("mob").value=data.mobileNo;
-						document.getElementById("email").value=data.email;
-						document.getElementById("gstnNo").value=data.gstnNo;
-						document.getElementById("panNo").value=data.panNo;
-						document.getElementById("liceNo").value=data.suppFdaLic;
-						document.getElementById("creditDays").value=data.suppCreditDays;
-						document.getElementById("isSameState").value=data.isSameState; 
-						document.getElementById("cancel").disabled=false;
-					});
-
- 
-	   
-
-}
-
-function cancel1() {
-
-    //alert("cancel");
-	document.getElementById("suppId").value="";
-	document.getElementById("suppName").value="";  
-	document.getElementById("suppAdd").value="";
-	document.getElementById("city").value="";
-	document.getElementById("mob").value="";
-	document.getElementById("email").value="";
-	document.getElementById("gstnNo").value="";
-	document.getElementById("panNo").value="";
-	document.getElementById("liceNo").value="";
-	document.getElementById("creditDays").value="";
-	document.getElementById("isSameState").value=""; 
-	document.getElementById("cancel").disabled=false;
-
-}
-(function() {
-  var fauxTable = document.getElementById("faux-table");
-  var mainTable = document.getElementById("table_grid");
-  var clonedElement = table_grid.cloneNode(true);
-  var clonedElement2 = table_grid.cloneNode(true);
-  clonedElement.id = "";
-  clonedElement2.id = "";
-  fauxTable.appendChild(clonedElement);
-  fauxTable.appendChild(clonedElement2);
-})();
-
-
-	</script>
 
 </body>
 </html>

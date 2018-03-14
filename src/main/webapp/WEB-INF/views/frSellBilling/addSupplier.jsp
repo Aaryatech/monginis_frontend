@@ -70,16 +70,16 @@
 					
 						<div class="col-md -3">
 							
-								<div class="col1title" align="left"><h3>Add SuppLier</h3></div>
+								<div class="col1title" align="left"><h3>Add Supplier</h3></div>
 								<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn btn-info">
 										</a>
 					</div>
 						</div>
 						
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">Supplier Name* </div>
+							<div class="col1title" align="left">Supplier Name*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="suppName" class="form-control"
@@ -93,7 +93,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Supplier Address* </div>
+							<div class="col1title" align="left">Supplier Address*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="suppAdd" class="form-control"
@@ -105,7 +105,7 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">Supplier City* </div>
+							<div class="col1title" align="left">Supplier City*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="city" class="form-control"
@@ -117,7 +117,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Is Same State* </div>
+							<div class="col1title" align="left">Is Same State*: </div>
 						</div>
 						<div class="col-md-3">
 							<select class="form-control" data-live-search="true" title="Please Select" 
@@ -133,7 +133,7 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">Mobile No* </div>
+							<div class="col1title" align="left">Mobile No*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="mob" class="form-control"
@@ -145,7 +145,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">E-Mail* </div>
+							<div class="col1title" align="left">E-Mail*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="email" class="form-control"
@@ -157,7 +157,7 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">GSTN No* </div>
+							<div class="col1title" align="left">GSTN No*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="gstnNo" class="form-control"
@@ -169,7 +169,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Pan No* </div>
+							<div class="col1title" align="left">Pan No*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="panNo" class="form-control"
@@ -181,7 +181,7 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title">FDA Licence* </div>
+							<div class="col1title" align="left">FDA Licence*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="liceNo" class="form-control"
@@ -193,7 +193,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title">Credit Days* </div>
+							<div class="col1title" align="left">Credit Days*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="creditDays" class="form-control"
@@ -204,9 +204,9 @@
 					</div> 
 					<div class="colOuter">
 						<div align="center">
-							<input name="" class="buttonsaveorder" value="Sumbit"
+							<input name="submit" class="buttonsaveorder" value="Submit"
 								type="submit" align="center">
-								<input type="button" class="btn btn-primary" value="Cancel" id="cancel" onclick="cancel1()" disabled>
+								<input type="button" class="buttonsaveorder" value="Cancel" id="cancel" onclick="cancel1()" disabled>
 						</div>
 				 
 					</div>
