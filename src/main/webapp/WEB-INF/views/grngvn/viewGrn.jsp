@@ -45,6 +45,7 @@
 
 				</div>
 				<form id="validation-form">
+ <input type="hidden" value="${gstType}" name="type" id="type"/>
 
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
@@ -422,10 +423,12 @@ function genPdf(headerId) {
 
 		var fromDate =$("#datepicker").val();
 		var toDate =$("#datepicker2").val();
-		
-		    window.open('${pageContext.request.contextPath}/pdf?reportURL=/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
+		var type =$("#type").val();
+
+	 window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
 		    
-		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
+		    //window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1);
+		   
 			
 	}
 	</script>

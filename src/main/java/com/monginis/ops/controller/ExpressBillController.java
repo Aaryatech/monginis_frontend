@@ -246,7 +246,8 @@ public class ExpressBillController {
 
 	@RequestMapping(value = "/calcStock", method = RequestMethod.GET)
 	public @ResponseBody int getStock(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value = "itemId", required = true) String itemId) {
+			@RequestParam(value = "itemId", required = true) String itemId,
+			@RequestParam(value = "qty", required = true) int qty) {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -265,7 +266,7 @@ public class ExpressBillController {
 
 				}
 			}
-
+if(catId!=7) {
 			// ------------------------------------------------------------------------------------------
 			if (currentStockDetailList != null) {
 				for (int i = 0; i < currentStockDetailList.size(); i++) {
@@ -288,8 +289,14 @@ public class ExpressBillController {
 					curStock = (currentStockDetailList.get(i).getCurrentRegStock());
 				}
 			}
+}//end of if catId!=5;
+else {
+	System.err.println("Cat Id =7 ");
+	
+	curStock=qty;
+}
 		} catch (Exception e) {
-			System.out.println("Exception in cal Stock " + e.getMessage());
+			System.out.println("Exception in cal Stock for Express Bill  " + e.getMessage());
 			e.printStackTrace();
 
 		}

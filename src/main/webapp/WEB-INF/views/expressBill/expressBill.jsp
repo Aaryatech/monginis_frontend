@@ -810,8 +810,6 @@ function  hideMe(startId){
 		
 	    var val = document.getElementById("input").value;
 	    
-	  
-	    
 	   // alert("Barcode "+val);
 	 
 	    $.getJSON('${getItemDetails}',{
@@ -844,7 +842,7 @@ function  hideMe(startId){
 	  
 	    	val=iId;
 	    	
-	    
+	    //alert("iID " +iId);
 		  
 	    $.getJSON('${getItemDetails}',{
 	  
@@ -882,7 +880,7 @@ function  hideMe(startId){
 	    $.getJSON('${calcStock}',{
 
 	    	itemId : val,
-          //  qty:qty,
+            qty:qty,
 			ajax : 'true',
 
 	}, function(data) {
@@ -1075,7 +1073,7 @@ function  hideMe(startId){
 	
 	function printExBill()
 	{
-		alert("in print");
+		//alert("in print");
 		
 		var checkedId=[];
 		var checkboxes=document.getElementsByName("select_to_print");
@@ -1088,7 +1086,7 @@ function  hideMe(startId){
 					
 				}
 			}
-			alert(checkboxes);
+			//alert(checkboxes);
 			 $.getJSON('${getSelectedIdForPrint}',{
 
 					id :  JSON.stringify(checkedId),
