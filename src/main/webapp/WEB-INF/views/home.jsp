@@ -91,7 +91,7 @@
        <input type="hidden" id="target" value="${sessionScope.fraTarget}"> --%>
        <c:choose>
        <c:when test="${loginInfo.accessRight==1}">
-                    <div id="chart_div" style="width: 220px;height: 70px;  float:right;margin-right: 60px;margin-top: 10px;"></div>
+                  	<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill">  <div id="chart_div" style="width: 220px;height: 70px;  float:right;margin-right: 60px;margin-top: 10px;"></div></a>
        
        </c:when>
        

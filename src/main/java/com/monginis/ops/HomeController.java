@@ -133,7 +133,7 @@ public class HomeController {
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
 		RestTemplate restTemplate = new RestTemplate();
-
+        try {
 		ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
 		ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
 		int frId = (Integer) session.getAttribute("frId");
@@ -199,7 +199,10 @@ public class HomeController {
 		model.addObject("isSpDayShow", spDayShow);
 
 		logger.info("/login request mapping.");
-
+        }
+        catch (Exception e) {
+			e.printStackTrace();
+		}
 		return model;
 
 	}

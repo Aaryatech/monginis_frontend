@@ -123,9 +123,9 @@ public class HistoryController {
 				}
 				else
 				{
-					System.out.println("sp cake order ");
+					System.out.println("sp cake order "+menuId+"-"+parsedDate+"-"+frDetails.getFrCode());
 
-				 spOrderHistory=spHistory(menuId,spDeliveryDt,frCode);
+				 spOrderHistory=spHistory(menuId,parsedDate,frDetails.getFrCode());
 					System.out.println("selected2:"+spOrderHistory.toString());
 				 model.addObject("orderHistory", spOrderHistory);
 				

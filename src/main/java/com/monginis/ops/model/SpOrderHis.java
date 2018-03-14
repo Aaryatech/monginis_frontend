@@ -1,294 +1,477 @@
 package com.monginis.ops.model;
 
 
-
 public class SpOrderHis {
-	private int spVno;
-	private int frId;
-	
-	
 
-public int getFrId() {
+	private int spOrderNo;
+
+	private String frCode;
+	
+	private int spType;
+	
+	private int spId;
+	
+	private int frId; 
+
+	private String itemId;
+	
+	private int menuId;
+	
+	private int spFlavourId;
+	
+	private float spSelectedWeight;
+	
+	private String spDeliveryPlace;
+	
+	private String spDeliveryDt;
+	
+	private float spMinWeight;
+	
+	private float spMaxWeight;
+	
+	private int spProdTime;
+	
+	private String spEstDeliDate;
+	
+	private String spProdDate;
+	
+	private String spEvents;
+	
+	private String spEventsName;
+	
+	private String spInstructions;
+	
+	private String spDeliveryDate;
+	
+	private String spCustName;
+	
+	private String spCustDob;
+	
+	private String spCustMobNo;
+	
+	private String spBookedForName;
+	
+	private String spBookForDob;
+	
+	private String spBookForMobNo;
+	
+	private float spGrandTotal;
+	
+	private float spPrice;
+	
+	private float spTotalAddRate;
+	
+	private float spBackendRate;
+	
+	private float spSubTotal;
+	
+	private float spAdvance;
+	
+	private float rmAmount;
+	
+	private float tax1;
+	
+	private float tax2;
+	
+	private float tax1Amt;
+	
+	private float tax2Amt;
+	
+	private String orderPhoto;
+	
+	private String orderDate;
+	
+	private String orderPhoto2;
+	
+	private int isSlotUsed;
+
+    private String spfName;
+
+    private String spName;
+
+    private float spAddRate;
+    
+    private float spGrand;
+    
+    
+    
+	public float getSpGrand() {
+		return spGrand;
+	}
+
+	public void setSpGrand(float spGrand) {
+		this.spGrand = spGrand;
+	}
+
+	public float getSpAddRate() {
+		return spAddRate;
+	}
+
+	public void setSpAddRate(float spAddRate) {
+		this.spAddRate = spAddRate;
+	}
+
+	public String getSpDeliveryDt() {
+		return spDeliveryDt;
+	}
+
+	public void setSpDeliveryDt(String spDeliveryDt) {
+		this.spDeliveryDt = spDeliveryDt;
+	}
+
+	public int getSpOrderNo() {
+		return spOrderNo;
+	}
+
+	public void setSpOrderNo(int spOrderNo) {
+		this.spOrderNo = spOrderNo;
+	}
+
+	public String getFrCode() {
+		return frCode;
+	}
+
+	public void setFrCode(String frCode) {
+		this.frCode = frCode;
+	}
+
+	public int getSpType() {
+		return spType;
+	}
+
+	public void setSpType(int spType) {
+		this.spType = spType;
+	}
+
+	public int getSpId() {
+		return spId;
+	}
+
+	public void setSpId(int spId) {
+		this.spId = spId;
+	}
+
+	public int getFrId() {
 		return frId;
 	}
+
 	public void setFrId(int frId) {
 		this.frId = frId;
 	}
-private String frCode;
-private Integer spType;
-private Integer spId;
 
+	public String getItemId() {
+		return itemId;
+	}
 
-private String itemId;
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
 
-private String spFlavour;
-private String spWeight;
-private String spPlace;
-private String spMinWeight;
-private String spMaxWeight;
-private String spProTime;
-private String spEstDelDate;
-private String spProduDate;
-private String spEvents;
-private String spEventsName;
-private String spInstructions;
-private String spDeliveryDt;
-private String spCustName;
+	public int getMenuId() {
+		return menuId;
+	}
 
-private String spCustDOB;
-private String spCustMobileNo;
-private String spBookedForName;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
 
-private String spBookForDOB;
-private String spBookForNumber;
-private String spGrand;
-private String spPrice;
-private String spAddRate;
-private String spSubTotal;
-private String spAdvance;
-private String rmAmount;
+	public int getSpFlavourId() {
+		return spFlavourId;
+	}
 
-private String tax1;
+	public void setSpFlavourId(int spFlavourId) {
+		this.spFlavourId = spFlavourId;
+	}
 
-private String tax2;
+	public float getSpSelectedWeight() {
+		return spSelectedWeight;
+	}
 
-private String tax1Amt;
+	public void setSpSelectedWeight(float spSelectedWeight) {
+		this.spSelectedWeight = spSelectedWeight;
+	}
 
-private String tax2Amt;
-private String orderPhoto;
-private String orderDate;
-private int menuId;
-private String spName;
-private String spfName;
-public int getSpVno() {
-	return spVno;
-}
-public String getFrCode() {
-	return frCode;
-}
-public Integer getSpType() {
-	return spType;
-}
-public Integer getSpId() {
-	return spId;
-}
-public String getItemId() {
-	return itemId;
-}
-public String getSpFlavour() {
-	return spFlavour;
-}
-public String getSpWeight() {
-	return spWeight;
-}
-public String getSpPlace() {
-	return spPlace;
-}
-public String getSpMinWeight() {
-	return spMinWeight;
-}
-public String getSpMaxWeight() {
-	return spMaxWeight;
-}
-public String getSpProTime() {
-	return spProTime;
-}
-public String getSpEstDelDate() {
-	return spEstDelDate;
-}
-public String getSpProduDate() {
-	return spProduDate;
-}
-public String getSpEvents() {
-	return spEvents;
-}
-public String getSpEventsName() {
-	return spEventsName;
-}
-public String getSpInstructions() {
-	return spInstructions;
-}
-public String getSpDeliveryDt() {
-	return spDeliveryDt;
-}
-public String getSpCustName() {
-	return spCustName;
-}
-public String getSpCustDOB() {
-	return spCustDOB;
-}
-public String getSpCustMobileNo() {
-	return spCustMobileNo;
-}
-public String getSpBookedForName() {
-	return spBookedForName;
-}
-public String getSpBookForDOB() {
-	return spBookForDOB;
-}
-public String getSpBookForNumber() {
-	return spBookForNumber;
-}
-public String getSpGrand() {
-	return spGrand;
-}
-public String getSpPrice() {
-	return spPrice;
-}
-public String getSpAddRate() {
-	return spAddRate;
-}
-public String getSpSubTotal() {
-	return spSubTotal;
-}
-public String getSpAdvance() {
-	return spAdvance;
-}
-public String getRmAmount() {
-	return rmAmount;
-}
-public String getTax1() {
-	return tax1;
-}
-public String getTax2() {
-	return tax2;
-}
-public String getTax1Amt() {
-	return tax1Amt;
-}
-public String getTax2Amt() {
-	return tax2Amt;
-}
-public String getOrderPhoto() {
-	return orderPhoto;
-}
-public String getOrderDate() {
-	return orderDate;
-}
-public int getMenuId() {
-	return menuId;
-}
-public String getSpName() {
-	return spName;
-}
-public String getSpfName() {
-	return spfName;
-}
-public void setSpVno(int spVno) {
-	this.spVno = spVno;
-}
-public void setFrCode(String frCode) {
-	this.frCode = frCode;
-}
-public void setSpType(Integer spType) {
-	this.spType = spType;
-}
-public void setSpId(Integer spId) {
-	this.spId = spId;
-}
-public void setItemId(String itemId) {
-	this.itemId = itemId;
-}
-public void setSpFlavour(String spFlavour) {
-	this.spFlavour = spFlavour;
-}
-public void setSpWeight(String spWeight) {
-	this.spWeight = spWeight;
-}
-public void setSpPlace(String spPlace) {
-	this.spPlace = spPlace;
-}
-public void setSpMinWeight(String spMinWeight) {
-	this.spMinWeight = spMinWeight;
-}
-public void setSpMaxWeight(String spMaxWeight) {
-	this.spMaxWeight = spMaxWeight;
-}
-public void setSpProTime(String spProTime) {
-	this.spProTime = spProTime;
-}
-public void setSpEstDelDate(String spEstDelDate) {
-	this.spEstDelDate = spEstDelDate;
-}
-public void setSpProduDate(String spProduDate) {
-	this.spProduDate = spProduDate;
-}
-public void setSpEvents(String spEvents) {
-	this.spEvents = spEvents;
-}
-public void setSpEventsName(String spEventsName) {
-	this.spEventsName = spEventsName;
-}
-public void setSpInstructions(String spInstructions) {
-	this.spInstructions = spInstructions;
-}
-public void setSpDeliveryDt(String spDeliveryDt) {
-	this.spDeliveryDt = spDeliveryDt;
-}
-public void setSpCustName(String spCustName) {
-	this.spCustName = spCustName;
-}
-public void setSpCustDOB(String spCustDOB) {
-	this.spCustDOB = spCustDOB;
-}
-public void setSpCustMobileNo(String spCustMobileNo) {
-	this.spCustMobileNo = spCustMobileNo;
-}
-public void setSpBookedForName(String spBookedForName) {
-	this.spBookedForName = spBookedForName;
-}
-public void setSpBookForDOB(String spBookForDOB) {
-	this.spBookForDOB = spBookForDOB;
-}
-public void setSpBookForNumber(String spBookForNumber) {
-	this.spBookForNumber = spBookForNumber;
-}
-public void setSpGrand(String spGrand) {
-	this.spGrand = spGrand;
-}
-public void setSpPrice(String spPrice) {
-	this.spPrice = spPrice;
-}
-public void setSpAddRate(String spAddRate) {
-	this.spAddRate = spAddRate;
-}
-public void setSpSubTotal(String spSubTotal) {
-	this.spSubTotal = spSubTotal;
-}
-public void setSpAdvance(String spAdvance) {
-	this.spAdvance = spAdvance;
-}
-public void setRmAmount(String rmAmount) {
-	this.rmAmount = rmAmount;
-}
-public void setTax1(String tax1) {
-	this.tax1 = tax1;
-}
-public void setTax2(String tax2) {
-	this.tax2 = tax2;
-}
-public void setTax1Amt(String tax1Amt) {
-	this.tax1Amt = tax1Amt;
-}
-public void setTax2Amt(String tax2Amt) {
-	this.tax2Amt = tax2Amt;
-}
-public void setOrderPhoto(String orderPhoto) {
-	this.orderPhoto = orderPhoto;
-}
-public void setOrderDate(String orderDate) {
-	this.orderDate = orderDate;
-}
-public void setMenuId(int menuId) {
-	this.menuId = menuId;
-}
-public void setSpName(String spName) {
-	this.spName = spName;
-}
-public void setSpfName(String spfName) {
-	this.spfName = spfName;
-}
+	public String getSpDeliveryPlace() {
+		return spDeliveryPlace;
+	}
 
+	public void setSpDeliveryPlace(String spDeliveryPlace) {
+		this.spDeliveryPlace = spDeliveryPlace;
+	}
 
+	public float getSpMinWeight() {
+		return spMinWeight;
+	}
+
+	public void setSpMinWeight(float spMinWeight) {
+		this.spMinWeight = spMinWeight;
+	}
+
+	public float getSpMaxWeight() {
+		return spMaxWeight;
+	}
+
+	public void setSpMaxWeight(float spMaxWeight) {
+		this.spMaxWeight = spMaxWeight;
+	}
+
+	public int getSpProdTime() {
+		return spProdTime;
+	}
+
+	public void setSpProdTime(int spProdTime) {
+		this.spProdTime = spProdTime;
+	}
+
+	public String getSpEstDeliDate() {
+		return spEstDeliDate;
+	}
+
+	public void setSpEstDeliDate(String spEstDeliDate) {
+		this.spEstDeliDate = spEstDeliDate;
+	}
+
+	public String getSpProdDate() {
+		return spProdDate;
+	}
+
+	public void setSpProdDate(String spProdDate) {
+		this.spProdDate = spProdDate;
+	}
+
+	public String getSpEvents() {
+		return spEvents;
+	}
+
+	public void setSpEvents(String spEvents) {
+		this.spEvents = spEvents;
+	}
+
+	public String getSpEventsName() {
+		return spEventsName;
+	}
+
+	public void setSpEventsName(String spEventsName) {
+		this.spEventsName = spEventsName;
+	}
+
+	public String getSpInstructions() {
+		return spInstructions;
+	}
+
+	public void setSpInstructions(String spInstructions) {
+		this.spInstructions = spInstructions;
+	}
+
+	public String getSpDeliveryDate() {
+		return spDeliveryDate;
+	}
+
+	public void setSpDeliveryDate(String spDeliveryDate) {
+		this.spDeliveryDate = spDeliveryDate;
+	}
+
+	public String getSpCustName() {
+		return spCustName;
+	}
+
+	public void setSpCustName(String spCustName) {
+		this.spCustName = spCustName;
+	}
+
+	public String getSpCustDob() {
+		return spCustDob;
+	}
+
+	public void setSpCustDob(String spCustDob) {
+		this.spCustDob = spCustDob;
+	}
+
+	public String getSpCustMobNo() {
+		return spCustMobNo;
+	}
+
+	public void setSpCustMobNo(String spCustMobNo) {
+		this.spCustMobNo = spCustMobNo;
+	}
+
+	public String getSpBookedForName() {
+		return spBookedForName;
+	}
+
+	public void setSpBookedForName(String spBookedForName) {
+		this.spBookedForName = spBookedForName;
+	}
+
+	public String getSpBookForDob() {
+		return spBookForDob;
+	}
+
+	public void setSpBookForDob(String spBookForDob) {
+		this.spBookForDob = spBookForDob;
+	}
+
+	public String getSpBookForMobNo() {
+		return spBookForMobNo;
+	}
+
+	public void setSpBookForMobNo(String spBookForMobNo) {
+		this.spBookForMobNo = spBookForMobNo;
+	}
+
+	public float getSpGrandTotal() {
+		return spGrandTotal;
+	}
+
+	public void setSpGrandTotal(float spGrandTotal) {
+		this.spGrandTotal = spGrandTotal;
+	}
+
+	public float getSpPrice() {
+		return spPrice;
+	}
+
+	public void setSpPrice(float spPrice) {
+		this.spPrice = spPrice;
+	}
+
+	public float getSpTotalAddRate() {
+		return spTotalAddRate;
+	}
+
+	public void setSpTotalAddRate(float spTotalAddRate) {
+		this.spTotalAddRate = spTotalAddRate;
+	}
+
+	public float getSpBackendRate() {
+		return spBackendRate;
+	}
+
+	public void setSpBackendRate(float spBackendRate) {
+		this.spBackendRate = spBackendRate;
+	}
+
+	public float getSpSubTotal() {
+		return spSubTotal;
+	}
+
+	public void setSpSubTotal(float spSubTotal) {
+		this.spSubTotal = spSubTotal;
+	}
+
+	public float getSpAdvance() {
+		return spAdvance;
+	}
+
+	public void setSpAdvance(float spAdvance) {
+		this.spAdvance = spAdvance;
+	}
+
+	public float getRmAmount() {
+		return rmAmount;
+	}
+
+	public void setRmAmount(float rmAmount) {
+		this.rmAmount = rmAmount;
+	}
+
+	public float getTax1() {
+		return tax1;
+	}
+
+	public void setTax1(float tax1) {
+		this.tax1 = tax1;
+	}
+
+	public float getTax2() {
+		return tax2;
+	}
+
+	public void setTax2(float tax2) {
+		this.tax2 = tax2;
+	}
+
+	public float getTax1Amt() {
+		return tax1Amt;
+	}
+
+	public void setTax1Amt(float tax1Amt) {
+		this.tax1Amt = tax1Amt;
+	}
+
+	public float getTax2Amt() {
+		return tax2Amt;
+	}
+
+	public void setTax2Amt(float tax2Amt) {
+		this.tax2Amt = tax2Amt;
+	}
+
+	public String getOrderPhoto() {
+		return orderPhoto;
+	}
+
+	public void setOrderPhoto(String orderPhoto) {
+		this.orderPhoto = orderPhoto;
+	}
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public String getOrderPhoto2() {
+		return orderPhoto2;
+	}
+
+	public void setOrderPhoto2(String orderPhoto2) {
+		this.orderPhoto2 = orderPhoto2;
+	}
+
+	public int getIsSlotUsed() {
+		return isSlotUsed;
+	}
+
+	public void setIsSlotUsed(int isSlotUsed) {
+		this.isSlotUsed = isSlotUsed;
+	}
+
+	public String getSpfName() {
+		return spfName;
+	}
+
+	public void setSpfName(String spfName) {
+		this.spfName = spfName;
+	}
+
+	public String getSpName() {
+		return spName;
+	}
+
+	public void setSpName(String spName) {
+		this.spName = spName;
+	}
+
+	@Override
+	public String toString() {
+		return "SpOrderHis [spOrderNo=" + spOrderNo + ", frCode=" + frCode + ", spType=" + spType + ", spId=" + spId
+				+ ", frId=" + frId + ", itemId=" + itemId + ", menuId=" + menuId + ", spFlavourId=" + spFlavourId
+				+ ", spSelectedWeight=" + spSelectedWeight + ", spDeliveryPlace=" + spDeliveryPlace + ", spMinWeight="
+				+ spMinWeight + ", spMaxWeight=" + spMaxWeight + ", spProdTime=" + spProdTime + ", spEstDeliDate="
+				+ spEstDeliDate + ", spProdDate=" + spProdDate + ", spEvents=" + spEvents + ", spEventsName="
+				+ spEventsName + ", spInstructions=" + spInstructions + ", spDeliveryDate=" + spDeliveryDate
+				+ ", spCustName=" + spCustName + ", spCustDob=" + spCustDob + ", spCustMobNo=" + spCustMobNo
+				+ ", spBookedForName=" + spBookedForName + ", spBookForDob=" + spBookForDob + ", spBookForMobNo="
+				+ spBookForMobNo + ", spGrandTotal=" + spGrandTotal + ", spPrice=" + spPrice + ", spTotalAddRate="
+				+ spTotalAddRate + ", spBackendRate=" + spBackendRate + ", spSubTotal=" + spSubTotal + ", spAdvance="
+				+ spAdvance + ", rmAmount=" + rmAmount + ", tax1=" + tax1 + ", tax2=" + tax2 + ", tax1Amt=" + tax1Amt
+				+ ", tax2Amt=" + tax2Amt + ", orderPhoto=" + orderPhoto + ", orderDate=" + orderDate + ", orderPhoto2="
+				+ orderPhoto2 + ", isSlotUsed=" + isSlotUsed + ", spfName=" + spfName + ", spName=" + spName + "]";
+	}
+    
+    
 
 }

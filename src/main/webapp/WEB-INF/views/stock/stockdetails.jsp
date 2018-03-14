@@ -107,7 +107,7 @@
 					<div class="col-md-2">
 						<div class="col1title">Current Month: </div>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-5">
 						 
 							<c:forEach items="${category}" var="category" varStatus="count">
 								<c:forEach items="${getMonthList}" var="getMonthList" varStatus="count">
