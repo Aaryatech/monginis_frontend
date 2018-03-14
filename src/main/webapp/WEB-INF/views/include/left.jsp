@@ -89,7 +89,7 @@
 						<i class="fa fa-file-pdf-o icon"></i>
 					</div>
 					<div class="title">
-						Other Bill <span></span>
+						Other Purchase Bill<span></span>
 					</div></a></li>
 					
 					<li><a href="${pageContext.request.contextPath}/showRuleFilePdf"><div
