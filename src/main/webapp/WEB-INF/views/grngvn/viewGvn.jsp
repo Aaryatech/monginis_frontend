@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
+ 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <!--topLeft-nav-->
