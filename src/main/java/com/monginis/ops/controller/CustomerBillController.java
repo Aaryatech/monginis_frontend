@@ -66,7 +66,8 @@ public class CustomerBillController {
 	public int prevItemId;
 	public int frGstType = 0;
 	public List<Item> newItemsList;
-
+	String fromDate="";
+	String toDate="";
 	public List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<>();//
 
 	// static ItemList
@@ -104,19 +105,23 @@ public class CustomerBillController {
 		String pattern = "dd-MM-yyyy";
 
 		String dateInString = new SimpleDateFormat(pattern).format(new Date());
-
+        if(fromDate!=""&&toDate!="") {
+        	ses.setAttribute("fromSellBillDate", fromDate);
+    		ses.setAttribute("toSellBillDate", toDate);
+        }else {
 		ses.setAttribute("fromSellBillDate", dateInString);
 		ses.setAttribute("toSellBillDate", dateInString);
+        }
 		return model;
 	}
-
+	
 	@RequestMapping(value = "/getSellBillHeader", method = RequestMethod.GET)
 	public @ResponseBody List<GetSellBillHeader> getSellBillHeader(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		System.out.println("in method");
-		String fromDate = request.getParameter("fromDate");
-		String toDate = request.getParameter("toDate");
+		 fromDate = request.getParameter("fromDate");
+		 toDate = request.getParameter("toDate");
 
 		HttpSession ses = request.getSession();
 		frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -1784,7 +1789,20 @@ if(currentNewItem.getCatId()==7) {
 
 			}
 			if (sellBillHeaderRes != null) {
+				if(token==1)
 				resetData1();
+				if(token==2)
+				resetData2();
+				if(token==3)
+				resetData3();
+				if(token==4)
+				resetData4();
+				if(token==5)
+				resetData5();
+				if(token==6)
+				resetData6();
+				if(token==7)
+				resetData7();
 
 			}
 		} catch (Exception e) {
