@@ -1602,7 +1602,7 @@ if(currentNewItem.getCatId()==7) {
 			sellBillHeader.setUserName(custName);
 			sellBillHeader.setBillDate(dtf.format(localDate));
 
-			sellBillHeader.setInvoiceNo(getInvoiceNo());
+			sellBillHeader.setInvoiceNo(getInvoiceNo(request,response));
 			sellBillHeader.setPaidAmt(paidAmount);
 			sellBillHeader.setPaymentMode(paymentMode);
 			if(isB2b==1)
@@ -1818,10 +1818,15 @@ if(currentNewItem.getCatId()==7) {
 
 	}
 
-	public String getInvoiceNo() {
+	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
+
+
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		int frId = frDetails.getFrId();
 
@@ -1893,6 +1898,7 @@ if(currentNewItem.getCatId()==7) {
 
 			invoiceNo = curStrYear + "-" + "0" + settingValue;
 
+		invoiceNo=frDetails.getFrCode()+invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 

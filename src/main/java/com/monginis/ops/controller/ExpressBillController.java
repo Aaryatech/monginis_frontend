@@ -507,15 +507,20 @@ else {
 
 	}
 
-	public  String getInvoiceNo() {
+	public  String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
 
-		String settingKey = new String();
+		HttpSession session = request.getSession();
 
-		settingKey = ""+globalFrId;
-		map.add("frId", globalFrId);
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		int frId = frDetails.getFrId();
+
+		// String frCode = frDetails.getFrCode();
+
+		map.add("frId", frId);
 		FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map, FrSetting.class);
 
 		int settingValue = frSetting.getSellBillNo();
@@ -579,6 +584,8 @@ else {
 
 			invoiceNo = curStrYear + "-" + "0" + settingValue;
 
+		
+		invoiceNo=frDetails.getFrCode()+invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 
@@ -599,7 +606,7 @@ else {
 		System.out.println(dtf.format(localDate)); // 2016/11/16
 
 		SellBillHeader sellBillHeader = new SellBillHeader();
-		String invNo = getInvoiceNo();
+		String invNo = getInvoiceNo(request,response);
 
 		sellBillHeader.setFrId(frDetails.getFrId());
 		sellBillHeader.setFrCode(frDetails.getFrCode());
