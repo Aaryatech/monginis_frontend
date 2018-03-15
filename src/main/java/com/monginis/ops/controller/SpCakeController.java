@@ -959,8 +959,7 @@ public class SpCakeController {
 	}
 	// ----------------------------------END--------------------------------------------
 
-	// -----------------For Showing Special Cake order
-	// PDF------------------------------
+	// -----------------For Showing Special Cake order PDF------------------------------
 	@RequestMapping(value = "/showSpCakeOrderPDF", method = RequestMethod.GET)
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 

@@ -92,22 +92,17 @@ document.body.onload = function()
         <tbody>
           <tr>
             <th align="left" bgcolor="#ECECEC">Name</th>
-            <th bgcolor="#ECECEC">Kg.</th>
+            <th bgcolor="#ECECEC">Qty</th>
             <th bgcolor="#ECECEC">Rate</th>
             <th align="center" bgcolor="#ECECEC">Amt</th>
           </tr>
           <tr>
-            <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td>
-            <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
-            <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate)/spCakeOrder.spSelectedWeight}</p></td>
-            <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate}</p></td>
+            <td><p style="font-size:12px">${regularSpCake.itemName}</p></td>
+            <td align="center"><p style="font-size:12px">${regularSpCake.qty}</p></td>
+            <td align="center"><p style="font-size:12px">${regularSpCake.rate}</p></td>
+            <td align="right"><p style="font-size:12px">${regularSpCake.rspSubTotal}</p></td>
           </tr>
-           <tr>
-            <td><p style="font-size:12px">${flavourName}</p></td>
-            <td align="center"><p style="font-size:12px"></p>Add Rate:</td>
-            <td align="center"><p style="font-size:12px">${spCakeOrder.spTotalAddRate/spCakeOrder.spSelectedWeight}</p></td>
-            <td align="right"><p style="font-size:12px">${spCakeOrder.spTotalAddRate}</p></td>
-          </tr>
+          
          
         <!--   <tr>
             <td><p style="font-size:12px">##MESSAGE</p></td>
@@ -122,7 +117,7 @@ document.body.onload = function()
              -->
             
             <tr>
-            <td><p style="font-size:12px">${spCakeOrder.spInstructions}</p></td>
+            <td><p style="font-size:12px"></p></td>
             <td align="center"><p style="font-size:12px"></p></td>
             <td align="center"><p style="font-size:12px"></p></td>
             <td align="right"><p style="font-size:12px"></p></td>
@@ -144,16 +139,16 @@ document.body.onload = function()
             </tr>
           <tr>
             <td rowspan="3">&nbsp;</td>
-            <td colspan="2" align="right"><strong>Total :</strong></td>
-            <td align="right"><strong>${spCakeOrder.spSubTotal}</strong></td>
+            <td colspan="2" align="right"><strong>Total: </strong></td>
+            <td align="right"><strong>${regularSpCake.rspSubTotal}</strong></td>
           </tr>
           <tr>
-            <td colspan="2" align="right"><strong>Advance :</strong></td>
-            <td align="right"><strong>${spCakeOrder.spAdvance}</strong></td>
+            <td colspan="2" align="right"><strong>Advance: </strong></td>
+            <td align="right"><strong>${regularSpCake.rspAdvanceAmt}</strong></td>
           </tr>
           <tr>
-            <td colspan="2" align="right"><strong>Balance :</strong></td>
-            <td align="right"><strong>${spCakeOrder.rmAmount}</strong></td>
+            <td colspan="2" align="right"><strong>Balance:</strong></td>
+            <td align="right"><strong>${regularSpCake.rspRemainingAmt}</strong></td>
           </tr>
         </tbody>
       </table></td>
@@ -169,23 +164,23 @@ document.body.onload = function()
         <table width="100%" border="0" cellspacing="0" cellpadding="7" >
   
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Delivery Date : </strong> ${spCakeOrder.spDeliveryDate}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Delivery Date : </strong> ${regularSpCake.rspDeliveryDt}</td>
       
     </tr>
-    <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Place of Delivery  :</strong> ${spCakeOrder.spDeliveryPlace}</td>
-    </tr>
+   <%--  <tr>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Place of Delivery  :</strong> ${regularSpCake.spDeliveryPlace}</td>
+    </tr> --%>
   
 </table>
 
       </td>
     </tr>
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Name : </strong> ${spCakeOrder.spCustName}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Name : </strong> ${regularSpCake.rspCustName}</td>
       
     </tr>
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Phno : </strong> ${spCakeOrder.spCustMobNo}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Phno : </strong> ${regularSpCake.rspCustMobileNo}</td>
     </tr>
     <tr>
       <td colspan="2" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p style="font-size:13px;">While we shall take every care to execute your order as per your instruction, We shall not be liable for delay/non delivery or for variations in the order and decoration due to circumstances beyond our control.</p><p style="font-size:13px;">Fresh cream items should be stored under refrigeration.Please present this receipt at the time of delivery. Order once given will not be cancelled/reversed at any cost.</p></td>

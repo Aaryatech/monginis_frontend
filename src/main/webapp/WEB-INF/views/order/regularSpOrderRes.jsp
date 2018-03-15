@@ -258,6 +258,8 @@ String fDate1 = formatter1.format(date);%>
 <!--rightContainer-->
 <div>
 	<a href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${globalIndex}"><h1> << Back</h1></a>
+	<br/>    
+	<a href="${pageContext.request.contextPath}/showRegCakeOrderPDF" target="_blank"><h1>PDF</h1></a>
 </div>
 </div>
 

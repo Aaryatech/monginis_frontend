@@ -11,8 +11,8 @@ public class RegularSpCake {
     private int rspSubCat;
     private int itemId;
     private int menuId;
-    private Date orderDate;
-    private Date rspProduDate;
+    private String orderDate;
+    private String rspProduDate;
     private String rspDeliveryDt;
     private String rspEvents;
     private String rspEventsName;
@@ -29,6 +29,15 @@ public class RegularSpCake {
     private float mrp;
     private int rateCat;
     private int qty;
+    private int isBillGenerated;
+    
+    
+	public int getIsBillGenerated() {
+		return isBillGenerated;
+	}
+	public void setIsBillGenerated(int isBillGenerated) {
+		this.isBillGenerated = isBillGenerated;
+	}
 	public int getRspId() {
 		return rspId;
 	}
@@ -70,16 +79,16 @@ public class RegularSpCake {
 	
 	
 	
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
-	public Date getRspProduDate() {
+	public String getRspProduDate() {
 		return rspProduDate;
 	}
-	public void setRspProduDate(Date rspProduDate) {
+	public void setRspProduDate(String rspProduDate) {
 		this.rspProduDate = rspProduDate;
 	}
 	public String getRspDeliveryDt() {

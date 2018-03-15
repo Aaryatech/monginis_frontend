@@ -60,7 +60,7 @@ jQuery(document).ready(function(){
  
   </script>
 <!--datepicker--> 
-
+<body onload="return searchSellBill()">
 
 <c:url var="getSellBillHeader" value="/getSellBillHeader" />
 	

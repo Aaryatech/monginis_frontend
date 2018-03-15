@@ -38,6 +38,8 @@
 	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
 <link rel="stylesheet"
@@ -84,6 +86,34 @@
 
 <%-- <script src="${pageContext.request.contextPath}/resources/jquery.confirm/jquery.confirm.js"></script> --%>
 <style>
+/* Paste this css to your style sheet file or under head tag */
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+    position: absolute;
+    left: 20px;
+    top: 230px;
+    width: 96%;
+    height: 53%;
+    z-index: 9999;
+	z-index: 9999;
+	opacity: 1;
+	background: url(resources/images/loader1.gif) center no-repeat #fff;
+}
+.checkdiv {
+    position: absolute;
+    left: 20px;
+    top: 230px;
+    width: 96%;
+    height: 53%;
+    z-index: 9999;
+	z-index: 9999;
+	opacity: 1;
+	background: url(resources/images/check.gif) center no-repeat #fff;
+}
+
 body {
 	font-family: sans-serif
 }
@@ -300,19 +330,19 @@ label:before{
 						<!--tabMenu-->
 						<nav>
 							<ul class="cd-tabs-navigation">
-								<li><a data-content="tab1" class="selected" href="#0"
+								<li id="li1"><a data-content="tab1" class="selected" href="#0"
 									onclick="onloadTab(1)" onshow="onloadTab(2)">Token 1</a></li>
-								<li><a data-content="tab2" href="#0" onclick="onloadTab(2)">Token
+								<li id="li2"><a data-content="tab2" href="#0" onclick="onloadTab(2)">Token
 										2</a></li>
-								<li><a data-content="tab3" href="#0" onclick="onloadTab(3)">Token
+								<li id="li3"><a data-content="tab3" href="#0" onclick="onloadTab(3)">Token
 										3</a></li>
-								<li><a data-content="tab4" href="#0" onclick="onloadTab(4)">Token
+								<li id="li4"><a data-content="tab4" href="#0" onclick="onloadTab(4)">Token
 										4</a></li>
-								<li><a data-content="tab5" href="#0" onclick="onloadTab(5)">Token
+								<li id="li5"><a data-content="tab5" href="#0" onclick="onloadTab(5)">Token
 										5</a></li>
-								<li><a data-content="tab6" href="#0" onclick="onloadTab(6)">Token
+								<li id="li6"><a data-content="tab6" href="#0" onclick="onloadTab(6)">Token
 										6</a></li>
-								<li><a data-content="tab7" href="#0" onclick="onloadTab(7)">Token
+								<li id="li7"><a data-content="tab7" href="#0" onclick="onloadTab(7)">Token
 										7</a></li>
 							</ul>
 						</nav>
@@ -407,6 +437,8 @@ label:before{
                                 </div>
 									
 								</div>	
+								<div class="se-pre-con" style="display: none;" id="loader1"></div>
+								<div class="checkdiv" style="display: none;" id="check1"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -641,7 +673,8 @@ label:before{
 									</div>
 								</div>
 
-
+	                            <div class="se-pre-con" style="display: none;" id="loader2"></div>
+								<div class="checkdiv" style="display: none;" id="check2"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -786,9 +819,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill2"
 										onclick="generateSellBill(2)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn2" disabled="false"
+									<button class="btn additem_btn" id="pdfBtn2" 
 										onclick="pdfBtn(2)">Print Bill</button>
-									<button class="btn additem_btn" id="clear2" disabled="true"
+									<button class="btn additem_btn" id="clear2"
 										onclick="clearData(2)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo2"
 								value="" />
@@ -886,7 +919,8 @@ label:before{
 									</div>
 								</div>
 
-
+                                <div class="se-pre-con" style="display: none;" id="loader3"></div>
+								<div class="checkdiv" style="display: none;" id="check3"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -1031,9 +1065,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill3"
 										onclick="generateSellBill(3)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn3" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn3" 
 										onclick="pdfBtn(3)">Print Bill</button>
-									<button class="btn additem_btn" id="clear3" disabled="true"
+									<button class="btn additem_btn" id="clear3"
 										onclick="clearData(3)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo3"
 								value="" />
@@ -1129,7 +1163,8 @@ label:before{
 									</div>
 								</div>
 
-
+	                            <div class="se-pre-con" style="display: none;" id="loader4"></div>
+								<div class="checkdiv" style="display: none;" id="check4"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -1274,9 +1309,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill4"
 										onclick="generateSellBill(4)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn4" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn4" 
 										onclick="pdfBtn(4)">Print Bill</button>
-									<button class="btn additem_btn" id="clear4" disabled="true"
+									<button class="btn additem_btn" id="clear4"
 										onclick="clearData(4)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo4"
 								value="" />
@@ -1371,7 +1406,8 @@ label:before{
 									</div>
 								</div>
 
-
+                                <div class="se-pre-con" style="display: none;" id="loader5"></div>
+								<div class="checkdiv" style="display: none;" id="check5"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -1507,9 +1543,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill5"
 										onclick="generateSellBill(5)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn5" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn5"
 										onclick="pdfBtn(5)">Print Bill</button>
-									<button class="btn additem_btn" id="clear5" disabled="true"
+									<button class="btn additem_btn" id="clear5" 
 										onclick="clearData(5)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo5"
 								value="" />
@@ -1604,7 +1640,8 @@ label:before{
 									</div>
 								</div>
 
-
+                                	<div class="se-pre-con" style="display: none;" id="loader6"></div>
+								<div class="checkdiv" style="display: none;" id="check6"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 
@@ -1749,9 +1786,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill6"
 										onclick="generateSellBill(6)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn6" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn6" 
 										onclick="pdfBtn(6)">Print Bill</button>
-									<button class="btn additem_btn" id="clear6" disabled="true"
+									<button class="btn additem_btn" id="clear6" 
 										onclick="clearData(6)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo6"
 								value="" />
@@ -1846,7 +1883,8 @@ label:before{
 									</div>
 								</div>
 
-
+                                	<div class="se-pre-con" style="display: none;" id="loader7"></div>
+								<div class="checkdiv" style="display: none;" id="check7"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
 								<div id="table-scroll" class="table-scroll">
@@ -1979,9 +2017,9 @@ label:before{
 								<center>
 									<button class="btn additem_btn" id="generateBill7"
 										onclick="generateSellBill(7)">Generate Bill</button>
-									<button class="btn additem_btn" id="pdfBtn7" disabled="true"
+									<button class="btn additem_btn" id="pdfBtn7" 
 										onclick="pdfBtn(7)">Print Bill</button>
-									<button class="btn additem_btn" id="clear7" disabled="true"
+									<button class="btn additem_btn" id="clear7"
 										onclick="clearData(7)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo7"
 								value="" />
@@ -2768,6 +2806,9 @@ label:before{
 								//first each 
 							}); //ajax
 			document.getElementById("barcode" + token).value = "";
+			
+	
+				
 			//	document.getElementById("generateBill"+token).focus();	
 		} //main function
 	</script>
@@ -2848,7 +2889,7 @@ label:before{
 
 	<script type="text/javascript">
 		function calTotal(allTotal, token) {
-
+			document.getElementById("li"+token).style.backgroundColor ="skyblue";
 			$("#total" + token).html(allTotal);
 			document.getElementById("tot" + token).setAttribute('value',
 					allTotal);
@@ -2992,7 +3033,9 @@ label:before{
 
 			//var isValid = validation(token);
 			var grandtot = $("#grandtot" + token).val();
-			
+			// Animate loader off screen
+			$("#loader"+token).show();
+
 		//	alert(grandtot);
 			if (validation(token) && grandtot > 0) {
 				var isb2b=0;
@@ -3007,7 +3050,7 @@ label:before{
 				var paymentMode = $("#paymentMode" + token).val();
 				var paidAmount = $("#paidAmount" + token).val();
 
-				$('#loader').show();
+			//	$('#loader').show();
 		     //   var loginWindow = window.open('', 'UserLogin');
 
 				$
@@ -3026,12 +3069,20 @@ label:before{
 
 								},
 								function(data) {
+									
 
-									$('#loader').hide();
+									$("#loader"+token).hide();
+									$("#check"+token).show();
 									if (data == "") {
 										alert("Order Not Placed !!");
+										$("#check"+token).hide();
 									} else {
-										
+										//setTimeout('document.getElementById("check2").style.display="none"', 1000); 
+										function showIt() {
+											  document.getElementById("check"+token).style.visibility = "hidden";
+											}
+											setTimeout(showIt, 500);
+										document.getElementById("li"+token).style.backgroundColor = "white";
 										
 									  //  loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='
 									//		+ data.sellBillNo;
@@ -3041,7 +3092,7 @@ label:before{
 												+ token).disabled = false;
 										document
 												.getElementById("clear" + token).disabled = false;
-
+									
 										$('#table_grid' + token + ' td')
 												.remove();
 										// alert(data.sellBillNo);
@@ -3074,13 +3125,14 @@ label:before{
 
 										document.getElementById(
 												"barcode" + token).focus();
-
-					                
+										
 
 									}
+									
 								});
 			}
 			document.getElementById("clear" + token).focus();
+			
 		}
 	</script>
 	<script type="text/javascript">
@@ -3139,7 +3191,7 @@ label:before{
 										alert("Order Not Placed !!");
 									} else {
 										
-										
+										document.getElementById("li"+token).style.backgroundColor = "white";
 									    loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='
 											+ data.sellBillNo;
 										document.getElementById("sellBillNo"
@@ -3331,6 +3383,11 @@ function pdfPrint(token) {
 			$("#barcode1").focus();
 
 		}
+	/* 	$(window).load(function() {
+			// Animate loader off screen
+		//	$(".se-pre-con").fadeOut("slow");
+			$("#loader1").show();
+		});  */
 	</script>
 
 	<!-- document.getElementById("mySelect").value = "orange"; -->

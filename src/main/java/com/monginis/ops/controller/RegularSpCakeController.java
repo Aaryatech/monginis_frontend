@@ -1,7 +1,7 @@
 package com.monginis.ops.controller;
 
 
- 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -62,7 +62,9 @@ public class RegularSpCakeController {
 	private  int globalIndex = 2;
  	String itemShow;
 	 List<MCategory>  mCategories;
-	
+	 RegularSpCake regularSpCake=new RegularSpCake();
+	 String spName="";
+	 
 	 RegularSpCkItemResponse regularSpCkItemList;
 	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";//Default Image to spCake order Page
    //--------------------------Show Regular Special Cake Order Page--------------------------------------
@@ -196,7 +198,7 @@ public class RegularSpCakeController {
 			 logger.info("2" + itemId);
 			
 
-			String spName = request.getParameter("rg_sp_name");
+			 spName = request.getParameter("rg_sp_name");
 			
 			String rspEvents = request.getParameter("sp_event");
 			 logger.info("7" + rspEvents);
@@ -277,17 +279,12 @@ public class RegularSpCakeController {
 
 			// -----Order Date And Production Date------
 
-			final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date currentDate = new Date();
 
 			// convert date to calendar
 			Calendar c = Calendar.getInstance();
 			c.setTime(currentDate);
-
-			// Current Date
-			Date orderDate = c.getTime();
-
-		
 			Date calOrderDate = c.getTime();
 			
 			String convertedOrderDate = dateFormat.format(calOrderDate);
@@ -301,7 +298,8 @@ public class RegularSpCakeController {
 			 Date  produDate = cal.getTime();
 			 System.out.println("production Date:"+produDate);
 			//---------------------------------------------
-			
+			 Date yesdate = new Date (System.currentTimeMillis()-24*60*60*1000);
+			 
 			regularSpCakeOrder.setFrCode(frDetails.getFrCode());
 			regularSpCakeOrder.setMenuId(currentMenuId);
 
@@ -316,8 +314,8 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setRspAdvanceAmt(rspAdvanceAmt);
 			regularSpCakeOrder.setRspCustMobileNo(rspCustMobileNo);
 			regularSpCakeOrder.setRspCustName(rspCustName);
-			regularSpCakeOrder.setRspDeliveryDt(convertedDelDate);
-			regularSpCakeOrder.setOrderDate(calOrderDate);
+			regularSpCakeOrder.setRspDeliveryDt(rspDeliveryDt);
+			regularSpCakeOrder.setOrderDate(convertedOrderDate);
 			regularSpCakeOrder.setRspEvents(rspEvents);
 			regularSpCakeOrder.setRspSubCat(rspSubCat);
 			regularSpCakeOrder.setRspSubTotal(rspSubTotal);
@@ -328,7 +326,7 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setTax2Amt(tax2Amt);
 			
 			regularSpCakeOrder.setRspEventsName(rspEventsName);
-			regularSpCakeOrder.setRspProduDate(produDate);
+			regularSpCakeOrder.setRspProduDate(dateFormat.format(yesdate));
 
 			
 			
@@ -343,8 +341,9 @@ public class RegularSpCakeController {
 		try {
 					  
 				RestTemplate restTemplate = new RestTemplate();
-				ErrorMessage errorMessage= restTemplate.postForObject(Constant.URL + "/insertRegularSpCake", httpEntity,
-						ErrorMessage.class);
+				
+				 regularSpCake= restTemplate.postForObject(Constant.URL + "/insertRegularSpCake", httpEntity,
+						RegularSpCake.class);
                   
 		         mav = new ModelAndView("order/regularSpOrderRes");
                 
@@ -424,7 +423,49 @@ public class RegularSpCakeController {
 			return mav;
 
 		}
-		 
+		// -----------------For Showing Regular Cake order PDF------------------------------
+		@RequestMapping(value = "/showRegCakeOrderPDF", method = RequestMethod.GET)
+		public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = new ModelAndView("order/regorderpdf");
+	      try {
+			HttpSession session = request.getSession();
+
+			Franchisee franchisee = (Franchisee) session.getAttribute("frDetails");
+
+			Calendar cal = Calendar.getInstance();
+
+			Date date = new Date();
+			date.getTime();
+
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formatTime = new SimpleDateFormat("hh-mm-ss a");
+
+			System.out.println(cal.getTime());
+
+			String formatted = format1.format(cal.getTime());
+			System.out.println(formatted);
+
+			String currentDate = format1.format(date);
+			String time = formatTime.format(cal.getTime());
+			String shopName = franchisee.getFrName();
+			String tel = franchisee.getFrMob();
+
+			model.addObject("regularSpCake", regularSpCake);
+			model.addObject("currDate", currentDate);
+			model.addObject("currTime", time);
+			model.addObject("shopName", shopName);
+			model.addObject("rspName", spName);
+			model.addObject("tel", tel);
+	      }
+	      catch (Exception e) {
+			e.printStackTrace();
+		}
+			return model;
+
+		}
+		// ----------------------------------END------------------------------------------------------------------
+
 		
 
 }

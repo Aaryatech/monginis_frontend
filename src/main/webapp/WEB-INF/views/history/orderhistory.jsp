@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+<%-- <script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script> --%>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <style>
@@ -281,8 +281,11 @@ jQuery(document).ready(function(){
 												<th class="col-md-2" style="text-align: center;">Item Name</th>
 												<th class="col-md-1" style="text-align: center;">MRP</th>
 												<th class="col-sm-1" style="text-align: center;">Quantity</th>
-												<th class="col-md-1" style="text-align: center;">Rate</th>
+											<c:choose>		<c:when test="${selectedMenu.menuId!=42}">	<th class="col-md-1" style="text-align: center;">Rate</th>	</c:when></c:choose>
 												<th class="col-md-1"style="text-align: center;" >Total</th>
+												<c:choose>		<c:when test="${selectedMenu.menuId==42}">
+												<th class="col-md-1"style="text-align: center;" >Order Memo</th>
+												</c:when></c:choose>
 											</tr>
 											</thead>
 										<tbody>
@@ -295,13 +298,14 @@ jQuery(document).ready(function(){
 													<td class="col-md-2" ><c:out
 															value="${orderList.itemName}" /></td>
 													<td class="col-md-1"style="text-align: right;"><c:out
-															value="${orderList.mrp}" /></td>
+															value="${orderList.rate}" /></td>
 													<td style="text-align: center;" class="col-sm-1"><c:out
 															value="${orderList.qty}" /></td>
-													<td class="col-md-1" style="text-align: right;"><c:out
-															value="${orderList.rate}" /></td>
+													
 													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.qty * orderList.rate}" /></td>
+											        <td class="col-md-1" style="text-align: center;"><a href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}" target="_blank"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a></td>
+															
 												</tr>
 											</c:forEach>
 											</c:when>
@@ -321,6 +325,7 @@ jQuery(document).ready(function(){
 															value="${orderList.orderRate}" /></td>
 													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.orderQty * orderList.orderRate}" /></td>
+															
 												</tr>
 											</c:forEach>
 										</c:otherwise>
@@ -371,7 +376,8 @@ jQuery(document).ready(function(){
 							<div class="table-wrap">
 
 							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="faux-table" class="faux-table1" aria="hidden">
+								</div>
 								<!-- 					<div class="table-wrap">
  -->
 								<table id="table_grid" class="main-table">
@@ -385,7 +391,7 @@ jQuery(document).ready(function(){
 											<th class="col-md-1"style="text-align: center;">Add On Rate</th>
 											<th class="col-md-1"style="text-align: center;">Total</th>
 												<th class="col-md-1"style="text-align: center;">Advance</th>
-											<th class="col-md-1"style="text-align: center;">PDF</th>
+											<th class="col-md-1"style="text-align: center;">Memo & Bill</th>
 										
 										</tr>
 									</thead>
@@ -406,7 +412,14 @@ jQuery(document).ready(function(){
 														value="${orderList.spGrandTotal}" /></td>
 												<td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spAdvance}" /></td>
-												<td class="col-md-1"style="text-align: center;">Remaining</td>
+												<td class="col-md-1" style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="${pageContext.request.contextPath}/showSpCakeOrderHisPDF/${orderList.spOrderNo}" target="_blank">
+					<abbr title="Order Memo"><i class="fa fa-file-pdf-o"></i></abbr></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="${pageContext.request.contextPath}/printSpCkBill/${orderList.spOrderNo}" target="_blank">
+					<abbr title="Bill"><i class="fa fa-file-pdf-o"></i></abbr></a>
+					
+					</td>
 											</tr>
 										</c:forEach>
 
@@ -421,7 +434,7 @@ jQuery(document).ready(function(){
 						</c:otherwise>
 					</c:choose>
 
-
+  
 
 				</div>
 			</div>
@@ -504,6 +517,7 @@ jQuery(document).ready(function(){
 		//window.print();
 		
 	}
+
 	</script>
 
 

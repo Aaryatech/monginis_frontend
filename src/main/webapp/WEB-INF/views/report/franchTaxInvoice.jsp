@@ -116,7 +116,7 @@
 												<td align="right"><span class="style5"><strong>${billList[0].discountAmt}</strong></span></td>
 											</tr>
 											<tr>
-												<td colspan="2" align="right"><span class="style5"><strong>Discount
+												<td colspan="3" align="right"><span class="style5"><strong>Discount
 															${billList[0].discountPer}% :</strong></span></td>
 												<td colspan="2" align="right"><span class="style5"><strong>${billList[0].intDiscAmt}</strong></span></td>
 
