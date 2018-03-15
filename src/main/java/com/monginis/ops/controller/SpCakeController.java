@@ -69,7 +69,7 @@ public class SpCakeController {
 
 	List<SpecialCake> specialCakeList;
 	SpecialCake specialCake;
-
+    String flavour="";
 	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";// Default Image to spCake order Page
 
 	// ------------------------Show Special Cake Order Page-------------------------------------------
@@ -774,6 +774,7 @@ public class SpCakeController {
 				}
 
 				String flavourName = filteredFlavour.getSpfName();
+				flavour=flavourName;
 				System.out.println("Sptype=" + spType);
 				mav.addObject("spType", spType);
 				mav.addObject("menuTitle", menuTitle);
@@ -845,7 +846,7 @@ public class SpCakeController {
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/order");
-
+      try {
 		HttpSession session = request.getSession();
 
 		Franchisee franchisee = (Franchisee) session.getAttribute("frDetails");
@@ -873,7 +874,11 @@ public class SpCakeController {
 		model.addObject("currTime", time);
 		model.addObject("shopName", shopName);
 		model.addObject("tel", tel);
-
+		model.addObject("flavourName", flavour);
+      }
+      catch (Exception e) {
+		e.printStackTrace();
+	}
 		return model;
 
 	}
