@@ -403,9 +403,12 @@ function genPdf(headerId) {
 		var toDate =$("#datepicker2").val();
 		var type =$("#type").val();
 	 
-		    window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+		   // window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
 		    
-		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0);
+		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+		    
+	    window.open('${pageContext.request.contextPath}/pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+
 			
 	}
 	</script>

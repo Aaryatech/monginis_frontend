@@ -777,22 +777,37 @@ else {
 
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.GET)
 	public @ResponseBody List<SellBillDetail> deleteItem(
-			@RequestParam(value = "sellBillDetailNo", required = true) int sellBillDetailNo) {
+			@RequestParam(value = "sellBillDetailNo", required = true) int sellBillDetailNo,
+			@RequestParam(value = "qty", required = true) int qty,	@RequestParam(value = "id", required = true) int id) {
 		System.out.println("********ItemId********" + sellBillDetailNo);
 
-		System.out.println("********inside Delete********" + sellBillDetailNo);
+		System.out.println("********inside Delete********" + sellBillDetailNo+ "qty "+ qty + "Id " +id);
 		//
 
 		RestTemplate restTemplate = new RestTemplate();
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		map.add("delStatus", Constant.DEL_STATUS);
+	
 		map.add("sellBillDetailNo", sellBillDetailNo);
 
 		Info info = restTemplate.postForObject(Constant.URL + "/deleteSellBillDetail", map, Info.class);
 
 		System.out.println("Info.to " + info.toString());
+		
+		if(info.isError()==false) {
+			
+			for(int i=0;i<currentStockDetailList.size();i++) {
+				
+				if(currentStockDetailList.get(i).getId()==id) {
+					
+					currentStockDetailList.get(i).setCurrentRegStock(currentStockDetailList.get(i).getCurrentRegStock()+qty);
+					System.err.println("Stock List updated Successfully "+currentStockDetailList.get(i));
+					break;
+				}
+			}
+			
+		}
 
 		map = new LinkedMultiValueMap<String, Object>();
 

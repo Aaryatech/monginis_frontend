@@ -357,7 +357,7 @@ input:checked + .slider:before {
 													<td><c:out value="${sellBillDetails.grandTotal}" /></td>
 
  											<td>
-								 				<a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
+								 				<a href="#" class="action_btn" onclick="deleteItem(${sellBillDetails.sellBillDetailNo},${sellBillDetails.qty},${sellBillDetails.itemId})"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>
 													</td>
 												</tr>
 											</c:forEach>
@@ -938,7 +938,7 @@ function  hideMe(startId){
 				//tr.append($('<td ><a href="#" >< i class="fa fa-trash" id="deleteButton" onclick="deleteItem('+item.sellBillDetailNo+')" ></i></a></td>'));
 
 				
-				tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
+				tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+','+item.qty+','+item.itemId+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
 				$('#table_grid1 tbody').append(tr);
 
 			});
@@ -1010,7 +1010,7 @@ function  hideMe(startId){
 	</script> -->
 
 	<script type="text/javascript">
-	function deleteItem(sellBillDetailNo){
+	function deleteItem(sellBillDetailNo,qty,id){
 		
 		$('#loader').show();
 
@@ -1020,6 +1020,8 @@ function  hideMe(startId){
 			 $.getJSON('${deleteItem}',{
 
 				sellBillDetailNo:billNo,
+				qty:qty,
+				id:id,
 				type : "get",
 			
 
@@ -1060,7 +1062,7 @@ function  hideMe(startId){
 					tr.append($('<td></td>').html(item.grandTotal));
 					
 				//	tr.append($('<td ><input type="button" id="deleteButton" onclick="deleteItem('+item.sellBillDetailNo+')" value="Delete" /></td>'));
-								tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
+								tr.append($('<td ><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+','+item.qty+','+item.itemId+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
 
 
 					$('#table_grid1 tbody').append(tr);

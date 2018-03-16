@@ -303,7 +303,7 @@ public class GrnGvnController {
 				for (int k = 0; k < i; k++) {
 					System.out.println(
 							"I Item = " + grnConfList.get(i).getItemId() + " K Item " + grnConfList.get(k).getItemId());
-					if (grnConfList.get(i).getItemId() == grnConfList.get(k).getItemId()) {
+					if (grnConfList.get(i).getItemId().equals(grnConfList.get(k).getItemId())) {
 						purQty = purQty + grnConfList.get(k).getBillQty();
 						tempGQty = tempGQty + grnConfList.get(k).getAutoGrnQty();
 						System.out.println("/////////// Item Name " + grnConfList.get(i).getItemName() + " Pur Qty "
@@ -315,7 +315,7 @@ public class GrnGvnController {
 
 				for (int j = 0; j < stockForAutoGrn.size(); j++) {
 
-					if (grnConfList.get(i).getItemId() == stockForAutoGrn.get(j).getId()) {
+					if (grnConfList.get(i).getItemId().equals(stockForAutoGrn.get(j).getId())) {
 
 						if (grnConfList.get(i).getGrnType() != 4) {
 
@@ -1953,11 +1953,12 @@ boolean isCustComplaint=false;
 
 		if (gsttype==10000000) {
 
-			model = new ModelAndView("grngvn/pdf/grnComposite");
-
+			//model = new ModelAndView("grngvn/pdf/grnComposite");
+			model = new ModelAndView("grngvn/pdf/grnPdf");
 		} else {
 
-			model = new ModelAndView("grngvn/pdf/grnPdf");
+			//model = new ModelAndView("grngvn/pdf/grnPdf");
+			model = new ModelAndView("grngvn/pdf/grnComposite");
 		}
 
 		try {
