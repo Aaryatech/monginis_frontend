@@ -214,7 +214,9 @@
 										System.out.println("in isSameDay else loop");
 
 									
-										if (now.isBefore(toTime) && fromTime.isAfter(now)) {
+										if (now.isAfter(fromTime)) {
+											isValid = true;
+										}else if( toTime.isAfter(now)){
 											isValid = true;
 										}
 									}

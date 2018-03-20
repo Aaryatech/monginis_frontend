@@ -107,7 +107,7 @@ public class ItemController {
 		LocalTime formatedFromTime = LocalTime.parse(fromTime);
 		LocalTime formatedToTime = LocalTime.parse(toTime);
 
-		currentTime = currentTime.plusHours(15);
+		//currentTime = currentTime.plusHours(15);
 		System.out.println("current time " + currentTime);
 		System.out.println("from time " + formatedFromTime);
 
@@ -612,7 +612,6 @@ public class ItemController {
 
 		String fromTime = menuList.get(globalIndex).getFromTime();
 		String toTime = menuList.get(globalIndex).getToTime();
-		System.out.println("before order placing: from time " + fromTime + " to time " + toTime);
 
 		ZoneId z = ZoneId.of("Asia/Calcutta");
 		LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
@@ -628,6 +627,7 @@ public class ItemController {
 
 		Boolean isSameDay = fromTimeLocalTime.isBefore(toTimeLocalTIme);
 		Boolean isValid = false;
+		System.out.println("before order placing: from time " + fromTimeLocalTime + " to time " + toTimeLocalTIme);
 
 		if (isSameDay) {
 
@@ -637,8 +637,12 @@ public class ItemController {
 			}
 		} else {
 
-			if (fromTimeLocalTime.isBefore(now) && now.isAfter(toTimeLocalTIme)) {
+			if (now.isAfter(fromTimeLocalTime) ) {
 				isValid = true;
+			}else if(toTimeLocalTIme.isAfter(now)) {
+				isValid= true;
+			}else {
+				isValid=false;
 			}
 		}
 		System.out.println(" is valid " + isValid);
