@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URLConnection;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -80,13 +81,17 @@ import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
+import com.monginis.ops.model.spadvreport.GetSpAdvTaxReport;
+import com.monginis.ops.model.spadvreport.GetSpAdvTaxReportList;
 import com.monginis.ops.model.spadvreport.GetSpAdvanceReport;
 import com.monginis.ops.model.spadvreport.GetSpAdvanceReportList;
 
 @Controller
 @Scope("session")
 public class ReportsController {
-
+	public static float roundUp(float d) {
+		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+	}
 	public List<GetRepTaxSell> getRepTaxSell;
 	public List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
 	public List<GetSellBillHeader> getSellBillHeaderList;
@@ -327,7 +332,321 @@ public class ReportsController {
 		 }
 		
 	}
+//sp tax advance report using delivery date
+	@RequestMapping(value = "/showSpAdvTaxReport", method = RequestMethod.GET)
+	public ModelAndView showSpAdvTaxReport(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("report/spAdvTaxReport");
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return model;
+	}
+	List<GetSpAdvTaxReport> spAdvTaxList=new ArrayList<>();
+	
+	String fd,tD,frName;
+	//getSpAdvTaxReport ajax
+	@RequestMapping(value = "/getSpAdvTaxReport", method = RequestMethod.GET)
+	public @ResponseBody List<GetSpAdvTaxReport> getSpAdvTaxReport(HttpServletRequest request,
+			HttpServletResponse response) {
+		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
+		spAdvTaxList = new ArrayList<>();
+		try {
+			System.out.println("in method /getSpAdvTaxReport");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			fd=fromDate;
+			tD=toDate;
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			RestTemplate restTemplate = new RestTemplate();
+			System.err.println("from " + fromDate + "toDate " + toDate);
+			frName=frDetails.getFrName();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+			map.add("frId", frId);
+
+			GetSpAdvTaxReportList spTaxAdv = restTemplate.postForObject(Constant.URL + "spProduction/getSpAdvTaxRepor",
+					map, GetSpAdvTaxReportList.class);
+			spAdvTaxList = spTaxAdv.getSpAdvTaxReport();
+
+			System.err.println("Sp tax List List " + spTaxAdv.toString());
+		} catch (Exception e) {
+			System.err.println("Ex in gettting sp tax list " + e.getMessage());
+			e.printStackTrace();
+		}
+		return spAdvTaxList;
+
+	}
+	//getSpAdvTaxPdf
+	
+	
+	
+	@RequestMapping(value = "/getSpAdvTaxPdf", method = RequestMethod.GET)
+	public void getSpAdvTaxPdf(HttpServletRequest request, HttpServletResponse response) {
+
+		Document doc=new Document();
+		
+		String FILE_PATH=Constant.REPORT_SAVE;
+		File file=new File(FILE_PATH);
+		
+		PdfWriter writer = null;
+		
+		
+		 FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(FILE_PATH);
+		} catch (FileNotFoundException e1) {
+			
+			System.err.println("File not found Exception"+e1.getMessage());
+			e1.printStackTrace();
+		}
+		   try {
+			    writer=PdfWriter.getInstance(doc,out);
+		} catch (DocumentException e) {
+			System.err.println("DocumentException Exception"+e.getMessage());
+
+			e.printStackTrace();
+		}
+		
+		 PdfPTable table = new PdfPTable(13);
+		 try {
+		 System.out.println("Inside PDF Table try /getSpAdvTaxPdf");
+		 table.setWidthPercentage(100);
+	     table.setWidths(new float[]{0.4f, 1.4f,1.5f,1.4f,1.5f,1.6f,0.8f,0.8f,1.2f,1.3f,1.2f,1.3f,1.4f});
+	     Font headFont = new Font(FontFamily.HELVETICA, 7, Font.ITALIC, BaseColor.BLACK);
+	     Font headFont1 = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLUE);
+	     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
+	     
+	     PdfPCell hcell;
+	     hcell = new PdfPCell(new Phrase("No", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+
+	     hcell = new PdfPCell(new Phrase("Invoice No", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	    
+	     
+	     hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("Hsn Code", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	    
+	     hcell = new PdfPCell(new Phrase("Delivery Date", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	 
+	     hcell = new PdfPCell(new Phrase("Base Mrp", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("CGST %", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("SGST %", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("CGST Rs", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("SGST Rs", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Total", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     table.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Advance", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Remaining", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     table.addCell(hcell);
+	     
+	     int index=0;
+	     
+	     for (GetSpAdvTaxReport spTax : spAdvTaxList) {
+		       index++;
+		         PdfPCell cell;
+		        
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         table.addCell(cell);
+
+		        
+		         cell = new PdfPCell(new Phrase(spTax.getInvoiceNo(),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getSpName()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getSpHsncd()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getDelDate()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_LEFT);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(roundUp(spTax.getBaseMrp())),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		      
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getTax1()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getTax2()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getTax1Amt()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getTax2Amt()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getTotal()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		      
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getSpAdvance()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+		         cell = new PdfPCell(new Phrase(String.valueOf(spTax.getRmAmount()),headFont));
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		         cell.setPaddingRight(12);
+		         table.addCell(cell);
+		         
+		         
+	     }  
+	     doc.open();
+	     
+	     Paragraph heading = new Paragraph("Report-Sp Cake Tax ");
+	     heading.setAlignment(Element.ALIGN_CENTER);
+	     doc.add(heading);
+	     DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new java.util.Date());
+			
+			doc.add(new Paragraph(""+ reportDate));
+			doc.add(new Paragraph(frName +" From " + fd + " To " + tD));
+			doc.add(new Paragraph("\n "));
+	     doc.add(table);
+	     
+	     doc.close();
+	     
+		   //Atul Sir code to open a Pdf File 
+				if (file != null) {
+
+					String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+					if (mimeType == null) {
+
+						mimeType = "application/pdf";
+
+					}
+
+					response.setContentType(mimeType);
+
+					response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+					// response.setHeader("Content-Disposition", String.format("attachment;
+					// filename=\"%s\"", file.getName()));
+
+					response.setContentLength((int) file.length());
+
+					InputStream inputStream = null;
+					try {
+						inputStream = new BufferedInputStream(new FileInputStream(file));
+					} catch (FileNotFoundException e1) {
+					
+						e1.printStackTrace();
+					}
+
+					try {
+						FileCopyUtils.copy(inputStream, response.getOutputStream());
+					} catch (IOException e) {
+						System.out.println("Excep in Opening a Pdf File for Mixing");
+						e.printStackTrace();
+					}
+				}
+		     
+		 } catch (DocumentException ex) {
+		 
+			 System.out.println("Pdf Generation Error: Prod From Orders"+ex.getMessage());
+			 
+			 ex.printStackTrace();
+		   
+		 }
+		 fd=null;
+		 tD=null;
+		 frName=null;
+	}
+	
+	
 	@RequestMapping(value = "/viewBillWisePurchaseReport", method = RequestMethod.GET)
 	public ModelAndView viewBill(HttpServletRequest request, HttpServletResponse response) {
 

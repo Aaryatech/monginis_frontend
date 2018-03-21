@@ -30,14 +30,8 @@
 
 			<jsp:include page="/WEB-INF/views/include/left.jsp">
 				<jsp:param name="myMenu" value="${menuList}" />
-
 			</jsp:include>
-
-
 			<!--leftNav-->
-
-
-
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
