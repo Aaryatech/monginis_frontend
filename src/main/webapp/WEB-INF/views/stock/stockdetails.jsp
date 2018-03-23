@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 
 <%-- <!DOCTYPE html>
 <html>
@@ -156,7 +157,7 @@
 													 		<c:set var="month" value=""></c:set>
 													 		</c:otherwise>
 													 	</c:choose>
-													 	${category.catName} : ${month}, 
+													 <strong>	${category.catName}</strong> : ${month}, 
 													 
 													 </c:when>
 								 				</c:choose>
@@ -303,7 +304,30 @@
 						
 
 							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="faux-table" class="faux-table" aria="hidden">
+								<table id="table_grid" class="main-table">
+										<thead>
+											<tr class="bgpink">
+												<th>Item Id</th>
+												<th>Item Name</th>
+												<th>Reg Op Stock</th>
+												<th>Sp Op Stock</th>
+												<th>Reg Pur Qty</th>
+												<th>Sp Pur Qty</th>
+												<th>Grn-Gvn Qty</th>
+												<th>Regular Sale</th>
+												<th>Sp Sale</th>
+												<th>Reorder Qty</th>
+												<th>Reg Cur Stock</th>
+												<th>Sp Cur Stock</th>
+
+												<c:if test="${isMonthCloseApplicable eq true}">
+													<th>Physical Stock</th>
+													<th>Stock Difference</th>
+												</c:if>
+
+											</tr>
+										</thead></table></div>
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table">
 										<thead>
