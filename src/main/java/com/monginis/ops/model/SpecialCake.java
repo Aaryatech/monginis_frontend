@@ -58,18 +58,18 @@ public class SpecialCake {
 	
 	private int isAddonRateAppli;
 	
-	private int mrpRate1;
+	private float mrpRate1;
 	
-	private int mrpRate2;
+	private float mrpRate2;
 	
-	private int mrpRate3;
+	private float mrpRate3;
 	
-	private int spRate1;
+	private float spRate1;
 	
 	
-	private int spRate2;
+	private float spRate2;
 	
-	private int spRate3;
+	private float spRate3;
 
 	private int isSlotUsed;
 	
@@ -110,42 +110,7 @@ public class SpecialCake {
 	public void setIsAddonRateAppli(int isAddonRateAppli) {
 		this.isAddonRateAppli = isAddonRateAppli;
 	}
-	public int getMrpRate1() {
-		return mrpRate1;
-	}
-	public void setMrpRate1(int mrpRate1) {
-		this.mrpRate1 = mrpRate1;
-	}
-	public int getMrpRate2() {
-		return mrpRate2;
-	}
-	public void setMrpRate2(int mrpRate2) {
-		this.mrpRate2 = mrpRate2;
-	}
-	public int getMrpRate3() {
-		return mrpRate3;
-	}
-	public void setMrpRate3(int mrpRate3) {
-		this.mrpRate3 = mrpRate3;
-	}
-	public int getSpRate1() {
-		return spRate1;
-	}
-	public void setSpRate1(int spRate1) {
-		this.spRate1 = spRate1;
-	}
-	public int getSpRate2() {
-		return spRate2;
-	}
-	public void setSpRate2(int spRate2) {
-		this.spRate2 = spRate2;
-	}
-	public int getSpRate3() {
-		return spRate3;
-	}
-	public void setSpRate3(int spRate3) {
-		this.spRate3 = spRate3;
-	}
+	
 	public int getSpId() {
 		return spId;
 	}
@@ -277,6 +242,43 @@ public class SpecialCake {
 	}
 	public void setOrderDiscount(float orderDiscount) {
 		this.orderDiscount = orderDiscount;
+	}
+	
+	public float getMrpRate1() {
+		return mrpRate1;
+	}
+	public void setMrpRate1(float mrpRate1) {
+		this.mrpRate1 = mrpRate1;
+	}
+	public float getMrpRate2() {
+		return mrpRate2;
+	}
+	public void setMrpRate2(float mrpRate2) {
+		this.mrpRate2 = mrpRate2;
+	}
+	public float getMrpRate3() {
+		return mrpRate3;
+	}
+	public void setMrpRate3(float mrpRate3) {
+		this.mrpRate3 = mrpRate3;
+	}
+	public float getSpRate1() {
+		return spRate1;
+	}
+	public void setSpRate1(float spRate1) {
+		this.spRate1 = spRate1;
+	}
+	public float getSpRate2() {
+		return spRate2;
+	}
+	public void setSpRate2(float spRate2) {
+		this.spRate2 = spRate2;
+	}
+	public float getSpRate3() {
+		return spRate3;
+	}
+	public void setSpRate3(float spRate3) {
+		this.spRate3 = spRate3;
 	}
 	@Override
 	public String toString() {

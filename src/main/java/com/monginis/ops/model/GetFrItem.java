@@ -10,23 +10,23 @@ public class GetFrItem  {
 	private String itemGrp1;
 	private String itemGrp2;
 	private String itemGrp3;
-	private Integer itemRate1;
-	private Integer itemRate2;
-	private Integer itemRate3;
+	private double itemRate1;
+	private double itemRate2;
+	private double itemRate3;
 	
-	private Integer itemMrp1;
-	private Integer itemMrp2;
-	private Integer itemMrp3;
+	private double itemMrp1;
+	private double itemMrp2;
+	private double itemMrp3;
 
 	private String itemImage;
-	private Integer itemTax1;
-	private Integer itemTax2;
+	private double itemTax1;
+	private double itemTax2;
 	
-	private Integer itemTax3;
+	private double itemTax3;
 	private Integer itemIsUsed;
 	private Double itemSortId;
 	private Integer grnTwo;
-	private Integer itemQty;
+	private int itemQty;
 	private Integer delStatus;
 	private String subCatName;
 	private int menuId;
@@ -81,54 +81,7 @@ public class GetFrItem  {
 		this.itemGrp3 = itemGrp3;
 	}
 
-	public Integer getItemRate1() {
-		return itemRate1;
-	}
-
-	public void setItemRate1(Integer itemRate1) {
-		this.itemRate1 = itemRate1;
-	}
-
-	public Integer getItemRate2() {
-		return itemRate2;
-	}
-
-	public void setItemRate2(Integer itemRate2) {
-		this.itemRate2 = itemRate2;
-	}
-
-	public Integer getItemRate3() {
-		return itemRate3;
-	}
-
-	public void setItemRate3(Integer itemRate3) {
-		this.itemRate3 = itemRate3;
-	}
-
-	public Integer getItemMrp1() {
-		return itemMrp1;
-	}
-
-	public void setItemMrp1(Integer itemMrp1) {
-		this.itemMrp1 = itemMrp1;
-	}
-
-	public Integer getItemMrp2() {
-		return itemMrp2;
-	}
-
-	public void setItemMrp2(Integer itemMrp2) {
-		this.itemMrp2 = itemMrp2;
-	}
-
-	public Integer getItemMrp3() {
-		return itemMrp3;
-	}
-
-	public void setItemMrp3(Integer itemMrp3) {
-		this.itemMrp3 = itemMrp3;
-	}
-
+	
 	public String getItemImage() {
 		return itemImage;
 	}
@@ -137,27 +90,28 @@ public class GetFrItem  {
 		this.itemImage = itemImage;
 	}
 
-	public Integer getItemTax1() {
+	
+	public double getItemTax1() {
 		return itemTax1;
 	}
 
-	public void setItemTax1(Integer itemTax1) {
+	public void setItemTax1(double itemTax1) {
 		this.itemTax1 = itemTax1;
 	}
 
-	public Integer getItemTax2() {
+	public double getItemTax2() {
 		return itemTax2;
 	}
 
-	public void setItemTax2(Integer itemTax2) {
+	public void setItemTax2(double itemTax2) {
 		this.itemTax2 = itemTax2;
 	}
 
-	public Integer getItemTax3() {
+	public double getItemTax3() {
 		return itemTax3;
 	}
 
-	public void setItemTax3(Integer itemTax3) {
+	public void setItemTax3(double itemTax3) {
 		this.itemTax3 = itemTax3;
 	}
 
@@ -185,11 +139,12 @@ public class GetFrItem  {
 		this.grnTwo = grnTwo;
 	}
 
-	public Integer getItemQty() {
+	
+	public int getItemQty() {
 		return itemQty;
 	}
 
-	public void setItemQty(Integer itemQty) {
+	public void setItemQty(int itemQty) {
 		this.itemQty = itemQty;
 	}
 
@@ -223,6 +178,56 @@ public class GetFrItem  {
 
 	public void setMinQty(int minQty) {
 		this.minQty = minQty;
+	}
+
+	
+	
+	public double getItemRate1() {
+		return itemRate1;
+	}
+
+	public void setItemRate1(double itemRate1) {
+		this.itemRate1 = itemRate1;
+	}
+
+	public double getItemRate2() {
+		return itemRate2;
+	}
+
+	public void setItemRate2(double itemRate2) {
+		this.itemRate2 = itemRate2;
+	}
+
+	public double getItemRate3() {
+		return itemRate3;
+	}
+
+	public void setItemRate3(double itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
+	public double getItemMrp1() {
+		return itemMrp1;
+	}
+
+	public void setItemMrp1(double itemMrp1) {
+		this.itemMrp1 = itemMrp1;
+	}
+
+	public double getItemMrp2() {
+		return itemMrp2;
+	}
+
+	public void setItemMrp2(double itemMrp2) {
+		this.itemMrp2 = itemMrp2;
+	}
+
+	public double getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(double itemMrp3) {
+		this.itemMrp3 = itemMrp3;
 	}
 
 	@Override

@@ -189,7 +189,7 @@ public class ItemController {
 
 		Set<String> setName = new HashSet<String>();
 
-		float grandTotal = 0;
+		double grandTotal = 0;
 
 		for (int i = 0; i < frItemList.size(); i++) {
 
@@ -214,7 +214,7 @@ public class ItemController {
 
 			String subCat = subCatList.get(i);
 			int qty = 0;
-			int total = 0;
+			double total = 0;
 
 			for (int j = 0; j < frItemList.size(); j++) {
 

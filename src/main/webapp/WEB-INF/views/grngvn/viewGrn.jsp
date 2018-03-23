@@ -147,7 +147,7 @@
 
 												<td class="col-md-2"><fmt:formatNumber type="number"
 														minFractionDigits="2" maxFractionDigits="2"
-														value="${grnList.apporvedGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
+														value="${grnList.aprGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
 												<c:set var="status" value="a"></c:set>
 												<c:choose>
 													<c:when test="${grnList.grngvnStatus==1}">
