@@ -277,7 +277,7 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
+																	<td class="col-md-1"><c:out value='${items.itemMrp2}' /></td>
 
 																	<td class="col-md-1"><c:out value='${items.itemRate2}' /></td>
 																	<c:set var="rate" value="${items.itemRate2}" />
