@@ -724,8 +724,7 @@ public class GrnGvnController {
 				DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar calDate = Calendar.getInstance();
 
-				GrnGvn postGrnGvn = new GrnGvn();
-
+				
 				String tempGrnQtyAuto = request.getParameter("grnqtyauto" + objShowGrnList.get(i).getItemId() + "");
 
 				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getItemId() + "");
@@ -752,6 +751,10 @@ public class GrnGvnController {
 					frGrnRemark = "no remark entered";
 
 				}
+				
+				if (grnQty > 0) {
+					
+					GrnGvn postGrnGvn = new GrnGvn();
 
 				float baseRate = objShowGrnList.get(i).getRate() * 100
 						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() + 100);
@@ -805,7 +808,7 @@ public class GrnGvnController {
 				 * }
 				 */
 				curDateTime = dateFormat.format(cal.getTime());
-				if (grnQty > 0) {
+			
 					postGrnGvn.setGrnGvnDate(grnGvnDate);
 
 					postGrnGvn.setBillDetailNo(objShowGrnList.get(i).getBillDetailNo());// 15 Feb added
@@ -926,8 +929,12 @@ public class GrnGvnController {
 			System.out.println("post grn for rest----- " + postGrnList.toString());
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
-
-			Info insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+			
+			Info insertGrn = null;
+if(postGrnList!=null) {
+			insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+			
+}
 			//Info insertGrn=null;
 			if (insertGrn.getError() == false) {
 
@@ -993,7 +1000,7 @@ public class GrnGvnController {
 				sellBillHeader.setBillDate(dtf.format(localDate));
 
 				sellBillHeader.setInvoiceNo(getInvoiceNo(request,response));
-				sellBillHeader.setPaidAmt(0);
+				
 				sellBillHeader.setPaymentMode(1);
 				
 					sellBillHeader.setBillType('G');
@@ -1097,11 +1104,13 @@ public class GrnGvnController {
 					payableAmt = roundUp(payableAmt);
 
 					sellBillHeader.setDiscountAmt(0);
-					sellBillHeader.setPayableAmt(0);
+					
 					System.out.println("Payable amt  : " + payableAmt);
 					sellBillHeader.setTotalTax(sumTotalTax);
 					sellBillHeader.setGrandTotal(sumGrandTotal);
+					sellBillHeader.setPayableAmt(sellBillHeader.getGrandTotal());
 					
+					sellBillHeader.setPaidAmt(sellBillHeader.getGrandTotal());
 					sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 					
 					SellBillHeader	sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,

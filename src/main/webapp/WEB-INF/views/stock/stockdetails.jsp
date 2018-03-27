@@ -305,7 +305,7 @@
 
 							<div id="table-scroll" class="table-scroll">
 								<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid1" class="main-table">
 										<thead>
 											<tr class="bgpink">
 												<th>Item Id</th>
@@ -329,7 +329,7 @@
 											</tr>
 										</thead></table></div>
 								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+									<table id="table_grid" class="main-table" border="1">
 										<thead>
 											<tr class="bgpink">
 												<th>Item Id</th>
@@ -577,7 +577,7 @@
 						
 						tr.append($('<th width=60 align=left>Item Name</th>'));
 						
-						tr.append($('<th width=60 align=left>Regular Opening Stock</th>'));
+						tr.append($('<th width=60 align=center>Regular Opening Stock</th>'));
 						tr.append($('<th width=60 align=left>Special Opening Stock</th>'));
 
 						
@@ -590,7 +590,7 @@
 						
 						tr.append($('<th width=60 align=left>Reorder Qty</th>'));
 						tr.append($('<th width=60 align=left>Regular Current Stock</th>'));
-						tr.append($('<th width=60 align=left>Special Current Stock</th>'));
+						tr.append($('<th width=60 align=center>Special Current Stock</th>'));
 
 						tr.append($('<th width=60 align=left>Physical Stock</th>'));
 						
