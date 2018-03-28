@@ -321,14 +321,13 @@ else {
 		DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 		try {
-			/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
-			runningMonth = frItemStockHeader.getMonth();*/
-			runningMonth=3;
-
+			runningMonth = frItemStockHeader.getMonth();
+			
 			Date todaysDate = new Date();
 			System.out.println(dateFormat.format(todaysDate));
 
@@ -344,7 +343,6 @@ else {
 			String strFirstDay = dateFormat.format(firstDay);
 
 			System.out.println("Year " + yearFormat.format(todaysDate));
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 			map.add("frStockType",1);
