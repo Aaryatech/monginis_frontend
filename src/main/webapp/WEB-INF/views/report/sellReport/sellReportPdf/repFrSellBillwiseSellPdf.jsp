@@ -59,8 +59,8 @@ th {
 												<td style="text-align:left;"><c:out value="${reportList.frName}" /></td>
 												<td ><c:out value="${reportList.billDate}" /></td>
 												
-													<td  style="text-align:right;"> <fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.payableAmt}" /></td>
-													 <c:set var="totalAmount" value="${totalAmount + reportList.payableAmt}"/>
+													<td  style="text-align:right;"> <fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.grandTotal}" /></td>
+													 <c:set var="totalAmount" value="${totalAmount + reportList.grandTotal}"/>
 													 
 													 <c:choose>
 																	<c:when test="${reportList.paymentMode==1}">

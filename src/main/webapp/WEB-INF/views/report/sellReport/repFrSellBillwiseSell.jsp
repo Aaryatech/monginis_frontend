@@ -233,7 +233,7 @@ table, th, td {
 								  	tr.append($('<td class="col-md-2"></td>').html(sellBillData.billDate));
 								  	
 								  	//var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.payableAmt).toFixed(2)));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.grandTotal).toFixed(2)));
 								  	
 									amtTotal=amtTotal + sellBillData.payableAmt;
 									

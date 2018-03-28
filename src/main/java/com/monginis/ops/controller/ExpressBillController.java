@@ -616,7 +616,7 @@ else {
 
 		sellBillHeader.setInvoiceNo(invNo);// hardcoded
 		sellBillHeader.setPaidAmt(0);// hardcoded
-		sellBillHeader.setPaymentMode(0);// hardcoded
+		sellBillHeader.setPaymentMode(1);// hardcoded
 
 		sellBillHeader.setSellBillNo(0);// hardcoded
 
@@ -747,6 +747,8 @@ else {
 				billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
 
 				// billHeader.setBillDate(billHeader.getBillDate());
+				billHeader.setPaidAmt(billHeader.getGrandTotal());
+				billHeader.setPayableAmt(billHeader.getGrandTotal());
 
 				billHeader.setDiscountPer(billHeader.getDiscountPer());
 
