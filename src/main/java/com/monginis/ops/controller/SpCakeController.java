@@ -243,11 +243,10 @@ public class SpCakeController {
 
 				weightList.add(minWt);
 				float currentWt = minWt;
-				do {
+				while (currentWt < maxWt) {
 					currentWt = currentWt + 0.5f;
 					weightList.add(currentWt);
-
-				} while (currentWt < maxWt);
+				} 
 
 				System.out.println("Weight List for SP Cake: " + weightList.toString());
 

@@ -395,6 +395,16 @@ else {
 			@RequestParam(value = "qty", required = true) int qty) {
 		System.out.println("********ItemId********" + itemId);
 		RestTemplate restTemplate = new RestTemplate();
+HttpSession ses=request.getSession();
+
+if(ses==null) {
+	
+	System.err.println("Sesssion is null ");
+}else {
+
+	System.err.println("Sesssion is Alive ");
+}
+
 
 		float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0;
 		for (CustomerBillItem item : customerBillItemList) {
