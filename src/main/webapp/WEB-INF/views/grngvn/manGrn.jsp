@@ -54,7 +54,7 @@ label::before {
 
 				<div class="row">
 					<div class="col-md-2">
-						<h2 class="pageTitle">Request Manual Grn</h2>
+						<h2 class="pageTitle">Request Manual GRN</h2>
 					</div>
 					
 					<br>
@@ -82,7 +82,7 @@ label::before {
 							<div class="col-md-2">
 						<h2 class="pageTitle"> </h2>
 					</div>
-								<div class="col-md-3">
+								<%-- <div class="col-md-3">
 									<select name="bill_no" id="bill_no" class="form-control"
 										style="width: 250px; background-color: white; height: 40px">
 									
@@ -112,7 +112,7 @@ label::before {
 										<!--<button type="button" class="btn">Cancel</button>-->
 
 									</div>
-
+ --%>
 								<!-- </div> -->
 							</div>
 						</form>
