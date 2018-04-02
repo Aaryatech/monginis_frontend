@@ -478,7 +478,7 @@ public class GrnGvnController {
 			 * System.out.println("item Id "+grnConfList.get(a).getItemId());
 			 * System.out.println("auto grn for pushed Item "
 			 * +grnConfList.get(a).getAutoGrnQty());
-			 * 
+			 * exBillQty
 			 * } }
 			 * 
 			 * if(!isSameItem) {
@@ -758,7 +758,7 @@ month=month+1;
 
 				}
 				
-				if (grnQty > 0) {
+			/*	if (grnQty > 0) {*/
 					
 					GrnGvn postGrnGvn = new GrnGvn();
 
@@ -894,6 +894,7 @@ month=month+1;
 					postGrnGvnList.add(postGrnGvn);
 					
 					if(objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty()>0) {
+						
 						System.err.println("Item Name " + objShowGrnList.get(i).getItemName());
 						System.err.println("Qty Variation found : For Item Id " + postGrnGvn.getItemId() + "Qty = " +(objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty()));
 						int exBillQty=objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty();
@@ -901,10 +902,12 @@ month=month+1;
 						objShowGrnList.get(i).setAutoGrnQty(exBillQty);
 						sellBillData.add(objShowGrnList.get(i));
 						
+						
+						
 						//sellBillData.get(i).setAutoGrnQty(exBillQty);
 					}
 
-				} // end of if checking for grnQty
+				//} // end of if checking for grnQty
 			} // end of for
 			System.err.println("Selll Bill Data "+sellBillData.toString());
 
@@ -939,13 +942,13 @@ month=month+1;
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
 			
-			Info insertGrn = null;
+			Info insertGrn =null;
 if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 			insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
 			
 }
 			//Info insertGrn=null;
-			if (insertGrn.getError() == false) {
+			if (insertGrn.getError() == false || insertGrn!=null) {
 
 				map = new LinkedMultiValueMap<String, Object>();
 
@@ -1004,8 +1007,10 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 				LocalDate localDate = LocalDate.now();
 				System.out.println(dtf.format(localDate)); // 2016/11/16
 				
-				SellBillHeader sellBillHeaderRes = null;
+		/*		SellBillHeader sellBillHeaderRes = null;
 				SellBillHeader sellBillHeader=null;
+				
+				
 				if(sellBillData.size()>0) {
 					sellBillHeader = new SellBillHeader();
 
@@ -1156,7 +1161,7 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 						}
 					}
 
-					System.out.println("info :" + sellBillHeaderRes.toString());
+					System.out.println("info :" + sellBillHeaderRes.toString());*/
 			
 				// update frSetting value for frGrnGvnSrNo
 				map = new LinkedMultiValueMap<String, Object>();
