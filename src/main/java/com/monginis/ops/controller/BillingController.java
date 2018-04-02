@@ -277,7 +277,7 @@ public class BillingController {
 
 			System.out.println("Message :   "+info.getMessage());
 			System.out.println("Error  :    "+info.getError());
-			
+			if(info.getError()==false) {
 			
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -367,7 +367,7 @@ public class BillingController {
 				}
 
 			}
-			
+			}
 	
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
