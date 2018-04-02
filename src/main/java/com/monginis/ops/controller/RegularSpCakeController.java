@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.SubCategoryResponse;
- 
+import com.monginis.ops.model.AllspMessageResponse;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.EventList;
 import com.monginis.ops.model.Flavour;
@@ -49,6 +49,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.RegularSpCake;
 import com.monginis.ops.model.RegularSpCkItemResponse;
+import com.monginis.ops.model.SpMessage;
 import com.monginis.ops.model.SubCategory;
    
 @Controller
@@ -64,6 +65,7 @@ public class RegularSpCakeController {
 	 List<MCategory>  mCategories;
 	 RegularSpCake regularSpCake=new RegularSpCake();
 	 String spName="";
+	 List<SpMessage> spMessageList;
 	 
 	 RegularSpCkItemResponse regularSpCkItemList;
 	String spImage = "0463a490-b678-46d7-b31d-d7d6bae5c954-ats.png";//Default Image to spCake order Page
@@ -98,9 +100,12 @@ public class RegularSpCakeController {
 		    		             map,SubCategoryResponse.class);
 				    logger.info("/regularSpCkOrder  request mapping"+categoryResponse.toString());
               
-				
-	                EventList eventList = restTemplate.getForObject(Constant.URL + "/showEventList", EventList.class);
-			        logger.info("/regularSpCkOrder Event List"+eventList.toString());
+					AllspMessageResponse allspMessageList = restTemplate.getForObject(Constant.URL + "getAllSpMessage",
+							AllspMessageResponse.class);
+
+					spMessageList = allspMessageList.getSpMessage();
+	                /*EventList eventList = restTemplate.getForObject(Constant.URL + "/showEventList", EventList.class);
+			        logger.info("/regularSpCkOrder Event List"+eventList.toString());*/
 		
 			        mCategories=categoryResponse.getmCategoryList();
 			        List<SubCategory> subCategories = new ArrayList<SubCategory>();
@@ -111,7 +116,7 @@ public class RegularSpCakeController {
 			        
 				    model.addObject("frDetails",frDetails);
 				    
-				    model.addObject("eventList", eventList);
+				    model.addObject("eventList", spMessageList);
 			
 				    model.addObject("categoryResponse", subCategories);
 				     
@@ -290,15 +295,14 @@ public class RegularSpCakeController {
 			String convertedOrderDate = dateFormat.format(calOrderDate);
 			System.out.println("Todays date is: " + calOrderDate);
 			// -------------------------------------------
-			Date newProdDate=dateFormat.parse(convertedDelDate);
+			Date newProdDate=dateFormat.parse(rspDeliveryDt);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime (newProdDate); // convert your date to Calendar object
-			int daysToDecrement = -1;
-			cal.add(Calendar.DATE, daysToDecrement);
+			cal.add(Calendar.DATE, -1);
 			 Date  produDate = cal.getTime();
-			 System.out.println("production Date:"+produDate);
+			 System.out.println("production Date:"+dateFormat.format(produDate));
 			//---------------------------------------------
-			 Date yesdate = new Date (System.currentTimeMillis()-24*60*60*1000);
+			// Date yesdate = new Date (System.currentTimeMillis()-24*60*60*1000);
 			 
 			regularSpCakeOrder.setFrCode(frDetails.getFrCode());
 			regularSpCakeOrder.setMenuId(currentMenuId);
@@ -326,7 +330,7 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setTax2Amt(tax2Amt);
 			
 			regularSpCakeOrder.setRspEventsName(rspEventsName);
-			regularSpCakeOrder.setRspProduDate(dateFormat.format(yesdate));
+			regularSpCakeOrder.setRspProduDate(dateFormat.format(produDate));
 
 			
 			

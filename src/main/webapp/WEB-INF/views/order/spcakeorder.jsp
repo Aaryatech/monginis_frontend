@@ -260,6 +260,7 @@ select {
 <input type="hidden" name="isCustChoiceCk" id="isCustChoiceCk" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
 <input type="hidden" name="isSlotUsed" id="isSlotUsed" value="${specialCake.isSlotUsed}">
+<input type="hidden" name="isSameDayApplicable" id="isSameDayApplicable" value="${isSameDayApplicable}">
 
 
 <!--centerForm-->	

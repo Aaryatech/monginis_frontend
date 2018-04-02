@@ -171,25 +171,25 @@ select {
 
 							 <div class="center">
 
-							<!--	<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Event</div>
-									</div>
-									<div class="col2"> 
-										<select name="sp_event" id="sp_event" >
+						<!--	<div class="colOuter">
+								 	<div class="col1">
+										<div class="col1title">Message</div>
+									</div> 
+									<div class="col2"> -->
+										<%-- <select name="sp_event" id="sp_event" >
 
 											<c:forEach items="${eventList.getEvent()}" var="eventList">
-												<option value="${eventList.speName}"><c:out value="${eventList.speName}" /></option>
+												<option value="${eventList.spMsgText}"><c:out value="${eventList.spMsgText}" /></option>
 											</c:forEach>
-										</select>-->
-										<input 
+										</select> --%>
+										 <input 
 											name="sp_event" type="hidden" id="sp_event" value="Birthday" required>
-									<!-- </div>
-									<div class="col3"> -->
+									<!--  </div>
+									<div class="col3">  -->
 										<input class="texboxitemcode"placeholder="Name" 
-											name="event_name" type="hidden" id="event_name" value="Happy Birthday" required>
-								<!-- 	</div>
-								</div> -->
+											name="event_name" type="hidden" id="event_name" value="happy bday" required>
+							<!-- 	</div>
+								</div>  -->
 
 								<!-- <div class="colOuter"></div>
 								&nbsp; -->
@@ -201,7 +201,7 @@ select {
 									<div class="col2full">
 										<input class="texboxitemcode" placeholder="" name="sp_qty"
 											type="text" id="sp_qty" onkeyup="calculatePerQuantity()"
-											required value="1">
+											required value="1" >
 									</div>
 								</div>
 
@@ -404,7 +404,14 @@ select {
 
 	<script type="text/javascript">
 		$(document).ready(function() {$('#regular_sp_cake').change(function() {
-			$('#regSpCkItem').find('option').remove().end()
+			$('#regSpCkItem').find('option').remove().end()  
+			if($(this).val()!=14)
+				{
+			     document.getElementById("sp_qty").disabled = true;
+				}else
+				{
+					 document.getElementById("sp_qty").disabled = false;
+				}
 			                                        $.getJSON('${findAllRegularSpCk}',
 																{
 																	regular_sp_cake : $(this).val(),

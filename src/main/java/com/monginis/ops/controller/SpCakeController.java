@@ -382,8 +382,7 @@ public class SpCakeController {
 
 	}
 
-	// ------------------------Get Addon Rate AJAX
-	// method(spcakeorder)-----------------------------------
+	// ------------------------Get Addon Rate AJAX method(spcakeorder)-----------------------------------
 	@RequestMapping(value = "/getAddOnRate", method = RequestMethod.GET)
 	public @ResponseBody Flavour getAddOnRate(@RequestParam(value = "spfId", required = true) double spfId) {
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
@@ -518,9 +517,10 @@ public class SpCakeController {
 
 		Boolean isLate = now.isAfter(toTimeLocalTIme);
 		Boolean isEarly = now.isBefore(fromTimeLocalTime);
+		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 
 		if (!isLate && !isEarly) {
-
+			
 			int spId = Integer.parseInt(request.getParameter("sp_id"));
 			logger.info("1" + spId);
 			String spCode = request.getParameter("sp_code");
@@ -623,7 +623,7 @@ public class SpCakeController {
 
 			String spPlace = request.getParameter("sp_place");
 			logger.info("33" + spPlace);
-
+ 
 			String spPhoUpload = request.getParameter("spPhoUpload");
 
 			String eventName = request.getParameter("event_name");
@@ -727,9 +727,13 @@ public class SpCakeController {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(delDate);
-
+            if(isSameDayApplicable==1)
+            {
+            	cal.add(Calendar.DATE, 0);
+            }
+            else {
 			cal.add(Calendar.DATE, -prodTime);
-
+            }
 			// manipulate date
 			// c.add(Calendar.DATE, prodTime);
 			Date deliDateMinusProdTime = cal.getTime();
@@ -743,16 +747,7 @@ public class SpCakeController {
 
 			final SimpleDateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-			/*
-			 * try { java.util.Date utilspBookForDOB = dmyFormat.parse(spCustDOB); } catch
-			 * (ParseException e1) { // TODO Auto-generated catch block
-			 * e1.printStackTrace(); }
-			 */
-			/*
-			 * java.util.Date utilSpCustDOB = new java.util.Date(); try { utilSpCustDOB =
-			 * dmyFormat.parse(spCustDOB); } catch (ParseException e1) { // TODO
-			 * Auto-generated catch block e1.printStackTrace(); }
-			 */Date date = new Date();
+		    Date date = new Date();
 			try {
 
 				date = dmyFormat.parse(spCustDOB);
