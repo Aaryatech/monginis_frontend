@@ -459,51 +459,7 @@ public class GrnGvnController {
 				}
 			} // end of calc autogrnQty
 
-			/*
-			 * System.out.println(""); //calculate autoGrnQty for pushed item
-			 * 
-			 * boolean isSameItem=false; for(int a=0;a<grnConfList.size();a++) {
-			 * 
-			 * if((grnConfList.get(i).getItemId()==grnConfList.get(a).getItemId())&&
-			 * (grnConfList.get(a).getGrnType()!=4)) {
-			 * 
-			 * isSameItem=true;
-			 * System.out.println("inside a for loop "+grnConfList.get(a).getItemId()); int
-			 * tempGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() +
-			 * grnConfList.get(a).getBillQty()) - (stockForAutoGrn.get(j).getRegSellQty() +
-			 * stockForAutoGrn.get(j).getGrnGvnQty()); int autoGrnQty=0; if(tempGrnQty>0) {
-			 * System.out.println("inside tempGrnQty >0 "+grnConfList.get(a).getItemId());
-			 * autoGrnQty = ((stockForAutoGrn.get(j).getRegCurrentStock() +
-			 * grnConfList.get(i).getBillQty()+grnConfList.get(a).getBillQty()) -
-			 * (stockForAutoGrn.get(j).getRegSellQty() +
-			 * stockForAutoGrn.get(j).getGrnGvnQty()))-tempGrnQty;
-			 * 
-			 * }else {
-			 * 
-			 * autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() +
-			 * grnConfList.get(i).getBillQty()+grnConfList.get(a).getBillQty()) -
-			 * (stockForAutoGrn.get(j).getRegSellQty() +
-			 * stockForAutoGrn.get(j).getGrnGvnQty());
-			 * 
-			 * }
-			 * 
-			 * 
-			 * grnConfList.get(i).setAutoGrnQty(autoGrnQty);
-			 * 
-			 * System.out.println("item Id "+grnConfList.get(a).getItemId());
-			 * System.out.println("auto grn for pushed Item "
-			 * +grnConfList.get(a).getAutoGrnQty()); exBillQty } }
-			 * 
-			 * if(!isSameItem) {
-			 * System.out.println("inside isSameItem = false "+grnConfList.get(i).getItemId(
-			 * ));
-			 * 
-			 * int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() +
-			 * grnConfList.get(i).getBillQty()) - (stockForAutoGrn.get(j).getRegSellQty() +
-			 * stockForAutoGrn.get(j).getGrnGvnQty());
-			 * grnConfList.get(i).setAutoGrnQty(autoGrnQty); }
-			 */
-
+			
 			objShowGrnList = new ArrayList<>();
 
 			ShowGrnBean objShowGrn = null;
@@ -952,13 +908,14 @@ public class GrnGvnController {
 
 			Info insertGrn = null;
 			if (postGrnList != null && postGrnList.getGrnGvnHeader().getTaxableAmt() > 0) {
+				System.err.println("Inserting Grn ");
 				insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
 
 			}
 			// Info insertGrn=null;
 			if (insertGrn.getError() == false) {
 				
-				
+				System.err.println("Update Grn Sr No for GRN insert  where insertGrn.getError() is false ");
 
 				map.add("frId", frDetails.getFrId());
 				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
@@ -1020,13 +977,13 @@ public class GrnGvnController {
 						billHeader.setPaidAmt(billHeader.getGrandTotal());
 						billHeader.setPayableAmt(billHeader.getGrandTotal());
 
-						if (billHeader.getSellBillDetailsList().size() > 0) {
+					
 
 							billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 									SellBillHeader.class);
 
 							System.out.println("Bill Header Response " + billHeader.toString());
-						}
+					
 					} else {
 
 						// update time
@@ -1043,14 +1000,15 @@ public class GrnGvnController {
 						Calendar caleInstance = Calendar.getInstance();
 
 						caleInstance.setTime(date);
-
-						caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
+							caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
+							
+							String incTime=dateFormat.format(caleInstance.getTime());
 
 						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
 
-						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+						System.out.println("*****Inc time Gettime == " + incTime);
 
-						map.add("timeStamp", curDateTime);
+						map.add("timeStamp", incTime);
 
 						Info info = restTemplate.postForObject(Constant.URL + "updateSellBillTimeStamp", map,
 								Info.class);

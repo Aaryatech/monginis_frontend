@@ -184,7 +184,7 @@ public class ExpressBillController {
 			sellBillHeaderGlobal = sellBillHeader;
 			// --------------------------------------------------
 
-			Date billDate = new SimpleDateFormat("yyyy-MM-dd").parse(sellBillHeader.getBillDate());
+			Date billDate = new SimpleDateFormat("dd-MM-yyyy").parse(sellBillHeader.getBillDate());
 			// 1 Date dmyBillDate=new
 			// SimpleDateFormat("dd-MM-yyyy").parse(sellBillHeader.getBillDate());
 			// ------------Todays Date-----------
@@ -192,6 +192,8 @@ public class ExpressBillController {
 			String todaysDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
 			System.out.println("Todays Date: " + todaysDate);
+			
+			System.err.println("Bill Date: " + billDate);
 			// -------------------------------------
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentDate = sdf.parse(todaysDate);
@@ -199,7 +201,7 @@ public class ExpressBillController {
 			if (count != 0) {
 				if (billDate.equals(currentDate)) {
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
+					System.err.println("bill date eq cur date");
 					map.add("billNo", sellBillHeader.getSellBillNo());
 
 					SellBillDetailList sellBillDetailList = rest.postForObject(Constant.URL + "/getSellBillDetails",
@@ -216,6 +218,7 @@ public class ExpressBillController {
 
 				} else if (billDate.before(currentDate)) {
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					System.err.println("bill date before cur date");
 
 					map.add("billNo", sellBillHeader.getSellBillNo());
 

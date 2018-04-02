@@ -35,10 +35,14 @@ import com.monginis.ops.billing.GetBillDetailsResponse;
 import com.monginis.ops.billing.GetBillHeader;
 import com.monginis.ops.billing.GetBillHeaderResponse;
 import com.monginis.ops.billing.Info;
+import com.monginis.ops.billing.SellBillDataCommon;
+import com.monginis.ops.billing.SellBillDetail;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
+import com.monginis.ops.model.SellBillDetailList;
 
 
 @Controller
@@ -273,6 +277,96 @@ public class BillingController {
 
 			System.out.println("Message :   "+info.getMessage());
 			System.out.println("Error  :    "+info.getError());
+			
+			
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frDetails.getFrId());
+
+			SellBillDataCommon sellBillResponse = restTemplate
+					.postForObject(Constant.URL + "/showNotDayClosedRecord", map, SellBillDataCommon.class);
+
+			if (!sellBillResponse.getSellBillHeaderList().isEmpty()) {
+
+				List<SellBillHeader> sellBillHeaderList = sellBillResponse.getSellBillHeaderList();
+
+				int count = sellBillHeaderList.size();
+				SellBillHeader billHeader = sellBillResponse.getSellBillHeaderList().get(0);
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("billNo", billHeader.getSellBillNo());
+
+				SellBillDetailList sellBillDetailList = restTemplate
+						.postForObject(Constant.URL + "/getSellBillDetails", map, SellBillDetailList.class);
+
+				List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
+				if (sellBillDetails.size() > 0) {
+
+					for (int x = 0; x < sellBillDetails.size(); x++) {
+
+						billHeader
+								.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
+
+						billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
+						billHeader
+								.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
+
+						// billHeader.setBillDate(billHeader.getBillDate());
+
+						billHeader.setDiscountPer(billHeader.getDiscountPer());
+
+					}
+					billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+					billHeader.setPaidAmt(billHeader.getGrandTotal());
+					billHeader.setPayableAmt(billHeader.getGrandTotal());
+
+			
+
+						billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+								SellBillHeader.class);
+
+						System.out.println("Bill Header Response " + billHeader.toString());
+					
+				} else {
+
+					// update time
+				String	curDateTime = dateFormat.format(cal.getTime());
+
+					map = new LinkedMultiValueMap<String, Object>();
+
+					DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Calendar cal2 = Calendar.getInstance();
+
+					map.add("sellBillNo", billHeader.getSellBillNo());
+
+					java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
+
+					Calendar caleInstance = Calendar.getInstance();
+
+					caleInstance.setTime(date);
+						caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
+						
+						String incTime=dateFormat2.format(caleInstance.getTime());
+
+					System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+
+					System.out.println("*****Inc time Gettime == " + incTime);
+
+					map.add("timeStamp", incTime);
+
+					Info updateSellBillTimeStamp = restTemplate.postForObject(Constant.URL + "updateSellBillTimeStamp", map,
+							Info.class);
+
+				}
+
+			}
 			
 	
 		}catch (Exception e) {
