@@ -73,7 +73,7 @@ import com.monginis.ops.model.remarks.GetAllRemarksList;
 @Controller
 @Scope("session")
 public class GrnGvnController {
-	public  String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
+	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
@@ -118,9 +118,8 @@ public class GrnGvnController {
 		Calendar cale = Calendar.getInstance();
 		cale.setTime(date);
 		int month = cale.get(Calendar.MONTH);
-		month=month+1;
-		System.err.println("month calendar" +month);
-		
+		month = month + 1;
+		System.err.println("month calendar" + month);
 
 		if (month <= 3) {
 
@@ -153,12 +152,12 @@ public class GrnGvnController {
 
 			invoiceNo = curStrYear + "-" + "0" + settingValue;
 
-		
-		invoiceNo=frDetails.getFrCode()+invoiceNo;
+		invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + invoiceNo);
 		return invoiceNo;
 
 	}
+
 	public String incrementDate(String date, int day) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -195,8 +194,8 @@ public class GrnGvnController {
 	List<GetBillsForFr> frBillList;
 
 	List<ShowGrnBean> objShowGrnList = new ArrayList<>();
-	
-	List<ShowGrnBean> sellBillData=new ArrayList<>();
+
+	List<ShowGrnBean> sellBillData = new ArrayList<>();
 
 	List<ShowGrnBean> objShowGvnList, gvnList;;
 
@@ -213,6 +212,21 @@ public class GrnGvnController {
 		System.out.println("show Grn displayed");
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgrn");
 
+		/*
+		 * java.util.Date date = new
+		 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
+		 * 
+		 * Calendar caleInstance = Calendar.getInstance();
+		 * 
+		 * caleInstance.setTime(date);
+		 * 
+		 * caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) +5));
+		 * 
+		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+		 * 
+		 * 
+		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+		 */
 		String srNo = getGrnGvnSrNo(request, response);
 
 		System.out.println("#########" + srNo + "################");
@@ -341,6 +355,7 @@ public class GrnGvnController {
 				 * java.util.Date billDate = grnConfList.get(i).getBillDate(); Calendar cal3 =
 				 * Calendar.getInstance(); cal3.setTime(billDate); cal3.add(Calendar.DATE, -1);
 				 */
+
 				String strBillDateTime = grnConfList.get(i).getBillDateTime();
 				java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strBillDateTime);
 
@@ -477,9 +492,7 @@ public class GrnGvnController {
 			 * 
 			 * System.out.println("item Id "+grnConfList.get(a).getItemId());
 			 * System.out.println("auto grn for pushed Item "
-			 * +grnConfList.get(a).getAutoGrnQty());
-			 * exBillQty
-			 * } }
+			 * +grnConfList.get(a).getAutoGrnQty()); exBillQty } }
 			 * 
 			 * if(!isSameItem) {
 			 * System.out.println("inside isSameItem = false "+grnConfList.get(i).getItemId(
@@ -648,10 +661,9 @@ public class GrnGvnController {
 			Calendar cale = Calendar.getInstance();
 			cale.setTime(date);
 			int month = cale.get(Calendar.MONTH);
-month=month+1;
-			System.err.println("RUnning month calendar " +month);
-			
-			
+			month = month + 1;
+			System.err.println("RUnning month calendar " + month);
+
 			if (month <= 3) {
 
 				curStrYear = preMarchStrYear + curStrYear;
@@ -670,14 +682,14 @@ month=month+1;
 
 			if (length == 1)
 
-				invoiceNo = curStrYear + "-"+frDetails.getFrCode()+"-" + "000" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-" + frDetails.getFrCode() + "-" + "000" + grnGvnSrNo;
 			if (length == 2)
 
-				invoiceNo = curStrYear + "-" +frDetails.getFrCode()+"-"+"00" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-" + frDetails.getFrCode() + "-" + "00" + grnGvnSrNo;
 
 			if (length == 3)
 
-				invoiceNo = curStrYear + "-" +frDetails.getFrCode()+"-"+ "0" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-" + frDetails.getFrCode() + "-" + "0" + grnGvnSrNo;
 
 			System.out.println("*** settingValue= " + grnGvnSrNo);
 
@@ -730,7 +742,6 @@ month=month+1;
 				DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar calDate = Calendar.getInstance();
 
-				
 				String tempGrnQtyAuto = request.getParameter("grnqtyauto" + objShowGrnList.get(i).getItemId() + "");
 
 				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getItemId() + "");
@@ -741,8 +752,7 @@ month=month+1;
 
 				int grnQty = Integer.parseInt(tempGrnQtyAuto);
 				int fixedGrnQty = Integer.parseInt(tempGrnQty);
-				
-				
+
 				int isEdit = 0;
 				if (grnQty != fixedGrnQty) {
 					isEdit = 1;
@@ -757,10 +767,10 @@ month=month+1;
 					frGrnRemark = "no remark entered";
 
 				}
-				
-			/*	if (grnQty > 0) {*/
-					
-					GrnGvn postGrnGvn = new GrnGvn();
+
+				/* if (grnQty > 0) { */
+
+				GrnGvn postGrnGvn = new GrnGvn();
 
 				float baseRate = objShowGrnList.get(i).getRate() * 100
 						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() + 100);
@@ -814,102 +824,101 @@ month=month+1;
 				 * }
 				 */
 				curDateTime = dateFormat.format(cal.getTime());
-			
-					postGrnGvn.setGrnGvnDate(grnGvnDate);
 
-					postGrnGvn.setBillDetailNo(objShowGrnList.get(i).getBillDetailNo());// 15 Feb added
+				postGrnGvn.setGrnGvnDate(grnGvnDate);
 
-					curDateTime = dateFormat.format(cal.getTime());
+				postGrnGvn.setBillDetailNo(objShowGrnList.get(i).getBillDetailNo());// 15 Feb added
 
-					postGrnGvn.setBillNo(objShowGrnList.get(i).getBillNo());
-					postGrnGvn.setFrId(frDetails.getFrId());
-					postGrnGvn.setItemId(objShowGrnList.get(i).getItemId());
-					postGrnGvn.setItemRate(objShowGrnList.get(i).getRate());
-					postGrnGvn.setItemMrp(objShowGrnList.get(i).getMrp());
-					postGrnGvn.setGrnGvnQty(grnQty);
-					postGrnGvn.setGrnType(objShowGrnList.get(i).getGrnType());
-					postGrnGvn.setIsGrn(1);
-					postGrnGvn.setIsGrnEdit(isEdit);
-					postGrnGvn.setGrnGvnEntryDateTime(dateFormat.format(cal.getTime()));
-					postGrnGvn.setFrGrnGvnRemark(frGrnRemark);
-					postGrnGvn.setGvnPhotoUpload1("grn:no photo");
-					postGrnGvn.setGvnPhotoUpload2("grn:no photo");
-					postGrnGvn.setGrnGvnStatus(1);
-					postGrnGvn.setApprovedLoginGate(0);
-					postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
-					postGrnGvn.setApprovedRemarkGate(" ");
+				curDateTime = dateFormat.format(cal.getTime());
 
-					postGrnGvn.setApprovedLoginStore(0);
-					postGrnGvn.setApprovedDateTimeStore(dateFormat.format(cal.getTime()));
-					postGrnGvn.setApprovedRemarkStore(" ");
-					postGrnGvn.setApprovedLoginAcc(0);
-					postGrnGvn.setGrnApprovedDateTimeAcc(dateFormat.format(cal.getTime()));
-					postGrnGvn.setApprovedRemarkAcc(" ");
+				postGrnGvn.setBillNo(objShowGrnList.get(i).getBillNo());
+				postGrnGvn.setFrId(frDetails.getFrId());
+				postGrnGvn.setItemId(objShowGrnList.get(i).getItemId());
+				postGrnGvn.setItemRate(objShowGrnList.get(i).getRate());
+				postGrnGvn.setItemMrp(objShowGrnList.get(i).getMrp());
+				postGrnGvn.setGrnGvnQty(grnQty);
+				postGrnGvn.setGrnType(objShowGrnList.get(i).getGrnType());
+				postGrnGvn.setIsGrn(1);
+				postGrnGvn.setIsGrnEdit(isEdit);
+				postGrnGvn.setGrnGvnEntryDateTime(dateFormat.format(cal.getTime()));
+				postGrnGvn.setFrGrnGvnRemark(frGrnRemark);
+				postGrnGvn.setGvnPhotoUpload1("grn:no photo");
+				postGrnGvn.setGvnPhotoUpload2("grn:no photo");
+				postGrnGvn.setGrnGvnStatus(1);
+				postGrnGvn.setApprovedLoginGate(0);
+				postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));
+				postGrnGvn.setApprovedRemarkGate(" ");
 
-					postGrnGvn.setDelStatus(0);
-					postGrnGvn.setGrnGvnQtyAuto(fixedGrnQty);
+				postGrnGvn.setApprovedLoginStore(0);
+				postGrnGvn.setApprovedDateTimeStore(dateFormat.format(cal.getTime()));
+				postGrnGvn.setApprovedRemarkStore(" ");
+				postGrnGvn.setApprovedLoginAcc(0);
+				postGrnGvn.setGrnApprovedDateTimeAcc(dateFormat.format(cal.getTime()));
+				postGrnGvn.setApprovedRemarkAcc(" ");
 
-					// newly added
+				postGrnGvn.setDelStatus(0);
+				postGrnGvn.setGrnGvnQtyAuto(fixedGrnQty);
 
-					postGrnGvn.setIsTallySync(0);
-					postGrnGvn.setBaseRate(roundUp(baseRate));
-					postGrnGvn.setSgstPer(objShowGrnList.get(i).getSgstPer());
-					postGrnGvn.setCgstPer(objShowGrnList.get(i).getCgstPer());
-					postGrnGvn.setIgstPer(objShowGrnList.get(i).getIgstPer());
+				// newly added
 
-					postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
-					postGrnGvn.setTotalTax(roundUp(totalTax));
-					postGrnGvn.setFinalAmt(roundUp(finalAmt));
-					postGrnGvn.setRoundUpAmt(roundUpAmt);
+				postGrnGvn.setIsTallySync(0);
+				postGrnGvn.setBaseRate(roundUp(baseRate));
+				postGrnGvn.setSgstPer(objShowGrnList.get(i).getSgstPer());
+				postGrnGvn.setCgstPer(objShowGrnList.get(i).getCgstPer());
+				postGrnGvn.setIgstPer(objShowGrnList.get(i).getIgstPer());
 
-					postGrnGvn.setIsCreditNote(0);
+				postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
+				postGrnGvn.setTotalTax(roundUp(totalTax));
+				postGrnGvn.setFinalAmt(roundUp(finalAmt));
+				postGrnGvn.setRoundUpAmt(roundUpAmt);
 
-					postGrnGvn.setCatId(objShowGrnList.get(i).getCatId());
-					postGrnGvn.setMenuId(objShowGrnList.get(i).getMenuId());
+				postGrnGvn.setIsCreditNote(0);
 
-					postGrnGvn.setRefInvoiceDate(objShowGrnList.get(i).getBillDate());
-					postGrnGvn.setInvoiceNo(objShowGrnList.get(i).getInvoiceNo());
+				postGrnGvn.setCatId(objShowGrnList.get(i).getCatId());
+				postGrnGvn.setMenuId(objShowGrnList.get(i).getMenuId());
 
-					// setting new field added on 23 FEB
+				postGrnGvn.setRefInvoiceDate(objShowGrnList.get(i).getBillDate());
+				postGrnGvn.setInvoiceNo(objShowGrnList.get(i).getInvoiceNo());
 
-					postGrnGvn.setAprQtyGate(0);
-					postGrnGvn.setAprQtyStore(0);
-					postGrnGvn.setAprQtyAcc(0);
-					postGrnGvn.setAprTaxableAmt(0);
-					postGrnGvn.setAprTotalTax(0);
-					postGrnGvn.setAprSgstRs(0);
-					postGrnGvn.setAprCgstRs(0);
-					postGrnGvn.setAprIgstRs(0);
-					postGrnGvn.setAprGrandTotal(0);
-					postGrnGvn.setAprROff(0);
-					postGrnGvn.setIsSameState(frDetails.getIsSameState());
+				// setting new field added on 23 FEB
 
-					System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
+				postGrnGvn.setAprQtyGate(0);
+				postGrnGvn.setAprQtyStore(0);
+				postGrnGvn.setAprQtyAcc(0);
+				postGrnGvn.setAprTaxableAmt(0);
+				postGrnGvn.setAprTotalTax(0);
+				postGrnGvn.setAprSgstRs(0);
+				postGrnGvn.setAprCgstRs(0);
+				postGrnGvn.setAprIgstRs(0);
+				postGrnGvn.setAprGrandTotal(0);
+				postGrnGvn.setAprROff(0);
+				postGrnGvn.setIsSameState(frDetails.getIsSameState());
 
-					// 15 Feb
-					sumTaxableAmt = sumTaxableAmt + postGrnGvn.getTaxableAmt();
-					sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();
-					sumTotalAmt = sumTotalAmt + postGrnGvn.getGrnGvnAmt();
+				System.out.println("post grn ref inv date " + postGrnGvn.getRefInvoiceDate());
 
-					postGrnGvnList.add(postGrnGvn);
-					
-					if(objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty()>0) {
-						
-						System.err.println("Item Name " + objShowGrnList.get(i).getItemName());
-						System.err.println("Qty Variation found : For Item Id " + postGrnGvn.getItemId() + "Qty = " +(objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty()));
-						int exBillQty=objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty();
-						
-						objShowGrnList.get(i).setAutoGrnQty(exBillQty);
-						sellBillData.add(objShowGrnList.get(i));
-						
-						
-						
-						//sellBillData.get(i).setAutoGrnQty(exBillQty);
-					}
+				// 15 Feb
+				sumTaxableAmt = sumTaxableAmt + postGrnGvn.getTaxableAmt();
+				sumTaxAmt = sumTaxAmt + postGrnGvn.getTotalTax();
+				sumTotalAmt = sumTotalAmt + postGrnGvn.getGrnGvnAmt();
 
-				//} // end of if checking for grnQty
+				postGrnGvnList.add(postGrnGvn);
+
+				if (objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty() > 0) {
+
+					System.err.println("Item Name " + objShowGrnList.get(i).getItemName());
+					System.err.println("Qty Variation found : For Item Id " + postGrnGvn.getItemId() + "Qty = "
+							+ (objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty()));
+					int exBillQty = objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty();
+
+					objShowGrnList.get(i).setAutoGrnQty(exBillQty);
+					sellBillData.add(objShowGrnList.get(i));
+
+					// sellBillData.get(i).setAutoGrnQty(exBillQty);
+				}
+
+				// } // end of if checking for grnQty
 			} // end of for
-			System.err.println("Selll Bill Data "+sellBillData.toString());
+			System.err.println("Selll Bill Data " + sellBillData.toString());
 
 			grnHeader.setGrnGvn(postGrnGvnList);
 
@@ -928,7 +937,6 @@ month=month+1;
 			grnHeader.setTaxAmt(sumTaxAmt);
 			grnHeader.setTotalAmt(sumTotalAmt);
 			grnHeader.setGrnGvn(postGrnGvnList);
-			
 
 			modelAndView.addObject("grnConfList", objShowGrnList);
 			System.out.println("postGrnGvnList************----- " + postGrnGvnList.toString());
@@ -941,15 +949,35 @@ month=month+1;
 			System.out.println("post grn for rest----- " + postGrnList.toString());
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
-			
-			Info insertGrn =null;
-if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
-			insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
-			
-}
-			//Info insertGrn=null;
-			if (insertGrn.getError() == false || insertGrn!=null) {
 
+			Info insertGrn = null;
+			if (postGrnList != null && postGrnList.getGrnGvnHeader().getTaxableAmt() > 0) {
+				insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+
+			}
+			// Info insertGrn=null;
+			if (insertGrn.getError() == false) {
+				
+				
+
+				map.add("frId", frDetails.getFrId());
+				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+						FrSetting.class);
+
+				int grnGvnSrNo = frSetting.getGrnGvnNo();
+
+				grnGvnSrNo = grnGvnSrNo + 1;
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				map.add("grnGvnNo", grnGvnSrNo);
+
+				Info updateFrSettingGrnGvnNo = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
+
+				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + updateFrSettingGrnGvnNo.toString());
+
+				
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -972,85 +1000,118 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 							.postForObject(Constant.URL + "/getSellBillDetails", map, SellBillDetailList.class);
 
 					List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
-					if(sellBillDetails.size()>0) {
+					if (sellBillDetails.size() > 0) {
 
-					for (int x = 0; x < sellBillDetails.size(); x++) {
+						for (int x = 0; x < sellBillDetails.size(); x++) {
 
-						billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
+							billHeader
+									.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
 
-						billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
-						billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
+							billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
+							billHeader
+									.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
 
-						// billHeader.setBillDate(billHeader.getBillDate());
+							// billHeader.setBillDate(billHeader.getBillDate());
 
-						billHeader.setDiscountPer(billHeader.getDiscountPer());
+							billHeader.setDiscountPer(billHeader.getDiscountPer());
 
-					}
-					}
-					if(billHeader.getSellBillDetailsList().size()>0) {
+						}
+						billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+						billHeader.setPaidAmt(billHeader.getGrandTotal());
+						billHeader.setPayableAmt(billHeader.getGrandTotal());
 
-					billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
-							SellBillHeader.class);
+						if (billHeader.getSellBillDetailsList().size() > 0) {
 
-					System.out.println("Bill Header Response " + billHeader.toString());
+							billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+									SellBillHeader.class);
+
+							System.out.println("Bill Header Response " + billHeader.toString());
+						}
+					} else {
+
+						// update time
+
+						map = new LinkedMultiValueMap<String, Object>();
+
+						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						Calendar cal = Calendar.getInstance();
+
+						map.add("sellBillNo", billHeader.getSellBillNo());
+
+						java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
+
+						Calendar caleInstance = Calendar.getInstance();
+
+						caleInstance.setTime(date);
+
+						caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
+
+						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+
+						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+
+						map.add("timeStamp", curDateTime);
+
+						Info info = restTemplate.postForObject(Constant.URL + "updateSellBillTimeStamp", map,
+								Info.class);
+
 					}
 
 				} // end of if ex bill not null
 
 				postGrnList = new PostGrnGvnList();
 
-				//insert Into Sell Bill Table as Bill Type 'G'
-				
-				
+				// insert Into Sell Bill Table as Bill Type 'G'
+
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 				LocalDate localDate = LocalDate.now();
 				System.out.println(dtf.format(localDate)); // 2016/11/16
-				
-		/*		SellBillHeader sellBillHeaderRes = null;
-				SellBillHeader sellBillHeader=null;
-				
-				
-				if(sellBillData.size()>0) {
+
+				SellBillHeader sellBillHeaderRes = null;
+				SellBillHeader sellBillHeader = null;
+
+				if (sellBillData.size() > 0) {
+
+					System.err.println("inside if sellBillData.size() > 0");
+
 					sellBillHeader = new SellBillHeader();
 
-				sellBillHeader.setFrId(frDetails.getFrId());
-				sellBillHeader.setFrCode(frDetails.getFrCode());
-				sellBillHeader.setDelStatus(0);
-				sellBillHeader.setUserName("dummy");
-				sellBillHeader.setBillDate(dtf.format(localDate));
+					sellBillHeader.setFrId(frDetails.getFrId());
+					sellBillHeader.setFrCode(frDetails.getFrCode());
+					sellBillHeader.setDelStatus(0);
+					sellBillHeader.setUserName("dummy");
+					sellBillHeader.setBillDate(dtf.format(localDate));
 
-				sellBillHeader.setInvoiceNo(getInvoiceNo(request,response));
-				
-				sellBillHeader.setPaymentMode(1);
-				
+					sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
+
+					sellBillHeader.setPaymentMode(1);
+
 					sellBillHeader.setBillType('G');
-				
 
-				sellBillHeader.setSellBillNo(0);
+					sellBillHeader.setSellBillNo(0);
 
-				sellBillHeader.setUserGstNo("");
+					sellBillHeader.setUserGstNo("");
 
-				sellBillHeader.setUserPhone("");
+					sellBillHeader.setUserPhone("");
 
-				
-				
-				List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
-				float sumTaxableAmt1 = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
-				
-				for(int i=0;i<sellBillData.size();i++) {
-					
-					//call from customer bill controller
-					
-						System.out.println("dddd");
+					List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
+
+					float sumTaxableAmt1 = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
+
+					for (int i = 0; i < sellBillData.size(); i++) {
+
+						System.err.println("sellBillData for loop ");
+
+						System.err.println("sell Bill Data at index " + i + sellBillData.get(i).toString());
 
 						SellBillDetail sellBillDetail = new SellBillDetail();
 
 						Float rate = (float) sellBillData.get(i).getMrp();
 
-						float tax1 =  sellBillData.get(i).getSgstPer();
-						float tax2 =  sellBillData.get(i).getCgstPer();
-						float tax3 =  sellBillData.get(i).getIgstPer();
+						float tax1 = sellBillData.get(i).getSgstPer();
+						float tax2 = sellBillData.get(i).getCgstPer();
+						float tax3 = sellBillData.get(i).getIgstPer();
 
 						int qty = sellBillData.get(i).getAutoGrnQty();
 
@@ -1064,9 +1125,7 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 						Float taxableAmt = (float) (mrpBaseRate * qty);
 						taxableAmt = roundUp(taxableAmt);
 
-						// -----------------------------------------
-
-						float discAmt =0;
+						float discAmt = 0;
 						taxableAmt = taxableAmt - discAmt;
 
 						float sgstRs = (taxableAmt * tax1) / 100;
@@ -1085,13 +1144,20 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 
 						sellBillDetail.setCatId(sellBillData.get(i).getCatId());
 						sellBillDetail.setSgstPer(tax1);
-						sellBillDetail.setSgstRs(sgstRs);
+						if (frDetails.getIsSameState() == 1) {
+							sellBillDetail.setSgstRs(sgstRs);
+							sellBillDetail.setCgstRs(cgstRs);
+
+						} else {
+							sellBillDetail.setIgstRs(igstRs);
+						}
+
 						sellBillDetail.setCgstPer(tax2);
-						sellBillDetail.setCgstRs(cgstRs);
+
+						sellBillDetail.setIgstPer(tax3);
+
 						sellBillDetail.setDelStatus(0);
 						sellBillDetail.setGrandTotal(grandTotal);
-						sellBillDetail.setIgstPer(tax3);
-						sellBillDetail.setIgstRs(igstRs);
 						sellBillDetail.setItemId(sellBillData.get(i).getItemId());
 						sellBillDetail.setMrp(rate);
 						sellBillDetail.setMrpBaseRate(mrpBaseRate);
@@ -1099,7 +1165,7 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 						sellBillDetail.setRemark("");
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
-						sellBillDetail.setBillStockType('R');
+						sellBillDetail.setBillStockType(1);
 
 						sumMrp = sumMrp + (rate * qty);
 						sumTaxableAmt1 = sumTaxableAmt1 + taxableAmt;
@@ -1114,96 +1180,71 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 					}
 					sellBillHeader.setTaxableAmt(sumTaxableAmt1);
 					sellBillHeader.setDiscountPer(0);
-					// float discountAmt = 0;
-					// if(discountPer!=0.0)
-					// discountAmt = ((sumGrandTotal * discountPer) / 100);
+
 					float payableAmt = sumGrandTotal;
 
 					payableAmt = roundUp(payableAmt);
 
 					sellBillHeader.setDiscountAmt(0);
-					
+
 					System.out.println("Payable amt  : " + payableAmt);
 					sellBillHeader.setTotalTax(sumTotalTax);
-					sellBillHeader.setGrandTotal(sumGrandTotal);
-					sellBillHeader.setPayableAmt(sumGrandTotal);
-					
-					sellBillHeader.setPaidAmt(sumGrandTotal);
+					sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
+					sellBillHeader.setPayableAmt(Math.round(sumGrandTotal));
+
+					sellBillHeader.setPaidAmt(Math.round(sumGrandTotal));
 					sellBillHeader.setSellBillDetailsList(sellBillDetailList);
-					
-						sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
+
+					sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
 							SellBillHeader.class);
+				} // end of if sellBillData size>0
+
+				if (sellBillHeaderRes != null) {
+
+				
+						map = new LinkedMultiValueMap<String, Object>();
+
+						map.add("frId", frDetails.getFrId());
+						FrSetting frSetting1 = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+								FrSetting.class);
+
+						int sellBillNo = frSetting1.getSellBillNo();
+
+						sellBillNo = sellBillNo + 1;
+
+						map = new LinkedMultiValueMap<String, Object>();
+
+						map.add("frId", frDetails.getFrId());
+						map.add("sellBillNo", sellBillNo);
+
+						Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+
+					
 				}
-					if(sellBillHeaderRes!=null) {
-						
 
-						if (sellBillHeader != null) {
-						
-							map = new LinkedMultiValueMap<String, Object>();
-						
+				System.out.println("info :" + sellBillHeaderRes.toString());
 
-							map.add("frId", frDetails.getFrId());
-							FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-									FrSetting.class);
-
-							int sellBillNo = frSetting.getSellBillNo();
-
-							sellBillNo = sellBillNo + 1;
-
-							map = new LinkedMultiValueMap<String, Object>();
-
-							map.add("frId", frDetails.getFrId());
-							map.add("sellBillNo", sellBillNo);
-
-							Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
-
-							//Info updateSetting = restTemplate.postForObject(Constant.URL + "updateSeetingForPB", map, Info.class);
-						}
-					}
-
-					System.out.println("info :" + sellBillHeaderRes.toString());*/
-			
 				// update frSetting value for frGrnGvnSrNo
 				map = new LinkedMultiValueMap<String, Object>();
 
-				map.add("frId", frDetails.getFrId());
-				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-						FrSetting.class);
+				// -----------------------For Notification-----------------
+				String frToken = "";
 
-				int grnGvnSrNo = frSetting.getGrnGvnNo();
-
-				grnGvnSrNo = grnGvnSrNo + 1;
-
-				map = new LinkedMultiValueMap<String, Object>();
-
-				map.add("frId", frDetails.getFrId());
-				map.add("grnGvnNo", grnGvnSrNo);
-
-				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
-
-				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + info.toString());
-				
-				
-				
-				
-				//-----------------------For Notification-----------------
-				String frToken="";
-			
 				try {
 					map = new LinkedMultiValueMap<String, Object>();
-					  map.add("frId",frDetails.getFrId());
-					   
-                     frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			         Firebase.sendPushNotifForCommunication(frToken,"GRN Punched","GRN has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Monginis","inbox");
-			   	
-			        }
-			        catch(Exception e2)
-			        {
-				      e2.printStackTrace();
-			        }
-				
-				//-----------------------------------------------------
+					map.add("frId", frDetails.getFrId());
 
+					frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
+					Firebase.sendPushNotifForCommunication(frToken, "GRN Punched",
+							"GRN has been punched against value of Rs." + grnHeader.getTotalAmt()
+									+ " Thank You..Team Monginis",
+							"inbox");
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+				// -----------------------------------------------------
 
 			}
 
@@ -1233,7 +1274,7 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 			map.add("toDate", cDate);
 			map.add("isGrn", 1);
 			// getFrGrnDetail
-			//List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
+			// List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
 
 			try {
 				grnHeaderList = new ArrayList<>();
@@ -1256,14 +1297,13 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 
 			// model.addObject("url", Constant.GVN_IMAGE_URL);
 			// modelAndView2.addObject("cDate", cDate); // End comment
-		
+
 		} catch (Exception e2) {
 
 			e2.printStackTrace();
 			System.out.println(e2.getMessage());
 
 		}
-
 
 		return modelAndView2;
 
@@ -1476,11 +1516,12 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 
 			String[] gvnItemBillDetailNo = request.getParameterValues("select_to_gvn");
 
-		/*	for (int i = 0; i < gvnItemBillDetailNo.length; i++) {
-
-				System.out.println("Selected Bill Detail No ::: " + gvnItemBillDetailNo[i]);
-			}
-*/
+			/*
+			 * for (int i = 0; i < gvnItemBillDetailNo.length; i++) {
+			 * 
+			 * System.out.println("Selected Bill Detail No ::: " + gvnItemBillDetailNo[i]);
+			 * }
+			 */
 			gvnList = new ArrayList<>();
 
 			System.out.println("OBJ BEAN " + objShowGrnList.toString());
@@ -1545,7 +1586,7 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 			float sumTaxAmt = 0;
 			float sumTotalAmt = 0;
 			String curDateTime = null;
-boolean isCustComplaint=false;
+			boolean isCustComplaint = false;
 			for (int i = 0; i < gvnList.size(); i++) {
 
 				// String strGvnQty = request.getParameter("gvn_qty" +
@@ -1560,21 +1601,20 @@ boolean isCustComplaint=false;
 				Calendar calDate = Calendar.getInstance();
 
 				String frGvnRemark = request.getParameter("gvn_remark" + gvnList.get(i).getItemId());
-				
-				if(frGvnRemark.equalsIgnoreCase("Customer Complaint")) {
-					
-					isCustComplaint=true;
+
+				if (frGvnRemark.equalsIgnoreCase("Customer Complaint")) {
+
+					isCustComplaint = true;
 					grnHeader.setIsGrn(2);
 				}
-				
-				if(isCustComplaint) {
+
+				if (isCustComplaint) {
 					grnHeader.setIsGrn(2);
 				}
-				
+
 				else {
 					grnHeader.setIsGrn(0);
 				}
-				
 
 				if (frGvnRemark == null || frGvnRemark.equals("")) {
 					frGvnRemark = "no remark from franchisee";
@@ -1718,7 +1758,7 @@ boolean isCustComplaint=false;
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response));
 			grnHeader.setGrngvnStatus(1);
 			grnHeader.setIsCreditNote(0);
-			//grnHeader.setIsGrn(0);
+			// grnHeader.setIsGrn(0);
 			grnHeader.setApporvedAmt(0);
 
 			grnHeader.setTaxableAmt(sumTaxableAmt);
@@ -1731,10 +1771,10 @@ boolean isCustComplaint=false;
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
 			Info insertGvn = null;
-			if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
+			if (postGrnList != null && postGrnList.getGrnGvnHeader().getTaxableAmt() > 0) {
 
-			 insertGvn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
-			 
+				insertGvn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+
 			}
 
 			if (insertGvn.getError() == false) {
@@ -1758,27 +1798,25 @@ boolean isCustComplaint=false;
 				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
 
 				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + info.toString());
-				
-				
-				//-----------------------For Notification-----------------
-				String frToken="";
-			
+
+				// -----------------------For Notification-----------------
+				String frToken = "";
+
 				try {
 					map = new LinkedMultiValueMap<String, Object>();
-					  map.add("frId",frDetails.getFrId());
-					   
-                     frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			         Firebase.sendPushNotifForCommunication(frToken,"GVN Punched","GVN has been punched against value of Rs."+grnHeader.getTotalAmt() + " Thank You..Team Monginis","inbox");
-			   	
-			        }
-			        catch(Exception e2)
-			        {
-				      e2.printStackTrace();
-			        }
-				
-				//-----------------------------------------------------
+					map.add("frId", frDetails.getFrId());
 
+					frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
+					Firebase.sendPushNotifForCommunication(frToken, "GVN Punched",
+							"GVN has been punched against value of Rs." + grnHeader.getTotalAmt()
+									+ " Thank You..Team Monginis",
+							"inbox");
 
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+				// -----------------------------------------------------
 
 			}
 			// Redirect to Gvn List after insert
@@ -1793,14 +1831,14 @@ boolean isCustComplaint=false;
 			DateFormat sdFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 			String cDate = sdFormat.format(grnDate);
-			String s=new String();
-			s="0"+","+"2";
+			String s = new String();
+			s = "0" + "," + "2";
 			map.add("frIdList", frId);
 			map.add("fromDate", cDate);
 			map.add("toDate", cDate);
 			map.add("isGrn", s);
 			// getFrGrnDetail
-			//List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
+			// List<GrnGvnHeader> gvnHeaderList = new ArrayList<>();
 
 			try {
 				gvnHeaderList = new ArrayList<>();
@@ -1829,7 +1867,7 @@ boolean isCustComplaint=false;
 
 	String gstType, frAddress;
 
-	List<GrnGvnHeader> grnHeaderList=new ArrayList<>();
+	List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
 
 	@RequestMapping(value = "/getGrnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGrnHeaderList(HttpServletRequest request, HttpServletResponse response) {
@@ -1984,8 +2022,8 @@ boolean isCustComplaint=false;
 		ModelAndView modelAndView = new ModelAndView("grngvn/viewGrn");
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-        System.out.println("GST"+frDetails.getFrGstType());
-	
+		System.out.println("GST" + frDetails.getFrGstType());
+
 		modelAndView.addObject("gstType", frDetails.getFrGstType());
 
 		return modelAndView;
@@ -1997,13 +2035,12 @@ boolean isCustComplaint=false;
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/viewGvn");
 		try {
-		HttpSession ses = request.getSession();
-		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-        System.out.println("GST"+frDetails.getFrGstType());
-	
-		modelAndView.addObject("gstType", frDetails.getFrGstType());
-		}
-		catch (Exception e) {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			System.out.println("GST" + frDetails.getFrGstType());
+
+			modelAndView.addObject("gstType", frDetails.getFrGstType());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return modelAndView;
@@ -2047,8 +2084,6 @@ boolean isCustComplaint=false;
 		}
 		grnGvnDetailsList = getGrnGvnDetailsList.getGrnGvnDetails();
 
-	
-
 		for (int i = 0; i < grnGvnDetailsList.size(); i++) {
 			grnGvnDetailsList.get(i)
 					.setGvnPhotoUpload1(Constant.GVN_IMAGE_URL + grnGvnDetailsList.get(i).getGvnPhotoUpload1());
@@ -2074,7 +2109,7 @@ boolean isCustComplaint=false;
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-        System.out.println("GST"+frDetails.getFrGstType());
+		System.out.println("GST" + frDetails.getFrGstType());
 		if (frDetails.getFrGstType().equals(10000000)) {
 
 			gstType = "Regular";
@@ -2091,15 +2126,15 @@ boolean isCustComplaint=false;
 		int frId = frDetails.getFrId();
 
 		// if(fromDate==null || fromDate=="") {
-		
-		String s=new String();
-		s="0"+","+"2";
+
+		String s = new String();
+		s = "0" + "," + "2";
 		if (!grnSrNO.equals("0") || grnSrNO == "") {
 
 			System.out.println("NULL DATE");
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
-			//map.add("isGrn", 0);
+			// map.add("isGrn", 0);
 			map.add("isGrn", "0" + "," + "2");
 
 			map.add("grnGvnSrNo", grnSrNO);
@@ -2195,8 +2230,8 @@ boolean isCustComplaint=false;
 		}
 
 		String gvnDate = grnDetailList.get(0).getGrnGvnDate();
-		
-		modelAndView.addObject("url",Constant.GVN_IMAGE_URL);
+
+		modelAndView.addObject("url", Constant.GVN_IMAGE_URL);
 		modelAndView.addObject("gvnList", grnDetailList);
 		modelAndView.addObject("gvnDate", gvnDate);
 
@@ -2209,20 +2244,21 @@ boolean isCustComplaint=false;
 	@RequestMapping(value = "pdf/getGrnPdf/{fromDate}/{toDate}/{headerId}/{type}/{gsttype}", method = RequestMethod.GET)
 	public ModelAndView getGrnPdf(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
-			@PathVariable("headerId") int headerId, @PathVariable("type") int type,@PathVariable("gsttype") int gsttype) {
+			@PathVariable("headerId") int headerId, @PathVariable("type") int type,
+			@PathVariable("gsttype") int gsttype) {
 
 		ModelAndView model;
 		System.out.println("type=== " + type);
 
 		System.err.println("Gst Type Received " + gsttype);
 
-		if (gsttype==10000000) {
+		if (gsttype == 10000000) {
 
-			//model = new ModelAndView("grngvn/pdf/grnComposite");
+			// model = new ModelAndView("grngvn/pdf/grnComposite");
 			model = new ModelAndView("grngvn/pdf/grnPdf");
 		} else {
 
-			//model = new ModelAndView("grngvn/pdf/grnPdf");
+			// model = new ModelAndView("grngvn/pdf/grnPdf");
 			model = new ModelAndView("grngvn/pdf/grnComposite");
 		}
 

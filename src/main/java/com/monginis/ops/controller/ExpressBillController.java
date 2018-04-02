@@ -712,8 +712,10 @@ if(ses==null) {
 				SellBillDetailList.class);
 
 		List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
+		
+		System.err.println("Day close detail list");
 
-		System.out.println("sellBillDetails " + sellBillDetails.toString());
+		System.out.println("sellBillDetails inside dayClose are " + sellBillDetails.toString());
 
 		map = new LinkedMultiValueMap<String, Object>();
 
@@ -756,13 +758,16 @@ if(ses==null) {
 				billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
 
 				// billHeader.setBillDate(billHeader.getBillDate());
-				billHeader.setPaidAmt(billHeader.getGrandTotal());
-				billHeader.setPayableAmt(billHeader.getGrandTotal());
-
+				
 				billHeader.setDiscountPer(billHeader.getDiscountPer());
 
 			}
+			billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+			billHeader.setPaidAmt(billHeader.getGrandTotal());
+			billHeader.setPayableAmt(billHeader.getGrandTotal());
 
+			
+			System.err.println("bill Header data for Day close " +billHeader.toString());
 			billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 					SellBillHeader.class);
 

@@ -1604,7 +1604,7 @@ if(currentNewItem.getCatId()==7) {
 			sellBillHeader.setBillDate(dtf.format(localDate));
 
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request,response));
-			sellBillHeader.setPaidAmt(paidAmount);
+			sellBillHeader.setPaidAmt(Math.round(paidAmount));
 			sellBillHeader.setPaymentMode(paymentMode);
 			if(isB2b==1)
 			{
@@ -1733,10 +1733,10 @@ if(currentNewItem.getCatId()==7) {
 			payableAmt = roundUp(payableAmt);
 
 			sellBillHeader.setDiscountAmt(sumMrp);
-			sellBillHeader.setPayableAmt(payableAmt);
+			sellBillHeader.setPayableAmt(Math.round(payableAmt));
 			System.out.println("Payable amt  : " + payableAmt);
 			sellBillHeader.setTotalTax(sumTotalTax);
-			sellBillHeader.setGrandTotal(sumGrandTotal);
+			sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
 
 			float calRemainingTotal = (payableAmt - paidAmount);
 
