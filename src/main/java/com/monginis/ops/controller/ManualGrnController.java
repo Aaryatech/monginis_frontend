@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Year;
@@ -115,8 +116,8 @@ public class ManualGrnController {
 
 		try {
 
-			int billNo = Integer.parseInt(request.getParameter("bill_no"));
-			System.out.println("selected bill no " + billNo);
+			//int billNo = Integer.parseInt(request.getParameter("bill_no"));
+			//System.out.println("selected bill no " + billNo);
 
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -126,18 +127,20 @@ public class ManualGrnController {
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			int frId=frDetails.getFrId();
-			map.add("billNo", billNo);
+			//map.add("billNo", billNo);
 			map.add("frId", frId);
-			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getItemsForManGrn", map,
+			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,
 					GetGrnGvnConfResponse.class);
 
 			grnConfList = new ArrayList<>();
 
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
+			if(grnConfList.isEmpty()==false || grnConfList!=null) {
 			System.out.println("gvn conf list " + grnConfList.toString());
+			}
 
 			modelAndView.addObject("frBillList", frBillList);
-			modelAndView.addObject("selctedBillNo", billNo);
+			//modelAndView.addObject("selctedBillNo", billNo);
 
 			objShowGrnList = new ArrayList<>();
 
@@ -237,7 +240,7 @@ public class ManualGrnController {
 			System.out.println("bean new " + objShowGrnList.toString());
 
 			modelAndView.addObject("grnConfList", objShowGrnList);
-			modelAndView.addObject("billNo", billNo);
+			//modelAndView.addObject("billNo", billNo);
 			
 			
 			map = new LinkedMultiValueMap<String, Object>();
@@ -567,6 +570,14 @@ System.err.println("Inside sellBillResponse != null");
 
 					}
 
+					
+					String start_dt =billHeader.getBillDate();
+					DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
+					java.util.Date date = (java.util.Date)formatter.parse(start_dt);
+				
+					SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String finalString = newFormat.format(date);
+					billHeader.setBillDate(finalString);
 					billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 							SellBillHeader.class);
 
