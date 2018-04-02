@@ -160,7 +160,6 @@
 							<thead>
 								<tr class="bgpink">
 								
-									<th class="col-sm-1">Bill No</th>
 									<th class="col-sm-1">Invoice No</th>
 									<th class="col-md-1">Date</th>
 
@@ -178,7 +177,7 @@
 								<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
 									<tr>
-										<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td>
+									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
 										<td class="col-sm-1"><c:out value="${billHeader.invoiceNo}" /></td>
 										<td class="col-md-1"><c:out
 												value="${billHeader.billDate}" /></td>
@@ -216,7 +215,7 @@
 										<td class="col-md-1"><c:out value="${billHeader.remark}" /></td>
 										<td class="col-md-1"><div >
 												<a
-													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}"
+													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"
 													class="fa fa-info"></a>
 												<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
 											</div></td>

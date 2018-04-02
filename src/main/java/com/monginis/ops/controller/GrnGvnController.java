@@ -1000,8 +1000,11 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 
 				LocalDate localDate = LocalDate.now();
 				System.out.println(dtf.format(localDate)); // 2016/11/16
-
-				SellBillHeader sellBillHeader = new SellBillHeader();
+				
+				SellBillHeader sellBillHeaderRes = null;
+				SellBillHeader sellBillHeader=null;
+				if(sellBillData.size()>0) {
+					sellBillHeader = new SellBillHeader();
 
 				sellBillHeader.setFrId(frDetails.getFrId());
 				sellBillHeader.setFrCode(frDetails.getFrCode());
@@ -1026,9 +1029,6 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 				
 				List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
 				float sumTaxableAmt1 = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
-				
-				
-				
 				
 				for(int i=0;i<sellBillData.size();i++) {
 					
@@ -1123,9 +1123,9 @@ if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 					sellBillHeader.setPaidAmt(sumGrandTotal);
 					sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 					
-					SellBillHeader	sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
+						sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
 							SellBillHeader.class);
-					
+				}
 					if(sellBillHeaderRes!=null) {
 						
 

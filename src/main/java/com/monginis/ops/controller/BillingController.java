@@ -175,6 +175,8 @@ public class BillingController {
 		String billDate=request.getParameter("billDate");
 		String billStatus=request.getParameter("billStatus");
 		String grandTotal=request.getParameter("grandTotal");
+		
+		String invNo=request.getParameter("Inv");
 		System.out.println("billNo: "+billNo +"  Date : "+billDate +"  billStatus :"+billStatus);
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -197,6 +199,8 @@ public class BillingController {
 		modelAndView.addObject("billNo", billNo);
 		modelAndView.addObject("billStatus", billStatus);
 		modelAndView.addObject("grandTotal", grandTotal);
+		
+		modelAndView.addObject("invoiceNo", invNo);
 		
 		}catch (Exception e) {
 		System.out.println("ex in bill detail "+e.getMessage());

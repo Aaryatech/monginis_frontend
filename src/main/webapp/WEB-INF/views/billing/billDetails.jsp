@@ -133,7 +133,7 @@ However, delay the fade out process for 2.5 seconds */
 		<br>
 	
 		<div class=" col-md-2">
-		    <h2 class=" pull-left">Bill No:-  <b>${billNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h2 class=" pull-left">Invoice No:-  <b>${invoiceNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
 		</div>
 	
 		<div class="col-md-2">
