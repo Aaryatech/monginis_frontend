@@ -296,7 +296,7 @@ table, th, td {
 																						.toFixed(2)));
 
 														amtTotal = amtTotal
-																+ sellBillData.payableAmt;
+																+ sellBillData.grandTotal;
 
 														//	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 

@@ -118,6 +118,9 @@ public class GrnGvnController {
 		Calendar cale = Calendar.getInstance();
 		cale.setTime(date);
 		int month = cale.get(Calendar.MONTH);
+		month=month+1;
+		System.err.println("month calendar" +month);
+		
 
 		if (month <= 3) {
 
@@ -152,7 +155,7 @@ public class GrnGvnController {
 
 		
 		invoiceNo=frDetails.getFrCode()+invoiceNo;
-		System.out.println("*** settingValue= " + settingValue);
+		System.out.println("*** settingValue= " + invoiceNo);
 		return invoiceNo;
 
 	}
@@ -645,7 +648,10 @@ public class GrnGvnController {
 			Calendar cale = Calendar.getInstance();
 			cale.setTime(date);
 			int month = cale.get(Calendar.MONTH);
-
+month=month+1;
+			System.err.println("RUnning month calendar " +month);
+			
+			
 			if (month <= 3) {
 
 				curStrYear = preMarchStrYear + curStrYear;
@@ -664,18 +670,18 @@ public class GrnGvnController {
 
 			if (length == 1)
 
-				invoiceNo = curStrYear + "-" + "000" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-"+frDetails.getFrCode()+"-" + "000" + grnGvnSrNo;
 			if (length == 2)
 
-				invoiceNo = curStrYear + "-" + "00" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-" +frDetails.getFrCode()+"-"+"00" + grnGvnSrNo;
 
 			if (length == 3)
 
-				invoiceNo = curStrYear + "-" + "0" + grnGvnSrNo;
+				invoiceNo = curStrYear + "-" +frDetails.getFrCode()+"-"+ "0" + grnGvnSrNo;
 
 			System.out.println("*** settingValue= " + grnGvnSrNo);
 
-			grnGvnNo = frDetails.getFrCode() + invoiceNo;
+			grnGvnNo = invoiceNo;
 			// return grnGvnNo;
 
 		} catch (Exception e) {
@@ -931,7 +937,7 @@ public class GrnGvnController {
 			// postGrnList.getGrnGvn().size());
 			
 			Info insertGrn = null;
-if(postGrnList!=null) {
+if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 			insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
 			
 }
@@ -960,6 +966,7 @@ if(postGrnList!=null) {
 							.postForObject(Constant.URL + "/getSellBillDetails", map, SellBillDetailList.class);
 
 					List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
+					if(sellBillDetails.size()>0) {
 
 					for (int x = 0; x < sellBillDetails.size(); x++) {
 
@@ -973,11 +980,14 @@ if(postGrnList!=null) {
 						billHeader.setDiscountPer(billHeader.getDiscountPer());
 
 					}
+					}
+					if(billHeader.getSellBillDetailsList().size()>0) {
 
 					billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 							SellBillHeader.class);
 
 					System.out.println("Bill Header Response " + billHeader.toString());
+					}
 
 				} // end of if ex bill not null
 
@@ -1094,7 +1104,7 @@ if(postGrnList!=null) {
 						sellBillDetailList.add(sellBillDetail);
 
 					}
-					sellBillHeader.setTaxableAmt(sumTaxableAmt);
+					sellBillHeader.setTaxableAmt(sumTaxableAmt1);
 					sellBillHeader.setDiscountPer(0);
 					// float discountAmt = 0;
 					// if(discountPer!=0.0)
@@ -1108,9 +1118,9 @@ if(postGrnList!=null) {
 					System.out.println("Payable amt  : " + payableAmt);
 					sellBillHeader.setTotalTax(sumTotalTax);
 					sellBillHeader.setGrandTotal(sumGrandTotal);
-					sellBillHeader.setPayableAmt(sellBillHeader.getGrandTotal());
+					sellBillHeader.setPayableAmt(sumGrandTotal);
 					
-					sellBillHeader.setPaidAmt(sellBillHeader.getGrandTotal());
+					sellBillHeader.setPaidAmt(sumGrandTotal);
 					sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 					
 					SellBillHeader	sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
@@ -1712,8 +1722,12 @@ boolean isCustComplaint=false;
 			System.out.println("post grn for rest----- " + postGrnList.toString());
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
+			Info insertGvn = null;
+			if(postGrnList!=null && postGrnList.getGrnGvnHeader().getTaxableAmt()>0) {
 
-			Info insertGvn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+			 insertGvn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
+			 
+			}
 
 			if (insertGvn.getError() == false) {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();

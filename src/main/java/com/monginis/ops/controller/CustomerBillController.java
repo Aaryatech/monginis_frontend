@@ -664,6 +664,7 @@ public class CustomerBillController {
 			frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
 					PostFrItemStockHeader.class);
 			runningMonth = frItemStockHeader.getMonth();
+			System.err.println("Runing month in cust Bill ");
 
 		} catch (Exception e) {
 			System.out.println("Exception in runningMonth" + e.getMessage());
@@ -1866,6 +1867,8 @@ if(currentNewItem.getCatId()==7) {
 		Calendar cale = Calendar.getInstance();
 		cale.setTime(date);
 		int month = cale.get(Calendar.MONTH);
+		
+		month=month+1;
 
 		if (month <= 3) {
 
