@@ -99,14 +99,14 @@ document.body.onload = function()
           <tr>
             <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
-            <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate)/spCakeOrder.spSelectedWeight}</p></td>
-            <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate}</p></td>
+            <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}</p></td>
+            <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal}</p></td>
           </tr>
            <tr>
             <td><p style="font-size:12px">${flavourName}</p></td>
-            <td align="center"><p style="font-size:12px"></p>Add Rate:</td>
+          <%--   <td align="center"><p style="font-size:12px"></p>Add Rate:</td>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spTotalAddRate/spCakeOrder.spSelectedWeight}</p></td>
-            <td align="right"><p style="font-size:12px">${spCakeOrder.spTotalAddRate}</p></td>
+            <td align="right"><p style="font-size:12px">${spCakeOrder.spTotalAddRate}</p></td> --%>
           </tr>
          
         <!--   <tr>

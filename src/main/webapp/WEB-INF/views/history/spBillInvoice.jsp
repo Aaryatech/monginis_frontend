@@ -108,14 +108,14 @@
           <tr>
             <td><p style="font-size:12px">${spCakeOrder.spName}(${spCakeOrder.itemId})-${spCakeOrder.spfName}</p>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
-            <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate)/spCakeOrder.spSelectedWeight}</p></td>
-            <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal-spCakeOrder.spTotalAddRate}</p></td>
+            <td align="center"><p style="font-size:12px">${spCakeOrder.spSubTotal/spCakeOrder.spSelectedWeight}</p></td>
+            <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal}</p></td>
           </tr>
         <%--   </c:forEach> --%>
          <tr>
           <!--   <td rowspan="3">&nbsp;</td> -->
-            <td colspan="3" align="right"><span class="style5"><strong>Add Rate :</strong></span></td>
-            <td align="right"><span class="style5"><strong>${spCakeOrder.spTotalAddRate}</strong></span></td>
+           <%--  <td colspan="3" align="right"><span class="style5"><strong>Add Rate :</strong></span></td>
+            <td align="right"><span class="style5"><strong>${spCakeOrder.spTotalAddRate}</strong></span></td> --%>
           </tr>
           <tr>
           <!--   <td rowspan="3">&nbsp;</td> -->
