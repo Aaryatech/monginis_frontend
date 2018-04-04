@@ -897,8 +897,11 @@ month=month+1;
 						System.err.println("Item Name " + objShowGrnList.get(i).getItemName());
 						System.err.println("Qty Variation found : For Item Id " + postGrnGvn.getItemId() + "Qty = " +(objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty()));
 						int exBillQty=objShowGrnList.get(i).getAutoGrnQty()-postGrnGvn.getGrnGvnQty();
+						
+						objShowGrnList.get(i).setAutoGrnQty(exBillQty);
 						sellBillData.add(objShowGrnList.get(i));
-						sellBillData.get(i).setAutoGrnQty(exBillQty);
+						
+						//sellBillData.get(i).setAutoGrnQty(exBillQty);
 					}
 
 				} // end of if checking for grnQty

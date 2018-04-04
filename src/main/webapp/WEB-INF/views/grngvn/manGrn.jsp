@@ -90,11 +90,11 @@ label::before {
 											<c:choose>
 
 												<c:when test="${selctedBillNo == frBillList.billNo}">
-													<option selected value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+													<option selected value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
 												</c:when>
 
 												<c:otherwise>
-													<option value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+													<option value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
 												</c:otherwise>
 
 											</c:choose>
@@ -268,7 +268,7 @@ label::before {
 													value="${grnAmt}"></c:out></td>
 
 											<td class="col-md-1"><select
-												name="grn_remark${grnConfList.itemId}" style="width: 200px"
+												name="grn_remark${grnConfList.itemId}" style="width: 200px" required="required";
 												id="grn_remark${grnConfList.itemId}" class="form-control" onchange="changeQty(${grnConfList.itemId},${grnConfList.autoGrnQty})">
 													<option selected value="0">Goods Expired</option>
 													<c:forEach items="${remarkList}" var="remarkList">

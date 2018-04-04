@@ -117,7 +117,7 @@ label::before {
 					<!-- 						</form>
  -->
 					<form action="${pageContext.request.contextPath}/addGvnProcess"
-						name="grn_add" id="grn_add" enctype="multipart/form-data"
+						name="proceed_gvn" id="proceed_gvn" enctype="multipart/form-data"
 						method="post">
 
 						<div class="clearfix"></div>
@@ -191,8 +191,8 @@ label::before {
 
 												<td class="col-md-1"><select
 													name="gvn_remark${gvnConfList.itemId}" style="width: 200px"
-													id="gvn_remark${gvnConfList.itemId}" class="form-control">
-														<option selected value="selectRemark">Select Remark</option>
+													id="gvn_remark${gvnConfList.itemId}" class="form-control" required="required">
+														<option selected value="">Select Remark</option>
 														<c:forEach items="${remarkList}" var="remarkList">
 																${remarkList.remark}
 																<option value="${remarkList.remark}">${remarkList.remark}</option>
@@ -205,7 +205,7 @@ label::before {
 
 
 														<div class="fileUpload">
-															<input class="upload upld" type='file' name="gvn_photo1"
+															<input class="upload upld" type='file' name="gvn_photo1" 
 																id="gvn_photo1${gvnConfList.itemId}"
 																data-rule-required="true" /> <img style="width: 45px"
 																src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
@@ -223,7 +223,7 @@ label::before {
 													<div class="form-group">
 														<div>
 															<div class="fileUpload">
-																<input class="upload upld" type='file' name="gvn_photo2"
+																<input class="upload upld" type='file' name="gvn_photo2" 
 																	id="gvn_photo2${gvnConfList.itemId}"
 																	data-rule-required="true" /> <img style="width: 45px"
 																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
@@ -251,7 +251,7 @@ label::before {
 
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder">
+							<button type="submit" class="buttonsaveorder" onclick="callSubmit()">
 								<i class="fa fa-check"></i> Save
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->
@@ -347,7 +347,23 @@ label::before {
 	$(".upld").change(function() {
 		readURL(this);
 	});
+	
+	/* function callSubmit(){
+		
+		alert("Hi");
+		
+		
+		
+		
+			/*  var form = document.getElementById("proceed_gvn");
+		    form.action ="addGvnProcess";
+		    form.submit();
+		 */
+		
+	} */
 </script>
+
+
 
 
 </body>

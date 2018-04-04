@@ -111,11 +111,11 @@ label::before {
 											<c:choose>
 
 												<c:when test="${selctedBillNo == frBillList.billNo}">
-													<option selected value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+													<option selected value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
 												</c:when>
 
 												<c:otherwise>
-													<option value="${frBillList.billNo}">Bill No- ${frBillList.billNo} Bill Date- ${frBillList.billDate}</option>
+													<option value="${frBillList.billNo}">Invoice No- ${frBillList.invoiceNo} Bill Date- ${frBillList.billDate}</option>
 												</c:otherwise>
 
 											</c:choose>

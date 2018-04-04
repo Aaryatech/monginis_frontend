@@ -193,7 +193,7 @@
 													value="${grnAmt}"></c:out></td>
 
 											<td class="col-md-1"><select
-												name="grn_remark${grnConfList.itemId}" style="width: 200px"
+												name="grn_remark${grnConfList.itemId}" style="width: 200px" required="required"
 												id="grn_remark${grnConfList.itemId}" class="form-control" onchange="changeQty(${grnConfList.itemId},${grnConfList.autoGrnQty})">
 													<option selected value="0">Goods Expired</option>
 													<c:forEach items="${remarkList}" var="remarkList">

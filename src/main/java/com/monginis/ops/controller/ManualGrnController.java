@@ -122,8 +122,12 @@ public class ManualGrnController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+			int frId=frDetails.getFrId();
 			map.add("billNo", billNo);
-			map.add("frId", 17);
+			map.add("frId", frId);
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getItemsForManGrn", map,
 					GetGrnGvnConfResponse.class);
 
