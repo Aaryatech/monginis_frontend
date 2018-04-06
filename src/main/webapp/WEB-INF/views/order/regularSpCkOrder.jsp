@@ -21,7 +21,7 @@
 
 		$("#datepicker").datepicker({
 			dateFormat : 'dd-mm-yy',
-			minDate : min
+			/* minDate : min */
 		});
 	});
 	$(function() {
@@ -405,13 +405,13 @@ select {
 	<script type="text/javascript">
 		$(document).ready(function() {$('#regular_sp_cake').change(function() {
 			$('#regSpCkItem').find('option').remove().end()  
-			if($(this).val()!=14)
+			/* if($(this).val()!=14)
 				{
 			     document.getElementById("sp_qty").disabled = true;
 				}else
 				{
 					 document.getElementById("sp_qty").disabled = false;
-				}
+				} */
 			                                        $.getJSON('${findAllRegularSpCk}',
 																{
 																	regular_sp_cake : $(this).val(),
