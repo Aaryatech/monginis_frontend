@@ -955,6 +955,7 @@ if(ses==null) {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
 
 	/*	RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();

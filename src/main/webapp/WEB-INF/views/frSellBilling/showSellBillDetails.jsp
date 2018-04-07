@@ -41,6 +41,10 @@ jQuery(document).ready(function(){
 </script> --%>
 <!--rightNav-->
 <!--datepicker-->
+
+	<c:url var="getSelectedIdForPrint" value="/billDetailPrint" />
+
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
   $( function() {
@@ -124,6 +128,7 @@ jQuery(document).ready(function(){
 														cellpadding="0" id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
 									<th>Index</th>
+									<th>Print</th>
 									<th>Item Name</td>
 									<th>Qty</td>
 									<th>MRP Base Rate</td>
@@ -139,7 +144,10 @@ jQuery(document).ready(function(){
 
 														<tr>
 															<td><c:out value="${count.index+1}"/></td>
-
+ <td><input type="checkbox" name="select_to_print" onchange="selectToPrint()"
+																id="select_to_print"
+																value="${sellBill.sellBillDetailNo}" ></td>
+																
 															<td align="left"><c:out value="${sellBill.itemName}" /></td>
 															<td align="left"><c:out	value="${sellBill.qty}" /></td>
 															<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
@@ -157,6 +165,8 @@ jQuery(document).ready(function(){
 								</table>
 							
 				</div>
+				<button style="float: right;margin-top: 13px;" type="button" class="btn btn-primary"
+						onclick="printExBill()"  id="printExBill">Print</button>
 			</div>
 		<!--table end-->
 		 
@@ -185,7 +195,61 @@ jQuery(document).ready(function(){
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-	
+<script type="text/javascript">
 
+
+function printExBill()
+{
+	//alert("in print");
+	
+	var checkedId=[];
+	var checkboxes=document.getElementsByName("select_to_print");
+	
+	 
+		for (var i = 0, n = checkboxes.length; i < n; i++) {
+			if(checkboxes[i].checked) {
+				
+				checkedId.push(checkboxes[i].value );
+				
+			}
+		}
+		//alert(checkboxes);
+		 $.getJSON('${getSelectedIdForPrint}',{
+
+				id :  JSON.stringify(checkedId),
+				ajax : 'true',
+			
+
+			 });
+			  
+	window.open("${pageContext.request.contextPath}/printSelectedBillDetail");
+}
+
+function selectToPrint()
+{
+	//alert("hh");
+ 
+	var checkboxes=document.getElementsByName("select_to_print");
+	//alert(checkboxes[0].value);
+	var flag=0;
+		for (var i = 0, n = checkboxes.length; i < n; i++) {
+			if(checkboxes[i].checked) {
+				 
+				flag=1;
+			}
+		}
+	if(flag==1)
+		{
+	 //alert("KK");
+		document.getElementById("printExBill").disabled=false;
+		}
+	else{
+	document.getElementById("printExBill").disabled=true;
+	}
+	
+	 
+}
+
+</script>
 </body>
 </html>
