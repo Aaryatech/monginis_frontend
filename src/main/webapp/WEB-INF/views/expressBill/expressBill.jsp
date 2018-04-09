@@ -289,8 +289,8 @@ input:checked + .slider:before {
 															</select> 
 																</td>
 																
-															<td><input type="number" min="0" max="500"
-																class="form-control" placeholder="1" name="qty1"
+															<td><input type="number" min="1" max="500"
+																class="form-control" placeholder="1" name="qty1" onkeypress="onQty(event)"
 																id="qty1" value="1"></td>
 															<td id="rateTdVal1">00</td>
 
@@ -699,8 +699,8 @@ input:checked + .slider:before {
 																	</c:forEach>
 															</select> 
 														</td>
-													<td><input type="number" min="0" max="500"
-														class="form-control" placeholder="1" name="qty1" id="qty1"
+													<td><input type="number" min="1" max="500"
+														class="form-control" placeholder="1" name="qty1" id="qty1" onkeypress="onQty(event)"
 														value="1"></td>
 													<td id="rateTdVal1">00</td>
 												</tr>
@@ -874,6 +874,8 @@ function  hideMe(startId){
 
 	    var val = document.getElementById("input").value;
 	    var qty = document.getElementById("qty1").value;
+	    
+	    if(parseInt(qty)>0){
 
 	    $('#input').focus();
 	    
@@ -956,7 +958,16 @@ function  hideMe(startId){
 		$('#itemName').selectpicker('val',''+"");
 		
 		 $('#input').focus();
-	    
+	}//if 
+	else{
+		alert("Please Enter Atleast One Quantity");
+		$('#loader11').hide();
+		
+	   document.getElementById("qty1").value="1";
+		$('#itemName').selectpicker('val',''+"");
+		document.getElementById("input").value="";
+
+	}
 	}
 		
 	</script>
@@ -1123,6 +1134,16 @@ function  hideMe(startId){
 		}
 		
 		 
+	}
+	
+	function onQty(event) {
+		var x = event.which || event.keyCode;
+		if (x == 13) {
+			//document.getElementById("b" + token).focus();
+			
+			   document.getElementById("qty1").value="1";
+
+		}
 	}
 	</script>
 

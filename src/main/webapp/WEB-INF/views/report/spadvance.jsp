@@ -226,7 +226,7 @@
 				var fromDate = document.getElementById("datepicker").value;
 				var toDate = document.getElementById("datepicker2").value;
 				
-				alert(fromDate + toDate);
+				//alert(fromDate + toDate);
 
 				$.getJSON('${getSpAdvance}', {
 
@@ -323,13 +323,11 @@ function getGrnDetail(headerId){
 			var toDate =$("#datepicker2").val();
 			
 			var headeIdText=$("#headeIdText").val();
-			alert(headeIdText);
+		//	alert(headeIdText);
 			
 			var isValid = true;
-			if(headeIdText =="" || headeIdText == null){
-				 isValid = false;
-			}
-			else if (fromDate == "" || fromDate == null) {
+		
+			if (fromDate == "" || fromDate == null) {
 
 				isValid = false;
 				alert("Please select From Date");
