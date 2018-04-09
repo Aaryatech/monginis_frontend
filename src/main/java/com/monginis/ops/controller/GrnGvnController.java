@@ -976,8 +976,15 @@ public class GrnGvnController {
 						billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
 						billHeader.setPaidAmt(billHeader.getGrandTotal());
 						billHeader.setPayableAmt(billHeader.getGrandTotal());
+						System.err.println("bill Header data for Day close " +billHeader.toString());
 
+						String start_dt =billHeader.getBillDate();
+						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
+						Date date = (Date)formatter.parse(start_dt);
 					
+						SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+						String finalString = newFormat.format(date);
+						billHeader.setBillDate(finalString);
 
 							billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 									SellBillHeader.class);
