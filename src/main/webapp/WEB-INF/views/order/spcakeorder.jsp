@@ -951,10 +951,10 @@ function validate() {
 <script>
 
 var todaysDate=new Date();
-//var min=new Date(todaysDate.setDate(todaysDate.getDate()+1));
+var min=new Date(todaysDate.setDate(todaysDate.getDate()+1));
 
   $( function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' , /* minDate:min, */
+    $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' ,  minDate:min,
         onSelect: function(date) {
            
       	    	var isSlotUsed =$("#isSlotUsed").val();         
