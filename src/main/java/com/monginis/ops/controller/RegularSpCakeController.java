@@ -331,7 +331,7 @@ public class RegularSpCakeController {
 			
 			regularSpCakeOrder.setRspEventsName(rspEventsName);
 			regularSpCakeOrder.setRspProduDate(dateFormat.format(produDate));
-
+            regularSpCakeOrder.setRspPlace(rspPlace);
 			
 			
 				HttpHeaders httpHeaders = new HttpHeaders();

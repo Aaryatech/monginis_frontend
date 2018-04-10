@@ -30,8 +30,14 @@ public class RegularSpCake {
     private int rateCat;
     private int qty;
     private int isBillGenerated;
+    private String rspPlace;
     
-    
+	public String getRspPlace() {
+		return rspPlace;
+	}
+	public void setRspPlace(String rspPlace) {
+		this.rspPlace = rspPlace;
+	}
 	public int getIsBillGenerated() {
 		return isBillGenerated;
 	}
