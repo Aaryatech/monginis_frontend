@@ -467,6 +467,7 @@ public class GrnGvnController {
 			for (int i = 0; i < grnConfList.size(); i++) {
 
 				if (!(grnConfList.get(i).getAutoGrnQty() <= 0)) {
+					System.err.println("inside qty is >0 ");
 
 					objShowGrn = new ShowGrnBean();
 
@@ -980,7 +981,7 @@ public class GrnGvnController {
 
 						String start_dt =billHeader.getBillDate();
 						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
-						Date date = (Date)formatter.parse(start_dt);
+						java.util.Date date = (java.util.Date)formatter.parse(start_dt);
 					
 						SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
 						String finalString = newFormat.format(date);
