@@ -66,9 +66,9 @@ public class ExpressBillController {
 	List<SellBillDetail> selectedSellBillDetailList;
 	List<SellBillDetail> BillDetailList = new ArrayList<SellBillDetail>();
 	List<GetCustBillTax> getCustBillTaxList;
-	String sellInvoiceGlobal;
+	String sellInvoiceGlobal="";
 	
-	int globalFrId;
+	int globalFrId=0;
 
 	@RequestMapping(value = "/showExpressBill", method = RequestMethod.GET)
 	public ModelAndView showExpressBill(HttpServletRequest request, HttpServletResponse response) {

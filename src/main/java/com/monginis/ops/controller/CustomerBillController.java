@@ -156,6 +156,7 @@ public class CustomerBillController {
 
 	}
 String printInvoiceNo;
+String selBillDate;
 	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
 	public ModelAndView viewBillDetails(HttpServletRequest request, HttpServletResponse response) {
 
@@ -166,6 +167,8 @@ String printInvoiceNo;
 		String sellBill_no = request.getParameter("sellBillNo");
 
 		String billDate = request.getParameter("billDate");
+		
+		selBillDate=billDate;
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -301,7 +304,9 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
        		model.addObject("frGstType", frDetails.getFrGstType());
 
 
-		model.addObject("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+		//model.addObject("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+       		model.addObject("date",selBillDate);
+       		
 		System.out.println("After print ");
 		}
 		catch (Exception e) {
