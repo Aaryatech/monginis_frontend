@@ -16,7 +16,7 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws IOException, LoginFailException {
 
-    	System.out.println("Intercept handler..");
+    	System.out.println("Intercept handler.."); 
     	
     	HttpSession session = request.getSession();
 
@@ -33,7 +33,9 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
          else 
          if(session == null || session.getAttribute("frDetails") == null || session.getAttribute("getFrDetails").equals("")) {
              request.setAttribute("emassage", "login failed");                
-             throw new LoginFailException("login failed");                
+             response.sendRedirect(request.getContextPath()+"/sessionTimeOut");     
+             return false;
+
          }else{                
              return true;
          }    
