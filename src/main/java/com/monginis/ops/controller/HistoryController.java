@@ -128,7 +128,7 @@ public class HistoryController {
 				else if(menu.getMenuId()==42)
 				{
 					regSpHistory=regHistory(parsedDate,frId);
-						System.out.println("selected2:"+regSpHistory.toString());
+						System.out.println("selected2c:"+regSpHistory.toString());
 					 model.addObject("orderHistory", regSpHistory);
 				}
 				else
@@ -214,10 +214,11 @@ public class HistoryController {
 	 	        map.add("spDeliveryDt",parsedDate);
 	 	        map.add("frId",frId);
 	 	        
-	 	       GetRegSpCakeOrders[] spOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistory",map,GetRegSpCakeOrders[].class);
+	 	       GetRegSpCakeOrders[] rspOrderList=rest.postForObject(Constant.URL+"/getRegSpCakeOrderHistory",map,GetRegSpCakeOrders[].class);
 	 	
-	 		System.out.println("OrderList"+spOrderList.toString());
-	 		ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<>(Arrays.asList(spOrderList));
+	 		System.out.println("OrderList"+rspOrderList.toString());
+	 		ArrayList<GetRegSpCakeOrders> regSpecialHistory=new ArrayList<GetRegSpCakeOrders>(Arrays.asList(rspOrderList));
+	 		System.out.println("OrderList"+rspOrderList.toString());
 
 	 		regSpHistory=regSpecialHistory;
 	 		return regSpecialHistory;

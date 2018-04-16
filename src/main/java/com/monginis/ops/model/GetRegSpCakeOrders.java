@@ -11,6 +11,8 @@ public class GetRegSpCakeOrders {
 	
 	private String itemName;
 	
+	private String rspPlace;
+	
 	private String orderDate;
 
 	private float rate;
@@ -28,6 +30,15 @@ public class GetRegSpCakeOrders {
 	private String rspCustName;
 	
 	private String rspCustMobileNo;
+
+	
+	public String getRspPlace() {
+		return rspPlace;
+	}
+
+	public void setRspPlace(String rspPlace) {
+		this.rspPlace = rspPlace;
+	}
 
 	public int getRspId() {
 		return rspId;

@@ -600,7 +600,7 @@ public class SpCakeController {
 			logger.info("25" + spAddRate);
 			float dbAdonRate = Float.parseFloat(request.getParameter("dbAdonRate"));
 
-			String spSubTotal = request.getParameter("sp_sub_total");
+			float spSubTotal = Float.parseFloat(request.getParameter("sp_sub_total"));
 			logger.info("26" + spSubTotal);
 
 			float tax1 = Float.parseFloat(request.getParameter("tax1"));
@@ -618,7 +618,7 @@ public class SpCakeController {
 			String rmAmount = request.getParameter("rm_amount");
 			logger.info("31" + rmAmount);
 
-			String spAdvance = request.getParameter("adv");
+			float spAdvance =Float.parseFloat(request.getParameter("adv"));
 			logger.info("32" + spAdvance);
 
 			String spPlace = request.getParameter("sp_place");
@@ -643,6 +643,12 @@ public class SpCakeController {
 			String addonRatePerKG = request.getParameter("addonRatePerKG");
 
 			float backendSpRate = Float.parseFloat(request.getParameter("spBackendRate"));
+			/*Calendar cal1 = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			System.out.println(sdf.format(cal1.getTime()));
+
+			String curTimeStamp = sdf.format(cal1.getTime());*/
+			String curTimeStamp = new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss").format(new Date());
 
 			String custChCk = "";
 			String orderPhoto1 = "";
@@ -654,16 +660,12 @@ public class SpCakeController {
 
 				VpsImageUpload upload = new VpsImageUpload();
 
-				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				System.out.println(sdf.format(cal.getTime()));
-
-				String curTimeStamp = sdf.format(cal.getTime());
+				
 
 				try {
-					orderPhoto1 = orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							orderPhoto.get(0).getOriginalFilename());
+							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
 					System.out.println("upload method called " + orderPhoto.toString());
 
 				} catch (IOException e) {
@@ -683,20 +685,20 @@ public class SpCakeController {
 
 				VpsImageUpload upload = new VpsImageUpload();
 
-				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				System.out.println(sdf.format(cal.getTime()));
+				//Calendar cal = Calendar.getInstance();
+				//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				//System.out.println(sdf.format(cal.getTime()));
 
-				String curTimeStamp = sdf.format(cal.getTime());
+				//String curTimeStamp = sdf.format(cal.getTime());
 
 				try {
-					orderPhoto1 = orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
 
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							orderPhoto.get(0).getOriginalFilename());
-					custChCk = custChoiceCk.get(0).getOriginalFilename();
+							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
+					custChCk = curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename();
 					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
-							custChoiceCk.get(0).getOriginalFilename());
+							curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename());
 
 					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
 
@@ -782,9 +784,10 @@ public class SpCakeController {
 
 			spCakeOrder.setItemId(spCode);
 			spCakeOrder.setOrderDate(dateFormat.format(orderDate));
-			spCakeOrder.setRmAmount(Float.valueOf(rmAmount));
+			float rmAmt=spSubTotal-spAdvance;
+			spCakeOrder.setRmAmount(rmAmt);
 			spCakeOrder.setSpTotalAddRate(Float.valueOf(spAddRate));
-			spCakeOrder.setSpAdvance(Float.valueOf(spAdvance));
+			spCakeOrder.setSpAdvance(spAdvance);
 
 			spCakeOrder.setSpBookedForName(spBookedForName);
 			spCakeOrder.setSpBookForDob(sqlBookForDob);
@@ -806,12 +809,12 @@ public class SpCakeController {
 			spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
 			spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
 			spCakeOrder.setSpSelectedWeight(spWeight);
-
+ 
 			spCakeOrder.setSpDeliveryPlace(spPlace);
 			spCakeOrder.setSpPrice(Float.valueOf(spPrice));
 			spCakeOrder.setSpProdDate(sqlProdDate);
 			spCakeOrder.setSpProdTime(Integer.parseInt(spProTime));
-			spCakeOrder.setSpSubTotal(Float.valueOf(spSubTotal));
+			spCakeOrder.setSpSubTotal(spSubTotal);
 			spCakeOrder.setSpType(spType);
 
 			spCakeOrder.setTax1(tax1);
