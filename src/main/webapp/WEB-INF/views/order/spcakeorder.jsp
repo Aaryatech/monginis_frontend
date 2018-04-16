@@ -395,11 +395,11 @@ select {
 	    <div class="col1"><div class="col1title">Special Instructions</div></div>
 		
 		<div class="col1full" id="marathiDiv">
-		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:250px;height:60px" ></textarea>
+		<textarea id="transliterateTextarea"  name="sp_inst1" cols="" rows="" style="width:250px;height:60px"maxlength="300" ></textarea>
 		</div>
 		
 	    <div class="col1full" id="englishDiv" style="display: none;">
-	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px"></textarea>
+	    <textarea id="textarea"  name="sp_inst2" cols="" rows="" style="width:200px;height:90px"maxlength="300"></textarea>
 	    </div>
 	</div>
 	
