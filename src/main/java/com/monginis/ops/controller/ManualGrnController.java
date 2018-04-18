@@ -570,6 +570,9 @@ System.err.println("Inside sellBillResponse != null");
 
 					}
 
+					billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
+					billHeader.setPaidAmt(billHeader.getGrandTotal());
+					billHeader.setPayableAmt(billHeader.getGrandTotal());
 					
 					String start_dt =billHeader.getBillDate();
 					DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 

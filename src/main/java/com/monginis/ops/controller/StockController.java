@@ -151,7 +151,8 @@ public class StockController {
 		
 		HttpSession session = request.getSession();
 
-		menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+		System.out.println("Menu List "+menuList.toString());
 
 		int menuId = 0;
 
