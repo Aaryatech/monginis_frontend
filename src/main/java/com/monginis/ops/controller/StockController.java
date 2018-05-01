@@ -208,10 +208,64 @@ public class StockController {
 		
 		if (showOption.equals("1")) {
 			
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			
+			
+			boolean isMonthCloseApplicable = false;
+
+			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = new Date();
+			System.out.println(dateFormat1.format(date));
+
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(date);
+
+			Integer dayOfMonth = cal1.get(Calendar.DATE);
+
+			Integer calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
+			System.out.println("Current Cal Month " + calCurrentMonth);
+
+			System.out.println("Day Of Month is: " + dayOfMonth);
+
+			if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+				isMonthCloseApplicable = true;
+				System.out.println("Day Of Month End ......" );
+
+			}
+			
+			if(isMonthCloseApplicable) {
+				System.err.println("Inside iMonthclose app");
+				String strDate;
+				int year;
+				if(runningMonth==12) {
+					System.err.println("running month =12");
+					 year=(Calendar.getInstance().getWeekYear()-1);
+					 System.err.println("year value " +year);
+				}
+				else {
+					System.err.println("running month not eq 12");
+					year=Calendar.getInstance().getWeekYear();
+					System.err.println("year value " +year);
+				}
+				
+			//	strDate="01/"+runningMonth+"/"+year;
+				
+				strDate=year+"/"+runningMonth+"/01";
+				
+				map.add("fromDate", strDate);
+			}
+			else {
+				
+				map.add("fromDate", dateFormat.format(firstDay));
+				
+			}
+			
 			map.add("frId", frDetails.getFrId());
 			map.add("frStockType", frDetails.getStockType());
-			map.add("fromDate", dateFormat.format(firstDay));
+			//map.add("fromDate", dateFormat1.format(firstDay));
 			map.add("toDate", dateFormat.format(todaysDate));
 			map.add("currentMonth", String.valueOf(runningMonth));
 			map.add("year", yearFormat.format(todaysDate));
