@@ -192,7 +192,7 @@ public class ReportsController {
 		 System.out.println("Inside PDF Table try");
 		 table.setWidthPercentage(100);
 	     table.setWidths(new float[]{0.5f, 1.8f,1.8f,1.2f,1.0f,1.2f});
-	     Font headFont = new Font(FontFamily.HELVETICA, 8, Font.ITALIC, BaseColor.BLACK);
+	     Font headFont = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
 	     Font headFont1 = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
 	     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
 	     
@@ -432,7 +432,7 @@ public class ReportsController {
 		 System.out.println("Inside PDF Table try /getSpAdvTaxPdf");
 		 table.setWidthPercentage(100);
 	     table.setWidths(new float[]{0.4f, 1.4f,1.5f,1.4f,1.5f,1.6f,0.8f,0.8f,1.2f,1.3f,1.2f,1.3f,1.4f});
-	     Font headFont = new Font(FontFamily.HELVETICA, 7, Font.ITALIC, BaseColor.BLACK);
+	     Font headFont = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 	     Font headFont1 = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLUE);
 	     Font f=new Font(FontFamily.TIMES_ROMAN,12.0f,Font.UNDERLINE,BaseColor.BLUE);
 	     
@@ -529,8 +529,8 @@ public class ReportsController {
 		       index++;
 		         PdfPCell cell;
 		        
-		         cgstSum=cgstSum+spTax.getTax1();
-		         sgstSum=sgstSum+spTax.getTax2();
+		         cgstSum=cgstSum+spTax.getTax1Amt();
+		         sgstSum=sgstSum+spTax.getTax2Amt();
 		         totalSum=totalSum+spTax.getTotal();
 		         advSum=advSum+spTax.getSpAdvance();
 		         remainingSum=remainingSum+spTax.getRmAmount();
