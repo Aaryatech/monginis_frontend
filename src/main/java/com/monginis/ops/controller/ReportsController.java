@@ -225,7 +225,7 @@ public class ReportsController {
 	     
 	     int index=0;
 	     
-	     
+	     float advAmt=0;
 	     for (GetSpAdvanceReport advance : advList) {
 		       index++;
 		         PdfPCell cell;
@@ -270,8 +270,9 @@ public class ReportsController {
 		         cell.setPaddingRight(5);
 		         table.addCell(cell);
 		         
-		         
-	     }  
+		         advAmt=advAmt+advance.getAdvAmt();
+	     }
+	  
 	     doc.open();
 	     
 	     Paragraph heading = new Paragraph("Report-Sp Cake Advance");
@@ -282,8 +283,14 @@ public class ReportsController {
 			
 			doc.add(new Paragraph(""+ reportDate));
 			doc.add(new Paragraph("\n"));
-	     //document.add(new Paragraph(" "));
+			
+		
+			
 	     doc.add(table);
+	     
+			Paragraph totalAdv = new Paragraph("Total Advance "+advAmt);
+			totalAdv.setAlignment(Element.ALIGN_RIGHT);
+		     doc.add(totalAdv);
 	     
 	     doc.close();
 	     
@@ -486,12 +493,47 @@ public class ReportsController {
 	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	     table.addCell(hcell);
 	     
+	     
+	     PdfPTable summaryTable = new PdfPTable(5);
+	     summaryTable.setWidthPercentage(100);
+	     hcell = new PdfPCell(new Phrase("CGST Rs", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     summaryTable.addCell(hcell);
+	     
+	     hcell = new PdfPCell(new Phrase("SGST Rs", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     summaryTable.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Total", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	     summaryTable.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Advance", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     summaryTable.addCell(hcell);
+	     
+	     
+	     hcell = new PdfPCell(new Phrase("Remaining", headFont1));
+	     hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	     summaryTable.addCell(hcell);
+	     
+	     
+	     
+	     
 	     int index=0;
+	     float cgstSum = 0,sgstSum=0,totalSum=0,advSum=0,remainingSum=0;
 	     
 	     for (GetSpAdvTaxReport spTax : spAdvTaxList) {
 		       index++;
 		         PdfPCell cell;
 		        
+		         cgstSum=cgstSum+spTax.getTax1();
+		         sgstSum=sgstSum+spTax.getTax2();
+		         totalSum=totalSum+spTax.getTotal();
+		         advSum=advSum+spTax.getSpAdvance();
+		         remainingSum=remainingSum+spTax.getRmAmount();
 		         
 		         cell = new PdfPCell(new Phrase(String.valueOf(index),headFont));
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -584,6 +626,40 @@ public class ReportsController {
 		         
 	     }  
 	     doc.open();
+	     PdfPCell cell;
+	        
+	     cell = new PdfPCell(new Phrase(String.valueOf(cgstSum),headFont));
+         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+         cell.setPaddingRight(12);
+         summaryTable.addCell(cell);
+         
+         cell = new PdfPCell(new Phrase(String.valueOf(sgstSum),headFont));
+         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+         cell.setPaddingRight(12);
+         summaryTable.addCell(cell);
+         
+         
+         cell = new PdfPCell(new Phrase(String.valueOf(totalSum),headFont));
+         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+         cell.setPaddingRight(12);
+         summaryTable.addCell(cell);
+         
+         
+         cell = new PdfPCell(new Phrase(String.valueOf(advSum),headFont));
+         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+         cell.setPaddingRight(12);
+         summaryTable.addCell(cell);
+         
+         cell = new PdfPCell(new Phrase(String.valueOf(remainingSum),headFont));
+         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+         cell.setPaddingRight(12);
+         summaryTable.addCell(cell);
+         
 	     
 	     Paragraph heading = new Paragraph("Report-Sp Cake Tax ");
 	     heading.setAlignment(Element.ALIGN_CENTER);
@@ -595,6 +671,12 @@ public class ReportsController {
 			doc.add(new Paragraph(frName +" From " + fd + " To " + tD));
 			doc.add(new Paragraph("\n "));
 	     doc.add(table);
+			doc.add(new Paragraph("\n "));
+
+	     doc.add(new Paragraph("Summary "));
+			doc.add(new Paragraph("\n "));
+
+	     doc.add(summaryTable);
 	     
 	     doc.close();
 	     
