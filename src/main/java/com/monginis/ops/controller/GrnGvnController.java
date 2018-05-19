@@ -699,9 +699,9 @@ public class GrnGvnController {
 				DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar calDate = Calendar.getInstance();
 
-				String tempGrnQtyAuto = request.getParameter("grnqtyauto" + objShowGrnList.get(i).getItemId() + "");
+				String tempGrnQtyAuto = request.getParameter("grnqtyauto" + objShowGrnList.get(i).getBillDetailNo() + "");
 
-				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getItemId() + "");
+				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getBillDetailNo()+ "");
 
 				System.out.println("tempGrnQty ===" + tempGrnQty);
 
@@ -718,7 +718,7 @@ public class GrnGvnController {
 					isEdit = 0;
 				}
 
-				String frGrnRemark = request.getParameter("grn_remark" + objShowGrnList.get(i).getItemId());
+				String frGrnRemark = request.getParameter("grn_remark" + objShowGrnList.get(i).getBillDetailNo());
 
 				if (frGrnRemark == null || frGrnRemark == "") {
 					frGrnRemark = "no remark entered";
@@ -1412,7 +1412,10 @@ public class GrnGvnController {
 				objShowGvn.setMrp(grnConfList.get(i).getMrp());
 				objShowGvn.setRate(grnConfList.get(i).getRate());
 				objShowGvn.setSgstPer(grnConfList.get(i).getSgstPer());
-
+				//--------code for catId and MenuId---------------------
+				objShowGvn.setCatId(grnConfList.get(i).getCatId());
+				objShowGvn.setMenuId(grnConfList.get(i).getMenuId());
+				//-------------------------------------------------------
 				objShowGvn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
 
 				float calcBaseRate = grnConfList.get(i).getRate() * 100

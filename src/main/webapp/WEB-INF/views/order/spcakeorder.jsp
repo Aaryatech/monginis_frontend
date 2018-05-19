@@ -449,6 +449,12 @@ select {
 			<div class="col2full"><input class="texboxitemcode" placeholder="Mobile No." name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required ></div>
 	
 	</div>
+	<div class="colOuter">
+			<div class="col1"><div class="col1title">GSTIN</div></div>
+	
+			<div class="col2full"><input class="texboxitemcode" placeholder="GSTIN No." name="gstin" type="text" id="gstin" ></div>
+	
+	</div>
 	 <span class="cakename"id="slotsNotAvailable"></span>
 	
 	<div class="colOuter">

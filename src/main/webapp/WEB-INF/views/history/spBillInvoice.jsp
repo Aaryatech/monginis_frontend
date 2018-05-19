@@ -86,14 +86,13 @@
     <tr>
       <td  style="font-size:8px">Invoice No: </td>
       <td style="font-size:9px">${spCakeOrder.spBookForMobNo}(${spCakeOrder.spOrderNo})</td>
-      <td style="font-size:8px">Date:</td>
+      <td style="font-size:8px"></td>
         
-      <td style="font-size:9px">${date} </td>
+      <td style="font-size:9px">${spCakeOrder.spDeliveryDate} </td>
     </tr >
      <tr>
       <td>Order No</td>
       <td colspan="3">${spCakeOrder.spOrderNo}</td>
-     
       </tr> 
     <tr>
       <td colspan="4"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="tbl-inner">
@@ -122,20 +121,20 @@
             <td colspan="3" align="right"><span class="style5"><strong>Total :</strong></span></td>
             <td align="right"><span class="style5"><strong>${spCakeOrder.spSubTotal}</strong></span></td>
           </tr>
-            <tr>
-           <!--  <td rowspan="3">&nbsp;</td> -->
+          <%--   <tr>
             <td colspan="3" align="right"><span class="style5"><strong>Advance :</strong></span></td>
             <td align="right"><span class="style5"><strong>${spCakeOrder.spAdvance}</strong></span></td>
           </tr>
           <tr>
             <td colspan="3" align="right"><span class="style5"><strong>Remaining Amt:</strong></span></td>
             <td align="right"><span class="style5"><strong>${spCakeOrder.rmAmount}</strong></span></td>
-          </tr>
+          </tr> --%>
         </tbody>
       </table></td>
       </tr>
   </tbody>
-</table>      </td>
+</table>     
+ </td>
     </tr>
       <c:choose>
       <c:when test="${frGstType==10000000 }">
@@ -203,6 +202,15 @@
 			</tr>
 			</c:when>
 			</c:choose>
+			<tr>
+							<td	style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
+								colspan="6">Customer Name: &nbsp; ${spCakeOrder.spCustName} </td>
+		   </tr>
+		 
+			 <tr>
+							<td	style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
+								colspan="6">Mobile No: &nbsp; ${spCakeOrder.spCustMobNo}</td>
+			</tr>
  <tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"

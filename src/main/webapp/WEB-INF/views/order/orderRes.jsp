@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
     		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-    
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -138,8 +139,18 @@ $("#tech").change(function() {
 <div class="order-left">
 <h2 class="pageTitle">${menuTitle}</h2>
 </div>
+<div class="row"></div>
+<c:if test="${isFound==true}">
+<div class="alert alert-success">
+  <strong>Success!</strong> Your Order Saved Successfully,Thank you!!
+</div>
+</c:if>
+<c:if test="${isFound==false}">
+<div class="alert alert-danger">
+    <strong>Failed!</strong> Oops,Your Order Not Saved!!
+  </div>
 
-
+</c:if>
 <!--formBox-->
 <div class="ordercake">
 <!--leftForm-->
