@@ -227,6 +227,48 @@ public class GrnGvnController {
 		 * 
 		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
 		 */
+		
+		 HttpSession session = request.getSession();
+	     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+	
+	     RestTemplate restTemplate = new RestTemplate();
+			
+	     
+		
+		try {
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			
+			com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
+					com.monginis.ops.model.Info.class);
+			
+			
+			System.out.println("info response for month end "+info.toString() );
+
+		if (info.isError()) {
+
+			
+			System.out.println("need to complete Month End ......" );
+
+			 modelAndView = new ModelAndView("stock/stockdetails");
+			modelAndView.addObject("message","Please do month end process first");
+			
+			return modelAndView;
+			
+		}
+		
+		
+		} catch (Exception e) {
+			System.out.println("Exception in runningMonth" + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+		
+		
+		
+		
 		String srNo = getGrnGvnSrNo(request, response);
 
 		System.out.println("#########" + srNo + "################");
@@ -234,10 +276,7 @@ public class GrnGvnController {
 		int month = 0;
 		try {
 
-			HttpSession session = request.getSession();
-			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			RestTemplate restTemplate = new RestTemplate();
-
+		
 			// getRunniugMonth
 			try {
 				MultiValueMap<String, Object> mapForRunningMonth = new LinkedMultiValueMap<String, Object>();
@@ -571,6 +610,7 @@ public class GrnGvnController {
 		return modelAndView;
 
 	}
+
 
 	public String getGrnGvnSrNo(HttpServletRequest request, HttpServletResponse response) {
 		String grnGvnNo = null;
