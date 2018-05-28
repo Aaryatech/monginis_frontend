@@ -3,6 +3,7 @@ package com.monginis.ops.controller;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,11 +48,13 @@ import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
 
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Font.FontFamily;
@@ -85,6 +89,9 @@ import com.monginis.ops.model.spadvreport.GetSpAdvTaxReport;
 import com.monginis.ops.model.spadvreport.GetSpAdvTaxReportList;
 import com.monginis.ops.model.spadvreport.GetSpAdvanceReport;
 import com.monginis.ops.model.spadvreport.GetSpAdvanceReportList;
+import com.monginis.ops.model.spadvreport.RegCakeAsSpOrderReport;
+import com.monginis.ops.util.ItextPageEvent;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @Controller
 @Scope("session")
@@ -107,6 +114,272 @@ public class ReportsController {
 	public List<MonthWiseReport> monthWiseReportList;
 	public int frGstType = 0;
 
+	//28 May Reg cake As sp Order report:
+	@RequestMapping(value = "/showRegCakeAsSpOrRep", method = RequestMethod.GET)
+	public ModelAndView showRegCakeAsSpOrRep(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/regcakeassp");
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return model;
+	}
+	
+	List<RegCakeAsSpOrderReport> regCakeSpList;
+	@RequestMapping(value = "/getRegCakeAsSpOrder", method = RequestMethod.GET)
+	public @ResponseBody List<RegCakeAsSpOrderReport> getRegCakeAsSpOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
+		advList = new ArrayList<>();
+		try {
+			System.out.println("in method /getRegCakeAsSpOrder");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			RestTemplate restTemplate = new RestTemplate();
+			System.err.println("from " + fromDate + "toDate " + toDate);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+			map.add("frId", frId);
+
+			RegCakeAsSpOrderReport[] regCakesSp = restTemplate.postForObject(Constant.URL + "/getRegCakeAsSpOrderReport",
+					map, RegCakeAsSpOrderReport[].class);
+			regCakeSpList = new ArrayList<>(Arrays.asList(regCakesSp));
+
+			System.err.println("regCakesSp List " + regCakesSp.toString());
+			
+		} catch (Exception e) {
+			
+			System.err.println("Ex in gettting regCakesSp list " + e.getMessage());
+			
+			e.printStackTrace();
+			
+		}
+		return regCakeSpList;
+
+	}
+	
+	
+	@RequestMapping(value = "/getRegCakeAsSpOrderPdf", method = RequestMethod.GET)
+	public void getRegCakeAsSpOrderPdf(HttpServletRequest request, HttpServletResponse response) {
+
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf prod From Order Or Plan");
+
+		
+
+		//regCakeSpList = pdfTypeList;
+		Document document = new Document(PageSize.A4,20,20,150,30);
+		// ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in getRegCakeAsSpOrderPdf PDF ==" + dateFormat.format(cal.getTime()));
+		String timeStamp = dateFormat.format(cal.getTime());
+		String FILE_PATH = Constant.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(FILE_PATH);
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+
+			String header=frDetails.getFrName();
+				
+
+			String title="Report-For Special Cake As Regular Order ";
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new java.util.Date());
+			
+			writer = PdfWriter.getInstance(document, out);
+			
+			ItextPageEvent event=new ItextPageEvent(header,title, reportDate);
+			
+			writer.setPageEvent(event);
+			
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(7);
+		try {
+			System.out.println("Inside PDF Table try /getRegCakeAsSpOrderPdf");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 0.4f, 1.7f, 0.9f,1.0f,0.9f,0.9f,0.9f});
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell=new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			hcell.setPadding(4);
+			hcell = new PdfPCell(new Phrase("Sr No", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item  Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+
+			
+			hcell = new PdfPCell(new Phrase("SubCategory", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Mrp", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			
+			
+			hcell = new PdfPCell(new Phrase("Quantity", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Sub Total", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Customer", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			
+			int index = 0;
+			for (RegCakeAsSpOrderReport regCakeSp : regCakeSpList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  cell.setPadding(4);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(regCakeSp.getItemName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+
+				
+					cell = new PdfPCell(new Phrase(regCakeSp.getSubCatName(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPaddingRight(2);
+					  cell.setPadding(4);
+					table.addCell(cell);
+			
+					cell = new PdfPCell(new Phrase(String.valueOf(regCakeSp.getMrp()), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPaddingRight(2);
+					  cell.setPadding(4);
+					table.addCell(cell);
+					
+					
+					cell = new PdfPCell(new Phrase(String.valueOf(regCakeSp.getQty()), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPaddingRight(2);
+					  cell.setPadding(4);
+					table.addCell(cell);
+					
+					
+					cell = new PdfPCell(new Phrase(String.valueOf(regCakeSp.getRspSubTotal()), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPaddingRight(2);
+					  cell.setPadding(4);
+					  
+					  table.addCell(cell);
+				
+					
+				
+				cell = new PdfPCell(new Phrase(""+regCakeSp.getRspCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+				// FooterTable footerEvent = new FooterTable(table);
+				// writer.setPageEvent(footerEvent);
+			}
+			document.open();
+			
+			document.add(table);
+			document.close();
+			
+			
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = null;
+				try {
+					inputStream = new BufferedInputStream(new FileInputStream(file));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: BOm Prod  View Prod" + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+	}
+	
 	@RequestMapping(value = "/showSpAdvanceReport", method = RequestMethod.GET)
 	public ModelAndView showSpAdvanceReport(HttpServletRequest request, HttpServletResponse response) {
 
