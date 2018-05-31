@@ -3,6 +3,7 @@ package com.monginis.ops.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,9 +40,12 @@ import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
+import com.monginis.ops.model.MCategory;
+import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
 
 
@@ -53,6 +57,8 @@ public class BillingController {
 	public GetBillHeaderResponse billHeadeResponse;
 	public List<GetBillDetail> billDetailsList;
 	
+	PostFrItemStockHeader frItemStockHeader;
+	int runningMonth;
 	
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request,
@@ -67,6 +73,111 @@ public class BillingController {
 		
 		     RestTemplate restTemplate = new RestTemplate();
 				
+		     
+			
+				try {
+					
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+					
+					com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
+							com.monginis.ops.model.Info.class);
+					
+					
+					System.out.println(" 	"+info.toString() );
+
+				if (info.isError()) {
+
+					
+					System.out.println("need to complete Month End ......" );
+
+					 modelAndView = new ModelAndView("stock/stockdetails");
+					modelAndView.addObject("message","Please do month end process first");
+					
+					List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+
+					CategoryList categoryList = new CategoryList();
+					
+					try {
+						 map = new LinkedMultiValueMap<String, Object>();
+						map.add("frId", frDetails.getFrId());
+						
+						List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
+								List.class);
+						
+						System.out.println("list " + list);
+
+						frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+								PostFrItemStockHeader.class);
+						
+						System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
+						runningMonth = frItemStockHeader.getMonth();
+						
+						int monthNumber = runningMonth;
+						String mon=Month.of(monthNumber).name();
+						
+						System.err.println("Month name "+mon);
+						modelAndView.addObject("getMonthList", list);
+						
+
+					} catch (Exception e) {
+						System.out.println("Exception in runningMonth" + e.getMessage());
+						e.printStackTrace();
+
+					}
+
+					boolean isMonthCloseApplicable = true;
+
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					java.util.Date date = new java.util.Date();
+					System.out.println(dateFormat.format(date));
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+
+					Integer dayOfMonth = cal.get(Calendar.DATE);
+
+					Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
+					System.out.println("Current Cal Month " + calCurrentMonth);
+
+					System.out.println("Day Of Month is: " + dayOfMonth);
+
+					if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+						isMonthCloseApplicable = true;
+						System.out.println("Day Of Month End ......" );
+
+					}
+
+					try {
+
+						categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
+
+					} catch (Exception e) {
+						System.out.println("Exception in getAllGategory" + e.getMessage());
+						e.printStackTrace();
+
+					}
+
+					mAllCategoryList = categoryList.getmCategoryList();
+
+					System.out.println(" All Category " + mAllCategoryList.toString());
+
+					modelAndView.addObject("category", mAllCategoryList);
+					modelAndView.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
+					
+					return modelAndView;
+					
+				}
+				
+				} catch (Exception e) {
+					System.out.println("Exception in runningMonth" + e.getMessage());
+					e.printStackTrace();
+
+				}
+			
+			     
+		     
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 				Date date = new Date();				

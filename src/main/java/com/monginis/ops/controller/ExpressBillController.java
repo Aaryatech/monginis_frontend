@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
@@ -48,6 +50,7 @@ import com.monginis.ops.model.GetItemHsnCode;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -70,10 +73,17 @@ public class ExpressBillController {
 	
 	int globalFrId=0;
 
+	
+	PostFrItemStockHeader frItemStockHeader;
+	int runningMonth;
+	
+	
 	@RequestMapping(value = "/showExpressBill", method = RequestMethod.GET)
 	public ModelAndView showExpressBill(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("expressBill/expressBill");
 		int count = 0;
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		Calendar cal = Calendar.getInstance();
 		System.out.println(new SimpleDateFormat("MMM").format(cal.getTime()));
@@ -88,9 +98,111 @@ public class ExpressBillController {
 		}
 
 		HttpSession session = request.getSession();
+	     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+	
+	     RestTemplate restTemplate = new RestTemplate();
+			
+	     
+	     try {
+				
+			 map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				
+				com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
+						com.monginis.ops.model.Info.class);
+				
+				
+				System.out.println(" 	"+info.toString() );
 
+			if (info.isError()) {
+
+				
+				System.out.println("need to complete Month End ......" );
+
+				model = new ModelAndView("stock/stockdetails");
+				model.addObject("message","Please do month end process first");
+				
+				List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+
+				CategoryList categoryList = new CategoryList();
+				
+				try {
+					 map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+					
+					List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
+							List.class);
+					
+					System.out.println("list " + list);
+
+					frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+							PostFrItemStockHeader.class);
+					
+					System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
+					runningMonth = frItemStockHeader.getMonth();
+					
+					int monthNumber = runningMonth;
+					String mon=Month.of(monthNumber).name();
+					
+					System.err.println("Month name "+mon);
+					model.addObject("getMonthList", list);
+					
+
+				} catch (Exception e) {
+					System.out.println("Exception in runningMonth" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				boolean isMonthCloseApplicable = true;
+
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				java.util.Date date = new java.util.Date();
+				System.out.println(dateFormat.format(date));
+				cal = Calendar.getInstance();
+				cal.setTime(date);
+
+				Integer dayOfMonth = cal.get(Calendar.DATE);
+
+				Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
+				System.out.println("Current Cal Month " + calCurrentMonth);
+
+				System.out.println("Day Of Month is: " + dayOfMonth);
+
+				if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+					isMonthCloseApplicable = true;
+					System.out.println("Day Of Month End ......" );
+
+				}
+
+				try {
+
+					categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
+
+				} catch (Exception e) {
+					System.out.println("Exception in getAllGategory" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				mAllCategoryList = categoryList.getmCategoryList();
+
+				System.out.println(" All Category " + mAllCategoryList.toString());
+
+				model.addObject("category", mAllCategoryList);
+				model.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
+				
+				return model;
+				
+			}
+			
+			} catch (Exception e) {
+				System.out.println("Exception in runningMonth" + e.getMessage());
+				e.printStackTrace();
+
+			}		
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 		try {
 			System.out.println("menuList" + menuList.toString());
@@ -116,7 +228,6 @@ public class ExpressBillController {
 
 			System.out.println("Item Show List is " + items);
 
-			RestTemplate restTemplate = new RestTemplate();
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 
 			mvm.add("itemList", items);
@@ -201,7 +312,7 @@ public class ExpressBillController {
 			// -------------------------------------
 			if (count != 0) {
 				if (billDate.equals(currentDate)) {
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					 map = new LinkedMultiValueMap<String, Object>();
 					System.err.println("bill date eq cur date");
 					map.add("billNo", sellBillHeader.getSellBillNo());
 
@@ -218,7 +329,7 @@ public class ExpressBillController {
 					model.addObject("sellBillHeader", sellBillHeader);
 
 				} else if (billDate.before(currentDate)) {
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map = new LinkedMultiValueMap<String, Object>();
 					System.err.println("bill date before cur date");
 
 					map.add("billNo", sellBillHeader.getSellBillNo());

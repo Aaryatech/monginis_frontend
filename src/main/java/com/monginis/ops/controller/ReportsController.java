@@ -334,7 +334,6 @@ public class ReportsController {
 				// writer.setPageEvent(footerEvent);
 			}
 			document.open();
-			
 			document.add(table);
 			document.close();
 			

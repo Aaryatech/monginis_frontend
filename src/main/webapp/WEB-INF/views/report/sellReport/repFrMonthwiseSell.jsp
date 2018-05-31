@@ -208,18 +208,17 @@ jQuery(document).ready(function(){
 	<div id="chart" style="display: none"><br><br><br>
 	<hr><div  >
 	 
-			<div  id="chart_div" style="width:60%; height:300; float:left;" ></div> 
+			<div  id="chart_div" style="width:70%; height:70%; float:left;" ></div> 
 		 
-			<div   id="Piechart" style="width:40%%; height:300; float: right;" ></div> 
+			<div   id="Piechart" style="width:70%%; height:70%; float: right;" ></div> 
 			</div>
 			 
 			<div class="colOuter" align="center" >
 			 <br>
-				<div   id="PieChart_div" style="width:50%; height:400;" align="center" ></div>
+				<div   id="PieChart_div" style="width:70%; height:70%;" align="center" ></div>
 				</div>
 				 
 				</div>
-				
 				
 				</div>
 				<!--rightSidebar-->

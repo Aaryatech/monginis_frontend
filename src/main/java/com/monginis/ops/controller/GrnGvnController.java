@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -48,8 +49,10 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -244,7 +247,7 @@ public class GrnGvnController {
 					com.monginis.ops.model.Info.class);
 			
 			
-			System.out.println("info response for month end "+info.toString() );
+			System.out.println(" 	"+info.toString() );
 
 		if (info.isError()) {
 
@@ -254,17 +257,87 @@ public class GrnGvnController {
 			 modelAndView = new ModelAndView("stock/stockdetails");
 			modelAndView.addObject("message","Please do month end process first");
 			
+			List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+
+			CategoryList categoryList = new CategoryList();
+			
+			try {
+				 map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				
+				List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
+						List.class);
+				
+				System.out.println("list " + list);
+
+				frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+						PostFrItemStockHeader.class);
+				
+				System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
+				runningMonth = frItemStockHeader.getMonth();
+				
+				int monthNumber = runningMonth;
+				String mon=Month.of(monthNumber).name();
+				
+				System.err.println("Month name "+mon);
+				modelAndView.addObject("getMonthList", list);
+				
+
+			} catch (Exception e) {
+				System.out.println("Exception in runningMonth" + e.getMessage());
+				e.printStackTrace();
+
+			}
+
+			boolean isMonthCloseApplicable = true;
+
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			java.util.Date date = new java.util.Date();
+			System.out.println(dateFormat.format(date));
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+
+			Integer dayOfMonth = cal.get(Calendar.DATE);
+
+			Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
+			System.out.println("Current Cal Month " + calCurrentMonth);
+
+			System.out.println("Day Of Month is: " + dayOfMonth);
+
+			if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+				isMonthCloseApplicable = true;
+				System.out.println("Day Of Month End ......" );
+
+			}
+
+			try {
+
+				categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
+
+			} catch (Exception e) {
+				System.out.println("Exception in getAllGategory" + e.getMessage());
+				e.printStackTrace();
+
+			}
+
+			mAllCategoryList = categoryList.getmCategoryList();
+
+			System.out.println(" All Category " + mAllCategoryList.toString());
+
+			modelAndView.addObject("category", mAllCategoryList);
+			modelAndView.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
+			
 			return modelAndView;
 			
 		}
-		
 		
 		} catch (Exception e) {
 			System.out.println("Exception in runningMonth" + e.getMessage());
 			e.printStackTrace();
 
 		}
-		
 		
 		
 		

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDataCommon;
@@ -318,10 +320,14 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 	
 	
 	
-
+	PostFrItemStockHeader frItemStockHeader;
+	int runningMonth;
+	
 	
 	@RequestMapping(value = "/showCustomerBill", method = RequestMethod.GET)
 	public ModelAndView displayCustomerBill1(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		ModelAndView model = new ModelAndView("frSellBilling/customerBill");
 
@@ -337,6 +343,127 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 		// currentStockDetailList.toString());
 
 		HttpSession session = request.getSession();
+	     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+	
+	     RestTemplate restTemplate = new RestTemplate();
+			
+	     
+		
+	     try {
+				
+			 map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frDetails.getFrId());
+				
+				com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
+						com.monginis.ops.model.Info.class);
+				
+				
+				System.out.println(" 	"+info.toString() );
+
+			if (info.isError()) {
+
+				
+				System.out.println("need to complete Month End ......" );
+
+				model = new ModelAndView("stock/stockdetails");
+				model.addObject("message","Please do month end process first");
+				
+				List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+
+				CategoryList categoryList = new CategoryList();
+				
+				try {
+					 map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+					
+					List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
+							List.class);
+					
+					System.out.println("list " + list);
+
+					frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+							PostFrItemStockHeader.class);
+					
+					System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
+					runningMonth = frItemStockHeader.getMonth();
+					
+					int monthNumber = runningMonth;
+					String mon=Month.of(monthNumber).name();
+					
+					System.err.println("Month name "+mon);
+					model.addObject("getMonthList", list);
+					
+
+				} catch (Exception e) {
+					System.out.println("Exception in runningMonth" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				boolean isMonthCloseApplicable = true;
+
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				java.util.Date date = new java.util.Date();
+				System.out.println(dateFormat.format(date));
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+
+				Integer dayOfMonth = cal.get(Calendar.DATE);
+
+				Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
+				System.out.println("Current Cal Month " + calCurrentMonth);
+
+				System.out.println("Day Of Month is: " + dayOfMonth);
+
+				if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+					isMonthCloseApplicable = true;
+					System.out.println("Day Of Month End ......" );
+
+				}
+
+				try {
+
+					categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
+
+				} catch (Exception e) {
+					System.out.println("Exception in getAllGategory" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				mAllCategoryList = categoryList.getmCategoryList();
+
+				System.out.println(" All Category " + mAllCategoryList.toString());
+
+				model.addObject("category", mAllCategoryList);
+				model.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
+				
+				return model;
+				
+			}
+			
+			} catch (Exception e) {
+				System.out.println("Exception in runningMonth" + e.getMessage());
+				e.printStackTrace();
+
+			}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		try {
 
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
@@ -368,13 +495,12 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 			// getAllSubCategories
 
-			RestTemplate restTemplate = new RestTemplate();
 
 			CategoryList catergoryList = restTemplate.getForObject(Constant.URL + "/showAllCategory",
 					CategoryList.class);
 			System.out.println("Category List " + catergoryList.toString());
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("itemList", items);
 
 			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsById", map,

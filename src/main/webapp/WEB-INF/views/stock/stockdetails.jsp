@@ -165,7 +165,6 @@
 										</c:choose> 
 									</c:forEach> 
 							</c:forEach>
-
 						 
 					</div>
  
@@ -180,8 +179,16 @@
 
 							<option value="-1">Select Category</option>
 							<c:forEach items="${category}" var="category" varStatus="count">
-								<option value="${category.catId}"><c:out
+							<c:choose>
+							<c:when test="${category.catId != '5' and category.catId != '6' and category.catId != '7' }">
+							
+							<option value="${category.catId}"><c:out
 										value="${category.catName}" /></option>
+							
+							</c:when>
+							
+							</c:choose>
+								
 							</c:forEach>
 
 						</select>

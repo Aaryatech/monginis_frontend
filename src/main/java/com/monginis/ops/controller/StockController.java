@@ -55,7 +55,7 @@ public class StockController {
 	Integer runningMonth = 0;
 	
 	PostFrItemStockHeader frItemStockHeader;
-
+	String catId=null;
 	
 	@RequestMapping(value = "/showstockdetail")
 	public ModelAndView showStockDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -97,7 +97,7 @@ public class StockController {
 
 		}
 
-		boolean isMonthCloseApplicable = false;
+		boolean isMonthCloseApplicable = true;
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
@@ -145,7 +145,7 @@ public class StockController {
 	public @ResponseBody List<GetCurrentStockDetails> getMenuListByFr(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String catId = request.getParameter("cat_id");
+		 catId = request.getParameter("cat_id");
 		String showOption = request.getParameter("show_option");
 
 		
@@ -213,7 +213,7 @@ public class StockController {
 
 			
 			
-			boolean isMonthCloseApplicable = false;
+			boolean isMonthCloseApplicable = true;
 
 			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
@@ -237,7 +237,7 @@ public class StockController {
 			}
 			
 			if(isMonthCloseApplicable) {
-				System.err.println("Inside iMonthclose app");
+				System.err.println("### Inside iMonthclose app");
 				String strDate;
 				int year;
 				if(runningMonth==12) {
@@ -341,16 +341,34 @@ public class StockController {
 
 	@RequestMapping(value = "/monthEndProcess", method = RequestMethod.POST)
 	public String showCurrentMonthStock(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("in end month");
+					
+		
+		System.out.println("in end month for cat Id "+catId);
+		
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		map.add("catId", catId);
+		
+		RestTemplate restTemplate=new RestTemplate();
+		
+		PostFrItemStockHeader postFrItemStockHeader = restTemplate.postForObject(Constant.URL + "getCurrentMonthByCatIdFrId", map,
+				PostFrItemStockHeader.class);
+		
+		System.out.println("prev stock header " + postFrItemStockHeader);
 	
-		PostFrItemStockHeader postFrItemStockHeader = new PostFrItemStockHeader();
-		postFrItemStockHeader.setFrId(frItemStockHeader.getFrId());
-		postFrItemStockHeader.setMonth(runningMonth);
-		postFrItemStockHeader.setIsMonthClosed(1);
-		postFrItemStockHeader.setCatId(frItemStockHeader.getCatId());
-		postFrItemStockHeader.setOpeningStockHeaderId(frItemStockHeader.getOpeningStockHeaderId());
-		postFrItemStockHeader.setYear(frItemStockHeader.getYear());
+//		PostFrItemStockHeader postFrItemStockHeader = new PostFrItemStockHeader();
+//		postFrItemStockHeader.setFrId(frItemStockHeader.getFrId());
+//		postFrItemStockHeader.setMonth(runningMonth);
+//		postFrItemStockHeader.setIsMonthClosed(1);
+//		postFrItemStockHeader.setCatId(frItemStockHeader.getCatId());
+//		postFrItemStockHeader.setOpeningStockHeaderId(frItemStockHeader.getOpeningStockHeaderId());
+//		postFrItemStockHeader.setYear(frItemStockHeader.getYear());
 
+		postFrItemStockHeader.setIsMonthClosed(1);
+		
 		List<PostFrItemStockDetail> stockDetailList = new ArrayList<PostFrItemStockDetail>();
 
 		for (int i = 0; i < currentStockDetailList.size(); i++) {
@@ -393,9 +411,8 @@ public class StockController {
 
 		postFrItemStockHeader.setPostFrItemStockDetailList(stockDetailList);
 
-		System.out.println("Post Fr Op Stock  " + postFrItemStockHeader.toString());
+		System.out.println("#### Month End Data - Post Fr Op Stock  " + postFrItemStockHeader.toString() +" ### ");
 
-		RestTemplate restTemplate = new RestTemplate();
 
 		Info info = restTemplate.postForObject(Constant.URL + "updateEndMonth", postFrItemStockHeader, Info.class);
 
