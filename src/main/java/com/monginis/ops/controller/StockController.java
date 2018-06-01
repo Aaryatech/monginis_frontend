@@ -69,9 +69,10 @@ public class StockController {
 		RestTemplate restTemplate = new RestTemplate();
 	
 		try {
-			
+			int frId=frDetails.getFrId();
+			System.err.println("Fr Id " +frId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("frId", frDetails.getFrId());
+			map.add("frId", frId);
 			
 			List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
 					List.class);
@@ -347,9 +348,10 @@ public class StockController {
 		
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-		
+		int frId=frDetails.getFrId();
+		System.err.println("Fr Id In stock Month End " +frId);
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("frId", frDetails.getFrId());
+		map.add("frId", frId);
 		map.add("catId", catId);
 		
 		RestTemplate restTemplate=new RestTemplate();
