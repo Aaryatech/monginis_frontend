@@ -322,16 +322,13 @@
 												<th>Reg Pur Qty</th>
 												<th>Sp Pur Qty</th>
 												<th>Grn-Gvn Qty</th>
-												<th>Regular Sale</th>
+												<th>Reg Sale</th>
 												<th>Sp Sale</th>
 												<th>Reorder Qty</th>
 												<th>Reg Cur Stock</th>
 												<th>Sp Cur Stock</th>
 
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
+												
 
 											</tr>
 										</thead></table></div>
@@ -346,16 +343,12 @@
 												<th>Reg Pur Qty</th>
 												<th>Sp Pur Qty</th>
 												<th>Grn-Gvn Qty</th>
-												<th>Regular Sale</th>
+												<th>Reg Sale</th>
 												<th>Sp Sale</th>
 												<th>Reorder Qty</th>
-												<th>Reg Cur Stock</th>
-												<th>Sp Cur Stock</th>
+												<th>Reg Current Stock</th>
+												<th>Sp Current Stock</th>
 
-												<c:if test="${isMonthCloseApplicable eq true}">
-													<th>Physical Stock</th>
-													<th>Stock Difference</th>
-												</c:if>
 
 											</tr>
 										</thead>
@@ -571,8 +564,9 @@
 					var len = data.length;
 					$('#table_grid td').remove();
 					//alert(isMonthClose+ "month close");			
-					
-					if(isMonthClose && selectedStockOption == 1){
+					var list= data.currentStockDetailList;
+					alert(data.monthClosed);
+					if(data.monthClosed && selectedStockOption == 1){
 					
 				
 						document.getElementById('monthEnd').style.display = "block";
@@ -580,34 +574,35 @@
 						$('#table_grid th').remove();
 							var tr = $('<tr class=bgpink></tr>');
 						
-						tr.append($('<th width=60 align=left>Item Id</th>'));
+						tr.append($('<th >Item Id</th>'));
 						
-						tr.append($('<th width=60 align=left>Item Name</th>'));
+						tr.append($('<th >Item Name</th>'));
 						
-						tr.append($('<th width=60 align=center>Regular Opening Stock</th>'));
-						tr.append($('<th width=60 align=left>Special Opening Stock</th>'));
+						tr.append($('<th >Regular Opening Stock</th>'));
+						tr.append($('<th >Special Opening Stock</th>'));
 
 						
-						tr.append($('<th width=60 align=left>Reg Purchase Qty</th>'));
-						tr.append($('<th width=60 align=left>Sp Purchase Qty</th>'));
+						tr.append($('<th >Reg Purchase Qty</th>'));
+						tr.append($('<th >Sp Purchase Qty</th>'));
 
-						tr.append($('<th width=60 align=left>GRN / GVN Qty</th>'));
-						tr.append($('<th width=60 align=left>Reg Sale</th>'));
-						tr.append($('<th width=60 align=left>Sp Sale</th>'));
+						tr.append($('<th >GRN / GVN Qty</th>'));
+						tr.append($('<th >Reg Sale</th>'));
+						tr.append($('<th >Sp Sale</th>'));
 						
-						tr.append($('<th width=60 align=left>Reorder Qty</th>'));
-						tr.append($('<th width=60 align=left>Regular Current Stock</th>'));
-						tr.append($('<th width=60 align=center>Special Current Stock</th>'));
+						tr.append($('<th >Reorder Qty</th>'));
+						tr.append($('<th >Regular Current Stock</th>'));
+						tr.append($('<th >Special Current Stock</th>'));
 
-						tr.append($('<th width=60 align=left>Physical Stock</th>'));
+						tr.append($('<th >Physical Stock</th>'));
 						
-						tr.append($('<th width=60 align=left>Stock Difference</th>'));
+						tr.append($('<th >Stock Diff</th>'));
 					
 						$('#table_grid').append(tr); 
 					}
 					
 					
-					$.each(data, function(key, item) {
+					
+					$.each(list, function(key, item) {
 
 						
 						var regCurrentStock = item.currentRegStock;
@@ -648,7 +643,7 @@
 							}
 						tr.append($('<td > </td>').html(item.currentSpStock));
 					
-						if(isMonthClose && selectedStockOption == 1){
+						if(data.monthClosed && selectedStockOption == 1){
 							
 						 	tr.append($('<td > <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
 									+ item.itemId +','+regCurrentStock+') onchange= updateStockDiff('+ item.itemId + ','+regCurrentStock+')  id= physicalStockQty'+ item.itemId+ ' name=physicalStockQty'+item.itemId+' value = '+ regCurrentStock+ '></td>'));
