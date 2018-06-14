@@ -25,7 +25,11 @@ public class StockForAutoGrnGvn {
 	
 	
 	
-	
+    private int status;//for grn stock cal added by sac 13 Jun
+    
+    private int billNo;//for grn stock cal added by sac 13 Jun
+
+
 
 	public String getItemId() {
 		return itemId;
@@ -108,13 +112,31 @@ public class StockForAutoGrnGvn {
 		this.grnGvnQty = grnGvnQty;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(int billNo) {
+		this.billNo = billNo;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "StockForAutoGrnGvn [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", regCurrentStock="
 				+ regCurrentStock + ", spCurrentStock=" + spCurrentStock + ", purchaseQty=" + purchaseQty + ", pushQty="
 				+ pushQty + ", regSellQty=" + regSellQty + ", spSellQty=" + spSellQty + ", grnGvnQty=" + grnGvnQty
-				+ "]";
+				+ ", status=" + status + ", billNo=" + billNo + "]";
 	}
 
+	
 
 }

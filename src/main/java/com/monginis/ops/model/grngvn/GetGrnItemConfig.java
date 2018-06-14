@@ -31,7 +31,17 @@ public class GetGrnItemConfig {
 
     private String billDateTime;
     
+    private int status;//for grn stock cal added by sac 13 Jun
     
+    
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public int getCatId() {
 		return catId;
 	}
@@ -190,7 +200,8 @@ public class GetGrnItemConfig {
 				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate + ", mrp="
 				+ mrp + ", billQty=" + billQty + ", billDate=" + billDate + ", sgstPer=" + sgstPer + ", cgstPer="
 				+ cgstPer + ", igstPer=" + igstPer + ", catId=" + catId + ", menuId=" + menuId + ", invoiceNo="
-				+ invoiceNo + ", autoGrnQty=" + autoGrnQty + ", billDateTime=" + billDateTime + "]";
+				+ invoiceNo + ", autoGrnQty=" + autoGrnQty + ", billDateTime=" + billDateTime + ", status=" + status
+				+ "]";
 	}
 
 	

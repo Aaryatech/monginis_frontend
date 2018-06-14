@@ -230,118 +230,110 @@ public class GrnGvnController {
 		 * 
 		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
 		 */
-		
-		 HttpSession session = request.getSession();
-	     Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-	
-	     RestTemplate restTemplate = new RestTemplate();
-			
-	     
-		
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		RestTemplate restTemplate = new RestTemplate();
+
 		try {
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
-			
-			com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
+
+			com.monginis.ops.model.Info info = restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
 					com.monginis.ops.model.Info.class);
-			
-			
-			System.out.println(" 	"+info.toString() );
 
-		if (info.isError()) {
+			System.out.println(" 	" + info.toString());
 
-			
-			System.out.println("need to complete Month End ......" );
+			if (info.isError()) {
 
-			 modelAndView = new ModelAndView("stock/stockdetails");
-			modelAndView.addObject("message","Please do month end process first");
-			
-			List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+				System.out.println("need to complete Month End ......");
 
-			CategoryList categoryList = new CategoryList();
-			
-			try {
-				 map = new LinkedMultiValueMap<String, Object>();
-				map.add("frId", frDetails.getFrId());
-				
-				List<PostFrItemStockHeader> list = restTemplate.postForObject(Constant.URL + "getCurrentMonthOfCatId", map,
-						List.class);
-				
-				System.out.println("list " + list);
+				modelAndView = new ModelAndView("stock/stockdetails");
+				modelAndView.addObject("message", "Please do month end process first");
 
-				frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
-						PostFrItemStockHeader.class);
-				
-				System.out.println("Fr Opening Stock "+frItemStockHeader.toString());
-				runningMonth = frItemStockHeader.getMonth();
-				
-				int monthNumber = runningMonth;
-				String mon=Month.of(monthNumber).name();
-				
-				System.err.println("Month name "+mon);
-				modelAndView.addObject("getMonthList", list);
-				
+				List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
 
-			} catch (Exception e) {
-				System.out.println("Exception in runningMonth" + e.getMessage());
-				e.printStackTrace();
+				CategoryList categoryList = new CategoryList();
+
+				try {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+
+					List<PostFrItemStockHeader> list = restTemplate
+							.postForObject(Constant.URL + "getCurrentMonthOfCatId", map, List.class);
+
+					System.out.println("list " + list);
+
+					frItemStockHeader = restTemplate.postForObject(Constant.URL + "getRunningMonth", map,
+							PostFrItemStockHeader.class);
+
+					System.out.println("Fr Opening Stock " + frItemStockHeader.toString());
+					runningMonth = frItemStockHeader.getMonth();
+
+					int monthNumber = runningMonth;
+					String mon = Month.of(monthNumber).name();
+
+					System.err.println("Month name " + mon);
+					modelAndView.addObject("getMonthList", list);
+
+				} catch (Exception e) {
+					System.out.println("Exception in runningMonth" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				boolean isMonthCloseApplicable = true;
+
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				java.util.Date date = new java.util.Date();
+				System.out.println(dateFormat.format(date));
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+
+				Integer dayOfMonth = cal.get(Calendar.DATE);
+
+				Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
+				System.out.println("Current Cal Month " + calCurrentMonth);
+
+				System.out.println("Day Of Month is: " + dayOfMonth);
+
+				if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
+
+					isMonthCloseApplicable = true;
+					System.out.println("Day Of Month End ......");
+
+				}
+
+				try {
+
+					categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
+
+				} catch (Exception e) {
+					System.out.println("Exception in getAllGategory" + e.getMessage());
+					e.printStackTrace();
+
+				}
+
+				mAllCategoryList = categoryList.getmCategoryList();
+
+				System.out.println(" All Category " + mAllCategoryList.toString());
+
+				modelAndView.addObject("category", mAllCategoryList);
+				modelAndView.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
+
+				return modelAndView;
 
 			}
 
-			boolean isMonthCloseApplicable = true;
-
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			java.util.Date date = new java.util.Date();
-			System.out.println(dateFormat.format(date));
-
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-
-			Integer dayOfMonth = cal.get(Calendar.DATE);
-
-			Integer calCurrentMonth = cal.get(Calendar.MONTH) + 1;
-			System.out.println("Current Cal Month " + calCurrentMonth);
-
-			System.out.println("Day Of Month is: " + dayOfMonth);
-
-			if (dayOfMonth == Constant.dayOfMonthEnd && runningMonth != calCurrentMonth) {
-
-				isMonthCloseApplicable = true;
-				System.out.println("Day Of Month End ......" );
-
-			}
-
-			try {
-
-				categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
-
-			} catch (Exception e) {
-				System.out.println("Exception in getAllGategory" + e.getMessage());
-				e.printStackTrace();
-
-			}
-
-			mAllCategoryList = categoryList.getmCategoryList();
-
-			System.out.println(" All Category " + mAllCategoryList.toString());
-
-			modelAndView.addObject("category", mAllCategoryList);
-			modelAndView.addObject("isMonthCloseApplicable", isMonthCloseApplicable);
-			
-			return modelAndView;
-			
-		}
-		
 		} catch (Exception e) {
 			System.out.println("Exception in runningMonth" + e.getMessage());
 			e.printStackTrace();
 
 		}
-		
-		
-		
-		
+
 		String srNo = getGrnGvnSrNo(request, response);
 
 		System.out.println("#########" + srNo + "################");
@@ -349,7 +341,6 @@ public class GrnGvnController {
 		int month = 0;
 		try {
 
-		
 			// getRunniugMonth
 			try {
 				MultiValueMap<String, Object> mapForRunningMonth = new LinkedMultiValueMap<String, Object>();
@@ -477,7 +468,7 @@ public class GrnGvnController {
 
 				caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) - 1));
 
-				System.out.println("*****Calender Gettime == " + caleInstance.getTime());
+				// System.out.println("*****Calender Gettime == " + caleInstance.getTime());
 
 				java.util.Date beforeBillAcceptDate = caleInstance.getTime();
 
@@ -502,26 +493,39 @@ public class GrnGvnController {
 						Constant.URL + "getStockForAutoGrnGvn", HttpMethod.POST, new HttpEntity<>(stockMap), typeRef);
 
 				templList = responseEntity.getBody();
+				templList.get(0).setBillNo(grnConfList.get(i).getBillNo());
 				stockForAutoGrn.add(templList.get(0));
 
 			}
 
-			System.out.println(" stockForAutoGrn Details : " + stockForAutoGrn.toString());
+			System.err.println(" Red :stockForAutoGrn Details : " + stockForAutoGrn.toString());
 
 			// end new web service
 
 			// calculate autogrnQty
 			for (int i = 0; i < grnConfList.size(); i++) {
 				// nw code
+				
+				
 				int purQty = grnConfList.get(i).getBillQty();
 				int tempGQty = grnConfList.get(i).getAutoGrnQty();
 
 				for (int k = 0; k < i; k++) {
+					
 					System.out.println(
 							"I Item = " + grnConfList.get(i).getItemId() + " K Item " + grnConfList.get(k).getItemId());
+					
 					if (grnConfList.get(i).getItemId().equals(grnConfList.get(k).getItemId())) {
-						purQty = purQty + grnConfList.get(k).getBillQty();
+						
+						if(grnConfList.get(i).getBillNo().equals(grnConfList.get(k).getBillNo()))
+						{
+							System.err.println("----Bill No Matched " +grnConfList.get(i).getBillNo());
+							purQty = purQty + grnConfList.get(k).getBillQty();
+						}
+						if(grnConfList.get(k).getAutoGrnQty()>0) {
 						tempGQty = tempGQty + grnConfList.get(k).getAutoGrnQty();
+						}
+						
 						System.out.println("/////////// Item Name " + grnConfList.get(i).getItemName() + " Pur Qty "
 								+ purQty + "Temp G qty " + tempGQty);
 
@@ -531,13 +535,24 @@ public class GrnGvnController {
 
 				for (int j = 0; j < stockForAutoGrn.size(); j++) {
 
-					if (grnConfList.get(i).getItemId().equals(stockForAutoGrn.get(j).getId())) {
+					if (grnConfList.get(i).getItemId().equals(stockForAutoGrn.get(j).getId())&& grnConfList.get(j).getStatus()==0) {
+						
+						grnConfList.get(j).setStatus(1);
 
 						if (grnConfList.get(i).getGrnType() != 4) {
 
-							int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
-									- (stockForAutoGrn.get(j).getRegSellQty() + stockForAutoGrn.get(j).getGrnGvnQty()
-											+ tempGQty);
+						
+
+							
+							int	autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
+										- (stockForAutoGrn.get(j).getRegSellQty()
+												+ stockForAutoGrn.get(j).getGrnGvnQty() + tempGQty);
+							
+							/*
+							 * int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty) -
+							 * (stockForAutoGrn.get(j).getRegSellQty() +
+							 * stockForAutoGrn.get(j).getGrnGvnQty() + tempGQty);
+							 */
 
 							System.out.println("*********");
 							System.out.println("item Id= " + grnConfList.get(i).getItemId());
@@ -545,14 +560,22 @@ public class GrnGvnController {
 							System.out.println(" bill qty = " + grnConfList.get(i).getBillQty());
 							System.out.println("tot sell = " + stockForAutoGrn.get(j).getRegSellQty());
 							System.out.println("grn = " + stockForAutoGrn.get(j).getGrnGvnQty());
+							System.out.println("purchase Qty = " + purQty);
+
+							System.out.println("autoGrnQty = " + autoGrnQty);
+							System.out.println("Value of i = " + autoGrnQty);
+
+							System.out.println("temp Qty  = " + tempGQty);
+
 							System.out.println("*********");
 							grnConfList.get(i).setAutoGrnQty(autoGrnQty);
 						} // end of inner if
 						else {
 							System.out.println("In Else ");
-							int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
-									- (stockForAutoGrn.get(j).getRegSellQty() + stockForAutoGrn.get(j).getGrnGvnQty()
-											+ tempGQty);
+							int	autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
+									- (stockForAutoGrn.get(j).getRegSellQty()
+											+ stockForAutoGrn.get(j).getGrnGvnQty() + tempGQty);
+						
 							System.out.println("4444444");
 							System.out.println("item Id= " + grnConfList.get(i).getItemId());
 							System.out.println("Pur Qty " + purQty);
@@ -567,11 +590,12 @@ public class GrnGvnController {
 							System.out.println("5555555");
 							grnConfList.get(i).setAutoGrnQty(autoGrnQty);
 						} // end of else
+						
+						break;
 					} // end of outer if
 				}
 			} // end of calc autogrnQty
 
-			
 			objShowGrnList = new ArrayList<>();
 
 			ShowGrnBean objShowGrn = null;
@@ -683,7 +707,6 @@ public class GrnGvnController {
 		return modelAndView;
 
 	}
-
 
 	public String getGrnGvnSrNo(HttpServletRequest request, HttpServletResponse response) {
 		String grnGvnNo = null;
@@ -812,9 +835,10 @@ public class GrnGvnController {
 				DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar calDate = Calendar.getInstance();
 
-				String tempGrnQtyAuto = request.getParameter("grnqtyauto" + objShowGrnList.get(i).getBillDetailNo() + "");
+				String tempGrnQtyAuto = request
+						.getParameter("grnqtyauto" + objShowGrnList.get(i).getBillDetailNo() + "");
 
-				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getBillDetailNo()+ "");
+				String tempGrnQty = request.getParameter("grnqty" + objShowGrnList.get(i).getBillDetailNo() + "");
 
 				System.out.println("tempGrnQty ===" + tempGrnQty);
 
@@ -1028,7 +1052,7 @@ public class GrnGvnController {
 			}
 			// Info insertGrn=null;
 			if (insertGrn.getError() == false) {
-				
+
 				System.err.println("Update Grn Sr No for GRN insert  where insertGrn.getError() is false ");
 
 				map.add("frId", frDetails.getFrId());
@@ -1044,11 +1068,12 @@ public class GrnGvnController {
 				map.add("frId", frDetails.getFrId());
 				map.add("grnGvnNo", grnGvnSrNo);
 
-				Info updateFrSettingGrnGvnNo = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map, Info.class);
+				Info updateFrSettingGrnGvnNo = restTemplate.postForObject(Constant.URL + "updateFrSettingGrnGvnNo", map,
+						Info.class);
 
-				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  " + updateFrSettingGrnGvnNo.toString());
+				System.out.println("/updateFrSettingGrnGvnNo: Response @GrnGvnController  info=  "
+						+ updateFrSettingGrnGvnNo.toString());
 
-				
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -1090,21 +1115,21 @@ public class GrnGvnController {
 						billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
 						billHeader.setPaidAmt(billHeader.getGrandTotal());
 						billHeader.setPayableAmt(billHeader.getGrandTotal());
-						System.err.println("bill Header data for Day close " +billHeader.toString());
+						System.err.println("bill Header data for Day close " + billHeader.toString());
 
-						String start_dt =billHeader.getBillDate();
-						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
-						java.util.Date date = (java.util.Date)formatter.parse(start_dt);
-					
+						String start_dt = billHeader.getBillDate();
+						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+						java.util.Date date = (java.util.Date) formatter.parse(start_dt);
+
 						SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
 						String finalString = newFormat.format(date);
 						billHeader.setBillDate(finalString);
 
-							billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
-									SellBillHeader.class);
+						billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
+								SellBillHeader.class);
 
-							System.out.println("Bill Header Response " + billHeader.toString());
-					
+						System.out.println("Bill Header Response " + billHeader.toString());
+
 					} else {
 
 						// update time
@@ -1121,9 +1146,9 @@ public class GrnGvnController {
 						Calendar caleInstance = Calendar.getInstance();
 
 						caleInstance.setTime(date);
-							caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
-							
-							String incTime=dateFormat.format(caleInstance.getTime());
+						caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) + 5));
+
+						String incTime = dateFormat.format(caleInstance.getTime());
 
 						System.out.println("*****Calender Gettime == " + caleInstance.getTime());
 
@@ -1280,25 +1305,23 @@ public class GrnGvnController {
 
 				if (sellBillHeaderRes != null) {
 
-				
-						map = new LinkedMultiValueMap<String, Object>();
+					map = new LinkedMultiValueMap<String, Object>();
 
-						map.add("frId", frDetails.getFrId());
-						FrSetting frSetting1 = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-								FrSetting.class);
+					map.add("frId", frDetails.getFrId());
+					FrSetting frSetting1 = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+							FrSetting.class);
 
-						int sellBillNo = frSetting1.getSellBillNo();
+					int sellBillNo = frSetting1.getSellBillNo();
 
-						sellBillNo = sellBillNo + 1;
+					sellBillNo = sellBillNo + 1;
 
-						map = new LinkedMultiValueMap<String, Object>();
+					map = new LinkedMultiValueMap<String, Object>();
 
-						map.add("frId", frDetails.getFrId());
-						map.add("sellBillNo", sellBillNo);
+					map.add("frId", frDetails.getFrId());
+					map.add("sellBillNo", sellBillNo);
 
-						Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
-					
 				}
 
 				System.out.println("info :" + sellBillHeaderRes.toString());
@@ -1525,10 +1548,10 @@ public class GrnGvnController {
 				objShowGvn.setMrp(grnConfList.get(i).getMrp());
 				objShowGvn.setRate(grnConfList.get(i).getRate());
 				objShowGvn.setSgstPer(grnConfList.get(i).getSgstPer());
-				//--------code for catId and MenuId---------------------
+				// --------code for catId and MenuId---------------------
 				objShowGvn.setCatId(grnConfList.get(i).getCatId());
 				objShowGvn.setMenuId(grnConfList.get(i).getMenuId());
-				//-------------------------------------------------------
+				// -------------------------------------------------------
 				objShowGvn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
 
 				float calcBaseRate = grnConfList.get(i).getRate() * 100
