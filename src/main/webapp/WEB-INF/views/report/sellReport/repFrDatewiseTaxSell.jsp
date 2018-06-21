@@ -167,7 +167,7 @@ jQuery(document).ready(function(){
 		</div>	
     </div>
 
-	<div id="chart"  "> <br><br> <br>
+	<div id="chart"> <br><br> <br>
 	<hr>
         
    
