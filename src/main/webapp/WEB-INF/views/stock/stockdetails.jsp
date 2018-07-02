@@ -565,7 +565,7 @@
 					$('#table_grid td').remove();
 					//alert(isMonthClose+ "month close");			
 					var list= data.currentStockDetailList;
-					alert(data.monthClosed);
+					//alert(data.monthClosed);
 					if(data.monthClosed && selectedStockOption == 1){
 					
 				
