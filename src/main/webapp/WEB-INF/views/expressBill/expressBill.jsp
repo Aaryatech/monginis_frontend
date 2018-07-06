@@ -978,6 +978,9 @@ function  hideMe(startId){
 	<script type="text/javascript">
 	function todaysDayClose(){
 			//alert("Hi ");
+		document.getElementById("dayClose1").disabled=true;
+
+			
 							$('#loader11').show();
 
 							$.getJSON('${dayClose}',{
@@ -986,8 +989,8 @@ function  hideMe(startId){
 							 },
 							 function(data) {
 								 //alert(data);
-								 
-								 window.location.reload();
+									window.location.reload();
+									window.open("${pageContext.request.contextPath}/showExpressBill");
 								 
 			});
 			$('#loader11').hide();

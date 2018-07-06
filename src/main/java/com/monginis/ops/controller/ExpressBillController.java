@@ -865,21 +865,37 @@ if(ses==null) {
 		} else {
 			System.out.println("Bill Detail Not Empty ");
 
+			float taxableAmt=0;
+			float totalTax=0;
+			float grandTot=0;
+			
 			for (int x = 0; x < sellBillDetails.size(); x++) {
+				
+				taxableAmt=taxableAmt+sellBillDetails.get(x).getTaxableAmt();
+				totalTax=totalTax+sellBillDetails.get(x).getTotalTax();
+				grandTot=grandTot+sellBillDetails.get(x).getGrandTotal() ;
+				
 
-				billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
+				//billHeader.setTaxableAmt(billHeader.getTaxableAmt() + sellBillDetails.get(x).getTaxableAmt());
 
-				billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
-				billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
+				//billHeader.setTotalTax(billHeader.getTotalTax() + sellBillDetails.get(x).getTotalTax());
+				//billHeader.setGrandTotal(sellBillDetails.get(x).getGrandTotal() + billHeader.getGrandTotal());
 
 				// billHeader.setBillDate(billHeader.getBillDate());
-				
-				billHeader.setDiscountPer(billHeader.getDiscountPer());
 
 			}
+			
+			billHeader.setTaxableAmt(taxableAmt);
+			billHeader.setTotalTax(totalTax);
+			billHeader.setGrandTotal(grandTot);
+			 billHeader.setBillDate(billHeader.getBillDate());
+			
 			billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
 			billHeader.setPaidAmt(billHeader.getGrandTotal());
 			billHeader.setPayableAmt(billHeader.getGrandTotal());
+			
+			billHeader.setDiscountPer(billHeader.getDiscountPer());
+
 
 			
 			System.err.println("bill Header data for Day close " +billHeader.toString());
@@ -906,6 +922,8 @@ if(ses==null) {
 		 * billHeader, SellBillHeader.class);
 		 */
 		ModelAndView model = new ModelAndView("expressBill/expressBill");
+		
+		sellBillHeaderGlobal=new SellBillHeader();
 
 		System.out.println("redirecting to model ex bill ");
 
