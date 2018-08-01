@@ -335,7 +335,6 @@ $("#tech").change(function() {
 
 	<!--easyTabs-->
 	<!--easyTabs-->
-	<script src="http://monginisaurangabad.com/js/main.js"></script>
 	<!--easyTabs-->
 	<script>
 function openNav() {
