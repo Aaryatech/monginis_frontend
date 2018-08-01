@@ -184,7 +184,7 @@ $("#tech").change(function() {
 							<div class="col2">
 								<input id="datepicker" class="texboxitemcode texboxcal"
 									placeholder="Delivery Date" name="datepicker" type="text"
-									value="${delDate}" >
+									value="${delDate}" autocomplete="off">
 							</div>
 						</div>
                     
@@ -246,7 +246,8 @@ $("#tech").change(function() {
 																		<tr>
 																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
-																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
+																			<td class="col-md-1" ><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
 																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																				value='${items.itemQty}' class="tableInput"
 																				type="text" onkeydown="myFunction()"
@@ -265,8 +266,8 @@ $("#tech").change(function() {
 																		<tr>
 																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
-																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
-																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+<td class="col-md-1" ><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																				value='${items.itemQty}' class="tableInput"
 																				type="text"
 																				onchange="onChange('${items.itemRate2}',${items.id})"></td>
@@ -284,8 +285,8 @@ $("#tech").change(function() {
 																		<tr>
 																			<td class="col-md-1"><c:out value='${loop.index+1}' /></td>
 
-																			<td class="col-md-1"><c:out value='${items.itemName}' /></td>
-																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
+<td class="col-md-1" ><a href="${url}${items.itemImage}"
+											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>																			<td class="col-md-1"><input name='${items.id}' id='${items.id}'
 																				value='${items.itemQty}' class="tableInput"
 																				type="text"
 																				onchange="onChange('${items.itemRate3}',${items.id})"></td>

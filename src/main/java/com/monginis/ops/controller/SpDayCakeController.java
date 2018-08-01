@@ -221,6 +221,7 @@ public class SpDayCakeController {
 			model.addObject("toDate",toDate);
 			model.addObject("delDate",delDate );
 			model.addObject("spdayId",spdayId);
+			model.addObject("url",Constant.ITEM_IMAGE_URL);
 
 			model.addObject("configureSpDayFrList", configureSpDayFrList);
 	       } catch (Exception e) {
