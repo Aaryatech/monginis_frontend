@@ -82,7 +82,7 @@ public class SpDayCakeController {
 		
 		    ModelAndView model = new ModelAndView("order/spdaycake");
 	
-		    HttpSession session = request.getSession();
+	  	    HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
           try {
