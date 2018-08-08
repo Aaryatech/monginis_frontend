@@ -193,7 +193,7 @@ $("#tech").change(function() {
 							
 						<div class="colOuter">
 							<div class="col2full">
-								<input name="" class="buttonsaveorder" value="Search..."
+								<input name="" class="buttonsaveorder" value="Search..." id="btn"
 									type="submit" >
 							</div>
 						</div>
@@ -318,7 +318,7 @@ $("#tech").change(function() {
 						<div class="order-btn textcenter">
 
 							<input name="" class="buttonsaveorder" value="SAVE ORDER"
-								type="button" ONCLICK="button1()">
+								type="button" ONCLICK="button1()" >
 						</div>
 
 					</form>
@@ -440,7 +440,7 @@ $(document).ready(function() {
 function onChangeDay() {
 
 	var spdayId = $('#spdayId').find(":selected").val();
-	
+	document.getElementById("btn").disabled = false;
 	 $.getJSON(
 				'${findDelToAndFromDate}',
 				{
@@ -448,17 +448,55 @@ function onChangeDay() {
 					ajax : 'true'
 				},
 				function(data) {
+					
 					//alert(data.deliveryFromDate);
 					//alert(data.orderFromDate);
-
+				var time = new Date();
+				
+				
+				var a=data.fromTime;
+				var b=data.toTime;
+				var c=data.currTime; 
+				
 					  $( function() {
 					   // $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy', minDate:data.orderFromDate ,maxDate:data.orderToDate}
 					    	/* ); */
-						  document.getElementById("availDate").innerHTML=" <strong>Delivery From Date: </strong>&nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryFromDate+", &nbsp; &nbsp; &nbsp;<strong>To Date :</strong> &nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryToDate;
+						  document.getElementById("availDate").innerHTML=" <strong>Delivery From Date: </strong>&nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryFromDate+", &nbsp; &nbsp; &nbsp;<strong>To Date :</strong> &nbsp;&nbsp;&nbsp;&nbsp;"+data.deliveryToDate+"  <strong>From Time: </strong>"+data.fromTime+"  <strong> To Time: </strong> "+data.toTime;
 						  document.getElementById("availDate").style.color = "green";
 						  document.getElementById("fromDate").value=data.deliveryFromDate;
 						  document.getElementById("toDate").value=data.deliveryToDate;
 					  } );
+					  
+					  var timeA = new Date(); 
+					  timeA.setHours(a.split(":")[0],a.split(":")[1],a.split(":")[2]);
+					  timeB = new Date();
+					  timeB.setHours(b.split(":")[0],b.split(":")[1],b.split(":")[2]); 
+					  timeC = new Date();
+					  timeC.setHours(c.split(":")[0],c.split(":")[1],c.split(":")[2]); 
+					  
+					  if(timeC>=timeA && timeC<=timeB)
+						  {
+						  document.getElementById("btn").disabled = false;
+						  }
+					  else
+						  {
+						  var timeString =data.fromTime;
+
+						  var H = +timeString.substr(0, 2);
+						  var h = (H % 12) || 12;
+						  var ampm = H < 12 ? "AM" : "PM";
+						  timeString = h + timeString.substr(2, 3) + ampm;
+						  
+						  var timeString1 =data.toTime;
+
+						  var H = +timeString1.substr(0, 2);
+						  var h = (H % 12) || 12;
+						  var ampm = H < 12 ? " AM" : " PM";
+						  timeString1 = h + timeString1.substr(2, 3) + ampm;
+						  
+						  document.getElementById("btn").disabled = true;
+                          alert("Order Time is From "+timeString+" to "+timeString1+" currently it's not available!!"); 
+						  }
 				
 				});
 }

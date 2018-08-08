@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -118,6 +119,9 @@ public class SpDayCakeController {
 	public @ResponseBody DateResponse getDelToAndFromDate(@RequestParam(value = "spdayId", required = true) int spdayId) {
 		
 		DateResponse dateResponse=new DateResponse();
+		ZoneId z = ZoneId.of("Asia/Calcutta");
+		LocalTime currentTime = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
+		System.out.println("current time " + currentTime);
 		
 		for(GetConfiguredSpDayCk getConfSpDay:configureSpDayFrList)
 		{
@@ -125,6 +129,9 @@ public class SpDayCakeController {
 		    {
 			   dateResponse.setDeliveryFromDate(getConfSpDay.getDeliveryFromDate());
 			   dateResponse.setDeliveryToDate(getConfSpDay.getDeliveryToDate());
+			   dateResponse.setFromTime(getConfSpDay.getFromTime());
+			   dateResponse.setToTime(getConfSpDay.getToTime());
+			   dateResponse.setCurrTime(""+currentTime);
 		    }
 		
 		}

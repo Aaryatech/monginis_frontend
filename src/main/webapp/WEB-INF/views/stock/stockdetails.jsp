@@ -180,7 +180,7 @@
 							<option value="-1">Select Category</option>
 							<c:forEach items="${category}" var="category" varStatus="count">
 							<c:choose>
-							<c:when test="${category.catId != '5' and category.catId != '6' and category.catId != '7' }">
+							<c:when test="${category.catId != '5' and category.catId != '7' }">  <!-- and category.catId != '6' -->
 							
 							<option value="${category.catId}"><c:out
 										value="${category.catName}" /></option>

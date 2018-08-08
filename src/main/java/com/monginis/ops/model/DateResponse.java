@@ -7,6 +7,37 @@ public class DateResponse implements Serializable{
 	private String deliveryToDate;
 	
 	private String deliveryFromDate;
+	
+	private String fromTime;
+	
+	private String toTime;
+	
+	private String currTime;
+
+	
+	public String getCurrTime() {
+		return currTime;
+	}
+
+	public void setCurrTime(String currTime) {
+		this.currTime = currTime;
+	}
+
+	public String getFromTime() {
+		return fromTime;
+	}
+
+	public String getToTime() {
+		return toTime;
+	}
+
+	public void setFromTime(String fromTime) {
+		this.fromTime = fromTime;
+	}
+
+	public void setToTime(String toTime) {
+		this.toTime = toTime;
+	}
 
 	public String getDeliveryToDate() {
 		return deliveryToDate;
@@ -26,8 +57,10 @@ public class DateResponse implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DateResponse [deliveryToDate=" + deliveryToDate + ", deliveryFromDate=" + deliveryFromDate + "]";
+		return "DateResponse [deliveryToDate=" + deliveryToDate + ", deliveryFromDate=" + deliveryFromDate
+				+ ", fromTime=" + fromTime + ", toTime=" + toTime + ", currTime=" + currTime + "]";
 	}
 
+	
     
 }

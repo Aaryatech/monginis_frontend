@@ -217,6 +217,18 @@ public class StockController {
 
 			}
 
+		}else if (catId.equalsIgnoreCase("6")) {
+
+			menuId = 49;
+			for (PostFrItemStockHeader header : list) {
+
+
+				if (header.getCatId() == intCatId) {
+					runningMonth = header.getMonth();
+				}
+
+			}
+
 		}
 		System.err.println("Cat Id: " + catId + "running month " + runningMonth);
 
@@ -266,7 +278,7 @@ public class StockController {
 			int dayOfMonth = cal1.get(Calendar.DATE);
 
 			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
-			System.out.println("Current Cal Month " + calCurrentMonth);
+			System.err.println("Current Cal Month " + calCurrentMonth+"menuList"+menuList.toString()+"itemShow"+itemShow);
 
 			System.out.println("Day Of Month is: " + dayOfMonth);
 
