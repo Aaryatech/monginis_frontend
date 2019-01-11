@@ -53,13 +53,13 @@
 						<div class="calender-title">From</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
-								value="${cDate}" name="from_Date" type="text">
+								value="${cDate}" autocomplete="off" name="from_Date" type="text">
 						</div>
 
 						<div class="calender-title">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
-								value="${cDate}" name="to_Date" type="text">
+								value="${cDate}" autocomplete="off" name="to_Date" type="text">
 						</div>
 
 						<div class="col-md-1"></div>
@@ -82,7 +82,7 @@
 
 						<div id="table-scroll" class="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1">Sr No</th>
@@ -98,12 +98,12 @@
 								</table>
 							</div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1">Sr No</th>
 											<th class="col-md-2">Item Name</th>
-											<th class="col-md-2">Sub Category</th>
+											<th class="col-md-1">Sub Category</th>
 											<th class="col-md-1">MRP</th>
 											<th class="col-md-1">Quantity</th>
 											<th class="col-md-1">Sub Total</th>
@@ -152,9 +152,9 @@
 						tr.append($('<td class="col-md-1"></td>').html(key+1));
 						tr.append($('<td class="col-md-2"></td>').html(report.itemName));
 						tr.append($('<td class="col-md-1"></td>').html(report.subCatName));
-						tr.append($('<td class="col-md-1" text-align:center></td>').html(report.mrp));
- 						tr.append($('<td class="col-md-1" text-align:center></td>').html(report.qty));
- 						tr.append($('<td class="col-md-1" align:right></td>').html(report.rspSubTotal.toFixed(2)));
+						tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(report.mrp));
+ 						tr.append($('<td class="col-md-1"  style="text-align:right;"></td>').html(report.qty));
+ 						tr.append($('<td class="col-md-1"  style="text-align:right;"></td>').html(report.rspSubTotal.toFixed(2)));
 						tr.append($('<td class="col-md-1"></td>').html(report.rspCustName));
 						
 					

@@ -139,13 +139,13 @@
 													 		<c:set var="month" value="July"></c:set>
 													 		</c:when>
 													 		<c:when test="${getMonthList.month==8}">
-													 		<c:set var="month" value="Augast"></c:set>
+													 		<c:set var="month" value="August"></c:set>
 													 		</c:when>
 													 		<c:when test="${getMonthList.month==9}">
 													 		<c:set var="month" value="September"></c:set>
 													 		</c:when>
 													 		<c:when test="${getMonthList.month==10}">
-													 		<c:set var="month" value="Octomber"></c:set>
+													 		<c:set var="month" value="October"></c:set>
 													 		</c:when>
 													 		<c:when test="${getMonthList.month==11}">
 													 		<c:set var="month" value="November"></c:set>
@@ -306,17 +306,17 @@
 <div class="col-md-9" ></div> 
 					<label for="search" class="col-md-3" id="search">
     <i class="fa fa-search" style="font-size:20px"></i>
-									<input type="text"  id="myInput" onkeyup="myFunction()" placeholder="Search items by name" title="Type item name">
+									<input type="text"  id="myInput" onkeyup="myFunction()" style="border-radius: 25px;" placeholder="Search items by name" title="Type item name">
 										</label>  
 						
 
 							<div id="table-scroll" class="table-scroll">
 								<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid1" class="main-table">
+								<table id="table_grid1" class="main-table" border=1 >
 										<thead>
 											<tr class="bgpink">
 												<th>Item Id</th>
-												<th>Item Name</th>
+												<th>Item_Name</th>
 												<th>Reg Op Stock</th>
 												<th>Sp Op Stock</th>
 												<th>Reg Pur Qty</th>
@@ -325,19 +325,18 @@
 												<th>Reg Sale</th>
 												<th>Sp Sale</th>
 												<th>Reorder Qty</th>
-												<th>Reg Cur Stock</th>
-												<th>Sp Cur Stock</th>
+												<th>Reg Current Stock</th>
+												<th>Sp Current Stock</th>
 
-												
 
 											</tr>
 										</thead></table></div>
 								<div class="table-wrap">
-									<table id="table_grid" class="main-table" border="1">
+									<table id="table_grid" class="main-table" border="1" >
 										<thead>
 											<tr class="bgpink">
 												<th>Item Id</th>
-												<th>Item Name</th>
+												<th>Item_Name</th>
 												<th>Reg Op Stock</th>
 												<th>Sp Op Stock</th>
 												<th>Reg Pur Qty</th>
@@ -564,10 +563,10 @@
 					var len = data.length;
 					$('#table_grid td').remove();
 					//alert(isMonthClose+ "month close");			
-					var list= data.currentStockDetailList;
-					//alert(data.monthClosed);
+					var list= data.currentStockDetailList;	//alert(data.monthClosed);	alert(selectedStockOption);
+					//alert(data.monthClosed); 
 					if(data.monthClosed && selectedStockOption == 1){
-					
+				
 				
 						document.getElementById('monthEnd').style.display = "block";
 

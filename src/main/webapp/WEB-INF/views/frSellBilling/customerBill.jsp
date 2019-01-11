@@ -61,18 +61,10 @@
 		});
 	});
 </script>
-<!--rightNav-->
-
-<!--new css added by kalpesh -->
-<!-- <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'> -->
 
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
-<%--   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/styles.css" />   --%>
-
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
-<!--new css added by kalpesh -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
@@ -80,12 +72,19 @@
 	src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
-<script
-	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script>
-<!-- 1 css and 2 js for search item   -->
+	<script
+	src="
+	https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
-<%-- <script src="${pageContext.request.contextPath}/resources/jquery.confirm/jquery.confirm.js"></script> --%>
+<!----------------------------------------Dropdown With Search----------------------------------------------- -->
+
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
+<!--------------------------------------------------------------------------------------- -->
 <style>
+/* Style for default dropdown size for all tabs */
+.chosen-container{width: 80% !important;}
+/* End of Style for default dropdown size for all tabs */
+
 /* Paste this css to your style sheet file or under head tag */
 /* This only works with JavaScript, 
 if it's not present, don't show loader */
@@ -374,10 +373,11 @@ label:before{
 																			id="barcode1" name="barcode1"
 																			placeholder="Enter Barcode" onchange="selectItem(1)"
 																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="selectpicker"
+																		<td><select class="chosen-select" 
 																			data-live-search="true" title="Please Select Item"
 																			name="itemName1" id="itemName1"
 																			data-rule-required="true">
+																			<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -615,11 +615,11 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
-																			data-show-subtext="true" data-live-search="true"
-																			title="Please Select Item" name="itemName2" id="itemName2"
-																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-
+																</datalist> --> <select class="chosen-select"  
+																			data-live-search="true" title="Please Select Item"
+																			name="itemName2" id="itemName2"
+																			data-rule-required="true">
+																			<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -860,11 +860,12 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
+																</datalist> --> <select class="chosen-select" 
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName3"
 																			 id="itemName3"
 																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
+																			<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -1104,12 +1105,12 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
+																</datalist> --> <select class="chosen-select" 
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName4"
 																			 id="itemName4"
 																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-																				
+																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -1348,12 +1349,12 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
+																</datalist> --> <select class="chosen-select" 
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName5"
 																			 id="itemName5"
 																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-																				
+																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -1582,12 +1583,12 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
+																</datalist> --> <select class="chosen-select"  
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName6"
-																			class="form-control" tabindex="-1" id="itemName6"
+																			class="form-control" id="itemName6"
 																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-																				
+																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -1825,12 +1826,12 @@ label:before{
 																<datalist id="items">
 																
 																
-																</datalist> --> <select class="selectpicker"
+																</datalist> --> <select class="chosen-select" 
 																			data-show-subtext="true" data-live-search="true"
 																			title="Please Select Item" name="itemName7"
 																			 id="itemName7"
 																			data-rule-required="true"<%-- onchange="setRate(1,${itemListResponse.itemId},${itemListResponse.itemRate1})" --%>>
-																				
+																				<option value=""></option>
 																				<c:forEach items="${catList}" var="cat">
 
 																					<optgroup label="${cat.catName}">
@@ -3391,5 +3392,16 @@ function pdfPrint(token) {
 	</script>
 
 	<!-- document.getElementById("mySelect").value = "orange"; -->
+	
+<!----------------------------------------Dropdown With Search----------------------------------------------- -->
+	<%-- <script
+		src="${pageContext.request.contextPath}/resources/customerBill/jquery-3.2.1.min.js"
+		type="text/javascript"></script> --%>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

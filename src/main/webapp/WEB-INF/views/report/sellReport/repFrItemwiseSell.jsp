@@ -68,10 +68,10 @@ table, th, td {
 	<div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		<input id="fromdatepicker" autocomplete="off" placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		<input id="todatepicker" autocomplete="off" placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
 		</div></div>
 												<input type="hidden" name="frId" id="frId" value="${frId}"/>
 		                                        <input type="hidden" name="catId" id="catId"/>
@@ -177,8 +177,8 @@ table, th, td {
 	 
 			<div  id="chart_div" style="width:60%; height:300; float:left;" style="overflow-y: scroll;"></div> 
 		 
-			<div   id="Piechart" style="width:40%%; height:300; float: right;" ></div> 
-			<div   id="PieAmtchart" style="width:40%%; height:300; float: right;" ></div> 
+			<div   id="Piechart" style="width:40%; height:300; float: right;" ></div> 
+			<div   id="PieAmtchart" style="width:40%; height:300; float: right;" ></div> 
 			</div>
 			 
 			<div class="colOuter" >

@@ -660,7 +660,7 @@ public class SpCakeController {
 			System.out.println(sdf.format(cal1.getTime()));
 
 			String curTimeStamp = sdf.format(cal1.getTime());*/
-			String curTimeStamp = new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss").format(new Date());
+			String curTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
 			String custChCk = "";
 			String orderPhoto1 = "";
@@ -675,9 +675,10 @@ public class SpCakeController {
 				
 
 				try {
-					orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = curTimeStamp+"SPPH"+orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1= orderPhoto1.replaceAll("\\s", "");
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
+							orderPhoto1);
 					System.out.println("upload method called " + orderPhoto.toString());
 
 				} catch (IOException e) {
@@ -704,13 +705,16 @@ public class SpCakeController {
 				//String curTimeStamp = sdf.format(cal.getTime());
 
 				try {
-					orderPhoto1 = curTimeStamp+""+orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = curTimeStamp+"SPPH"+orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1= orderPhoto1.replaceAll("\\s", "");
 
 					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							curTimeStamp+""+orderPhoto.get(0).getOriginalFilename());
-					custChCk = curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename();
+							orderPhoto1);
+					custChCk = curTimeStamp+"CC"+custChoiceCk.get(0).getOriginalFilename();
+					custChCk= custChCk.replaceAll("\\s", "");
+
 					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
-							curTimeStamp+""+custChoiceCk.get(0).getOriginalFilename());
+							custChCk);
 
 					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
 

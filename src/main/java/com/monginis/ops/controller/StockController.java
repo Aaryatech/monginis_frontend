@@ -287,6 +287,9 @@ public class StockController {
 				isMonthCloseApplicable = true;
 				System.out.println("Day Of Month End ......");
 
+			}else if (runningMonth==12 && calCurrentMonth==1) 
+			{
+				isMonthCloseApplicable = true;
 			}
 
 			if (isMonthCloseApplicable) {

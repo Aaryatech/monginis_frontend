@@ -74,10 +74,13 @@
 								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
 						<div class="col-md-1"></div>
-						<div class="col-md-1">
+						<div class="col-md-2">
 
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
+								
+<button class="btn btn-primary" value="PDF" id="PDFButton" disabled="disabled"
+							onclick="genPdf1()">PDF</button>
 						</div>
 
 					</div>
@@ -91,17 +94,35 @@
 
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div id="faux-table" class="faux-table" aria="hidden">
+							<table id="table_grid2" class="main-table" border="1">
+									<thead>
+										<!-- <tr class="bgpink">
+											<th class="col-md-3">GvnSr No</th>
+											<th  class="col-md-2" align="left">Date</th>
+											<th class="col-md-1">Taxable Amt</th>
+											<th class="col-md-1">Tax Amt</th>
+											<th class="col-md-1">Amount</th>
+											<th class="col-md-1">Appr Amt</th>
+											<th class="col-md-3">Status</th>
+											<th class="col-md-1">Credited?</th>
+											<th class="col-md-1">Credit Number</th>
+											<th class="col-md-2">Action</th>
+										
+										</tr> -->
+									</thead>
+									</table>
+							</div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-3">GvnSr No</th>
 											<th  class="col-md-2" align="left">Date</th>
-											<th class="col-md-2">Taxable Amt</th>
-											<th class="col-md-2">Tax Amt</th>
-											<th class="col-md-2">Amount</th>
-											<th class="col-md-2">Approved Amt</th>
+											<th class="col-md-1">Taxable Amt</th>
+											<th class="col-md-1">Tax Amt</th>
+											<th class="col-md-1">Amount</th>
+											<th class="col-md-1">Appr Amt</th>
 											<th class="col-md-3">Status</th>
 											<th class="col-md-1">Credited?</th>
 											<th class="col-md-1">Credit Number</th>
@@ -205,6 +226,14 @@
 
 								</table>
 							</div>
+								<div class="form-group" id="range">
+								 <br>
+											 
+											 
+											<div class="col-sm-2  controls">
+											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											</div>
+											</div>
 						</div>
 
 
@@ -257,12 +286,14 @@
 					ajax : 'true'
 
 				}, function(data) {
-
+					document.getElementById("PDFButton").disabled = false;
+					  document.getElementById("expExcel").disabled=false;
 					//$('#table_grid td').remove();
 document.getElementById("headeIdText").value=0;
 					if (data == "") {
 						alert("No records found !!");
-
+						document.getElementById("PDFButton").disabled = true;
+						  document.getElementById("expExcel").disabled=true;
 					}
 
 					$.each(data, function(key, grndata) {
@@ -295,12 +326,12 @@ document.getElementById("headeIdText").value=0;
 							 }else{credited="No";}
 
 						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnSrno));
-						tr.append($('<td class="col-md-1"></td>').html(grndata.grngvnDate));
-				tr.append($('<td class="col-md-1"></td>').html(grndata.taxableAmt));
-				tr.append($('<td class="col-md-1"></td>').html(grndata.taxAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.totalAmt));
-						tr.append($('<td class="col-md-2"></td>').html(grndata.aprGrandTotal));
-						tr.append($('<td class="col-md-2"></td>').html(grnStatus));
+						tr.append($('<td class="col-md-2"></td>').html(grndata.grngvnDate));
+				tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(grndata.taxableAmt));
+				tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(grndata.taxAmt));
+						tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(grndata.totalAmt));
+						tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(grndata.aprGrandTotal));
+						tr.append($('<td class="col-md-3"></td>').html(grnStatus));
 						tr.append($('<td class="col-md-2"></td>').html(credited));
 						tr.append($('<td class="col-md-2"></td>').html(grndata.creditNoteId));
 
@@ -411,6 +442,18 @@ function genPdf(headerId) {
 
 			
 	}
+function genPdf1() {
+
+	window
+			.open('${pageContext.request.contextPath}/getGvnHeadersPdf');
+
+}
+function exportToExcel()
+{
+	 
+	window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled=true;
+}
 	</script>
 
 </body>

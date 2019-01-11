@@ -2,8 +2,16 @@ package com.monginis.ops.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URLConnection;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,6 +38,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +51,18 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.monginis.ops.billing.Info;
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
@@ -50,6 +71,7 @@ import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.MCategory;
@@ -72,6 +94,7 @@ import com.monginis.ops.model.grngvn.ShowGrnBean;
 import com.monginis.ops.model.grngvn.StockForAutoGrnGvn;
 import com.monginis.ops.model.remarks.GetAllRemarks;
 import com.monginis.ops.model.remarks.GetAllRemarksList;
+import com.monginis.ops.util.ItextPageEvent;
 
 @Controller
 @Scope("session")
@@ -336,7 +359,7 @@ public class GrnGvnController {
 
 		String srNo = getGrnGvnSrNo(request, response);
 
-		System.out.println("#########" + srNo + "################");
+		//System.out.println("#########" + srNo + "################");
 
 		int month = 0;
 		try {
@@ -1973,14 +1996,14 @@ public class GrnGvnController {
 	String gstType, frAddress;
 
 	List<GrnGvnHeader> grnHeaderList = new ArrayList<>();
-
+	String fromDate="";String toDate="";
 	@RequestMapping(value = "/getGrnHeaderList", method = RequestMethod.GET)
 	public @ResponseBody List<GrnGvnHeader> getGrnHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		// ModelAndView modelAndView = new ModelAndView("grngvn/displaygrn");
 
 		System.out.println("in method");
-		String fromDate = request.getParameter("fromDate");
-		String toDate = request.getParameter("toDate");
+		 fromDate = request.getParameter("fromDate");
+		 toDate = request.getParameter("toDate");
 		String grnSrNO = request.getParameter("headerId");
 
 		HttpSession ses = request.getSession();
@@ -2045,13 +2068,785 @@ public class GrnGvnController {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
+			// Export to excel
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+			rowData.add("Sr.No.");
+			rowData.add("GRN Sr No.");
+			rowData.add("Date");
+			rowData.add("Taxable Amt");
+			rowData.add("Tax Amount");
+			rowData.add("Amount");
+			rowData.add("Approved Amt");
+			rowData.add("Status");
+			rowData.add("Is Credited?");
+			rowData.add("Credit No.");
+			expoExcel.setRowData(rowData);
 
+			exportToExcelList.add(expoExcel);
+			  float amt=0.0f;float apAmt=0.0f;	
+			for (int i = 0; i < grnHeaderList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add((i+1)+"");
+				rowData.add("" + grnHeaderList.get(i).getGrngvnSrno());
+				rowData.add("" + grnHeaderList.get(i).getGrngvnDate());
+				rowData.add("" + grnHeaderList.get(i).getTaxableAmt());
+				rowData.add("" + grnHeaderList.get(i).getTaxAmt());
+				rowData.add("" + grnHeaderList.get(i).getTotalAmt());
+				amt=amt+(grnHeaderList.get(i).getTotalAmt());
+				apAmt=apAmt+(grnHeaderList.get(i).getApporvedAmt());
+					
+				String grnStatus="";
+				
+				if(grnHeaderList.get(i).getGrngvnStatus()==1)
+					grnStatus="Pending";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==2)
+					grnStatus="Approved  From Dispatch";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==3)
+					grnStatus="Reject From Dispatch";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==4)
+					grnStatus="Approved From Sales";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==5)
+					grnStatus="Reject From Sales";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==6)
+					grnStatus="Approved From Account";
+				else if(grnHeaderList.get(i).getGrngvnStatus()==7)
+					grnStatus="Reject From Account";
+				
+				else if(grnHeaderList.get(i).getGrngvnStatus()==8)
+					grnStatus="Partially Approved";
+				
+				String isCredit="";
+				if(grnHeaderList.get(i).getIsCreditNote()==1)
+					isCredit="Yes";
+				if(grnHeaderList.get(i).getIsCreditNote()==0)
+					isCredit="No";
+				rowData.add("" + grnHeaderList.get(i).getApporvedAmt());
+				rowData.add("" + grnStatus);
+				rowData.add("" + isCredit);
+
+				rowData.add("" + grnHeaderList.get(i).getCreditNoteId());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add(" ");
+			rowData.add("Total:");
+			rowData.add("");
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" "+amt);
+			rowData.add(" "+apAmt);
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" ");
+			expoExcel.setRowData(rowData);
+
+			exportToExcelList.add(expoExcel);
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GRN Headers List");
 			System.out.println("grn  list  grnHeaderList " + grnHeaderList.toString());
 		} // end of else
 		return grnHeaderList;
 
 	}
+	@RequestMapping(value = "/getGvnHeadersPdf", method = RequestMethod.GET)
+	public void getGvnHeadersPdf(HttpServletRequest request, HttpServletResponse response) {
 
+		BufferedOutputStream outStream = null;
+		Document document = new Document(PageSize.A4);
+		String FILE_PATH = Constant.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+		PdfWriter writer = null;
+
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(FILE_PATH);
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new java.util.Date());
+			
+			writer = PdfWriter.getInstance(document, out);
+			
+		/*	ItextPageEvent event=new ItextPageEvent(header,title, reportDate);
+			
+			writer.setPageEvent(event);*/
+			
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(10);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 0.4f, 1.7f, 1.2f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f});
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+			headFont1.setColor(BaseColor.WHITE);
+			
+			PdfPCell hcell=new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+			hcell.setPaddingTop(4);hcell.setPaddingBottom(4);
+			hcell = new PdfPCell(new Phrase("Sr.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Grn Sr No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+
+			
+			hcell = new PdfPCell(new Phrase("Date", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Taxable Amt", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			
+			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Approved Amt", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Status", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Is Credited?", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Credit NO", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+
+			float amount=0;
+			float approvedAmt=0;
+			int index = 0;
+			for (GrnGvnHeader grnGvnHeader : gvnHeaderList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(4);
+				table.addCell(cell);
+				amount = amount + (grnGvnHeader.getTotalAmt());
+				approvedAmt = approvedAmt + (grnGvnHeader.getApporvedAmt());
+
+				String grnStatus="";
+						
+						if(grnGvnHeader.getGrngvnStatus()==1)
+							grnStatus="Pending";
+						else if(grnGvnHeader.getGrngvnStatus()==2)
+							grnStatus="Approved  From Dispatch";
+						else if(grnGvnHeader.getGrngvnStatus()==3)
+							grnStatus="Reject From Dispatch";
+						else if(grnGvnHeader.getGrngvnStatus()==4)
+							grnStatus="Approved From Sales";
+						else if(grnGvnHeader.getGrngvnStatus()==5)
+							grnStatus="Reject From Sales";
+						else if(grnGvnHeader.getGrngvnStatus()==6)
+							grnStatus="Approved From Account";
+						else if(grnGvnHeader.getGrngvnStatus()==7)
+							grnStatus="Reject From Account";
+						
+						else if(grnGvnHeader.getGrngvnStatus()==8)
+							grnStatus="Partially Approved";
+						
+						String isCredit="";
+						if(grnGvnHeader.getIsCreditNote()==1)
+							isCredit="Yes";
+						if(grnGvnHeader.getIsCreditNote()==0)
+							isCredit="No";
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getGrngvnSrno()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getGrngvnDate()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTaxableAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+					
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTaxAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTotalAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getApporvedAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(grnStatus), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(isCredit), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getCreditNoteId()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+			}
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			  cell.setPadding(4);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Total:", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(4);
+			table.addCell(cell);
+
+			
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+		
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase(""+amount, headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				  
+				  table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(""+approvedAmt, headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			document.open();
+			
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+
+			String header=""+frDetails.getFrName();
+				
+
+			String title="GRN Headers List"+" From Date:"+fromDate+" To Date: "+toDate;
+			Paragraph name = new Paragraph(header+"\n ", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			Paragraph company = new Paragraph(title, f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+			document.add(table);
+			document.close();
+		
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = null;
+				try {
+					inputStream = new BufferedInputStream(new FileInputStream(file));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error" + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+	@RequestMapping(value = "/getGrnHeadersPdf", method = RequestMethod.GET)
+	public void getGrnHeadersPdf(HttpServletRequest request, HttpServletResponse response) {
+
+		BufferedOutputStream outStream = null;
+		Document document = new Document(PageSize.A4);
+		String FILE_PATH = Constant.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+		PdfWriter writer = null;
+
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(FILE_PATH);
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new java.util.Date());
+			
+			writer = PdfWriter.getInstance(document, out);
+			
+		/*	ItextPageEvent event=new ItextPageEvent(header,title, reportDate);
+			
+			writer.setPageEvent(event);*/
+			
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(10);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 0.4f, 1.7f, 1.2f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f});
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+			headFont1.setColor(BaseColor.WHITE);
+			
+			PdfPCell hcell=new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+			hcell.setPaddingTop(4);hcell.setPaddingBottom(4);
+			hcell = new PdfPCell(new Phrase("Sr.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Grn Sr No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+
+			
+			hcell = new PdfPCell(new Phrase("Date", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Taxable Amt", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			
+			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			
+			
+			hcell = new PdfPCell(new Phrase("Approved Amt", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Status", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Is Credited?", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+			hcell = new PdfPCell(new Phrase("Credit NO", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			table.addCell(hcell);
+			table.setHeaderRows(1);
+			
+
+			float amount=0;
+			float approvedAmt=0;
+			int index = 0;
+			for (GrnGvnHeader grnGvnHeader : grnHeaderList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(4);
+				table.addCell(cell);
+				amount = amount + (grnGvnHeader.getTotalAmt());
+				approvedAmt = approvedAmt + (grnGvnHeader.getApporvedAmt());
+
+				String grnStatus="";
+						
+						if(grnGvnHeader.getGrngvnStatus()==1)
+							grnStatus="Pending";
+						else if(grnGvnHeader.getGrngvnStatus()==2)
+							grnStatus="Approved  From Dispatch";
+						else if(grnGvnHeader.getGrngvnStatus()==3)
+							grnStatus="Reject From Dispatch";
+						else if(grnGvnHeader.getGrngvnStatus()==4)
+							grnStatus="Approved From Sales";
+						else if(grnGvnHeader.getGrngvnStatus()==5)
+							grnStatus="Reject From Sales";
+						else if(grnGvnHeader.getGrngvnStatus()==6)
+							grnStatus="Approved From Account";
+						else if(grnGvnHeader.getGrngvnStatus()==7)
+							grnStatus="Reject From Account";
+						
+						else if(grnGvnHeader.getGrngvnStatus()==8)
+							grnStatus="Partially Approved";
+						
+						String isCredit="";
+						if(grnGvnHeader.getIsCreditNote()==1)
+							isCredit="Yes";
+						if(grnGvnHeader.getIsCreditNote()==0)
+							isCredit="No";
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getGrngvnSrno()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getGrngvnDate()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTaxableAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+				table.addCell(cell);
+					
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTaxAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getTotalAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getApporvedAmt()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(grnStatus), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(isCredit), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(String.valueOf(grnGvnHeader.getCreditNoteId()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(4);
+
+				table.addCell(cell);
+			}
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			  cell.setPadding(4);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Total:", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(4);
+			table.addCell(cell);
+
+			
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+		
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase("", headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				table.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase(""+amount, headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				  cell.setPadding(4);
+				  
+				  table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(""+approvedAmt, headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			  cell.setPadding(5);
+			table.addCell(cell);
+			document.open();
+			
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			
+
+			String header=""+frDetails.getFrName();
+				
+
+			String title="GVN Headers List"+" From Date:"+fromDate+" To Date: "+toDate;
+			Paragraph name = new Paragraph(header, f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			Paragraph company = new Paragraph(title, f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+			document.add(table);
+			document.close();
+		
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = null;
+				try {
+					inputStream = new BufferedInputStream(new FileInputStream(file));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error" + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
 	@RequestMapping(value = "/getGrnDetailList/{headerId}", method = RequestMethod.GET)
 	public ModelAndView getGrnDetailList(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("headerId") int headerId) {
@@ -2279,7 +3074,92 @@ public class GrnGvnController {
 				e.printStackTrace();
 				System.out.println("EXCE in getting gvn Header List " + e.getMessage());
 			}
+			// export to excel
 
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr.No.");
+			rowData.add("GRN Sr No.");
+			rowData.add("Date");
+			rowData.add("Taxable Amt");
+			rowData.add("Tax Amount");
+			rowData.add("Amount");
+			rowData.add("Approved Amt");
+			rowData.add("Status");
+			rowData.add("Is Credited?");
+			rowData.add("Credit No.");
+			expoExcel.setRowData(rowData);
+
+			exportToExcelList.add(expoExcel);
+            float amt=0.0f;float apAmt=0.0f;
+			for (int i = 0; i < gvnHeaderList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add((i+1)+"");
+				rowData.add("" + gvnHeaderList.get(i).getGrngvnSrno());
+				rowData.add("" + gvnHeaderList.get(i).getGrngvnDate());
+				rowData.add("" + gvnHeaderList.get(i).getTaxableAmt());
+				rowData.add("" + gvnHeaderList.get(i).getTaxAmt());
+				rowData.add("" + gvnHeaderList.get(i).getTotalAmt());
+				String grnStatus="";
+				
+				if(gvnHeaderList.get(i).getGrngvnStatus()==1)
+					grnStatus="Pending";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==2)
+					grnStatus="Approved  From Dispatch";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==3)
+					grnStatus="Reject From Dispatch";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==4)
+					grnStatus="Approved From Sales";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==5)
+					grnStatus="Reject From Sales";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==6)
+					grnStatus="Approved From Account";
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==7)
+					grnStatus="Reject From Account";
+				
+				else if(gvnHeaderList.get(i).getGrngvnStatus()==8)
+					grnStatus="Partially Approved";
+				
+				String isCredit="";
+				if(gvnHeaderList.get(i).getIsCreditNote()==1)
+					isCredit="Yes";
+				if(gvnHeaderList.get(i).getIsCreditNote()==0)
+					isCredit="No";
+				amt=amt+(gvnHeaderList.get(i).getTotalAmt());
+				apAmt=apAmt+(gvnHeaderList.get(i).getApporvedAmt());
+				rowData.add("" + gvnHeaderList.get(i).getApporvedAmt());
+				rowData.add("" + grnStatus);
+				rowData.add("" + isCredit);
+
+				rowData.add("" + gvnHeaderList.get(i).getCreditNoteId());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add(" ");
+			rowData.add("Total:");
+			rowData.add("");
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" "+amt);
+			rowData.add(" "+apAmt);
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" ");
+			expoExcel.setRowData(rowData);
+
+			exportToExcelList.add(expoExcel);
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GVN Headers List");
 			System.out.println("grn  list  grnHeaderList " + gvnHeaderList.toString());
 		} // end of else
 		return gvnHeaderList;

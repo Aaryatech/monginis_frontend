@@ -53,13 +53,13 @@
 						<div class="calender-title">From</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
-								value="${cDate}" name="from_Date" type="text">
+								value="${cDate}" autocomplete="off"  name="from_Date" type="text">
 						</div>
 
 						<div class="calender-title">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
-								value="${cDate}" name="to_Date" type="text">
+								value="${cDate}" autocomplete="off"  name="to_Date" type="text">
 						</div>
 
 						<div class="col-md-1"></div>
@@ -82,10 +82,10 @@
 
 						<div id="table-scroll" class="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-1">Sr No</th>
+										<!-- 	<th class="col-md-1">Sr No</th>
 											<th class="col-md-2">Invoice No</th>
 											<th class="col-md-3">Item Name</th>
 											<th class="col-md-2">HsnCode</th>
@@ -98,13 +98,13 @@
 											<th class="col-md-1">Total</th>
 
 											<th class="col-md-1">Advance</th>
-											<th class="col-md-1">Remaining</th>
+											<th class="col-md-1">Remaining</th> -->
 										</tr>
 									</thead>
 								</table>
 							</div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1">Sr No</th>
@@ -162,19 +162,19 @@
 						}
 						var tr = $('<tr></tr>');
 						
-						tr.append($('<td class="col-md-1"></td>').html(key+1));
-						tr.append($('<td class="col-md-2"></td>').html(spTax.invoiceNo));
-						tr.append($('<td class="col-md-3"></td>').html(spTax.spName));
-						tr.append($('<td class="col-md-2"></td>').html(spTax.spHsncd));
- 						tr.append($('<td class="col-md-1"></td>').html(spTax.delDate));
- 						tr.append($('<td class="col-md-1"></td>').html(spTax.baseMrp.toFixed(2)));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.tax1));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.tax2));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.tax1Amt));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.tax2Amt));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.total));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.spAdvance));
-						tr.append($('<td class="col-md-1"></td>').html(spTax.rmAmount));
+						tr.append($('<td ></td>').html(key+1));
+						tr.append($('<td ></td>').html(spTax.invoiceNo));
+						tr.append($('<td></td>').html(spTax.spName));
+						tr.append($('<td></td>').html(spTax.spHsncd));
+ 						tr.append($('<td  ></td>').html(spTax.delDate));
+ 						tr.append($('<td  style="text-align:right"></td>').html(spTax.baseMrp.toFixed(2)));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.tax1));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.tax2));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.tax1Amt));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.tax2Amt));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.total));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.spAdvance));
+						tr.append($('<td  style="text-align:right"></td>').html(spTax.rmAmount));
 					
 $('#table_grid tbody')
 	.append(

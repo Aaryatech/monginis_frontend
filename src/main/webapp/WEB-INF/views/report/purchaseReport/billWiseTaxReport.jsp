@@ -63,13 +63,13 @@
 		    <h4 class="pull-left">From Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
-			<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="fromDate" type="text">
+			<input id="fromdatepicker" class="texboxitemcode texboxcal" autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate" type="text">
 		</div>
 		<div class="col-md-1">
 		    <h4 class="pull-left">To Date:-</h4>
 		</div>
 		<div class="col-md-2 ">
-			<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY" name="toDate" type="text">
+			<input id="todatepicker" class="texboxitemcode texboxcal"  autocomplete="off" placeholder="DD-MM-YYYY" name="toDate" type="text">
 		</div>
 		<div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="billWiseTaxReport()">Search </button>
@@ -86,9 +86,34 @@
 
 
 				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div id="faux-table" class="faux-table" aria="hidden">
+					<table id="table_grid1" class="main-table" border=1>
+							<thead>
+								<tr class="bgpink">
+
+															
+									<th class="col-md-1">Sr. NO.</th>
+									<th class="col-md-1">Party Name</th>
+									<th class="col-md-1">GSTIN</th>
+									<th class="col-md-1">Bill No</th>
+									<th class="col-md-1">Bill Date</th>
+									
+									<th class="col-md-1">Taxable Amt</th>
+									<th class="col-md-1">Tax Rate</th>
+									<th class="col-md-1">IGST</th>
+									<th class="col-md-1">CGST</th>
+									<th class="col-md-1">SGST</th>
+									<th class="col-md-1">Bill Amount</th>
+									<th class="col-md-1">CESS</th>
+								  </tr>
+								
+								 </thead>
+							<tbody>
+								  
+								</table>
+					</div>
 					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+						<table id="table_grid" class="main-table" border=1>
 							<thead>
 								<tr class="bgpink">
 
@@ -199,19 +224,19 @@
 
 							  	tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.billDate));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.taxableAmt));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.taxableAmt).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.taxRate));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.taxRate).toFixed(2)));
 								
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.igstRs));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.igstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.cgstRs));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.cgstRs).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.sgstRs));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.sgstRs).toFixed(2)));
+ 
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.grandTotal).toFixed(2)));
 
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.grandTotal));
-
-								tr.append($('<td class="col-md-1"></td>').html(billWiseTaxData.cess));
+								tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((billWiseTaxData.cess).toFixed(2)));
 
 								
 								$('#table_grid tbody').append(tr);

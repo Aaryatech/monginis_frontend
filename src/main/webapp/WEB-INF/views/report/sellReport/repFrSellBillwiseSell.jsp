@@ -76,14 +76,14 @@ table, th, td {
 							<div class="col1">
 								<div class="col1title">
 									<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="fromdatepicker" placeholder="Delivery Date"
+										id="fromdatepicker" placeholder="Delivery Date" autocomplete="off"
 										name="from_Date" type="text" size="35">
 								</div>
 							</div>
 							<div class="col2">
 								<div class="col1title">
 									<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="todatepicker" placeholder="Delivery Date" name="to_Date"
+										id="todatepicker" placeholder="Delivery Date" autocomplete="off" name="to_Date"
 										type="text" size="35">
 								</div>
 							</div>
@@ -144,7 +144,7 @@ table, th, td {
 									</table>
 								</div>
 								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+									<table id="table_grid" class="main-table" >
 										<thead>
 											<tr class="bgpink">
 
@@ -153,7 +153,7 @@ table, th, td {
 													No</th>
 												<th class="col-sm-1" style="text-align: center;">Invoice
 													No</th>
-												<th class="col-md-2" style="text-align: center;">Franchisee
+												<th class="col-md-2" style="text-align: center;">Franchise
 													Name</th>
 												<th class="col-md-2" style="text-align: center;">Bill
 													Date</th>
