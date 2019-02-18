@@ -59,20 +59,20 @@
 			<tr style="height: 30px;">
 				<td
 					style="padding: 10px; font-family: Calibri; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-left-color: #000000;"
-					colspan=8><nobr>To, Galdhar Foods Pvt Ltd</nobr> <nobr>&nbsp;</nobr>
+					colspan=8><nobr>To, Galdhar Foods</nobr> <nobr>&nbsp;</nobr>
 					<nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr></td>
 			</tr>
 			<tr style="height: 30px;">
 				<td colspan="8"
 					style="padding: 10px; font-family: Calibri; font-size: 12px; color: #000000; font-weight: bold; border-left: 1px solid; border-left-color: #000000;">
-					<nobr>A-89, Shendra MIDC, Aurangabad</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
+					<nobr>Factory Add: Plot No.48,Chikalthana Midc, Aurangabad.</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
 					<nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
 				</td>
 			</tr>
 			<tr style="height: 30px;">
 				<td colspan="8"
 					style="padding: 10px; font-family: Calibri; font-size: 14px; color: #000000; font-weight: bold; border-left: 1px solid; border-bottom: 1px solid; border-left-color: #000000; border-bottom-color: #000000;">
-					<nobr>GST NO.27AAECG5545R1ZX</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
+					<nobr>GST NO.27AAPFG0569F1Z7</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
 					<nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr> <nobr>&nbsp;</nobr>
 				</td>
 			</tr>

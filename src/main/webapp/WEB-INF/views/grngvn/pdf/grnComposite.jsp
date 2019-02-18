@@ -99,9 +99,9 @@
 			<td colspan="2" align="center"
 					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">
-						<br />To, <strong>Galdhar Foods Pvt Ltd</strong><br /> 
-						<br /> A 89, SHENDRA M.I.D.C.,Aurangabad<br /> 
-						<br />GSTIN: <strong>27AAECG5545R1ZX</strong><br />
+						<br />To, <strong>Galdhar Foods</strong><br /> 
+						<br />Factory Add: Plot No.48,Chikalthana Midc, Aurangabad.<br /> 
+						<br />GSTIN: <strong>27AAPFG0569F1Z7</strong><br />
                
                 </p>
                 </td>
@@ -116,7 +116,7 @@
                  Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
                 </p>
                 </td>
-			<tr>
+			</tr>
 			
 			
 			</tr>
