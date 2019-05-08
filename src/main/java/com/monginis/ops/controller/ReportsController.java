@@ -1430,7 +1430,7 @@ public class ReportsController {
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Purchase Bill No");
-
+		rowData.add("Bill Date");
 		rowData.add("Tax Rate");
 		rowData.add("cgst");
 
@@ -1449,7 +1449,7 @@ public class ReportsController {
 			rowData = new ArrayList<String>();
 
 			rowData.add("" + billWiseTaxReport.get(i).getBillNo());
-
+			rowData.add("" +DateConvertor.convertToDMY(billWiseTaxReport.get(i).getBillDate()));
 			rowData.add("" + billWiseTaxReport.get(i).getTaxRate());
 			rowData.add("" + billWiseTaxReport.get(i).getCgstRs());
 			rowData.add("" + billWiseTaxReport.get(i).getSgstRs());
