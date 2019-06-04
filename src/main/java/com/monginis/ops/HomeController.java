@@ -45,6 +45,7 @@ import com.monginis.ops.model.DummyItems;
 import com.monginis.ops.model.FrItemList;
 import com.monginis.ops.model.FrLoginResponse;
 import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.FrPurchaseDash;
 import com.monginis.ops.model.FrTotalSale;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
@@ -78,32 +79,33 @@ public class HomeController {
 	 */
 
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public ModelAndView time() {
 
-		String StartTimes = "10:00";
-		String EndTimes = "12:00";
+		FrPurchaseDash frData = null;
+		RestTemplate restTemplate = new RestTemplate();
+		ModelAndView model1 = new ModelAndView("homeold");
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+			Date date = new Date();
+			System.out.println(dateFormat.format(date));
 
-		String startTimeParse[] = StartTimes.split(":");
-		String endTimeParse[] = EndTimes.split(":");
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			System.out.println(dateFormat.format(cal.getTime()));
 
-		int firstHour = Integer.parseInt(startTimeParse[0]);
-		int firstMinute = Integer.parseInt(startTimeParse[1]);
-		int secondHour = Integer.parseInt(endTimeParse[0]);
-		int secondMinute = Integer.parseInt(endTimeParse[1]);
-		int durattionHour = secondHour - firstHour;
-		int durattionMinutes = secondMinute - firstMinute;
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("preMonth", dateFormat.format(date));
+			map.add("curMonth", dateFormat.format(cal.getTime()));
+			map.add("frId", 1);
 
-		System.out.println("Duration : " + durattionHour + ":" + durattionMinutes);
+			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
+			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
+		} catch (Exception e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "homeold";
+		return model1;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -133,74 +135,73 @@ public class HomeController {
 		ModelAndView model = new ModelAndView("home");
 		HttpSession session = request.getSession();
 		RestTemplate restTemplate = new RestTemplate();
-        try {
-		ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
-		ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
-		int frId = (Integer) session.getAttribute("frId");
+		try {
+			ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
+			ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
+			int frId = (Integer) session.getAttribute("frId");
 
-		System.out.println("***************Schedular List*****************" + schedulerLists);
-		System.out.println("***************msgList*****************" + msgList);
-		System.out.println("***************frId*****************" + frId);
+			System.out.println("***************Schedular List*****************" + schedulerLists);
+			System.out.println("***************msgList*****************" + msgList);
+			System.out.println("***************frId*****************" + frId);
 
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		map.add("frId", frId);
+			map.add("frId", frId);
 
-		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
-				map, ConfiguredSpDayCkResponse.class);
+			ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate
+					.postForObject(Constant.URL + "/getSpDayCkList", map, ConfiguredSpDayCkResponse.class);
 
-		List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+			List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
 
-		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+			configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
 
-		List<GetConfiguredSpDayCk> configureSpDayCk = new ArrayList<GetConfiguredSpDayCk>();
+			List<GetConfiguredSpDayCk> configureSpDayCk = new ArrayList<GetConfiguredSpDayCk>();
 
-		boolean flag = false, spDayShow = false;
-		int count = 0;
+			boolean flag = false, spDayShow = false;
+			int count = 0;
 
-		for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
+			for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
 
-			DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
-			Date startDate;
+				DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Date startDate;
 
-			startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
-			System.out.println("startDate" + startDate);
+				startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+				System.out.println("startDate" + startDate);
 
-			Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
-			System.out.println("endDate" + endDate);
+				Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+				System.out.println("endDate" + endDate);
 
-			String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-			Date dateToCheck = dmyFormat.parse(todaysDate);
+				String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				Date dateToCheck = dmyFormat.parse(todaysDate);
 
-			System.out.println("dateToCheck" + dateToCheck);
+				System.out.println("dateToCheck" + dateToCheck);
 
-			flag = checkBetween(dateToCheck, startDate, endDate);
-			System.out.println("ShowSpDayCk:" + flag);
+				flag = checkBetween(dateToCheck, startDate, endDate);
+				System.out.println("ShowSpDayCk:" + flag);
 
-			if (flag == true) {
-				count = count + 1;
-				configureSpDayCk.add(getConfSpDayCk);
-				System.out.println("Configure SpDay Cake To And From Date: " + configureSpDayCk.toString());
+				if (flag == true) {
+					count = count + 1;
+					configureSpDayCk.add(getConfSpDayCk);
+					System.out.println("Configure SpDay Cake To And From Date: " + configureSpDayCk.toString());
+				}
+
 			}
 
-		}
+			if (count > 0) {
+				spDayShow = true;
+			}
+			session.setAttribute("isSpDayShow", spDayShow);
+			System.out.println("isSpDayShow" + spDayShow);
 
-		if (count > 0) {
-			spDayShow = true;
-		}
-		session.setAttribute("isSpDayShow", spDayShow);
-		System.out.println("isSpDayShow" + spDayShow);
+			model.addObject("configureSpDayFrList", configureSpDayCk);
 
-		model.addObject("configureSpDayFrList", configureSpDayCk);
+			model.addObject("schedulerLists", schedulerLists);
+			model.addObject("msgList", msgList);
+			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
+			model.addObject("isSpDayShow", spDayShow);
 
-		model.addObject("schedulerLists", schedulerLists);
-		model.addObject("msgList", msgList);
-		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
-		model.addObject("isSpDayShow", spDayShow);
-
-		logger.info("/login request mapping.");
-        }
-        catch (Exception e) {
+			logger.info("/login request mapping.");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
