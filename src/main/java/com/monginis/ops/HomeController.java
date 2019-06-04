@@ -108,6 +108,61 @@ public class HomeController {
 		return model1;
 	}
 
+	@RequestMapping(value = "/time2", method = RequestMethod.GET)
+	public ModelAndView time2() {
+
+		FrPurchaseDash frData = null;
+		RestTemplate restTemplate = new RestTemplate();
+		ModelAndView model1 = new ModelAndView("homeold");
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+			Date date = new Date();
+			System.out.println(dateFormat.format(date));
+
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			System.out.println(dateFormat.format(cal.getTime()));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			/*
+			 * map.add("preMonth", dateFormat.format(date)); map.add("curMonth",
+			 * dateFormat.format(cal.getTime()));
+			 */
+
+			map.add("preMonth", "2019-04");
+			map.add("curMonth", "2018-04");
+			map.add("frId", 91);
+
+			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
+
+			float grnPrevTotal = 0;
+			grnPrevTotal = frData.getPrevGrnTotal() * 100 / 75;
+
+			frData.setPrevGrnTotal(grnPrevTotal);
+			float prevCompanyGrnContri = (float) (grnPrevTotal * (0.75));
+			float prevFrGrnContri = (float) (grnPrevTotal * (0.25));
+			frData.setPrevCompanyGrnContri(prevCompanyGrnContri);
+			frData.setPrevFrGrnContribution(prevFrGrnContri);
+
+			float grnCurrTotal = 0;
+			grnCurrTotal = frData.getCurGrnTotal() * 100 / 75;
+
+			frData.setCurGrnTotal(grnCurrTotal);
+			float curCompanyGrnContri = (float) (grnPrevTotal * (0.75));
+			float curFrGrnContri = (float) (grnPrevTotal * (0.25));
+			frData.setCurFrGrnContribution(curFrGrnContri);
+			frData.setCurCompanyGvnContri(curCompanyGrnContri);
+
+			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
+
+		} catch (Exception e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+
+		return model1;
+	}
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 

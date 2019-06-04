@@ -11,8 +11,20 @@ public class FrPurchaseDash {
 	private float prevGvnTotal;
 	private float curGvnTotal;
 
-	private float preActualTotal;
+	private float prevActualTotal;
 	private float curActualTotal;
+
+	private float prevFrGrnContribution;
+	private float prevCompanyGrnContri;
+
+	private float curFrGrnContribution;
+	private float curCompanyGrnContri;
+
+	private float prevFrGvnContribution;
+	private float prevCompanyGvnContri;
+
+	private float curFrGvnContribution;
+	private float curCompanyGvnContri;
 
 	public float getPrevPurchaseTotal() {
 		return prevPurchaseTotal;
@@ -62,14 +74,6 @@ public class FrPurchaseDash {
 		this.curGvnTotal = curGvnTotal;
 	}
 
-	public float getPreActualTotal() {
-		return preActualTotal;
-	}
-
-	public void setPreActualTotal(float preActualTotal) {
-		this.preActualTotal = preActualTotal;
-	}
-
 	public float getCurActualTotal() {
 		return curActualTotal;
 	}
@@ -78,12 +82,88 @@ public class FrPurchaseDash {
 		this.curActualTotal = curActualTotal;
 	}
 
+	public float getPrevActualTotal() {
+		return prevActualTotal;
+	}
+
+	public void setPrevActualTotal(float prevActualTotal) {
+		this.prevActualTotal = prevActualTotal;
+	}
+
+	public float getPrevFrGrnContribution() {
+		return prevFrGrnContribution;
+	}
+
+	public void setPrevFrGrnContribution(float prevFrGrnContribution) {
+		this.prevFrGrnContribution = prevFrGrnContribution;
+	}
+
+	public float getPrevCompanyGrnContri() {
+		return prevCompanyGrnContri;
+	}
+
+	public void setPrevCompanyGrnContri(float prevCompanyGrnContri) {
+		this.prevCompanyGrnContri = prevCompanyGrnContri;
+	}
+
+	public float getCurFrGrnContribution() {
+		return curFrGrnContribution;
+	}
+
+	public void setCurFrGrnContribution(float curFrGrnContribution) {
+		this.curFrGrnContribution = curFrGrnContribution;
+	}
+
+	public float getCurCompanyGrnContri() {
+		return curCompanyGrnContri;
+	}
+
+	public void setCurCompanyGrnContri(float curCompanyGrnContri) {
+		this.curCompanyGrnContri = curCompanyGrnContri;
+	}
+
+	public float getPrevFrGvnContribution() {
+		return prevFrGvnContribution;
+	}
+
+	public void setPrevFrGvnContribution(float prevFrGvnContribution) {
+		this.prevFrGvnContribution = prevFrGvnContribution;
+	}
+
+	public float getPrevCompanyGvnContri() {
+		return prevCompanyGvnContri;
+	}
+
+	public void setPrevCompanyGvnContri(float prevCompanyGvnContri) {
+		this.prevCompanyGvnContri = prevCompanyGvnContri;
+	}
+
+	public float getCurFrGvnContribution() {
+		return curFrGvnContribution;
+	}
+
+	public void setCurFrGvnContribution(float curFrGvnContribution) {
+		this.curFrGvnContribution = curFrGvnContribution;
+	}
+
+	public float getCurCompanyGvnContri() {
+		return curCompanyGvnContri;
+	}
+
+	public void setCurCompanyGvnContri(float curCompanyGvnContri) {
+		this.curCompanyGvnContri = curCompanyGvnContri;
+	}
+
 	@Override
 	public String toString() {
 		return "FrPurchaseDash [prevPurchaseTotal=" + prevPurchaseTotal + ", curPurchaseTotal=" + curPurchaseTotal
 				+ ", prevGrnTotal=" + prevGrnTotal + ", curGrnTotal=" + curGrnTotal + ", prevGvnTotal=" + prevGvnTotal
-				+ ", curGvnTotal=" + curGvnTotal + ", preActualTotal=" + preActualTotal + ", curActualTotal="
-				+ curActualTotal + "]";
+				+ ", curGvnTotal=" + curGvnTotal + ", prevActualTotal=" + prevActualTotal + ", curActualTotal="
+				+ curActualTotal + ", prevFrGrnContribution=" + prevFrGrnContribution + ", prevCompanyGrnContri="
+				+ prevCompanyGrnContri + ", curFrGrnContribution=" + curFrGrnContribution + ", curCompanyGrnContri="
+				+ curCompanyGrnContri + ", prevFrGvnContribution=" + prevFrGvnContribution + ", prevCompanyGvnContri="
+				+ prevCompanyGvnContri + ", curFrGvnContribution=" + curFrGvnContribution + ", curCompanyGvnContri="
+				+ curCompanyGvnContri + "]";
 	}
 
 }
