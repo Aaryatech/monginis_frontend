@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -52,6 +53,7 @@ import com.monginis.ops.model.SpCakeOrderRes;
 import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpMessage;
 import com.monginis.ops.model.SpecialCake;
+import com.monginis.ops.model.album.Album;
 import com.monginis.ops.model.frsetting.FrSetting;
 
 @Controller
@@ -73,18 +75,19 @@ public class SpCakeController {
 	List<SpecialCake> specialCakeList;
 	SpecialCake specialCake;
 	String flavour = "";
-	String spImage= "";// Default Image to spCake order Page
+	String spImage = "";// Default Image to spCake order Page
 
-	//--------------------------------------------------------
-	String menuTitle="";
-	int spType; 
-	SpCakeOrder spCake=new SpCakeOrder();
-	String spName="";
-	String productionTime="";
-	String flavourName="";
-	String isCustCh="";
-	String spPhoUpload="";
-	SpCakeOrderRes spCakeOrderRes=new SpCakeOrderRes();
+	// --------------------------------------------------------
+	String menuTitle = "";
+	int spType;
+	SpCakeOrder spCake = new SpCakeOrder();
+	String spName = "";
+	String productionTime = "";
+	String flavourName = "";
+	String isCustCh = "";
+	String spPhoUpload = "";
+	SpCakeOrderRes spCakeOrderRes = new SpCakeOrderRes();
+
 	// ------------------------Show Special Cake Order
 	// Page-------------------------------------------
 	@RequestMapping(value = "/showSpCakeOrder/{index}", method = RequestMethod.GET)
@@ -195,10 +198,14 @@ public class SpCakeController {
 
 		map.add("spCode", spCode);
 		try {
+
 			SearchSpCakeResponse searchSpCakeResponse = restTemplate.postForObject(Constant.URL + "/searchSpecialCake",
 					map, SearchSpCakeResponse.class);
 			ErrorMessage errorMessage = searchSpCakeResponse.getErrorMessage();
 			specialCake = searchSpCakeResponse.getSpecialCake();
+
+			System.out
+					.println("specialCake.getSpId()specialCake.getSpId()specialCake.getSpId()" + specialCake.getSpId());
 
 			if (errorMessage.getError() == false) {
 
@@ -256,7 +263,7 @@ public class SpCakeController {
 				while (currentWt < maxWt) {
 					currentWt = currentWt + 0.5f;
 					weightList.add(currentWt);
-				} 
+				}
 
 				System.out.println("Weight List for SP Cake: " + weightList.toString());
 
@@ -299,6 +306,18 @@ public class SpCakeController {
 				model.addObject("weightList", weightList);
 				model.addObject("menuId", currentMenuId);
 				model.addObject("menuTitle", menuTitle);
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("spId", specialCake.getSpId());
+				Album[] messageResponse = restTemplate.postForObject(Constant.URL + "/getAlbumsBySpId", map,
+						Album[].class);
+				List<Album> albumList = new ArrayList<Album>(Arrays.asList(messageResponse));
+
+				model.addObject("albumList", albumList);
+
+				System.out.println("messagemessagemessagemessagemessage" + albumList.toString());
+
 			} else {
 
 				System.out.println(" inside else:");
@@ -392,7 +411,8 @@ public class SpCakeController {
 
 	}
 
-	// ------------------------Get Addon Rate AJAX method(spcakeorder)-----------------------------------
+	// ------------------------Get Addon Rate AJAX
+	// method(spcakeorder)-----------------------------------
 	@RequestMapping(value = "/getAddOnRate", method = RequestMethod.GET)
 	public @ResponseBody Flavour getAddOnRate(@RequestParam(value = "spfId", required = true) double spfId) {
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
@@ -487,9 +507,9 @@ public class SpCakeController {
 
 		if (length == 4)
 
-		invoiceNo = curStrYear + "-" + "0" + settingValue;
-		
-		invoiceNo=frDetails.getFrCode()+invoiceNo;
+			invoiceNo = curStrYear + "-" + "0" + settingValue;
+
+		invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 
@@ -511,7 +531,7 @@ public class SpCakeController {
 		int frId = frDetails.getFrId();
 
 		globalFrId = frId;
-		 menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+		menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
 		// menu timing verification
 		String fromTime = menuList.get(globalIndex).getFromTime();
@@ -530,14 +550,14 @@ public class SpCakeController {
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 
 		if (!isLate && !isEarly) {
-			
+
 			int spId = Integer.parseInt(request.getParameter("sp_id"));
 			logger.info("1" + spId);
 			String spCode = request.getParameter("sp_code");
 			logger.info("2" + spCode);
 			String gstin = request.getParameter("gstin");
-			
-			 menuTitle = request.getParameter("menu_title");// For Notification
+
+			menuTitle = request.getParameter("menu_title");// For Notification
 			logger.info("menuTitle" + menuTitle);
 			spName = request.getParameter("sp_name");
 			logger.info("3" + spName);
@@ -630,15 +650,22 @@ public class SpCakeController {
 			String rmAmount = request.getParameter("rm_amount");
 			logger.info("31" + rmAmount);
 
-			float spAdvance =Float.parseFloat(request.getParameter("adv"));
+			float spAdvance = Float.parseFloat(request.getParameter("adv"));
 			logger.info("32" + spAdvance);
 
 			String spPlace = request.getParameter("sp_place");
 			logger.info("33" + spPlace);
- 
-			 spPhoUpload = request.getParameter("spPhoUpload");
+
+			spPhoUpload = request.getParameter("spPhoUpload");
 
 			String eventName = request.getParameter("event_name");
+
+			String albumName = request.getParameter("album_name");
+			logger.info("377777777777777777" + albumName);
+
+			System.out.println(
+					"albumNamealbumNamealbumNamealbualbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamemName"
+							+ albumName);
 
 			isCustCh = request.getParameter("isCustCh");
 
@@ -650,16 +677,17 @@ public class SpCakeController {
 
 			// ---------isCustSpCk And isSpPhoUpload Special Cake Value(1/0)-------
 			int isCustSpCk = Integer.parseInt(request.getParameter("isCustChoiceCk"));
-		    int	isSpPhoUpload = Integer.parseInt(request.getParameter("spPhoUpload"));
+			int isSpPhoUpload = Integer.parseInt(request.getParameter("spPhoUpload"));
 
 			String addonRatePerKG = request.getParameter("addonRatePerKG");
 
 			float backendSpRate = Float.parseFloat(request.getParameter("spBackendRate"));
-			/*Calendar cal1 = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-			System.out.println(sdf.format(cal1.getTime()));
-
-			String curTimeStamp = sdf.format(cal1.getTime());*/
+			/*
+			 * Calendar cal1 = Calendar.getInstance(); SimpleDateFormat sdf = new
+			 * SimpleDateFormat("HH:mm:ss"); System.out.println(sdf.format(cal1.getTime()));
+			 * 
+			 * String curTimeStamp = sdf.format(cal1.getTime());
+			 */
 			String curTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
 			String custChCk = "";
@@ -672,13 +700,10 @@ public class SpCakeController {
 
 				VpsImageUpload upload = new VpsImageUpload();
 
-				
-
 				try {
-					orderPhoto1 = curTimeStamp+"SPPH"+orderPhoto.get(0).getOriginalFilename();
-					orderPhoto1= orderPhoto1.replaceAll("\\s", "");
-					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							orderPhoto1);
+					orderPhoto1 = curTimeStamp + "SPPH" + orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = orderPhoto1.replaceAll("\\s", "");
+					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
 					System.out.println("upload method called " + orderPhoto.toString());
 
 				} catch (IOException e) {
@@ -698,23 +723,21 @@ public class SpCakeController {
 
 				VpsImageUpload upload = new VpsImageUpload();
 
-				//Calendar cal = Calendar.getInstance();
-				//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				//System.out.println(sdf.format(cal.getTime()));
+				// Calendar cal = Calendar.getInstance();
+				// SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				// System.out.println(sdf.format(cal.getTime()));
 
-				//String curTimeStamp = sdf.format(cal.getTime());
+				// String curTimeStamp = sdf.format(cal.getTime());
 
 				try {
-					orderPhoto1 = curTimeStamp+"SPPH"+orderPhoto.get(0).getOriginalFilename();
-					orderPhoto1= orderPhoto1.replaceAll("\\s", "");
+					orderPhoto1 = curTimeStamp + "SPPH" + orderPhoto.get(0).getOriginalFilename();
+					orderPhoto1 = orderPhoto1.replaceAll("\\s", "");
 
-					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE,
-							orderPhoto1);
-					custChCk = curTimeStamp+"CC"+custChoiceCk.get(0).getOriginalFilename();
-					custChCk= custChCk.replaceAll("\\s", "");
+					upload.saveUploadedFiles(orderPhoto, Constant.SPCAKE_IMAGE_TYPE, orderPhoto1);
+					custChCk = curTimeStamp + "CC" + custChoiceCk.get(0).getOriginalFilename();
+					custChCk = custChCk.replaceAll("\\s", "");
 
-					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE,
-							custChCk);
+					upload.saveUploadedFiles(custChoiceCk, Constant.CUST_CHIOICE_IMAGE_TYPE, custChCk);
 
 					System.out.println("upload method called for two photo   " + orderPhoto.get(0).getName());
 
@@ -745,13 +768,11 @@ public class SpCakeController {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(delDate);
-            if(isSameDayApplicable==1)
-            {
-            	cal.add(Calendar.DATE, 0);
-            }
-            else {
-			cal.add(Calendar.DATE, -prodTime);
-            }
+			if (isSameDayApplicable == 1) {
+				cal.add(Calendar.DATE, 0);
+			} else {
+				cal.add(Calendar.DATE, -prodTime);
+			}
 			// manipulate date
 			// c.add(Calendar.DATE, prodTime);
 			Date deliDateMinusProdTime = cal.getTime();
@@ -765,7 +786,7 @@ public class SpCakeController {
 
 			final SimpleDateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-		    Date date = new Date();
+			Date date = new Date();
 			try {
 
 				date = dmyFormat.parse(spCustDOB);
@@ -800,21 +821,21 @@ public class SpCakeController {
 
 			spCakeOrder.setItemId(spCode);
 			spCakeOrder.setOrderDate(dateFormat.format(orderDate));
-			float rmAmt=spSubTotal-spAdvance;
+			float rmAmt = spSubTotal - spAdvance;
 			spCakeOrder.setRmAmount(rmAmt);
 			spCakeOrder.setSpTotalAddRate(Float.valueOf(spAddRate));
 			spCakeOrder.setSpAdvance(spAdvance);
 
 			spCakeOrder.setSpBookedForName(spBookedForName);
 			spCakeOrder.setSpBookForDob(sqlBookForDob);
-			spCakeOrder.setSpBookForMobNo(getInvoiceNo(request,response));
+			spCakeOrder.setSpBookForMobNo(getInvoiceNo(request, response));
 			spCakeOrder.setSpCustDob(sqlSpCustDOB);
 			spCakeOrder.setSpInstructions(spInstructions);
 			spCakeOrder.setOrderPhoto(orderPhoto1);
 			spCakeOrder.setOrderPhoto2(custChCk);
 
 			spCakeOrder.setSpCustMobNo(spCustMobileNo);
-			spCakeOrder.setSpCustName(spCustName+" </br> GSTIN :   "+gstin);
+			spCakeOrder.setSpCustName(spCustName + " </br> GSTIN :   " + gstin);
 			spCakeOrder.setSpDeliveryDate(sqlSpDeliveryDt);
 			spCakeOrder.setSpEstDeliDate(sqlSpEdt);
 			spCakeOrder.setSpEvents(spEvents);
@@ -825,7 +846,7 @@ public class SpCakeController {
 			spCakeOrder.setSpMaxWeight(Float.valueOf(spMaxWeight));
 			spCakeOrder.setSpMinWeight(Float.valueOf(spMinWeight));
 			spCakeOrder.setSpSelectedWeight(spWeight);
- 
+
 			spCakeOrder.setSpDeliveryPlace(spPlace);
 			spCakeOrder.setSpPrice(Float.valueOf(spPrice));
 			spCakeOrder.setSpProdDate(sqlProdDate);
@@ -862,8 +883,8 @@ public class SpCakeController {
 				HttpEntity<String> httpEntity = new HttpEntity<String>(jsonInString.toString(), httpHeaders);
 
 				RestTemplate restTemplate = new RestTemplate();
-				spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder",
-						httpEntity, SpCakeOrderRes.class);
+				spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder", httpEntity,
+						SpCakeOrderRes.class);
 				System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
 				spCakeOrder.setSpInstructions(spCakeOrderRes.getSpCakeOrder().getSpInstructions());
 				spCake = spCakeOrderRes.getSpCakeOrder();
@@ -886,6 +907,22 @@ public class SpCakeController {
 					map.add("sellBillNo", sellBillNo);
 
 					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+
+				}
+
+				if (spCakeOrderRes.getErrorMessage().getError() != true) {
+
+					System.out.println("albumNamealbumNamealbumNamealbumName" + albumName);
+
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("tSpCakeOrderNo", spCakeOrderRes.getSpCakeOrder().getSpOrderNo());
+					map.add("photo4", albumName);
+
+					Info info = restTemplate.postForObject(Constant.URL + "updatePhoto4ByAlbum", map, Info.class);
+					System.out.println(albumName);
+					System.out
+							.println("System.out.println(albumName);System.out.println(albumName);" + info.toString());
 
 				}
 				List<Flavour> flavoursList = new ArrayList<Flavour>();
@@ -921,21 +958,21 @@ public class SpCakeController {
 				// -----------------------For Notification-----------------
 				String frToken = "";
 				if (spCakeOrderRes.getErrorMessage().getError() != true) {
-				try {
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					map.add("frId", frDetails.getFrId());
+					try {
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("frId", frDetails.getFrId());
 
-					frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
-					Firebase.sendPushNotifForCommunication(frToken, menuTitle + " Order Placed Sucessfully",
-							"Your SP Order has been saved. Order Saved is--SP Code--" + spCode + "-Sp name--" + spName
-									+ "--Weight--" + spWeight + "--Flavour--" + flavourName + "--Message--"
-									+ spCakeOrderRes.getSpCakeOrder().getSpInstructions() + "--Total Amount-" + spGrand
-									+ ". Thank You.Team Monginis",
-							"inbox");
+						frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
+						Firebase.sendPushNotifForCommunication(frToken, menuTitle + " Order Placed Sucessfully",
+								"Your SP Order has been saved. Order Saved is--SP Code--" + spCode + "-Sp name--"
+										+ spName + "--Weight--" + spWeight + "--Flavour--" + flavourName + "--Message--"
+										+ spCakeOrderRes.getSpCakeOrder().getSpInstructions() + "--Total Amount-"
+										+ spGrand + ". Thank You.Team Monginis",
+								"inbox");
 
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 				}
 
 				// -----------------------------------------------------
@@ -966,14 +1003,11 @@ public class SpCakeController {
 	@RequestMapping(value = "/orderRes", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("order/orderRes");
-		
-		try
-		{
-			if(spCake!=null)
-			{
-				if(spCakeOrderRes.getErrorMessage().getError()!=true)
-				{
-					
+
+		try {
+			if (spCake != null) {
+				if (spCakeOrderRes.getErrorMessage().getError() != true) {
+
 					mav.addObject("menuTitle", menuTitle);
 					mav.addObject("spType", spType);
 					mav.addObject("specialCake", spCake);
@@ -988,10 +1022,8 @@ public class SpCakeController {
 					mav.addObject("PHOTO_URL", Constant.PHOTO_CAKE_URL);
 					mav.addObject("globalIndex", globalIndex);
 					mav.addObject("isFound", true);
-				}
-				else
-				{
-					
+				} else {
+
 					mav.addObject("errorMessage", "Special Cake Order TimeOut");
 					mav.addObject("menuList", menuList);
 					mav.addObject("eventList", spMessageList);
@@ -1003,10 +1035,8 @@ public class SpCakeController {
 
 					mav.addObject("isFound", false);
 				}
-				
-			}
-			else
-			{
+
+			} else {
 				mav.addObject("errorMessage", "Special Cake Order TimeOut");
 				mav.addObject("menuList", menuList);
 				mav.addObject("eventList", spMessageList);
@@ -1018,8 +1048,8 @@ public class SpCakeController {
 				mav.addObject("globalIndex", globalIndex);
 
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("Exc" + e.getMessage());
 			mav.addObject("eventList", spMessageList);
 			mav.addObject("flavourList", flavourList);
@@ -1033,7 +1063,8 @@ public class SpCakeController {
 	}
 	// ----------------------------------END--------------------------------------------
 
-	// -----------------For Showing Special Cake order PDF------------------------------
+	// -----------------For Showing Special Cake order
+	// PDF------------------------------
 	@RequestMapping(value = "/showSpCakeOrderPDF", method = RequestMethod.GET)
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
