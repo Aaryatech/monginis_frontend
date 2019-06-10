@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,6 +78,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	RestTemplate restTemplate = new RestTemplate();
 
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public ModelAndView time() {
@@ -100,6 +102,7 @@ public class HomeController {
 
 			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
 			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
+			model1.addObject("frData", frData);
 		} catch (Exception e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
@@ -108,13 +111,17 @@ public class HomeController {
 		return model1;
 	}
 
-	@RequestMapping(value = "/time2", method = RequestMethod.GET)
-	public ModelAndView time2() {
+	@RequestMapping(value = "/showDashboardFranchisee", method = RequestMethod.GET)
+	public ModelAndView showDashboardFranchisee(HttpServletRequest request, HttpServletResponse response) {
 
 		FrPurchaseDash frData = null;
 		RestTemplate restTemplate = new RestTemplate();
 		ModelAndView model1 = new ModelAndView("homeold");
 		try {
+
+			Calendar now = Calendar.getInstance();
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 			Date date = new Date();
 			System.out.println(dateFormat.format(date));
@@ -135,6 +142,22 @@ public class HomeController {
 
 			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
 
+			String toyear = "2018";
+			String fromyear = "2018";
+
+			if ((now.get(Calendar.MONTH) + 1) > 3) {
+				fromyear = "" + (now.get(Calendar.YEAR));
+				toyear = "" + (now.get(Calendar.YEAR) + 1);
+
+			} else {
+				fromyear = "" + (now.get(Calendar.YEAR) - 1);
+				toyear = "" + (now.get(Calendar.YEAR));
+			}
+
+			model1.addObject("frommonth", "03-" + fromyear);
+			model1.addObject("tomonth", "04-" + toyear);
+			model1.addObject("frId", frDetails.getFrId());
+
 			float grnPrevTotal = 0;
 			grnPrevTotal = frData.getPrevGrnTotal() * 100 / 75;
 
@@ -147,13 +170,25 @@ public class HomeController {
 			float grnCurrTotal = 0;
 			grnCurrTotal = frData.getCurGrnTotal() * 100 / 75;
 
+			System.out.println("grnCurrTotal" + grnCurrTotal);
+
 			frData.setCurGrnTotal(grnCurrTotal);
-			float curCompanyGrnContri = (float) (grnPrevTotal * (0.75));
-			float curFrGrnContri = (float) (grnPrevTotal * (0.25));
+			float curCompanyGrnContri = (float) (grnCurrTotal * (0.75));
+			float curFrGrnContri = (float) (grnCurrTotal * (0.25));
 			frData.setCurFrGrnContribution(curFrGrnContri);
-			frData.setCurCompanyGvnContri(curCompanyGrnContri);
+			frData.setCurCompanyGrnContri(curCompanyGrnContri);
+
+			float expectedPrevActualTotal = 0;
+			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal;
+
+			float expectedCurActualTotal = 0;
+			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal;
+
+			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
+			frData.setExpectedCurActualTotal(expectedCurActualTotal);
 
 			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
+			model1.addObject("frData", frData);
 
 		} catch (Exception e3) {
 			// TODO Auto-generated catch block
@@ -161,6 +196,85 @@ public class HomeController {
 		}
 
 		return model1;
+	}
+
+	@RequestMapping(value = "/getDashboardCount", method = RequestMethod.GET)
+	public @ResponseBody FrPurchaseDash getDashboardCount(HttpServletRequest request, HttpServletResponse response) {
+		FrPurchaseDash frData = null;
+		try {
+
+			String preMonth = request.getParameter("fromDate");
+			String curMonth = request.getParameter("toDate");
+
+			System.out.println("preMonthpreMonthpreMonthpreMonthpreMonthpreMonthpreMonthpreMonthpreMonth" + preMonth);
+			System.out.println("curMonthcurMonthcurMonthcurMonthcurMonthcurMonthcurMonth" + curMonth);
+
+			Calendar now = Calendar.getInstance();
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+			DateFormat dateFormat1 = new SimpleDateFormat("MM-yyyy");
+			Date date = new Date();
+			System.out.println(dateFormat.format(date));
+
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			System.out.println(dateFormat.format(cal.getTime()));
+			String forPreMonth = null;
+			String forCurMonth = null;
+			try {
+				Date formattedPreMonth = dateFormat1.parse(preMonth);
+				Date formattedCurMonth = dateFormat1.parse(curMonth);
+
+				forPreMonth = dateFormat.format(formattedCurMonth);
+
+				forCurMonth = dateFormat.format(formattedPreMonth);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("preMonth", forPreMonth);
+			map.add("curMonth", forCurMonth);
+			map.add("frId", frDetails.getFrId());
+
+			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
+
+			float grnPrevTotal = 0;
+			grnPrevTotal = frData.getPrevGrnTotal() * 100 / 75;
+
+			frData.setPrevGrnTotal(grnPrevTotal);
+			float prevCompanyGrnContri = (float) (grnPrevTotal * (0.75));
+			float prevFrGrnContri = (float) (grnPrevTotal * (0.25));
+			frData.setPrevCompanyGrnContri(prevCompanyGrnContri);
+			frData.setPrevFrGrnContribution(prevFrGrnContri);
+
+			float grnCurrTotal = 0;
+			grnCurrTotal = frData.getCurGrnTotal() * 100 / 75;
+
+			System.out.println("grnCurrTotal" + grnCurrTotal);
+
+			frData.setCurGrnTotal(grnCurrTotal);
+			float curCompanyGrnContri = (float) (grnCurrTotal * (0.75));
+			float curFrGrnContri = (float) (grnCurrTotal * (0.25));
+			frData.setCurFrGrnContribution(curFrGrnContri);
+			frData.setCurCompanyGrnContri(curCompanyGrnContri);
+
+			float expectedPrevActualTotal = 0;
+			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal;
+
+			float expectedCurActualTotal = 0;
+			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal;
+
+			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
+			frData.setExpectedCurActualTotal(expectedCurActualTotal);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return frData;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -174,16 +288,6 @@ public class HomeController {
 
 	}
 
-	//
-	// @RequestMapping(value = "/loginProcess",method = RequestMethod.POST)
-	// public ModelAndView renderPDF(HttpServletRequest request,
-	// HttpServletResponse response) throws Exception {
-	//
-	// ModelAndView mav = new ModelAndView("report/order");
-	// mav.addObject("name", " mahesh cake shop");
-	// return mav;
-	// }
-	//
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
