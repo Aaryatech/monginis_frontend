@@ -69,29 +69,29 @@
 				<div class="content">
 					<div class="container-fluid">
 
-						<%-- 	<div class="colOuter">
-							<div align="center">
-								<div class="col1">
-									<div class="col1title">
-										<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-											id="fromdatepicker" placeholder="Delivery Date"
-											name="from_Date" type="text" size="35" value="${frommonth}">
-									</div>
-								</div>
-								<div class="col2">
-									<div class="col1title">
-										<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-											id="todatepicker" placeholder="Delivery Date" name="to_Date"
-											type="text" size="35" value="${tomonth}">
-									</div>
-								</div>
+						<div class="row">
 
+							<div class="col1">
+								<div class="col1title">
+									<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
+										id="fromdatepicker" placeholder="Delivery Date"
+										name="from_Date" type="text" size="35" value="${frommonth}">
+								</div>
 							</div>
+							<div class="col2">
+								<div class="col1title">
+									<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
+										id="todatepicker" placeholder="Delivery Date" name="to_Date"
+										type="text" size="35" value="${tomonth}">
+								</div>
+							</div>
+
+
 							<div align="center">
 								<button class="btn search_btn" onclick="searchReport()">HTML
 									View</button>
 							</div>
-						</div> --%>
+						</div>
 						<div class="row">
 							<div class="col-lg-3 col-md-6 col-sm-6">
 								<div class="card card-stats">
@@ -250,9 +250,8 @@
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
-												id="prevFrGrnContribution"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${frData.preGrnTarget}" /></span>
+												id="preGrnTarget"> <fmt:formatNumber type="number"
+													maxFractionDigits="2" value="${frData.preGrnTarget}" /></span>
 										</h3>
 
 
@@ -365,9 +364,8 @@
 										<h2>&nbsp; GRN Target</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
-												id="curFrGrnContribution"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${frData.curGrnTarget}" />
+												id="curGrnTarget"> <fmt:formatNumber type="number"
+													maxFractionDigits="2" value="${frData.curGrnTarget}" />
 											</span>
 										</h3>
 
@@ -439,7 +437,8 @@
 									<div class="card-category">
 										<h2>&nbsp;Franchisee Contribution</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;" id=""> <fmt:formatNumber
+											<span class="count" style="font-size: 30px;"
+												id="prevFrGvnContribution"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevFrGvnContribution}" />
 											</span>
@@ -915,8 +914,8 @@
 		var fromDate = document.getElementById("fromdatepicker").value;
 		var toDate = document.getElementById("todatepicker").value;
 
-		alert("fromdatepicker" + fromDate);
-		alert("todatepicker" + toDate);
+		//alert("fromdatepicker" + fromDate);
+		//alert("todatepicker" + toDate);
 
 		var valid = true;
 
@@ -948,7 +947,7 @@
 							},
 
 							function(data) {
-								alert("hi");
+								//alert("hi");
 
 								document.getElementById("prevPurchaseTotal").innerText = data.prevPurchaseTotal
 										.toFixed(2);
@@ -961,11 +960,24 @@
 								document
 										.getElementById("prevFrGrnContribution").innerText = data.prevFrGrnContribution
 										.toFixed(2);
+
+								document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
+										.toFixed(2);
+
+								document.getElementById("preGrnTarget").innerText = data.preGrnTarget
+										.toFixed(2);
+
 								document.getElementById("curGrnTotal").innerText = data.curGrnTotal
 										.toFixed(2);
 								document.getElementById("curCompanyGrnContri").innerText = data.curCompanyGrnContri
 										.toFixed(2);
 								document.getElementById("curFrGrnContribution").innerText = data.curFrGrnContribution
+										.toFixed(2);
+
+								document.getElementById("curReturnPerGrn").innerText = data.curReturnPerGrn
+										.toFixed(2);
+
+								document.getElementById("curGrnTarget").innerText = data.curGrnTarget
 										.toFixed(2);
 								document.getElementById("prevGvnTotal").innerText = data.prevGvnTotal
 										.toFixed(2);
@@ -983,11 +995,19 @@
 
 								document.getElementById("curFrGvnContribution").innerText = (data.curFrGvnContribution)
 										.toFixed(2);
+
+								//preSaleTarget
+
+								document.getElementById("preSaleTarget").innerText = (data.preSaleTarget)
+										.toFixed(2);
 								document.getElementById("prevActualTotal").innerText = (data.prevActualTotal)
 										.toFixed(2);
 
 								document
 										.getElementById("expectedPrevActualTotal").innerText = (data.expectedPrevActualTotal)
+										.toFixed(2);
+
+								document.getElementById("curSaleTarget").innerText = (data.curSaleTarget)
 										.toFixed(2);
 
 								document.getElementById("curActualTotal").innerText = (data.curActualTotal)
