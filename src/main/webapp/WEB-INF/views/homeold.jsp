@@ -150,7 +150,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GRN Value</h2>
+										<h2>&nbsp;GRN Purchase Value</h2>
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
@@ -220,7 +220,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GRN Value</h2>
+										<h2>&nbsp;GRN Purchase Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;" id="curGrnTotal">
 												<fmt:formatNumber type="number" maxFractionDigits="2"
@@ -290,7 +290,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GVN Value</h2>
+										<h2>&nbsp;GVN Purchase Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
 												id="prevGvnTotal"> <fmt:formatNumber type="number"
@@ -361,7 +361,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GVN Value</h2>
+										<h2>&nbsp;GVN Purchase Value</h2>
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;" id="curGvnTotal">

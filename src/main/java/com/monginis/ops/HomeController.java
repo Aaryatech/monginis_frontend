@@ -131,14 +131,11 @@ public class HomeController {
 			System.out.println(dateFormat.format(cal.getTime()));
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			/*
-			 * map.add("preMonth", dateFormat.format(date)); map.add("curMonth",
-			 * dateFormat.format(cal.getTime()));
-			 */
 
-			map.add("preMonth", "2019-04");
-			map.add("curMonth", "2018-04");
-			map.add("frId", 91);
+			map.add("preMonth", dateFormat.format(cal.getTime()));
+			map.add("curMonth", dateFormat.format(date));
+
+			map.add("frId", frDetails.getFrId());
 
 			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
 
@@ -183,6 +180,9 @@ public class HomeController {
 
 			float expectedCurActualTotal = 0;
 			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal;
+
+			frData.setCurCompanyGvnContri(frData.getCurGvnTotal());
+			frData.setPrevCompanyGvnContri(frData.getPrevGvnTotal());
 
 			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
 			frData.setExpectedCurActualTotal(expectedCurActualTotal);
