@@ -139,20 +139,10 @@ public class HomeController {
 
 			frData = restTemplate.postForObject(Constant.URL + "/getFrPurchaseReport", map, FrPurchaseDash.class);
 
-			String toyear = "2018";
-			String fromyear = "2018";
+			DateFormat dateFormat1 = new SimpleDateFormat("MM-yyyy");
 
-			if ((now.get(Calendar.MONTH) + 1) > 3) {
-				fromyear = "" + (now.get(Calendar.YEAR));
-				toyear = "" + (now.get(Calendar.YEAR) + 1);
-
-			} else {
-				fromyear = "" + (now.get(Calendar.YEAR) - 1);
-				toyear = "" + (now.get(Calendar.YEAR));
-			}
-
-			model1.addObject("frommonth", "03-" + fromyear);
-			model1.addObject("tomonth", "04-" + toyear);
+			model1.addObject("frommonth", dateFormat1.format(cal.getTime()));
+			model1.addObject("tomonth", dateFormat1.format(date));
 			model1.addObject("frId", frDetails.getFrId());
 
 			float grnPrevTotal = 0;
@@ -230,9 +220,9 @@ public class HomeController {
 				Date formattedPreMonth = dateFormat1.parse(preMonth);
 				Date formattedCurMonth = dateFormat1.parse(curMonth);
 
-				forPreMonth = dateFormat.format(formattedCurMonth);
+				forPreMonth = dateFormat.format(formattedPreMonth);
 
-				forCurMonth = dateFormat.format(formattedPreMonth);
+				forCurMonth = dateFormat.format(formattedCurMonth);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -274,6 +264,11 @@ public class HomeController {
 
 			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
 			frData.setExpectedCurActualTotal(expectedCurActualTotal);
+
+			frData.setPrevReturnPerGrn(grnPrevTotal / (frData.getPrevPurchaseTotal() / 100));
+
+			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
