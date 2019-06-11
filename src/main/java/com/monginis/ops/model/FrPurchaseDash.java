@@ -35,6 +35,66 @@ public class FrPurchaseDash {
 	private float curSchoolTarget;
 	private float curAchSchoolTarget;
 
+	private float preGrnTarget;
+	private float preSaleTarget;
+
+	private float curGrnTarget;
+	private float curSaleTarget;
+	
+	
+	private float prevReturnPerGrn;
+	private float curReturnPerGrn;
+	
+	
+
+	public float getPrevReturnPerGrn() {
+		return prevReturnPerGrn;
+	}
+
+	public void setPrevReturnPerGrn(float prevReturnPerGrn) {
+		this.prevReturnPerGrn = prevReturnPerGrn;
+	}
+
+	public float getCurReturnPerGrn() {
+		return curReturnPerGrn;
+	}
+
+	public void setCurReturnPerGrn(float curReturnPerGrn) {
+		this.curReturnPerGrn = curReturnPerGrn;
+	}
+
+	public float getPreGrnTarget() {
+		return preGrnTarget;
+	}
+
+	public void setPreGrnTarget(float preGrnTarget) {
+		this.preGrnTarget = preGrnTarget;
+	}
+
+	public float getPreSaleTarget() {
+		return preSaleTarget;
+	}
+
+	public void setPreSaleTarget(float preSaleTarget) {
+		this.preSaleTarget = preSaleTarget;
+	}
+
+	public float getCurGrnTarget() {
+		return curGrnTarget;
+	}
+
+	public void setCurGrnTarget(float curGrnTarget) {
+		this.curGrnTarget = curGrnTarget;
+	}
+
+	public float getCurSaleTarget() {
+		return curSaleTarget;
+	}
+
+	public void setCurSaleTarget(float curSaleTarget) {
+		this.curSaleTarget = curSaleTarget;
+	}
+
 	public float getPrevPurchaseTotal() {
 		return prevPurchaseTotal;
 	}
@@ -223,7 +283,9 @@ public class FrPurchaseDash {
 				+ ", curActualTotal=" + curActualTotal + ", expectedPrevActualTotal=" + expectedPrevActualTotal
 				+ ", expectedCurActualTotal=" + expectedCurActualTotal + ", preSchoolTarget=" + preSchoolTarget
 				+ ", preAchSchoolTarget=" + preAchSchoolTarget + ", curSchoolTarget=" + curSchoolTarget
-				+ ", curAchSchoolTarget=" + curAchSchoolTarget + "]";
+				+ ", curAchSchoolTarget=" + curAchSchoolTarget + ", preGrnTarget=" + preGrnTarget + ", preSaleTarget="
+				+ preSaleTarget + ", curGrnTarget=" + curGrnTarget + ", curSaleTarget=" + curSaleTarget
+				+ ", prevReturnPerGrn=" + prevReturnPerGrn + ", curReturnPerGrn=" + curReturnPerGrn + "]";
 	}
 
 }

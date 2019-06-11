@@ -176,16 +176,20 @@ public class HomeController {
 			frData.setCurCompanyGrnContri(curCompanyGrnContri);
 
 			float expectedPrevActualTotal = 0;
-			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal;
+			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal - frData.getPrevGvnTotal();
 
 			float expectedCurActualTotal = 0;
-			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal;
+			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal - frData.getCurGvnTotal();
 
 			frData.setCurCompanyGvnContri(frData.getCurGvnTotal());
 			frData.setPrevCompanyGvnContri(frData.getPrevGvnTotal());
 
 			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
 			frData.setExpectedCurActualTotal(expectedCurActualTotal);
+
+			frData.setPrevReturnPerGrn(grnPrevTotal / (frData.getPrevPurchaseTotal() / 100));
+
+			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
 
 			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
 			model1.addObject("frData", frData);
