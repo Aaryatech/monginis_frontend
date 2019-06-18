@@ -588,7 +588,8 @@
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
 												id="prevActualTotal"> <fmt:formatNumber type="number"
-													maxFractionDigits="2" value="${frData.prevActualTotal}" />
+													maxFractionDigits="2"
+													value="${frData.calPreSaleSpGrandTotal}" />
 											</span>
 										</h3>
 
@@ -666,7 +667,8 @@
 										<h3 class="card-title">
 											<span class="count" style="font-size: 30px;"
 												id="curActualTotal"> <fmt:formatNumber type="number"
-													maxFractionDigits="2" value="${frData.curActualTotal}" />
+													maxFractionDigits="2"
+													value="${frData.calCurSaleSpGrandTotal}" />
 											</span>
 										</h3>
 
@@ -684,83 +686,6 @@
 
 						</div>
 
-						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
-								<div class="card card-stats">
-
-									<div class="card-category">
-										<h2>&nbsp;School Visit</h2>
-
-										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
-												id="preSchoolTarget"> <fmt:formatNumber type="number"
-													maxFractionDigits="2" value="${frData.preSchoolTarget}" />
-											</span>
-										</h3>
-
-
-									</div>
-									<div class="card-footer">
-										<div class="stats">
-
-											<a href="#pablo">Last Month</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
-								<div class="card card-stats">
-
-									<div class="card-category">
-										<h2>&nbsp;Achieved School Visit</h2>
-
-										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
-												id="preAchSchoolTarget"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${frData.preAchSchoolTarget}" />
-											</span>
-										</h3>
-
-									</div>
-									<div class="card-footer">
-										<div class="stats">
-
-											<a href="#pablo">Last Month</a>
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="col-lg-3 col-md-6 col-sm-6">
-								<div class="card card-stats">
-
-									<div class="card-category">
-										<h2>&nbsp;Pending School Visit</h2>
-
-										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
-												id="penPreSchoolTarget"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${(frData.preSchoolTarget)-(frData.preAchSchoolTarget)}" />
-											</span>
-										</h3>
-
-									</div>
-									<div class="card-footer">
-										<div class="stats">
-
-											<a href="#pablo">Last Month</a>
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-
-
-						</div>
 
 						<div class="row">
 							<div class="col-lg-3 col-md-6 col-sm-6">
@@ -964,10 +889,10 @@
 								document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
 										.toFixed(2);
 
-								document.getElementById("preGrnTarget").innerText = data.preGrnTarget
+								document.getElementById("preGrnTarget").innerText = data.calPreSaleSpGrandTotal
 										.toFixed(2);
 
-								document.getElementById("curGrnTotal").innerText = data.curGrnTotal
+								document.getElementById("curGrnTotal").innerText = data.calCurSaleSpGrandTotal
 										.toFixed(2);
 								document.getElementById("curCompanyGrnContri").innerText = data.curCompanyGrnContri
 										.toFixed(2);
@@ -1017,19 +942,10 @@
 										.getElementById("expectedCurActualTotal").innerText = (data.expectedCurActualTotal)
 										.toFixed(2);
 
-								document.getElementById("preSchoolTarget").innerText = (data.preSchoolTarget)
-										.toFixed(2);
-
-								document.getElementById("preAchSchoolTarget").innerText = (data.preAchSchoolTarget)
-										.toFixed(2);
-
 								document.getElementById("curSchoolTarget").innerText = (data.curSchoolTarget)
 										.toFixed(2);
 
 								document.getElementById("curAchSchoolTarget").innerText = (data.curAchSchoolTarget)
-										.toFixed(2);
-
-								document.getElementById("penPreSchoolTarget").innerText = (data.preSchoolTarget - data.preAchSchoolTarget)
 										.toFixed(2);
 
 								document.getElementById("penCurSchoolTarget").innerText = (data.curSchoolTarget - data.curAchSchoolTarget)

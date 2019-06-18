@@ -29,9 +29,6 @@ public class FrPurchaseDash {
 	private float expectedPrevActualTotal;
 	private float expectedCurActualTotal;
 
-	private float preSchoolTarget;
-	private float preAchSchoolTarget;
-
 	private float curSchoolTarget;
 	private float curAchSchoolTarget;
 
@@ -40,12 +37,15 @@ public class FrPurchaseDash {
 
 	private float curGrnTarget;
 	private float curSaleTarget;
-	
-	
+
 	private float prevReturnPerGrn;
 	private float curReturnPerGrn;
-	
-	
+
+	private float preSaleSpGrandTotal;
+	private float curSaleSpGrandTotal;
+
+	private float calPreSaleSpGrandTotal;
+	private float calCurSaleSpGrandTotal;
 
 	public float getPrevReturnPerGrn() {
 		return prevReturnPerGrn;
@@ -239,22 +239,6 @@ public class FrPurchaseDash {
 		this.expectedCurActualTotal = expectedCurActualTotal;
 	}
 
-	public float getPreSchoolTarget() {
-		return preSchoolTarget;
-	}
-
-	public void setPreSchoolTarget(float preSchoolTarget) {
-		this.preSchoolTarget = preSchoolTarget;
-	}
-
-	public float getPreAchSchoolTarget() {
-		return preAchSchoolTarget;
-	}
-
-	public void setPreAchSchoolTarget(float preAchSchoolTarget) {
-		this.preAchSchoolTarget = preAchSchoolTarget;
-	}
-
 	public float getCurSchoolTarget() {
 		return curSchoolTarget;
 	}
@@ -271,6 +255,38 @@ public class FrPurchaseDash {
 		this.curAchSchoolTarget = curAchSchoolTarget;
 	}
 
+	public float getPreSaleSpGrandTotal() {
+		return preSaleSpGrandTotal;
+	}
+
+	public void setPreSaleSpGrandTotal(float preSaleSpGrandTotal) {
+		this.preSaleSpGrandTotal = preSaleSpGrandTotal;
+	}
+
+	public float getCurSaleSpGrandTotal() {
+		return curSaleSpGrandTotal;
+	}
+
+	public void setCurSaleSpGrandTotal(float curSaleSpGrandTotal) {
+		this.curSaleSpGrandTotal = curSaleSpGrandTotal;
+	}
+
+	public float getCalPreSaleSpGrandTotal() {
+		return calPreSaleSpGrandTotal;
+	}
+
+	public void setCalPreSaleSpGrandTotal(float calPreSaleSpGrandTotal) {
+		this.calPreSaleSpGrandTotal = calPreSaleSpGrandTotal;
+	}
+
+	public float getCalCurSaleSpGrandTotal() {
+		return calCurSaleSpGrandTotal;
+	}
+
+	public void setCalCurSaleSpGrandTotal(float calCurSaleSpGrandTotal) {
+		this.calCurSaleSpGrandTotal = calCurSaleSpGrandTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "FrPurchaseDash [prevPurchaseTotal=" + prevPurchaseTotal + ", curPurchaseTotal=" + curPurchaseTotal
@@ -281,11 +297,13 @@ public class FrPurchaseDash {
 				+ ", prevCompanyGvnContri=" + prevCompanyGvnContri + ", curFrGvnContribution=" + curFrGvnContribution
 				+ ", curCompanyGvnContri=" + curCompanyGvnContri + ", prevActualTotal=" + prevActualTotal
 				+ ", curActualTotal=" + curActualTotal + ", expectedPrevActualTotal=" + expectedPrevActualTotal
-				+ ", expectedCurActualTotal=" + expectedCurActualTotal + ", preSchoolTarget=" + preSchoolTarget
-				+ ", preAchSchoolTarget=" + preAchSchoolTarget + ", curSchoolTarget=" + curSchoolTarget
+				+ ", expectedCurActualTotal=" + expectedCurActualTotal + ", curSchoolTarget=" + curSchoolTarget
 				+ ", curAchSchoolTarget=" + curAchSchoolTarget + ", preGrnTarget=" + preGrnTarget + ", preSaleTarget="
 				+ preSaleTarget + ", curGrnTarget=" + curGrnTarget + ", curSaleTarget=" + curSaleTarget
-				+ ", prevReturnPerGrn=" + prevReturnPerGrn + ", curReturnPerGrn=" + curReturnPerGrn + "]";
+				+ ", prevReturnPerGrn=" + prevReturnPerGrn + ", curReturnPerGrn=" + curReturnPerGrn
+				+ ", preSaleSpGrandTotal=" + preSaleSpGrandTotal + ", curSaleSpGrandTotal=" + curSaleSpGrandTotal
+				+ ", calPreSaleSpGrandTotal=" + calPreSaleSpGrandTotal + ", calCurSaleSpGrandTotal="
+				+ calCurSaleSpGrandTotal + "]";
 	}
 
 }

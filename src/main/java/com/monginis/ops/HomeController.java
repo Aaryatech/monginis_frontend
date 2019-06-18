@@ -181,6 +181,12 @@ public class HomeController {
 
 			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
 
+			float calPre = (float) ((frData.getPrevActualTotal() * 1.25) + frData.getPreSaleSpGrandTotal());
+			float calCur = (float) ((frData.getCurActualTotal() * 1.25) + frData.getCurSaleSpGrandTotal());
+
+			frData.setCalPreSaleSpGrandTotal(calPre);
+			frData.setCalCurSaleSpGrandTotal(calCur);
+
 			System.out.println("frDatafrDatafrDatafrDatafrDatafrData" + frData.toString());
 			model1.addObject("frData", frData);
 
@@ -268,6 +274,12 @@ public class HomeController {
 			frData.setPrevReturnPerGrn(grnPrevTotal / (frData.getPrevPurchaseTotal() / 100));
 
 			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
+
+			float calPre = (float) ((frData.getPrevActualTotal() * 1.25) + frData.getPreSaleSpGrandTotal());
+			float calCur = (float) ((frData.getCurActualTotal() * 1.25) + frData.getCurSaleSpGrandTotal());
+
+			frData.setCalPreSaleSpGrandTotal(calPre);
+			frData.setCalCurSaleSpGrandTotal(calCur);
 
 		} catch (Exception e) {
 			// TODO: handle exception
