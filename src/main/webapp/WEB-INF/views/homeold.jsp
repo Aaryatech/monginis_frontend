@@ -819,7 +819,6 @@
 							},
 
 							function(data) {
-								//alert("hi");
 
 								document.getElementById("prevPurchaseTotal").innerText = data.prevPurchaseTotal
 										.toFixed(2);
@@ -833,8 +832,7 @@
 										.getElementById("prevFrGrnContribution").innerText = data.prevFrGrnContribution
 										.toFixed(2);
 
-								document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
-										.toFixed(2);
+								document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn;
 
 								document.getElementById("preGrnTarget").innerText = data.preGrnTarget
 										.toFixed(2);
@@ -846,8 +844,7 @@
 								document.getElementById("curFrGrnContribution").innerText = data.curFrGrnContribution
 										.toFixed(2);
 
-								document.getElementById("curReturnPerGrn").innerText = data.curReturnPerGrn
-										.toFixed(2);
+								document.getElementById("curReturnPerGrn").innerText = data.curReturnPerGrn;
 
 								document.getElementById("curGrnTarget").innerText = data.curGrnTarget
 										.toFixed(2);
@@ -872,21 +869,24 @@
 
 								document.getElementById("preSaleTarget").innerText = (data.preSaleTarget)
 										.toFixed(2);
-								document.getElementById("prevActualTotal").innerText = (data.prevActualTotal)
-										.toFixed(2);
 
 								document
 										.getElementById("expectedPrevActualTotal").innerText = (data.expectedPrevActualTotal)
 										.toFixed(2);
 
-								document.getElementById("curSaleTarget").innerText = (data.curSaleTarget)
+								document
+										.getElementById("calPreSaleSpGrandTotal").innerText = (data.calPreSaleSpGrandTotal)
 										.toFixed(2);
 
-								document.getElementById("curActualTotal").innerText = (data.curActualTotal)
+								document.getElementById("curSaleTarget").innerText = (data.curSaleTarget)
 										.toFixed(2);
 
 								document
 										.getElementById("expectedCurActualTotal").innerText = (data.expectedCurActualTotal)
+										.toFixed(2);
+
+								document
+										.getElementById("calCurSaleSpGrandTotal").innerText = (data.calCurSaleSpGrandTotal)
 										.toFixed(2);
 
 								document.getElementById("curSchoolTarget").innerText = (data.curSchoolTarget)
@@ -896,14 +896,6 @@
 										.toFixed(2);
 
 								document.getElementById("penCurSchoolTarget").innerText = (data.curSchoolTarget - data.curAchSchoolTarget)
-										.toFixed(2);
-
-								document
-										.getElementById("calPreSaleSpGrandTotal").innerText = (data.calPreSaleSpGrandTotal)
-										.toFixed(2);
-
-								document
-										.getElementById("calCurSaleSpGrandTotal").innerText = (data.calCurSaleSpGrandTotal)
 										.toFixed(2);
 
 							});

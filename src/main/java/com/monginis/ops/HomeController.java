@@ -179,9 +179,19 @@ public class HomeController {
 			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
 			frData.setExpectedCurActualTotal(expectedCurActualTotal);
 
-			frData.setPrevReturnPerGrn(grnPrevTotal / (frData.getPrevPurchaseTotal() / 100));
+			if (frData.getPrevPurchaseTotal() == 0) {
+				frData.setPrevReturnPerGrn(0);
+			} else {
 
-			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
+				frData.setPrevReturnPerGrn(grnPrevTotal / (frData.getPrevPurchaseTotal() / 100));
+			}
+
+			if (frData.getCurPurchaseTotal() == 0) {
+				frData.setCurReturnPerGrn(0);
+			} else {
+
+				frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
+			}
 
 			/*
 			 * float calPre = (float) ((expectedPrevActualTotal) +
