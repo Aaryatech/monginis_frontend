@@ -108,9 +108,16 @@
 					</div>
 					<div class="title">
 						Stock <span>Details</span>
+					</div></a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/showDashboardFranchisee" ><div class="img">
+						<img
+							src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
+							alt="img">
+					</div>
+					<div class="title">
+						Franchisee <span>Dashboard</span>
 					</div></a></li></c:if>
-					
-					
 					
 					
 			<c:if test="${info.accessRight==1}">	
@@ -543,6 +550,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!--4nav-->
 
 	<!--3nav-->

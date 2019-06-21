@@ -93,14 +93,20 @@
 							</div>
 						</div>
 						<div class="row">
+						<div class="latestNews">
+					
+						<h3 class="latestNewsTitle">Purchase value</h3>
+							
+						
+					</div>
 							<div class="col-lg-3 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 
 									<div class="card-category">
-										<h2>&nbsp;Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevPurchaseTotal"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevPurchaseTotal}" />
@@ -111,7 +117,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
@@ -124,9 +130,9 @@
 
 
 									<div class="card-category">
-										<h2>&nbsp;Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curPurchaseTotal"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curPurchaseTotal}" /></span>
@@ -135,7 +141,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -146,14 +152,20 @@
 
 
 						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="latestNews">
+					
+						<h3 class="latestNewsTitle">GRN Dashboard</h3>
+							
+						
+					</div>
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GRN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;GRN Purchase Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevGrnTotal"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.prevGrnTotal}" /></span>
 										</h3>
@@ -162,20 +174,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Company Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Company Contribution</h2>
 
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevCompanyGrnContri"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevCompanyGrnContri}" /></span>
@@ -184,20 +196,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
 
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevFrGrnContribution"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevFrGrnContribution}" /></span>
@@ -208,21 +220,21 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Return Percentage</h2>
+										<h2 style="font-size: 20px;">&nbsp;Return Percentage</h2>
 
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevReturnPerGrn"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevReturnPerGrn}" /></span>
@@ -233,7 +245,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
@@ -241,15 +253,15 @@
 
 
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GRN Target</h2>
+										<h2 style="font-size: 20px;">&nbsp;Target Return %</h2>
 
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="preGrnTarget"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.preGrnTarget}" /></span>
 										</h3>
@@ -259,7 +271,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
@@ -267,13 +279,13 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GRN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;GRN Purchase Value</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;" id="curGrnTotal">
+											<span class="count" style="font-size: 22px;" id="curGrnTotal">
 												<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${frData.curGrnTotal}" />
 											</span>
@@ -282,19 +294,19 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Company Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Company Contribution</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curCompanyGrnContri"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curCompanyGrnContri}" />
@@ -304,19 +316,19 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp; Franchisee Contribution</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curFrGrnContribution"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curFrGrnContribution}" />
@@ -327,19 +339,19 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Return Percentage</h2>
+										<h2 style="font-size: 20px;">&nbsp; Return Percentage</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curReturnPerGrn"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.curReturnPerGrn}" />
 											</span>
@@ -349,7 +361,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -357,13 +369,13 @@
 
 
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; GRN Target</h2>
+										<h2 style="font-size: 20px;">&nbsp; Target Return %</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curGrnTarget"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.curGrnTarget}" />
 											</span>
@@ -373,7 +385,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -383,13 +395,19 @@
 
 
 						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="latestNews">
+					
+						<h3 class="latestNewsTitle">GVN Dashboard</h3>
+							
+						
+					</div>
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GVN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;GVN Purchase Value</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevGvnTotal"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.prevGvnTotal}" />
 											</span>
@@ -399,19 +417,19 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Company Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Company Contribution</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevCompanyGvnContri"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevCompanyGvnContri}" />
@@ -423,21 +441,21 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 									<!--  <div class="card-header card-header-warning card-header-icon"> -->
 									<!-- <div class="card-icon">
                     <i class="material-icons">content_copy</i>
                   </div> -->
 									<div class="card-category">
-										<h2>&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevFrGvnContribution"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.prevFrGvnContribution}" />
@@ -447,22 +465,22 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+					<!-- 	</div>
 
-						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="row"> -->
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;GVN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;GVN Purchase Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;" id="curGvnTotal">
+											<span class="count" style="font-size: 22px;" id="curGvnTotal">
 												<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${frData.curGvnTotal}" />
 											</span>
@@ -471,19 +489,19 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Company Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Company Contribution</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curCompanyGvnContri"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curCompanyGvnContri}" />
@@ -494,22 +512,22 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 									<!--  <div class="card-header card-header-warning card-header-icon"> -->
 									<!-- <div class="card-icon">
                     <i class="material-icons">content_copy</i>
                   </div> -->
 									<div class="card-category">
-										<h2>&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curFrGvnContribution"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curFrGvnContribution}" />
@@ -521,7 +539,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -531,14 +549,20 @@
 
 
 						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="latestNews">
+					
+						<h3 class="latestNewsTitle">Sales Dashboard</h3>
+							
+						
+					</div>
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Sale Target Value</h2>
-										f
+										<h2 style="font-size: 20px;">&nbsp; Sale Target Value</h2>
+									
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="preSaleTarget"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.preSaleTarget}" />
 											</span>
@@ -549,20 +573,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Expected Sale Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Expected Sale Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="expectedPrevActualTotal"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.expectedPrevActualTotal}" />
@@ -573,20 +597,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Sale Value</h2>
-										f
+										<h2 style="font-size: 20px;">&nbsp;Punched Sale Value</h2>
+									
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="prevActualTotal"> <fmt:formatNumber type="number"
 													maxFractionDigits="2"
 													value="${frData.calPreSaleSpGrandTotal}" />
@@ -598,25 +622,25 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Last Month</a>
+											Last Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-						</div>
+					<!-- 	</div>
 
 
 
-						<div class="row">
-							<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="row"> -->
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Sale Target Value</h2>
+										<h2 style="font-size: 20px;">&nbsp; Sale Target Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curSaleTarget"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.curSaleTarget}" />
 											</span>
@@ -627,20 +651,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Expected Sale Value</h2>
+										<h2 style="font-size: 20px;">&nbsp; Expected Sale Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="expectedCurActualTotal"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.expectedCurActualTotal}" />
@@ -652,20 +676,20 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp; Sale Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Punched Sale Value</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curActualTotal"> <fmt:formatNumber type="number"
 													maxFractionDigits="2"
 													value="${frData.calCurSaleSpGrandTotal}" />
@@ -677,7 +701,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -692,10 +716,10 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;School Visit</h2>
+										<h2 style="font-size: 20px;">&nbsp;School Visit</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curSchoolTarget"> <fmt:formatNumber type="number"
 													maxFractionDigits="2" value="${frData.curSchoolTarget}" />
 											</span>
@@ -706,7 +730,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -715,10 +739,10 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Achieved School Visit</h2>
+										<h2 style="font-size: 20px;">&nbsp;Achieved School Visit</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="curAchSchoolTarget"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${frData.curAchSchoolTarget}" />
@@ -729,7 +753,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>
@@ -740,10 +764,10 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2>&nbsp;Pending School Visit</h2>
+										<h2 style="font-size: 20px;">&nbsp;Pending School Visit</h2>
 
 										<h3 class="card-title">
-											<span class="count" style="font-size: 30px;"
+											<span class="count" style="font-size: 22px;"
 												id="penCurSchoolTarget"> <fmt:formatNumber
 													type="number" maxFractionDigits="2"
 													value="${(frData.curSchoolTarget)-(frData.curAchSchoolTarget)}" />
@@ -754,7 +778,7 @@
 									<div class="card-footer">
 										<div class="stats">
 
-											<a href="#pablo">Current Month</a>
+											Current Month
 										</div>
 									</div>
 								</div>

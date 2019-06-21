@@ -660,12 +660,12 @@ public class SpCakeController {
 
 			String eventName = request.getParameter("event_name");
 
-			String albumName = request.getParameter("album_name");
-			logger.info("377777777777777777" + albumName);
+			//String albumName = request.getParameter("album_name");
+			//logger.info("377777777777777777" + albumName);
 
-			System.out.println(
-					"albumNamealbumNamealbumNamealbualbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamemName"
-							+ albumName);
+			//System.out.println(
+					//"albumNamealbumNamealbumNamealbualbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamealbumNamemName"
+						//	+ albumName);
 
 			isCustCh = request.getParameter("isCustCh");
 
@@ -909,8 +909,8 @@ public class SpCakeController {
 					Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
 				}
-
-				if (spCakeOrderRes.getErrorMessage().getError() != true) {
+                //-------------------------------------------------------------------------
+				/*if (spCakeOrderRes.getErrorMessage().getError() != true) {
 
 					System.out.println("albumNamealbumNamealbumNamealbumName" + albumName);
 
@@ -924,7 +924,8 @@ public class SpCakeController {
 					System.out
 							.println("System.out.println(albumName);System.out.println(albumName);" + info.toString());
 
-				}
+				}*/
+				//-----------------------------------------------------------------------------
 				List<Flavour> flavoursList = new ArrayList<Flavour>();
 				Flavour filteredFlavour = new Flavour();
 
