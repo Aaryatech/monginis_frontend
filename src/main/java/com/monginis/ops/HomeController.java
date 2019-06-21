@@ -166,10 +166,12 @@ public class HomeController {
 			frData.setCurCompanyGrnContri(curCompanyGrnContri);
 
 			float expectedPrevActualTotal = 0;
-			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal - frData.getPrevGvnTotal();
+			expectedPrevActualTotal = (float) ((frData.getPrevPurchaseTotal() - grnPrevTotal - frData.getPrevGvnTotal())
+					* Constant.sale_per);
 
 			float expectedCurActualTotal = 0;
-			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal - frData.getCurGvnTotal();
+			expectedCurActualTotal = (float) ((frData.getCurPurchaseTotal() - grnCurrTotal - frData.getCurGvnTotal())
+					* Constant.sale_per);
 
 			frData.setCurCompanyGvnContri(frData.getCurGvnTotal());
 			frData.setPrevCompanyGvnContri(frData.getPrevGvnTotal());
@@ -181,8 +183,14 @@ public class HomeController {
 
 			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
 
-			float calPre = (float) ((frData.getPrevActualTotal() * 1.25) + frData.getPreSaleSpGrandTotal());
-			float calCur = (float) ((frData.getCurActualTotal() * 1.25) + frData.getCurSaleSpGrandTotal());
+			/*
+			 * float calPre = (float) ((expectedPrevActualTotal) +
+			 * frData.getPreSaleSpGrandTotal()); float calCur = (float)
+			 * ((expectedCurActualTotal) + frData.getCurSaleSpGrandTotal());
+			 */
+
+			float calPre = (float) ((frData.getPrevActualTotal()) + frData.getPreSaleSpGrandTotal());
+			float calCur = (float) ((frData.getCurActualTotal()) + frData.getCurSaleSpGrandTotal());
 
 			frData.setCalPreSaleSpGrandTotal(calPre);
 			frData.setCalCurSaleSpGrandTotal(calCur);
@@ -263,10 +271,12 @@ public class HomeController {
 			frData.setCurCompanyGrnContri(curCompanyGrnContri);
 
 			float expectedPrevActualTotal = 0;
-			expectedPrevActualTotal = frData.getPrevPurchaseTotal() - grnPrevTotal;
+			expectedPrevActualTotal = (float) ((frData.getPrevPurchaseTotal() - grnPrevTotal - frData.getPrevGvnTotal())
+					* Constant.sale_per);
 
 			float expectedCurActualTotal = 0;
-			expectedCurActualTotal = frData.getCurPurchaseTotal() - grnCurrTotal;
+			expectedCurActualTotal = (float) ((frData.getCurPurchaseTotal() - grnCurrTotal - frData.getCurGvnTotal())
+					* Constant.sale_per);
 
 			frData.setExpectedPrevActualTotal(expectedPrevActualTotal);
 			frData.setExpectedCurActualTotal(expectedCurActualTotal);
@@ -275,9 +285,14 @@ public class HomeController {
 
 			frData.setCurReturnPerGrn(grnCurrTotal / (frData.getCurPurchaseTotal() / 100));
 
-			float calPre = (float) ((frData.getPrevActualTotal() * Constant.sale_per)
-					+ frData.getPreSaleSpGrandTotal());
-			float calCur = (float) ((frData.getCurActualTotal() * Constant.sale_per) + frData.getCurSaleSpGrandTotal());
+			/*
+			 * float calPre = (float) ((expectedPrevActualTotal) +
+			 * frData.getPreSaleSpGrandTotal()); float calCur = (float)
+			 * ((expectedCurActualTotal) + frData.getCurSaleSpGrandTotal());
+			 */
+
+			float calPre = (float) ((frData.getPrevActualTotal()) + frData.getPreSaleSpGrandTotal());
+			float calCur = (float) ((frData.getCurActualTotal()) + frData.getCurSaleSpGrandTotal());
 
 			frData.setCalPreSaleSpGrandTotal(calPre);
 			frData.setCalCurSaleSpGrandTotal(calCur);

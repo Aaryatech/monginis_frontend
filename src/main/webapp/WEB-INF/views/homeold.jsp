@@ -93,12 +93,12 @@
 							</div>
 						</div>
 						<div class="row">
-						<div class="latestNews">
-					
-						<h3 class="latestNewsTitle">Purchase value</h3>
-							
-						
-					</div>
+							<div class="latestNews">
+
+								<h3 class="latestNewsTitle">Purchase value</h3>
+
+
+							</div>
 							<div class="col-lg-3 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
@@ -115,10 +115,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 
@@ -139,10 +136,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 
@@ -152,12 +146,12 @@
 
 
 						<div class="row">
-						<div class="latestNews">
-					
-						<h3 class="latestNewsTitle">GRN Dashboard</h3>
-							
-						
-					</div>
+							<div class="latestNews">
+
+								<h3 class="latestNewsTitle">GRN Dashboard</h3>
+
+
+							</div>
 							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
@@ -172,10 +166,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -194,10 +185,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -205,7 +193,8 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee
+											Contribution</h2>
 
 
 										<h3 class="card-title">
@@ -218,10 +207,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -243,10 +229,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -269,10 +252,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -292,10 +272,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -314,10 +291,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -326,7 +300,8 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp; Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp; Franchisee
+											Contribution</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
 												id="curFrGrnContribution"> <fmt:formatNumber
@@ -337,10 +312,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -359,10 +331,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -383,10 +352,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -395,12 +361,12 @@
 
 
 						<div class="row">
-						<div class="latestNews">
-					
-						<h3 class="latestNewsTitle">GVN Dashboard</h3>
-							
-						
-					</div>
+							<div class="latestNews">
+
+								<h3 class="latestNewsTitle">GVN Dashboard</h3>
+
+
+							</div>
 							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
@@ -415,10 +381,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -439,10 +402,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -453,7 +413,8 @@
                     <i class="material-icons">content_copy</i>
                   </div> -->
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee
+											Contribution</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
 												id="prevFrGvnContribution"> <fmt:formatNumber
@@ -463,14 +424,11 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
-					<!-- 	</div>
+							<!-- 	</div>
 
 						<div class="row"> -->
 							<div class="col-lg-2 col-md-6 col-sm-6">
@@ -487,10 +445,7 @@
 										</h3>
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -510,10 +465,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -524,7 +476,8 @@
                     <i class="material-icons">content_copy</i>
                   </div> -->
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;Franchisee Contribution</h2>
+										<h2 style="font-size: 20px;">&nbsp;Franchisee
+											Contribution</h2>
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
@@ -537,10 +490,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -550,17 +500,17 @@
 
 						<div class="row">
 							<div class="latestNews">
-					
-						<h3 class="latestNewsTitle">Sales Dashboard</h3>
-							
-						
-					</div>
+
+								<h3 class="latestNewsTitle">Sales Dashboard</h3>
+
+
+							</div>
 							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
 										<h2 style="font-size: 20px;">&nbsp; Sale Target Value</h2>
-									
+
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
 												id="preSaleTarget"> <fmt:formatNumber type="number"
@@ -571,10 +521,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -595,10 +542,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
@@ -608,11 +552,11 @@
 
 									<div class="card-category">
 										<h2 style="font-size: 20px;">&nbsp;Punched Sale Value</h2>
-									
+
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
-												id="prevActualTotal"> <fmt:formatNumber type="number"
-													maxFractionDigits="2"
+												id="calPreSaleSpGrandTotal"> <fmt:formatNumber
+													type="number" maxFractionDigits="2"
 													value="${frData.calPreSaleSpGrandTotal}" />
 											</span>
 										</h3>
@@ -620,15 +564,12 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Last Month
-										</div>
+										<div class="stats">Last Month</div>
 									</div>
 								</div>
 							</div>
 
-					<!-- 	</div>
+							<!-- 	</div>
 
 
 
@@ -649,10 +590,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -674,10 +612,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -690,8 +625,8 @@
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
-												id="curActualTotal"> <fmt:formatNumber type="number"
-													maxFractionDigits="2"
+												id="calCurSaleSpGrandTotal"> <fmt:formatNumber
+													type="number" maxFractionDigits="2"
 													value="${frData.calCurSaleSpGrandTotal}" />
 											</span>
 										</h3>
@@ -699,10 +634,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -728,10 +660,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -751,10 +680,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -776,10 +702,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">
-
-											Current Month
-										</div>
+										<div class="stats">Current Month</div>
 									</div>
 								</div>
 							</div>
@@ -913,10 +836,10 @@
 								document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
 										.toFixed(2);
 
-								document.getElementById("preGrnTarget").innerText = data.calPreSaleSpGrandTotal
+								document.getElementById("preGrnTarget").innerText = data.preGrnTarget
 										.toFixed(2);
 
-								document.getElementById("curGrnTotal").innerText = data.calCurSaleSpGrandTotal
+								document.getElementById("curGrnTotal").innerText = data.curGrnTotal
 										.toFixed(2);
 								document.getElementById("curCompanyGrnContri").innerText = data.curCompanyGrnContri
 										.toFixed(2);
@@ -973,6 +896,14 @@
 										.toFixed(2);
 
 								document.getElementById("penCurSchoolTarget").innerText = (data.curSchoolTarget - data.curAchSchoolTarget)
+										.toFixed(2);
+
+								document
+										.getElementById("calPreSaleSpGrandTotal").innerText = (data.calPreSaleSpGrandTotal)
+										.toFixed(2);
+
+								document
+										.getElementById("calCurSaleSpGrandTotal").innerText = (data.calCurSaleSpGrandTotal)
 										.toFixed(2);
 
 							});
