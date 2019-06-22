@@ -47,6 +47,10 @@ public class FrPurchaseDash {
 	private float calPreSaleSpGrandTotal;
 	private float calCurSaleSpGrandTotal;
 
+	private String prevMonthName;
+
+	private String curMonthName;
+
 	public float getPrevReturnPerGrn() {
 		return prevReturnPerGrn;
 	}
@@ -287,6 +291,22 @@ public class FrPurchaseDash {
 		this.calCurSaleSpGrandTotal = calCurSaleSpGrandTotal;
 	}
 
+	public String getPrevMonthName() {
+		return prevMonthName;
+	}
+
+	public void setPrevMonthName(String prevMonthName) {
+		this.prevMonthName = prevMonthName;
+	}
+
+	public String getCurMonthName() {
+		return curMonthName;
+	}
+
+	public void setCurMonthName(String curMonthName) {
+		this.curMonthName = curMonthName;
+	}
+
 	@Override
 	public String toString() {
 		return "FrPurchaseDash [prevPurchaseTotal=" + prevPurchaseTotal + ", curPurchaseTotal=" + curPurchaseTotal
@@ -303,7 +323,7 @@ public class FrPurchaseDash {
 				+ ", prevReturnPerGrn=" + prevReturnPerGrn + ", curReturnPerGrn=" + curReturnPerGrn
 				+ ", preSaleSpGrandTotal=" + preSaleSpGrandTotal + ", curSaleSpGrandTotal=" + curSaleSpGrandTotal
 				+ ", calPreSaleSpGrandTotal=" + calPreSaleSpGrandTotal + ", calCurSaleSpGrandTotal="
-				+ calCurSaleSpGrandTotal + "]";
+				+ calCurSaleSpGrandTotal + ", prevMonthName=" + prevMonthName + ", curMonthName=" + curMonthName + "]";
 	}
 
 }
