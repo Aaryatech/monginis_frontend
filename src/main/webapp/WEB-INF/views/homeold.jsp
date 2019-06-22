@@ -107,9 +107,8 @@
 										<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
-												id="prevPurchaseTotal"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${frData.prevPurchaseTotal}" />
+												id=prevActualTotal> <fmt:formatNumber type="number"
+													maxFractionDigits="2" value="${frData.prevActualTotal}" />
 
 											</span>
 										</h3>
@@ -130,9 +129,8 @@
 										<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
-												id="curPurchaseTotal"> <fmt:formatNumber
-													type="number" maxFractionDigits="2"
-													value="${frData.curPurchaseTotal}" /></span>
+												id="curActualTotal"> <fmt:formatNumber type="number"
+													maxFractionDigits="2" value="${frData.curActualTotal}" /></span>
 										</h3>
 									</div>
 									<div class="card-footer">
@@ -156,7 +154,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;GRN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Total GRN Value</h2>
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
@@ -240,7 +238,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;Target Return %</h2>
+										<h2 style="font-size: 20px;">&nbsp;Target Return</h2>
 
 
 										<h3 class="card-title">
@@ -263,7 +261,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;GRN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Total GRN Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;" id="curGrnTotal">
 												<fmt:formatNumber type="number" maxFractionDigits="2"
@@ -342,7 +340,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp; Target Return %</h2>
+										<h2 style="font-size: 20px;">&nbsp; Target Return</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
 												id="curGrnTarget"> <fmt:formatNumber type="number"
@@ -371,7 +369,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;GVN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Total GVN Value</h2>
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;"
 												id="prevGvnTotal"> <fmt:formatNumber type="number"
@@ -385,7 +383,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-2 col-md-6 col-sm-6">
+							<%-- 			<%-- <div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
@@ -405,8 +403,8 @@
 										<div class="stats">Last Month</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-2 col-md-6 col-sm-6">
+							</div> --%>
+							<%-- <div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 									<!--  <div class="card-header card-header-warning card-header-icon"> -->
 									<!-- <div class="card-icon">
@@ -427,7 +425,8 @@
 										<div class="stats">Last Month</div>
 									</div>
 								</div>
-							</div>
+							</div> --%>
+
 							<!-- 	</div>
 
 						<div class="row"> -->
@@ -435,7 +434,7 @@
 								<div class="card card-stats">
 
 									<div class="card-category">
-										<h2 style="font-size: 20px;">&nbsp;GVN Purchase Value</h2>
+										<h2 style="font-size: 20px;">&nbsp;Total GVN Value</h2>
 
 										<h3 class="card-title">
 											<span class="count" style="font-size: 22px;" id="curGvnTotal">
@@ -449,7 +448,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-2 col-md-6 col-sm-6">
+							<%-- <div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
@@ -468,8 +467,8 @@
 										<div class="stats">Current Month</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-2 col-md-6 col-sm-6">
+							</div> --%>
+							<%-- <div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 									<!--  <div class="card-header card-header-warning card-header-icon"> -->
 									<!-- <div class="card-icon">
@@ -493,7 +492,7 @@
 										<div class="stats">Current Month</div>
 									</div>
 								</div>
-							</div>
+							</div> --%>
 						</div>
 
 
@@ -547,7 +546,7 @@
 								</div>
 							</div>
 
-							<div class="col-lg-2 col-md-6 col-sm-6">
+							<%-- 	<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
 									<div class="card-category">
@@ -567,7 +566,7 @@
 										<div class="stats">Last Month</div>
 									</div>
 								</div>
-							</div>
+							</div> --%>
 
 							<!-- 	</div>
 
@@ -616,7 +615,7 @@
 									</div>
 								</div>
 							</div>
-
+							<%-- 
 							<div class="col-lg-2 col-md-6 col-sm-6">
 								<div class="card card-stats">
 
@@ -638,7 +637,7 @@
 									</div>
 								</div>
 							</div>
-
+ --%>
 
 						</div>
 
@@ -660,7 +659,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">Current Month</div>
+										<div class="stats">Current Year(Jan to Dec)</div>
 									</div>
 								</div>
 							</div>
@@ -680,7 +679,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">Current Month</div>
+										<div class="stats">Current Year(Jan to Dec)</div>
 									</div>
 								</div>
 							</div>
@@ -702,7 +701,7 @@
 
 									</div>
 									<div class="card-footer">
-										<div class="stats">Current Month</div>
+										<div class="stats">Current Year(Jan to Dec)</div>
 									</div>
 								</div>
 							</div>
@@ -820,9 +819,9 @@
 
 							function(data) {
 
-								document.getElementById("prevPurchaseTotal").innerText = data.prevPurchaseTotal
+								document.getElementById("prevActualTotal").innerText = data.prevActualTotal
 										.toFixed(2);
-								document.getElementById("curPurchaseTotal").innerText = data.curPurchaseTotal
+								document.getElementById("curActualTotal").innerText = data.curActualTotal
 										.toFixed(2);
 								document.getElementById("prevGrnTotal").innerText = data.prevGrnTotal
 										.toFixed(2);
