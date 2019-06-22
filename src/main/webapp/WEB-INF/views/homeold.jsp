@@ -106,7 +106,7 @@
 
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
+											<h2 style="font-size: 20px;">&nbsp;Net Purchase Value</h2>
 											<h3 class="card-title">
 												<span class="count" style="font-size: 22px;"
 													id=prevActualTotal> <fmt:formatNumber type="number"
@@ -128,7 +128,7 @@
 
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp;Purchase Value</h2>
+											<h2 style="font-size: 20px;">&nbsp;Net Purchase Value</h2>
 											<h3 class="card-title">
 												<span class="count" style="font-size: 22px;"
 													id="curActualTotal"> <fmt:formatNumber type="number"
@@ -216,7 +216,8 @@
 									<div class="card card-stats">
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp;Return Percentage</h2>
+											<h2 style="font-size: 20px;">&nbsp;Franchisee Return
+												Percentage</h2>
 
 
 											<h3 class="card-title">
@@ -321,7 +322,8 @@
 									<div class="card card-stats">
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp; Return Percentage</h2>
+											<h2 style="font-size: 20px;">&nbsp; Franchisee Return
+												Percentage</h2>
 											<h3 class="card-title">
 												<span class="count" style="font-size: 22px;"
 													id="curReturnPerGrn"> <fmt:formatNumber
@@ -442,7 +444,7 @@
 									<div class="card card-stats">
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp;Expected Sale Value</h2>
+											<h2 style="font-size: 20px;">&nbsp;Actual Sale Value</h2>
 
 											<h3 class="card-title">
 												<span class="count" style="font-size: 22px;"
@@ -486,7 +488,7 @@
 									<div class="card card-stats">
 
 										<div class="card-category">
-											<h2 style="font-size: 20px;">&nbsp; Expected Sale Value</h2>
+											<h2 style="font-size: 20px;">&nbsp; Actual Sale Value</h2>
 
 											<h3 class="card-title">
 												<span class="count" style="font-size: 22px;"
@@ -709,66 +711,68 @@
 								function(data) {
 
 									document.getElementById("prevActualTotal").innerText = data.prevActualTotal
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document.getElementById("curActualTotal").innerText = data.curActualTotal
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document.getElementById("prevGrnTotal").innerText = data.prevGrnTotal
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document
 											.getElementById("prevCompanyGrnContri").innerText = data.prevCompanyGrnContri
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document
 											.getElementById("prevFrGrnContribution").innerText = data.prevFrGrnContribution
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
-									document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn;
+									document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
+											.toFixed(2);
 
 									document.getElementById("preGrnTarget").innerText = data.preGrnTarget
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("curGrnTotal").innerText = data.curGrnTotal
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document
 											.getElementById("curCompanyGrnContri").innerText = data.curCompanyGrnContri
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document
 											.getElementById("curFrGrnContribution").innerText = data.curFrGrnContribution
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
-									document.getElementById("curReturnPerGrn").innerText = data.curReturnPerGrn;
+									document.getElementById("curReturnPerGrn").innerText = data.curReturnPerGrn
+											.toFixed(2);
 
 									document.getElementById("curGrnTarget").innerText = data.curGrnTarget
-											.toFixed(0);
+											.toLocaleString('en-IN');
 									document.getElementById("prevGvnTotal").innerText = data.prevGvnTotal
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("curGvnTotal").innerText = (data.curGvnTotal)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("preSaleTarget").innerText = (data.preSaleTarget)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document
 											.getElementById("expectedPrevActualTotal").innerText = (data.expectedPrevActualTotal)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("curSaleTarget").innerText = (data.curSaleTarget)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document
 											.getElementById("expectedCurActualTotal").innerText = (data.expectedCurActualTotal)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("curSchoolTarget").innerText = (data.curSchoolTarget)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document
 											.getElementById("curAchSchoolTarget").innerText = (data.curAchSchoolTarget)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document
 											.getElementById("penCurSchoolTarget").innerText = (data.curSchoolTarget - data.curAchSchoolTarget)
-											.toFixed(0);
+											.toLocaleString('en-IN');
 
 									document.getElementById("prevMonthName").innerText = data.prevMonthName
 									document.getElementById("prevMonthName1").innerText = data.prevMonthName
