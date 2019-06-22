@@ -320,6 +320,23 @@ public class HomeController {
 
 			System.out.println("ajaxxxxxxxxxx" + frData.toString());
 
+			SimpleDateFormat parser = new SimpleDateFormat("MM-yyyy");
+
+			SimpleDateFormat formatter = new SimpleDateFormat("MMM-yyyy");
+
+			try {
+				String fromMonth = formatter.format(parser.parse(preMonth));
+
+				String toMonth = formatter.format(parser.parse(curMonth));
+				frData.setCurMonthName(toMonth);
+				frData.setPrevMonthName(fromMonth);
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+
+			System.out.println("In AJAXXXXXXXXXXXXXXXXXXXXXXXXXX" + frData.toString());
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

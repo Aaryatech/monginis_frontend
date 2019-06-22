@@ -116,7 +116,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName"></div>
 										</div>
 									</div>
 
@@ -136,7 +136,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName"></div>
 										</div>
 									</div>
 
@@ -166,7 +166,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName1"></div>
 										</div>
 									</div>
 								</div>
@@ -185,7 +185,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName2"></div>
 										</div>
 									</div>
 								</div>
@@ -207,7 +207,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName3"></div>
 										</div>
 									</div>
 								</div>
@@ -229,7 +229,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName4"></div>
 										</div>
 									</div>
 								</div>
@@ -252,7 +252,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName5"></div>
 										</div>
 									</div>
 								</div>
@@ -272,7 +272,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName1"></div>
 										</div>
 									</div>
 								</div>
@@ -291,7 +291,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName2"></div>
 										</div>
 									</div>
 								</div>
@@ -312,7 +312,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName3"></div>
 										</div>
 									</div>
 								</div>
@@ -332,7 +332,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName4"></div>
 										</div>
 									</div>
 								</div>
@@ -353,7 +353,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName5"></div>
 										</div>
 									</div>
 								</div>
@@ -382,7 +382,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName8"></div>
 										</div>
 									</div>
 								</div>
@@ -401,7 +401,7 @@
 											</h3>
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName6"></div>
 										</div>
 									</div>
 								</div>
@@ -433,7 +433,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName6"></div>
 										</div>
 									</div>
 								</div>
@@ -454,7 +454,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Last Month</div>
+											<div class="stats" id="prevMonthName7"></div>
 										</div>
 									</div>
 								</div>
@@ -477,7 +477,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName7"></div>
 										</div>
 									</div>
 								</div>
@@ -499,7 +499,7 @@
 
 										</div>
 										<div class="card-footer">
-											<div class="stats">Current Month</div>
+											<div class="stats" id="curMonthName8"></div>
 										</div>
 									</div>
 								</div>
@@ -769,6 +769,26 @@
 									document
 											.getElementById("penCurSchoolTarget").innerText = (data.curSchoolTarget - data.curAchSchoolTarget)
 											.toFixed(0);
+
+									document.getElementById("prevMonthName").innerText = data.prevMonthName
+									document.getElementById("prevMonthName1").innerText = data.prevMonthName
+									document.getElementById("prevMonthName2").innerText = data.prevMonthName
+									document.getElementById("prevMonthName3").innerText = data.prevMonthName
+									document.getElementById("prevMonthName4").innerText = data.prevMonthName
+									document.getElementById("prevMonthName5").innerText = data.prevMonthName
+									document.getElementById("prevMonthName6").innerText = data.prevMonthName
+									document.getElementById("prevMonthName7").innerText = data.prevMonthName
+									document.getElementById("prevMonthName8").innerText = data.prevMonthName
+
+									document.getElementById("curMonthName").innerText = data.curMonthName
+									document.getElementById("curMonthName1").innerText = data.curMonthName
+									document.getElementById("curMonthName2").innerText = data.curMonthName
+									document.getElementById("curMonthName3").innerText = data.curMonthName
+									document.getElementById("curMonthName4").innerText = data.curMonthName
+									document.getElementById("curMonthName5").innerText = data.curMonthName
+									document.getElementById("curMonthName6").innerText = data.curMonthName
+									document.getElementById("curMonthName7").innerText = data.curMonthName
+									document.getElementById("curMonthName8").innerText = data.curMonthName
 
 								});
 
