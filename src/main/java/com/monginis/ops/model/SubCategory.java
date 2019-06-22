@@ -1,42 +1,50 @@
 
 package com.monginis.ops.model;
 
-
 public class SubCategory {
 
-    private Integer subCatId;
-    private String subCatName;
-    private Integer delStatus;
+	private Integer subCatId;
+	private String subCatName;
+	private Integer delStatus;
 
-    public Integer getSubCatId() {
-        return subCatId;
-    }
+	private Integer catId;
 
-    public void setSubCatId(Integer subCatId) {
-        this.subCatId = subCatId;
-    }
+	public Integer getSubCatId() {
+		return subCatId;
+	}
 
-    public String getSubCatName() {
-        return subCatName;
-    }
+	public void setSubCatId(Integer subCatId) {
+		this.subCatId = subCatId;
+	}
 
-    public void setSubCatName(String subCatName) {
-        this.subCatName = subCatName;
-    }
+	public String getSubCatName() {
+		return subCatName;
+	}
 
-    public Integer getDelStatus() {
-        return delStatus;
-    }
+	public void setSubCatName(String subCatName) {
+		this.subCatName = subCatName;
+	}
 
-    public void setDelStatus(Integer delStatus) {
-        this.delStatus = delStatus;
-    }
+	public Integer getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(Integer delStatus) {
+		this.delStatus = delStatus;
+	}
 
 	@Override
 	public String toString() {
-		return "SubCategory [subCatId=" + subCatId + ", subCatName=" + subCatName + ", delStatus=" + delStatus + "]";
+		return "SubCategory [subCatId=" + subCatId + ", subCatName=" + subCatName + ", delStatus=" + delStatus
+				+ ", catId=" + catId + "]";
 	}
-    
-    
+
+	public Integer getCatId() {
+		return catId;
+	}
+
+	public void setCatId(Integer catId) {
+		this.catId = catId;
+	}
 
 }

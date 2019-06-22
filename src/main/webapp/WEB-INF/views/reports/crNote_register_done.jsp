@@ -338,7 +338,7 @@ table, th, td {
 
 	function exportToExcel() {
 
-		window.open("${pageContext.request.contextPath}/exportToExcelNew");
+		window.open("${pageContext.request.contextPath}/exportToExcel");
 		document.getElementById("expExcel").disabled = true;
 	}
 </script>
@@ -348,7 +348,7 @@ table, th, td {
 		var todate = $("#todatepicker").val();
 		window
 				.open('${pageContext.request.contextPath}/getCRNoteRegisterDonePdf/'
-						+ fromdate + '/' + todate + '/');
+						+ fromdate + '/' + todate);
 
 	}
 </script>
