@@ -726,6 +726,8 @@
 									document.getElementById("prevReturnPerGrn").innerText = data.prevReturnPerGrn
 											.toFixed(2);
 
+									
+									
 									document.getElementById("preGrnTarget").innerText = data.preGrnTarget
 											.toLocaleString('en-IN');
 
