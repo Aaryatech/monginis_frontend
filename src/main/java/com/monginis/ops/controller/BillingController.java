@@ -1,15 +1,24 @@
 package com.monginis.ops.controller;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +39,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.zefer.pd4ml.PD4Constants;
+import org.zefer.pd4ml.PD4ML;
+import org.zefer.pd4ml.PD4PageMark;
 
 import com.monginis.ops.billing.GetBillDetail;
 import com.monginis.ops.billing.GetBillDetailsResponse;
@@ -41,12 +53,20 @@ import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.CategoryListResponse;
+import com.monginis.ops.model.Currency;
+import com.monginis.ops.model.FrBillHeaderForPrint;
+import com.monginis.ops.model.FrBillPrint;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.GetBillDetailPrint;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.MCategory;
+import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
+import com.monginis.ops.model.SlabwiseBillList;
+import com.monginis.ops.model.SubCategory;
 
 
 @Controller
@@ -56,7 +76,8 @@ public class BillingController {
 	
 	public GetBillHeaderResponse billHeadeResponse;
 	public List<GetBillDetail> billDetailsList;
-	
+	List<FrBillHeaderForPrint> billHeadersListForPrint =new ArrayList<>();
+
 	PostFrItemStockHeader frItemStockHeader;
 	int runningMonth;
 	
@@ -82,10 +103,7 @@ public class BillingController {
 					
 					com.monginis.ops.model.Info info= restTemplate.postForObject(Constant.URL + "checkIsMonthClosed", map,
 							com.monginis.ops.model.Info.class);
-					
-					
-					System.out.println(" 	"+info.toString() );
-
+				
 				if (info.isError()) {
 
 					
@@ -496,5 +514,280 @@ public class BillingController {
 		e.printStackTrace();
 	}
 		
+	}
+	@RequestMapping(value = "pdf/showBillPdf/{transportMode}/{vehicleNo}/{selectedBills}", method = RequestMethod.GET)
+	public ModelAndView showBillPdf(@PathVariable String transportMode, @PathVariable String vehicleNo,
+			@PathVariable String[] selectedBills, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = new ModelAndView("billing/frBillPdf");
+
+		 List<FrBillPrint> billPrintList = new ArrayList<>();
+		try {
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			String billList = new String();
+
+			for (int i = 0; i < selectedBills.length; i++) {
+				billList = selectedBills[i] + "," + billList;
+			}
+
+			billList = billList.substring(0, billList.length() - 1);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billNoList", billList);
+
+			ParameterizedTypeReference<List<GetBillDetailPrint>> typeRef = new ParameterizedTypeReference<List<GetBillDetailPrint>>() {
+			};
+			ResponseEntity<List<GetBillDetailPrint>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getBillDetailsForPrint", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			List<GetBillDetailPrint> billDetailsResponse = responseEntity.getBody();
+
+			List<String> billnos = Arrays.asList(billList.split("\\s*,\\s*"));
+			List<SlabwiseBillList> slabwiseBillList = new ArrayList<>();
+
+			for (String billno : billnos) {
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("billNoList", billno);
+				ParameterizedTypeReference<List<SlabwiseBillList>> typeRef1 = new ParameterizedTypeReference<List<SlabwiseBillList>>() {
+				};
+				ResponseEntity<List<SlabwiseBillList>> responseEntity1 = restTemplate.exchange(
+						Constant.URL + "getSlabwiseBillData", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+
+				slabwiseBillList.addAll(responseEntity1.getBody());
+			}
+			billHeadersListForPrint = new ArrayList<>();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("billNoList", billList);
+
+			ParameterizedTypeReference<List<FrBillHeaderForPrint>> typeRef2 = new ParameterizedTypeReference<List<FrBillHeaderForPrint>>() {
+			};
+			ResponseEntity<List<FrBillHeaderForPrint>> responseEntity2 = restTemplate.exchange(
+					Constant.URL + "getFrBillHeaderForPrintSelectedBill", HttpMethod.POST, new HttpEntity<>(map),
+					typeRef2);
+			 List<FrBillHeaderForPrint> billHeadersListForPrint  = new ArrayList<>();
+			billHeadersListForPrint = responseEntity2.getBody();
+
+			CategoryListResponse categoryListResponse = restTemplate.getForObject(Constant.URL + "showAllCategory",
+					CategoryListResponse.class);
+			List<MCategoryList> categoryList;
+			categoryList = categoryListResponse.getmCategoryList();
+			
+			
+			
+			SubCategory[] subCatList = restTemplate.getForObject(Constant.URL + "getAllSubCatList",
+					SubCategory[].class);
+
+			ArrayList<SubCategory> subCatAList = new ArrayList<SubCategory>(Arrays.asList(subCatList));
+			SubCategory subCat=new SubCategory();
+			subCat.setCatId(5);
+			subCat.setSubCatName("Special Cake");
+			subCat.setSubCatId(0);
+			subCat.setDelStatus(0);
+			subCatAList.add(subCat);
+
+			List<GetBillDetailPrint> billDetailsListForPrint = new ArrayList<GetBillDetailPrint>();
+			billDetailsListForPrint = billDetailsResponse;
+
+
+			FrBillPrint billPrint = null;
+			for (int i = 0; i < billHeadersListForPrint.size(); i++) {
+				billPrint = new FrBillPrint();
+				List<GetBillDetailPrint> billDetails = new ArrayList<>();
+
+				List<SubCategory> filteredSubCat = new ArrayList<SubCategory>();
+				for (int j = 0; j < billDetailsListForPrint.size(); j++) {
+
+					if (billHeadersListForPrint.get(i).getBillNo().equals(billDetailsListForPrint.get(j).getBillNo())) {
+
+						billPrint.setAmtInWords(Currency.convertToIndianCurrency(
+								String.valueOf(billHeadersListForPrint.get(i).getGrandTotal())));
+						billPrint.setBillNo(billHeadersListForPrint.get(i).getBillNo());
+						billPrint.setFrAddress(billHeadersListForPrint.get(i).getFrAddress());
+						billPrint.setFrId(billHeadersListForPrint.get(i).getFrId());
+						billPrint.setFrName(billHeadersListForPrint.get(i).getFrName());
+						billPrint.setInvoiceNo(billHeadersListForPrint.get(i).getInvoiceNo());
+						billPrint.setIsSameState(billHeadersListForPrint.get(i).getIsSameState());
+						billPrint.setBillDate(billHeadersListForPrint.get(i).getBillDate());
+						billPrint.setGrandTotal(billHeadersListForPrint.get(i).getGrandTotal());
+						billPrint.setCompany(billHeadersListForPrint.get(i).getCompany());
+						billDetails.add(billDetailsListForPrint.get(j));
+
+						for (int a = 0; a < subCatAList.size(); a++) {
+
+							for (int b = 0; b < billDetails.size(); b++) {
+
+								
+								if (billDetails.get(b).getSubCatId()==subCatAList.get(a).getSubCatId()) {
+
+									if (filteredSubCat.isEmpty())
+										filteredSubCat.add(subCatAList.get(a));
+									else if (!filteredSubCat.contains(subCatAList.get(a))) {
+										filteredSubCat.add(subCatAList.get(a));
+									}
+								}
+
+							}
+
+						}
+					} // end of if
+
+				}
+				billPrint.setBillDetailsList(billDetails);
+				billPrint.setSubCatList(filteredSubCat);
+				if (billPrint != null)
+					billPrintList.add(billPrint);
+
+			}
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+
+			model.addObject("billDetails", billPrintList);
+			model.addObject("slabwiseBillList", slabwiseBillList);
+			model.addObject("vehicleNo", vehicleNo);
+			model.addObject("transportMode", transportMode);
+			model.addObject("dateTime", dateFormat.format(cal.getTime()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	private Dimension format = PD4Constants.A4;
+	private boolean landscapeValue = false;
+	private int topValue = 8;
+	private int leftValue = 0;
+	private int rightValue = 0;
+	private int bottomValue = 8;
+	private String unitsValue = "m";
+	private String proxyHost = "";
+	private int proxyPort = 0;
+
+	private int userSpaceWidth = 750;
+	private static int BUFFER_SIZE = 1024;
+	
+	@RequestMapping(value = "/billPdf", method = RequestMethod.GET)
+	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
+
+		String url = request.getParameter("url");
+		System.out.println("URL " + url);
+		// http://monginis.ap-south-1.elasticbeanstalk.com
+		 File f = new File("/opt/tomcat-latest/webapps/uploads/report.pdf");
+		 //File f = new File("/home/ats-12/pdf/ordermemo221.pdf");
+		//File f = new File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
+
+		System.out.println("I am here " + f.toString());
+		try {
+			runConverter(Constant.ReportURL + url, f, request, response);
+			System.out.println("Come on lets get ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+			System.out.println("Pdf conversion exception " + e.getMessage());
+		}
+
+		// get absolute path of the application
+		ServletContext context = request.getSession().getServletContext();
+		String appPath = context.getRealPath("");
+		String filename = "ordermemo221.pdf";
+		String filePath = "/opt/tomcat-latest/webapps/uploads/report.pdf";
+		// String filePath = "/home/ats-12/pdf/ordermemo221.pdf";
+		//String filePath = "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
+
+		// construct the complete absolute path of the file
+		String fullPath = appPath + filePath;
+		File downloadFile = new File(filePath);
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(downloadFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			// get MIME type of the file
+			String mimeType = context.getMimeType(fullPath);
+			if (mimeType == null) {
+				// set to binary type if MIME mapping not found
+				mimeType = "application/pdf";
+			}
+			System.out.println("MIME type: " + mimeType);
+
+			String headerKey = "Content-Disposition";
+
+			// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+			response.setContentType("application/pdf");
+
+			// get output stream of the response
+			OutputStream outStream;
+
+			outStream = response.getOutputStream();
+
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+
+			// write bytes read from the input stream into the output stream
+
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+			}
+
+			inputStream.close();
+			outStream.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void runConverter(String urlstring, File output, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		if (urlstring.length() > 0) {
+			if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
+				urlstring = "http://" + urlstring;
+			}
+			System.out.println("PDF URL " + urlstring);
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+			PD4ML pd4ml = new PD4ML();
+
+			try {
+
+				PD4PageMark footer = new PD4PageMark();  
+				footer.setPageNumberTemplate("page $[page] of $[total]");  
+				footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);  
+				footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);  
+				footer.setInitialPageNumber(1);  
+				footer.setFontSize(8);  
+				footer.setAreaHeight(15); 
+			
+				pd4ml.setPageFooter(footer);
+
+			} catch (Exception e) {
+				System.out.println("Pdf conversion method excep " + e.getMessage());
+			}
+			try {
+				pd4ml.setPageSize(landscapeValue ? pd4ml.changePageOrientation(format) : format);
+			} catch (Exception e) {
+				System.out.println("Pdf conversion ethod excep " + e.getMessage());
+			}
+
+			if (unitsValue.equals("mm")) {
+				pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+			} else {
+				pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+			}
+
+			pd4ml.setHtmlWidth(userSpaceWidth);
+
+			pd4ml.render(urlstring, fos);
+
+		}
 	}
 }
