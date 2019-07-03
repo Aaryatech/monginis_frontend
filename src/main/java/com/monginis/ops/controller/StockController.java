@@ -39,6 +39,7 @@ import com.monginis.ops.model.Item;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.PostFrItemStockDetail;
 import com.monginis.ops.model.PostFrItemStockHeader;
+import com.sun.org.apache.bcel.internal.generic.ALOAD;
 
 @Controller
 @Scope("session")
@@ -156,7 +157,7 @@ public class StockController {
 		menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 		System.out.println("Menu List " + menuList.toString());
 
-		int menuId = 0;
+		List<Integer> menuIdList =new ArrayList<>();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("frId", frDetails.getFrId());
@@ -171,7 +172,8 @@ public class StockController {
 		System.out.println("## catId" + intCatId);
 
 		if (catId.equalsIgnoreCase("1")) {
-
+			menuIdList =new ArrayList<>();
+			
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -180,11 +182,12 @@ public class StockController {
 
 			}
 
-			menuId = 26;
+			menuIdList.add(26);
 
 		} else if (catId.equalsIgnoreCase("2")) {
-
-			menuId = 31;
+			menuIdList =new ArrayList<>();
+			
+			menuIdList.add(31);menuIdList.add(32);
 			for (PostFrItemStockHeader header : list) {
 
 
@@ -194,8 +197,9 @@ public class StockController {
 
 			}
 		} else if (catId.equalsIgnoreCase("3")) {
-
-			menuId = 33;
+			menuIdList =new ArrayList<>();
+			
+			menuIdList.add(33);
 			for (PostFrItemStockHeader header : list) {
 
 
@@ -206,8 +210,9 @@ public class StockController {
 			}
 
 		} else if (catId.equalsIgnoreCase("4")) {
-
-			menuId = 34;
+			menuIdList =new ArrayList<>();
+			
+			menuIdList.add(34);
 			for (PostFrItemStockHeader header : list) {
 
 
@@ -218,8 +223,9 @@ public class StockController {
 			}
 
 		}else if (catId.equalsIgnoreCase("6")) {
-
-			menuId = 49;
+			menuIdList =new ArrayList<>();
+			
+			menuIdList.add(49);
 			for (PostFrItemStockHeader header : list) {
 
 
@@ -235,15 +241,19 @@ public class StockController {
 		String itemShow = "";
 
 		for (int i = 0; i < menuList.size(); i++) {
+			
+            for(int j=0;j<menuIdList.size();j++) {
+			    if (menuList.get(i).getMenuId() == menuIdList.get(j)) {
 
-			if (menuList.get(i).getMenuId() == menuId) {
+				itemShow =menuList.get(i).getItemShow()+","+itemShow;
 
-				itemShow = menuList.get(i).getItemShow();
-
-			}
+			   }
+            }
 
 		}
-
+		if (itemShow.endsWith(",")) {
+			itemShow = itemShow.substring(0, itemShow.length() - 1);
+			}
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
