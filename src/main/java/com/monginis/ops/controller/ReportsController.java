@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import java.awt.Dimension;
 
+
 import java.awt.Insets;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -14,7 +15,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.URLConnection;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -85,6 +86,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
+import com.monginis.ops.model.Tax1Report;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
 import com.monginis.ops.model.reportv2.CrNoteRegItem;
 import com.monginis.ops.model.reportv2.CrNoteRegSp;
@@ -3732,4 +3734,165 @@ public class ReportsController {
 		}
 	}
 
+	@RequestMapping(value = "/showTaxReport", method = RequestMethod.GET)
+	public ModelAndView showTaxReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		HttpSession session = request.getSession();
+		String fromDate = "";
+		String toDate = "";
+
+		model = new ModelAndView("reports/tax1Report");
+		// Constants.mainAct =2;
+		// Constants.subAct =20;
+		List<Tax1Report> taxReportList = null;
+
+		try {
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
+
+			if (fromDate == null && toDate == null) {
+				Date date = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				fromDate = formatter.format(date);
+				toDate = formatter.format(date);
+			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("frId", frDetails.getFrId());
+
+			ParameterizedTypeReference<List<Tax1Report>> typeRef = new ParameterizedTypeReference<List<Tax1Report>>() {
+			};
+			ResponseEntity<List<Tax1Report>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getTax1ReportByFrId", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			taxReportList = responseEntity.getBody();
+			model.addObject("taxReportList", taxReportList);
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			System.out.println("taxReportListtaxReportListtaxReportList" + taxReportList.toString());
+			System.out.println("taxReportListtaxReportListtaxReportList" + fromDate);
+			System.out.println("taxReportListtaxReportListtaxReportList" + toDate);
+
+			// exportToExcel
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			rowData.add("Sr.No.");
+			rowData.add("GSTIN/UIN of Recipient");
+			rowData.add("Receiver Name");
+			rowData.add("Invoice No");
+			rowData.add("Invoice date");
+			rowData.add("Invoice Value");
+			rowData.add("Place of Supply");
+			rowData.add("Reverse Charge");
+
+			rowData.add("Applicable % of Tax Rate");
+			rowData.add("Invoice Type");
+			rowData.add("E Commerce GSTIN");
+			rowData.add("Rate");
+			rowData.add("Taxable Value");
+			rowData.add("Cess Amount");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			float taxableAmt = 0.0f;
+			float cgstSum = 0.0f;
+			float sgstSum = 0.0f;
+
+			float totalTax = 0.0f;
+			float totalFinal = 0.0f;
+			float grandTotal = 0.0f;
+
+			for (int i = 0; i < taxReportList.size(); i++) {
+				float finalTotal = 0;
+				for (int j = 0; j < taxReportList.size(); j++) {
+
+					if (taxReportList.get(j).getBillNo() == taxReportList.get(i).getBillNo()) {
+						finalTotal = finalTotal + taxReportList.get(j).getGrandTotal();
+					}
+				}
+
+				taxableAmt = taxableAmt + taxReportList.get(i).getTaxableAmt();
+				cgstSum = cgstSum + taxReportList.get(i).getCgstAmt();
+				sgstSum = sgstSum + taxReportList.get(i).getSgstAmt();
+
+				totalTax = totalTax + taxReportList.get(i).getTotalTax();
+				grandTotal = grandTotal + taxReportList.get(i).getGrandTotal();
+				totalFinal = totalFinal + finalTotal;
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				rowData.add((i + 1) + "");
+				rowData.add("" + taxReportList.get(i).getFrGstNo());
+				rowData.add("" + taxReportList.get(i).getFrName());
+				rowData.add("" + taxReportList.get(i).getInvoiceNo());
+				rowData.add("" + taxReportList.get(i).getBillDate());
+
+				rowData.add("" + finalTotal);
+				rowData.add("27-Maharashtra");
+				rowData.add("N");
+				rowData.add(" ");
+
+				rowData.add("Regular");
+				rowData.add(" ");
+
+				rowData.add("" + (taxReportList.get(i).getCgstPer() + taxReportList.get(i).getSgstPer()));
+				rowData.add("" + taxReportList.get(i).getTaxableAmt());
+				rowData.add("0");
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("" + roundUp(totalFinal));
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "Tax1Report");
+			session.setAttribute("reportNameNew", "Tax_Repot1");
+			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+			session.setAttribute("mergeUpto1", "$A$1:$N$1");
+			session.setAttribute("mergeUpto2", "$A$2:$N$2");
+
+		} catch (Exception e) {
+			System.out.println("Exc in Tax Report" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+
+	}
 }
