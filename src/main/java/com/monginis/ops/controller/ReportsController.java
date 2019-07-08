@@ -2,7 +2,6 @@ package com.monginis.ops.controller;
 
 import java.awt.Dimension;
 
-
 import java.awt.Insets;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -3651,8 +3650,10 @@ public class ReportsController {
 				cell.setPaddingRight(8);
 				table.addCell(cell);
 
-				cell = new PdfPCell(
-						new Phrase(String.valueOf(roundUp(crNoteRegItemListDone.get(j).getCrnTaxable())), headFont));
+				double crnTaxable = Double.parseDouble(crNoteRegItemListDone.get(j).getCrnTaxable() + " ");
+				String strCrnTaxable = String.format("%.0f", crnTaxable);
+
+				cell = new PdfPCell(new Phrase(strCrnTaxable, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(8);
@@ -3672,8 +3673,10 @@ public class ReportsController {
 				cell.setPaddingRight(8);
 				table.addCell(cell);
 
-				cell = new PdfPCell(
-						new Phrase(String.valueOf(roundUp(crNoteRegItemListDone.get(j).getCrnAmt())), headFont));
+				double crnAmt = Double.parseDouble(crNoteRegItemListDone.get(j).getCrnAmt() + " ");
+				String strCrnAmt = String.format("%.0f", crnAmt);
+
+				cell = new PdfPCell(new Phrase(strCrnAmt, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(8);
