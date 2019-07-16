@@ -250,8 +250,7 @@
 								<%
 									//else
 													} else {
-								%> <abbr title='${menu.menuDesc}'><a
-									class="listareaBox"
+								%> <abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}"><div
 											class="listareaBoximg"></abbr> <%
  	}
@@ -262,46 +261,40 @@
  					{
 
  						//if
- %> <abbr title='${menu.menuDesc}'><a
-									class="listareaBoxBlue"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	} else {
- %> <abbr title='${menu.menuDesc}'> <a
-									class="listareaBox"
+ %> <abbr title='${menu.menuDesc}'> <a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	}
 
  				}
- 			} else if (catId == 5 && isSameDayApplicable==4) {
+ 			} else if (catId == 5 && isSameDayApplicable == 4) {
 
  				// if
  				if (settingType != 1) {
- %> <abbr title='${menu.menuDesc}'><a
-									class="listareaBoxBlue"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	//else
  				} else {
- %> <abbr title='${menu.menuDesc}'><a
-									class="listareaBox"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	}
 
- 			}else if (catId == 5) {
+ 			} else if (catId == 5) {
 
  				// if
  				if (settingType != 1) {
- %> <abbr title='${menu.menuDesc}'><a
-									class="listareaBoxBlue"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	//else
  				} else {
- %> <abbr title='${menu.menuDesc}'><a
-									class="listareaBox"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	}
@@ -507,6 +500,9 @@
 								class="fa fa-files-o icon"></i>Tax Report 1</a> <a
 								href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
 								class="fa fa-files-o icon"></i>Credit Note Register Done Report</a>
+
+							<a href="${pageContext.request.contextPath}/showInsertCreditNote"><i
+								class="fa fa-files-o icon"></i>Credit Note Report</a>
 
 
 						</div>

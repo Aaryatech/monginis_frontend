@@ -134,7 +134,7 @@ table, th, td {
 								<thead>
 									<tr class="bgpink">
 
-										<th><input type="checkbox" onClick="selectBillNo(this)" /></th>
+										<th><!-- <input type="checkbox" onClick="selectBillNo(this)" /> --></th>
 										<th class="col-sm-1">Sr No.</th>
 										<th class="col-md-1" style="text-align: center;">Date</th>
 										<th class="col-md-1" style="text-align: center;">CRN Id</th>
