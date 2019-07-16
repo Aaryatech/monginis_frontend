@@ -274,7 +274,23 @@
  	}
 
  				}
- 			} else if (catId == 5) {
+ 			} else if (catId == 5 && isSameDayApplicable==4) {
+
+ 				// if
+ 				if (settingType != 1) {
+ %> <abbr title='${menu.menuDesc}'><a
+									class="listareaBoxBlue"
+									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
+										<div class="listareaBoximg"></abbr> <%
+ 	//else
+ 				} else {
+ %> <abbr title='${menu.menuDesc}'><a
+									class="listareaBox"
+									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
+										<div class="listareaBoximg"></abbr> <%
+ 	}
+
+ 			}else if (catId == 5) {
 
  				// if
  				if (settingType != 1) {
