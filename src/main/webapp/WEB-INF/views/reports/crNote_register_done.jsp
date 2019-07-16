@@ -104,7 +104,7 @@ table, th, td {
 
 
 					<div id="table-scroll" class="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden">
+						<!-- <div id="faux-table" class="faux-table" aria="hidden">
 							<table id="table_grid1" class="main-table" border="1">
 								<thead>
 									<tr class="bgpink">
@@ -131,7 +131,7 @@ table, th, td {
 								</thead>
 								<tbody>
 							</table>
-						</div>
+						</div> -->
 						<div class="table-wrap">
 							<table id="table_grid" class="main-table" border="1">
 								<thead>
@@ -275,19 +275,19 @@ table, th, td {
 			tr.append($('<td></td>').html(""));
 			tr.append($('<td></td>').html(""));
 
-			tr.append($('<td style="font-weight:12px;"></td>').html(""));
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(""));
 			tr.append($('<td></td>').html("Total"));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(
 					"" + crnQty.toFixed(2)));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(
 					"" + crnTaxable.toFixed(2)));
 
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(
 					"" + cgstAmt.toFixed(2)));
 
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(
 					"" + sgstAmt.toFixed(2)));
-			tr.append($('<td style="font-weight:12px;"></td>').html(
+			tr.append($('<td style="font-weight:12px;text-align:right;"></td>').html(
 					"" + crnAmt.toFixed(0)));
 			$('#table_grid tbody').append(tr);
 

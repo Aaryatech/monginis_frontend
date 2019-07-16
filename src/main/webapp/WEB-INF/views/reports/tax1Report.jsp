@@ -150,7 +150,7 @@ jQuery(document).ready(function(){
 
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden">
 								<table id="table_grid1" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
@@ -173,7 +173,7 @@ jQuery(document).ready(function(){
 									</thead>
 
 								</table>
-							</div>
+							</div> -->
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>
@@ -431,7 +431,7 @@ jQuery(document).ready(function(){
 
 	function exportToExcel() {
 
-		window.open("${pageContext.request.contextPath}/exportToExcelNew");
+		window.open("${pageContext.request.contextPath}/exportToExcel");
 		document.getElementById("expExcel").disabled = true;
 	}
 </script>

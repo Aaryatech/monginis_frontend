@@ -3431,11 +3431,15 @@ public class ReportsController {
 				rowData.add("" + crNoteRegItemListDone.get(i).getCrnDate());
 				rowData.add(" ");
 				rowData.add("27-Maharashtra");
-				rowData.add("" + roundUp(crnTotal));
+				double crnTotalAmt = Double.parseDouble(crnTotal + " ");
+				String strCrnAmt = String.format("%.0f", crnTotalAmt);
+				rowData.add("" + strCrnAmt);
 				rowData.add(" ");
+				double crnTaxableAmt = Double.parseDouble(crNoteRegItemListDone.get(i).getCrnTaxable() + " ");
+				String strCrnTaxable = String.format("%.0f", crnTaxableAmt);
 				rowData.add(
 						"" + (crNoteRegItemListDone.get(i).getCgstPer() + crNoteRegItemListDone.get(i).getSgstPer()));
-				rowData.add("" + roundUp(crNoteRegItemListDone.get(i).getCrnTaxable()));
+				rowData.add("" + strCrnTaxable);
 				rowData.add("0");
 
 				crnQty = crnQty + crNoteRegItemListDone.get(i).getCrnQty();
@@ -3883,13 +3887,8 @@ public class ReportsController {
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
-			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "Tax1Report");
-			session.setAttribute("reportNameNew", "Tax_Repot1");
-			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$N$1");
-			session.setAttribute("mergeUpto2", "$A$2:$N$2");
-
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "Tax1Report");
 		} catch (Exception e) {
 			System.out.println("Exc in Tax Report" + e.getMessage());
 			e.printStackTrace();
