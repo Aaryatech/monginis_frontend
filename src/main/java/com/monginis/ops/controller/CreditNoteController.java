@@ -229,10 +229,12 @@ public class CreditNoteController {
 				try {
 					map = new LinkedMultiValueMap<String, Object>();
 					map.add("crnId", creditHeaderList.get(i).getCrnId());
-				/*	List<CrnDetailsSummary> crnSummaryList = restTemplate
-							.postForObject(Constant.URL + "getCrnDetailsSummary", map, List.class);
-					cNoteHeaderPrint.setCrnDetailsSummaryList(crnSummaryList);*/
-					/*System.err.println(crnSummaryList.toString());*/
+					/*
+					 * List<CrnDetailsSummary> crnSummaryList = restTemplate
+					 * .postForObject(Constant.URL + "getCrnDetailsSummary", map, List.class);
+					 * cNoteHeaderPrint.setCrnDetailsSummaryList(crnSummaryList);
+					 */
+					/* System.err.println(crnSummaryList.toString()); */
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -330,8 +332,8 @@ public class CreditNoteController {
 				cNoteHeaderPrint.setCrnNo(creditHeaderList.get(i).getCrnNo());
 				cNoteHeaderPrint.setSrNoDateList(srNoDateList);
 				cNoteHeaderPrint.setSrNoList(srNoList);
-				//cNoteHeaderPrint.setExInt1(creditHeaderList.get(i).getExInt1());
-				//cNoteHeaderPrint.setExVarchar1(creditHeaderList.get(i).getExVarchar1());
+				// cNoteHeaderPrint.setExInt1(creditHeaderList.get(i).getExInt1());
+				// cNoteHeaderPrint.setExVarchar1(creditHeaderList.get(i).getExVarchar1());
 				printBean.setCreditHeader(cNoteHeaderPrint);
 
 				printList.add(printBean);

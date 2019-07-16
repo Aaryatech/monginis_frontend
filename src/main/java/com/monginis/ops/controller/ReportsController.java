@@ -3333,8 +3333,7 @@ public class ReportsController {
 
 				for (int i = 0; i < crNoteRegItemListDone.size(); i++) {
 
-					if (crNoteRegItemListDone.get(i).getCrnId() == crnRegSpList.get(j).getCrnId()
-							&& crNoteRegItemListDone.get(i).getHsnCode().equals(crnRegSpList.get(j).getHsnCode())) {
+					if (crNoteRegItemListDone.get(i).getCrnId() == crnRegSpList.get(j).getCrnId()) {
 						flag = 1;
 						crNoteRegItemListDone.get(i)
 								.setCrnQty(crNoteRegItemListDone.get(i).getCrnQty() + crnRegSpList.get(j).getCrnQty());
@@ -3863,7 +3862,6 @@ public class ReportsController {
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
-				
 
 			}
 
