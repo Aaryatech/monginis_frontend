@@ -178,6 +178,9 @@ public class SpCakeController {
 
 		return model;
 	}
+	
+
+	
 	// -------------------------------------END-------------------------------------------------
 
 	// ------------------------Search Special
@@ -404,6 +407,7 @@ public class SpCakeController {
 			System.out.println("Filter Item List " + flavoursListWithAddonRate.toString());
 		} catch (Exception e) {
 			System.out.println("Exception in getFlavourBySpfId() AJAX CALL");
+			e.printStackTrace();
 
 		}
 
