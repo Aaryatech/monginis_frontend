@@ -350,7 +350,7 @@ table, th, td {
 		//alert("Inside Gen Pdf " + selArray);
 
 		window
-				.open('${pageContext.request.contextPath}/pdf?url=pdf/getCrnCheckedHeadersNew/'
+				.open('${pageContext.request.contextPath}/billPdf?url=pdf/getCrnCheckedHeadersNew/'
 						+ selArray);
 
 	}
