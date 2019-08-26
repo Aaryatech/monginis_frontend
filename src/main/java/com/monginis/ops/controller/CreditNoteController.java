@@ -248,7 +248,8 @@ public class CreditNoteController {
 
 				cNoteHeaderPrint.setFrGstNo(creditHeaderList.get(i).getFrGstNo());
 				cNoteHeaderPrint.setIsGrn(creditHeaderList.get(i).getIsGrn());
-
+				cNoteHeaderPrint.setIsSameState(creditHeaderList.get(i).getIsSameState());
+				
 				List<GetCrnDetails> crnPrintDetailList = new ArrayList<>();
 
 				List<String> srNoList = new ArrayList<String>();

@@ -1693,7 +1693,9 @@ if(currentNewItem.getCatId()==7) {
 		return customerBillData.getCustomerBillList();
 
 	}
-
+	 private static boolean isNotNullOrEmpty(String str) {
+	        return str != null && !str.isEmpty();
+	    }
 	@RequestMapping(value = "/generateBill", method = RequestMethod.GET)
 	public @ResponseBody SellBillHeader generateSellBill(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1732,6 +1734,7 @@ if(currentNewItem.getCatId()==7) {
 
 			gstNo = request.getParameter("gstNo");
 			System.out.println("Gst No:" + gstNo);
+			gstNo=isNotNullOrEmpty(gstNo) ? gstNo : "-";
 
 			phoneNo = request.getParameter("phoneNo");
 			System.out.println("phoneNo:" + phoneNo);
@@ -2196,7 +2199,10 @@ if(currentNewItem.getCatId()==7) {
 		getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
 
 		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
-
+		String custName = billResponse.getCustName().split("##")[0];
+		String custGstin= billResponse.getCustName().split("##")[1];
+		model.addObject("custName", custName);
+		model.addObject("custGstin", custGstin);
 		model.addObject("billList", getCustmoreBillResponseList);
 		model.addObject("frGstType", frGstType);
 		return model;

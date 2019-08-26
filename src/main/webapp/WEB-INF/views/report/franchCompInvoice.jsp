@@ -73,7 +73,13 @@
     </tr>
     <tr>
       <td>Name</td>
-      <td colspan="3">${billList[0].custName}</td>
+      <td colspan="3">${custName}</td>
+     
+      </tr>
+    <tr>
+     <tr>
+      <td>GST No.</td>
+      <td colspan="3">${custGstin}</td>
      
       </tr>
     <tr>
