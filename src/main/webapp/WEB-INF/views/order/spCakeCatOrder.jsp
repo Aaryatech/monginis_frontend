@@ -140,7 +140,7 @@ select {
 										<datalist id="categories">
 											<c:forEach items="${configuredSpCodeList}"
 												var="specialCakeList">
-												<option value="${specialCakeList.albumCode}"></option>
+												<option value="${specialCakeList.albumCode}-${specialCakeList.albumName}-${specialCakeList.spCode}"></option>
 											</c:forEach>
 										</datalist>
 
@@ -493,8 +493,8 @@ select {
 <!--rightForm-->	
 <div class="right">
 	<div class="priceBox">
-		<h2 class="inrbox" id="INR">INR - ${(sprRate*specialCake.spMinwt)}</h2>
-		 <input type="hidden" name="sp_grand" id="sp_grand" value="${(sprRate*specialCake.spMinwt)}">   
+		<h2 class="inrbox" id="INR">INR - ${(sprRate*album.minWt)}</h2>
+		 <input type="hidden" name="sp_grand" id="sp_grand" value="${(sprRate*album.minWt)}">   
 		<div class="inrboxmiddle">
 			<ul>
 				<li>
@@ -503,8 +503,8 @@ select {
 				</li>
 				<li>
 					<div class="priceLeft">Price </div>
-					<div class="priceRight" id="price">${sprRate*specialCake.spMinwt}</div>
-					<input name="sp_calc_price" id="sp_calc_price" value="${sprRate*specialCake.spMinwt}" type="hidden">
+					<div class="priceRight" id="price">${sprRate*album.minWt}</div>
+					<input name="sp_calc_price" id="sp_calc_price" value="${sprRate*album.minWt}" type="hidden">
 				</li>
 				<li>
 					<div class="priceLeft">Add Rate </div>
@@ -513,8 +513,8 @@ select {
 				</li>
 				<li>
 					<div class="priceLeft">Sub Total </div>
-					<div class="priceRight"id="subtotal">${sprRate*specialCake.spMinwt}</div>
-					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="${sprRate*specialCake.spMinwt}">
+					<div class="priceRight"id="subtotal">${sprRate*album.minWt}</div>
+					<input name="sp_sub_total" id="sp_sub_total"  type="hidden"value="${sprRate*album.minWt}">
 				</li>
 				<li>
 					<div class="priceLeft">GST (%)</div>
@@ -523,23 +523,23 @@ select {
 				</li>
 				<li>
 					<div class="priceLeft">GST IN RS.</div>
-					<c:set var="varGstRs" value="${(((sprRate*specialCake.spMinwt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))*(specialCake.spTax1+specialCake.spTax2)/100}" />  
+					<c:set var="varGstRs" value="${(((sprRate*album.minWt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))*(specialCake.spTax1+specialCake.spTax2)/100}" />  
 					<fmt:formatNumber var="fGstRs" minFractionDigits="2" maxFractionDigits="2" type="number" value="${varGstRs}" />  
 					
 					<div class="priceRight" id="gstrs"><c:out value="${fGstRs}" /></div>
 					<input type="hidden" id="gst_rs" name="gst_rs" value="${fGstRs}">
 				</li>
 				<li class="total">
-				<c:set var="varMgstamt" value="${(((sprRate*specialCake.spMinwt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))}"/>
+				<c:set var="varMgstamt" value="${(((sprRate*album.minWt)*100)/((specialCake.spTax1+specialCake.spTax2)+100))}"/>
 					<fmt:formatNumber var="fMgstamt" minFractionDigits="2" maxFractionDigits="2" type="number" value="${varMgstamt}" />  
 					
 					<div class="priceLeft" id="mgstamt">AMT-<c:out value="${fMgstamt}"></c:out></div>
 					
 				   <input type="hidden" name="m_gst_amt" id="m_gst_amt" type="hidden" value="${fMgstamt}">
 				
-					<div class="priceRight"id="tot">TOTAL-${(sprRate*specialCake.spMinwt)}</div>
+					<div class="priceRight"id="tot">TOTAL-${(sprRate*album.minWt)}</div>
 					
-					 <input type="hidden" name="total_amt" id="total_amt" value="${(sprRate*specialCake.spMinwt)}">
+					 <input type="hidden" name="total_amt" id="total_amt" value="${(sprRate*album.minWt)}">
 				</li>
 				
 				<li class="advance">
@@ -551,8 +551,8 @@ select {
 		</div>
 		<div class="remainamount">
 			<div class="priceLeft">Remaining Amount</div>
-					<div class="priceRight" id="rmAmt">${(sprRate*specialCake.spMinwt)}</div>
-				    <input type="hidden" name="rm_amount" id="rm_amount" value="${(sprRate*specialCake.spMinwt)}">
+					<div class="priceRight" id="rmAmt">${(sprRate*album.minWt)}</div>
+				    <input type="hidden" name="rm_amount" id="rm_amount" value="${(sprRate*album.minWt)}">
 		</div>
 	</div>
 	
@@ -570,14 +570,14 @@ select {
 <input type="hidden" id="t1amt" name="t1amt" value="0.0">
 </c:if>
 <c:if test="${specialCake.spTax1!=0 or specialCake.spTax1!=0.00}">
-<input type="hidden" id="t1amt" name="t1amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax1)/100}">
+<input type="hidden" id="t1amt" name="t1amt" value="${(sprRate*album.minWt)*(specialCake.spTax1)/100}">
 
 </c:if>
 <c:if test="${specialCake.spTax2==0 or specialCake.spTax2!=0.00}">
 <input type="hidden" id="t2amt" name="t2amt" value="0.0">
 </c:if>
 <c:if test="${specialCake.spTax2!=0 or specialCake.spTax2!=0.00}">
-<input type="hidden" id="t2amt" name="t2amt" value="${(sprRate*specialCake.spMinwt)*(specialCake.spTax2)/100}">
+<input type="hidden" id="t2amt" name="t2amt" value="${(sprRate*album.minWt)*(specialCake.spTax2)/100}">
 
 </c:if>
 
