@@ -5,6 +5,8 @@ public class AlbumCodeAndName {
 	private int albumId;
 	private String albumCode;
 	private String albumName;
+	private String spCode;
+	
 	
 	
 
@@ -34,9 +36,20 @@ public class AlbumCodeAndName {
 	
 	
 
+	public String getSpCode() {
+		return spCode;
+	}
+
+	public void setSpCode(String spCode) {
+		this.spCode = spCode;
+	}
+	
+	
+
 	@Override
 	public String toString() {
-		return "AlbumCodeAndName [albumId=" + albumId + ", albumCode=" + albumCode + ", albumName=" + albumName + "]";
+		return "AlbumCodeAndName [albumId=" + albumId + ", albumCode=" + albumCode + ", albumName=" + albumName
+				+ ", spCode=" + spCode + "]";
 	}
 
 }
