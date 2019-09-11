@@ -209,7 +209,7 @@ public class SpCakeCatController {
 	// Anmol 11-7-19
 	// -----------Search Special Cake Category Process----------------------------
 
-	@RequestMapping(value = "/searchSpCakeCat", method = RequestMethod.POST)
+	@RequestMapping(value = "/searchSpCakeCat", method = RequestMethod.GET)
 	public ModelAndView searchSpCakeCatBySpCode(HttpServletRequest request, HttpServletResponse response) {
 
 		logger.info("inside Search Sp Cake Category Request");
@@ -229,18 +229,35 @@ public class SpCakeCatController {
 
 			System.err.println("ALBUM CODE ----------------------------------------- " + spCode);
 
-			SearchSpCakeCatResponse searchSpCakeResponse = restTemplate
-					.postForObject(Constant.URL + "/searchAlbumByCode", map, SearchSpCakeCatResponse.class);
-			ErrorMessage errorMessage = searchSpCakeResponse.getErrorMessage();
-			specialCake = searchSpCakeResponse.getSpecialCake();
-			Album album = searchSpCakeResponse.getAlbum();
-			
-			System.err.println("ALBUM *************************  "+album);
+			SearchSpCakeCatResponse searchSpCakeResponse = new SearchSpCakeCatResponse();
+			ErrorMessage errorMessage = new ErrorMessage();
+			Album album = new Album();
+			try {
+
+				searchSpCakeResponse = restTemplate.postForObject(Constant.URL + "/searchAlbumByCode", map,
+						SearchSpCakeCatResponse.class);
+
+				errorMessage = searchSpCakeResponse.getErrorMessage();
+				if (errorMessage == null) {
+					errorMessage = new ErrorMessage();
+					errorMessage.setError(false);
+				}
+
+				specialCake = searchSpCakeResponse.getSpecialCake();
+				album = searchSpCakeResponse.getAlbum();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMessage.setError(false);
+			}
+
+			System.err.println("ALBUM *************************  " + album);
 
 			System.err.println("DATA ----------------------------------------- " + searchSpCakeResponse);
 
-			System.out
-					.println("specialCake.getSpId()specialCake.getSpId()specialCake.getSpId()" + specialCake.getSpId());
+			// System.out
+			// .println("specialCake.getSpId()specialCake.getSpId()specialCake.getSpId()" +
+			// specialCake.getSpId());
 
 			if (errorMessage.getError() == false) {
 
@@ -308,9 +325,9 @@ public class SpCakeCatController {
 
 				}
 
-				String spImage = specialCake.getSpImage();
+				// String spImage = specialCake.getSpImage();
 
-				System.out.println("Sp RESPONSE" + specialCake.toString());
+				// System.out.println("Sp RESPONSE" + specialCake.toString());
 				float sprRate;
 				float spBackendRate;
 
@@ -327,38 +344,43 @@ public class SpCakeCatController {
 
 				System.out.println("Weight List for SP Cake: " + weightList.toString());
 
-				if (frDetails.getFrRateCat() == 1) {
-					sprRate = specialCake.getMrpRate1();
-					spBackendRate = specialCake.getSpRate1();
+				int spBookb4 = 0;
+				if (specialCake != null) {
 
-				} else if (frDetails.getFrRateCat() == 2) {
-					sprRate = specialCake.getMrpRate2();
-					spBackendRate = specialCake.getSpRate2();
-				} else {
-					sprRate = specialCake.getMrpRate3();
-					spBackendRate = specialCake.getSpRate3();
+					if (frDetails.getFrRateCat() == 1) {
+						sprRate = specialCake.getMrpRate1();
+						spBackendRate = specialCake.getSpRate1();
+
+					} else if (frDetails.getFrRateCat() == 2) {
+						sprRate = specialCake.getMrpRate2();
+						spBackendRate = specialCake.getSpRate2();
+					} else {
+						sprRate = specialCake.getMrpRate3();
+						spBackendRate = specialCake.getSpRate3();
+
+					}
+
+					model.addObject("sprRate", sprRate);
+					model.addObject("spBackendRate", spBackendRate);
+
+					if (specialCake.getIsAddonRateAppli() == 0) {
+						model.addObject("addonRatePerKG", 0);
+					} else {
+						model.addObject("addonRatePerKG", specialCake.getSprAddOnRate());
+					}
+
+					System.out.println("Sp cake search: \n Back End Rate " + spBackendRate);
+					System.out.println("Sp cake search: \n Add On Rate " + sprRate);
+
+					model.addObject("album", album);
+					model.addObject("specialCake", specialCake);
+					model.addObject("eventList", spMessageList);
+
+					spBookb4 = Integer.parseInt(specialCake.getSpBookb4());
+
+					System.out.println("spBookb4" + spBookb4);
 
 				}
-
-				model.addObject("sprRate", sprRate);
-				model.addObject("spBackendRate", spBackendRate);
-
-				if (specialCake.getIsAddonRateAppli() == 0) {
-					model.addObject("addonRatePerKG", 0);
-				} else {
-					model.addObject("addonRatePerKG", specialCake.getSprAddOnRate());
-				}
-
-				System.out.println("Sp cake search: \n Back End Rate " + spBackendRate);
-				System.out.println("Sp cake search: \n Add On Rate " + sprRate);
-
-				model.addObject("album", album);
-				model.addObject("specialCake", specialCake);
-				model.addObject("eventList", spMessageList);
-
-				int spBookb4 = Integer.parseInt(specialCake.getSpBookb4());
-
-				System.out.println("spBookb4" + spBookb4);
 
 				model.addObject("albumMinWt", album.getMinWt());
 				model.addObject("spBookb4", spBookb4);
@@ -371,20 +393,25 @@ public class SpCakeCatController {
 				model.addObject("menuTitle", menuTitle);
 				model.addObject("flavourList", flavourList);
 
-				map = new LinkedMultiValueMap<String, Object>();
+				/*
+				 * map = new LinkedMultiValueMap<String, Object>();
+				 * 
+				 * map.add("spId", specialCake.getSpId()); Album[] messageResponse =
+				 * restTemplate.postForObject(Constant.URL + "/getAlbumsBySpId", map,
+				 * Album[].class); List<Album> albumList = new
+				 * ArrayList<Album>(Arrays.asList(messageResponse));
+				 * 
+				 * model.addObject("albumList", albumList);
+				 * 
+				 * System.out.println("messagemessagemessagemessagemessage" +
+				 * albumList.toString());
+				 */
 
-				map.add("spId", specialCake.getSpId());
-				Album[] messageResponse = restTemplate.postForObject(Constant.URL + "/getAlbumsBySpId", map,
-						Album[].class);
-				List<Album> albumList = new ArrayList<Album>(Arrays.asList(messageResponse));
+			}
 
-				model.addObject("albumList", albumList);
+			else {
 
-				System.out.println("messagemessagemessagemessagemessage" + albumList.toString());
-
-			} else {
-
-				System.out.println(" inside else:");
+				// System.out.println(" inside else:");
 				model.addObject("albumMinWt", album.getMinWt());
 				model = new ModelAndView("order/spcakeorder");
 				model.addObject("menuList", menuList);
@@ -402,13 +429,16 @@ public class SpCakeCatController {
 				model.addObject("menuTitle", menuTitle);
 				model.addObject("album", album);
 
-				return model;
+				//return model;
 
 			}
+
 		} catch (Exception e) {
 			model = new ModelAndView("order/spcakeorder");
 
 			System.out.println("search  Sp Cake  Excep: " + e.getMessage());
+			e.printStackTrace();
+
 			model.addObject("albumMinWt", 1);
 			model.addObject("menuList", menuList);
 			model.addObject("eventList", spMessageList);
@@ -470,9 +500,10 @@ public class SpCakeCatController {
 
 				}
 			}
-			
-			System.err.println("SP CAKE CAT============================== is ADD ON RATE APPLICABLE - "+specialCake.getIsAddonRateAppli());
-			
+
+			System.err.println("SP CAKE CAT============================== is ADD ON RATE APPLICABLE - "
+					+ specialCake.getIsAddonRateAppli());
+
 			for (Flavour flavour : filterFlavoursList) {
 				if (specialCake.getIsAddonRateAppli() == 1) {
 					flavoursListWithAddonRate.add(flavour);
@@ -499,8 +530,9 @@ public class SpCakeCatController {
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
 		Flavour filteredFlavour = new Flavour();
 
-		//RestTemplate restTemplate = new RestTemplate();
-		//flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
+		// RestTemplate restTemplate = new RestTemplate();
+		// flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList",
+		// FlavourList.class);
 		flavoursList = flavourList.getFlavour();
 
 		System.err.println("FLAVOUR LIST OLD --------------------- " + flavourList.getFlavour());
@@ -510,7 +542,8 @@ public class SpCakeCatController {
 
 			if (flavour.getSpfId() == spfId) {
 
-				System.err.println("FLAVOUR  ---------*********************************------------ " + spfId + "        ------------- " + flavour);
+				System.err.println("FLAVOUR  ---------*********************************------------ " + spfId
+						+ "        ------------- " + flavour);
 
 				filteredFlavour = flavour;
 			}
