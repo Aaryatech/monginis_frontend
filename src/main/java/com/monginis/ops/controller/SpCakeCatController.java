@@ -470,6 +470,9 @@ public class SpCakeCatController {
 
 				}
 			}
+			
+			System.err.println("SP CAKE CAT============================== is ADD ON RATE APPLICABLE - "+specialCake.getIsAddonRateAppli());
+			
 			for (Flavour flavour : filterFlavoursList) {
 				if (specialCake.getIsAddonRateAppli() == 1) {
 					flavoursListWithAddonRate.add(flavour);
@@ -496,8 +499,8 @@ public class SpCakeCatController {
 		List<Flavour> flavoursList = new ArrayList<Flavour>();
 		Flavour filteredFlavour = new Flavour();
 
-		RestTemplate restTemplate = new RestTemplate();
-		flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
+		//RestTemplate restTemplate = new RestTemplate();
+		//flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
 		flavoursList = flavourList.getFlavour();
 
 		System.err.println("FLAVOUR LIST OLD --------------------- " + flavourList.getFlavour());
@@ -507,7 +510,7 @@ public class SpCakeCatController {
 
 			if (flavour.getSpfId() == spfId) {
 
-				System.err.println("FLAVOUR  --------------------- " + spfId + "        ------------- " + flavour);
+				System.err.println("FLAVOUR  ---------*********************************------------ " + spfId + "        ------------- " + flavour);
 
 				filteredFlavour = flavour;
 			}
