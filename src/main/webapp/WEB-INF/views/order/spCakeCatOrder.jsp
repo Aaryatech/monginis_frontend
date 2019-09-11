@@ -127,7 +127,7 @@ select {
 <!--leftForm-->
 						<div class="left">
 							<form action="${pageContext.request.contextPath}/searchSpCakeCat"
-								method="post" class="form-horizontal" name="form"
+								method="get" class="form-horizontal" name="form"
 								onsubmit="return validateForm()">
 
 								<div class="fullform">
