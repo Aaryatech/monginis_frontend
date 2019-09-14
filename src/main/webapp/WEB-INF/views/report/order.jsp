@@ -97,7 +97,7 @@ document.body.onload = function()
             <th align="center" bgcolor="#ECECEC">Amt</th>
           </tr>
           <tr>
-            <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td>
+            <td><p style="font-size:12px">${spCakeOrder.spName} ${spCakeOrder.itemId}</p></td>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
             <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}</p></td>
             <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal}</p></td>
