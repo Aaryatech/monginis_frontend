@@ -130,6 +130,12 @@ public class HistoryController {
 					regSpHistory=regHistory(parsedDate,frId);
 						System.out.println("selected2c:"+regSpHistory.toString());
 					 model.addObject("orderHistory", regSpHistory);
+				}else if(menu.getMainCatId()==5 && menu.getIsSameDayApplicable()==4) {
+					
+					 spOrderHistory=albumHistory(menuId,parsedDate,frDetails.getFrCode());
+					System.out.println("selected album:"+spOrderHistory.toString());
+				 model.addObject("orderHistory", spOrderHistory);
+					
 				}
 				else
 				{
@@ -205,6 +211,26 @@ public class HistoryController {
 		return spCkHisList;
 		
 	}
+   
+   public List<SpOrderHis> albumHistory(int menuId,String parsedDate,String frCode)
+  	{
+  	  
+  	   System.out.println("spHistory");
+  		RestTemplate rest=new RestTemplate();
+  		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+  	        map.add("menuId",menuId);
+  	        map.add("spDeliveryDt",parsedDate);
+  	        map.add("frCode",frCode);
+  		SpOrderHisList spOrderList=rest.postForObject(
+  				Constant.URL+"/albumOrderHistory",map,
+  				SpOrderHisList.class);
+  		List<SpOrderHis> spCkHisList=spOrderList.getSpOrderList();
+  		System.out.println("OrderList"+spCkHisList.toString());
+  		return spCkHisList;
+  		
+  	}
+   
+   
    public List<GetRegSpCakeOrders> regHistory(String parsedDate,int frId)
    {
 	   
