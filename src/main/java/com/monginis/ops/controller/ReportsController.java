@@ -482,6 +482,9 @@ public class ReportsController {
 			int index = 0;
 
 			float advAmt = 0;
+			
+			System.err.println("ADV SP -------------------------- "+advList);
+			
 			for (GetSpAdvanceReport advance : advList) {
 				index++;
 				PdfPCell cell;
