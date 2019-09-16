@@ -1844,7 +1844,7 @@ public class GrnGvnController {
 
 					postGrnGvn.setCatId(gvnList.get(i).getCatId());
 					postGrnGvn.setMenuId(gvnList.get(i).getMenuId());
-
+					postGrnGvn.setBillDetailNo(gvnList.get(i).getBillDetailNo());
 					postGrnGvn.setRefInvoiceDate(gvnList.get(i).getBillDate());
 					postGrnGvn.setInvoiceNo(gvnList.get(i).getInvoiceNo());
 
