@@ -229,7 +229,7 @@ select {
 
 										Calendar cal = Calendar.getInstance();
 										cal.setTime(new Date()); // Now use today date.
-										if(menuId!=46){
+										if(menuId!=68){
 										cal.add(Calendar.DATE, 1); // Adding 1 days
 										}
 										Date date = cal.getTime();
@@ -422,7 +422,7 @@ select {
 	
 	<div class="colOuter">
 		<div class="col1"><div class="col1title">Delivery Date</div></div>
-		<div class="col2"><c:choose><c:when test="${menuId==46}">
+		<div class="col2"><c:choose><c:when test="${menuId==68}">
 			<input id="date" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" readonly>
 			<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="hidden" />
 
@@ -458,7 +458,7 @@ select {
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">DOB</div></div>
 		
-		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
+		<div class="col2full"><input id="datepicker4" autocomplete="off"    class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
       </div>
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Mobile</div></div>

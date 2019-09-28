@@ -69,7 +69,7 @@ public class SpCakeCatController {
 	List<SpMessage> spMessageList;
 	List<String> configuredSpCodeList;
 
-	private int globalIndex = 2;
+	private int globalIndex = 0;
 	ArrayList<FrMenu> menuList;
 
 	private int currentMenuId = 0;
@@ -113,7 +113,7 @@ public class SpCakeCatController {
 			System.err.println(
 					"IS SAME DAY----------------------------- " + menuList.get(globalIndex).getIsSameDayApplicable());
 
-			int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+			int isSameDayApplicable = menuList.get(index).getIsSameDayApplicable();
 
 			currentMenuId = menuList.get(index).getMenuId();
 			System.out.println("MenuList" + currentMenuId);
