@@ -179,7 +179,7 @@ select {
 							<div class="fullform">
 								<div class="cackleft">Description</div>
 								<div class="cackright" id="spDesc">
-								<span class="cakename">${specialCake.spDesc}</span>
+								<span class="cakename">${album.albumDesc}</span>
 								</div>
 							</div>
 
