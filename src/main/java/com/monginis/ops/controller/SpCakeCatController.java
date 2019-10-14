@@ -429,7 +429,7 @@ public class SpCakeCatController {
 				model.addObject("menuTitle", menuTitle);
 				model.addObject("album", album);
 
-				//return model;
+				// return model;
 
 			}
 
@@ -669,6 +669,7 @@ public class SpCakeCatController {
 		Boolean isLate = now.isAfter(toTimeLocalTIme);
 		Boolean isEarly = now.isBefore(fromTimeLocalTime);
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+		int menuId = menuList.get(globalIndex).getMenuId();
 
 		if (!isLate && !isEarly) {
 
@@ -894,7 +895,9 @@ public class SpCakeCatController {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(delDate);
-			if (isSameDayApplicable == 1 || menuList.get(globalIndex).getMenuId()==68) {
+			if (isSameDayApplicable == 1) {
+				cal.add(Calendar.DATE, 0);
+			} else if (isSameDayApplicable == 4 && menuId == 68) {
 				cal.add(Calendar.DATE, 0);
 			} else {
 				cal.add(Calendar.DATE, -prodTime);
