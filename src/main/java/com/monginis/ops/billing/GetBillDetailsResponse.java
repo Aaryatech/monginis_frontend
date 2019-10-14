@@ -4,7 +4,6 @@ package com.monginis.ops.billing;
 import java.util.List;
 
 
-
 public class GetBillDetailsResponse {
 
     private List<GetBillDetail> getBillDetails = null;
