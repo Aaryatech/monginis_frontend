@@ -894,7 +894,7 @@ public class SpCakeCatController {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(delDate);
-			if (isSameDayApplicable == 1) {
+			if (isSameDayApplicable == 1 || menuList.get(globalIndex).getMenuId()==68) {
 				cal.add(Calendar.DATE, 0);
 			} else {
 				cal.add(Calendar.DATE, -prodTime);

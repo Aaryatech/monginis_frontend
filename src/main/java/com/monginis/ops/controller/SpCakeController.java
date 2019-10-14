@@ -66,7 +66,7 @@ public class SpCakeController {
 	List<SpMessage> spMessageList;
 	List<String> configuredSpCodeList;
 
-	private int globalIndex = 2;
+	private int globalIndex =0;
 	ArrayList<FrMenu> menuList;
 
 	private int currentMenuId = 0;
