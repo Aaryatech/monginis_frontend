@@ -72,13 +72,17 @@
 					</p></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"
+			<td colspan="2" align="center"
 					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">
 						<br /> <strong>${grnPdf.frAddress}</strong><br /> <br />
 					
                 GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong><br/>
-             
+                 Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
+                </p>
+                </td>
+			</tr>
+			
        
          <%--  Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
           
@@ -93,7 +97,7 @@
           
           </c:when>
         </c:choose> --%> 
-			</tr>
+		
 			
 				<tr>
 			<td colspan="2" align="center"
@@ -105,18 +109,8 @@
                
                 </p>
                 </td>
-			<tr>
-			<tr>
-			<td colspan="2" align="center"
-					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
-						class="style5">
-						<br /> <strong>${grnPdf.frAddress}</strong><br /> <br />
-					
-                GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong><br/>
-                 Phone:<strong>${sessionScope.frDetails.frMob}</strong><br/>
-                </p>
-                </td>
-			</tr>
+			
+			
 			
 			
 			</tr>
