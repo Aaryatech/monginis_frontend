@@ -588,6 +588,12 @@ public class BillingController {
 			subCat.setDelStatus(0);
 			subCatAList.add(subCat);
 
+			subCat=new SubCategory();
+			subCat.setCatId(0);
+			subCat.setSubCatName("Regular Sp Cake");
+			subCat.setSubCatId(8);
+			subCat.setDelStatus(0);
+			subCatAList.add(subCat);
 			List<GetBillDetailPrint> billDetailsListForPrint = new ArrayList<GetBillDetailPrint>();
 			billDetailsListForPrint = billDetailsResponse;
 
