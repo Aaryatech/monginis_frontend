@@ -32,6 +32,8 @@ public class GetFrItem  {
 	private int menuId;
 	
 	private int minQty;
+	
+	private int qtyLimit;
 
 	public Integer getId() {
 		return id;
@@ -229,6 +231,18 @@ public class GetFrItem  {
 	public void setItemMrp3(double itemMrp3) {
 		this.itemMrp3 = itemMrp3;
 	}
+	
+	
+
+	public int getQtyLimit() {
+		return qtyLimit;
+	}
+
+	public void setQtyLimit(int qtyLimit) {
+		this.qtyLimit = qtyLimit;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -238,7 +252,7 @@ public class GetFrItem  {
 				+ ", itemMrp3=" + itemMrp3 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2="
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
-				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + "]";
+				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + "]";
 	}
 	
 	
