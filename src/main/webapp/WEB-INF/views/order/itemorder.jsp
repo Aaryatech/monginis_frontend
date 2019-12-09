@@ -18,9 +18,10 @@ jQuery(document).ready(function(){
 
 
 <style>
- .main-table tbody > tr:hover{
-  background-color: #ffa;
+.main-table tbody>tr:hover {
+	background-color: #ffa;
 }
+
 .alert {
 	padding: 15px;
 	background-color: #f44336;
@@ -41,11 +42,13 @@ jQuery(document).ready(function(){
 .closebtn:hover {
 	color: black;
 }
+
 a:link {
-    color: black;
+	color: black;
 }
+
 a:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -104,8 +107,7 @@ a:hover {
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
 						${deliveryDate}</h3>
 
-					<input type="hidden" name="menuId" value="${menuId}">
-						 <input
+					<input type="hidden" name="menuId" value="${menuId}"> <input
 						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
 					<input type="hidden" value="${isSameDayApplicable}"
 						id="isSameDayApplicable" />
@@ -147,7 +149,7 @@ a:hover {
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
 					name="form1" method="post">
-<input type="hidden" name="menuTitle" value="${menuTitle}">
+					<input type="hidden" name="menuTitle" value="${menuTitle}">
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->
@@ -199,39 +201,46 @@ a:hover {
 
 
 								<div id="table-scroll" class="table-scroll">
-							 
+
 									<div id="faux-table" class="faux-table" aria="hidden">
-									<table id="table_grid" class="main-table">
-											<thead>
-												<tr class="bgpink">
-													<th class="col-md-2">Item Name</th>
-													<th class="col-md-1">Min Quantity</th>
-													<th class="col-md-1">Quantity</th>
-													<th class="col-md-1">MRP</th>
-													<th class="col-md-1">Rate</th>
-													<th class="col-md-1">Total</th>
-												</tr>
-												</thead>
-												</table>
-									
-									</div>
-									<div class="table-wrap">
-									
+
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Min Quantity</th>
+													<c:if test='${index==5}'>
+														<th class="col-md-1">Limit</th>
+													</c:if>
 													<th class="col-md-1">Quantity</th>
 													<th class="col-md-1">MRP</th>
 													<th class="col-md-1">Rate</th>
 													<th class="col-md-1">Total</th>
 												</tr>
-												</thead>
-												<tbody>
-											
+											</thead>
+										</table>
 
-	<c:set var="menuTime" value="${menu.timing}" />
+									</div>
+									<div class="table-wrap">
+
+										<table id="table_grid" class="main-table">
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-2">Item Name</th>
+													<th class="col-md-1">Min Quantity</th>
+													<c:if test='${index==5}'>
+														<th class="col-md-1">Limit</th>
+													</c:if>
+													<th class="col-md-1">Quantity</th>
+													<th class="col-md-1">MRP</th>
+													<th class="col-md-1">Rate</th>
+													<th class="col-md-1">Total</th>
+												</tr>
+											</thead>
+											<tbody>
+
+
+												<c:set var="menuTime" value="${menu.timing}" />
 
 
 												<c:forEach var="items" items="${itemList}" varStatus="loop">
@@ -241,20 +250,59 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
-																	<td class="col-md-2" ><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
-																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
+																	<td class="col-md-2"><a
+																		href="${url}${items.itemImage}"
+																		data-lightbox="image-1" tabindex="-1"><c:out
+																				value='${items.itemName}' /></a></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.minQty}' /></td>
 
-																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text" onkeydown="myFunction()"
-																		onchange="onChange('${items.itemRate1}',${items.id})">
+																	<c:if test='${index==5}'>
+																		<td class="col-md-1"><c:out
+																				value='${items.qtyLimit}' /></td>
+																	</c:if>
 
-																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1"><c:out value='${items.itemMrp1}' /></td>
+																	<%-- <td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChangeLimit('${items.itemRate1}',${items.id},${items.qtyLimit})">
 
-																	<td class="col-md-1"><c:out value='${items.itemRate1}' /></td>
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td> --%>
+
+																	<c:choose>
+																		<c:when test='${index==5}'>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChangeLimit('${items.itemRate1}',${items.id},${items.qtyLimit})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:when>
+																		<c:otherwise>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChange('${items.itemRate1}',${items.id})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:otherwise>
+																	</c:choose>
+
+
+
+
+
+																	<td class="col-md-1"><c:out
+																			value='${items.itemMrp1}' /></td>
+
+																	<td class="col-md-1"><c:out
+																			value='${items.itemRate1}' /></td>
 																	<c:set var="rate" value="${items.itemRate1}" />
 																	<c:set var="qty" value="${items.itemQty}" />
 																	<td class="col-md-1" id="total${items.id}"><c:out
@@ -267,19 +315,24 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='2'}">
 																<tr>
 
-																	<td class="col-md-1"><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
-																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
-																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text"
+																	<td class="col-md-1"><a
+																		href="${url}${items.itemImage}"
+																		data-lightbox="image-1" tabindex="-1"><c:out
+																				value='${items.itemName}' /></a></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.minQty}' /></td>
+																	<td class="col-md-1"><input name='${items.id}'
+																		id='${items.id}' value='${items.itemQty}'
+																		class="tableInput" type="text"
 																		onchange="onChange('${items.itemRate2}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1"><c:out value='${items.itemMrp2}' /></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.itemMrp2}' /></td>
 
-																	<td class="col-md-1"><c:out value='${items.itemRate2}' /></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.itemRate2}' /></td>
 																	<c:set var="rate" value="${items.itemRate2}" />
 																	<c:set var="qty" value="${items.itemQty}" />
 																	<td id="total${items.id}"><c:out
@@ -290,19 +343,24 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='3'}">
 																<tr>
 
-																	<td class="col-md-1"><a href="${url}${items.itemImage}"
-											data-lightbox="image-1"tabindex="-1"><c:out value='${items.itemName}' /></a></td>
-																	<td class="col-md-1"><c:out value='${items.minQty}' /></td>
-																	<td class="col-md-1"><input name='${items.id}' id='${items.id}'
-																		value='${items.itemQty}' class="tableInput"
-																		type="text"
+																	<td class="col-md-1"><a
+																		href="${url}${items.itemImage}"
+																		data-lightbox="image-1" tabindex="-1"><c:out
+																				value='${items.itemName}' /></a></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.minQty}' /></td>
+																	<td class="col-md-1"><input name='${items.id}'
+																		id='${items.id}' value='${items.itemQty}'
+																		class="tableInput" type="text"
 																		onchange="onChange('${items.itemRate3}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1"><c:out value='${items.itemMrp3}' /></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.itemMrp3}' /></td>
 
-																	<td class="col-md-1"><c:out value='${items.itemRate3}' /></td>
+																	<td class="col-md-1"><c:out
+																			value='${items.itemRate3}' /></td>
 																	<c:set var="rate" value="${items.itemRate3}" />
 																	<c:set var="qty" value="${items.itemQty}" />
 																	<td class="col-md-1" id="total${items.id}"><c:out
@@ -314,19 +372,19 @@ a:hover {
 													</c:if>
 												</c:forEach>
 
-							</tbody>
+											</tbody>
 
-						</table>
-					</div>
-				</div>
-				
-				
-				
-				
-			
+										</table>
+									</div>
+								</div>
+
+
+
+
+
 
 							</c:forEach>
-								
+
 
 						</ul>
 					</div>
@@ -468,6 +526,53 @@ a:hover {
 
 
 <script type="text/javascript">
+		function onChangeLimit(rate,id,limit) {
+			
+			//alert("Limit = "+limit);
+
+			//calculate total value  
+			var qty = $('#'+id).val();
+			
+			
+			var minqty = $('#minqty'+id).val();
+			
+			if(qty % minqty==0){
+				
+				
+				if(qty<=limit){
+					
+					 var total = rate * qty;
+						
+					   $('#total'+id).html(total);
+					
+				}else{
+					
+					 var total =0;
+					 
+						alert("Please Enter Qty Less than Limit");
+						$('#'+id).val('0');
+						
+						$('#total'+id).html(total);
+						$('#'+id).focus();
+						
+				}
+				
+			   
+			}else
+			{
+				 var total =0;
+				 
+				alert("Please Enter Qty Multiple of Minimum Qty");
+				$('#'+id).val('0');
+				
+				$('#total'+id).html(total);
+				$('#'+id).focus();
+			}
+		}
+	</script>
+
+
+<script type="text/javascript">
 		function onKeyDown(id) {
 			alert("alert");
 			var e = $('#'+id).val();
@@ -518,7 +623,7 @@ $(document).ready(function() {
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	
+
 
 
 

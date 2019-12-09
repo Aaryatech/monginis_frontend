@@ -113,6 +113,8 @@ public class RegularSpCakeController {
 				     {
 				    	 subCategories=mCategory.getSubCategory();
 				     }
+				     
+				     model.addObject("index",index);
 			        
 				    model.addObject("frDetails",frDetails);
 				    
