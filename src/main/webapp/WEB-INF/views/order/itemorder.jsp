@@ -321,13 +321,53 @@ a:hover {
 																				value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
-																	<td class="col-md-1"><input name='${items.id}'
+
+
+
+																	<c:if test='${index==5}'>
+																		<td class="col-md-1"><c:out
+																				value='${items.qtyLimit}' /></td>
+																	</c:if>
+
+
+																	<c:choose>
+																		<c:when test='${index==5}'>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChangeLimit('${items.itemRate2}',${items.id},${items.qtyLimit})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:when>
+																		<c:otherwise>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChange('${items.itemRate2}',${items.id})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:otherwise>
+																	</c:choose>
+
+
+
+
+
+
+
+
+																	<%-- <td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
 																		onchange="onChange('${items.itemRate2}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
+																		id="minqty${items.id}" /></td> --%>
+
 																	<td class="col-md-1"><c:out
 																			value='${items.itemMrp2}' /></td>
 
@@ -349,13 +389,47 @@ a:hover {
 																				value='${items.itemName}' /></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
-																	<td class="col-md-1"><input name='${items.id}'
+
+
+																	<c:if test='${index==5}'>
+																		<td class="col-md-1"><c:out
+																				value='${items.qtyLimit}' /></td>
+																	</c:if>
+
+
+																	<c:choose>
+																		<c:when test='${index==5}'>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChangeLimit('${items.itemRate3}',${items.id},${items.qtyLimit})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:when>
+																		<c:otherwise>
+																			<td class="col-md-1"><input name='${items.id}'
+																				id='${items.id}' value='${items.itemQty}'
+																				class="tableInput" type="text"
+																				onkeydown="myFunction()"
+																				onchange="onChange('${items.itemRate3}',${items.id})">
+
+																				<input type="hidden" value="${items.minQty}"
+																				id="minqty${items.id}" /></td>
+																		</c:otherwise>
+																	</c:choose>
+
+
+																	<%-- <td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
 																		onchange="onChange('${items.itemRate3}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
-																		id="minqty${items.id}" /></td>
+																		id="minqty${items.id}" /></td> --%>
+																		
+																		
 																	<td class="col-md-1"><c:out
 																			value='${items.itemMrp3}' /></td>
 
