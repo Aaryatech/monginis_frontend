@@ -209,7 +209,7 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Min Quantity</th>
-													<c:if test='${index==5}'>
+													<c:if test='${currentMenuId==31}'>
 														<th class="col-md-1">Limit</th>
 													</c:if>
 													<th class="col-md-1">Quantity</th>
@@ -228,7 +228,7 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Min Quantity</th>
-													<c:if test='${index==5}'>
+													<c:if test='${currentMenuId==31}'>
 														<th class="col-md-1">Limit</th>
 													</c:if>
 													<th class="col-md-1">Quantity</th>
@@ -257,7 +257,7 @@ a:hover {
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<c:if test='${index==5}'>
+																	<c:if test='${currentMenuId==31}'>
 																		<td class="col-md-1"><c:out
 																				value='${items.qtyLimit}' /></td>
 																	</c:if>
@@ -272,7 +272,7 @@ a:hover {
 																				id="minqty${items.id}" /></td> --%>
 
 																	<c:choose>
-																		<c:when test='${index==5}'>
+																		<c:when test='${currentMenuId==31}'>
 																			<td class="col-md-1"><input name='${items.id}'
 																				id='${items.id}' value='${items.itemQty}'
 																				class="tableInput" type="text"
@@ -324,14 +324,14 @@ a:hover {
 
 
 
-																	<c:if test='${index==5}'>
+																	<c:if test='${currentMenuId==31}'>
 																		<td class="col-md-1"><c:out
 																				value='${items.qtyLimit}' /></td>
 																	</c:if>
 
 
 																	<c:choose>
-																		<c:when test='${index==5}'>
+																		<c:when test='${currentMenuId==31}'>
 																			<td class="col-md-1"><input name='${items.id}'
 																				id='${items.id}' value='${items.itemQty}'
 																				class="tableInput" type="text"
@@ -391,14 +391,14 @@ a:hover {
 																			value='${items.minQty}' /></td>
 
 
-																	<c:if test='${index==5}'>
+																	<c:if test='${currentMenuId==31}'>
 																		<td class="col-md-1"><c:out
 																				value='${items.qtyLimit}' /></td>
 																	</c:if>
 
 
 																	<c:choose>
-																		<c:when test='${index==5}'>
+																		<c:when test='${currentMenuId==31}'>
 																			<td class="col-md-1"><input name='${items.id}'
 																				id='${items.id}' value='${items.itemQty}'
 																				class="tableInput" type="text"

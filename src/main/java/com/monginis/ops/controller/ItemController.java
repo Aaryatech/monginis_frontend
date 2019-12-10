@@ -314,6 +314,7 @@ public class ItemController {
 		String strDeliveryDate = formatter.format(itemDeliveryDate);
 
 		model.addObject("index", index);
+		model.addObject("currentMenuId", currentMenuId);
 
 		model.addObject("menuList", menuList);
 

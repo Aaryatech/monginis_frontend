@@ -881,7 +881,7 @@ function qtyOnChange(){
 		if (rspId == -1) {
 			alert("Please Select Regular Special Cake!");
 			isValid = false;
-		}  else if (${index}==7) {
+		}  else if (${currentMenuId}==42) {
 			
 			if (document.getElementById("regular_sp_cake").value == 14) {
 				if(qty<36){

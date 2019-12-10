@@ -115,6 +115,8 @@ public class RegularSpCakeController {
 				     }
 				     
 				     model.addObject("index",index);
+				     
+				     model.addObject("currentMenuId",currentMenuId);
 			        
 				    model.addObject("frDetails",frDetails);
 				    
