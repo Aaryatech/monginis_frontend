@@ -272,11 +272,11 @@ select {
 							
 							<div class="colOuter">
 								<div class="col1">
-									<div class="col1title">Special Instructions</div>
+									<div class="col1title">Message</div>
 								</div>
 								<div class="col2full">
 									<input class="texboxitemcode texboxcal2"
-										placeholder="Special Instructions" name="sp_cust_name" type="text"
+										placeholder="Message" name="sp_cust_name" type="text"
 										id="sp_cust_name" >
 								</div>
 							</div>

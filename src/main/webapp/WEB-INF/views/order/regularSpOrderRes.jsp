@@ -200,7 +200,7 @@ select {
 							
 							<div class="colOuter">
 								<div class="col1">
-									<div class="col1title">Special Instructions</div>
+									<div class="col1title">Message</div>
 								</div>
 								<div class="col2full">
 									<div class="col1title">${rspCustName}</div>
