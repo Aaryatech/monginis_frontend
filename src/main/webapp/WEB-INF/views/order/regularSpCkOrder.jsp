@@ -242,16 +242,7 @@ select {
 							<div class="colOuter"></div>
 
 
-							<div class="colOuter">
-								<div class="col1">
-									<div class="col1title">Customer Name</div>
-								</div>
-								<div class="col2full">
-									<input class="texboxitemcode texboxcal2"
-										placeholder="Customer Name" name="sp_cust_name" type="text"
-										id="sp_cust_name" required>
-								</div>
-							</div>
+							
 
 							<div class="colOuter"></div>
 
@@ -278,9 +269,19 @@ select {
 										required>
 								</div>
 							</div>
+							
+							<div class="colOuter">
+								<div class="col1">
+									<div class="col1title">Special Instructions</div>
+								</div>
+								<div class="col2full">
+									<input class="texboxitemcode texboxcal2"
+										placeholder="Special Instructions" name="sp_cust_name" type="text"
+										id="sp_cust_name" >
+								</div>
+							</div>
 
 							<div class="colOuter"></div>
-
 
 							<div class="cackleft" id="error">
 								<span class="cakename"> <c:if

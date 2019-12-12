@@ -321,7 +321,7 @@ public class RegularSpCakeController {
 			regularSpCakeOrder.setRateCat(frDetails.getFrRateCat());
 			regularSpCakeOrder.setRspAdvanceAmt(rspAdvanceAmt);
 			regularSpCakeOrder.setRspCustMobileNo(rspCustMobileNo);
-			regularSpCakeOrder.setRspCustName(rspCustName);
+			regularSpCakeOrder.setRspCustName(rspCustName);//special instructions saved in cust name
 			regularSpCakeOrder.setRspDeliveryDt(rspDeliveryDt);
 			regularSpCakeOrder.setOrderDate(convertedOrderDate);
 			regularSpCakeOrder.setRspEvents(rspEvents);

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>PDF</title>
 
 <html >
   <head>
@@ -176,7 +176,7 @@ document.body.onload = function()
       </td>
     </tr>
     <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Name : </strong> ${regularSpCake.rspCustName}</td>
+      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Special Instructions : </strong> ${regularSpCake.rspCustName}</td>
       
     </tr>
     <tr>
