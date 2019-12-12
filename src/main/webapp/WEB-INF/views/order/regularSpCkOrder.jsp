@@ -277,7 +277,7 @@ select {
 								<div class="col2full">
 									<input class="texboxitemcode texboxcal2"
 										placeholder="Message" name="sp_cust_name" type="text"
-										id="sp_cust_name" >
+										id="sp_cust_name" required="required">
 								</div>
 							</div>
 
