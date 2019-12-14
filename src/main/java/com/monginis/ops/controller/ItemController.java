@@ -181,7 +181,7 @@ public class ItemController {
 			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 			};
 
-			if (index == 5) {
+			if (currentMenuId == 31) {
 
 				map.add("type", frDetails.getStockType());
 				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(

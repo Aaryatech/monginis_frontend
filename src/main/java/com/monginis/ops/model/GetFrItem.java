@@ -34,6 +34,7 @@ public class GetFrItem  {
 	private int minQty;
 	
 	private int qtyLimit;
+	private int itemShelfLife;
 
 	public Integer getId() {
 		return id;
@@ -243,6 +244,17 @@ public class GetFrItem  {
 	}
 	
 	
+	
+
+	public int getItemShelfLife() {
+		return itemShelfLife;
+	}
+
+	public void setItemShelfLife(int itemShelfLife) {
+		this.itemShelfLife = itemShelfLife;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -252,7 +264,8 @@ public class GetFrItem  {
 				+ ", itemMrp3=" + itemMrp3 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2="
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
-				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + "]";
+				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit
+				+ ", itemShelfLife=" + itemShelfLife + "]";
 	}
 	
 	

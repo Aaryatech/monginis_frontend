@@ -208,6 +208,7 @@ a:hover {
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
+													<th class="col-md-1">Shelf Life</th>
 													<th class="col-md-1">Min Quantity</th>
 													<c:if test='${currentMenuId==31}'>
 														<th class="col-md-1">Limit</th>
@@ -227,6 +228,7 @@ a:hover {
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
+													<th class="col-md-1">Shelf Life</th>
 													<th class="col-md-1">Min Quantity</th>
 													<c:if test='${currentMenuId==31}'>
 														<th class="col-md-1">Limit</th>
@@ -254,6 +256,10 @@ a:hover {
 																		href="${url}${items.itemImage}"
 																		data-lightbox="image-1" tabindex="-1"><c:out
 																				value='${items.itemName}' /></a></td>
+
+																	<td class="col-md-1"><c:out
+																			value='${items.itemShelfLife}' /></td>
+
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
@@ -319,6 +325,10 @@ a:hover {
 																		href="${url}${items.itemImage}"
 																		data-lightbox="image-1" tabindex="-1"><c:out
 																				value='${items.itemName}' /></a></td>
+
+																	<td class="col-md-1"><c:out
+																			value='${items.itemShelfLife}' /></td>
+
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
@@ -387,6 +397,10 @@ a:hover {
 																		href="${url}${items.itemImage}"
 																		data-lightbox="image-1" tabindex="-1"><c:out
 																				value='${items.itemName}' /></a></td>
+
+																	<td class="col-md-1"><c:out
+																			value='${items.itemShelfLife}' /></td>
+
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
@@ -428,8 +442,8 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td> --%>
-																		
-																		
+
+
 																	<td class="col-md-1"><c:out
 																			value='${items.itemMrp3}' /></td>
 
