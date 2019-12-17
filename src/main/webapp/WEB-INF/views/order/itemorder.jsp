@@ -132,10 +132,15 @@ a:hover {
 					</div>
 				</div>
 
-				<c:if test="${not empty message}">
+				<c:if test="${not empty errorMessage}">
 					<!-- here would be a message with a result of processing -->
-					<div class="messages messagesErr">${message}</div>
+					<div class="messages messagesErr"><h3>${errorMessage}</h3></div>
 				</c:if>
+				
+				
+
+<!-- <div class="messages messagesErr" id="errorMsg" style="display: none;"><input type="text" id="error"></div> -->
+				
 
 
 
@@ -144,11 +149,11 @@ a:hover {
 
 
 
-
-
+				<%-- <form action="${pageContext.request.contextPath}/saveOrder"
+					name="form1" method="post"> --%>
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
-					name="form1" method="post">
+					name="form1" method="post" id="form1">
 					<input type="hidden" name="menuTitle" value="${menuTitle}">
 					<!--tabNavigation-->
 					<div class="cd-tabs">
@@ -713,6 +718,23 @@ $(document).ready(function() {
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 
 
+
+<script type="text/javascript">
+
+function checkTrayQty(){
+$.ajax({
+    type: "POST",
+         url: "${pageContext.request.contextPath}/checkTrayQty",
+         data: $("#form1").serialize(),
+         dataType: 'json',
+ success: function(data){
+	alert(data);
+ }
+ });
+ 
+}
+ 
+</script>
 
 
 </body>
