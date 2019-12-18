@@ -52,6 +52,7 @@ import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.ItemSupModel;
 import com.monginis.ops.model.Orders;
+import com.monginis.ops.model.Settings;
 import com.monginis.ops.model.TabTitleData;
 
 @Controller
@@ -737,9 +738,13 @@ public class ItemController {
 						
 						System.err.println("itemSup ----------------- "+itemSup);
 						
-						float tray=(float) Math.ceil(orderList.get(i).getItemQty()/itemSup.getNoOfItemPerTray());
+						//double tray= Math.ceil(orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray());
+						float tray= orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray();
 						
-						System.err.println("tray ----------------- "+tray);
+						System.err.println("ORD QTY ----------------- "+orderList.get(i).getItemQty());
+						System.err.println("NO OF TRAY ----------------- "+itemSup.getNoOfItemPerTray());
+						System.err.println("tray ----------------- "+(orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray()));
+						System.err.println("tray CEIL----------------- "+tray);
 						
 						tQty=tQty+tray;
 					}
@@ -747,34 +752,74 @@ public class ItemController {
 				
 				try {
 					
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					map.add("deliveryDate", deliveryDate);
-					
-					RestTemplate restTemplate = new RestTemplate();
-
-					ParameterizedTypeReference<FrTrayConsumeQty> typeRef = new ParameterizedTypeReference<FrTrayConsumeQty>() {
-					};
-					
-					ResponseEntity<FrTrayConsumeQty> responseEntity = restTemplate.exchange(Constant.URL + "traymgt/getTotalFrTrayConsumed",
-							HttpMethod.POST, new HttpEntity<>(map), typeRef);
-					
-					FrTrayConsumeQty frTrayQty = responseEntity.getBody();
-					
-					System.err.println("FR TRAY ----------------- "+frTrayQty);
-					
-					tQty=tQty+frTrayQty.getTrayQty();
-					
-					System.err.println("QTY ----------------- "+tQty);
-					System.err.println("TARGET ----------------- "+frDetails.getFrTarget());
-					
-					if(tQty<=frDetails.getFrTarget()) {
-						result=1;
-					}
 					
 					
 				}catch(Exception e) {e.printStackTrace();}
+				
+				
+				try {
+					
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("settingId", 35);//fr_tray_limit_applicable
+					
+					RestTemplate restTemplate = new RestTemplate();
+
+					ParameterizedTypeReference<Settings> typeRef = new ParameterizedTypeReference<Settings>() {
+					};
+					
+					ResponseEntity<Settings> responseEntity = restTemplate.exchange(Constant.URL + "/getSettingDataById",
+							HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					
+					Settings settings = responseEntity.getBody();
+					
+					System.err.println("SETTINGS------------------------------------------ - "+settings);
+					
+					if(settings!=null) {
+						
+						if(settings.getSettingValue()==0) {
+							result=1;
+						}else {
+							
+							
+							map = new LinkedMultiValueMap<String, Object>();
+
+							map.add("frId", frDetails.getFrId());
+							map.add("deliveryDate", deliveryDate);
+							
+
+							ParameterizedTypeReference<FrTrayConsumeQty> typeRef1 = new ParameterizedTypeReference<FrTrayConsumeQty>() {
+							};
+							
+							ResponseEntity<FrTrayConsumeQty> responseEntity1 = restTemplate.exchange(Constant.URL + "traymgt/getTotalFrTrayConsumed",
+									HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+							
+							FrTrayConsumeQty frTrayQty = responseEntity1.getBody();
+							
+							System.err.println("FR TRAY ----------------- "+frTrayQty);
+							
+							tQty=tQty+frTrayQty.getTrayQty();
+							
+							System.err.println("QTY ----------------- "+tQty);
+							System.err.println("TARGET ----------------- "+frDetails.getFrTarget());
+							
+							if(tQty<=frDetails.getFrTarget()) {
+								result=1;
+							}else {
+								result=0;
+							}
+							
+							
+							
+							
+						}
+						
+					}else {
+						result=1;
+					}
+					
+				}catch(Exception e) {e.printStackTrace();}
+				
 				
 				if(result==1) {
 					
