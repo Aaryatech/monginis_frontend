@@ -62,12 +62,14 @@ public class ItemController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	private List<GetFrItem> frItemList = new ArrayList<>();
 	private List<GetFrItem> prevFrItemList = new ArrayList<>();
-	private String errorMessage="";
+	private String errorMessage = "";
 	private int globalIndex = 2;
 	private int currentMenuId = 0;
 	List<String> subCatList = new ArrayList<>();
 	public MultiValueMap<String, Object> map;
 	public static String qtyAlert = "Enter the Quantity as per the Limit.";
+
+	float sameMenuQty = 0;
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)
 	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
@@ -78,8 +80,14 @@ public class ItemController {
 
 		subCatList = new ArrayList<>();
 		globalIndex = index;
-        model.addObject("errorMessage",errorMessage);
-        errorMessage="";
+		model.addObject("errorMessage", errorMessage);
+
+		if (errorMessage.isEmpty()) {
+			System.err.println("------------------EMPTY-----------------------");
+		} else {
+			System.err.println("------------------NOT EMPTY-----------------------");
+		}
+
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -160,7 +168,10 @@ public class ItemController {
 		System.out.println("Production date: " + productionDate);
 		System.out.println("Delivery date: " + deliveryDate);
 
-		frItemList = new ArrayList<GetFrItem>();
+		if (errorMessage.isEmpty()) {
+			frItemList = new ArrayList<GetFrItem>();
+		}
+
 		prevFrItemList = new ArrayList<GetFrItem>();
 		try {
 
@@ -182,26 +193,30 @@ public class ItemController {
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-			};
+			if (errorMessage.isEmpty()) {
 
-			if (currentMenuId == 31) {
+				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
+				};
 
-				map.add("type", frDetails.getStockType());
-				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(
-						Constant.URL + "/getFrItemsWithLimit", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+				if (currentMenuId == 31) {
 
-				frItemList = responseEntity.getBody();
-				prevFrItemList = responseEntity.getBody();
-				System.out.println("Fr Item List " + frItemList.toString());
+					map.add("type", frDetails.getStockType());
+					ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(
+							Constant.URL + "/getFrItemsWithLimit", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-			} else {
-				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
-						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					frItemList = responseEntity.getBody();
+					prevFrItemList = responseEntity.getBody();
+					System.out.println("Fr Item List " + frItemList.toString());
 
-				frItemList = responseEntity.getBody();
-				prevFrItemList = responseEntity.getBody();
-				System.out.println("Fr Item List " + frItemList.toString());
+				} else {
+					ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+							HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+					frItemList = responseEntity.getBody();
+					prevFrItemList = responseEntity.getBody();
+					System.out.println("Fr Item List " + frItemList.toString());
+				}
+
 			}
 
 		} catch (Exception e) {
@@ -213,18 +228,28 @@ public class ItemController {
 
 		double grandTotal = 0;
 
-		for (int i = 0; i < frItemList.size(); i++) {
+		if (errorMessage.isEmpty()) {
 
-			if (frDetails.getFrRateCat() == 1) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
-			} else if (frDetails.getFrRateCat() == 2) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
+			for (int i = 0; i < frItemList.size(); i++) {
 
-			} else if (frDetails.getFrRateCat() == 3) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
+				if (frDetails.getFrRateCat() == 1) {
+					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
+				} else if (frDetails.getFrRateCat() == 2) {
+					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
+
+				} else if (frDetails.getFrRateCat() == 3) {
+					grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
+
+				}
+				setName.add(frItemList.get(i).getSubCatName());
 
 			}
-			setName.add(frItemList.get(i).getSubCatName());
+
+		} else {
+
+			for (int i = 0; i < frItemList.size(); i++) {
+				setName.add(frItemList.get(i).getSubCatName());
+			}
 
 		}
 
@@ -232,64 +257,168 @@ public class ItemController {
 
 		List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
 
-		for (int i = 0; i < subCatList.size(); i++) {
+		if (errorMessage.isEmpty()) {
 
-			String subCat = subCatList.get(i);
-			int qty = 0;
-			double total = 0;
+			System.err.println("************************************************************");
 
-			for (int j = 0; j < frItemList.size(); j++) {
+			for (int i = 0; i < subCatList.size(); i++) {
 
-				if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
+				String subCat = subCatList.get(i);
+				int qty = 0;
+				double total = 0;
 
-					qty = qty + frItemList.get(j).getItemQty();
+				for (int j = 0; j < frItemList.size(); j++) {
 
-					if (frDetails.getFrRateCat() == 1) {
+					if (frItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
 
-						total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
+						qty = qty + frItemList.get(j).getItemQty();
 
-					} else if (frDetails.getFrRateCat() == 2) {
+						if (frDetails.getFrRateCat() == 1) {
 
-						total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
+							total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
 
-					} else if (frDetails.getFrRateCat() == 3) {
+						} else if (frDetails.getFrRateCat() == 2) {
 
-						total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
+							total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
+
+						} else if (frDetails.getFrRateCat() == 3) {
+
+							total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
+
+						}
 
 					}
 
 				}
 
+				TabTitleData tabTitleData = new TabTitleData();
+				tabTitleData.setName(subCat);
+
+				if (isSameDayApplicable != 2) {
+					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
+				} else if (isSameDayApplicable == 2) {
+					if (subCat.equalsIgnoreCase("Pastries")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg1() + ")");
+
+					} else if (subCat.equalsIgnoreCase("1/2 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg2() + ")");
+
+					} else if (subCat.equalsIgnoreCase("1 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg3() + ")");
+
+					} else if (subCat.equalsIgnoreCase("Above 1 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg4() + ")");
+
+					}
+
+				}
+				subCatListWithQtyTotal.add(tabTitleData);
+
+			}
+		} else {
+
+			System.err.println("//////////////////////////////////////////////////////////////");
+
+			List<GetFrItem> tempFrItemList = new ArrayList<>();
+
+			currentMenuId = menuList.get(index).getMenuId();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("items", menuList.get(index).getItemShow());
+			map.add("frId", frDetails.getFrId());
+			map.add("date", productionDate);
+			map.add("menuId", menuList.get(index).getMenuId());
+			map.add("isSameDayApplicable", isSameDayApplicable);
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
+			};
+
+			if (currentMenuId == 31) {
+
+				map.add("type", frDetails.getStockType());
+				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(
+						Constant.URL + "/getFrItemsWithLimit", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				tempFrItemList = responseEntity.getBody();
+				System.out.println("Fr Item List " + frItemList.toString());
+
+			} else {
+				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
+						HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+				tempFrItemList = responseEntity.getBody();
+				System.out.println("Fr Item List " + frItemList.toString());
 			}
 
-			TabTitleData tabTitleData = new TabTitleData();
-			tabTitleData.setName(subCat);
+			for (int i = 0; i < subCatList.size(); i++) {
 
-			if (isSameDayApplicable != 2) {
-				tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
-			} else if (isSameDayApplicable == 2) {
-				if (subCat.equalsIgnoreCase("Pastries")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
-							+ frDetails.getFrKg1() + ")");
+				String subCat = subCatList.get(i);
+				int qty = 0;
+				double total = 0;
 
-				} else if (subCat.equalsIgnoreCase("1/2 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
-							+ frDetails.getFrKg2() + ")");
+				for (int j = 0; j < tempFrItemList.size(); j++) {
 
-				} else if (subCat.equalsIgnoreCase("1 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
-							+ frDetails.getFrKg3() + ")");
+					if (tempFrItemList.get(j).getSubCatName().equalsIgnoreCase(subCat)) {
 
-				} else if (subCat.equalsIgnoreCase("Above 1 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
-							+ frDetails.getFrKg4() + ")");
+						qty = qty + tempFrItemList.get(j).getItemQty();
+
+						if (frDetails.getFrRateCat() == 1) {
+
+							total = total + (tempFrItemList.get(j).getItemRate1() * tempFrItemList.get(j).getItemQty());
+
+						} else if (frDetails.getFrRateCat() == 2) {
+
+							total = total + (tempFrItemList.get(j).getItemRate2() * tempFrItemList.get(j).getItemQty());
+
+						} else if (frDetails.getFrRateCat() == 3) {
+
+							total = total + (tempFrItemList.get(j).getItemRate3() * tempFrItemList.get(j).getItemQty());
+
+						}
+
+					}
 
 				}
 
+				TabTitleData tabTitleData = new TabTitleData();
+				tabTitleData.setName(subCat);
+
+				if (isSameDayApplicable != 2) {
+					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
+				} else if (isSameDayApplicable == 2) {
+					if (subCat.equalsIgnoreCase("Pastries")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg1() + ")");
+
+					} else if (subCat.equalsIgnoreCase("1/2 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg2() + ")");
+
+					} else if (subCat.equalsIgnoreCase("1 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg3() + ")");
+
+					} else if (subCat.equalsIgnoreCase("Above 1 Kg Cake")) {
+						tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+								+ frDetails.getFrKg4() + ")");
+
+					}
+
+				}
+				subCatListWithQtyTotal.add(tabTitleData);
+
 			}
-			subCatListWithQtyTotal.add(tabTitleData);
 
 		}
+
+		System.err.println("SUB CAT LIST================================= " + subCatListWithQtyTotal);
 
 		System.out.println(subCatList);
 
@@ -339,10 +468,66 @@ public class ItemController {
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
-		
-		
-		
-		
+
+		// Settings
+		map = new LinkedMultiValueMap<String, Object>();
+
+		map.add("settingId", 35);// fr_tray_limit_applicable
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		ParameterizedTypeReference<Settings> typeRef = new ParameterizedTypeReference<Settings>() {
+		};
+
+		ResponseEntity<Settings> responseEntity = restTemplate.exchange(Constant.URL + "/getSettingDataById",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+		Settings settings = responseEntity.getBody();
+
+		System.err.println("SETTINGS------------------------------------------ - " + settings);
+
+		model.addObject("trayApplicable", settings.getSettingValue());
+
+		if (settings.getSettingValue() == 1) {
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frDetails.getFrId());
+			map.add("deliveryDate", deliveryDate);
+			map.add("menuId", menuList.get(index).getMenuId());
+
+			ParameterizedTypeReference<FrTrayConsumeQty> typeRef1 = new ParameterizedTypeReference<FrTrayConsumeQty>() {
+			};
+
+			ResponseEntity<FrTrayConsumeQty> responseEntity1 = restTemplate.exchange(
+					Constant.URL + "traymgt/getTotalFrTrayConsumedByMenuNotIn", HttpMethod.POST, new HttpEntity<>(map),
+					typeRef1);
+
+			FrTrayConsumeQty frTrayQtyByNotMenu = responseEntity1.getBody();
+
+			model.addObject("otherMenuQty", frTrayQtyByNotMenu);
+
+			ParameterizedTypeReference<FrTrayConsumeQty> typeRef2 = new ParameterizedTypeReference<FrTrayConsumeQty>() {
+			};
+
+			ResponseEntity<FrTrayConsumeQty> responseEntity2 = restTemplate.exchange(
+					Constant.URL + "traymgt/getTotalFrTrayConsumedByMenu", HttpMethod.POST, new HttpEntity<>(map),
+					typeRef2);
+
+			FrTrayConsumeQty frTrayQtyByMenu = responseEntity2.getBody();
+
+			// model.addObject("sameMenuQty", frTrayQtyByMenu);
+
+			if (errorMessage.isEmpty()) {
+				sameMenuQty = frTrayQtyByMenu.getTrayQty();
+			}
+
+		}
+
+		model.addObject("sameMenuQty", sameMenuQty);
+
+		errorMessage = "";
+		sameMenuQty = 0;
 
 		return model;
 
@@ -453,12 +638,11 @@ public class ItemController {
 	@RequestMapping("/saveOrder")
 	public String helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
-		
-		
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		//ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
+		// ModelAndView mav = new ModelAndView("redirect:/showSavouries/" +
+		// globalIndex);
 
 		String orderDate = "";
 		String productionDate = "";
@@ -698,9 +882,20 @@ public class ItemController {
 
 						System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
 
-						if (qty != frItem.getItemQty()) {
+						/*
+						 * if (qty != frItem.getItemQty()) {
+						 * 
+						 * frItem.setItemQty(qty); orderList.add(frItem); }
+						 */
 
-							frItem.setItemQty(qty);
+						if (qty > 0 || frItem.getItemQty() > 0) {
+
+							if (qty != frItem.getItemQty()) {
+								frItem.setItemQty(qty);
+							} else {
+								frItem.setItemQty(frItem.getItemQty());
+							}
+
 							orderList.add(frItem);
 						}
 
@@ -711,118 +906,118 @@ public class ItemController {
 				}
 
 				System.out.println("Order List ---------------------" + orderList.toString());
-				
-				int result=0;
-				float tQty=0;
-				if(orderList!=null) {
-					
-					
-					
+
+				int result = 0;
+				float tQty = 0;
+				if (orderList != null) {
+
 					RestTemplate restTemplate = new RestTemplate();
-					
-					for(int i=0;i<orderList.size();i++) {
-						
+
+					for (int i = 0; i < orderList.size(); i++) {
+
 						map = new LinkedMultiValueMap<String, Object>();
 
-						map.add("itemId",orderList.get(i).getId());
-						
+						map.add("itemId", orderList.get(i).getId());
+
 						System.out.println("itemId ---------------------" + orderList.get(i).getId());
-						
+
 						ParameterizedTypeReference<ItemSupModel> typeRef = new ParameterizedTypeReference<ItemSupModel>() {
 						};
-						
-						ResponseEntity<ItemSupModel> responseEntity = restTemplate.exchange(Constant.URL + "getItemSupDataByItemId",
-								HttpMethod.POST, new HttpEntity<>(map), typeRef);
-						
+
+						ResponseEntity<ItemSupModel> responseEntity = restTemplate.exchange(
+								Constant.URL + "getItemSupDataByItemId", HttpMethod.POST, new HttpEntity<>(map),
+								typeRef);
+
 						ItemSupModel itemSup = responseEntity.getBody();
-						
-						System.err.println("itemSup ----------------- "+itemSup);
-						
-						//double tray= Math.ceil(orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray());
-						float tray= orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray();
-						
-						System.err.println("ORD QTY ----------------- "+orderList.get(i).getItemQty());
-						System.err.println("NO OF TRAY ----------------- "+itemSup.getNoOfItemPerTray());
-						System.err.println("tray ----------------- "+(orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray()));
-						System.err.println("tray CEIL----------------- "+tray);
-						
-						tQty=tQty+tray;
+
+						System.err.println("itemSup ----------------- " + itemSup);
+
+						// double tray=
+						// Math.ceil(orderList.get(i).getItemQty()/(float)itemSup.getNoOfItemPerTray());
+						float tray = orderList.get(i).getItemQty() / (float) itemSup.getNoOfItemPerTray();
+
+						System.err.println("ORD QTY ----------------- " + orderList.get(i).getItemQty());
+						System.err.println("NO OF TRAY ----------------- " + itemSup.getNoOfItemPerTray());
+						System.err.println("tray ----------------- "
+								+ (orderList.get(i).getItemQty() / (float) itemSup.getNoOfItemPerTray()));
+						System.err.println("tray CEIL----------------- " + tray);
+
+						tQty = tQty + tray;
 					}
 				}
-				
+
 				try {
-					
-					
-					
-				}catch(Exception e) {e.printStackTrace();}
-				
-				
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 				try {
-					
+
 					map = new LinkedMultiValueMap<String, Object>();
 
-					map.add("settingId", 35);//fr_tray_limit_applicable
-					
+					map.add("settingId", 35);// fr_tray_limit_applicable
+
 					RestTemplate restTemplate = new RestTemplate();
 
 					ParameterizedTypeReference<Settings> typeRef = new ParameterizedTypeReference<Settings>() {
 					};
-					
-					ResponseEntity<Settings> responseEntity = restTemplate.exchange(Constant.URL + "/getSettingDataById",
-							HttpMethod.POST, new HttpEntity<>(map), typeRef);
-					
+
+					ResponseEntity<Settings> responseEntity = restTemplate.exchange(
+							Constant.URL + "/getSettingDataById", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
 					Settings settings = responseEntity.getBody();
-					
-					System.err.println("SETTINGS------------------------------------------ - "+settings);
-					
-					if(settings!=null) {
-						
-						if(settings.getSettingValue()==0) {
-							result=1;
-						}else {
-							
-							
+
+					System.err.println("SETTINGS------------------------------------------ - " + settings);
+
+					if (settings != null) {
+
+						if (settings.getSettingValue() == 0) {
+							result = 1;
+						} else {
+
 							map = new LinkedMultiValueMap<String, Object>();
 
 							map.add("frId", frDetails.getFrId());
 							map.add("deliveryDate", deliveryDate);
-							
+							map.add("menuId", currentMenuId);
 
 							ParameterizedTypeReference<FrTrayConsumeQty> typeRef1 = new ParameterizedTypeReference<FrTrayConsumeQty>() {
 							};
-							
-							ResponseEntity<FrTrayConsumeQty> responseEntity1 = restTemplate.exchange(Constant.URL + "traymgt/getTotalFrTrayConsumed",
-									HttpMethod.POST, new HttpEntity<>(map), typeRef1);
-							
+
+							ResponseEntity<FrTrayConsumeQty> responseEntity1 = restTemplate.exchange(
+									Constant.URL + "traymgt/getTotalFrTrayConsumedByMenuNotIn", HttpMethod.POST,
+									new HttpEntity<>(map), typeRef1);
+
 							FrTrayConsumeQty frTrayQty = responseEntity1.getBody();
-							
-							System.err.println("FR TRAY ----------------- "+frTrayQty);
-							
-							tQty=tQty+frTrayQty.getTrayQty();
-							
-							System.err.println("QTY ----------------- "+tQty);
-							System.err.println("TARGET ----------------- "+frDetails.getFrTarget());
-							
-							if(tQty<=frDetails.getFrTarget()) {
-								result=1;
-							}else {
-								result=0;
+
+							System.err.println("FR TRAY ----------------- " + frTrayQty);
+
+							tQty = tQty + frTrayQty.getTrayQty();
+
+							sameMenuQty = (float) Math.ceil(tQty);
+
+							System.err.println("QTY ----------------- " + tQty);
+							System.err.println("TARGET ----------------- " + frDetails.getFrTarget());
+
+							if (tQty <= frDetails.getFrTarget()) {
+								result = 1;// 1
+							} else {
+								result = 0;
 							}
-							
-							
-							
-							
+
 						}
-						
-					}else {
-						result=1;
+
+					} else {
+						result = 1;
 					}
-					
-				}catch(Exception e) {e.printStackTrace();}
-				
-				
-				if(result==1) {
-					
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				if (result == 1) {
+
 					try {
 
 						RestTemplate restTemplate = new RestTemplate();
@@ -863,7 +1058,8 @@ public class ItemController {
 							} // end of else
 
 							// for no grn these menuIds
-							if (menuList.get(globalIndex).getMenuId() == 29 || menuList.get(globalIndex).getMenuId() == 30
+							if (menuList.get(globalIndex).getMenuId() == 29
+									|| menuList.get(globalIndex).getMenuId() == 30
 									|| menuList.get(globalIndex).getMenuId() == 42
 									|| menuList.get(globalIndex).getMenuId() == 43
 									|| menuList.get(globalIndex).getMenuId() == 44
@@ -1080,24 +1276,33 @@ public class ItemController {
 					} catch (Exception e) {
 						System.out.println("Except Placing order " + e.getMessage());
 					}
-					
-					
-				}else {
-					System.err.println("--------------------ERROR--------------------------");
-					String error=new String();
-					error="Tray Quantity Exceeds Than Franchisee Limit !";
-					
-					errorMessage= error;
-					
-				}
-				
-				
 
-				
+				} else {
+					System.err.println("--------------------ERROR--------------------------");
+					String error = new String();
+					error = "Tray Quantity Exceeds Than Franchisee Limit !";
+
+					errorMessage = error;
+
+					for (int i = 0; i < frItemList.size(); i++) {
+
+						for (int j = 0; j < orderList.size(); j++) {
+
+							if (frItemList.get(i).getId() == orderList.get(j).getId()) {
+
+								frItemList.set(i, orderList.get(j));
+
+							}
+
+						}
+
+					}
+
+				}
 
 			} else { // time out for place order
 
-				errorMessage="Timeout for placing order";
+				errorMessage = "Timeout for placing order";
 			}
 
 		} else
@@ -1109,318 +1314,280 @@ public class ItemController {
 		return "redirect:/showSavouries/" + globalIndex;
 
 	}
-	
-	
-	
-	
-	
-	//-------ANMOL---->17-12-2019----->CHECK TRAY QTY----------------------------------------
-	
-	/*@RequestMapping("/checkTrayQty")
-	public @ResponseBody int checkTrayQty(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
-		int result=0;
-		
-		HttpSession session = request.getSession();
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
-		ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
-
-		String orderDate = "";
-		String productionDate = "";
-		String deliveryDate = "";
-
-		int kg1QtyN = 0;// Notification
-		int kg2QtyN = 0;// Notification
-		int kg3QtyN = 0;// Notification
-		int kg4QtyN = 0;// Notification
-
-		String menuId = request.getParameter("menuId");
-		int rateCat = frDetails.getFrRateCat();
-		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
-
-		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
-		String menuTitle = request.getParameter("menuTitle");// For Notification
-		System.out.println("Fr Rate Cat " + rateCat);
-
-		System.out.println("Current menu id: " + currentMenuId + " menu id from jsp: " + menuId);
-
-		List<GetFrItem> tempOrderList = new ArrayList<>();
-		boolean isValidQty = true;
-		System.out.println(" frItemList List before limit condition " + frItemList.toString());
-
-		if (isSameDayApplicable == 2) { // if category is cake and pastries with limit then check for limit
-
-			List<GetFrItem> tempFrItemList = new ArrayList<GetFrItem>();
-			tempFrItemList = prevFrItemList;
-
-			for (int i = 0; i < prevFrItemList.size(); i++) {
-
-				GetFrItem tempFrItem = prevFrItemList.get(i);
-
-				try {
-					Integer id = tempFrItem.getId();
-					System.out.println("id " + id);
-					System.out.println("prev qty " + tempFrItem.getItemQty());
-
-					String strQty = request.getParameter(String.valueOf(id));
-					int qty = Integer.parseInt(strQty);
-
-					System.out.println(" " + id + ":" + strQty);
-
-					tempFrItem.setItemQty(qty);
-					tempOrderList.add(tempFrItem);
-
-				} catch (Exception e) {
-					System.out.println("Except OrderList " + e.getMessage());
-				}
-
-			}
-
-			System.out.println(" tempOrder List " + tempOrderList.toString());
-
-			System.out.println(" frItemList List " + frItemList.toString());
-
-			int kg1Qty = 0;
-			int kg2Qty = 0;
-			int kg3Qty = 0;
-			int kg4Qty = 0;
-
-			
-			qtyAlert = "";
-			for (int i = 0; i < tempOrderList.size(); i++) {
-
-				GetFrItem item = tempOrderList.get(i);
-
-				if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
-
-					kg1Qty = kg1Qty + item.getItemQty();
-
-				} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
-
-					kg2Qty = kg2Qty + item.getItemQty();
-
-				} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
-
-					kg3Qty = kg3Qty + item.getItemQty();
-
-				} else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
-
-					kg4Qty = kg4Qty + item.getItemQty();
-
-				}
-
-			}
-
-			System.out.println("limit : " + frDetails.getFrKg1() + "new qty:  kg1:" + kg1Qty);
-			System.out.println("limit : " + frDetails.getFrKg2() + "new qty:  kg2:" + kg2Qty);
-			System.out.println("limit : " + frDetails.getFrKg3() + "new qty:  kg3:" + kg3Qty);
-			System.out.println("limit : " + frDetails.getFrKg4() + "new qty:  kg4:" + kg4Qty);
-
-			if (frDetails.getFrKg1() < kg1Qty) {
-				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for Pastries";
-
-			} else if (frDetails.getFrKg2() < kg2Qty) {
-				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for 1/2 Kg Cake";
-
-			} else if (frDetails.getFrKg3() < kg3Qty) {
-				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for 1 Kg Cake";
-
-			} else if (frDetails.getFrKg4() < kg4Qty) {
-				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for Above 1 Kg Cake";
-
-			}
-
-			if (isValidQty) {
-				frItemList = new ArrayList<GetFrItem>();
-
-				RestTemplate restTemplate = new RestTemplate();
-
-				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
-				};
-				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
-						HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
-				frItemList = responseEntity.getBody();
-			}
-
-		}
-
-		if (isValidQty) {
-
-
-			String fromTime = menuList.get(globalIndex).getFromTime();
-			String toTime = menuList.get(globalIndex).getToTime();
-
-			ZoneId z = ZoneId.of("Asia/Calcutta");
-			LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
-
-			LocalTime fromTimeLocalTime = LocalTime.parse(fromTime);
-			LocalTime toTimeLocalTIme = LocalTime.parse(toTime);
-
-			Boolean isLate = now.isAfter(toTimeLocalTIme);
-			Boolean isEarly = now.isBefore(fromTimeLocalTime);
-
-			System.out.println("\nLocal time" + now + "Is Early :" + isLate);
-			System.out.println("Local time" + now + "Is Late :" + isLate);
-
-			Boolean isSameDay = fromTimeLocalTime.isBefore(toTimeLocalTIme);
-			Boolean isValid = false;
-			System.out.println("before order placing: from time " + fromTimeLocalTime + " to time " + toTimeLocalTIme);
-
-			if (isSameDay) {
-
-				if (!isLate && !isEarly) {
-
-					isValid = true;
-				}
-			} else {
-
-				if (now.isAfter(fromTimeLocalTime)) {
-					isValid = true;
-				} else if (toTimeLocalTIme.isAfter(now)) {
-					isValid = true;
-				} else {
-					isValid = false;
-				}
-			}
-			System.out.println(" is valid " + isValid);
-
-			if (isValid) {
-				System.out.println("current time " + now);
-				System.out.println("from time " + fromTimeLocalTime);
-
-				String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-				if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
-
-					orderDate = todaysDate;
-					productionDate = todaysDate;
-
-					if (isSameDayApplicable == 0 || isSameDayApplicable == 2) {
-
-						deliveryDate = incrementDate(todaysDate, 1);
-						System.out.println("inside 1.1");
-
-					} else if (isSameDayApplicable == 1) {
-
-						deliveryDate = todaysDate;
-
-						System.out.println("inside 1.2");
-
-					}
-
-				} else {
-
-					if (now.isAfter(fromTimeLocalTime)) {
-
-						orderDate = todaysDate;
-						productionDate = incrementDate(todaysDate, 1);
-						deliveryDate = incrementDate(todaysDate, 2);
-
-						System.out.println("inside 2.1");
-					} else {
-
-						orderDate = todaysDate;
-						productionDate = todaysDate;
-						deliveryDate = incrementDate(todaysDate, 1);
-						System.out.println("inside 2.2");
-					}
-
-				}
-
-				System.out.println("Order date: " + orderDate);
-				System.out.println("Production date: " + productionDate);
-				System.out.println("Delivery date: " + deliveryDate);
-
-				// if date time verified then place order
-				//
-				List<GetFrItem> orderList = new ArrayList<>();
-
-				for (int i = 0; i < frItemList.size(); i++) {
-
-					GetFrItem frItem = frItemList.get(i);
-
-					try {
-						Integer id = frItem.getId();
-						System.out.println("id " + id);
-
-						String strQty = request.getParameter(String.valueOf(id));
-
-						int qty = Integer.parseInt(strQty);
-
-						System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
-
-						if (qty != frItem.getItemQty()) {
-
-							frItem.setItemQty(qty);
-							orderList.add(frItem);
-						}
-
-					} catch (Exception e) {
-						System.out.println("Except OrderList " + e.getMessage());
-					}
-
-				}
-
-				System.out.println("Order List -----------------------------" + orderList.toString());
-				
-				float qty=0;
-				if(orderList!=null) {
-					for(int i=0;i<orderList.size();i++) {
-						qty=qty+orderList.get(i).getItemQty();
-					}
-				}
-				
-				try {
-					
-					map = new LinkedMultiValueMap<String, Object>();
-
-					map.add("frId", frDetails.getFrId());
-					map.add("deliveryDate", deliveryDate);
-					
-					RestTemplate restTemplate = new RestTemplate();
-
-					ParameterizedTypeReference<FrTrayConsumeQty> typeRef = new ParameterizedTypeReference<FrTrayConsumeQty>() {
-					};
-					
-					ResponseEntity<FrTrayConsumeQty> responseEntity = restTemplate.exchange(Constant.URL + "traymgt/getTotalFrTrayConsumed",
-							HttpMethod.POST, new HttpEntity<>(map), typeRef);
-					
-					FrTrayConsumeQty frTrayQty = responseEntity.getBody();
-					
-					System.err.println("FR TRAY ----------------- "+frTrayQty);
-					
-					qty=qty+frTrayQty.getTrayQty();
-					
-					System.err.println("QTY ----------------- "+qty);
-					System.err.println("TARGET ----------------- "+frDetails.getFrTarget());
-					
-					if(qty<=frDetails.getFrTarget()) {
-						result=1;
-					}
-					
-					
-				}catch(Exception e) {e.printStackTrace();}
-
-				
-
-			}
-
-		} 
-		
-		System.err.println("RESULT ----------------- "+result);
-
-		return result;
-
-	}*/
-
-	
-	//------------------------------------------------------------------------
+	// -------ANMOL---->17-12-2019----->CHECK TRAY
+	// QTY----------------------------------------
+
+	/*
+	 * @RequestMapping("/checkTrayQty") public @ResponseBody int
+	 * checkTrayQty(HttpServletRequest request, HttpServletResponse res) throws
+	 * IOException {
+	 * 
+	 * int result=0;
+	 * 
+	 * HttpSession session = request.getSession(); Franchisee frDetails =
+	 * (Franchisee) session.getAttribute("frDetails");
+	 * 
+	 * ModelAndView mav = new ModelAndView("redirect:/showSavouries/" +
+	 * globalIndex);
+	 * 
+	 * String orderDate = ""; String productionDate = ""; String deliveryDate = "";
+	 * 
+	 * int kg1QtyN = 0;// Notification int kg2QtyN = 0;// Notification int kg3QtyN =
+	 * 0;// Notification int kg4QtyN = 0;// Notification
+	 * 
+	 * String menuId = request.getParameter("menuId"); int rateCat =
+	 * frDetails.getFrRateCat(); ArrayList<FrMenu> menuList = (ArrayList<FrMenu>)
+	 * session.getAttribute("menuList");
+	 * 
+	 * int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+	 * String menuTitle = request.getParameter("menuTitle");// For Notification
+	 * System.out.println("Fr Rate Cat " + rateCat);
+	 * 
+	 * System.out.println("Current menu id: " + currentMenuId +
+	 * " menu id from jsp: " + menuId);
+	 * 
+	 * List<GetFrItem> tempOrderList = new ArrayList<>(); boolean isValidQty = true;
+	 * System.out.println(" frItemList List before limit condition " +
+	 * frItemList.toString());
+	 * 
+	 * if (isSameDayApplicable == 2) { // if category is cake and pastries with
+	 * limit then check for limit
+	 * 
+	 * List<GetFrItem> tempFrItemList = new ArrayList<GetFrItem>(); tempFrItemList =
+	 * prevFrItemList;
+	 * 
+	 * for (int i = 0; i < prevFrItemList.size(); i++) {
+	 * 
+	 * GetFrItem tempFrItem = prevFrItemList.get(i);
+	 * 
+	 * try { Integer id = tempFrItem.getId(); System.out.println("id " + id);
+	 * System.out.println("prev qty " + tempFrItem.getItemQty());
+	 * 
+	 * String strQty = request.getParameter(String.valueOf(id)); int qty =
+	 * Integer.parseInt(strQty);
+	 * 
+	 * System.out.println(" " + id + ":" + strQty);
+	 * 
+	 * tempFrItem.setItemQty(qty); tempOrderList.add(tempFrItem);
+	 * 
+	 * } catch (Exception e) { System.out.println("Except OrderList " +
+	 * e.getMessage()); }
+	 * 
+	 * }
+	 * 
+	 * System.out.println(" tempOrder List " + tempOrderList.toString());
+	 * 
+	 * System.out.println(" frItemList List " + frItemList.toString());
+	 * 
+	 * int kg1Qty = 0; int kg2Qty = 0; int kg3Qty = 0; int kg4Qty = 0;
+	 * 
+	 * 
+	 * qtyAlert = ""; for (int i = 0; i < tempOrderList.size(); i++) {
+	 * 
+	 * GetFrItem item = tempOrderList.get(i);
+	 * 
+	 * if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
+	 * 
+	 * kg1Qty = kg1Qty + item.getItemQty();
+	 * 
+	 * } else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
+	 * 
+	 * kg2Qty = kg2Qty + item.getItemQty();
+	 * 
+	 * } else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
+	 * 
+	 * kg3Qty = kg3Qty + item.getItemQty();
+	 * 
+	 * } else if (item.getSubCatName().equalsIgnoreCase("Above 1 Kg Cake")) {
+	 * 
+	 * kg4Qty = kg4Qty + item.getItemQty();
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * System.out.println("limit : " + frDetails.getFrKg1() + "new qty:  kg1:" +
+	 * kg1Qty); System.out.println("limit : " + frDetails.getFrKg2() +
+	 * "new qty:  kg2:" + kg2Qty); System.out.println("limit : " +
+	 * frDetails.getFrKg3() + "new qty:  kg3:" + kg3Qty);
+	 * System.out.println("limit : " + frDetails.getFrKg4() + "new qty:  kg4:" +
+	 * kg4Qty);
+	 * 
+	 * if (frDetails.getFrKg1() < kg1Qty) { isValidQty = false; qtyAlert =
+	 * "You have exceeded max limit for Pastries";
+	 * 
+	 * } else if (frDetails.getFrKg2() < kg2Qty) { isValidQty = false; qtyAlert =
+	 * "You have exceeded max limit for 1/2 Kg Cake";
+	 * 
+	 * } else if (frDetails.getFrKg3() < kg3Qty) { isValidQty = false; qtyAlert =
+	 * "You have exceeded max limit for 1 Kg Cake";
+	 * 
+	 * } else if (frDetails.getFrKg4() < kg4Qty) { isValidQty = false; qtyAlert =
+	 * "You have exceeded max limit for Above 1 Kg Cake";
+	 * 
+	 * }
+	 * 
+	 * if (isValidQty) { frItemList = new ArrayList<GetFrItem>();
+	 * 
+	 * RestTemplate restTemplate = new RestTemplate();
+	 * 
+	 * ParameterizedTypeReference<List<GetFrItem>> typeRef = new
+	 * ParameterizedTypeReference<List<GetFrItem>>() { };
+	 * ResponseEntity<List<GetFrItem>> responseEntity =
+	 * restTemplate.exchange(Constant.URL + "/getFrItems", HttpMethod.POST, new
+	 * HttpEntity<>(map), typeRef);
+	 * 
+	 * frItemList = responseEntity.getBody(); }
+	 * 
+	 * }
+	 * 
+	 * if (isValidQty) {
+	 * 
+	 * 
+	 * String fromTime = menuList.get(globalIndex).getFromTime(); String toTime =
+	 * menuList.get(globalIndex).getToTime();
+	 * 
+	 * ZoneId z = ZoneId.of("Asia/Calcutta"); LocalTime now = LocalTime.now(z); //
+	 * Explicitly specify the desired/expected time zone.
+	 * 
+	 * LocalTime fromTimeLocalTime = LocalTime.parse(fromTime); LocalTime
+	 * toTimeLocalTIme = LocalTime.parse(toTime);
+	 * 
+	 * Boolean isLate = now.isAfter(toTimeLocalTIme); Boolean isEarly =
+	 * now.isBefore(fromTimeLocalTime);
+	 * 
+	 * System.out.println("\nLocal time" + now + "Is Early :" + isLate);
+	 * System.out.println("Local time" + now + "Is Late :" + isLate);
+	 * 
+	 * Boolean isSameDay = fromTimeLocalTime.isBefore(toTimeLocalTIme); Boolean
+	 * isValid = false; System.out.println("before order placing: from time " +
+	 * fromTimeLocalTime + " to time " + toTimeLocalTIme);
+	 * 
+	 * if (isSameDay) {
+	 * 
+	 * if (!isLate && !isEarly) {
+	 * 
+	 * isValid = true; } } else {
+	 * 
+	 * if (now.isAfter(fromTimeLocalTime)) { isValid = true; } else if
+	 * (toTimeLocalTIme.isAfter(now)) { isValid = true; } else { isValid = false; }
+	 * } System.out.println(" is valid " + isValid);
+	 * 
+	 * if (isValid) { System.out.println("current time " + now);
+	 * System.out.println("from time " + fromTimeLocalTime);
+	 * 
+	 * String todaysDate =
+	 * LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	 * 
+	 * if (fromTimeLocalTime.isBefore(toTimeLocalTIme)) {
+	 * 
+	 * orderDate = todaysDate; productionDate = todaysDate;
+	 * 
+	 * if (isSameDayApplicable == 0 || isSameDayApplicable == 2) {
+	 * 
+	 * deliveryDate = incrementDate(todaysDate, 1);
+	 * System.out.println("inside 1.1");
+	 * 
+	 * } else if (isSameDayApplicable == 1) {
+	 * 
+	 * deliveryDate = todaysDate;
+	 * 
+	 * System.out.println("inside 1.2");
+	 * 
+	 * }
+	 * 
+	 * } else {
+	 * 
+	 * if (now.isAfter(fromTimeLocalTime)) {
+	 * 
+	 * orderDate = todaysDate; productionDate = incrementDate(todaysDate, 1);
+	 * deliveryDate = incrementDate(todaysDate, 2);
+	 * 
+	 * System.out.println("inside 2.1"); } else {
+	 * 
+	 * orderDate = todaysDate; productionDate = todaysDate; deliveryDate =
+	 * incrementDate(todaysDate, 1); System.out.println("inside 2.2"); }
+	 * 
+	 * }
+	 * 
+	 * System.out.println("Order date: " + orderDate);
+	 * System.out.println("Production date: " + productionDate);
+	 * System.out.println("Delivery date: " + deliveryDate);
+	 * 
+	 * // if date time verified then place order // List<GetFrItem> orderList = new
+	 * ArrayList<>();
+	 * 
+	 * for (int i = 0; i < frItemList.size(); i++) {
+	 * 
+	 * GetFrItem frItem = frItemList.get(i);
+	 * 
+	 * try { Integer id = frItem.getId(); System.out.println("id " + id);
+	 * 
+	 * String strQty = request.getParameter(String.valueOf(id));
+	 * 
+	 * int qty = Integer.parseInt(strQty);
+	 * 
+	 * System.out.println(" " + frItem.getItemQty() + "=?" + strQty);
+	 * 
+	 * if (qty != frItem.getItemQty()) {
+	 * 
+	 * frItem.setItemQty(qty); orderList.add(frItem); }
+	 * 
+	 * } catch (Exception e) { System.out.println("Except OrderList " +
+	 * e.getMessage()); }
+	 * 
+	 * }
+	 * 
+	 * System.out.println("Order List -----------------------------" +
+	 * orderList.toString());
+	 * 
+	 * float qty=0; if(orderList!=null) { for(int i=0;i<orderList.size();i++) {
+	 * qty=qty+orderList.get(i).getItemQty(); } }
+	 * 
+	 * try {
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>();
+	 * 
+	 * map.add("frId", frDetails.getFrId()); map.add("deliveryDate", deliveryDate);
+	 * 
+	 * RestTemplate restTemplate = new RestTemplate();
+	 * 
+	 * ParameterizedTypeReference<FrTrayConsumeQty> typeRef = new
+	 * ParameterizedTypeReference<FrTrayConsumeQty>() { };
+	 * 
+	 * ResponseEntity<FrTrayConsumeQty> responseEntity =
+	 * restTemplate.exchange(Constant.URL + "traymgt/getTotalFrTrayConsumed",
+	 * HttpMethod.POST, new HttpEntity<>(map), typeRef);
+	 * 
+	 * FrTrayConsumeQty frTrayQty = responseEntity.getBody();
+	 * 
+	 * System.err.println("FR TRAY ----------------- "+frTrayQty);
+	 * 
+	 * qty=qty+frTrayQty.getTrayQty();
+	 * 
+	 * System.err.println("QTY ----------------- "+qty);
+	 * System.err.println("TARGET ----------------- "+frDetails.getFrTarget());
+	 * 
+	 * if(qty<=frDetails.getFrTarget()) { result=1; }
+	 * 
+	 * 
+	 * }catch(Exception e) {e.printStackTrace();}
+	 * 
+	 * 
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * System.err.println("RESULT ----------------- "+result);
+	 * 
+	 * return result;
+	 * 
+	 * }
+	 */
+
+	// ------------------------------------------------------------------------
 
 	public String incrementDate(String date, int day) {
 

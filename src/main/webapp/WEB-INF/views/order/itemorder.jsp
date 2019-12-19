@@ -132,15 +132,44 @@ a:hover {
 					</div>
 				</div>
 
+
+				<c:if test="${trayApplicable==1}">
+					<div class="messages messagesErr">
+						<div class=row>
+							<div class="col-md-3">
+								Other Menu Qty = ${otherMenuQty.trayQty}
+							</div>
+							<div class="col-md-3">
+								Current Menu Qty = ${sameMenuQty}
+							</div>
+							<div class="col-md-3">
+								Total Tray Qty =
+									${otherMenuQty.trayQty+sameMenuQty}
+							</div>
+							<div class="col-md-3">
+								Tray Limit =
+									${frDetails.frTarget}
+							</div>
+							
+						</div>
+					</div>
+				</c:if>
+
 				<c:if test="${not empty errorMessage}">
 					<!-- here would be a message with a result of processing -->
-					<div class="messages messagesErr"><h3>${errorMessage}</h3></div>
+					<div class="messages messagesErr">
+						<h3>${errorMessage}</h3>
+					</div>
 				</c:if>
-				
-				
 
-<!-- <div class="messages messagesErr" id="errorMsg" style="display: none;"><input type="text" id="error"></div> -->
-				
+<c:if test="${not empty errorMessage}">
+<%-- <h6>${itemList}</h6> --%>
+
+<%-- <h6>${subCatListTitle}</h6> --%>
+</c:if>
+
+				<!-- <div class="messages messagesErr" id="errorMsg" style="display: none;"><input type="text" id="error"></div> -->
+
 
 
 
