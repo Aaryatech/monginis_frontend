@@ -515,7 +515,7 @@ a:hover {
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textcenter">
 
-						<input name="" class="buttonsaveorder" value="SAVE ORDER"
+						<input name="" class="buttonsaveorder" value="SAVE ORDER" id="saveOrderButton"
 							type="button" ONCLICK="button1()">
 					</div>
 
@@ -582,8 +582,13 @@ a:hover {
            
             function button1()
             {
-
+              	//alert("hi");
+            	document.getElementById('saveOrderButton').style.visibility="hidden";
+            	//${'#saveOrderButton'}.show(hide);
+      
               form1.submit();
+              
+              //
                 
     		/* 	if(isSameDayApplicable!=2)
     				{
