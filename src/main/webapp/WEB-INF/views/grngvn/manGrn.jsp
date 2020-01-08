@@ -206,7 +206,7 @@ label::before {
 													<td class="col-md-1"><c:out value="GRN 1(75%)"></c:out></td>
 												</c:when>
 												<c:when test="${grnConfList.grnType==1}">
-													<td class="col-md-1"><c:out value="GRN 2(90%)"></c:out></td>
+													<td class="col-md-1"><c:out value="GRN 2(65%)"></c:out></td>
 												</c:when>
 												<c:when test="${grnConfList.grnType==2}">
 													<td class="col-md-1"><c:out value="GRN 3(100%)"></c:out></td>
@@ -416,12 +416,12 @@ label::before {
 			
 			var grnRate=$("#grn_rate"+itemId).text();
 			
-			grnBaseRate = baseRate * 90 / 100;
+			grnBaseRate = baseRate * 65 / 100;
 			
-			grnRate=(rate * 90) / 100;
+			grnRate=(rate * 65) / 100;
 			
 			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			//grnAmt=grnAmt*90/100;	
+			//grnAmt=grnAmt*65/100;	
 			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 			}

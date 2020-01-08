@@ -167,8 +167,8 @@
 
 																</c:when>
 																<c:when test="${detail.grnType==1}">
-																	<c:set var="type" value="GRN 2(90%)"></c:set>
-																	<c:set var="rate" value="${detail.baseRate* 0.90}"></c:set>
+																	<c:set var="type" value="GRN 2(65%)"></c:set>
+																	<c:set var="rate" value="${detail.baseRate* 0.65}"></c:set>
 
 																</c:when>
 																<c:when test="${detail.grnType==2 or detail.grnType==4}">

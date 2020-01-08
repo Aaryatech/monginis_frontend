@@ -301,10 +301,10 @@ try {
 					}
 
 					if (objShowGrn.getGrnType() == 1) {
-						grnBaseRate = baseRate * 90 / 100;
-						// grnRate = (objShowGrn.getRate() * 90) / 100;
+						grnBaseRate = baseRate * 65 / 100;
+						// grnRate = (objShowGrn.getRate() * 65) / 100;
 
-						grnRate = (baseRate * 90) / 100;
+						grnRate = (baseRate * 65) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
@@ -491,8 +491,8 @@ System.err.println("Inside Manual Grn POST method ");
 				}
 
 				if (objShowGrnList.get(i).getGrnType() == 1) {
-					grnBaseRate = baseRate * 90 / 100;
-					grnRate = (objShowGrnList.get(i).getRate() * 90) / 100;
+					grnBaseRate = baseRate * 65 / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 65) / 100;
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 
