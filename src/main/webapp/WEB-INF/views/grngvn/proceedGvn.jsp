@@ -118,7 +118,7 @@ label::before {
  -->
 					<form action="${pageContext.request.contextPath}/addGvnProcess"
 						name="proceed_gvn" id="proceed_gvn" enctype="multipart/form-data"
-						method="post">
+						method="post" onsubmit="submitGvn.disabled = true;return confirm('Do you really want to Proceed ?');">
 
 						<div class="clearfix"></div>
 
@@ -251,7 +251,7 @@ label::before {
 
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder" onclick="callSubmit()">
+							<button type="submit" class="buttonsaveorder"  id="submitGvn">
 								<i class="fa fa-check"></i> Save
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->
@@ -358,7 +358,7 @@ label::before {
 			/*  var form = document.getElementById("proceed_gvn");
 		    form.action ="addGvnProcess";
 		    form.submit();
-		 */
+		
 		
 	} */
 </script>

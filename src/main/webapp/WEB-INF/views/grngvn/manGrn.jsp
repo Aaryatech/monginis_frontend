@@ -121,7 +121,7 @@ label::before {
 					<!-- 						</form>
  -->
 					<form action="${pageContext.request.contextPath}/postManualGrn"
-						name="grn_add" id="grn_add" method="post">
+						name="grn_add" id="grn_add" method="post"  onsubmit="subman.disabled = true; return confirm('Do you want to save ?');">
 						
 						<div class="col-md-9" ></div> 
 					<label for="search" class="col-md-3" id="search">
@@ -286,9 +286,9 @@ label::before {
 
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder">
-								<i class="fa fa-check"></i> Save
-							</button>
+						
+							<input name="" class="buttonsaveorder" value="Save"
+										id="subman" type="submit">
 							<!--<button type="button" class="btn">Cancel</button>-->
 
 						</div>

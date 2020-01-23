@@ -61,7 +61,7 @@
 				</div>
 
 				<div class="clearfix"></div>
-				<form action="${pageContext.request.contextPath}/insertGrnProcess"
+				<form action="${pageContext.request.contextPath}/insertGrnProcess" onsubmit="submitGrn.disabled = true;return confirm('Do you really want to save ?');"
 					name="validation_form" id="validation_form" method="post">
 
 
@@ -214,8 +214,7 @@
 					</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" id="submit"
-						value="Save">
+					<input type="submit" class="btn btn-primary" id="submit" id="submitGrn" value="Save" />
 					
 
 

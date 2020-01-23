@@ -142,7 +142,7 @@ label::before {
 					<!-- 						</form>
  -->
 					<form action="${pageContext.request.contextPath}/addTempGvn"
-						name="grn_add" id="grn_add" method="post">
+						name="grn_add" id="grn_add" method="post" onsubmit="submitGvn.disabled = true;return confirm('Do you really want to proceed ?');">
 						
 						<div class="col-md-9" ></div> 
 					<label for="search" class="col-md-3" id="search">
@@ -240,7 +240,7 @@ label::before {
 
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder">
+							<button type="submit" class="buttonsaveorder" id="submitGvn">
 								<i class="fa fa-check"></i> Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->

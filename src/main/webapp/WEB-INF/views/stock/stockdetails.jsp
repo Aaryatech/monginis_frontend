@@ -299,7 +299,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="monthEndProcess" method="POST">
+						<form action="monthEndProcess" method="POST" onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
 						
 
 							<div class="clearfix"></div>
@@ -364,7 +364,7 @@
 							<div class="colOuter" id="monthEnd" style="display: none">
 								<div class="col2full">
 									<input name="" class="buttonsaveorder" value="Month End"
-										type="submit">
+										id="substk" type="submit">
 								</div>
 								</div>
 						</form>

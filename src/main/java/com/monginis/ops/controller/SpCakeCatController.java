@@ -61,7 +61,7 @@ import com.monginis.ops.model.frsetting.FrSetting;
 @Scope("session")
 public class SpCakeCatController {
 
-	public static final String Album_IMAGE_URL = "http://132.148.151.41:8080/uploads/ALBUM/";
+	public static final String Album_IMAGE_URL = "http://107.180.95.11:8080/uploads/ALBUM/";
 
 	private static final Logger logger = LoggerFactory.getLogger(SpCakeController.class);
 
