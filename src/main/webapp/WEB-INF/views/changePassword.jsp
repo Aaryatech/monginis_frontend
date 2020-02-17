@@ -88,9 +88,9 @@ jQuery(document).ready(function(){
 										id="validation-form" method="post">
 		
 		
-		<div class="loginfildset"><input class="texboxlogin" placeholder="New Password" name="newPass" id="newPass" type="text"  data-rule-required="true"></div>
+		<div class="loginfildset"><input class="texboxlogin" placeholder="New Password" name="newPass" id="newPass" type="password"  data-rule-required="true"></div>
 		
-		<div class="loginfildset"><input class="texboxlogin" placeholder="Confirm Password" name="confirmPass" id="confirmPass" type="text" data-rule-required="true"></div>
+		<div class="loginfildset"><input class="texboxlogin" placeholder="Confirm Password" name="confirmPass" id="confirmPass" type="password" data-rule-required="true"></div>
 		
 		<input class="texboxlogin"  name="frId" id="frId" value="${frId}" type="hidden" data-rule-required="true">
 		
@@ -148,6 +148,18 @@ $("#login").validate();
 </script>
 <script type="text/javascript">
 $("#confirmPass").keyup(function(){
+	var newPass = $("#newPass").val();
+	var conrfmPass = $("#confirmPass").val();
+	
+	if(newPass!=conrfmPass){
+		document. getElementById("sendOTP"). disabled = true;
+	}else{
+		document. getElementById("sendOTP"). disabled = false;
+	}
+	
+	});
+	
+$("#newPass").keyup(function(){
 	var newPass = $("#newPass").val();
 	var conrfmPass = $("#confirmPass").val();
 	
