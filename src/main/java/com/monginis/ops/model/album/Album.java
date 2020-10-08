@@ -1,5 +1,8 @@
 package com.monginis.ops.model.album;
 
+import java.util.List;
+
+
 public class Album {
 
 	private int albumId;
@@ -22,6 +25,58 @@ public class Album {
 	private int isActive;
 	private String albumDesc;
 	private int isVisibleToAlbum;
+	
+	
+	// 18-03-2020
+	private int enqNo;
+	private int status;
+	private List<Integer> menuList;
+	List<Integer> frIds;
+	
+private String token;
+
+
+
+
+	public int getEnqNo() {
+	return enqNo;
+}
+
+public int getStatus() {
+	return status;
+}
+
+public List<Integer> getMenuList() {
+	return menuList;
+}
+
+public List<Integer> getFrIds() {
+	return frIds;
+}
+
+public String getToken() {
+	return token;
+}
+
+public void setEnqNo(int enqNo) {
+	this.enqNo = enqNo;
+}
+
+public void setStatus(int status) {
+	this.status = status;
+}
+
+public void setMenuList(List<Integer> menuList) {
+	this.menuList = menuList;
+}
+
+public void setFrIds(List<Integer> frIds) {
+	this.frIds = frIds;
+}
+
+public void setToken(String token) {
+	this.token = token;
+}
 
 	public int getAlbumId() {
 		return albumId;
