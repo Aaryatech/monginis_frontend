@@ -87,6 +87,7 @@ document.body.onload = function()
       <td >${currTime} </td>
       <td ><strong></td>
     </tr>
+    ${spCakeOrder.spName}
     <tr>
       <td colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="tbl-inner">
         <tbody>
@@ -98,6 +99,7 @@ document.body.onload = function()
           </tr>
           <tr>
             <td><p style="font-size:12px">${spCakeOrder.spName} ${spCakeOrder.itemId}</p></td>
+            <%-- <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td> --%>
             <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
             <td align="center"><p style="font-size:12px">${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}</p></td>
             <td align="right"><p style="font-size:12px">${spCakeOrder.spSubTotal}</p></td>

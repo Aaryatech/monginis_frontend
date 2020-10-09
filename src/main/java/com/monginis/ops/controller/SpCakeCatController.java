@@ -19,8 +19,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -49,10 +52,13 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.SearchSpCakeCatResponse;
 import com.monginis.ops.model.SearchSpCakeResponse;
+import com.monginis.ops.model.Settings;
 import com.monginis.ops.model.SpCakeOrder;
 import com.monginis.ops.model.SpCakeOrderRes;
 import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpMessage;
+import com.monginis.ops.model.SpOrderHis;
+import com.monginis.ops.model.SpOrderHisList;
 import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.album.Album;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -110,8 +116,9 @@ public class SpCakeCatController {
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
 			System.err.println("IS SAME DAY MENU-----------" + globalIndex + "------------------ " + menuList);
-			System.err.println(
-					"IS SAME DAY----------------------------- " + menuList.get(globalIndex).getIsSameDayApplicable());
+			// System.err.println(
+			// "IS SAME DAY----------------------------- " +
+			// menuList.get(globalIndex).getIsSameDayApplicable());
 
 			int isSameDayApplicable = menuList.get(index).getIsSameDayApplicable();
 
@@ -201,6 +208,11 @@ public class SpCakeCatController {
 			model.addObject("menuId", currentMenuId);
 		}
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 1);
+		model.addObject("hideDeliveryDate", sdf.format(cal.getTime()));
+
 		System.err.println("FLAVOURS------------------------------------------------------------------ " + flavourList);
 
 		return model;
@@ -214,6 +226,8 @@ public class SpCakeCatController {
 
 		logger.info("inside Search Sp Cake Category Request");
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
 		System.err.println("ALBUM  ---------------searchSpCakeCat-------------------------- ");
 
 		String spCode = request.getParameter("sp_code");
@@ -221,9 +235,25 @@ public class SpCakeCatController {
 		String menuTitle = "";
 		List<Float> weightList = new ArrayList<>();
 
+		String delDate = request.getParameter("hiddenDeliveryDate");
+		System.err.println("DATE -------------------------------------------- > " + delDate);
+
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+		map.add("settingId", 38);
+
+		ParameterizedTypeReference<Settings> typeRef = new ParameterizedTypeReference<Settings>() {
+		};
+
+		ResponseEntity<Settings> responseEntity = restTemplate.exchange(Constant.URL + "/getSettingDataById",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+		Settings settings = responseEntity.getBody();
+
+		System.err.println("SETTINGS------------------------------------------ - " + settings);
+
+		map = new LinkedMultiValueMap<String, Object>();
 		map.add("albumCode", spCode);
 		try {
 
@@ -328,8 +358,8 @@ public class SpCakeCatController {
 				// String spImage = specialCake.getSpImage();
 
 				// System.out.println("Sp RESPONSE" + specialCake.toString());
-				float sprRate;
-				float spBackendRate;
+				float sprRate = 0;
+				float spBackendRate = 0;
 
 				float minWt = Float.valueOf(album.getMinWt());
 
@@ -347,16 +377,62 @@ public class SpCakeCatController {
 				int spBookb4 = 0;
 				if (specialCake != null) {
 
-					if (frDetails.getFrRateCat() == 1) {
-						sprRate = specialCake.getMrpRate1();
-						spBackendRate = specialCake.getSpRate1();
+					int flag = 0;
 
-					} else if (frDetails.getFrRateCat() == 2) {
-						sprRate = specialCake.getMrpRate2();
-						spBackendRate = specialCake.getSpRate2();
-					} else {
-						sprRate = specialCake.getMrpRate3();
-						spBackendRate = specialCake.getSpRate3();
+					if (currentMenuId == 72) {
+
+						if (settings.getSettingValue() == 1) {
+							// MIX AND MATCH RATE SETTING IS OFF
+
+							if (delDate != null) {
+								try {
+									flag = 1;
+
+									Date deliveryDate = sdf.parse(delDate);
+
+									Date curr = new Date();
+
+									long diff = deliveryDate.getTime() - curr.getTime();
+
+									long days = diff / 1000 / 60 / 60 / 24;
+
+									System.err.println("-----DAYS ----- " + days);
+
+									if (days >= 1) {
+										sprRate = specialCake.getMrpRate2();
+										spBackendRate = specialCake.getSpRate2();
+									} else {
+										sprRate = specialCake.getMrpRate1();
+										spBackendRate = specialCake.getSpRate1();
+									}
+
+								} catch (Exception e) {
+									flag = 0;
+								}
+
+							} else {
+								flag = 0;
+							}
+
+						} else {
+							// MIX AND MATCH RATE SETTING IS OFF
+							flag = 0;
+						}
+					}
+
+					if (flag == 0) {
+
+						if (frDetails.getFrRateCat() == 1) {
+							sprRate = specialCake.getMrpRate1();
+							spBackendRate = specialCake.getSpRate1();
+
+						} else if (frDetails.getFrRateCat() == 2) {
+							sprRate = specialCake.getMrpRate2();
+							spBackendRate = specialCake.getSpRate2();
+						} else {
+							sprRate = specialCake.getMrpRate3();
+							spBackendRate = specialCake.getSpRate3();
+						}
 
 					}
 
@@ -468,6 +544,17 @@ public class SpCakeCatController {
 		model.addObject("albumList", albumList);
 		model.addObject("menuId", currentMenuId);
 		model.addObject("menuTitle", menuTitle);
+
+		if (delDate != null) {
+			if (delDate.equalsIgnoreCase("0")) {
+				model.addObject("hideDeliveryDate", sdf.format(Calendar.getInstance().getTime()));
+			} else {
+				model.addObject("hideDeliveryDate", delDate);
+			}
+		} else {
+
+			model.addObject("hideDeliveryDate", sdf.format(Calendar.getInstance().getTime()));
+		}
 
 		System.err.println("FLAVOURS------------------------------------------------------------------ " + flavourList);
 
@@ -635,6 +722,8 @@ public class SpCakeCatController {
 		return invoiceNo;
 
 	}
+	
+	SpOrderHis spOrderHis;
 
 	// Anmol 12-7-2019
 	// --------Order Special Cake Category Process-------------------------------
@@ -1015,6 +1104,22 @@ public class SpCakeCatController {
 				RestTemplate restTemplate = new RestTemplate();
 				spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder", httpEntity,
 						SpCakeOrderRes.class);
+				
+				
+				
+				if(spCakeOrderRes!=null) {
+					
+					
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("spOrderNo", spCakeOrderRes.getSpCakeOrder().getSpOrderNo());
+					
+					spOrderHis=restTemplate.postForObject(Constant.URL + "/getSpOrderHistory", map,
+							SpOrderHis.class);
+				}
+				
+				
+				
+				
 				System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
 				spCakeOrder.setSpInstructions(spCakeOrderRes.getSpCakeOrder().getSpInstructions());
 				spCake = spCakeOrderRes.getSpCakeOrder();
@@ -1233,7 +1338,9 @@ public class SpCakeCatController {
 			String shopName = franchisee.getFrName();
 			String tel = franchisee.getFrMob();
 
-			model.addObject("spCakeOrder", spCakeOrder);
+			
+			//model.addObject("spCakeOrder", spCakeOrder);
+			model.addObject("spCakeOrder", spOrderHis);
 			model.addObject("currDate", currentDate);
 			model.addObject("currTime", time);
 			model.addObject("shopName", shopName);
