@@ -507,7 +507,7 @@ select {
 													value="<%=fDate%>" name="datepicker" type="hidden" />
 
 											</c:when>
-											<c:when test="${menuId==72}">
+											<c:when test="${menuId==72 || menuId==69 || menuId==73}">
 
 												<input id="datepicker"
 													class="texboxitemcode texboxcal deliveryDate"
@@ -1324,7 +1324,7 @@ select {
 															});
 										}
 
-										if (document.getElementById("menu_id").value == 72) {
+										if (document.getElementById("menu_id").value == 72 || document.getElementById("menu_id").value == 69 || document.getElementById("menu_id").value == 73) {
 
 											document
 													.getElementById("hiddenDeliveryDate").value = date;

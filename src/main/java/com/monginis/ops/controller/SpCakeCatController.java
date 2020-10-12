@@ -379,7 +379,7 @@ public class SpCakeCatController {
 
 					int flag = 0;
 
-					if (currentMenuId == 72) {
+					if (currentMenuId == 72 || currentMenuId == 69 || currentMenuId == 73) {
 
 						if (settings.getSettingValue() == 1) {
 							// MIX AND MATCH RATE SETTING IS OFF
