@@ -240,19 +240,22 @@
 											if (isSameDayApplicable == 3) {
 												// if
 												if (settingType != 1) {
-							%> <abbr title='${menu.menuDesc}'>
+							%> 
+							
+							<abbr title='${menu.menuDesc}'>
 								<div class="listareaBoxBlue">
-						</abbr> <a class="listareaBoximg"
-							href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
-
-
+						</abbr> <a class="listareaBoximg" href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
 
 								<%
 									//else
 													} else {
-								%> <abbr title='${menu.menuDesc}'><a class="listareaBox"
+								%> 
+								
+								<abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}"><div
-											class="listareaBoximg"></abbr> <%
+											class="listareaBoximg"></abbr> 
+								
+								<%
  	}
 
  				} else {
@@ -261,13 +264,21 @@
  					{
 
  						//if
- %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
+						 %> 
+						 
+						 <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-										<div class="listareaBoximg"></abbr> <%
+										<div class="listareaBoximg"></abbr> 
+						
+						<%
  	} else {
- %> <abbr title='${menu.menuDesc}'> <a class="listareaBox"
+ 						%> 
+ 						
+ 						<abbr title='${menu.menuDesc}'> <a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-										<div class="listareaBoximg"></abbr> <%
+										<div class="listareaBoximg"></abbr> 
+										
+						<%
  	}
 
  				}
@@ -275,32 +286,49 @@
 
  				// if
  				if (settingType != 1) {
- %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
+ 						%> 
+ 						
+ 					<abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
-										<div class="listareaBoximg"></abbr> <%
+										<div class="listareaBoximg"></abbr> 
+										
+						<%
  	//else
  				} else {
- %> <abbr title='${menu.menuDesc}'><a class="listareaBox"
+ 						%> 
+ 						
+ 						<abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSpCakeCatOrder/${loop.index}">
-										<div class="listareaBoximg"></abbr> <%
+										<div class="listareaBoximg"></abbr> 
+										
+						<%
  	}
 
  			} else if (catId == 5) {
 
  				// if
  				if (settingType != 1) {
- %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
+					 %> 
+					 
+					 
+					 <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 									href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
 										<div class="listareaBoximg"></abbr> <%
  	//else
  				} else {
- %> <abbr title='${menu.menuDesc}'><a class="listareaBox"
+					 %> 
+					 
+					 <abbr title='${menu.menuDesc}'><a class="listareaBox"
 									href="${pageContext.request.contextPath}/showSpCakeOrder/${loop.index}">
-										<div class="listareaBoximg"></abbr> <%
+										<div class="listareaBoximg"></abbr> 
+										
+					<%
  	}
 
  			}
- %> <img
+ 					%> 
+ 					
+ 					<img
 								src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
 								alt="monginis"> <img
 								src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
@@ -324,28 +352,17 @@
 			%>
 
 
-			<li>
+			<!-- <li>
 
 				<div class="listareaBox">
 
-					<a class="listareaBoximg"> <%-- <img
-										src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
-										alt="monginis"> <img
-										src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
-										alt="monginis"> --%></a>
+					<a class="listareaBoximg"> </a>
 
-					<%--
-									<h2>
-										<c:out value='${menu.menuTitle}' />
-									</h2>
-								 	<h3>
-										Booking - <c:out value='${fromTime}' /> To 
-											<c:out value='${toTime}' />
-									</h3> --%>
+					
 					</a>
 				</div>
 
-			</li>
+			</li> -->
 			<%
 				}
 			%>
