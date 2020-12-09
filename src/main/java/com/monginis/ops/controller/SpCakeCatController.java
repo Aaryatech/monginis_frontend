@@ -284,6 +284,8 @@ public class SpCakeCatController {
 
 				specialCake = searchSpCakeResponse.getSpecialCake();
 				album = searchSpCakeResponse.getAlbum();
+				
+				System.err.println("SP_--------------------- "+specialCake);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1292,6 +1294,7 @@ public class SpCakeCatController {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("prodDate", prodDate);
+		map.add("menuId", menuId);
 
 		info = restTemplate.postForObject(Constant.URL + "getSpCakeCountByProdDate", map, Info.class);
 

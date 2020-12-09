@@ -449,6 +449,8 @@ select {
 									</div>
 								</div>
 
+
+
 								<c:choose>
 									<c:when test="${specialCake.isCustChoiceCk=='1'}">
 
@@ -1249,6 +1251,10 @@ select {
 				var photo2=document.getElementById("cust_choice_ck").value;
 				
 				var isCustPhotoCake=${specialCake.isCustChoiceCk};
+				var isPhoto=${specialCake.spPhoupload};
+				//alert(isPhoto);
+				
+				
 
 				if (spCode == "") {
 					alert("Special Cake Code must be filled out");
@@ -1285,9 +1291,14 @@ select {
 					isValid = false;
 				} 
 				
-				else if(isCustPhotoCake==1){
+				
+				
+				
+				
+			  	else if(isCustPhotoCake == 1 && isPhoto==1){
+			  		
 					
-					if(photo1 == ""){
+					 if(photo1 == ""){
 						
 						alert("Please Select Photo 1");
 						isValid = false;
@@ -1297,9 +1308,27 @@ select {
 						alert("Please Select Photo 2");
 						isValid = false;
 						
+					} 
+					
+				} 
+			  	/* else if(isCustPhotoCake == 0 && isPhoto==1){
+			  		
+					
+					 if(photo1 == ""){
+						
+						alert("Please Select Photo 1");
+						isValid = false;
+						
 					}
 					
-				}
+				} */ 
+				
+			/* 	else if(isPhoto==1){
+					if(photo1 == ""){				
+						alert("Please Select Photo 1");
+						isValid = false;	
+					}
+				} */
 				
 				/* else if (spCustMob.match(phoneNo)) {
 					return true;
@@ -1620,8 +1649,9 @@ select {
 					if(data.message=='false'){
 						alert("Daily Limit Exceeded!");
 					}else{
-						document.forms["from_ord"]
-						.submit();
+						//alert("ok");
+						 document.forms["from_ord"]
+						.submit(); 
 					}
 
 				});
