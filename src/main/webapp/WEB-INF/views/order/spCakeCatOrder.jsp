@@ -107,6 +107,12 @@ select {
 		<c:url var="findAddOnRate" value="/getSpAddOnRate" />
 		<c:url var="getSpCakeCatFlavourBySpfId"
 			value="/getSpCakeCatFlavourBySpfId" />
+
+		<c:url var="getSpOrderCountByProdDate"
+			value="/getSpOrderCountByProdDate" />
+
+
+
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
@@ -145,8 +151,8 @@ select {
 										<input class="texboxitemcode" id="sp_code"
 											value="${album.albumCode}" name="sp_code" type="text"
 											autocomplete="off" list="categories"> <input
-											type="hidden" id="hiddenDeliveryDate" name="hiddenDeliveryDate"
-											value="${hideDeliveryDate}">
+											type="hidden" id="hiddenDeliveryDate"
+											name="hiddenDeliveryDate" value="${hideDeliveryDate}">
 
 										<datalist id="categories">
 											<c:forEach items="${configuredSpCodeList}"
@@ -320,183 +326,10 @@ select {
 
 							<div class="center">
 
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Type</div>
-									</div>
-									<div class="col2full">
-										<select name="sptype" tabindex="-1" id="sptype" required>
-											<option value="">Select Type</option>
-											<c:set var="spCakeType" value="${specialCake.spType}"></c:set>
-											<c:choose>
-
-												<c:when test="${spCakeType=='1'}">
-													<option value="1">Chocolate</option>
-												</c:when>
-												<c:when test="${spCakeType=='2'}">
-													<option value="2">FC</option>
-												</c:when>
-												<c:otherwise>
-
-													<option value="1">Chocolate</option>
-													<option value="2">FC</option>
-												</c:otherwise>
-											</c:choose>
-
-										</select>
-									</div>
-								</div>
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title">Flavour</div>
-									</div>
-									<div class="col2full">
-										<select name="spFlavour" tabindex="-1"
-											onchange="onChangeFlavour()" id="spFlavour" required>
-											<option value="">Select Flavour</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Weight</div>
-									</div>
-									<div class="col2">
-										<c:set var="dbRate" scope="session" value="${sprRate}" />
-										<input type="hidden" name="dbRate" id="dbRate"
-											value="${sprRate}"> <input type="hidden"
-											name="spBackendRate" id="spBackendRate"
-											value="${spBackendRate}"> <select name="spwt"
-											id="spwt" onchange="onChange('${dbRate}')" required>
-											<c:forEach items="${weightList}" var="weightList">
-												<option value="${weightList}">${weightList}</option>
-											</c:forEach>
-
-										</select>
-										<div class="err" style="display: none;">Please Enter
-											Weight</div>
-									</div>
-								</div>
-
-
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Message</div>
-									</div>
-									<div class="col2">
-										<select name="sp_event" id="sp_event" required>
-
-											<c:forEach items="${eventList}" var="eventList">
-												<option value="${eventList.spMsgText}"><c:out
-														value="${eventList.spMsgText}" /></option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col3">
-										<input class="texboxitemcode" placeholder="Name"
-											name="event_name" type="text" id="event_name">
-									</div>
-								</div>
-
-								<c:choose>
-									<c:when test="${specialCake.isCustChoiceCk=='1'}">
-
-										<div class="colOuter">
-											<div class="col1">
-												<div class="col1title">Photo Cake1</div>
-											</div>
-											<div class="col2full">
-												<div class="editimg">
-													<div class="editpics">
-														<div class="fileUpload">
-															<span> <i class="fa fa-pencil"></i></span> <input
-																class="upload" type="file" id="order_photo"
-																name="order_photo" />
-
-														</div>
-													</div>
-													<img id="image" />
-												</div>
-											</div>
-										</div>
-										<div class="colOuter">
-											<div class="col1">
-												<div class="col1title">Photo Cake2</div>
-											</div>
-											<div class="col2full">
-												<div class="editimg">
-													<div class="editpics">
-														<div class="fileUpload">
-															<span> <i class="fa fa-pencil"></i></span> <input
-																class="upload" type="file" id="cust_choice_ck"
-																name="cust_choice_ck" />
-														</div>
-													</div>
-													<img id="img" />
-												</div>
-											</div>
-										</div>
-
-
-									</c:when>
-									<c:when test="${specialCake.spPhoupload=='1'}">
-
-										<div class="colOuter">
-											<div class="col1">
-												<div class="col1title">Photo Cake</div>
-											</div>
-											<div class="col2full">
-												<div class="editimg">
-													<div class="editpics">
-														<div class="fileUpload">
-															<span> <i class="fa fa-pencil"></i></span> <input
-																class="upload" type="file" id="order_photo"
-																name="order_photo" />
-
-														</div>
-													</div>
-													<img id="image" />
-												</div>
-											</div>
-										</div>
-
-									</c:when>
-								</c:choose>
-
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Select Language</div>
-									</div>
-									<div class="col2full">
-										<select id="show" class="form-control" name="showtextarea"
-											onchange="showDiv(this)" required>
-											<option value="1" id="marathi">Marathi</option>
-											<option value="2" id="english">English</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Special Instructions</div>
-									</div>
-
-									<div class="col1full" id="marathiDiv">
-										<textarea id="transliterateTextarea" name="sp_inst1" cols=""
-											rows="" style="width: 250px; height: 60px" maxlength="300"></textarea>
-									</div>
-
-									<div class="col1full" id="englishDiv" style="display: none;">
-										<textarea id="textarea" name="sp_inst2" cols="" rows=""
-											style="width: 200px; height: 90px" maxlength="300"></textarea>
-									</div>
-								</div>
-
-								<div class="colOuter">
-									<div class="col1">
-										<div class="col1title">Delivery Date</div>
+										<div class="col1title" style="font-weight: bold;color: black;">Delivery Date</div>
 									</div>
 									<div class="col2">
 										<c:choose>
@@ -535,12 +368,228 @@ select {
 								</div>
 
 
+
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title">Place of Delivery</div>
+										<div class="col1title" style="font-weight: bold;color: black;">Type</div>
 									</div>
 									<div class="col2full">
-										<input class="texboxitemcode" placeholder="Place of Delivery"
+										<select name="sptype" tabindex="-1" id="sptype" required>
+											<option value="">Select Type</option>
+											<c:set var="spCakeType" value="${specialCake.spType}"></c:set>
+											<c:choose>
+
+												<c:when test="${spCakeType=='1'}">
+													<option value="1">Chocolate</option>
+												</c:when>
+												<c:when test="${spCakeType=='2'}">
+													<option value="2">FC</option>
+												</c:when>
+												<c:otherwise>
+
+													<option value="1">Chocolate</option>
+													<option value="2">FC</option>
+												</c:otherwise>
+											</c:choose>
+
+										</select>
+									</div>
+								</div>
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title" style="font-weight: bold;color: black;">Flavour</div>
+									</div>
+									<div class="col2full">
+										<select name="spFlavour" tabindex="-1"
+											onchange="onChangeFlavour()" id="spFlavour" required>
+											<option value="">Select Flavour</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title" style="font-weight: bold;color: black;">Weight</div>
+									</div>
+									<div class="col2">
+										<c:set var="dbRate" scope="session" value="${sprRate}" />
+										<input type="hidden" name="dbRate" id="dbRate"
+											value="${sprRate}"> <input type="hidden"
+											name="spBackendRate" id="spBackendRate"
+											value="${spBackendRate}"> <select name="spwt"
+											id="spwt" onchange="onChange('${dbRate}')" required>
+											<c:forEach items="${weightList}" var="weightList">
+												<option value="${weightList}">${weightList}</option>
+											</c:forEach>
+
+										</select>
+										<div class="err" style="display: none;">Please Enter
+											Weight</div>
+									</div>
+								</div>
+
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title" style="font-weight: bold;color: black;">Message</div>
+									</div>
+									<div class="col2">
+										<select name="sp_event" id="sp_event" required>
+
+											<c:forEach items="${eventList}" var="eventList">
+												<option value="${eventList.spMsgText}"><c:out
+														value="${eventList.spMsgText}" /></option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col3">
+										<input class="texboxitemcode" placeholder="Name"
+											name="event_name" type="text" id="event_name">
+									</div>
+								</div>
+
+								<c:choose>
+									<c:when test="${specialCake.isCustChoiceCk=='1'}">
+
+										<div class="colOuter">
+											<div class="col1">
+												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake1</div>
+											</div>
+											<div class="col2full">
+												<div class="editimg">
+													<div class="editpics">
+														<div class="fileUpload">
+															<span> <i class="fa fa-pencil"></i></span> <input
+																class="upload" type="file" id="order_photo"
+																name="order_photo" />
+
+														</div>
+													</div>
+													<img id="image" />
+												</div>
+											</div>
+										</div>
+										<div class="colOuter">
+											<div class="col1">
+												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake2</div>
+											</div>
+											<div class="col2full">
+												<div class="editimg">
+													<div class="editpics">
+														<div class="fileUpload">
+															<span> <i class="fa fa-pencil"></i></span> <input
+																class="upload" type="file" id="cust_choice_ck"
+																name="cust_choice_ck" />
+														</div>
+													</div>
+													<img id="img" />
+												</div>
+											</div>
+										</div>
+
+
+									</c:when>
+									<c:when test="${specialCake.spPhoupload=='1'}">
+
+										<div class="colOuter">
+											<div class="col1">
+												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake</div>
+											</div>
+											<div class="col2full">
+												<div class="editimg">
+													<div class="editpics">
+														<div class="fileUpload">
+															<span> <i class="fa fa-pencil"></i></span> <input
+																class="upload" type="file" id="order_photo"
+																name="order_photo" />
+
+														</div>
+													</div>
+													<img id="image" />
+												</div>
+											</div>
+										</div>
+
+									</c:when>
+								</c:choose>
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title" style="font-weight: bold;color: black;">Select Language</div>
+									</div>
+									<div class="col2full">
+										<select id="show" class="form-control" name="showtextarea"
+											onchange="showDiv(this)" required>
+											<option value="1" id="marathi">Marathi</option>
+											<option value="2" id="english">English</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title" style="font-weight: bold;color: black;">Special Instructions</div>
+									</div>
+
+									<div class="col1full" id="marathiDiv">
+										<textarea id="transliterateTextarea" name="sp_inst1" cols=""
+											rows="" style="width: 250px; height: 60px" maxlength="300"></textarea>
+									</div>
+
+									<div class="col1full" id="englishDiv" style="display: none;">
+										<textarea id="textarea" name="sp_inst2" cols="" rows=""
+											style="width: 200px; height: 90px" maxlength="300"></textarea>
+									</div>
+								</div>
+
+								<%-- <div class="colOuter">
+									<div class="col1">
+										<div class="col1title">Delivery Date</div>
+									</div>
+									<div class="col2">
+										<c:choose>
+											<c:when test="${menuId==68}">
+												<input id="date" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" type="text" readonly>
+												<input id="datepicker" class="texboxitemcode texboxcal"
+													value="<%=fDate%>" name="datepicker" type="hidden" />
+
+											</c:when>
+											<c:when test="${menuId==72 || menuId==69 || menuId==73}">
+
+												<input id="datepicker"
+													class="texboxitemcode texboxcal deliveryDate"
+													value="${hideDeliveryDate}" name="datepicker" type="text"
+													required>
+
+											</c:when>
+											<c:otherwise>
+												<input id="datepicker"
+													class="texboxitemcode texboxcal deliveryDate"
+													value="<%=fDate%>" name="datepicker" type="text" required>
+											</c:otherwise>
+										</c:choose>
+
+
+
+
+									</div>
+									<div class="col2">
+										<c:if test="${specialCake.isSlotUsed=='1'}">
+											<span class="cakename" id="slotUsedSpan">Check Slots
+												availability</span>
+										</c:if>
+									</div>
+								</div> --%>
+
+
+								<div class="colOuter">
+									<div class="col1">
+										<div class="col1title"  style="font-weight: bold;color: black;">Cross Delivery/Delivery at Other Location(Marathi/Hindi)</div>
+									</div>
+									<div class="col2full">
+										<input class="texboxitemcode" placeholder="Delivery at Other Location"
 											name="sp_place" id="sp_place" type="text" required>
 									</div>
 								</div>
@@ -557,7 +606,7 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title">Customer Name</div>
+										<div class="col1title" style="font-weight: bold;color: black;">Customer Name</div>
 									</div>
 									<div class="col2full">
 										<input class="texboxitemcode texboxcal2"
@@ -569,7 +618,7 @@ select {
 									<%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
  --%>
 								</div>
-								<div class="colOuter">
+								<div class="colOuter" style="display: none;">
 									<div class="col1">
 										<div class="col1title">DOB</div>
 									</div>
@@ -580,7 +629,7 @@ select {
 											name="datepicker4" type="text" required>
 									</div>
 								</div>
-								<div class="colOuter">
+								<div class="colOuter"  style="display: none;">
 									<div class="col1">
 										<div class="col1title">Mobile</div>
 									</div>
@@ -594,7 +643,7 @@ select {
 								</div>
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title">GSTIN</div>
+										<div class="col1title" style="font-weight: bold;color: black;">GSTIN</div>
 									</div>
 
 									<div class="col2full">
@@ -1194,6 +1243,12 @@ select {
 				spCode = document.getElementById("sp_code").value;
 				spWt = document.getElementById("spwt").value;
 				var isValid = true;
+				
+				
+				var photo1=document.getElementById("order_photo").value;
+				var photo2=document.getElementById("cust_choice_ck").value;
+				
+				var isCustPhotoCake=${specialCake.isCustChoiceCk};
 
 				if (spCode == "") {
 					alert("Special Cake Code must be filled out");
@@ -1216,24 +1271,44 @@ select {
 					document.getElementById('event_name').focus();
 
 					isValid = false;
-				} else if (spPlace == "") {
+				} 
+				/* else if (spPlace == "") {
 					alert("Please Enter Place of delivery");
 					document.getElementById('sp_place').focus();
 
 					isValid = false;
-				} else if (spCustName == "") {
+				} */
+				else if (spCustName == "") {
 					alert("Please Enter Customer Name");
 					document.getElementById('sp_cust_name').focus();
 
 					isValid = false;
-				} else if (spCustMob.match(phoneNo)) {
+				} 
+				
+				else if(isCustPhotoCake==1){
+					
+					if(photo1 == ""){
+						
+						alert("Please Select Photo 1");
+						isValid = false;
+						
+					}else if(photo2 == ""){
+						
+						alert("Please Select Photo 2");
+						isValid = false;
+						
+					}
+					
+				}
+				
+				/* else if (spCustMob.match(phoneNo)) {
 					return true;
 				} else {
 					alert("Not a valid Mobile Number");
 					document.getElementById('sp_cust_mobile_no').value = "";
 					document.getElementById('sp_cust_mobile_no').focus();
 					return false;
-				}
+				} */
 
 				return isValid;
 
@@ -1324,7 +1399,11 @@ select {
 															});
 										}
 
-										if (document.getElementById("menu_id").value == 72 || document.getElementById("menu_id").value == 69 || document.getElementById("menu_id").value == 73) {
+										if (document.getElementById("menu_id").value == 72
+												|| document
+														.getElementById("menu_id").value == 69
+												|| document
+														.getElementById("menu_id").value == 73) {
 
 											document
 													.getElementById("hiddenDeliveryDate").value = date;
@@ -1333,6 +1412,9 @@ select {
 													"submitForm").click();
 
 										}
+
+										//alert("hi");
+										getOrderCountByProdDate();
 
 									}
 
@@ -1376,66 +1458,83 @@ select {
 								$("#click")
 										.click(
 												function() {
+													
+														var date = $('#datepicker')
+														.datepicker(
+																{
+																	dateFormat : 'dd-mm-yy'
+																}).val();
+												
+												
 
-													var date = $('#datepicker')
-															.datepicker(
+												var isSlotUsed = $(
+														"#isSlotUsed")
+														.val();
+
+												var produTime = $(
+														"#sp_pro_time")
+														.val();
+
+												if (isSlotUsed == '1') {
+
+													$
+															.getJSON(
+																	'${findAvailableSlot}',
 																	{
-																		dateFormat : 'dd-mm-yy'
-																	}).val();
+																		deldate : date,
+																		prodTime : produTime,
+																		ajax : 'true'
+																	},
+																	function(
+																			availableSlots) {
 
-													var isSlotUsed = $(
-															"#isSlotUsed")
-															.val();
+																		if (availableSlots > 0) {
+																			$(
+																					"#slotUsedSpan")
+																					.html(
+																							availableSlots
+																									+ ' Slots Available');
+																			var valid = validate();
 
-													var produTime = $(
-															"#sp_pro_time")
-															.val();
-
-													if (isSlotUsed == '1') {
-
-														$
-																.getJSON(
-																		'${findAvailableSlot}',
-																		{
-																			deldate : date,
-																			prodTime : produTime,
-																			ajax : 'true'
-																		},
-																		function(
-																				availableSlots) {
-
-																			if (availableSlots > 0) {
-																				$(
-																						"#slotUsedSpan")
-																						.html(
-																								availableSlots
-																										+ ' Slots Available');
-																				var valid = validate();
-
-																				if (valid) {
-																					document.forms["from_ord"]
-																							.submit();
-																				}
-
-																			} else {
-
-																				$(
-																						"#slotsNotAvailable")
-																						.html(
-																								'No Slots Available');
-																				alert("Sorry, No Slots Available !");
+																			if (valid) {
+																				
+																				submitGetOrderCountByProdDate();
+																				
+																				/* document.forms["from_ord"]
+																						.submit(); */
 																			}
 
-																		});
-													} else {
-														var valid = validate();
+																		} else {
 
-														if (valid) {
-															document.forms["from_ord"]
-																	.submit();
-														}
+																			$(
+																					"#slotsNotAvailable")
+																					.html(
+																							'No Slots Available');
+																			alert("Sorry, No Slots Available !");
+																		}
 
+																	});
+												} else {
+													var valid = validate();
+
+													if (valid) {
+														
+														submitGetOrderCountByProdDate();
+														
+														/* document.forms["from_ord"]
+																.submit(); */
 													}
+
+												}
+														
+													
+													
+
+												
+													
+													
+													
+													
 												});
 							});
 		</script>
@@ -1468,5 +1567,67 @@ select {
 		});
 		
 		</script> -->
+
+
+		<script type="text/javascript">
+		
+		function getOrderCountByProdDate(){
+			
+			var prodDate = $('#datepicker')
+			.datepicker(
+					{
+						dateFormat : 'dd-mm-yy'
+					}).val();
+			
+			
+			var bookBefore =document.getElementById("sp_pro_time").value;
+			
+				$.getJSON('${getSpOrderCountByProdDate}', {
+					prodDate : prodDate,
+					bookBefore : bookBefore,
+					menuId : ${menuId},
+					ajax : 'true'
+				}, function(data) {
+					//alert(JSON.stringify(data));
+					
+					if(data.message=='false'){
+						alert("Daily Limit Exceeded!");
+					}
+
+				});
+
+			}
+		
+		
+		function submitGetOrderCountByProdDate(){
+			
+			var prodDate = $('#datepicker')
+			.datepicker(
+					{
+						dateFormat : 'dd-mm-yy'
+					}).val();
+			
+			var bookBefore =document.getElementById("sp_pro_time").value;
+			
+				$.getJSON('${getSpOrderCountByProdDate}', {
+					prodDate : prodDate,
+					bookBefore : bookBefore,
+					menuId : ${menuId},
+					ajax : 'true'
+				}, function(data) {
+					//alert(JSON.stringify(data));
+					
+					if(data.message=='false'){
+						alert("Daily Limit Exceeded!");
+					}else{
+						document.forms["from_ord"]
+						.submit();
+					}
+
+				});
+
+			}
+		
+		</script>
 </body>
 </html>

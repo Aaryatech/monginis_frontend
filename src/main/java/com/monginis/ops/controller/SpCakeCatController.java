@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -38,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
@@ -50,8 +53,12 @@ import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Main;
+import com.monginis.ops.model.MenuLimit;
+import com.monginis.ops.model.MenuLimitList;
+import com.monginis.ops.model.MenuOrderLimit;
 import com.monginis.ops.model.SearchSpCakeCatResponse;
 import com.monginis.ops.model.SearchSpCakeResponse;
+import com.monginis.ops.model.SettingNew;
 import com.monginis.ops.model.Settings;
 import com.monginis.ops.model.SpCakeOrder;
 import com.monginis.ops.model.SpCakeOrderRes;
@@ -214,6 +221,8 @@ public class SpCakeCatController {
 		model.addObject("hideDeliveryDate", sdf.format(cal.getTime()));
 
 		System.err.println("FLAVOURS------------------------------------------------------------------ " + flavourList);
+
+
 
 		return model;
 	}
@@ -722,7 +731,7 @@ public class SpCakeCatController {
 		return invoiceNo;
 
 	}
-	
+
 	SpOrderHis spOrderHis;
 
 	// Anmol 12-7-2019
@@ -1104,22 +1113,15 @@ public class SpCakeCatController {
 				RestTemplate restTemplate = new RestTemplate();
 				spCakeOrderRes = restTemplate.postForObject(Constant.URL + "/placeSpCakeOrder", httpEntity,
 						SpCakeOrderRes.class);
-				
-				
-				
-				if(spCakeOrderRes!=null) {
-					
-					
+
+				if (spCakeOrderRes != null) {
+
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 					map.add("spOrderNo", spCakeOrderRes.getSpCakeOrder().getSpOrderNo());
-					
-					spOrderHis=restTemplate.postForObject(Constant.URL + "/getSpOrderHistory", map,
-							SpOrderHis.class);
+
+					spOrderHis = restTemplate.postForObject(Constant.URL + "/getSpOrderHistory", map, SpOrderHis.class);
 				}
-				
-				
-				
-				
+
 				System.out.println("ORDER PLACED " + spCakeOrderRes.toString());
 				spCakeOrder.setSpInstructions(spCakeOrderRes.getSpCakeOrder().getSpInstructions());
 				spCake = spCakeOrderRes.getSpCakeOrder();
@@ -1240,6 +1242,108 @@ public class SpCakeCatController {
 
 	}
 
+	@RequestMapping(value = "/getSpOrderCountByProdDate", method = RequestMethod.GET)
+	public @ResponseBody Info getSpOrderCountByProdDate(HttpServletRequest request, HttpServletResponse response) {
+
+		Info info = new Info();
+		RestTemplate restTemplate = new RestTemplate();
+
+		String delDate = request.getParameter("prodDate");
+		int menuId = Integer.parseInt(request.getParameter("menuId"));
+		
+		String prodDate="";
+		
+		int bookBefore=0;
+		try {
+			bookBefore=Integer.parseInt(request.getParameter("bookBefore"));
+		}catch(Exception e) {}
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+			Date d = sdf.parse(delDate);
+			
+			//Calendar cal=Calendar.getInstance();
+			//cal.setTime(d);
+			
+			int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			if (isSameDayApplicable == 1) {
+				cal.add(Calendar.DATE, 0);
+			} else if (isSameDayApplicable == 4 && menuId == 68) {
+				cal.add(Calendar.DATE, 0);
+			} else {
+				cal.add(Calendar.DATE, -bookBefore);
+			}
+			
+			delDate = sdf1.format(d);
+			
+			prodDate=sdf1.format(cal.getTimeInMillis());
+			
+			
+			
+		} catch (Exception e) {
+		}
+
+		System.err.println("PARAM - " + prodDate+"      MENU ID - "+menuId);
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("prodDate", prodDate);
+
+		info = restTemplate.postForObject(Constant.URL + "getSpCakeCountByProdDate", map, Info.class);
+
+		System.err.println("INFO ------> " + info);
+
+		String res = info.getMessage();
+
+		boolean flag = false;
+
+		// MENU LIMIT-------
+		try {
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("settingKey", "MENULIMIT");
+
+			SettingNew limitJsonStr = restTemplate.postForObject(Constant.URL + "/getSettingValueByKey", map,
+					SettingNew.class);
+
+			System.err.println("JSON STR ------------------------- " + limitJsonStr);
+
+			///ObjectMapper mapper = new ObjectMapper();
+			//MenuLimitList menuList = mapper.readValue(limitJsonStr.getSettingValue1(), MenuLimitList.class);
+			
+			Gson gson = new Gson();
+
+			Type userListType = new TypeToken<ArrayList<MenuOrderLimit>>() {
+			}.getType();
+
+			ArrayList<MenuOrderLimit> jsonList = gson.fromJson(limitJsonStr.getSettingValue1(), userListType);
+
+
+			if (menuList != null) {
+
+				System.err.println("MENU LIST ==============> " + menuList);
+
+				for (MenuOrderLimit menu :jsonList) {
+					if (menu.getMenuId() == menuId && Integer.parseInt(res) < menu.getQtyLimit()) {
+						flag = true;
+					}
+				}
+
+			}
+
+		} catch (Exception e) {
+
+		}
+
+		info.setMessage("" + flag);
+
+		return info;
+	}
+
 	// -----------------Showing of order Datails Page------------------------------
 	@RequestMapping(value = "/spCakeCatOrderRes", method = RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) {
@@ -1338,8 +1442,7 @@ public class SpCakeCatController {
 			String shopName = franchisee.getFrName();
 			String tel = franchisee.getFrMob();
 
-			
-			//model.addObject("spCakeOrder", spCakeOrder);
+			// model.addObject("spCakeOrder", spCakeOrder);
 			model.addObject("spCakeOrder", spOrderHis);
 			model.addObject("currDate", currentDate);
 			model.addObject("currTime", time);
