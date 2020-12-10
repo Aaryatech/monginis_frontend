@@ -1247,11 +1247,11 @@ select {
 				var isValid = true;
 				
 				
-				var photo1=document.getElementById("order_photo").value;
-				var photo2=document.getElementById("cust_choice_ck").value;
+				//var photo1=document.getElementById("order_photo").value;
+				//var photo2=document.getElementById("cust_choice_ck").value;
 				
-				var isCustPhotoCake=${specialCake.isCustChoiceCk};
-				var isPhoto=${specialCake.spPhoupload};
+				//var isCustPhotoCake=${specialCake.isCustChoiceCk};
+				//var isPhoto=${specialCake.spPhoupload};
 				//alert(isPhoto);
 				
 				
@@ -1294,7 +1294,7 @@ select {
 				
 				
 				
-				
+/* 				
 			  	else if(isCustPhotoCake == 1 && isPhoto==1){
 			  		
 					
@@ -1311,6 +1311,8 @@ select {
 					} 
 					
 				} 
+				 */
+				
 			  	/* else if(isCustPhotoCake == 0 && isPhoto==1){
 			  		
 					
@@ -1650,8 +1652,7 @@ select {
 						alert("Daily Limit Exceeded!");
 					}else{
 						//alert("ok");
-						 document.forms["from_ord"]
-						.submit(); 
+						 document.forms["from_ord"].submit(); 
 					}
 
 				});
