@@ -94,6 +94,502 @@ select {
 }
 </style>
 </head>
+
+<style>
+
+/* Absolute Center Spinner */
+.loading {
+	position: fixed;
+	z-index: 999;
+	height: 2em;
+	width: 2em;
+	overflow: show;
+	margin: auto;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
+	background: -webkit-radial-gradient(rgba(20, 20, 20, .8),
+		rgba(0, 0, 0, .8));
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading
+:not
+ 
+(
+:required
+ 
+)
+{
+/* hide "loading..." text */
+font
+:
+ 
+0/0
+a
+;
+
+	
+color
+:
+ 
+transparent
+;
+
+	
+text-shadow
+:
+ 
+none
+;
+
+	
+background-color
+:
+ 
+transparent
+;
+
+	
+border
+:
+ 
+0;
+}
+.loading:not (:required ):after {
+	content: '';
+	display: block;
+	font-size: 10px;
+	width: 1em;
+	height: 1em;
+	margin-top: -0.5em;
+	-webkit-animation: spinner 150ms infinite linear;
+	-moz-animation: spinner 150ms infinite linear;
+	-ms-animation: spinner 150ms infinite linear;
+	-o-animation: spinner 150ms infinite linear;
+	animation: spinner 150ms infinite linear;
+	border-radius: 0.5em;
+	-webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0
+		1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0,
+		rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75)
+		-1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+	box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0
+		1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0,
+		rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75)
+		-1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+@
+-webkit-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+-moz-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+-o-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+</style>
+
 <body onload="onload()">
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -127,6 +623,13 @@ select {
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
+
+
+				<!-- <div class="se-pre-con" id="loader"></div> -->
+
+				<div class="loading" id="loader" style="display: none;">
+				</div>
+
 
 
 				<!--leftNav-->
@@ -329,7 +832,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Delivery Date</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Delivery Date</div>
 									</div>
 									<div class="col2">
 										<c:choose>
@@ -357,9 +861,14 @@ select {
 
 
 
-
 									</div>
 									<div class="col2">
+										<!-- <a href="javascript:void(0)" style="background: #ec268f;    text-align: center;margin: 0px;padding: 7px 10px;cursor: pointer;border: 2px solid #ec268f;color: #fff;font-size: 12px;" onclick="getOrderCountByProdDate()">Check Limit</a> -->
+
+										<input type="button" value="Check Slot"
+											style="background: #ec268f; text-align: center; margin: 0px; padding: 7px 10px; cursor: pointer; border: 2px solid #ec268f; color: #fff; font-size: 12px;"
+											onclick="getOrderCountByProdDate()">
+
 										<c:if test="${specialCake.isSlotUsed=='1'}">
 											<span class="cakename" id="slotUsedSpan">Check Slots
 												availability</span>
@@ -371,7 +880,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Type</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Type</div>
 									</div>
 									<div class="col2full">
 										<select name="sptype" tabindex="-1" id="sptype" required>
@@ -398,7 +908,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Flavour</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Flavour</div>
 									</div>
 									<div class="col2full">
 										<select name="spFlavour" tabindex="-1"
@@ -410,7 +921,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Weight</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Weight</div>
 									</div>
 									<div class="col2">
 										<c:set var="dbRate" scope="session" value="${sprRate}" />
@@ -432,7 +944,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Message</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Message</div>
 									</div>
 									<div class="col2">
 										<select name="sp_event" id="sp_event" required>
@@ -456,7 +969,8 @@ select {
 
 										<div class="colOuter">
 											<div class="col1">
-												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake1</div>
+												<div class="col1title"
+													style="font-weight: bold; color: black;">Photo Cake1</div>
 											</div>
 											<div class="col2full">
 												<div class="editimg">
@@ -474,7 +988,8 @@ select {
 										</div>
 										<div class="colOuter">
 											<div class="col1">
-												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake2</div>
+												<div class="col1title"
+													style="font-weight: bold; color: black;">Photo Cake2</div>
 											</div>
 											<div class="col2full">
 												<div class="editimg">
@@ -496,7 +1011,8 @@ select {
 
 										<div class="colOuter">
 											<div class="col1">
-												<div class="col1title" style="font-weight: bold;color: black;">Photo Cake</div>
+												<div class="col1title"
+													style="font-weight: bold; color: black;">Photo Cake</div>
 											</div>
 											<div class="col2full">
 												<div class="editimg">
@@ -518,7 +1034,9 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Select Language</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Select
+											Language</div>
 									</div>
 									<div class="col2full">
 										<select id="show" class="form-control" name="showtextarea"
@@ -531,7 +1049,9 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Special Instructions</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Special
+											Instructions</div>
 									</div>
 
 									<div class="col1full" id="marathiDiv">
@@ -588,10 +1108,13 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title"  style="font-weight: bold;color: black;">Cross Delivery/Delivery at Other Location(Marathi/Hindi)</div>
+										<div class="col1title" style="font-weight: bold; color: red;">Fill
+											this column in case of Cross Delivery (fill in Marathi/Hindi
+											only)</div>
 									</div>
 									<div class="col2full">
-										<input class="texboxitemcode" placeholder="Delivery at Other Location"
+										<input class="texboxitemcode"
+											placeholder="Delivery at Other Location in Marathi/Hindi only"
 											name="sp_place" id="sp_place" type="text" required>
 									</div>
 								</div>
@@ -608,7 +1131,8 @@ select {
 
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">Customer Name</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">Customer Name</div>
 									</div>
 									<div class="col2full">
 										<input class="texboxitemcode texboxcal2"
@@ -631,7 +1155,7 @@ select {
 											name="datepicker4" type="text" required>
 									</div>
 								</div>
-								<div class="colOuter"  style="display: none;">
+								<div class="colOuter" style="display: none;">
 									<div class="col1">
 										<div class="col1title">Mobile</div>
 									</div>
@@ -645,7 +1169,8 @@ select {
 								</div>
 								<div class="colOuter">
 									<div class="col1">
-										<div class="col1title" style="font-weight: bold;color: black;">GSTIN</div>
+										<div class="col1title"
+											style="font-weight: bold; color: black;">GSTIN</div>
 									</div>
 
 									<div class="col2full">
@@ -1613,6 +2138,8 @@ select {
 			
 			var bookBefore =document.getElementById("sp_pro_time").value;
 			
+			$("#loader").show();
+			
 				$.getJSON('${getSpOrderCountByProdDate}', {
 					prodDate : prodDate,
 					bookBefore : bookBefore,
@@ -1621,8 +2148,12 @@ select {
 				}, function(data) {
 					//alert(JSON.stringify(data));
 					
+					$("#loader").hide();
+					
 					if(data.message=='false'){
-						alert("Daily Limit Exceeded!");
+						alert("Slot Full - Daily Limit Exceeded!");
+					}else{
+						alert("Slot Available");
 					}
 
 				});
@@ -1640,6 +2171,8 @@ select {
 			
 			var bookBefore =document.getElementById("sp_pro_time").value;
 			
+			$("#loader").show();
+			
 				$.getJSON('${getSpOrderCountByProdDate}', {
 					prodDate : prodDate,
 					bookBefore : bookBefore,
@@ -1648,8 +2181,11 @@ select {
 				}, function(data) {
 					//alert(JSON.stringify(data));
 					
+					
+					
 					if(data.message=='false'){
-						alert("Daily Limit Exceeded!");
+						$("#loader").hide();
+						alert("Slot Full - Daily Limit Exceeded!");
 					}else{
 						//alert("ok");
 						 document.forms["from_ord"].submit(); 
