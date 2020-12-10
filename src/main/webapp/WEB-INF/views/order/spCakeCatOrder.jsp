@@ -2138,6 +2138,33 @@ deg
 			
 			var bookBefore =document.getElementById("sp_pro_time").value;
 			
+			var spCode=document.getElementById("sp_code").value;
+			
+			if(spCode==""){
+				//alert("select sp ")
+				
+				var today = new Date();
+				var dd = today.getDate();
+
+				var mm = today.getMonth()+1; 
+				var yyyy = today.getFullYear();
+				if(dd<10) 
+				{
+				    dd='0'+dd;
+				} 
+
+				if(mm<10) 
+				{
+				    mm='0'+mm;
+				} 
+				
+				today = dd+'-'+mm+'-'+yyyy;
+				console.log(today);
+				
+				prodDate=today;
+			
+			}
+			
 			$("#loader").show();
 			
 				$.getJSON('${getSpOrderCountByProdDate}', {
