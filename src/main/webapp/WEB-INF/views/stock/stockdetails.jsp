@@ -38,6 +38,505 @@
 </head>
 <body> --%>
 
+<style>
+
+/* Absolute Center Spinner */
+.loading {
+	position: fixed;
+	z-index: 999;
+	height: 2em;
+	width: 2em;
+	overflow: show;
+	margin: auto;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
+	background: -webkit-radial-gradient(rgba(20, 20, 20, .8),
+		rgba(0, 0, 0, .8));
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading
+:not
+ 
+(
+:required
+ 
+)
+{
+/* hide "loading..." text */
+font
+:
+ 
+0/0
+a
+;
+
+	
+color
+:
+ 
+transparent
+;
+
+	
+text-shadow
+:
+ 
+none
+;
+
+	
+background-color
+:
+ 
+transparent
+;
+
+	
+border
+:
+ 
+0;
+}
+.loading:not (:required ):after {
+	content: '';
+	display: block;
+	font-size: 10px;
+	width: 1em;
+	height: 1em;
+	margin-top: -0.5em;
+	-webkit-animation: spinner 150ms infinite linear;
+	-moz-animation: spinner 150ms infinite linear;
+	-ms-animation: spinner 150ms infinite linear;
+	-o-animation: spinner 150ms infinite linear;
+	animation: spinner 150ms infinite linear;
+	border-radius: 0.5em;
+	-webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0
+		1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0,
+		rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75)
+		-1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+	box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0
+		1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0,
+		rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75)
+		-1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0,
+		rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+@
+-webkit-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+-moz-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+-o-keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+@
+keyframes spinner { 0% {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+100%
+{
+-webkit-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-moz-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-ms-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+-o-transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+    
+
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+
+  
+
+}
+}
+</style>
+
+
+
+
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -94,6 +593,9 @@
 
 			<!--leftNav-->
 
+
+<div class="loading" id="loaderFullScr" style="display: none;">
+				</div>
 
 
 			<!--rightSidebar-->
@@ -311,8 +813,8 @@
 						
 
 							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid1" class="main-table" border=1 >
+								<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+								<table id="table_grid1" class="main-table" border=1  >
 										<thead>
 											<tr class="bgpink">
 												<th>Item Id</th>
@@ -334,7 +836,7 @@
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table" border="1" >
 										<thead>
-											<tr class="bgpink">
+											<!-- <tr class="bgpink">
 												<th>Item Id</th>
 												<th>Item_Name</th>
 												<th>Reg Op Stock</th>
@@ -346,7 +848,7 @@
 												<th>Sp Sale</th>
 												<th>Reorder Qty</th>
 												<th>Reg Current Stock</th>
-												<th>Sp Current Stock</th>
+												<th>Sp Current Stock</th> -->
 
 
 											</tr>
@@ -364,7 +866,7 @@
 							<div class="colOuter" id="monthEnd" style="display: none">
 								<div class="col2full">
 									<input name="" class="buttonsaveorder" value="Month End"
-										id="substk" type="submit">
+										id="substk" type="submit" onclick="showLoader()">
 								</div>
 								</div>
 						</form>
@@ -597,6 +1099,33 @@
 						tr.append($('<th >Stock Diff</th>'));
 					
 						$('#table_grid').append(tr); 
+					}else{
+						
+						$('#table_grid th').remove();
+						var tr = $('<tr class=bgpink></tr>');
+					
+					tr.append($('<th >Item Id</th>'));
+					
+					tr.append($('<th >Item Name</th>'));
+					
+					tr.append($('<th >Regular Opening Stock</th>'));
+					tr.append($('<th >Special Opening Stock</th>'));
+
+					
+					tr.append($('<th >Reg Purchase Qty</th>'));
+					tr.append($('<th >Sp Purchase Qty</th>'));
+
+					tr.append($('<th >GRN / GVN Qty</th>'));
+					tr.append($('<th >Reg Sale</th>'));
+					tr.append($('<th >Sp Sale</th>'));
+					
+					tr.append($('<th >Reorder Qty</th>'));
+					tr.append($('<th >Regular Current Stock</th>'));
+					tr.append($('<th >Special Current Stock</th>'));
+
+				
+					$('#table_grid').append(tr);
+						
 					}
 					
 					
@@ -719,6 +1248,12 @@ function myFunction() {
       }
     }       
   }
+}
+</script>
+
+<script>
+function showLoader(){
+	$("#loaderFullScr").show();
 }
 </script>
 
