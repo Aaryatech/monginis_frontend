@@ -40,6 +40,10 @@
 
 <style>
 
+.thClass{
+position: sticky; top: 0;
+}
+
 /* Absolute Center Spinner */
 .loading {
 	position: fixed;
@@ -534,9 +538,6 @@ deg
 </style>
 
 
-
-
-
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -835,7 +836,7 @@ deg
 										</thead></table></div>
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table" border="1" >
-										<thead>
+										<thead class="thClass">
 											<!-- <tr class="bgpink">
 												<th>Item Id</th>
 												<th>Item_Name</th>
@@ -1075,56 +1076,56 @@ deg
 						$('#table_grid th').remove();
 							var tr = $('<tr class=bgpink></tr>');
 						
-						tr.append($('<th >Item Id</th>'));
+						tr.append($('<th class="thClass">Item Id</th>'));
 						
-						tr.append($('<th >Item Name</th>'));
+						tr.append($('<th  class="thClass">Item Name</th>'));
 						
-						tr.append($('<th >Regular Opening Stock</th>'));
-						tr.append($('<th >Special Opening Stock</th>'));
+						tr.append($('<th  class="thClass">Regular Opening Stock</th>'));
+						tr.append($('<th  class="thClass">Special Opening Stock</th>'));
 
 						
-						tr.append($('<th >Reg Purchase Qty</th>'));
-						tr.append($('<th >Sp Purchase Qty</th>'));
+						tr.append($('<th  class="thClass">Reg Purchase Qty</th>'));
+						tr.append($('<th  class="thClass">Sp Purchase Qty</th>'));
 
-						tr.append($('<th >GRN / GVN Qty</th>'));
-						tr.append($('<th >Reg Sale</th>'));
-						tr.append($('<th >Sp Sale</th>'));
+						tr.append($('<th  class="thClass">GRN / GVN Qty</th>'));
+						tr.append($('<th  class="thClass">Reg Sale</th>'));
+						tr.append($('<th class="thClass" >Sp Sale</th>'));
 						
-						tr.append($('<th >Reorder Qty</th>'));
-						tr.append($('<th >Regular Current Stock</th>'));
-						tr.append($('<th >Special Current Stock</th>'));
+						tr.append($('<th  class="thClass">Reorder Qty</th>'));
+						tr.append($('<th  class="thClass">Regular Current Stock</th>'));
+						tr.append($('<th  class="thClass">Special Current Stock</th>'));
 
-						tr.append($('<th >Physical Stock</th>'));
+						tr.append($('<th  class="thClass">Physical Stock</th>'));
 						
-						tr.append($('<th >Stock Diff</th>'));
+						tr.append($('<th  class="thClass">Stock Diff</th>'));
 					
-						$('#table_grid').append(tr); 
+						$('#table_grid thead').append(tr); 
 					}else{
 						
 						$('#table_grid th').remove();
 						var tr = $('<tr class=bgpink></tr>');
 					
-					tr.append($('<th >Item Id</th>'));
+					tr.append($('<th  class="thClass">Item Id</th>'));
 					
-					tr.append($('<th >Item Name</th>'));
+					tr.append($('<th  class="thClass">Item Name</th>'));
 					
-					tr.append($('<th >Regular Opening Stock</th>'));
-					tr.append($('<th >Special Opening Stock</th>'));
+					tr.append($('<th  class="thClass">Regular Opening Stock</th>'));
+					tr.append($('<th  class="thClass">Special Opening Stock</th>'));
 
 					
-					tr.append($('<th >Reg Purchase Qty</th>'));
-					tr.append($('<th >Sp Purchase Qty</th>'));
+					tr.append($('<th  class="thClass">Reg Purchase Qty</th>'));
+					tr.append($('<th  class="thClass">Sp Purchase Qty</th>'));
 
-					tr.append($('<th >GRN / GVN Qty</th>'));
-					tr.append($('<th >Reg Sale</th>'));
-					tr.append($('<th >Sp Sale</th>'));
+					tr.append($('<th  class="thClass">GRN / GVN Qty</th>'));
+					tr.append($('<th  class="thClass">Reg Sale</th>'));
+					tr.append($('<th  class="thClass">Sp Sale</th>'));
 					
-					tr.append($('<th >Reorder Qty</th>'));
-					tr.append($('<th >Regular Current Stock</th>'));
-					tr.append($('<th >Special Current Stock</th>'));
+					tr.append($('<th  class="thClass">Reorder Qty</th>'));
+					tr.append($('<th class="thClass" >Regular Current Stock</th>'));
+					tr.append($('<th  class="thClass">Special Current Stock</th>'));
 
 				
-					$('#table_grid').append(tr);
+					$('#table_grid thead').append(tr);
 						
 					}
 					
