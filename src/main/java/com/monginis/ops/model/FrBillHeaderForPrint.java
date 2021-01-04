@@ -1,6 +1,5 @@
 package com.monginis.ops.model;
 
-
 public class FrBillHeaderForPrint {
 
 	private Integer billNo;
@@ -18,14 +17,14 @@ public class FrBillHeaderForPrint {
 	private Integer delStatus;
 	private int isSameState;
 	private String frAddress;
-	private String partyName;//new -08 feb 19
-	private String partyGstin;//new -08 feb 19
-	private String partyAddress;//new -08 feb 19
-	
+	private String partyName;// new -08 feb 19
+	private String partyGstin;// new -08 feb 19
+	private String partyAddress;// new -08 feb 19
+
+	private float roundOff;
+
 	Company company;
-	
-	
-	
+
 	public String getPartyName() {
 		return partyName;
 	}
@@ -89,8 +88,6 @@ public class FrBillHeaderForPrint {
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
-
-	 
 
 	public Integer getFrId() {
 		return frId;
@@ -172,13 +169,20 @@ public class FrBillHeaderForPrint {
 		this.isSameState = isSameState;
 	}
 
-	
 	public String getBillDate() {
 		return billDate;
 	}
 
 	public void setBillDate(String billDate) {
 		this.billDate = billDate;
+	}
+
+	public float getRoundOff() {
+		return roundOff;
+	}
+
+	public void setRoundOff(float roundOff) {
+		this.roundOff = roundOff;
 	}
 
 	@Override
@@ -188,8 +192,7 @@ public class FrBillHeaderForPrint {
 				+ ", grandTotal=" + grandTotal + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status="
 				+ status + ", remark=" + remark + ", delStatus=" + delStatus + ", isSameState=" + isSameState
 				+ ", frAddress=" + frAddress + ", partyName=" + partyName + ", partyGstin=" + partyGstin
-				+ ", partyAddress=" + partyAddress + ", company=" + company + "]";
+				+ ", partyAddress=" + partyAddress + ", roundOff=" + roundOff + ", company=" + company + "]";
 	}
 
-	
 }
