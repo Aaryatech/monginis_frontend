@@ -91,10 +91,11 @@
             <th width="13%" bgcolor="#ECECEC">Rate</th>
             <th width="29%" align="center" bgcolor="#ECECEC">Amt</th>
           </tr>
+         
           <c:forEach items="${billList}" var="billList" varStatus="count">
           <tr>
             <td><p style="font-size:12px">${billList.itemName}</p>
-				<p style="font-size:10px">hsn123456789</p></td>
+				<p style="font-size:10px">${billList.itemHsncd}</p></td>
             <td align="center"><p style="font-size:12px">${billList.qty}</p></td>
             <td align="center"><p style="font-size:12px">${billList.mrp}</p></td>
             <td align="right"><p style="font-size:12px">${billList.qty*billList.mrp}</p></td>

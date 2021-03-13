@@ -2184,11 +2184,12 @@ if(currentNewItem.getCatId()==7) {
 
 		ParameterizedTypeReference<List<GetCustmoreBillResponse>> typeRef = new ParameterizedTypeReference<List<GetCustmoreBillResponse>>() {
 		};
-		ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest.exchange(Constant.URL + "getCustomerBill",
-				HttpMethod.POST, new HttpEntity<>(map), typeRef);
+		ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest.exchange(Constant.URL + "getCustomerItemHsnBill",
+				HttpMethod.POST, new HttpEntity<>(map), typeRef); /* /getCustomerBill*/
 
 		List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
-
+		System.out.println("Cust Bill----"+getCustmoreBillResponseList);
+		
 		GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
 
 		int billAmt = billResponse.getIntDiscAmt();

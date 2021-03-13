@@ -47,7 +47,6 @@ private float sgstPer;
 
 private float igstPer;
 
-
 private String gstn;
 
 private float bill_amount;
@@ -61,6 +60,8 @@ private float igstRs;
 private float cgstRs;
 
 private float sgstRs;
+
+private String itemHsncd; //mahendra 12-03-2021
 
 public int getSellBillDetailNo() {
 	return sellBillDetailNo;
@@ -270,6 +271,14 @@ public void setIntDiscAmt(int intDiscAmt) {
 	this.intDiscAmt = intDiscAmt;
 }
 
+public String getItemHsncd() {
+	return itemHsncd;
+}
+
+public void setItemHsncd(String itemHsncd) {
+	this.itemHsncd = itemHsncd;
+}
+
 @Override
 public String toString() {
 	return "GetCustmoreBillResponse [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo
@@ -279,7 +288,7 @@ public String toString() {
 			+ ", discountAmt=" + discountAmt + ", intBillAmt=" + intBillAmt + ", intDiscAmt=" + intDiscAmt
 			+ ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", gstn=" + gstn
 			+ ", bill_amount=" + bill_amount + ", mrp=" + mrp + ", qty=" + qty + ", igstRs=" + igstRs + ", cgstRs="
-			+ cgstRs + ", sgstRs=" + sgstRs + "]";
+			+ cgstRs + ", sgstRs=" + sgstRs + ", itemHsncd=" + itemHsncd + "]";
 }
 
 
